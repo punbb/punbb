@@ -1,0 +1,17 @@
+# BEGIN PunBB
+
+<IfModule mod_rewrite.c>
+# MultiViews interfers with proper rewriting
+Options -MultiViews
+
+RewriteEngine On
+
+# Uncomment and properly set the RewriteBase if the rewrite rules are not working properly
+#RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . rewrite.php [L]
+</IfModule>
+
+# END PunBB
