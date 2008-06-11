@@ -141,7 +141,10 @@ class DBLayer
 			if (!empty($query['INSERT']))
 				$sql .= ' ('.$query['INSERT'].')';
 
-			$sql .= ' VALUES('.$query['VALUES'].')';
+			if (is_array($query['VALUES']))
+				$sql .= ' VALUES('.implode('),(', $query['VALUES']).')';
+			else
+				$sql .= ' VALUES('.$query['VALUES'].')';
 		}
 		else if (isset($query['UPDATE']))
 		{
@@ -311,6 +314,9 @@ class DBLayer
 			$field_data['datatype'] = preg_replace(array_keys($this->datatype_transformations), array_values($this->datatype_transformations), $field_data['datatype']);
 
 			$query .= $field_name.' '.$field_data['datatype'];
+
+			if (isset($field_data['collation']))
+				$query .= 'CHARACTER SET utf8 COLLATE utf8_'.$field_data['collation'];
 
 			if (!$field_data['allow_null'])
 				$query .= ' NOT NULL';
