@@ -596,6 +596,10 @@ D - COMMON BOARD ELEMENTS
 	padding: 0.5em 1.417em;
 	}
 	
+.brd .message br {
+	display: inline;
+	}
+	
 .brd .message p span {
 	display: block;
 	padding-top: 1em;
