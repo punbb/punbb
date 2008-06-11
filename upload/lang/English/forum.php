@@ -3,6 +3,7 @@
 // Language definitions used in viewforum.php
 $lang_forum = array(
 
+'Paged info'				=>	'Topics %1$s to %2$s of %3$s', 
 'Post topic'				=>	'Post new topic',
 'Login to post'				=>	'You must %1$s or %2$s to post a new topic',
 'No posting allowed'		=>	'You do not have permission to post a new topic',
