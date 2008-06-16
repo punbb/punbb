@@ -1441,6 +1441,7 @@ else
 		'o_time_format'				=> "'H:i:s'",
 		'o_date_format'				=> "'Y-m-d'",
 		'o_check_for_updates'		=> "'$check_for_updates'",
+		'o_check_for_versions'		=> "'$check_for_updates'",
 		'o_timeout_visit'			=> "'1800'",
 		'o_timeout_online'			=> "'300'",
 		'o_redirect_delay'			=> "'1'",
@@ -1509,8 +1510,8 @@ else
 	);
 
 	while (list($conf_name, $conf_value) = @each($config))
-		$forum_db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)") or error(__FILE__, __LINE__);
-
+		$forum_db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)") or error(__FILE__, __LINE__);	
+	
 	// Insert some other default data
 	$forum_db->query('INSERT INTO '.$db_prefix."categories (cat_name, disp_position) VALUES('".$lang_install['Default category name']."', 1)") or error(__FILE__, __LINE__);
 

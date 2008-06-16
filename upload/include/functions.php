@@ -2770,3 +2770,27 @@ function dump()
 	echo '</pre>';
 	exit;
 }
+
+function check_need_versions_updates()
+{
+	global $forum_versions, $url_repository, $url_repository_by_extension;
+	
+	//Find max timestamp on servers
+	$timestamp = -100000;
+	for ($url_num = 0; $url_num < count($url_repository); $url_num++)
+	{	
+		$rep_time = get_remote_file( $url_repository[$url_num].'/timestamp', 2);
+		$rep_time = ($rep_time != null) ? ( intval($rep_time['content']) ) : ( time() );
+		$timestamp = max($timestamp, $rep_time);		
+	}
+	
+	if (count( $url_repository_by_extension ) > 0)
+		foreach ($url_repository_by_extension as $key => $value)
+		{
+			$rep_time = get_remote_file( $url_repository_by_extension[ $key ].'/timestamp', 2);
+			$rep_time = ($rep_time != null) ? ( intval($rep_time['content']) ) : ( time() );
+			$timestamp = max($timestamp, $rep_time);		
+		}	
+	//Check need for updates every hour
+	return ( ($timestamp - $forum_versions['_cached_']) >= 3600 );
+}

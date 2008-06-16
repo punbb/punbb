@@ -790,6 +790,39 @@ else
 		array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
 		$lang_admin['Manage extensions']
 	);
+	
+	if ($forum_config['o_check_for_versions'] == 1)
+	{	
+		$url_repository = array();
+		$url_repository[] = 'http://'.$_SERVER['HTTP_HOST'].'/repository/';
+		$url_repository_by_extension = array();
+		
+		$keys = array_keys($inst_exts);
+		for ($ext_num = 0; $ext_num < count($keys); $ext_num++)
+		{
+			$h = 'aex_'.$keys[$ext_num].'_add_ext_repository';
+			$hook = get_hook($h);
+			
+			if ($hook !== FALSE)
+			{
+				$e_info = substr($hook, 0, stripos($hook, "\n\n"));				
+				eval($e_info);
+				if ($ext_info['id'] == $keys[$ext_num])
+					eval($hook);				
+			}
+		}
+	  
+		@include FORUM_CACHE_DIR.'cache_version_notifications.php';	
+	
+		//If it first start or cache is out of date or some extension was install/uninstall 
+		if ( !isset($forum_versions) || check_need_versions_updates() || (count($inst_exts) != $forum_versions['_user_ext_count_']))
+		{
+			require_once FORUM_ROOT.'include/cache.php';
+			generate_versions_cache( $inst_exts );
+			include FORUM_CACHE_DIR.'cache_version_notifications.php';
+		}
+		require_once FORUM_ROOT.'/lang/'.$forum_user['language'].'/versions_updates.php';
+	}
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;
 
@@ -832,6 +865,23 @@ else
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ? $lang_admin['Disable'] : $lang_admin['Enable']).'</a>',
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.$lang_admin['Uninstall'].'</a>'
 			);
+			
+			if ($forum_config['o_check_for_versions'] == 1)
+			{
+				$version = ( isset($forum_versions[ $id ]) )?( $forum_versions[ $id ][ 'version' ] ):( null );
+				$changes = ( isset($forum_versions[ $id ]) )?( $forum_versions[ $id ][ 'last_changes' ] ):( null );
+		
+				$need_update = ( $version == null )?( false ):( version_compare($ext['version'], $version, '<') );	
+			
+				if ($need_update)
+				{
+					$upd_url = $forum_versions[ $id ][ 'repository_url' ] . $id;
+					
+					$forum_page['ext_actions'][] = '<a href="'.$upd_url.'/'.$id.'.zip">'.$lang_system_updates['Download'].' '.$version.'</a>';
+					$changes = ( $changes != null )?( '<br>'.$changes ):( '' );
+					$forum_page['ext_actions'][] = '<div class="frm-info"><p class="warn">'.sprintf($lang_system_updates['New version'], $id).$changes.'</p></div>';					
+				}
+			}
 
 			($hook = get_hook('aex_section_manage_pre_ext_actions')) ? eval($hook) : null;
 

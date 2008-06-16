@@ -135,6 +135,8 @@ if (isset($_POST['form_sent']))
 			$form['avatars_size'] = intval($form['avatars_size']);
 
 			if (!isset($form['check_for_updates']) || $form['check_for_updates'] != '1') $form['check_for_updates'] = '0';
+			if (!isset($form['check_for_versions']) || $form['check_for_versions'] != '1') $form['check_for_versions'] = '0';
+			
 			if (!isset($form['gzip']) || $form['gzip'] != '1') $form['gzip'] = '0';
 
 			break;
@@ -849,12 +851,23 @@ $forum_page['set_count'] = 0;
 				<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
 					<legend class="frm-legend"><strong><?php echo $lang_admin['Updates legend'] ?></strong></legend>
 <?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>				<div class="radbox checkbox">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span class="fld-label"><?php echo $lang_admin['Check for updates'] ?></span><br /><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[check_for_updates]" value="1"<?php if ($forum_config['o_check_for_updates'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Auto check for updates'] ?></label>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span class="fld-label"><?php echo $lang_admin['Check for updates'] ?></span><br /><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[check_for_updates]" value="1"<?php if ($forum_config['o_check_for_updates'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Auto check for updates'] ?></label>							
 					</div>
 <?php else: ?>					<div class="frm-fld link">
 						<span class="fld-label"><?php echo $lang_admin['Check for updates'] ?></span>
 						<span class="fld-input">[ <?php echo $lang_admin['Auto check disabled'] ?> ]</span>
 					</div>
+
+<?php endif; ?>
+
+<?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>				<div class="radbox checkbox">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span class="fld-label"><?php echo $lang_admin['Check for versions'] ?></span><br /><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[check_for_versions]" value="1"<?php if ($forum_config['o_check_for_versions'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Auto check for versions'] ?></label>	
+					</div>
+<?php else: ?>					<div class="frm-fld link">
+						<span class="fld-label"><?php echo $lang_admin['Check for updates'] ?></span>
+						<span class="fld-input">[ <?php echo $lang_admin['Auto check disabled'] ?> ]</span>
+					</div>
+					
 <?php endif; ($hook = get_hook('aop_features_updates_end')) ? eval($hook) : null; ?>				</fieldset>
 			</div>
 <?php

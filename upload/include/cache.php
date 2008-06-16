@@ -387,3 +387,58 @@ function generate_updates_cache()
 
 	fclose($fh);
 }
+
+function generate_versions_cache( $inst_exts )
+{
+	global $url_repository, $url_repository_by_extension;
+	
+	//We cache version and last changes in every install extension
+	$sys_upd = array();
+	foreach ($inst_exts as $key)
+	{
+		if ( isset($url_repository_by_extension[ $key['id'] ]) )
+		{		
+			$path = $url_repository_by_extension[ $key['id'] ]. $key['id'];		
+			$version = get_remote_file( $path.'/lastversion', 2);
+			if ($version != null)
+			{
+				$repository_path = $url_repository_by_extension[ $key['id'] ];				
+				$sys_upd[ $key['id'] ][ 'version' ] = $version['content'];								
+			}
+		}
+		else
+			for ($rep_num = 0; $rep_num < count($url_repository); $rep_num++)
+			{
+				$path = $url_repository[ $rep_num ]. $key['id'];
+				$version = get_remote_file( $path.'/lastversion', 2);
+				if ($version != null)
+				{
+					$repository_path = $url_repository[ $rep_num ];
+					$sys_upd[ $key['id'] ][ 'version' ] = $version['content'];				
+					break;
+				}
+			}
+		
+		if ($version == null)
+			continue;
+		
+		$sys_upd[ $key['id'] ][ 'repository_url' ] = $repository_path;
+		
+		$last_changes = get_remote_file( $path.'/lastchanges.txt', 2);
+		if ($last_changes != null)
+			$sys_upd[ $key['id'] ][ 'last_changes' ] = $last_changes['content'];	
+	}
+	
+	//Write time of creating cache and count of installed extensions (it's need in case when there is no extension on the server)
+	$sys_upd['_cached_'] = time();
+	$sys_upd['_user_ext_count_'] = count($inst_exts);
+    
+	// Output config as PHP code
+	$fh = @fopen(FORUM_CACHE_DIR.'cache_version_notifications.php', 'wb');
+	if (!$fh)
+		error('Unable to write configuration cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'$forum_versions = '.var_export($sys_upd, true).';'."\n\n".'?>');
+
+	fclose($fh);
+}
