@@ -790,7 +790,7 @@ else
 		array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
 		$lang_admin['Manage extensions']
 	);
-	
+
 	if ($forum_config['o_check_for_versions'] == 1)
 	{	
 		$url_repository = array();
@@ -865,7 +865,7 @@ else
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ? $lang_admin['Disable'] : $lang_admin['Enable']).'</a>',
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.$lang_admin['Uninstall'].'</a>'
 			);
-			
+
 			if ($forum_config['o_check_for_versions'] == 1)
 			{
 				$version = ( isset($forum_versions[ $id ]) )?( $forum_versions[ $id ][ 'version' ] ):( null );

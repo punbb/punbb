@@ -35,7 +35,7 @@ ob_start();
 ($hook = get_hook('ft_about_output_start')) ? eval($hook) : null;
 
 ?>
-<div id="brd-about" class="gen-content">
+<div id="brd-about">
 <?php
 
 // Display the "Jump to" drop list
@@ -69,12 +69,6 @@ $tpl_main = str_replace('<!-- forum_about -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_about -->
 
-
-// START SUBST - <!-- forum_debug -->
-if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
-{
-	ob_start();
-
 	($hook = get_hook('ft_debug_output_start')) ? eval($hook) : null;
 
 	// Display debug info (if enabled/defined)
@@ -83,19 +77,23 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 		// Calculate script generation time
 		list($usec, $sec) = explode(' ', microtime());
 		$time_diff = sprintf('%.3f', ((float)$usec + (float)$sec) - $forum_start);
-		echo '<p id="querytime">[ Generated in '.$time_diff.' seconds, '.$forum_db->get_num_queries().' queries executed ]</p>'."\n";
+	echo "\t".'<p id="querytime">[ Generated in '.$time_diff.' seconds, '.$forum_db->get_num_queries().' queries executed ]</p>'."\n";
 	}
-
-	if (defined('FORUM_SHOW_QUERIES'))
-		get_saved_queries();
+echo '</div>'."\n";
 
 	($hook = get_hook('ft_debug_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_debug -->', $tpl_temp, $tpl_main);
+$tpl_main = str_replace('<!-- forum_about -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
-}
+// END SUBST - <!-- forum_about -->
+
+
+// START SUBST - <!-- forum_debug -->
+if (defined('FORUM_SHOW_QUERIES'))
+	$tpl_main = str_replace('<!-- forum_debug -->', get_saved_queries(), $tpl_main);
 // END SUBST - <!-- forum_debug -->
+
 
 // Last call!
 ($hook = get_hook('ft_end')) ? eval($hook) : null;

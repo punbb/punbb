@@ -115,7 +115,7 @@ if (!isset($_POST['form_sent']))
 	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 	if (substr($base_url_guess, -1) == '/')
 		$base_url_guess = substr($base_url_guess, 0, -1);
-
+		
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
@@ -131,170 +131,189 @@ if (!isset($_POST['form_sent']))
 <body>
 
 <div id="brd-install" class="brd-page">
-<div id="brd-wrap" class="brd">
+<div class="brd">
 
-<div id="brd-head" class="gen-content">
-	<p id="brd-title"><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></p>
-	<p id="brd-desc"><?php echo $lang_install['Install intro'] ?></p>
+<div id="brd-title">
+	<p><strong><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></strong></p>
 </div>
+
+<div id="brd-desc">
+	<p><?php printf ($lang_install['Install welcome'], FORUM_VERSION) ?></p>
+</div>
+
+<div id="brd-head">
+	<div id="brd-visit">
+		<p><?php echo $lang_install['Install intro'] ?></p>
+	</div>
+</div>
+
 
 <div id="brd-main" class="main">
 
 	<div class="main-head">
-		<h1 class="hn"><span><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></span></h1>
+		<h1><span><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></span></h1>
 	</div>
 
-	<form class="frm-newform" method="post" accept-charset="utf-8" action="install.php">
-	<div class="hidden">
-		<input type="hidden" name="form_sent" value="1" />
-	</div>
-	<div class="main-content frm">
-		<div class="content-head">
-			<h2 class="hn"><span><?php echo $lang_install['Part1'] ?></span></h2>
+	<div class="main-content frm parted">
+		<div class="frm-head">
+			<h2><span><?php echo $lang_install['Install head'] ?></span></h2>
 		</div>
-		<div class="cbox info-box">
-			<p><?php echo $lang_install['Part1 intro'] ?></p>
-			<ul class="spaced">
-				<li><span><strong><?php echo $lang_install['Database type'] ?></strong> <?php echo $lang_install['Database type info'] ?><?php if ($dual_mysql) echo ' '.$lang_install['Mysql type info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Database server'] ?></strong> <?php echo $lang_install['Database server info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Database name'] ?></strong> <?php echo $lang_install['Database name info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Database user pass'] ?></strong> <?php echo $lang_install['Database username info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Table prefix'] ?></strong> <?php echo $lang_install['Table prefix info'] ?></span></li>
-			</ul>
-		</div>
-		<div id="req-msg" class="req-warn">
-			<p class="important"><?php printf($lang_install['Required warn'], '<em>'.$lang_install['Reqmark'].'</em>') ?></p>
-		</div>
-		<fieldset class="frm-set set1">
-			<legend class="frm-legend"><strong><?php echo $lang_install['Part1 legend'] ?></strong></legend>
-			<div class="frm-select required">
-				<label for="fld1">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Database type'] ?></span>
-					<small class="fld-help"><?php echo $lang_install['Database type help'] ?></small>
-				</label><br />
-				<span class="fld-input"><select id="fld1" name="req_db_type">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
+			<div class="hidden">
+				<input type="hidden" name="form_sent" value="1" />
+			</div>
+			<div class="frm-part part1">
+				<h3><span><?php echo $lang_install['Part1'] ?></span></h3>
+				<div class="frm-info">
+					<p><?php echo $lang_install['Part1 intro'] ?></p>
+					<ul class="pair">
+						<li><strong><?php echo $lang_install['Database type'] ?></strong> <span><?php echo $lang_install['Database type info'] ?><?php if ($dual_mysql) echo ' '.$lang_install['Mysql type info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Database server'] ?></strong> <span><?php echo $lang_install['Database server info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Database name'] ?></strong> <span><?php echo $lang_install['Database name info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Database user pass'] ?></strong> <span><?php echo $lang_install['Database username info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Table prefix'] ?></strong> <span><?php echo $lang_install['Table prefix info'] ?></span></li>
+					</ul>
+				</div>
+				<fieldset class="frm-set set1">
+					<legend class="frm-legend"><strong><?php echo $lang_install['Part1 legend'] ?></strong></legend>
+					<div class="frm-fld select required">
+						<label for="fld1">
+							<span class="fld-label"><?php echo $lang_install['Database type'] ?></span><br />
+							<span class="fld-input"><select id="fld1" name="req_db_type">
 <?php
 
 	foreach ($db_extensions as $db_type)
-		echo "\t\t\t\t\t".'<option value="'.$db_type[0].'">'.$db_type[1].'</option>'."\n";
+		echo "\t\t\t\t\t\t\t".'<option value="'.$db_type[0].'">'.$db_type[1].'</option>'."\n";
 
 ?>
-				</select></span>
+							</select></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Database type help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text required">
+						<label for="fld2">
+							<span class="fld-label"><?php echo $lang_install['Database server'] ?></span><br />
+							<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="50" maxlength="100" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Database server help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text required">
+						<label for="fld3">
+							<span class="fld-label"><?php echo $lang_install['Database name'] ?></span><br />
+							<span class="fld-input"><input id="fld3" type="text" name="req_db_name" size="35" maxlength="50" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Database name help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text">
+						<label for="fld4">
+							<span class="fld-label"><?php echo $lang_install['Database username'] ?></span><br />
+							<span class="fld-input"><input id="fld4" type="text" name="db_username" size="35" maxlength="50" /></span><br />
+							<span class="fld-help"><?php echo $lang_install['Database username help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text">
+						<label for="fld5">
+							<span class="fld-label"><?php echo $lang_install['Database password'] ?></span><br />
+							<span class="fld-input"><input id="fld5" type="password" name="db_password" size="35" /></span><br />
+							<span class="fld-help"><?php echo $lang_install['Database password help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text">
+						<label for="fld6">
+							<span class="fld-label"><?php echo $lang_install['Table prefix'] ?></span><br />
+							<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="20" maxlength="30" /></span><br />
+							<span class="fld-help"><?php echo $lang_install['Table prefix help'] ?></span>
+						</label>
+					</div>
+				</fieldset>
 			</div>
-			<div class="frm-text required">
-				<label for="fld2">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Database server'] ?></span>
-					<small><?php echo $lang_install['Database server help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="50" maxlength="100" /></span>
+			<div class="frm-part part2">
+				<h3><span><?php echo $lang_install['Part2'] ?></span></h3>
+				<div class="frm-info">
+					<p><?php echo $lang_install['Part2 intro'] ?></p>
+					<ul class="pair">
+						<li><strong><?php echo $lang_install['Admin username'] ?></strong> <span><?php echo $lang_install['Admin username info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Admin password'] ?></strong> <span><?php echo $lang_install['Admin password info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Admin e-mail'] ?></strong> <span><?php echo $lang_install['Admin e-mail info'] ?></span></li>
+					</ul>
+				</div>
+				<fieldset class="frm-set set1">
+					<legend class="frm-legend"><strong><?php echo $lang_install['Part2 legend'] ?></strong></legend>
+					<div class="frm-fld text required">
+						<label for="fld7">
+							<span class="fld-label"><?php echo $lang_install['Username'] ?></span><br />
+							<span class="fld-input"><input id="fld7" type="text" name="req_username" size="35" maxlength="25" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Username help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text required">
+						<label for="fld8">
+							<span class="fld-label"><?php echo $lang_install['Password'] ?></span><br />
+							<span class="fld-input"><input id="fld8" type="password" name="req_password1" size="35" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Password help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text required">
+						<label for="fld9">
+							<span class="fld-label"><?php echo $lang_install['Admin confirm password'] ?></span><br />
+							<span class="fld-input"><input id="fld9" type="password" name="req_password2" size="35" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Confirm password help'] ?></span>
+						</label>
+					</div>
+					<div class="frm-fld text required">
+						<label for="fld10">
+							<span class="fld-label"><?php echo $lang_install['E-mail address'] ?></span><br />
+							<span class="fld-input"><input id="fld10" type="text" name="req_email" size="50" maxlength="80" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['E-mail address help'] ?></span>
+						</label>
+					</div>
+				</fieldset>
 			</div>
-			<div class="frm-text required">
-				<label for="fld3">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Database name'] ?></span>
-					<small><?php echo $lang_install['Database name help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld3" type="text" name="req_db_name" size="35" maxlength="50" /></span>
+			<div class="frm-part part3">
+				<h3><span><?php echo $lang_install['Part3'] ?></span></h3>
+				<div class="frm-info">
+					<p><?php echo $lang_install['Part3 intro'] ?></p>
+					<ul class="pair">
+						<li><strong><?php echo $lang_install['Board title and desc'] ?></strong> <span><?php echo $lang_install['Board title info'] ?></span></li>
+						<li><strong><?php echo $lang_install['Base URL'] ?></strong> <span><?php echo $lang_install['Base URL info'] ?></span></li>
+					</ul>
+				</div>
+				<fieldset class="frm-set set1">
+					<legend class="frm-legend"><strong><?php echo $lang_install['Part3 legend'] ?></strong></legend>
+					<div class="frm-fld text">
+						<label for="fld11">
+							<span class="fld-label"><?php echo $lang_install['Board title'] ?></span><br />
+							<span class="fld-input"><input id="fld11" type="text" name="board_title" size="50" maxlength="255" /></span>
+						</label>
+					</div>
+					<div class="frm-fld text">
+						<label for="fld12">
+							<span class="fld-label"><?php echo $lang_install['Board description'] ?></span><br />
+							<span class="fld-input"><input id="fld12" type="text" name="board_descrip" size="50" maxlength="255" /></span>
+						</label>
+					</div>
+					<div class="frm-fld text required">
+						<label for="fld13">
+							<span class="fld-label"><?php echo $lang_install['Base URL'] ?></span><br />
+							<span class="fld-input"><input id="fld13" type="text" name="req_base_url" value="<?php echo $base_url_guess ?>" size="60" maxlength="100" /></span><br />
+							<em class="req-text"><?php echo $lang_install['Required'] ?></em>
+							<span class="fld-help"><?php echo $lang_install['Base URL help'] ?></span>
+						</label>
+					</div>
+				</fieldset>
 			</div>
-			<div class="frm-text">
-				<label for="fld4">
-					<span><?php echo $lang_install['Database username'] ?></span>
-					<small><?php echo $lang_install['Database username help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld4" type="text" name="db_username" size="35" maxlength="50" /></span>
+			<div class="frm-buttons">
+				<span class="submit"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
 			</div>
-			<div class="frm-text">
-				<label for="fld5">
-					<span><?php echo $lang_install['Database password'] ?></span>
-					<small><?php echo $lang_install['Database password help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld5" type="password" name="db_password" size="35" /></span>
-			</div>
-			<div class="frm-text">
-				<label for="fld6">
-					<span><?php echo $lang_install['Table prefix'] ?></span>
-					<small><?php echo $lang_install['Table prefix help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="20" maxlength="30" /></span>
-			</div>
-		</fieldset>
+		</form>
 	</div>
-	<div class="main-content frm">
-		<div class="content-head">
-			<h2 class="hn"><span><?php echo $lang_install['Part2'] ?></span></h2>
-		</div>
-		<div class="cbox info-box">
-			<p><?php echo $lang_install['Part2 intro'] ?></p>
-		</div>
-		<fieldset class="frm-set set1">
-			<legend class="frm-legend"><strong><?php echo $lang_install['Part2 legend'] ?></strong></legend>
-			<div class="frm-text required">
-				<label for="fld7">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Admin username'] ?></span>
-					<small><?php echo $lang_install['Username help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld7" type="text" name="req_username" size="35" maxlength="25" /></span>
-			</div>
-			<div class="frm-text required">
-				<label for="fld8">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Admin password'] ?></span>
-					<small><?php echo $lang_install['Password help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld8" type="password" name="req_password1" size="35" /></span>
-			</div>
-			<div class="frm-text required">
-				<label for="fld9">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Admin confirm password'] ?></span>
-					<small><?php echo $lang_install['Confirm password help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld9" type="password" name="req_password2" size="35" /></span>
-			</div>
-			<div class="frm-text required">
-				<label for="fld10">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Admin e-mail'] ?></span>
-					<small><?php echo $lang_install['E-mail address help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld10" type="text" name="req_email" size="50" maxlength="80" /></span>
-			</div>
-		</fieldset>
-	</div>
-	<div class="main-content frm">
-		<div class="content-head">
-			<h2 class="hn"><span><?php echo $lang_install['Part3'] ?></span></h2>
-		</div>
-		<div class="cbox info-box">
-			<p><?php echo $lang_install['Part3 intro'] ?></p>
-			<ul class="spaced">
-				<li><span><strong><?php echo $lang_install['Board title and desc'] ?></strong> <?php echo $lang_install['Board title info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Base URL'] ?></strong> <?php echo $lang_install['Base URL info'] ?></span></li>
-			</ul>
-		</div>
-		<fieldset class="frm-set set1">
-			<legend class="frm-legend"><strong><?php echo $lang_install['Part3 legend'] ?></strong></legend>
-			<div class="frm-text">
-				<label for="fld11">
-					<span><?php echo $lang_install['Board title'] ?></span>
-				</label><br />
-				<span class="fld-input"><input id="fld11" type="text" name="board_title" size="50" maxlength="255" /></span>
-			</div>
-			<div class="frm-text">
-				<label for="fld12">
-					<span><?php echo $lang_install['Board description'] ?></span>
-				</label><br />
-				<span class="fld-input"><input id="fld12" type="text" name="board_descrip" size="50" maxlength="255" /></span>
-			</div>
-			<div class="frm-text required">
-				<label for="fld13">
-					<span><em><?php echo $lang_install['Reqmark'] ?></em> <?php echo $lang_install['Base URL'] ?></span>
-					<small><?php echo $lang_install['Base URL help'] ?></small>
-				</label><br />
-				<span class="fld-input"><input id="fld13" type="text" name="req_base_url" value="<?php echo $base_url_guess ?>" size="60" maxlength="100" /></span>
-			</div>
-		</fieldset>
-		<div class="frm-buttons">
-			<span class="submit"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
-		</div>
-	</div>
-	</form>
 </div>
 
 </div>
@@ -806,6 +825,11 @@ else
 				'datatype'		=> 'TINYINT(1)',
 				'allow_null'	=> false,
 				'default'		=> '1'
+			),
+			'g_edit_subjects_interval'	=> array(
+				'datatype'		=> 'SMALLINT(6)',
+				'allow_null'	=> false,
+				'default'		=> '300'
 			),
 			'g_post_flood'				=> array(
 				'datatype'		=> 'SMALLINT(6)',
@@ -1414,10 +1438,10 @@ else
 	$now = time();
 
 	// Insert the four preset groups
-	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood) VALUES('Administrators', 'Administrator', 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0)") or error(__FILE__, __LINE__);
-	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood) VALUES('Guest', NULL, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0)") or error(__FILE__, __LINE__);
-	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood) VALUES('Members', NULL, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 60, 30, 60)") or error(__FILE__, __LINE__);
-	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood) VALUES('Moderators', 'Moderator', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0)") or error(__FILE__, __LINE__);
+	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_edit_subjects_interval, g_post_flood, g_search_flood, g_email_flood) VALUES('Administrators', 'Administrator', 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)") or error(__FILE__, __LINE__);
+	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_edit_subjects_interval, g_post_flood, g_search_flood, g_email_flood) VALUES('Guest', NULL, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0)") or error(__FILE__, __LINE__);
+	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_edit_subjects_interval, g_post_flood, g_search_flood, g_email_flood) VALUES('Members', NULL, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 300, 60, 30, 60)") or error(__FILE__, __LINE__);
+	$forum_db->query('INSERT INTO '.$forum_db->prefix."groups (g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_edit_subjects_interval, g_post_flood, g_search_flood, g_email_flood) VALUES('Moderators', 'Moderator', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)") or error(__FILE__, __LINE__);
 
 	// Insert guest and first admin user
 	$forum_db->query('INSERT INTO '.$db_prefix."users (group_id, username, password, email) VALUES(2, 'Guest', 'Guest', 'Guest')") or error(__FILE__, __LINE__);
@@ -1510,8 +1534,8 @@ else
 	);
 
 	while (list($conf_name, $conf_value) = @each($config))
-		$forum_db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)") or error(__FILE__, __LINE__);	
-	
+		$forum_db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)") or error(__FILE__, __LINE__);
+
 	// Insert some other default data
 	$forum_db->query('INSERT INTO '.$db_prefix."categories (cat_name, disp_position) VALUES('".$lang_install['Default category name']."', 1)") or error(__FILE__, __LINE__);
 
@@ -1584,24 +1608,27 @@ else
 <body>
 
 <div id="brd-install" class="brd-page">
-<div id="brd-wrap" class="brd">
+<div class="brd">
 
-<div id="brd-head" class="gen-content">
-	<p id="brd-title"><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></p>
-	<p id="brd-desc"><?php printf($lang_install['Success description'], FORUM_VERSION) ?></p>
+<div id="brd-title">
+	<p><strong><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></strong></p>
 </div>
 
-<div id="brd-visit" class="gen-content">
+<div id="brd-desc">
+	<p><?php printf($lang_install['Success description'], FORUM_VERSION) ?></p>
+</div>
+
+<div id="brd-visit">
 	<p><?php echo $lang_install['Success welcome'] ?></p>
 </div>
 
 <?php
 ?>
 
-<div id="brd-main" class="main basic">
+<div id="brd-main" class="main">
 
 	<div class="main-head">
-		<h1 class="hn"><span><?php echo $lang_install['Final instructions'] ?></span></h1>
+		<h1><span><?php echo $lang_install['Final instructions'] ?></span></h1>
 	</div>
 
 	<div class="main-content frm">
@@ -1611,7 +1638,7 @@ if (!$written)
 {
 
 ?>
-		<div class="cbox info-box">
+		<div class="frm-info">
 			<p class="warn"><?php echo $lang_install['No write info 1'] ?></p>
 			<p class="warn"><?php printf($lang_install['No write info 2'], '<a href="index.php">'.$lang_install['Go to index'].'</a>') ?></p>
 		</div>
@@ -1621,7 +1648,7 @@ if (!$written)
 				<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
 			</ul>
 		</div>
-<?php endif; ?>		<form class="frm-newform" method="post" accept-charset="utf-8" action="install.php">
+<?php endif; ?>		<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
 			<div class="hidden">
 			<input type="hidden" name="generate_config" value="1" />
 			<input type="hidden" name="db_type" value="<?php echo $db_type; ?>" />
@@ -1644,7 +1671,7 @@ else
 {
 
 ?>
-		<div class="cbox info-box">
+		<div class="frm-info">
 			<p class="warn"><?php printf($lang_install['Write info'], '<a href="index.php">'.$lang_install['Go to index'].'</a>') ?></p>
 		</div>
 <?php

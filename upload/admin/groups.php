@@ -121,7 +121,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 			<h2><span><?php echo $lang_admin['Group settings heading'] ?></span></h2>
 		</div>
 		<div id="req-msg" class="frm-warn">
-			<p class="important"><?php printf($lang_common['Required warn'], '<em class="req-text">'.$lang_common['Reqmark'].'</em>') ?></p>
+			<p class="important"><?php printf($lang_common['Required warn'], '<em class="req-text">'.$lang_common['Required'].'</em>') ?></p>
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_groups']) ?>">
 			<div class="hidden">
@@ -139,7 +139,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
 							<span class="fld-label"><?php echo $lang_admin['Group title'] ?></span><br />
 							<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_title" size="25" maxlength="50" value="<?php if ($mode == 'edit') echo forum_htmlencode($group['g_title']); ?>" /></span>
-							<em class="req-text"><?php echo $lang_common['Reqmark'] ?></em>
+							<em class="req-text"><?php echo $lang_common['Required'] ?></em>
 						</label>
 					</div>
 					<div class="frm-fld text required">
@@ -209,6 +209,13 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 				<h3><span><?php printf($lang_admin['Group flood head'], $forum_page['part_count']) ?></span></h3>
 				<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
 					<legend class="frm-legend"><span><?php echo $lang_admin['Restrictions'] ?></span></legend>
+					<div class="frm-fld text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
+							<span class="fld-label"><?php echo $lang_admin['Edit interval'] ?></span><br />
+							<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="edit_subjects_interval" size="5" maxlength="5" value="<?php echo $group['g_edit_subjects_interval'] ?>" /></span>
+							<span class="fld-help"><?php echo $lang_admin['Edit interval info'] ?></span>
+						</label>
+					</div>
 					<div class="frm-fld text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
 							<span class="fld-label"><?php echo $lang_admin['Flood interval'] ?></span><br />
@@ -281,6 +288,7 @@ else if (isset($_POST['add_edit_group']))
 	$search = (isset($_POST['search']) && $_POST['search'] == '1') || $is_admin_group ? '1' : '0';
 	$search_users = (isset($_POST['search_users']) && $_POST['search_users'] == '1') || $is_admin_group ? '1' : '0';
 	$send_email = (isset($_POST['send_email']) && $_POST['send_email'] == '1') || $is_admin_group ? '1' : '0';
+	$edit_subjects_interval = isset($_POST['edit_subjects_interval']) ? intval($_POST['edit_subjects_interval']) : '0';
 	$post_flood = isset($_POST['post_flood']) ? intval($_POST['post_flood']) : '0';
 	$search_flood = isset($_POST['search_flood']) ? intval($_POST['search_flood']) : '0';
 	$email_flood = isset($_POST['email_flood']) ? intval($_POST['email_flood']) : '0';
@@ -310,9 +318,9 @@ else if (isset($_POST['add_edit_group']))
 
 		// Insert the new group
 		$query = array(
-			'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
+			'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_edit_subjects_interval, g_post_flood, g_search_flood, g_email_flood',
 			'INTO'		=> 'groups',
-			'VALUES'	=> '\''.$forum_db->escape($title).'\', '.$user_title.', '.$moderator.', '.$mod_edit_users.', '.$mod_rename_users.', '.$mod_change_passwords.', '.$mod_ban_users.', '.$read_board.', '.$view_users.', '.$post_replies.', '.$post_topics.', '.$edit_posts.', '.$delete_posts.', '.$delete_topics.', '.$set_title.', '.$search.', '.$search_users.', '.$send_email.', '.$post_flood.', '.$search_flood.', '.$email_flood
+			'VALUES'	=> '\''.$forum_db->escape($title).'\', '.$user_title.', '.$moderator.', '.$mod_edit_users.', '.$mod_rename_users.', '.$mod_change_passwords.', '.$mod_ban_users.', '.$read_board.', '.$view_users.', '.$post_replies.', '.$post_topics.', '.$edit_posts.', '.$delete_posts.', '.$delete_topics.', '.$set_title.', '.$search.', '.$search_users.', '.$send_email.', '.$edit_subjects_interval.', '.$post_flood.', '.$search_flood.', '.$email_flood
 		);
 
 		($hook = get_hook('agr_qy_add_group')) ? eval($hook) : null;
@@ -368,7 +376,7 @@ else if (isset($_POST['add_edit_group']))
 		// Save changes
 		$query = array(
 			'UPDATE'	=> 'groups',
-			'SET'		=> 'g_title=\''.$forum_db->escape($title).'\', g_user_title='.$user_title.', g_moderator='.$moderator.', g_mod_edit_users='.$mod_edit_users.', g_mod_rename_users='.$mod_rename_users.', g_mod_change_passwords='.$mod_change_passwords.', g_mod_ban_users='.$mod_ban_users.', g_read_board='.$read_board.', g_view_users='.$view_users.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_send_email='.$send_email.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.', g_email_flood='.$email_flood,
+			'SET'		=> 'g_title=\''.$forum_db->escape($title).'\', g_user_title='.$user_title.', g_moderator='.$moderator.', g_mod_edit_users='.$mod_edit_users.', g_mod_rename_users='.$mod_rename_users.', g_mod_change_passwords='.$mod_change_passwords.', g_mod_ban_users='.$mod_ban_users.', g_read_board='.$read_board.', g_view_users='.$view_users.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_send_email='.$send_email.', g_edit_subjects_interval='.$edit_subjects_interval.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.', g_email_flood='.$email_flood,
 			'WHERE'		=> 'g_id='.$group_id
 		);
 

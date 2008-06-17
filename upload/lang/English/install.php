@@ -5,6 +5,9 @@ $lang_install = array(
 
 // Install Form
 'Install PunBB'			=>	'Install PunBB %s',
+'Required'					=>	'(Required)',
+'Install welcome'			=>	'Welcome to PunBB installation. You are about to install PunBB %s.',
+'Install head'				=>	'Complete all three parts of this form to install your forum',
 'Install intro'				=>	'In order to install PunBB you must complete the form set out below. Please read the instructions provided before completing the form. If you encounter any difficulties with the installation, please refer to the documentation supplied as part of PunBB\'s download package.',
 'Part1'						=>	'Part 1 - Database setup',
 'Part1 intro'				=>	'Please enter the requested information in order to setup your database for PunBB. You must know all the information asked for before proceeding with the installation. Help with completing this part of the form is set out below.',
@@ -30,15 +33,21 @@ $lang_install = array(
 'Table prefix help'			=>	'Optional database table prefix e.g. "foo_".',
 'Part2'						=>	'Part 2 - Forum Administrator setup',
 'Part2 legend'				=>	'Administrator\'s details',
-'Part2 intro'				=>	'Please enter the requested information in order to setup an administrator (Admin) for your PunBB installation. You can create more administrators and moderators later.',
-'Admin username'			=>	'Admin\'s username:',
-'Admin password'			=>	'Admin\'s password:',
+'Part2 intro'				=>	'Please enter the requested information in order to setup an administrator for your PunBB installation. You can later create more administrators and moderators.',
+'Username'					=>	'Username:',
+'Password'					=>	'Password:',
+'E-mail address'			=>	'E-mail address:',
+'Admin username'			=>	'Administrator\'s username:',
+'Admin password'			=>	'Administrator\'s password:',
 'Admin confirm password'	=>	'Confirm password:',
-'Admin e-mail'				=>	'Admin\'s e-mail address:',
+'Admin e-mail'				=>	'Administrator\'s e-mail:',
+'Admin username info'		=>	'Enter the username of the forum administrator. Usernames can be between 2 and 25 characters long.',
+'Admin password info'		=>	'Enter then re-enter the forum administrator\'s password. Passwords must be at least 4 characters long and are case sensitive.',
+'Admin e-mail info'			=>	'Enter a current and valid e-mail address for the forum administrator.',
 'Username help'				=>	'Between 2 and 25 characters.',
 'Password help'				=>	'Minimum 4 characters. Case sensitive.',
 'Confirm password help'		=>	'Re-enter exactly as before.',
-'E-mail address help'		=>	'A valid current e-mail address for the forum administrator.',
+'E-mail address help'		=>	'The e-mail address of the forum administrator.',
 'Part3'						=>	'Part 3 - Forum setup',
 'Part3 legend'				=>	'Forum information',
 'Part3 intro'				=>	'Please enter the requested information. Pay particular attention to entering your base URL and read the instructions set out below carefully.',
@@ -50,8 +59,6 @@ $lang_install = array(
 'Base URL info'				=>	'Please pay particular attention when entering your Base URL. You must set the correct Base URL or your forum will not work properly. The Base URL is the URL (without trailing slash) of your PunBB forum (example: <em>http://forum.example.com</em> or <em>http://example.com/~myuser</em>). Please note that the preset value below is just an educated guess by PunBB.',
 'Base URL help'				=>	'The URL (without trailing slash) of your PunBB installation. Please read information above.',
 'Start install'				=>	'Start install', // Label for submit button
-'Reqmark'					=>	'*',
-'Required warn'				=>	'<strong>IMPORTANT! </strong>Fields marked %s must be completed.',
 
 // Install errors
 'No database support'		=>	'This PHP environment does not have support for any of the databases that PunBB supports. PHP needs to have support for either MySQL, PostgreSQL or SQLite in order for PunBB to be installed.',
@@ -84,7 +91,6 @@ $lang_install = array(
 'Default post contents'		=>	'If you are looking at this (which I guess you are), the install of PunBB appears to have worked! Now log in and head over to the administration control panel to configure your forum.',
 'Default rank 1'			=>	'New member',
 'Default rank 2'			=>	'Member',
-
 
 // Installation completed form
 'Success description'		=>	'Congratulations! PunBB %s has been successfully installed.',
