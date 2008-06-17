@@ -820,8 +820,7 @@ else
 			require_once FORUM_ROOT.'include/cache.php';
 			generate_versions_cache( $inst_exts );
 			include FORUM_CACHE_DIR.'cache_version_notifications.php';
-		}
-		require_once FORUM_ROOT.'/lang/'.$forum_user['language'].'/versions_updates.php';
+		}		
 	}
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;
@@ -877,9 +876,9 @@ else
 				{
 					$upd_url = $forum_versions[ $id ][ 'repository_url' ] . $id;
 					
-					$forum_page['ext_actions'][] = '<a href="'.$upd_url.'/'.$id.'.zip">'.$lang_system_updates['Download'].' '.$version.'</a>';
+					$forum_page['ext_actions'][] = '<a href="'.$upd_url.'/'.$id.'.zip">'.$lang_admin['Download'].' '.$version.'</a>';
 					$changes = ( $changes != null )?( '<br>'.$changes ):( '' );
-					$forum_page['ext_actions'][] = '<div class="frm-info"><p class="warn">'.sprintf($lang_system_updates['New version'], $id).$changes.'</p></div>';					
+					$forum_page['ext_actions'][] = '<div class="frm-info"><p class="warn">'.sprintf($lang_admin['New version'], $id).$changes.'</p></div>';					
 				}
 			}
 

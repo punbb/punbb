@@ -702,6 +702,9 @@ $lang_admin = array(
 'Cannot find IP'				=>	'The supplied IP address could not be found in the database.',
 'Not verified'					=>	'Not verified',
 'No match'						=>	'No match',
-'User search results'			=>	'User search results'
+'User search results'			=>	'User search results',
 
+// notificatoins about new versions
+'Download'                 =>  'Download new version ',
+'New version'              =>  'There is a new version of %s available!'
 );
