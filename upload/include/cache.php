@@ -388,14 +388,8 @@ function generate_updates_cache()
 	fclose($fh);
 }
 
-function generate_ext_versions_cache($inst_exts)
+function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension)
 {
-	$repository_urls = array('http://punbb.informer.com/extensions/');
-	$repository_url_by_extension = array();
-
-	foreach(array_keys($inst_exts) as $id)
-		($hook = get_hook('ch_add_repository_for_'.$id)) ? eval($hook) : null;
-
 	// Get version numbers and last changes info for every installed extension
 	$forum_ext_versions = array();
 
@@ -417,8 +411,8 @@ function generate_ext_versions_cache($inst_exts)
 
 		if ($last_version != $ext['version'])
 		{
-			$last_changes = @end(get_remote_file($url.'/'.$id.'/lastchanges.txt', 2));
-			$forum_ext_versions[$id] = array('version' => $last_version, 'repository_url' => $repository_url, 'last_changes' => $last_changes);
+			$last_changes = @end(get_remote_file($url.'/'.$id.'/lastchanges', 2));
+			$forum_ext_versions[$id] = array('lastversion' => $last_version, 'repository_url' => $repository_url, 'lastchanges' => $last_changes);
 		}
 
 	}

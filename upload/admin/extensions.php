@@ -793,6 +793,13 @@ else
 
 	if ($forum_config['o_check_for_versions'] == 1)
 	{
+		$repository_urls = array('http://punbb.informer.com/extensions');
+		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
+
+		$repository_url_by_extension = array();
+		foreach(array_keys($inst_exts) as $id)
+			($hook = get_hook('aex_add_repository_for_'.$id)) ? eval($hook) : null;
+
 		@include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
 
 		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update
@@ -816,7 +823,7 @@ else
 		if ($update_new_versions_cache)
 		{
 			require_once FORUM_ROOT.'include/cache.php';
-			generate_ext_versions_cache( $inst_exts );
+			generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension);
 			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
 		}
 	}
@@ -863,7 +870,7 @@ else
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.$lang_admin['Uninstall'].'</a>'
 			);
 
-			if ($forum_config['o_check_for_versions'] == 1 && isset($forum_ext_versions[$id]) && && version_compare($ext['version'], $forum_ext_versions[$id]['version'], '<'))
+			if ($forum_config['o_check_for_versions'] == 1 && isset($forum_ext_versions[$id]) && version_compare($ext['version'], $forum_ext_versions[$id]['lastversion'], '<'))
 				$forum_page['ext_actions'][] = '<a href="'.$forum_ext_versions[$id]['repository_url'].'/'.$id.'/'.$id.'.zip">'.$lang_admin['Download latest version'].'</a>';
 
 			($hook = get_hook('aex_section_manage_pre_ext_actions')) ? eval($hook) : null;
@@ -871,7 +878,7 @@ else
 ?>
 		<div class="ext-item databox<?php if ($ext['disabled'] == '1') echo ' extdisabled' ?>">
 			<h3 class="legend"><span><?php echo forum_htmlencode($ext['title']).((strpos($id, 'hotfix_') !== 0) ? ' v'.$ext['version'] : '') ?><?php if ($ext['disabled'] == '1') echo ' ( <span>'.$lang_admin['Extension disabled'].'</span> )' ?></span></h3>
-			<?php if (isset($forum_ext_versions[$id])) echo '<div class="frm-info"><p class="warn">'.sprintf($lang_admin['Version available'], $id).(!empty($forum_ext_versions[$id]['last_changes']) ? '<br /><br /><span>'.sprintf($lang_admin['Latest version changes'], $id).'</span><br />'.$forum_ext_versions[$id]['last_changes'] : '').'</p></div>'; ?>
+			<?php if (isset($forum_ext_versions[$id])) echo '<div class="frm-info"><p class="warn"><strong>'.sprintf($lang_admin['Version available'], $forum_ext_versions[$id]['lastversion']).'</strong>'.(!empty($forum_ext_versions[$id]['lastchanges']) ? ' <span>'.sprintf($lang_admin['Latest version changes'], $id).'</span> '.$forum_ext_versions[$id]['lastchanges'] : '').'</p></div>'; ?>
 			<p><span><?php printf($lang_admin['Extension by'], $ext['author']) ?></span><?php if ($ext['description'] != ''): ?><br /><span><?php echo forum_htmlencode($ext['description']) ?></span><?php endif; ?></p>
 			<p class="actions"><?php echo implode('', $forum_page['ext_actions']) ?></p>
 		</div>

@@ -706,6 +706,6 @@ $lang_admin = array(
 
 // notificatoins on new versions of extensions
 'Download latest version'		=>	'Download latest version',
-'Version available'				=>	'Version %s is available!'
-'Latest version changes'		=>	'Latest version changes:'
+'Version available'				=>	'Version %s is available!',
+'Latest version changes'		=>	'Latest changes:'
 );
