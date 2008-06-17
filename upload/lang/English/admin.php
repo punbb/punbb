@@ -704,7 +704,8 @@ $lang_admin = array(
 'No match'						=>	'No match',
 'User search results'			=>	'User search results',
 
-// notificatoins about new versions
-'Download'                 =>  'Download new version ',
-'New version'              =>  'There is a new version of %s available!'
+// notificatoins on new versions of extensions
+'Download latest version'		=>	'Download latest version',
+'Version available'				=>	'Version %s is available!'
+'Latest version changes'		=>	'Latest version changes:'
 );

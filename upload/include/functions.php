@@ -156,13 +156,13 @@ function cookie_login(&$forum_user)
 					'VALUES'	=> $forum_user['id'].', \''.$forum_db->escape($forum_user['username']).'\', '.$forum_user['logged'].', \''.$forum_user['csrf_token'].'\'',
 					'UNIQUE'	=> 'user_id='.$forum_user['id']
 				);
-				
+
 				if ($forum_user['prev_url'] != null)
 				{
 					$query['REPLACE'] .= ', prev_url';
 					$query['VALUES'] .= ', \''.$forum_db->escape($forum_user['prev_url']).'\'';
 				}
-					
+
 				($hook = get_hook('fn_qr_add_online_user')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
@@ -293,7 +293,7 @@ function set_default_user()
 		($hook = get_hook('fn_qr_update_online_guest_user')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
-	
+
 	$forum_user['disp_topics'] = $forum_config['o_disp_topics_default'];
 	$forum_user['disp_posts'] = $forum_config['o_disp_posts_default'];
 	$forum_user['timezone'] = $forum_config['o_default_timezone'];
@@ -2165,7 +2165,7 @@ function get_current_url($max_length = 0)
 
 	if (strlen($url) <= $max_length)
 		return $url;
-	
+
 	// We can't find a short enough url
 	return null;
 }
@@ -2510,7 +2510,7 @@ function redirect($destination_url, $message)
 	}
 
 	ob_end_clean();
-	
+
 	($hook = get_hook('fn_redirect_head')) ? eval($hook) : null;
 
 	$tpl_redir = str_replace('<!-- forum_head -->', implode("\n",$forum_head), $tpl_redir);
@@ -2792,28 +2792,4 @@ function dump()
 
 	echo '</pre>';
 	exit;
-}
-
-function check_need_versions_updates()
-{
-	global $forum_versions, $url_repository, $url_repository_by_extension;
-	
-	//Find max timestamp on servers
-	$timestamp = -100000;
-	for ($url_num = 0; $url_num < count($url_repository); $url_num++)
-	{	
-		$rep_time = get_remote_file( $url_repository[$url_num].'/timestamp', 2);
-		$rep_time = ($rep_time != null) ? ( intval($rep_time['content']) ) : ( time() );
-		$timestamp = max($timestamp, $rep_time);		
-	}
-	
-	if (count( $url_repository_by_extension ) > 0)
-		foreach ($url_repository_by_extension as $key => $value)
-		{
-			$rep_time = get_remote_file( $url_repository_by_extension[ $key ].'/timestamp', 2);
-			$rep_time = ($rep_time != null) ? ( intval($rep_time['content']) ) : ( time() );
-			$timestamp = max($timestamp, $rep_time);		
-		}	
-	//Check need for updates every hour
-	return ( ($timestamp - $forum_versions['_cached_']) >= 3600 );
 }

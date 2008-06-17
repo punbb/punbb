@@ -792,35 +792,33 @@ else
 	);
 
 	if ($forum_config['o_check_for_versions'] == 1)
-	{	
-		$url_repository = array();
-		$url_repository[] = 'http://'.$_SERVER['HTTP_HOST'].'/repository/';
-		$url_repository_by_extension = array();
-		
-		$keys = array_keys($inst_exts);
-		for ($ext_num = 0; $ext_num < count($keys); $ext_num++)
+	{
+		@include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
+
+		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update
+		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (array_keys($inst_exts) != array_keys($forum_ext_versions)) || (time() - $forum_ext_versions_timestamp > 60*60*24);
+
+		if (!$update_new_versions_cache && (time() - $forum_ext_versions_timestamp > 60*60))
 		{
-			$h = 'aex_'.$keys[$ext_num].'_add_ext_repository';
-			$hook = get_hook($h);
-			
-			if ($hook !== FALSE)
+			// Check repository timestamps every hour
+
+			foreach (array_merge($repository_urls, isset($repository_url_by_extension[$id]) ? array($repository_url_by_extension[$id]) : array()) as $url)
 			{
-				$e_info = substr($hook, 0, stripos($hook, "\n\n"));				
-				eval($e_info);
-				if ($ext_info['id'] == $keys[$ext_num])
-					eval($hook);				
+				$repository_timestamp = @end(get_remote_file( $url.'/timestamp', 2));
+				if ($forum_ext_versions_timestamp < $repository_timestamp)
+				{
+					$update_new_versions_cache = true;
+					break;
+				}
 			}
 		}
-	  
-		@include FORUM_CACHE_DIR.'cache_version_notifications.php';	
-	
-		//If it first start or cache is out of date or some extension was install/uninstall 
-		if ( !isset($forum_versions) || check_need_versions_updates() || (count($inst_exts) != $forum_versions['_user_ext_count_']))
+
+		if ($update_new_versions_cache)
 		{
 			require_once FORUM_ROOT.'include/cache.php';
-			generate_versions_cache( $inst_exts );
-			include FORUM_CACHE_DIR.'cache_version_notifications.php';
-		}		
+			generate_ext_versions_cache( $inst_exts );
+			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
+		}
 	}
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;
@@ -865,28 +863,15 @@ else
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.$lang_admin['Uninstall'].'</a>'
 			);
 
-			if ($forum_config['o_check_for_versions'] == 1)
-			{
-				$version = ( isset($forum_versions[ $id ]) )?( $forum_versions[ $id ][ 'version' ] ):( null );
-				$changes = ( isset($forum_versions[ $id ]) )?( $forum_versions[ $id ][ 'last_changes' ] ):( null );
-		
-				$need_update = ( $version == null )?( false ):( version_compare($ext['version'], $version, '<') );	
-			
-				if ($need_update)
-				{
-					$upd_url = $forum_versions[ $id ][ 'repository_url' ] . $id;
-					
-					$forum_page['ext_actions'][] = '<a href="'.$upd_url.'/'.$id.'.zip">'.$lang_admin['Download'].' '.$version.'</a>';
-					$changes = ( $changes != null )?( '<br>'.$changes ):( '' );
-					$forum_page['ext_actions'][] = '<div class="frm-info"><p class="warn">'.sprintf($lang_admin['New version'], $id).$changes.'</p></div>';					
-				}
-			}
+			if ($forum_config['o_check_for_versions'] == 1 && isset($forum_ext_versions[$id]) && && version_compare($ext['version'], $forum_ext_versions[$id]['version'], '<'))
+				$forum_page['ext_actions'][] = '<a href="'.$forum_ext_versions[$id]['repository_url'].'/'.$id.'/'.$id.'.zip">'.$lang_admin['Download latest version'].'</a>';
 
 			($hook = get_hook('aex_section_manage_pre_ext_actions')) ? eval($hook) : null;
 
 ?>
 		<div class="ext-item databox<?php if ($ext['disabled'] == '1') echo ' extdisabled' ?>">
 			<h3 class="legend"><span><?php echo forum_htmlencode($ext['title']).((strpos($id, 'hotfix_') !== 0) ? ' v'.$ext['version'] : '') ?><?php if ($ext['disabled'] == '1') echo ' ( <span>'.$lang_admin['Extension disabled'].'</span> )' ?></span></h3>
+			<?php if (isset($forum_ext_versions[$id])) echo '<div class="frm-info"><p class="warn">'.sprintf($lang_admin['Version available'], $id).(!empty($forum_ext_versions[$id]['last_changes']) ? '<br /><br /><span>'.sprintf($lang_admin['Latest version changes'], $id).'</span><br />'.$forum_ext_versions[$id]['last_changes'] : '').'</p></div>'; ?>
 			<p><span><?php printf($lang_admin['Extension by'], $ext['author']) ?></span><?php if ($ext['description'] != ''): ?><br /><span><?php echo forum_htmlencode($ext['description']) ?></span><?php endif; ?></p>
 			<p class="actions"><?php echo implode('', $forum_page['ext_actions']) ?></p>
 		</div>
