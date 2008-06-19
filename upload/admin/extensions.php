@@ -812,7 +812,7 @@ else
 			foreach (array_merge($repository_urls, isset($repository_url_by_extension[$id]) ? array($repository_url_by_extension[$id]) : array()) as $url)
 			{
 				$repository_timestamp = @end(get_remote_file( $url.'/timestamp', 2));
-				if ($forum_ext_versions_timestamp < $repository_timestamp)
+				if (is_numeric($repository_timestamp) && $forum_ext_versions_timestamp < $repository_timestamp)
 				{
 					$update_new_versions_cache = true;
 					break;
@@ -878,7 +878,7 @@ else
 ?>
 		<div class="ext-item databox<?php if ($ext['disabled'] == '1') echo ' extdisabled' ?>">
 			<h3 class="legend"><span><?php echo forum_htmlencode($ext['title']).((strpos($id, 'hotfix_') !== 0) ? ' v'.$ext['version'] : '') ?><?php if ($ext['disabled'] == '1') echo ' ( <span>'.$lang_admin['Extension disabled'].'</span> )' ?></span></h3>
-			<?php if (version_compare($ext['version'], $forum_ext_versions[$id]['lastversion'], '<')) echo '<div class="frm-info"><p class="warn"><strong>'.sprintf($lang_admin['Version available'], $forum_ext_versions[$id]['lastversion']).'</strong>'.(!empty($forum_ext_versions[$id]['lastchanges']) ? ' <span>'.sprintf($lang_admin['Latest version changes'], $id).'</span> '.$forum_ext_versions[$id]['lastchanges'] : '').'</p></div>'; ?>
+			<?php if (version_compare($ext['version'], $forum_ext_versions[$id]['lastversion'], '<')) echo '<div class="frm-info"><p class="warn"><strong>'.sprintf($lang_admin['Version available'], $forum_ext_versions[$id]['lastversion']).'</strong>'.(!empty($forum_ext_versions[$id]['lastchanges']) ? ' <span>'.sprintf($lang_admin['Latest version changes'], $id).'</span> '.forum_htmlencode($forum_ext_versions[$id]['lastchanges']) : '').'</p></div>'; ?>
 			<p><span><?php printf($lang_admin['Extension by'], $ext['author']) ?></span><?php if ($ext['description'] != ''): ?><br /><span><?php echo forum_htmlencode($ext['description']) ?></span><?php endif; ?></p>
 			<p class="actions"><?php echo implode('', $forum_page['ext_actions']) ?></p>
 		</div>

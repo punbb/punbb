@@ -402,7 +402,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 		{
 			$version = @end(get_remote_file($url.'/'.$id.'/lastversion', 2));
 
-			if (!empty($version) && version_compare($last_version, $version, '<'))
+			if (!empty($version) && preg_match('~^[0-9a-zA-Z\. +-]+$~u', $version) && version_compare($last_version, $version, '<'))
 			{
 				$last_version = $version;
 				$repository_url = $url;
