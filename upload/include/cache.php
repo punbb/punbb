@@ -414,6 +414,8 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 			$last_changes = @end(get_remote_file($url.'/'.$id.'/lastchanges', 2));
 			$forum_ext_versions[$id] = array('lastversion' => $last_version, 'repository_url' => $repository_url, 'lastchanges' => $last_changes);
 		}
+		else
+			$forum_ext_versions[$id] = array('lastversion' => $ext['version']);
 
 	}
 
