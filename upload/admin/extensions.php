@@ -878,7 +878,7 @@ else
 ?>
 		<div class="ext-item databox<?php if ($ext['disabled'] == '1') echo ' extdisabled' ?>">
 			<h3 class="legend"><span><?php echo forum_htmlencode($ext['title']).((strpos($id, 'hotfix_') !== 0) ? ' v'.$ext['version'] : '') ?><?php if ($ext['disabled'] == '1') echo ' ( <span>'.$lang_admin['Extension disabled'].'</span> )' ?></span></h3>
-			<?php if (isset($forum_ext_versions[$id])) echo '<div class="frm-info"><p class="warn"><strong>'.sprintf($lang_admin['Version available'], $forum_ext_versions[$id]['lastversion']).'</strong>'.(!empty($forum_ext_versions[$id]['lastchanges']) ? ' <span>'.sprintf($lang_admin['Latest version changes'], $id).'</span> '.$forum_ext_versions[$id]['lastchanges'] : '').'</p></div>'; ?>
+			<?php if (version_compare($ext['version'], $forum_ext_versions[$id]['lastversion'], '<')) echo '<div class="frm-info"><p class="warn"><strong>'.sprintf($lang_admin['Version available'], $forum_ext_versions[$id]['lastversion']).'</strong>'.(!empty($forum_ext_versions[$id]['lastchanges']) ? ' <span>'.sprintf($lang_admin['Latest version changes'], $id).'</span> '.$forum_ext_versions[$id]['lastchanges'] : '').'</p></div>'; ?>
 			<p><span><?php printf($lang_admin['Extension by'], $ext['author']) ?></span><?php if ($ext['description'] != ''): ?><br /><span><?php echo forum_htmlencode($ext['description']) ?></span><?php endif; ?></p>
 			<p class="actions"><?php echo implode('', $forum_page['ext_actions']) ?></p>
 		</div>
