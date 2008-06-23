@@ -808,8 +808,8 @@ else
 		if (!$update_new_versions_cache && (time() - $forum_ext_versions_timestamp > 60*60))
 		{
 			// Check repository timestamps every hour
-
-			foreach (array_merge($repository_urls, isset($repository_url_by_extension[$id]) ? array($repository_url_by_extension[$id]) : array()) as $url)
+                                              
+			foreach ( array_unique( array_merge($repository_urls, isset($repository_url_by_extension) ? array($repository_url_by_extension) : array()) ) as $url)
 			{
 				$repository_timestamp = @end(get_remote_file( $url.'/timestamp', 2));
 				if (is_numeric($repository_timestamp) && $forum_ext_versions_timestamp < $repository_timestamp)
