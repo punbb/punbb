@@ -50,6 +50,7 @@ $lang_profile = array(
 'Too wide or high'			=>	'The file you tried to upload is wider and/or higher than the maximum allowed %sx%s pixels.',
 'Unknown failure'			=>	'An unknown error occurred. Please try again.',
 'Avatar'					=>	'Avatar',
+'Avatar info change'		=>	'To change your avatar upload a new one and it will automatically replace the old one.',
 'Avatar info none'			=>	'You do not currently have an avatar. To display an avatar with your posts you first need to upload one.',
 'Avatar info remove'		=>	'if you no longer wish to display an avatar',
 'Avatar info type'			=>	'The allowed image file types are gif, jpeg and png.',
