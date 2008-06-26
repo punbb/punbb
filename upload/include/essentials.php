@@ -1,9 +1,9 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2008  PunBB.org
+  Copyright (C) 2002-2008  PunBB
 
-  Based on code copyright (C) 2002-2008  PunBB.org
+  Partially based on code copyright (C) 2008  FluxBB.org
 
   This file is part of PunBB.
 
