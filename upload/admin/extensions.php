@@ -69,7 +69,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	if (!empty($errors))
 		message(isset($_GET['install']) ? $lang_common['Bad request'] : $lang_admin['Hotfix download failed']);
-
+    
 	// Make sure we have an array of dependencies
 	if (!isset($ext_data['extension']['dependencies']))
 		$ext_data['extension']['dependencies'] = array();
@@ -786,14 +786,14 @@ else
 {
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array($forum_config['o_board_title'], forum_link($forum_url['index'])),                                                                     
 		array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
 		$lang_admin['Manage extensions']
 	);
 
 	if ($forum_config['o_check_for_versions'] == 1)
 	{        
-		$repository_urls = array('http://punbb.informer.com/extensions', 'http://localhost/pun_13_last/upload/repos/extensions');
+		$repository_urls = array('http://punbb.informer.com/extensions');
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
 
 		$repository_url_by_extension = array();
@@ -814,6 +814,8 @@ else
         
         // Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update    
 		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_keys($inst_exts) != array_keys($forum_ext_last_versions)) || $update_hour  || ( $update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));                 
+        
+        ($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;     
         
         if ($update_new_versions_cache)
         {

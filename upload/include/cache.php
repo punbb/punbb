@@ -428,6 +428,8 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
         }
     }
     
+    ($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
+    
     // Output config as PHP code
     $fh = @fopen(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', 'wb');
 
