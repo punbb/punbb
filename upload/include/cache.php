@@ -427,7 +427,12 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
             $forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
         }
     }
-    
+   
+    if (array_keys($forum_ext_last_versions) != array_keys($inst_exts))
+        foreach ($inst_exts as $ext)
+            if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
+                $forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
+     
     ($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
     
     // Output config as PHP code
