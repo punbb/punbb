@@ -769,6 +769,8 @@ if ($section == 'install')
 
 	}
 
+	($hook = get_hook('aex_section_install_post_display_ext_list')) ? eval($hook) : null;
+
 ?>
 	</div>
 
