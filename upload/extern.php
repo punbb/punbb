@@ -249,18 +249,16 @@ function output_html($feed)
 if (!isset($_GET['action']) || $_GET['action'] == 'feed')
 {
 	// Determine what type of feed to output
-	$type = 'html';
-	if (isset($_GET['type']) && is_scalar($_GET['type']))
-	{
-		if (strtolower($_GET['type']) == 'rss')
-			$type = 'rss';
-		else if (strtolower($_GET['type']) == 'atom')
-			$type = 'atom';
-		else if (strtolower($_GET['type']) == 'xml')
-			$type = 'xml';
-	}
-
-	$forum_sql = '';
+    $feed_types = array('rss', 'atom', 'xml', 'html');
+    
+    ($hook = get_hook('ex_new_feed_type')) ? eval($hook) : null;    
+    
+    if (isset($_GET['type']) && is_scalar($_GET['type']) && in_array($_GET['type'], $feed_types))
+        $type = $_GET['type'];    
+    else
+        $type = 'html';
+	
+    $forum_sql = '';
 
 	// Was a topic ID supplied?
 	if (isset($_GET['tid']))
