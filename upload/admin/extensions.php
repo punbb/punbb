@@ -797,34 +797,34 @@ else
 	{        
 		$repository_urls = array('http://punbb.informer.com/extensions');
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
-
+		
 		$repository_url_by_extension = array();
 		foreach(array_keys($inst_exts) as $id)
 			($hook = get_hook('aex_add_repository_for_'.$id)) ? eval($hook) : null;
         
 		@include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
         
-        //Get latest timestamp in cache
-        if ( isset($forum_ext_repos) )
-        {
-            $min_timestamp = 10000000000;            
-            foreach ( $forum_ext_repos as $rep)
-                $min_timestamp = min($min_timestamp, $rep['timestamp']);                                        
-        }       
+		//Get latest timestamp in cache
+		if ( isset($forum_ext_repos) )
+		{
+			$min_timestamp = 10000000000;            
+			foreach ( $forum_ext_repos as $rep)
+				$min_timestamp = min($min_timestamp, $rep['timestamp']);                                        
+		}       
         
 		$update_hour = (isset($forum_ext_versions_update_cache) && (time() - $forum_ext_versions_update_cache > 60 * 60));        
         
-        // Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update    
+		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update    
 		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_diff($inst_exts, $forum_ext_last_versions) != array()) || $update_hour  || ( $update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));                 
         
-        ($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;     
+		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;     
         
-        if ($update_new_versions_cache)
-        {
-            require_once FORUM_ROOT.'include/cache.php';
-            generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension);
-            include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
-        }       
+		if ($update_new_versions_cache)
+		{
+			require_once FORUM_ROOT.'include/cache.php';
+			generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension);
+			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
+		}       
 	}
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;
