@@ -603,6 +603,14 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 		// Delete the user
 		$db->query('DELETE FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to delete user', __FILE__, __LINE__, $db->error());
 
+		// Delete user avatar
+		if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.gif'))
+			@unlink($pun_config['o_avatars_dir'].'/'.$id.'.gif');
+		if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.jpg'))
+			@unlink($pun_config['o_avatars_dir'].'/'.$id.'.jpg');
+		if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.png'))
+			@unlink($pun_config['o_avatars_dir'].'/'.$id.'.png');
+
 		redirect('index.php', $lang_profile['User delete redirect']);
 	}
 
