@@ -1,7 +1,7 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
 
   This file is part of PunBB.
 
@@ -176,7 +176,7 @@ generate_admin_menu('index');
 					<dt>PunBB version</dt>
 					<dd>
 						PunBB <?php echo $pun_config['o_cur_version'] ?> - <a href="admin_index.php?action=check_upgrade">Check for upgrade</a><br />
-						&copy; Copyright 2002, 2003, 2004, 2005 Rickard Andersson
+						&copy; Copyright 2002-2008 PunBB
 					</dd>
 					<dt>Server load</dt>
 					<dd>
