@@ -2142,8 +2142,6 @@ function get_remote_address()
 //
 function get_current_url($max_length = 0)
 {
-	global $base_url;
-
 	$return = ($hook = get_hook('fn_get_current_url_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
