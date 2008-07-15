@@ -360,6 +360,7 @@ switch ($stage)
 	// Show form
 	case '':
 		$db_seems_utf8 = db_seems_utf8();
+		$current_url = get_current_url();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -421,7 +422,7 @@ if ($db_seems_utf8 && !isset($_GET['force']))
 {
 
 ?>
-				<li class="important"><span><strong>IMPORTANT!</strong> Based on a random selection of 100 posts, topic subjects, usernames and forum names from the database, it appears as if text in the database is currently UTF-8 encoded. This is a good thing. Based on this, the update process will not attempt to do charset conversion. If you have reason to believe that the charset conversion is required nonetheless, you can <a href="<?php echo $_SERVER['PHP_SELF'] ?>?force=1">force the conversion to run</a>.</span></li>
+				<li class="important"><span><strong>IMPORTANT!</strong> Based on a random selection of 100 posts, topic subjects, usernames and forum names from the database, it appears as if text in the database is currently UTF-8 encoded. This is a good thing. Based on this, the update process will not attempt to do charset conversion. If you have reason to believe that the charset conversion is required nonetheless, you can <a href="<?php echo $current_url.(strpos($current_url, '?') === false ? '?' : '&amp;').'force=1' ?>">force the conversion to run</a>.</span></li>
 <?php
 
 }
@@ -432,7 +433,7 @@ if ($db_seems_utf8 && !isset($_GET['force']))
 		<div id="req-msg" class="frm-warn">
 			<p class="important"><strong>Important!</strong> All fields marked <em class="req-text">(Required)</em> must be completed before submitting this form.</p>
 		</div>
-		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo $current_url ?>">
 			<div class="hidden">
 				<input type="hidden" name="stage" value="start" />
 			</div>
