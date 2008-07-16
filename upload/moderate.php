@@ -273,6 +273,7 @@ if (isset($_GET['tid']))
 
 </div>
 <?php
+		($hook = get_hook('mr_post_actions_pre_mod_options')) ? eval($hook) : null;
 
 		$forum_id = $fid;
 
