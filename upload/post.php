@@ -371,24 +371,24 @@ if (isset($_POST['preview']) && empty($errors))
 	</div>
 
 <div id="post-preview" class="main-content topic">
-		<div class="post firstpost">
-			<div class="postmain">
-				<div class="posthead">
-					<h3><?php echo $lang_post['Preview info'] ?></h3>
-	</div>
-		<div class="postbody">
-			<div class="user">
-						<h4 class="user-ident"><strong class="username"><?php echo $forum_user['username'] ?></strong></h4>
+	<div class="post firstpost">
+		<div class="postmain">
+			<div class="posthead">
+				<h3><?php echo $lang_post['Preview info'] ?></h3>
 			</div>
-			<div class="post-entry">
-				<div class="entry-content">
-				<?php echo $forum_page['preview_message']."\n" ?>
+			<div class="postbody">
+				<div class="user">
+					<h4 class="user-ident"><strong class="username"><?php echo $forum_user['username'] ?></strong></h4>
+				</div>
+				<div class="post-entry">
+					<div class="entry-content">
+						<?php echo $forum_page['preview_message']."\n" ?>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-	</div>
 <?php
 
 }
