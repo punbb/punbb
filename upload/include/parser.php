@@ -69,7 +69,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	$replace = array('preparse_list_tag(\'$1\', \'*\', $errors)',
 					 'preparse_list_tag(\'$2\', \'$1\', $errors)');
 
-	$text = preg_replace($pattern, $replace, $text);		
+	$text = preg_replace($pattern, $replace, $text);
 
 	if ($forum_config['o_make_links'] == '1')
 		$text = do_clickable($text);
@@ -224,7 +224,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		}
 		else
 			$current = strtolower($current);
-			
+
 		if (!in_array($current_tag, $limit_bbcode) && $current_tag != $open_tags[$opened_tag])
 		{
 			$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
@@ -236,12 +236,12 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			// We are currently too deeply nested so lets see if we are closing the tag or not.
 			if ($current_tag != $current_nest)
 				continue;
-				
+
 			if (substr($current, 1, 1) == '/')
 				$current_depth[$current_nest]--;
 			else
 				$current_depth[$current_nest]++;
-			
+
 			if ($current_depth[$current_nest] <= $tags_nested[$current_nest])
 				$current_nest = '';
 
@@ -333,7 +333,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				if (isset($current_depth[$current_tag]))
 					$current_depth[$current_tag]--;
 			}
-			
+
 			if (in_array($open_tags[$opened_tag], array_keys($tags_limit_bbcode)))
 				$limit_bbcode = $tags_limit_bbcode[$open_tags[$opened_tag]];
 			else
@@ -377,7 +377,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 					$current_depth[$current_tag]++;
 				else
 					$current_depth[$current_tag] = 1;
-					
+
 				if ($current_depth[$current_tag] > $tags_nested[$current_tag])
 				{
 					$current_nest = $current_tag;
@@ -389,7 +389,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			{
 				$current = preg_replace('#\['.$current_tag.'=("|\'|)(.*?)\\1\]\s*#i', '['.$current_tag.'=$2]', $current);
 			}
-			
+
 			if (in_array($current_tag, array_keys($tags_limit_bbcode)))
 				$limit_bbcode = $tags_limit_bbcode[$current_tag];
 
@@ -617,12 +617,12 @@ function do_bbcode($text, $is_signature = false)
 			$replace[] = 'handle_img_tag(\'$2$4\', false, \'$1\')';
 		}
 	}
-	
+
 	$pattern[] = '#\[url\]([^\[]*?)\[/url\]#e';
 	$pattern[] = '#\[url=([^\[]+?)\](.*?)\[/url\]#e';
 	$pattern[] = '#\[email\]([^\[]*?)\[/email\]#';
 	$pattern[] = '#\[email=([^\[]+?)\](.*?)\[/email\]#';
-	
+
 	$replace[] = 'handle_url_tag(\'$1\')';
 	$replace[] = 'handle_url_tag(\'$1\', \'$2\')';
 	$replace[] = '<a href="mailto:$1">$1</a>';
@@ -665,7 +665,7 @@ function do_smilies($text)
 	global $forum_config, $base_url, $smilies;
 
 	$text = ' '.$text.' ';
-	
+
 	foreach ($smilies as $smiley_text => $smiley_img)
 	{
 		if (strpos($text, $smiley_text) !== false)
@@ -714,7 +714,7 @@ function parse_message($text, $hide_smilies, $is_signature = false)
 
 	if ($forum_config['p_message_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 		$text = do_bbcode($text, $is_signature);
-		
+
 	if ($forum_config['o_smilies'] == '1' && $forum_user['show_smilies'] == '1' && $hide_smilies == '0')
 		$text = do_smilies($text);
 
@@ -777,7 +777,7 @@ function parse_signature($text)
 	$return = ($hook = get_hook('ps_parse_signature_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
-	
+
 	return parse_message($text, false, true);
 }
 
