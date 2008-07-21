@@ -42,7 +42,7 @@ $smilies = array(':)' => 'smile.png', '=)' => 'smile.png', ':|' => 'neutral.png'
 function preparse_bbcode($text, &$errors, $is_signature = false)
 {
 	global $forum_config;
-
+	
 	$return = ($hook = get_hook('ps_preparse_bbcode_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -680,7 +680,7 @@ function do_bbcode($text, $is_signature = false)
 
 	$replace[] = '<strong>$1</strong>';
 	$replace[] = '<em>$1</em>';
-	$replace[] = '<em class="bbuline">$1</em>'
+	$replace[] = '<em class="bbuline">$1</em>';
 	$replace[] = '<span style="color: $1">$2</span>';
 
 	if (($is_signature && $forum_config['p_sig_img_tag'] == '1') || (!$is_signature && $forum_config['p_message_img_tag'] == '1'))
