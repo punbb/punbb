@@ -49,7 +49,7 @@ $lang_admin = array(
 // Start-Information
 'Information head'				=>	'Welcome to PunBB administration control panel',
 'PunBB version'				=>	'PunBB version',
-'Check for updates enabled'		=>	'This board is setup to automatically check for updates and hotfixes against the PunBB.org updates service.',
+'Check for updates enabled'		=>	'This board is setup to automatically check for updates and hotfixes against the PunBB updates service.',
 'Check for updates manual'		=>	'Check for updates',	// Link text
 'Server load'					=>	'Server load',
 'Not available'					=>	'Not available',
