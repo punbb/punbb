@@ -61,7 +61,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	if (isset($_GET['install']))
 		$manifest = @file_get_contents(FORUM_ROOT.'extensions/'.$id.'/manifest.xml');
 	else
-		$manifest = @end(get_remote_file('http://punbb.informer.com/update/manifest/'.$id.'.xml', 16));
+		$manifest = @trim(end(get_remote_file('http://punbb.informer.com/update/manifest/'.$id.'.xml', 16)));
 
 	// Parse manifest.xml into an array and validate it
 	$ext_data = xml_to_array($manifest);
@@ -69,7 +69,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	if (!empty($errors))
 		message(isset($_GET['install']) ? $lang_common['Bad request'] : $lang_admin['Hotfix download failed']);
-    
+
 	// Make sure we have an array of dependencies
 	if (!isset($ext_data['extension']['dependencies']))
 		$ext_data['extension']['dependencies'] = array();
@@ -789,43 +789,43 @@ else
 {
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),                                                                     
+		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
 		$lang_admin['Manage extensions']
 	);
 
 	if ($forum_config['o_check_for_versions'] == 1)
-	{        
+	{
 		$repository_urls = array('http://punbb.informer.com/extensions');
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
 		
 		$repository_url_by_extension = array();
 		foreach(array_keys($inst_exts) as $id)
 			($hook = get_hook('aex_add_repository_for_'.$id)) ? eval($hook) : null;
-        
+
 		@include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
-        
+
 		//Get latest timestamp in cache
 		if ( isset($forum_ext_repos) )
 		{
-			$min_timestamp = 10000000000;            
+			$min_timestamp = 10000000000;
 			foreach ( $forum_ext_repos as $rep)
-				$min_timestamp = min($min_timestamp, $rep['timestamp']);                                        
-		}       
-        
-		$update_hour = (isset($forum_ext_versions_update_cache) && (time() - $forum_ext_versions_update_cache > 60 * 60));        
-        
-		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update    
-		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_diff($inst_exts, $forum_ext_last_versions) != array()) || $update_hour  || ( $update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));                 
-        
-		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;     
-        
+				$min_timestamp = min($min_timestamp, $rep['timestamp']);
+		}
+
+		$update_hour = (isset($forum_ext_versions_update_cache) && (time() - $forum_ext_versions_update_cache > 60 * 60));
+
+		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update
+		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_diff($inst_exts, $forum_ext_last_versions) != array()) || $update_hour  || ( $update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));
+
+		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;
+
 		if ($update_new_versions_cache)
 		{
 			require_once FORUM_ROOT.'include/cache.php';
 			generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension);
 			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
-		}       
+		}
 	}
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;
@@ -865,13 +865,13 @@ else
 
 		while (list($id, $ext) = @each($inst_exts))
 		{
-            $forum_page['ext_actions'] = array(
+			$forum_page['ext_actions'] = array(
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ? $lang_admin['Disable'] : $lang_admin['Enable']).'</a>',
 				'<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.$lang_admin['Uninstall'].'</a>'
 			);
 
 			if ($forum_config['o_check_for_versions'] == 1 && isset($forum_ext_last_versions[$id]) && version_compare($ext['version'], $forum_ext_last_versions[$id]['version'], '<'))
-            	$forum_page['ext_actions'][] = '<a href="'.$forum_ext_last_versions[$id]['repo_url'].'/'.$id.'/'.$id.'.zip">'.$lang_admin['Download latest version'].'</a>';            
+				$forum_page['ext_actions'][] = '<a href="'.$forum_ext_last_versions[$id]['repo_url'].'/'.$id.'/'.$id.'.zip">'.$lang_admin['Download latest version'].'</a>';
 
 			($hook = get_hook('aex_section_manage_pre_ext_actions')) ? eval($hook) : null;
 

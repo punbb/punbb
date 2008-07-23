@@ -2219,7 +2219,7 @@ function array_insert(&$input, $offset, $element, $key = null)
 //
 // Attempts to fetch the provided URL using any available means
 //
-function get_remote_file($url, $timeout, $head_only = false)
+function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10)
 {
 	$result = null;
 	$parsed_url = parse_url($url);
@@ -2241,6 +2241,8 @@ function get_remote_file($url, $timeout, $head_only = false)
 		curl_setopt($ch, CURLOPT_NOBODY, $head_only);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'PunBB');
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_MAXREDIRS, $max_redirects);
 
 		// Grab the page
 		$content = @curl_exec($ch);
@@ -2249,14 +2251,16 @@ function get_remote_file($url, $timeout, $head_only = false)
 		if ($content !== false && curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200')
 		{
 			if ($head_only)
-				$result['headers'] = explode("\r\n", trim($content));
+				$result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", trim($content)));
 			else
 			{
-				$content_start = strpos($content, "\r\n\r\n");
+				preg_match('#HTTP/1.[01] 200 OK#', $content, $match, PREG_OFFSET_CAPTURE);
+				$last_content = substr($content, $match[0][1]);
+				$content_start = strpos($last_content, "\r\n\r\n");
 				if ($content_start !== false)
 				{
-					$result['headers'] = explode("\r\n", substr($content, 0, $content_start));
-					$result['content'] = trim(substr($content, $content_start));
+					$result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", substr($content, 0, $match[0][1] + $content_start)));
+					$result['content'] = substr($last_content, $content_start + 4);
 				}
 			}
 		}
@@ -2270,7 +2274,6 @@ function get_remote_file($url, $timeout, $head_only = false)
 		if ($remote)
 		{
 			// Send a standard HTTP 1.0 request for the page
-			$method = $head_only ? 'HEAD' : 'GET';
 			fwrite($remote, ($head_only ? 'HEAD' : 'GET').' '.(!empty($parsed_url['path']) ? $parsed_url['path'] : '/').(!empty($parsed_url['query']) ? '?'.$parsed_url['query'] : '').' HTTP/1.0'."\r\n");
 			fwrite($remote, 'Host: '.$parsed_url['host']."\r\n");
 			fwrite($remote, 'User-Agent: PunBB'."\r\n");
@@ -2289,7 +2292,21 @@ function get_remote_file($url, $timeout, $head_only = false)
 
 			fclose($remote);
 
-			// Ignore everything except a 200 response code (we don't support redirects)
+			// Process 301/302 redirect
+			if ($content !== false && preg_match('#^HTTP/1.[01] 30[12]#', $content))
+			{
+				$headers = explode("\r\n", trim($content));
+				foreach($headers as $header)
+					if (substr($header, 0, 10) == 'Location: ' && $max_redirects > 0)
+					{
+						$responce = get_remote_file(substr($header, 10), $timeout, $head_only, $max_redirects - 1);
+						if ($responce !== null)
+							$responce['headers'] = array_merge($headers, $responce['headers']);
+						return $responce;
+					}
+			}
+
+			// Ignore everything except a 200 response code
 			if ($content !== false && preg_match('#^HTTP/1.[01] 200 OK#', $content))
 			{
 				if ($head_only)
@@ -2300,7 +2317,7 @@ function get_remote_file($url, $timeout, $head_only = false)
 					if ($content_start !== false)
 					{
 						$result['headers'] = explode("\r\n", substr($content, 0, $content_start));
-						$result['content'] = trim(substr($content, $content_start));
+						$result['content'] = substr($content, $content_start + 4);
 					}
 				}
 			}
@@ -2318,7 +2335,7 @@ function get_remote_file($url, $timeout, $head_only = false)
 					'http' => array(
 						'method'		=> $head_only ? 'HEAD' : 'GET',
 						'user_agent'	=> 'PunBB',
-						'max_redirects'	=> 3,		// PHP >=5.1.0 only
+						'max_redirects'	=> $max_redirects,		// PHP >=5.1.0 only
 						'timeout'		=> $timeout	// PHP >=5.2.1 only
 					)
 				)
@@ -2335,7 +2352,7 @@ function get_remote_file($url, $timeout, $head_only = false)
 			// Gotta love the fact that $http_response_header just appears in the global scope (*cough* hack! *cough*)
 			$result['headers'] = $http_response_header;
 			if (!$head_only)
-				$result['content'] = trim($content);
+				$result['content'] = $content;
 		}
 	}
 

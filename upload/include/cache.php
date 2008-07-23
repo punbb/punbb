@@ -367,7 +367,7 @@ function generate_updates_cache()
 	{
 		require FORUM_ROOT.'/include/xml.php';
 
-		$output = xml_to_array($result['content']);
+		$output = xml_to_array(trim($result['content']));
 		$output = current($output);
 		$output['cached'] = time();
 		$output['fail'] = false;
@@ -390,58 +390,58 @@ function generate_updates_cache()
 
 function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension)
 {
-    $forum_ext_last_versions = array();
-    $forum_ext_repos = array();    
-    
-    foreach ( array_unique( array_merge($repository_urls, $repository_url_by_extension) ) as $url)
-    {
-        //Get repository timestamp        
-        $repository_timestamp = @end(get_remote_file( $url.'/timestamp', 2));        
-        if (!is_numeric($repository_timestamp))
-            continue;            
-            
-        if (!isset( $forum_ext_repos[ $url ][ 'timestamp' ] ))
-            $forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;           
-                                                                
-        if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp) 
-        {
-            foreach ($inst_exts as $ext)
-            {                   
-                $version = @end(get_remote_file($url.'/'.$ext['id'].'/lastversion', 2));
-                if (empty($version) || !preg_match('~^[0-9a-zA-Z\. +-]+$~u', $version))
-                    continue;
-                      
-                $forum_ext_repos[ $url ][ 'extension_versions' ][ $ext['id'] ] = $version;
-                
-                //If key with current extension exist in array, compare it with version in rep-ry          
-                if (!isset($forum_ext_last_versions[ $ext['id'] ]) || ( version_compare($forum_ext_last_versions[ $ext['id'] ][ 'version' ], $version, '<') ) )                 
-                {
-                    $forum_ext_last_versions[ $ext['id'] ] = array('version' => $version, 'repo_url' => $url);                    
-                    
-                    $last_changes = @end(get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2));
-                    if ( !empty($last_changes) )                    
-                        $forum_ext_last_versions[ $ext['id'] ][ 'changes' ] = $last_changes;
-                }              
-            }                  
-            //Write timestamp to cache
-            $forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
-        }
-    }
+	$forum_ext_last_versions = array();
+	$forum_ext_repos = array();	
+	
+	foreach ( array_unique( array_merge($repository_urls, $repository_url_by_extension) ) as $url)
+	{
+		//Get repository timestamp
+		$repository_timestamp = @trim(end(get_remote_file( $url.'/timestamp', 2)));
+		if (!is_numeric($repository_timestamp))
+			continue;
+		
+		if (!isset( $forum_ext_repos[ $url ][ 'timestamp' ] ))
+			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
+		
+		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp) 
+		{
+			foreach ($inst_exts as $ext)
+			{
+				$version = @trim(end(get_remote_file($url.'/'.$ext['id'].'/lastversion', 2)));
+				if (empty($version) || !preg_match('~^[0-9a-zA-Z\. +-]+$~u', $version))
+					continue;
+				
+				$forum_ext_repos[ $url ][ 'extension_versions' ][ $ext['id'] ] = $version;
+				
+				//If key with current extension exist in array, compare it with version in rep-ry
+				if (!isset($forum_ext_last_versions[ $ext['id'] ]) || ( version_compare($forum_ext_last_versions[ $ext['id'] ][ 'version' ], $version, '<') ) )
+				{
+					$forum_ext_last_versions[ $ext['id'] ] = array('version' => $version, 'repo_url' => $url);
+					
+					$last_changes = @trim(end(get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2)));
+					if ( !empty($last_changes) )
+						$forum_ext_last_versions[ $ext['id'] ][ 'changes' ] = $last_changes;
+				}
+			}
+			//Write timestamp to cache
+			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
+		}
+	}
    
-    if (array_keys($forum_ext_last_versions) != array_keys($inst_exts))
-        foreach ($inst_exts as $ext)
-            if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
-                $forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
-     
-    ($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
-    
-    // Output config as PHP code
-    $fh = @fopen(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', 'wb');
+	if (array_keys($forum_ext_last_versions) != array_keys($inst_exts))
+		foreach ($inst_exts as $ext)
+			if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
+				$forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
+	 
+	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
+	
+	// Output config as PHP code
+	$fh = @fopen(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', 'wb');
 
-    if (!$fh)
-        error('Unable to write configuration cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+	if (!$fh)
+		error('Unable to write configuration cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 
-    fwrite($fh, '<?php'."\n\n".'if (!defined(\'FORUM_EXT_VERSIONS_LOADED\')) define(\'FORUM_EXT_VERSIONS_LOADED\', 1);'."\n\n".'$forum_ext_repos = '.var_export($forum_ext_repos, true).';'."\n\n".' $forum_ext_last_versions = '.var_export($forum_ext_last_versions, true).";\n\n".'$forum_ext_versions_update_cache = '.time().";\n\n".'?>');
+	fwrite($fh, '<?php'."\n\n".'if (!defined(\'FORUM_EXT_VERSIONS_LOADED\')) define(\'FORUM_EXT_VERSIONS_LOADED\', 1);'."\n\n".'$forum_ext_repos = '.var_export($forum_ext_repos, true).';'."\n\n".' $forum_ext_last_versions = '.var_export($forum_ext_last_versions, true).";\n\n".'$forum_ext_versions_update_cache = '.time().";\n\n".'?>');
 
-    fclose($fh);    
-}       
+	fclose($fh);
+}
