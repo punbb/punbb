@@ -152,5 +152,5 @@ if (!empty($_POST) && $forum_user['is_admmod'] && (isset($_POST['confirm_cancel'
 
 ($hook = get_hook('co_common')) ? eval($hook) : null;
 
-if (!defined('FORUM_MAX_POSTSIZE'))
-	define('FORUM_MAX_POSTSIZE', 65535);
+if (!defined('FORUM_MAX_POSTSIZE_BYTES'))
+	define('FORUM_MAX_POSTSIZE_BYTES', 65535);
