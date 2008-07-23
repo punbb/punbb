@@ -618,6 +618,30 @@ else if (isset($_GET['flip']))
 
 	redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? $lang_admin['Extension disabled'] : $lang_admin['Extension enabled']).' '.$lang_admin['Redirect']);
 }
+else if (isset($_GET['reject']))
+{
+	$id = preg_replace('/[^0-9a-z_]/', '', $_GET['reject']);
+
+	if (strpos($id, 'hotfix_') === FALSE)
+		message($lang_common['Bad request']);
+	
+	if (empty($forum_config['o_rejected_updates']) || strpos($id, $forum_config['o_rejected_updates']) === FALSE)
+	{
+		$query = array(
+			'UPDATE'	=> 'config',
+			'SET'	=> 'conf_value = \''.((empty($forum_config['o_rejected_updates'])) ? ('|') : ($forum_config['o_rejected_updates'])).$id.'|\'',
+			'WHERE'	=>	'conf_name = \'o_rejected_updates\''
+		);
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+		$hook = get_hook('aex_qr_update_rejected_hotfixes') ? eval($hook) : null;
+
+		// Regenerate the hooks cache
+		require_once FORUM_ROOT.'include/cache.php';
+		generate_config_cache();
+	}
+	redirect(forum_link($forum_url['admin_extensions_install']), 'Hotfix was rejected.'.' '.$lang_admin['Redirect']);
+}
 
 ($hook = get_hook('aex_new_action')) ? eval($hook) : null;
 
@@ -683,12 +707,15 @@ if ($section == 'install')
 		// If there's only one hotfix, add one layer of arrays so we can foreach over it
 		if (!is_array(current($forum_updates['hotfix'])))
 			$forum_updates['hotfix'] = array($forum_updates['hotfix']);
-
+			
+		$rej_hotfixes = explode('|', substr($forum_config['o_rejected_updates'], 1, -1));
 		foreach ($forum_updates['hotfix'] as $hotfix)
 		{
 			if (!array_key_exists($hotfix['attributes']['id'], $inst_exts))
 			{
-				$forum_page['ext_item'][] = '<div class="hotfix-item databox">'."\n\t\t\t".'<h3 class="legend"><span>'.forum_htmlencode($hotfix['content']).'</span></h3>'."\n\t\t\t".'<p><span>'.sprintf($lang_admin['Extension by'], 'PunBB').'</span><br /><span>'.$lang_admin['Hotfix description'].'</span></p>'."\n\t\t\t".'<p class="actions"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.$lang_admin['Install hotfix'].'</a></p>'."\n\t\t".'</div>';
+				$rej_flag = in_array($hotfix['attributes']['id'], $rej_hotfixes);
+				
+				$forum_page['ext_item'][] = '<div class="hotfix-item databox">'."\n\t\t\t".'<h3 class="legend"><span>'.forum_htmlencode($hotfix['content']).'</span>'.(($rej_flag) ? ('<span> ( '.'Hotfix rejected.'.' )</span>') : ('')).'</h3>'."\n\t\t\t".'<p><span>'.sprintf($lang_admin['Extension by'], 'PunBB').'</span><br /><span>'.$lang_admin['Hotfix description'].'</span></p>'."\n\t\t\t".'<p class="actions"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.$lang_admin['Install hotfix'].'</a>'.((!$rej_flag) ? ('<a href="'.$base_url.'/admin/extensions.php?section=install&reject='.urlencode($hotfix['attributes']['id']).'">'.$lang_admin['Reject hotfix'].'</a>') : ('')).'</p>'."\n\t\t".'</div>';
 				++$num_exts;
 			}
 		}
@@ -743,7 +770,13 @@ if ($section == 'install')
 	($hook = get_hook('aex_section_install_pre_display_ext_list')) ? eval($hook) : null;
 
 	if ($num_exts)
+	{
+		if (isset($forum_updates['hotfix']))
+			echo '<div class="frm-info"><p>'.$lang_admin['Hotfix install alert'].'</p></div>';
+			
 		echo "\t\t".implode("\n\t\t", $forum_page['ext_item'])."\n";
+	}
+	
 	else
 	{
 

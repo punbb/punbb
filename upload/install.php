@@ -1514,6 +1514,7 @@ else
 		'o_rules_message'			=> "'".$lang_install['Default rules']."'",
 		'o_maintenance'				=> "'0'",
 		'o_maintenance_message'		=> "'".$lang_install['Default maint message']."'",
+		'o_rejected_updates'		=> "''",
 		'p_message_bbcode'			=> "'1'",
 		'p_message_img_tag'			=> "'1'",
 		'p_message_all_caps'		=> "'1'",

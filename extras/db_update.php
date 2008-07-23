@@ -787,6 +787,9 @@ if ($db_seems_utf8 && !isset($_GET['force']))
 		if (!array_key_exists('o_announcement_heading', $forum_config))
 			$forum_db->query('INSERT INTO '.$forum_db->prefix.'config (conf_name, conf_value) VALUES(\'o_announcement_heading\', \'\')') or error(__FILE__, __LINE__);
 
+		if (!array_key_exists('o_rejected_updates', $forum_config))
+			$forum_db->query('INSERT INTO '.$forum_db->prefix.'config (conf_name, conf_value) VALUES(\'o_rejected_updates\', \'''\')') or error(__FILE__, __LINE__);
+
 		// Server timezone is now simply the default timezone
 		if (!array_key_exists('o_default_timezone', $forum_config))
 			$forum_db->query('UPDATE '.$forum_db->prefix.'config SET conf_name=\'o_default_timezone\' WHERE conf_name=\'o_server_timezone\'') or error(__FILE__, __LINE__);

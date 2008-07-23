@@ -249,13 +249,24 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 {
 		if ($forum_config['o_check_for_updates'] == '1')
 		{
+			if (isset($forum_updates['hotfix']))
+			{
+				$hotfixes_id = array();
+				for ($hot_num = 0; $hot_num < count($forum_updates['hotfix']); $hot_num++)
+					$hotfixes_id[] = $forum_updates['hotfix'][$hot_num]['attributes']['id'];
+				
+				$hotfix_available = array_diff($hotfixes_id, explode('|', substr($forum_config['o_rejected_updates'], 1, -1))) != array();
+			}
+			else
+				$hotfix_available = false;
+
 			if ($forum_updates['fail'])
 			$alert_items['update_fail'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates failed'].'</span></p>';
-			else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']))
+			else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']) && $hotfix_available)
 			$alert_items['update_version_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version n hf'], $forum_updates['version']).'</span></p>';
 			else if (isset($forum_updates['version']))
 			$alert_items['update_version'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version'], $forum_updates['version']).'</span></p>';
-			else if (isset($forum_updates['hotfix']))
+			else if (isset($forum_updates['hotfix']) && $hotfix_available)
 			$alert_items['update_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates hf'].'</span></p>';
 		}
 

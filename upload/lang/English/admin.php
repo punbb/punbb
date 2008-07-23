@@ -165,7 +165,9 @@ $lang_admin = array(
 'Can\'t ban guest user'			=>	'The guest user cannot be banned.',
 'Invalid e-mail message'		=>	'The e-mail address (e.g. user@example.com) or partial e-mail address domain (e.g. example.com) you entered is invalid.',
 'Invalid expire message'		=>	'You entered an invalid expire date. The format should be YYYY-MM-DD and the date must be at least one day in the future.',
-
+'Reject hotfix'					=>	'Reject hotfix',
+'Hotfix rejected'				=>	'Hotfix rejected.',
+'Hotfix install alert'			=>	'You may reject hotfix if you do not want to see alert for this one anymore.',
 
 // admin_censoring
 'Add censored word head'		=>	'Add new censored word',
