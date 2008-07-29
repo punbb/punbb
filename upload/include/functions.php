@@ -1226,7 +1226,7 @@ function delete_topic($topic_id, $forum_id)
 		($hook = get_hook('fn_qr_delete_topic_posts')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		require FORUM_ROOT.'include/search_idx.php';
+		require_once FORUM_ROOT.'include/search_idx.php';
 		strip_search_index($post_ids);
 	}
 
@@ -1277,7 +1277,7 @@ function delete_post($post_id, $topic_id, $forum_id)
 	($hook = get_hook('fn_qr_delete_post')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	require FORUM_ROOT.'include/search_idx.php';
+	require_once FORUM_ROOT.'include/search_idx.php';
 	strip_search_index($post_id);
 
 	// Count number of replies in the topic
