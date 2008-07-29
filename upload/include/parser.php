@@ -44,63 +44,67 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	global $forum_config;
 	
 	$return = ($hook = get_hook('ps_preparse_bbcode_start')) ? eval($hook) : null;
-	if ($return != null)
-		return $return;
-
-	if ($is_signature)
+	if (($forum_config['o_make_links'] == '1')&&($forum_config['p_message_bbcode'] !== '1'))
+		$text = do_clickable($text);	
+	else
 	{
-		global $lang_profile;
-
-		if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]#i', $text))
-			$errors[] = $lang_profile['Signature quote/code'];
-	}
-
-	$text = str_replace('<">', forum_htmlencode('<">'), $text);
-
-	// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
-	if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
-	{
-		list($inside, $outside) = split_text($text, '[code]', '[/code]', $errors);
-		$text = implode("\0", $outside);
-	}
-
-	// Tidy up lists
-	$pattern = array('#\[list\](.*?)\[/list\]#ems',
-					 '#\[list=([1a\*])\](.*?)\[/list\]#ems');
-
-	$replace = array('preparse_list_tag(\'$1\', \'*\', $errors)',
-					 'preparse_list_tag(\'$2\', \'$1\', $errors)');
-
-	$text = preg_replace($pattern, $replace, $text);
-
-	if ($forum_config['o_make_links'] == '1')
-		$text = do_clickable($text);
-
-	// If we split up the message before we have to concatenate it together again (code tags)
-	if (isset($inside))
-	{
-		$outside = explode("\0", $text);
-		$text = '';
-
-		$num_tokens = count($outside);
-
-		for ($i = 0; $i < $num_tokens; ++$i)
+		if ($return != null)
+			return $return;
+	
+		if ($is_signature)
 		{
-			$text .= $outside[$i];
-			if (isset($inside[$i]))
-				$text .= '[code]'.$inside[$i].'[/code]';
+			global $lang_profile;
+	
+			if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]#i', $text))
+				$errors[] = $lang_profile['Signature quote/code'];
 		}
+	
+		$text = str_replace('<">', forum_htmlencode('<">'), $text);
+	
+		// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
+		if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
+		{
+			list($inside, $outside) = split_text($text, '[code]', '[/code]', $errors);
+			$text = implode("\0", $outside);
+		}
+	
+		// Tidy up lists
+		$pattern = array('#\[list\](.*?)\[/list\]#ems',
+						 '#\[list=([1a\*])\](.*?)\[/list\]#ems');
+	
+		$replace = array('preparse_list_tag(\'$1\', \'*\', $errors)',
+						 'preparse_list_tag(\'$2\', \'$1\', $errors)');
+	
+		$text = preg_replace($pattern, $replace, $text);
+	
+		if ($forum_config['o_make_links'] == '1')
+			$text = do_clickable($text);
+	
+		// If we split up the message before we have to concatenate it together again (code tags)
+		if (isset($inside))
+		{
+			$outside = explode("\0", $text);
+			$text = '';
+	
+			$num_tokens = count($outside);
+	
+			for ($i = 0; $i < $num_tokens; ++$i)
+			{
+				$text .= $outside[$i];
+				if (isset($inside[$i]))
+					$text .= '[code]'.$inside[$i].'[/code]';
+			}
+		}
+	
+		$text = str_replace(forum_htmlencode('<">'), '<">', $text);
+	
+		$temp_text = false;
+		if (empty($errors))
+			$temp_text = preparse_tags($text, $errors, $is_signature);
+	
+		if ($temp_text !== false)
+			$text = $temp_text;
 	}
-
-	$text = str_replace(forum_htmlencode('<">'), '<">', $text);
-
-	$temp_text = false;
-	if (empty($errors))
-		$temp_text = preparse_tags($text, $errors, $is_signature);
-
-	if ($temp_text !== false)
-		$text = $temp_text;
-
 	$return = ($hook = get_hook('ps_preparse_bbcode_end')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
