@@ -69,7 +69,7 @@ else
 // Determine the topic offset (based on $_GET['p'])
 $num_pages = ceil($cur_forum['num_topics'] / $pun_user['disp_topics']);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
 $start_from = $pun_user['disp_topics'] * ($p - 1);
 
 // Generate paging links
@@ -253,4 +253,3 @@ else
 $forum_id = $id;
 $footer_style = 'viewforum';
 require PUN_ROOT.'footer.php';
-
