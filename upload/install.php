@@ -24,7 +24,7 @@
 
 
 // The PunBB version this script installs
-$punbb_version = '1.2.19';
+$punbb_version = '1.2.20';
 
 
 define('PUN_ROOT', './');
