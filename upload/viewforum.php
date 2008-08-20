@@ -87,7 +87,7 @@ if (!$forum_user['is_guest'])
 
 // Determine the topic offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_topics']);
-$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($cur_forum['num_topics']));
 
@@ -175,7 +175,7 @@ $forum_page['crumbs'] = array(
 ($hook = get_hook('vf_pre_header_load')) ? eval($hook) : null;
 
 // Allow indexing if this isn't a link with p=1
-if (!isset($_GET['p']) || $forum_page['page'] != 1)
+if (!isset($_GET['p']) || !is_numeric($_GET['p']) || $forum_page['page'] != 1)
 	define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'viewforum');
