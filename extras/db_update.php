@@ -29,7 +29,7 @@
 // Copy this file to the forum root directory and run it. Then remove it from
 // the root directory.
 
-define('UPDATE_TO', '1.3 RC');
+define('UPDATE_TO', '1.3dev');
 
 // An array of hotfix extensions that this version supersedes and replaces
 $supersedes_ext = array('hotfix_13svn_test');
