@@ -2594,6 +2594,12 @@ function redirect($destination_url, $message)
 //
 function error()
 {
+	if (!headers_sent()) 
+	{
+		header('Content-type: text/html; charset=utf-8');
+		header('HTTP/1.1 503 Service Temporarily Unavailable');
+	}
+	
 	global $forum_config;
 
 	/*
