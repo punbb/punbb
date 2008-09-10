@@ -42,52 +42,52 @@ $smilies = array(':)' => 'smile.png', '=)' => 'smile.png', ':|' => 'neutral.png'
 function preparse_bbcode($text, &$errors, $is_signature = false)
 {
 	global $forum_config;
-	
+
 	$return = ($hook = get_hook('ps_preparse_bbcode_start')) ? eval($hook) : null;
 	if (($forum_config['o_make_links'] == '1')&&($forum_config['p_message_bbcode'] !== '1'))
-		$text = do_clickable($text);	
+		$text = do_clickable($text);
 	else
 	{
 		if ($return != null)
 			return $return;
-	
+
 		if ($is_signature)
 		{
 			global $lang_profile;
-	
+
 			if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]#i', $text))
 				$errors[] = $lang_profile['Signature quote/code'];
 		}
-	
+
 		$text = str_replace('<">', forum_htmlencode('<">'), $text);
-	
+
 		// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
 		if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
 		{
 			list($inside, $outside) = split_text($text, '[code]', '[/code]', $errors);
 			$text = implode("\0", $outside);
 		}
-	
+
 		// Tidy up lists
 		$pattern = array('#\[list\](.*?)\[/list\]#ems',
 						 '#\[list=([1a\*])\](.*?)\[/list\]#ems');
-	
+
 		$replace = array('preparse_list_tag(\'$1\', \'*\', $errors)',
 						 'preparse_list_tag(\'$2\', \'$1\', $errors)');
-	
+
 		$text = preg_replace($pattern, $replace, $text);
-	
+
 		if ($forum_config['o_make_links'] == '1')
 			$text = do_clickable($text);
-	
+
 		// If we split up the message before we have to concatenate it together again (code tags)
 		if (isset($inside))
 		{
 			$outside = explode("\0", $text);
 			$text = '';
-	
+
 			$num_tokens = count($outside);
-	
+
 			for ($i = 0; $i < $num_tokens; ++$i)
 			{
 				$text .= $outside[$i];
@@ -95,13 +95,13 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 					$text .= '[code]'.$inside[$i].'[/code]';
 			}
 		}
-	
+
 		$text = str_replace(forum_htmlencode('<">'), '<">', $text);
-	
+
 		$temp_text = false;
 		if (empty($errors))
 			$temp_text = preparse_tags($text, $errors, $is_signature);
-	
+
 		if ($temp_text !== false)
 			$text = $temp_text;
 	}
@@ -313,7 +313,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 
 			if ($opened_tag == 0 || !in_array($current_tag, $open_tags))
 			{
-				//We tried to close a tag which is not open 
+				//We tried to close a tag which is not open
 				if (in_array($current_tag, $tags_opened))
 				{
 					$errors[] = sprintf($lang_common['BBCode error 1'], $current_tag);
@@ -410,7 +410,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			else
 				$limit_bbcode = $tags;
 
-			if (preg_match('/\['.$current_tag.'(?:=[^\]]*?)?\]\s*$/', $new_text, $matches))
+			if (preg_match('/\['.preg_quote($current_tag).'(?:=[^\]]*?)?\]\s*$/', $new_text, $matches))
 				$new_text = substr($new_text, 0, 0 - strlen($matches[0]));
 			else
 				$new_text .= $current;
