@@ -772,6 +772,9 @@ $forum_page['set_count'] = 0;
 						<div class="radbox"><label for="fld<?php echo ++$forum_page['fld_count'] ?>"><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[sig_bbcode]" value="1"<?php if ($forum_config['p_sig_bbcode'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['BBCode in sigs'] ?></label></div>
 						<div class="radbox"><label for="fld<?php echo ++$forum_page['fld_count'] ?>"><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[sig_img_tag]" value="1"<?php if ($forum_config['p_sig_img_tag'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Img in sigs'] ?></label></div>
 						<div class="radbox"><label for="fld<?php echo ++$forum_page['fld_count'] ?>"><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[smilies_sig]" value="1"<?php if ($forum_config['o_smilies_sig'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Smilies in signatures'] ?></label></div>
+					</fieldset>
+					<fieldset class="frm-group">
+						<legend><span><?php echo $lang_admin['Allow capitals'] ?></span></legend>
 						<div class="radbox"><label for="fld<?php echo ++$forum_page['fld_count'] ?>"><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[sig_all_caps]" value="1"<?php if ($forum_config['p_sig_all_caps'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['All caps sigs'] ?></label></div>
 					</fieldset>
 					<div class="frm-fld">
