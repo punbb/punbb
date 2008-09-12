@@ -397,7 +397,7 @@ function generate_cached_search_query($search_id, &$show_as)
 	else
 	{
 		$query = array(
-			'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, f.forum_name',
+			'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
 			'FROM'		=> 'topics AS t',
 			'JOINS'		=> array(
 				array(
@@ -421,7 +421,7 @@ function generate_cached_search_query($search_id, &$show_as)
 //
 function generate_action_search_query($action, $value, &$search_id, &$url_type, &$show_as)
 {
-	global $forum_db, $forum_user, $lang_common, $forum_url, $db_type;
+	global $forum_db, $forum_user, $forum_config, $lang_common, $forum_url, $db_type;
 
 	$return = ($hook = get_hook('sf_generate_action_search_query')) ? eval($hook) : null;
 	if ($return != null)
@@ -434,7 +434,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				message($lang_common['No permission']);
 
 			$query = array(
-				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, f.forum_name',
+				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
 				'FROM'		=> 'topics AS t',
 				'JOINS'		=> array(
 					array(
@@ -450,6 +450,18 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				'ORDER BY'	=> 't.last_post DESC'
 			);
 
+			// With "has posted" indication
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
+			{
+				$subquery = array(
+					'SELECT'	=> 'COUNT(p.id)',
+					'FROM'		=> 'posts AS p',
+					'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
+				);
+
+				$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
+			}
+
 			$url_type = $forum_url['search_new'];
 
 			($hook = get_hook('sf_qr_get_new')) ? eval($hook) : null;
@@ -458,7 +470,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 
 		case 'show_recent':
 			$query = array(
-				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, f.forum_name',
+				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
 				'FROM'		=> 'topics AS t',
 				'JOINS'		=> array(
 					array(
@@ -473,6 +485,18 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.last_post>'.(time() - $value).' AND t.moved_to IS NULL',
 				'ORDER BY'	=> 't.last_post DESC'
 			);
+
+			// With "has posted" indication
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
+			{
+				$subquery = array(
+					'SELECT'	=> 'COUNT(p.id)',
+					'FROM'		=> 'posts AS p',
+					'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
+				);
+
+				$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
+			}
 
 			$url_type = $forum_url['search_24h'];
 
@@ -512,7 +536,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 
 		case 'show_user_topics':
 			$query = array(
-				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, f.forum_name',
+				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
 				'FROM'		=> 'topics AS t',
 				'JOINS'		=> array(
 					array(
@@ -532,6 +556,18 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				'ORDER BY'	=> 't.last_post DESC'
 			);
 
+			// With "has posted" indication
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
+			{
+				$subquery = array(
+					'SELECT'	=> 'COUNT(p.id)',
+					'FROM'		=> 'posts AS p',
+					'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
+				);
+
+				$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
+			}
+
 			$url_type = $forum_url['search_user_topics'];
 			$search_id = $value;
 
@@ -544,7 +580,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				message($lang_common['Bad request']);
 
 			$query = array(
-				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, f.forum_name',
+				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
 				'FROM'		=> 'topics AS t',
 				'JOINS'		=> array(
 					array(
@@ -564,6 +600,18 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				'ORDER BY'	=> 't.last_post DESC'
 			);
 
+			// With "has posted" indication
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
+			{
+				$subquery = array(
+					'SELECT'	=> 'COUNT(p.id)',
+					'FROM'		=> 'posts AS p',
+					'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
+				);
+
+				$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
+			}
+
 			$url_type = $forum_url['search_subscriptions'];
 			$search_id = $value;
 
@@ -573,7 +621,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 
 		case 'show_unanswered':
 			$query = array(
-				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, f.forum_name',
+				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
 				'FROM'		=> 'topics AS t',
 				'JOINS'		=> array(
 					array(
@@ -588,6 +636,18 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.num_replies=0 AND t.moved_to IS NULL',
 				'ORDER BY'	=> 't.last_post DESC'
 			);
+
+			// With "has posted" indication
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
+			{
+				$subquery = array(
+					'SELECT'	=> 'COUNT(p.id)',
+					'FROM'		=> 'posts AS p',
+					'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
+				);
+
+				$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
+			}
 
 			$url_type = $forum_url['search_unanswered'];
 
