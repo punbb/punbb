@@ -29,7 +29,7 @@ $forum_rewrite_rules = array(
 	'/^topic[\/_-]?([0-9]+).*(new|last)[\/_-]?(post)?s?(\.html?|\/)?$/i'													=>	'viewtopic.php?id=$1&action=$2',
 	'/^post[\/_-]?([0-9]+)(\.html?|\/)?$/i'																					=>	'viewtopic.php?pid=$1',
 	'/^(forum|topic)[\/_-]?([0-9]+).*[\/_-]p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'											=>	'view$1.php?id=$2&p=$4',
-	'/^(f|t)(orum|opic)[\/_-]?([0-9]+)[\/_-](rss|atom)(\.html?|\/)?$/i'														=>	'extern.php?action=feed&$1id=$3&type=$4',
+	'/^(f|t)(orum|opic)[\/_-]?([0-9]+)[\/_-](rss|atom)(\.xml?|\/)?$/i'														=>	'extern.php?action=feed&$1id=$3&type=$4',
 	'/^(forum|topic)[\/_-]?([0-9]+).*(\.html?|\/)?$/i'																		=>	'view$1.php?id=$2',
 	'/^new[\/_-]?reply[\/_-]?([0-9]+)(\.html?|\/)?$/i'																		=>	'post.php?tid=$1',
 	'/^new[\/_-]?reply[\/_-]?([0-9]+)[\/_-]?quote[\/_-]?([0-9]+)(\.html?|\/)?$/i'											=>	'post.php?tid=$1&qid=$2',
@@ -45,8 +45,8 @@ $forum_rewrite_rules = array(
 	'/^change[\/_-]?(email|pass)(word)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'														=>	'profile.php?action=change_$1&id=$3',
 	'/^search[\/_-]?(new|recent|unanswered)(\.html?|\/)?$/i'																=>	'search.php?action=show_$1',
 	'/^search[\/_-]?(new|recent|unanswered)[\/_-]p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'									=>	'search.php?action=show_$1&p=$3',
-	'/^search[\/_-]?subscriptions[\/_-]?([0-9]+)(\.html?|\/)?$/i'																	=>	'search.php?action=show_subscriptions&user_id=$1',
-	'/^search[\/_-]?subscriptions[\/_-]?([0-9]+)[\/_-]p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'										=>	'search.php?action=show_subscriptions&user_id=$1&p=$2',
+	'/^search[\/_-]?subscriptions[\/_-]?([0-9]+)(\.html?|\/)?$/i'															=>	'search.php?action=show_subscriptions&user_id=$1',
+	'/^search[\/_-]?subscriptions[\/_-]?([0-9]+)[\/_-]p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'								=>	'search.php?action=show_subscriptions&user_id=$1&p=$3',
 	'/^search[\/_-]?([0-9]+)(\.html?|\/)?$/i'																				=>	'search.php?search_id=$1',
 	'/^search[\/_-]?([0-9]+)[\/_-]?p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'													=>	'search.php?search_id=$1&p=$3',
 	'/^search[\/_-]?(posts|topics)[\/_-]?user[\/_-]?([0-9]+)(\.html?|\/)?$/i'												=>	'search.php?action=show_user_$1&user_id=$2',
@@ -67,5 +67,6 @@ $forum_rewrite_rules = array(
 	'/^moderate[\/_-]?([0-9]+)[\/_-]?p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'												=>	'moderate.php?fid=$1&p=$3',
 	'/^moderate[\/_-]?([0-9]+)[\/_-]([0-9]+)(\.html?|\/)?$/i'																=>	'moderate.php?fid=$1&tid=$2',
 	'/^moderate[\/_-]?([0-9]+)[\/_-]([0-9]+)[\/_-]?p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'									=>	'moderate.php?fid=$1&tid=$2&p=$4',
-	'/^get_host[\/_-]?([0-9]+|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(\.html?|\/)?$/i'								=>	'moderate.php?get_host=$1'
+	'/^get_host[\/_-]?([0-9]+|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(\.html?|\/)?$/i'								=>	'moderate.php?get_host=$1',
+	'/^feed[\/_-]?(rss|atom)(\.xml?|\/)?$/i'																				=>	'extern.php?action=feed&type=$1'
 );
