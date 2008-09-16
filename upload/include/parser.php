@@ -57,8 +57,6 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 
 	if ($forum_config['p_sig_bbcode'] == '1' && $is_signature || $forum_config['p_message_bbcode'] == '1' && !$is_signature)
 	{
-		$text = str_replace('<">', forum_htmlencode('<">'), $text);
-
 		// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
 		if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
 		{
@@ -67,13 +65,11 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 		}
 
 		// Tidy up lists
-		$pattern = array('#\[list\](.*?)\[/list\]#ems',
-						 '#\[list=([1a\*])\](.*?)\[/list\]#ems');
-
-		$replace = array('preparse_list_tag(\'$1\', \'*\', $errors)',
-						 'preparse_list_tag(\'$2\', \'$1\', $errors)');
-
+		$pattern = array('/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems');
+		$replace = array('preparse_list_tag(\'$2\', \'$1\', $errors)');
 		$text = preg_replace($pattern, $replace, $text);
+		
+		$text = str_replace('*'."\0".']', '*]', $text);
 
 		if ($forum_config['o_make_links'] == '1')
 			$text = do_clickable($text);
@@ -93,8 +89,6 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 					$text .= '[code]'.$inside[$i].'[/code]';
 			}
 		}
-
-		$text = str_replace(forum_htmlencode('<">'), '<">', $text);
 
 		$temp_text = false;
 		if (empty($errors))
@@ -128,11 +122,11 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// and tags we need to check are closed (the same as above, added it just in case)
 	$tags_closed = $tags;
 	// Tags we can nest and the depth they can be nested to (only quotes )
-	$tags_nested = array('quote' => $forum_config['o_quote_depth']);
+	$tags_nested = array('quote' => $forum_config['o_quote_depth'], 'list' => 5, '*' => 5);
 	// Tags to ignore the contents of completely (just code)
 	$tags_ignore = array('code');
 	// Block tags, block tags can only go within another block tag, they cannot be in a normal tag
-	$tags_block = array('quote', 'code', 'list', 'h');
+	$tags_block = array('quote', 'code', 'list', 'h', '*');
 	// Inline tags, we do not allow new lines in these
 	$tags_inline = array('b', 'i', 'u', 'color', 'colour', 'h');
 	// Tags we trim interior space
@@ -141,7 +135,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	$tags_quotes = array('url', 'email', 'img');
 	// Tags we limit bbcode in
 	$tags_limit_bbcode = array(
-		'*' 	=> array('b', 'i', 'u', 'color', 'colour', 'url', 'email'),
+		'*' 	=> array('b', 'i', 'u', 'color', 'colour', 'url', 'email', 'list', 'img'),
 		'list' 	=> array('*'),
 		'url' 	=> array('b', 'i', 'u', 'color', 'colour', 'img'),
 		'email' => array('b', 'i', 'u', 'color', 'colour', 'img'),
@@ -185,7 +179,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				$split_current = preg_split("/([\n\r]+)/", $current, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 				$current = '';
 				
-				if (!forum_trim($split_current[0], "\r\n")) // the first part is a linebreak so we need to handle any open tags first
+				if (!trim($split_current[0], "\r\n")) // the first part is a linebreak so we need to handle any open tags first
 					array_unshift($split_current, '');
 
 				for ($i = 1; $i < count($split_current); $i += 2)
@@ -299,13 +293,6 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			continue;
 		}
 
-		// Check the current tag is allowed here
-		if (!in_array($current_tag, $limit_bbcode) && $current_tag != $open_tags[$opened_tag])
-		{
-			$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
-			return false;
-		}
-
 		if ($current_nest)
 		{
 			// We are currently too deeply nested so lets see if we are closing the tag or not.
@@ -321,6 +308,13 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				$current_nest = '';
 
 			continue;
+		}
+
+		// Check the current tag is allowed here
+		if (!in_array($current_tag, $limit_bbcode) && $current_tag != $open_tags[$opened_tag])
+		{
+			$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
+			return false;
 		}
 
 		if (substr($current, 1, 1) == '/')
@@ -529,11 +523,15 @@ function preparse_tags($text, &$errors, $is_signature = false)
 function preparse_list_tag($content, $type = '*', &$errors)
 {
 	global $lang_common;
+	
+	if (strlen($type) != 1)
+		$type = '*';
 
 	if (strpos($content,'[list') !== false)
 	{
-		$errors['list'] = $lang_common['BBCode nested list'];
-		return '[list='.$type.']'.$content.'[/list]';
+		$pattern = array('/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems');
+		$replace = array('preparse_list_tag(\'$2\', \'$1\', $errors)');
+		$content = preg_replace($pattern, $replace, $content);
 	}
 
 	$items = explode('[*]', str_replace('\"', '"', $content));
@@ -542,7 +540,7 @@ function preparse_list_tag($content, $type = '*', &$errors)
 	foreach ($items as $item)
 	{
 		if (trim($item) != '')
-			$content .= '[*]'.str_replace('[/*]', '', trim($item))."[/*]\n";
+			$content .= '[*'."\0".']'.str_replace('[/*]', '', trim($item)).'[/*'."\0".']'."\n";
 	}
 
 	return '[list='.$type.']'."\n".$content.'[/list]';
@@ -657,6 +655,16 @@ function handle_list_tag($content, $type = '*')
 {
 	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li>$1</li>', trim($content));
 
+	if (strlen($type) != 1)
+		$type = '*';
+	
+	if (strpos($content,'[list') !== false)
+	{
+		$pattern = array('/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems');
+		$replace = array('handle_list_tag(\'$2\', \'$1\')');
+		$content = preg_replace($pattern, $replace, $content);
+    }
+	
 	if ($type == '*')
 		$content = '<ul>'.$content.'</ul>';
 	else
@@ -689,7 +697,7 @@ function do_bbcode($text, $is_signature = false)
 
 	if (!$is_signature)
 	{
-		$pattern[] = '#\[list=([1a\*])\](.*?)\[/list\]*#ems';
+		$pattern[] = '/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems';
 		$replace[] = 'handle_list_tag(\'$2\', \'$1\')';
 	}
 
@@ -753,8 +761,8 @@ function do_clickable($text)
 {
 	$text = ' '.$text;
 
-	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/url\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
-	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/url\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
 
 	return utf8_substr($text, 1);
 }
