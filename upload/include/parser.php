@@ -111,6 +111,10 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	return trim($text);
 }
 
+
+//
+// Check the structure of bbcode tags and fix simple mistakes where possible
+//
 function preparse_tags($text, &$errors, $is_signature = false)
 {
 	global $lang_common, $forum_config;
@@ -118,7 +122,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// Start off by making some arrays of bbcode tags and what we need to do with each one
 
 	// List of all the tags
-	$tags = array('quote', 'code', 'b', 'i', 'u', 'color', 'colour', 'url', 'email', 'img', 'list', '*');
+	$tags = array('quote', 'code', 'b', 'i', 'u', 'color', 'colour', 'url', 'email', 'img', 'list', '*', 'h');
 	// List of tags that we need to check are open (You could not put b,i,u in here then illegal nesting like [b][i][/b][/i] would be allowed)
 	$tags_opened = $tags;
 	// and tags we need to check are closed (the same as above, added it just in case)
@@ -128,17 +132,23 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// Tags to ignore the contents of completely (just code)
 	$tags_ignore = array('code');
 	// Block tags, block tags can only go within another block tag, they cannot be in a normal tag
-	$tags_block = array('quote', 'code', 'list');
+	$tags_block = array('quote', 'code', 'list', 'h');
 	// Inline tags, we do not allow new lines in these
-	$tags_inline = array('b', 'i', 'u', 'color', 'colour');
+	$tags_inline = array('b', 'i', 'u', 'color', 'colour', 'h');
 	// Tags we trim interior space
 	$tags_trim = array('url', 'email', 'img', '*');
 	// Tags we remove quotes from the argument
 	$tags_quotes = array('url', 'email', 'img');
 	// Tags we limit bbcode in
-	$tags_limit_bbcode = array('*' => array('b', 'i', 'u', 'color', 'colour', 'url', 'email'), 'list' => array('*'), 'url' => array('b', 'i', 'u', 'color', 'colour', 'img'), 'email' => array('b', 'i', 'u', 'color', 'colour', 'img'), 'img' => array());
+	$tags_limit_bbcode = array(
+		'*' 	=> array('b', 'i', 'u', 'color', 'colour', 'url', 'email'),
+		'list' 	=> array('*'),
+		'url' 	=> array('b', 'i', 'u', 'color', 'colour', 'img'),
+		'email' => array('b', 'i', 'u', 'color', 'colour', 'img'),
+		'img' 	=> array()
+	);
 	// Tags we can automatically fix bad nesting
-	$tags_fix = array('quote', 'b', 'i', 'u', 'color', 'colour', 'url', 'email');
+	$tags_fix = array('quote', 'b', 'i', 'u', 'color', 'colour', 'url', 'email', 'h');
 
 	$return = ($hook = get_hook('ps_preparse_tags_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -252,21 +262,6 @@ function preparse_tags($text, &$errors, $is_signature = false)
 
 		// We definitely have a bbcode tag.
 
-		//This is if we are currently in a tag which escapes other bbcode such as code
-		if ($current_ignore)
-		{
-			if ('[/'.$current_ignore.']' == $current)
-			{
-				// We've finished the ignored section
-				$current = '[/'.$current_tag.']';
-				$current_ignore = '';
-			}
-
-			$new_text .= $current;
-
-			continue;
-		}
-
 		// Make the tag string lower case
 		if ($equalpos = strpos($current,'='))
 		{
@@ -281,6 +276,21 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		}
 		else
 			$current = strtolower($current);
+
+		//This is if we are currently in a tag which escapes other bbcode such as code
+		if ($current_ignore)
+		{
+			if ('[/'.$current_ignore.']' == $current)
+			{
+				// We've finished the ignored section
+				$current = '[/'.$current_tag.']';
+				$current_ignore = '';
+			}
+
+			$new_text .= $current;
+
+			continue;
+		}
 
 		// Check the current tag is allowed here
 		if (!in_array($current_tag, $limit_bbcode) && $current_tag != $open_tags[$opened_tag])
@@ -676,15 +686,17 @@ function do_bbcode($text, $is_signature = false)
 		$replace[] = 'handle_list_tag(\'$2\', \'$1\')';
 	}
 
-	$pattern[] = '#\[b\](.*?)\[/b\]#s';
-	$pattern[] = '#\[i\](.*?)\[/i\]#s';
-	$pattern[] = '#\[u\](.*?)\[/u\]#s';
-	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#s';
+	$pattern[] = '#\[b\](.*?)\[/b\]#';
+	$pattern[] = '#\[i\](.*?)\[/i\]#';
+	$pattern[] = '#\[u\](.*?)\[/u\]#';
+	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#';
+	$pattern[] = '#\[h\](.*?)\[/h\]#';
 
 	$replace[] = '<strong>$1</strong>';
 	$replace[] = '<em>$1</em>';
 	$replace[] = '<em class="bbuline">$1</em>';
 	$replace[] = '<span style="color: $1">$2</span>';
+	$replace[] = '</p><h5>$1</h5><p>';
 
 	if (($is_signature && $forum_config['p_sig_img_tag'] == '1') || (!$is_signature && $forum_config['p_message_img_tag'] == '1'))
 	{
