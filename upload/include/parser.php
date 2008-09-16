@@ -31,7 +31,7 @@ if (!defined('FORUM'))
 
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
-$smilies = array(':)' => 'smile.png', '=)' => 'smile.png', ':|' => 'neutral.png', '=|' => 'neutral.png', ':(' => 'sad.png', '=(' => 'sad.png', ':D' => 'big_smile.png', '=D' => 'big_smile.png', ':o' => 'yikes.png', ':O' => 'yikes.png', ';)' => 'wink.png', ':/' => 'hmm.png', ':P' => 'tongue.png', ':lol:' => 'lol.png', ':mad:' => 'mad.png', ':rolleyes:' => 'roll.png', ':cool:' => 'cool.png');
+$smilies = array(':)' => 'smile.png', '=)' => 'smile.png', ':|' => 'neutral.png', '=|' => 'neutral.png', ':(' => 'sad.png', '=(' => 'sad.png', ':D' => 'big_smile.png', '=D' => 'big_smile.png', ':o' => 'yikes.png', ':O' => 'yikes.png', ';)' => 'wink.png', ':/' => 'hmm.png', ':P' => 'tongue.png', ':p' => 'tongue.png', ':lol:' => 'lol.png', ':mad:' => 'mad.png', ':rolleyes:' => 'roll.png', ':cool:' => 'cool.png');
 
 ($hook = get_hook('ps_start')) ? eval($hook) : null;
 
@@ -136,7 +136,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// Inline tags, we do not allow new lines in these
 	$tags_inline = array('b', 'i', 'u', 'color', 'colour', 'h');
 	// Tags we trim interior space
-	$tags_trim = array('url', 'email', 'img', '*');
+	$tags_trim = array('img');
 	// Tags we remove quotes from the argument
 	$tags_quotes = array('url', 'email', 'img');
 	// Tags we limit bbcode in
@@ -179,16 +179,21 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if ($current_nest)
 				continue;
 
-			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos(trim($current, "\r\n"), "\n") !== false)
+			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos($current, "\n") !== false) 
 			{
 				// Deal with new lines
-				$split_current = preg_split("/([\n\r]+)/", trim($current, "\r\n"), -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
-				$current = $split_current[0];
+				$split_current = preg_split("/([\n\r]+)/", $current, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+				$current = '';
+				
+				if (!forum_trim($split_current[0], "\r\n")) // the first part is a linebreak so we need to handle any open tags first
+					array_unshift($split_current, '');
 
-				for ($i = 1; $i < count($split_current); $i = $i + 2) {
+				for ($i = 1; $i < count($split_current); $i += 2)
+				{
 					$temp_opened = array();
 					$temp_opened_arg = array();
-					$temp = '';
+					$temp = $split_current[$i - 1];
+				
 					while (!empty($open_tags))
 					{
 						$temp_tag = array_pop($open_tags);
@@ -222,7 +227,9 @@ function preparse_tags($text, &$errors, $is_signature = false)
 					}
 					$current .= $temp;
 				}
-				$current .= $split_current[$i-1];
+				
+				if (array_key_exists($i - 1, $split_current))
+					$current .= $split_current[$i - 1];
 			}
 
 			if (in_array($open_tags[$opened_tag], $tags_trim))
@@ -746,8 +753,8 @@ function do_clickable($text)
 {
 	$text = ' '.$text;
 
-	$text = preg_replace('#([\s\(\)])(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^"\s\(\)<\[]*)?)#ie', '\'$1\'.handle_url_tag(\'$2://$3\', \'$2://$3\', true)', $text);
-	$text = preg_replace('#([\s\(\)])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^"\s\(\)<\[]*)?)#ie', '\'$1\'.handle_url_tag(\'$2.$3\', \'$2.$3\', true)', $text);
+	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/url\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/url\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
 
 	return utf8_substr($text, 1);
 }
