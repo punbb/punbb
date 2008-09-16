@@ -147,6 +147,18 @@ var Forum = {
 		document.location = url;
 		return false;
 	},
+	/* toggle all checkboxes in the given form */
+	toggleCheckboxes: function(curForm)
+	{
+		var inputlist = curForm.getElementsByTagName("input");
+		for (i = 0; i < inputlist.length; i++)
+		{
+			if (inputlist[i].getAttribute("type") == 'checkbox' && inputlist[i].disabled == false)
+				inputlist[i].checked = !inputlist[i].checked;
+		}
+
+		return false;
+	},
 	/* attach form validation function to submit-type inputs */
 	attachValidateForm: function()
 	{
