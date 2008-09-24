@@ -180,6 +180,7 @@ $lang_profile = array(
 'Pass updated redirect'		=>	'Password updated. Redirecting &#8230;',
 
 // Change E-mail stuff
+'Change email'				=>	'Change email',
 'Change e-mail errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your e-mail address can be updated:',
 'E-mail key bad'			=>	'The specified e-mail activation key was incorrect or has expired. Please re-request change of e-mail address. If that fails, contact the forum administrator at %s.',
 'E-mail updated'			=>	'Your e-mail address has been updated.',

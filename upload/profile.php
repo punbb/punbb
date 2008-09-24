@@ -896,7 +896,7 @@ else if (isset($_POST['form_sent']))
 					$form['num_posts'] = intval($_POST['num_posts']);
 			}
 
-			if ($forum_config['o_regs_verify'] == '0' || $forum_user['is_admmod'])
+			if ($forum_user['is_admmod'])
 			{
 				require FORUM_ROOT.'include/email.php';
 
@@ -1466,6 +1466,9 @@ else
 		if ($forum_user['id'] == $id || $forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_change_passwords'] == '1'))
 			$forum_page['user_actions']['change_password'] = '<li><a href="'.forum_link($forum_url['change_password'], $id).'">'.$lang_profile['Change password'].'</a></li>';
 
+		if ($forum_user['id'] == $id || $forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_change_email'] == '1'))
+			$forum_page['user_actions']['change_email'] = '<li><a href="'.forum_link($forum_url['change_email'], $id).'">'.$lang_profile['Change email'].'</a></li>';
+
 		if (!$forum_user['is_admmod'] && $forum_config['o_regs_verify'] == '1')
 			$forum_page['user_actions']['change_email'] = '<li><a href="'.forum_link($forum_url['change_email'], $id).'">'.$lang_profile['Change e-mail'].'</a></li>';
 
@@ -1654,8 +1657,12 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 <?php endif; if ($forum_user['is_admmod'] || $forum_config['o_regs_verify'] != '1'): ?>				<div class="frm-fld text required">
 					<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
 						<span class="fld-label"><?php echo $lang_profile['E-mail'] ?></span><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_email" value="<?php echo(isset($_POST['req_username']) ? forum_htmlencode($_POST['req_email']) : $user['email']) ?>" size="35" maxlength="80" /></span>
-						<em class="req-text"><?php echo $lang_common['Required'] ?></em>
+						<span class="fld-input">
+						<?php if ($forum_user['is_admmod']):?>
+							<input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_email" value="<?php echo(isset($_POST['req_username']) ? forum_htmlencode($_POST['req_email']) : $user['email']) ?>" size="35" maxlength="80" /></span>
+						<?else:?>
+							<?php echo(isset($_POST['req_username']) ? forum_htmlencode($_POST['req_email']) : $user['email']) ?></span>
+						<?endif;?>
 					</label>
 				</div>
 <?php endif; ($hook = get_hook('pf_change_details_identity_req_info_end')) ? eval($hook) : null; ?>			</fieldset>
