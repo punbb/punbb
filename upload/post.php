@@ -443,20 +443,20 @@ if ($forum_user['is_guest'])
 		<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
 			<legend class="frm-legend"><strong><?php echo $lang_post['Guest post legend'] ?></strong></legend>
 <?php ($hook = get_hook('po_guest_info_start')) ? eval($hook) : null; ?>
-				<div class="frm-fld text required">
+			<div class="frm-fld text required">
 				<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_post['Guest name'] ?></span><br />
-				<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php if (isset($_POST['req_username'])) echo forum_htmlencode($username); ?>" size="35" maxlength="25" /></span>
-						<em class="req-text"><?php echo $lang_common['Required'] ?></em>
-					</label>
+					<span class="fld-label"><?php echo $lang_post['Guest name'] ?></span><br />
+					<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php if (isset($_POST['req_username'])) echo forum_htmlencode($username); ?>" size="35" maxlength="25" /></span>
+					<em class="req-text"><?php echo $lang_common['Required'] ?></em>
+				</label>
 			</div>
 <?php ($hook = get_hook('po_post_guest_name_div')) ? eval($hook) : null; ?>
-				<div class="frm-fld text<?php if ($forum_config['p_force_guest_email'] == '1') echo ' required' ?>">
+			<div class="frm-fld text<?php if ($forum_config['p_force_guest_email'] == '1') echo ' required' ?>">
 				<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_post['Guest e-mail'] ?></span><br />
-				<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="<?php echo $forum_page['email_form_name'] ?>" value="<?php if (isset($_POST[$forum_page['email_form_name']])) echo forum_htmlencode($email); ?>" size="35" maxlength="80" /></span>
-						<?php if ($forum_config['p_force_guest_email'] == '1') echo '<em class="req-text">'.$lang_common['Required'].'</em>' ?>
-					</label>
+					<span class="fld-label"><?php echo $lang_post['Guest e-mail'] ?></span><br />
+					<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="<?php echo $forum_page['email_form_name'] ?>" value="<?php if (isset($_POST[$forum_page['email_form_name']])) echo forum_htmlencode($email); ?>" size="35" maxlength="80" /></span>
+					<?php if ($forum_config['p_force_guest_email'] == '1') echo '<em class="req-text">'.$lang_common['Required'].'</em>' ?>
+				</label>
 			</div>
 <?php ($hook = get_hook('po_guest_info_end')) ? eval($hook) : null; ?>
 		</fieldset>
