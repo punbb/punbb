@@ -51,8 +51,8 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	{
 		global $lang_profile;
 
-		if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]#i', $text))
-			$errors[] = $lang_profile['Signature quote/code'];
+		if (preg_match('#\[quote(=(&quot;|"|\'|)(.*)\\1)?\]|\[/quote\]|\[code\]|\[/code\]|\[list(=([1a\*]))?\]|\[/list\]#i', $text))
+			$errors[] = $lang_profile['Signature quote/code/list'];
 	}
 
 	if ($forum_config['p_sig_bbcode'] == '1' && $is_signature || $forum_config['p_message_bbcode'] == '1' && !$is_signature)
@@ -96,8 +96,18 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 
 		if ($temp_text !== false)
 			$text = $temp_text;
+
+		// Remove empty tags
+		while ($new_text = preg_replace('/\[(b|u|i|h|colou?r|quote|code|img|url|email|list)(?:\=[^\]]*)?\]\[\/\1\]/', '', $text))
+		{
+			if ($new_text != $text)
+				$text = $new_text;
+			else
+				break;
+		}
+
 	}
-	
+
 	$return = ($hook = get_hook('ps_preparse_bbcode_end')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -173,13 +183,15 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if ($current_nest)
 				continue;
 
+			$current = str_replace("\r\n", "\n", $current);
+			$current = str_replace("\r", "\n", $current);
 			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos($current, "\n") !== false) 
 			{
 				// Deal with new lines
-				$split_current = preg_split("/([\n\r]+)/", $current, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+				$split_current = preg_split("/(\n\n+)/", $current, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 				$current = '';
-				
-				if (!trim($split_current[0], "\r\n")) // the first part is a linebreak so we need to handle any open tags first
+
+				if (!trim($split_current[0], "\n")) // the first part is a linebreak so we need to handle any open tags first
 					array_unshift($split_current, '');
 
 				for ($i = 1; $i < count($split_current); $i += 2)
@@ -187,7 +199,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 					$temp_opened = array();
 					$temp_opened_arg = array();
 					$temp = $split_current[$i - 1];
-				
+
 					while (!empty($open_tags))
 					{
 						$temp_tag = array_pop($open_tags);
@@ -419,11 +431,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				$limit_bbcode = $tags_limit_bbcode[$open_tags[$opened_tag]];
 			else
 				$limit_bbcode = $tags;
-
-			if (preg_match('/\['.preg_quote($current_tag).'(?:=[^\]]*?)?\]\s*$/', $new_text, $matches))
-				$new_text = substr($new_text, 0, 0 - strlen($matches[0]));
-			else
-				$new_text .= $current;
+			$new_text .= $current;
 
 			continue;
 		}
@@ -653,18 +661,18 @@ function handle_img_tag($url, $is_signature = false, $alt = null)
 //
 function handle_list_tag($content, $type = '*')
 {
-	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li>$1</li>', trim($content));
-
 	if (strlen($type) != 1)
 		$type = '*';
-	
+
 	if (strpos($content,'[list') !== false)
 	{
 		$pattern = array('/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems');
 		$replace = array('handle_list_tag(\'$2\', \'$1\')');
 		$content = preg_replace($pattern, $replace, $content);
-    }
-	
+	}
+
+	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', forum_trim($content));
+
 	if ($type == '*')
 		$content = '<ul>'.$content.'</ul>';
 	else
@@ -691,8 +699,8 @@ function do_bbcode($text, $is_signature = false)
 	if (strpos($text, '[quote') !== false)
 	{
 		$text = preg_replace('#\[quote\]\s*#', '</p><div class="quotebox"><blockquote><p>', $text);
-		$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</cite><blockquote><p>"', $text);
-		$text = preg_replace('#\s*\[\/quote\]#', '</p></blockquote></div><p>', $text);
+		$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*?)\\1\]#se', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</cite><blockquote><p>"', $text);
+		$text = preg_replace('#\s*\[\/quote\]#S', '</p></blockquote></div><p>', $text);
 	}
 
 	if (!$is_signature)
@@ -701,11 +709,11 @@ function do_bbcode($text, $is_signature = false)
 		$replace[] = 'handle_list_tag(\'$2\', \'$1\')';
 	}
 
-	$pattern[] = '#\[b\](.*?)\[/b\]#';
-	$pattern[] = '#\[i\](.*?)\[/i\]#';
-	$pattern[] = '#\[u\](.*?)\[/u\]#';
-	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#';
-	$pattern[] = '#\[h\](.*?)\[/h\]#';
+	$pattern[] = '#\[b\](.*?)\[/b\]#ms';
+	$pattern[] = '#\[i\](.*?)\[/i\]#ms';
+	$pattern[] = '#\[u\](.*?)\[/u\]#ms';
+	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#ms';
+	$pattern[] = '#\[h\](.*?)\[/h\]#ms';
 
 	$replace[] = '<strong>$1</strong>';
 	$replace[] = '<em>$1</em>';
@@ -764,7 +772,7 @@ function do_clickable($text)
 	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
 	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
 
-	return utf8_substr($text, 1);
+	return substr($text, 1);
 }
 
 
@@ -780,10 +788,10 @@ function do_smilies($text)
 	foreach ($smilies as $smiley_text => $smiley_img)
 	{
 		if (strpos($text, $smiley_text) !== false)
-			$text = preg_replace("#(?<=\s)".preg_quote($smiley_text, '#')."(?=\W)#m", '$1<img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />$2', $text);
+			$text = preg_replace("#(?<=[>\s])".preg_quote($smiley_text, '#')."(?=\W)#m", '<img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />', $text);
 	}
 
-	return utf8_substr($text, 1, -1);
+	return substr($text, 1, -1);
 }
 
 
