@@ -313,6 +313,13 @@ if (isset($query))
 					<h3><?php echo $forum_page['item_head'] ?></h3>
 				</div>
 				<div class="postbody">
+
+			// Should we display the dot or not? :)
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1' && $search_set[$i]['has_posted'] > 0)
+			{
+				$forum_page['item_title']['posted'] = '<span class="posted-mark">'.$lang_forum['You posted indicator'].'</span>';
+				$forum_page['item_status']['posted'] = 'posted';
+			}
 					<div class="user">
 						<h4 class="user-ident"><?php echo $forum_page['user_ident'] ?></h4>
 					</div>
