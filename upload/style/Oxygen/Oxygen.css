@@ -440,6 +440,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	background-position: center left;
 	white-space: nowrap;
 	float: left;
+	font-size:1.1em;
 	}	
 
 .brd-crumbs .crumbfirst {
@@ -460,21 +461,20 @@ D - MAIN CONTENT COMMON ELEMENTS
 	border-style: solid;
 	border-width: 1px;
 	padding: 0 1.3em;
-	min-height: 2.6em;
+	min-height: 2em;
 	}
 	
 .main .paged-head .paging,
 .main .paged-foot .paging {
 	float: left;
-	font-size: 1.1em;
-	padding: 0.6em 0;
+	padding: 0.4em 0;
 	}
 	
 .main .paged-head .posting,
 .main .paged-foot .posting {
 	float: right;
 	font-size: 1.1em;
-	padding: 0.6em 0;
+	padding: 0.4em 0;
 	}
 	
 .brd .posting, .brd .posting * {
@@ -528,8 +528,8 @@ D - MAIN CONTENT COMMON ELEMENTS
 
 .main .main-head,
 .main .main-foot {
-	padding: 0.7em 1.3em;
-	min-height: 1.3em;
+	padding: 0.6em 1.3em;
+	min-height: 1em;
 	}
 
 #brd-install .main-head {
@@ -550,9 +550,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	padding: 0 1px;
 	}
 
-.main .main-head h1 span,
-.main .main-head h2 span,
-.main .main-foot .h2 strong {
+.main .main-head h1 span {
 	font-size: 1.1em;
 	}
 
