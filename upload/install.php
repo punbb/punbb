@@ -54,6 +54,7 @@ require FORUM_ROOT.'include/functions.php';
 // Load UTF-8 functions
 require FORUM_ROOT.'include/utf8/utf8.php';
 require FORUM_ROOT.'include/utf8/ucwords.php';
+require FORUM_ROOT.'include/utf8/trim.php';
 
 //
 // Generate output to be used for config.php
@@ -115,7 +116,7 @@ if (!isset($_POST['form_sent']))
 	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 	if (substr($base_url_guess, -1) == '/')
 		$base_url_guess = substr($base_url_guess, 0, -1);
-		
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
@@ -335,17 +336,17 @@ else
 
 
 	$db_type = $_POST['req_db_type'];
-	$db_host = trim($_POST['req_db_host']);
-	$db_name = trim($_POST['req_db_name']);
-	$db_username = unescape(trim($_POST['db_username']));
-	$db_password = unescape(trim($_POST['db_password']));
-	$db_prefix = trim($_POST['db_prefix']);
-	$username = unescape(trim($_POST['req_username']));
-	$email = unescape(strtolower(trim($_POST['req_email'])));
-	$password1 = unescape(trim($_POST['req_password1']));
-	$password2 = unescape(trim($_POST['req_password2']));
-	$board_title = unescape(trim($_POST['board_title']));
-	$board_descrip = unescape(trim($_POST['board_descrip']));
+	$db_host = forum_trim($_POST['req_db_host']);
+	$db_name = forum_trim($_POST['req_db_name']);
+	$db_username = unescape(forum_trim($_POST['db_username']));
+	$db_password = unescape(forum_trim($_POST['db_password']));
+	$db_prefix = forum_trim($_POST['db_prefix']);
+	$username = unescape(forum_trim($_POST['req_username']));
+	$email = unescape(strtolower(forum_trim($_POST['req_email'])));
+	$password1 = unescape(forum_trim($_POST['req_password1']));
+	$password2 = unescape(forum_trim($_POST['req_password2']));
+	$board_title = unescape(forum_trim($_POST['board_title']));
+	$board_descrip = unescape(forum_trim($_POST['board_descrip']));
 
 
 	// Make sure base_url doesn't end with a slash
@@ -825,7 +826,7 @@ else
 				'datatype'		=> 'TINYINT(1)',
 				'allow_null'	=> false,
 				'default'		=> '1'
-			),			
+			),
 			'g_post_flood'				=> array(
 				'datatype'		=> 'SMALLINT(6)',
 				'allow_null'	=> false,

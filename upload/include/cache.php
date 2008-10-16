@@ -382,7 +382,7 @@ function generate_updates_cache()
 	{
 		require FORUM_ROOT.'/include/xml.php';
 
-		$output = xml_to_array(trim($result['content']));
+		$output = xml_to_array(forum_trim($result['content']));
 		$output = current($output);
 		$output['cached'] = time();
 		$output['fail'] = false;
@@ -411,7 +411,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 	foreach ( array_unique( array_merge($repository_urls, $repository_url_by_extension) ) as $url)
 	{
 		//Get repository timestamp
-		$repository_timestamp = @trim(end(get_remote_file( $url.'/timestamp', 2)));
+		$repository_timestamp = @forum_trim(end(get_remote_file( $url.'/timestamp', 2)));
 		if (!is_numeric($repository_timestamp))
 			continue;
 		
@@ -422,7 +422,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 		{
 			foreach ($inst_exts as $ext)
 			{
-				$version = @trim(end(get_remote_file($url.'/'.$ext['id'].'/lastversion', 2)));
+				$version = @forum_trim(end(get_remote_file($url.'/'.$ext['id'].'/lastversion', 2)));
 				if (empty($version) || !preg_match('~^[0-9a-zA-Z\. +-]+$~u', $version))
 					continue;
 				
@@ -433,7 +433,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 				{
 					$forum_ext_last_versions[ $ext['id'] ] = array('version' => $version, 'repo_url' => $url);
 					
-					$last_changes = @trim(end(get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2)));
+					$last_changes = @forum_trim(end(get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2)));
 					if ( !empty($last_changes) )
 						$forum_ext_last_versions[ $ext['id'] ][ 'changes' ] = $last_changes;
 				}

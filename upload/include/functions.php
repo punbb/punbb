@@ -887,12 +887,12 @@ function add_user($user_info, &$new_uid)
 	if ($user_info['require_verification'])
 	{
 		// Load the "welcome" template
-		$mail_tpl = trim(file_get_contents(FORUM_ROOT.'lang/'.$forum_user['language'].'/mail_templates/welcome.tpl'));
+		$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$forum_user['language'].'/mail_templates/welcome.tpl'));
 
 		// The first row contains the subject
 		$first_crlf = strpos($mail_tpl, "\n");
-		$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
-		$mail_message = trim(substr($mail_tpl, $first_crlf));
+		$mail_subject = forum_trim(substr($mail_tpl, 8, $first_crlf-8));
+		$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
 		$mail_subject = str_replace('<board_title>', $forum_config['o_board_title'], $mail_subject);
 		$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
@@ -1539,19 +1539,19 @@ function send_subscriptions($post_info, $new_pid)
 				if (file_exists(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
 				{
 					// Load the "new reply" template
-					$mail_tpl = trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
+					$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
 
 					// Load the "new reply full" template (with post included)
-					$mail_tpl_full = trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
+					$mail_tpl_full = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
 
 					// The first row contains the subject (it also starts with "Subject:")
 					$first_crlf = strpos($mail_tpl, "\n");
-					$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
-					$mail_message = trim(substr($mail_tpl, $first_crlf));
+					$mail_subject = forum_trim(substr($mail_tpl, 8, $first_crlf-8));
+					$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
 					$first_crlf = strpos($mail_tpl_full, "\n");
-					$mail_subject_full = trim(substr($mail_tpl_full, 8, $first_crlf-8));
-					$mail_message_full = trim(substr($mail_tpl_full, $first_crlf));
+					$mail_subject_full = forum_trim(substr($mail_tpl_full, 8, $first_crlf-8));
+					$mail_message_full = forum_trim(substr($mail_tpl_full, $first_crlf));
 
 					$mail_subject = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject);
 					$mail_message = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message);
@@ -1615,7 +1615,7 @@ function sef_friendly($str)
 	$str = strtolower(utf8_decode($str));
 	$str = preg_replace(array('/[^a-z0-9\s]/', '/[\s]+/'), array('', '-'), $str);
 
-	return $str != '-' ? trim($str, '-') : '';
+	return $str != '-' ? forum_trim($str, '-') : '';
 }
 
 
@@ -1869,7 +1869,7 @@ function message($message, $link = '')
 </div>
 <?php
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -1973,7 +1973,7 @@ function csrf_confirm_form()
 </div>
 <?php
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -2264,7 +2264,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 		if ($content !== false && curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200')
 		{
 			if ($head_only)
-				$result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", trim($content)));
+				$result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", forum_trim($content)));
 			else
 			{
 				preg_match('#HTTP/1.[01] 200 OK#', $content, $match, PREG_OFFSET_CAPTURE);
@@ -2308,7 +2308,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 			// Process 301/302 redirect
 			if ($content !== false && $max_redirects > 0 && preg_match('#^HTTP/1.[01] 30[12]#', $content))
 			{
-				$headers = explode("\r\n", trim($content));
+				$headers = explode("\r\n", forum_trim($content));
 				foreach($headers as $header)
 					if (substr($header, 0, 10) == 'Location: ')
 					{
@@ -2323,7 +2323,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 			if ($content !== false && preg_match('#^HTTP/1.[01] 200 OK#', $content))
 			{
 				if ($head_only)
-					$result['headers'] = explode("\r\n", trim($content));
+					$result['headers'] = explode("\r\n", forum_trim($content));
 				else
 				{
 					$content_start = strpos($content, "\r\n\r\n");
@@ -2401,7 +2401,7 @@ function maintenance_message()
 
 	($hook = get_hook('fn_maintenance_message_pre_template_loaded')) ? eval($hook) : null;
 
-	$tpl_maint = trim(file_get_contents($tpl_path));
+	$tpl_maint = forum_trim(file_get_contents($tpl_path));
 
 	($hook = get_hook('fn_maintenance_message_template_loaded')) ? eval($hook) : null;
 
@@ -2420,7 +2420,7 @@ function maintenance_message()
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'_fix7.css' ?>" /><![endif]-->
 <?php
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_maint = str_replace('<!-- forum_head -->', $tpl_temp, $tpl_maint);
 	ob_end_clean();
 	// END SUBST - <!-- forum_head -->
@@ -2443,7 +2443,7 @@ function maintenance_message()
 </div>
 <?php
 
-	$tpl_temp = "\t".trim(ob_get_contents());
+	$tpl_temp = "\t".forum_trim(ob_get_contents());
 	$tpl_maint = str_replace('<!-- forum_maint_main -->', $tpl_temp, $tpl_maint);
 	ob_end_clean();
 	// END SUBST - <!-- forum_maint_main -->
@@ -2512,7 +2512,7 @@ function redirect($destination_url, $message)
 
 	($hook = get_hook('fn_redirect_pre_template_loaded')) ? eval($hook) : null;
 
-	$tpl_redir = trim(file_get_contents($tpl_path));
+	$tpl_redir = forum_trim(file_get_contents($tpl_path));
 
 	($hook = get_hook('fn_redirect_template_loaded')) ? eval($hook) : null;
 
@@ -2531,7 +2531,7 @@ function redirect($destination_url, $message)
 	// Include stylesheets
 	require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
 
-	$head_temp = trim(ob_get_contents());
+	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
 	foreach (explode("\n", $head_temp) as $style_temp) {
 		$forum_head['style'.$num_temp++] = $style_temp;
@@ -2565,7 +2565,7 @@ function redirect($destination_url, $message)
 </div>
 <?php
 
-	$tpl_temp = "\t".trim(ob_get_contents());
+	$tpl_temp = "\t".forum_trim(ob_get_contents());
 	$tpl_redir = str_replace('<!-- forum_redir_main -->', $tpl_temp, $tpl_redir);
 	ob_end_clean();
 	// END SUBST - <!-- forum_redir_main -->
