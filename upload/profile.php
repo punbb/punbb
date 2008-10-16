@@ -1764,7 +1764,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 		$forum_page['d'] = dir(FORUM_ROOT.'style');
 		while (($forum_page['entry'] = $forum_page['d']->read()) !== false)
 		{
-			if ($forum_page['entry'] != '.' && $forum_page['entry'] != '..' && is_dir(FORUM_ROOT.'style/'.$forum_page['entry']) && file_exists(FORUM_ROOT.'style/'.$forum_page['entry'].'/'.$forum_page['entry'].'.css'))
+			if ($forum_page['entry'] != '.' && $forum_page['entry'] != '..' && is_dir(FORUM_ROOT.'style/'.$forum_page['entry']) && file_exists(FORUM_ROOT.'style/'.$forum_page['entry'].'/'.$forum_page['entry'].'.php'))
 				$forum_page['styles'][] = $forum_page['entry'];
 		}
 		$forum_page['d']->close();
@@ -1928,7 +1928,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 			echo "\t\t\t\t\t\t\t".'<option value="'.$key.'"';
 			if ($user['date_format'] == $key)
 				echo ' selected="selected"';
-			echo '>'. gmdate($date_format);
+			echo '>'. gmdate($date_format, time() + (($forum_user['timezone'] + $forum_user['dst']) * 3600));
 			if ($key == 0)
 				echo ' ('.$lang_profile['Default'].')';
 			echo "</option>\n";

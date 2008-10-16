@@ -173,9 +173,7 @@ if (isset($_POST['form_sent']))
 	// Clean up message from POST
 	$message = forum_linebreaks(forum_trim($_POST['req_message']));
 
-	if ($message == '')
-		$errors[] = $lang_post['No message'];
-	else if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
+	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
 		$errors[] = sprintf($lang_post['Too long message'], strlen($message), FORUM_MAX_POSTSIZE_BYTES, intval(100*(FORUM_MAX_POSTSIZE_BYTES/strlen($message))));
 	else if ($forum_config['p_message_all_caps'] == '0' && utf8_strtoupper($message) == $message && !$forum_page['is_admmod'])
 		$message = utf8_ucwords(utf8_strtolower($message));
@@ -187,6 +185,9 @@ if (isset($_POST['form_sent']))
 			require FORUM_ROOT.'include/parser.php';
 		$message = preparse_bbcode($message, $errors);
 	}
+
+	if ($message == '')
+		$errors[] = $lang_post['No message'];
 
 	$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 	$subscribe = isset($_POST['subscribe']) ? 1 : 0;
