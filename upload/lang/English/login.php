@@ -17,6 +17,7 @@ $lang_login = array(
 'Send password legend'		=>	'Required address for new password:',
 'Profile e-mail address'	=>	'E-mail address:',
 'Profile e-mail info'		=>	'The e-mail address currently appearing in your profile',
+'Email flood'				=>	'This account has already requested a new password in the past %s seconds. Please wait a while before requesting a new password again.',
 'Logout redirect'			=>	'Logged out. Redirecting &#8230;',
 'No e-mail match'			=>	'There is no user registered with the e-mail address %s.',
 'Request pass'				=>	'request a new password',
