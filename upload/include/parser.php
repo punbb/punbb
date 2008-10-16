@@ -68,7 +68,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 		$pattern = array('/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems');
 		$replace = array('preparse_list_tag(\'$2\', \'$1\', $errors)');
 		$text = preg_replace($pattern, $replace, $text);
-		
+
 		$text = str_replace('*'."\0".']', '*]', $text);
 
 		if ($forum_config['o_make_links'] == '1')
@@ -185,7 +185,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 
 			$current = str_replace("\r\n", "\n", $current);
 			$current = str_replace("\r", "\n", $current);
-			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos($current, "\n") !== false) 
+			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos($current, "\n") !== false)
 			{
 				// Deal with new lines
 				$split_current = preg_split("/(\n\n+)/", $current, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
@@ -233,7 +233,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 					}
 					$current .= $temp;
 				}
-				
+
 				if (array_key_exists($i - 1, $split_current))
 					$current .= $split_current[$i - 1];
 			}
@@ -531,7 +531,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 function preparse_list_tag($content, $type = '*', &$errors)
 {
 	global $lang_common;
-	
+
 	if (strlen($type) != 1)
 		$type = '*';
 
@@ -671,7 +671,7 @@ function handle_list_tag($content, $type = '*')
 		$content = preg_replace($pattern, $replace, $content);
 	}
 
-	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', forum_trim($content));
+	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', trim($content));
 
 	if ($type == '*')
 		$content = '<ul>'.$content.'</ul>';
