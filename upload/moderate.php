@@ -423,7 +423,7 @@ if (isset($_GET['tid']))
 		// Give the post some class
 		$forum_page['item_status'] = array(
 			'post',
-			($forum_page['item_count'] % 2 == 0) ? 'odd' : 'even'
+			($forum_page['item_count'] % 2 == 0) ? 'even' : 'odd'
 		);
 
 		if ($forum_page['item_count'] == 1)
