@@ -2196,6 +2196,15 @@ function forum_linebreaks($str)
 
 
 //
+// Trim whitespace including non-breaking space
+//
+function forum_trim($str, $charlist = " \t\n\r\x0b\xc2\xa0")
+{
+	return utf8_trim($str, $charlist);
+}
+
+
+//
 // Inserts $element into $input at $offset
 // $offset can be either a numerical offset to insert at (eg: 0 inserts at the beginning of the array)
 // or a string, which is the key that the new element should be inserted before
@@ -2598,12 +2607,12 @@ function redirect($destination_url, $message)
 //
 function error()
 {
-	if (!headers_sent()) 
+	if (!headers_sent())
 	{
 		header('Content-type: text/html; charset=utf-8');
 		header('HTTP/1.1 503 Service Temporarily Unavailable');
 	}
-	
+
 	global $forum_config;
 
 	/*
