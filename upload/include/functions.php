@@ -373,15 +373,11 @@ function check_bans()
 			$num_ips = count($cur_ban_ips);
 			for ($i = 0; $i < $num_ips; ++$i)
 			{
-				// Both the ban and the IP match IPv4
-				if (strpos($cur_ban_ips[$i], '.') !== false && strpos($user_ip, '.') !== false)
+				// Add the proper ending to the ban
+				if (strpos($user_ip, '.') !== false)
 					$cur_ban_ips[$i] = $cur_ban_ips[$i].'.';
-				// Both the ban and the IP match IPv6
-				else if (strpos($cur_ban_ips[$i], ':') !== false && strpos($user_ip, ':') !== false)
-					$cur_ban_ips[$i] = $cur_ban_ips[$i].':';
-				// The ban and the IP are not using the same system
 				else
-					continue;
+					$cur_ban_ips[$i] = $cur_ban_ips[$i].':';
 
 				if (substr($user_ip, 0, strlen($cur_ban_ips[$i])) == $cur_ban_ips[$i])
 				{
@@ -847,7 +843,7 @@ function validate_username($username, $exclude_id = null)
 		$errors[] = $lang_profile['Username IP'];
 	else if ((strpos($username, '[') !== false || strpos($username, ']') !== false) && strpos($username, '\'') !== false && strpos($username, '"') !== false)
 		$errors[] = $lang_profile['Username reserved chars'];
-	else if (preg_match('#\[b\]|\[/b\]|\[u\]|\[/u\]|\[i\]|\[/i\]|\[color|\[/color\]|\[quote\]|\[quote=|\[/quote\]|\[code\]|\[/code\]|\[img\]|\[/img\]|\[url|\[/url\]|\[email|\[/email\]|\[list\]|\[list=|\[/list\]#i', $username))
+	else if (preg_match('/(?:\[\/?(?:b|u|i|h|colou?r|quote|code|img|url|email|list)\]|\[(?:code|quote|list)=)/i', $username))
 		$errors[] = $lang_profile['Username BBCode'];
 
 	// Check username for any censored words
