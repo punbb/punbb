@@ -1492,6 +1492,7 @@ else
 		'o_additional_navlinks'		=> "''",
 		'o_report_method'			=> "'0'",
 		'o_regs_report'				=> "'0'",
+		'o_default_email_setting'	=> "'1'",
 		'o_mailing_list'			=> "'$email'",
 		'o_avatars'					=> "'$avatars'",
 		'o_avatars_dir'				=> "'img/avatars'",

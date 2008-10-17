@@ -505,6 +505,10 @@ $lang_admin = array(
 'Topic review info'				=>	'Ordered newest first. 0 to disable.',
 'Topics per page'				=>	'Topics per page',
 'Posts per page'				=>	'Posts per page',
+'E-mail setting group'			=>	'Default e-mail setting:',
+'Display e-mail label'			=>	'Display e-mail address to other users.',
+'Allow form e-mail label'		=>	'Hide e-mail address but allow e-mail via the forum.',
+'Disallow form e-mail label'	=>	'Hide e-mail address and disallow e-mail via the forum.',
 
 // admin_options - communications
 'E-mail head'					=>	'E-mail',
