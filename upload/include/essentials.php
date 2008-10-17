@@ -76,8 +76,8 @@ if (!defined('FORUM_CACHE_DIR'))
 	define('FORUM_CACHE_DIR', FORUM_ROOT.'cache/');
 
 
-// Construct REQUEST_URI if it isn't set
-if (!isset($_SERVER['REQUEST_URI']))
+// Construct REQUEST_URI if it isn't set (or if it's set improperly)
+if (!isset($_SERVER['REQUEST_URI']) || (!empty($_SERVER['QUERY_STRING']) && strpos($_SERVER['REQUEST_URI'], '?') === false))
 	$_SERVER['REQUEST_URI'] = (isset($_SERVER['PHP_SELF']) ? str_replace(array('%26', '%3D', '%2F'), array('&', '=', '/'), rawurlencode($_SERVER['PHP_SELF'])) : '').(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : '');
 
 // Load DB abstraction layer and connect
