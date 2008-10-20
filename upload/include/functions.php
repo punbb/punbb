@@ -2097,9 +2097,12 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 
 
 //
-// Format a time string according to $time_format and timezones
+// Format a time string according to $date_format, $time_format, and timezones
 //
-function format_time($timestamp, $date_only = false)
+define('FORUM_FT_DATETIME', 0);
+define('FORUM_FT_DATE', 1);
+define('FORUM_FT_TIME', 2);
+function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null, $time_format = null, $no_text = false)
 {
 	global $forum_config, $lang_common, $forum_user, $forum_time_formats, $forum_date_formats;
 
@@ -2108,26 +2111,44 @@ function format_time($timestamp, $date_only = false)
 		return $return;
 
 	if ($timestamp == '')
-		return $lang_common['Never'];
+		return ($no_text ? '' : $lang_common['Never']);
+
+	if ($date_format == null)
+		$date_format = $forum_date_formats[$forum_user['date_format']];
+
+	if ($time_format == null)
+		$time_format = $forum_time_formats[$forum_user['time_format']];
 
 	$diff = ($forum_user['timezone'] + $forum_user['dst']) * 3600;
 	$timestamp += $diff;
 	$now = time();
 
-	$date = gmdate($forum_date_formats[$forum_user['date_format']], $timestamp);
-	$base = gmdate('Y-m-d', $timestamp);
-	$today = gmdate('Y-m-d', $now+$diff);
-	$yesterday = gmdate('Y-m-d', $now+$diff-86400);
+	$formatted_time = '';
 
-	if ($base == $today)
-		$date = $lang_common['Today'];
-	else if ($base == $yesterday)
-		$date = $lang_common['Yesterday'];
+	if ($type == FORUM_FT_DATETIME || $type == FORUM_FT_DATE)
+	{
+		$formatted_time = gmdate($date_format, $timestamp);
 
-	if (!$date_only)
-		$date .= ' '.gmdate($forum_time_formats[$forum_user['time_format']], $timestamp);
+		if (!$no_text)
+		{
+			$base = gmdate('Y-m-d', $timestamp);
+			$today = gmdate('Y-m-d', $now + $diff);
+			$yesterday = gmdate('Y-m-d', $now + $diff - 86400);
 
-	return $date;
+			if ($base == $today)
+				$formatted_time = $lang_common['Today'];
+			else if ($base == $yesterday)
+				$formatted_time = $lang_common['Yesterday'];
+		}
+	}
+
+	if ($type == FORUM_FT_DATETIME)
+		$formatted_time .= ' ';
+
+	if ($type == FORUM_FT_DATETIME || $type == FORUM_FT_TIME)
+		$formatted_time .= gmdate($time_format, $timestamp);
+
+	return $formatted_time;
 }
 
 
