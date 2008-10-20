@@ -146,7 +146,8 @@ if (isset($_POST['form_sent']))
 		{
 			($hook = get_hook('aop_email_validation')) ? eval($hook) : null;
 
-			require FORUM_ROOT.'include/email.php';
+			if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
+				require FORUM_ROOT.'include/email.php';
 
 			$form['admin_email'] = strtolower($form['admin_email']);
 			if (!is_valid_email($form['admin_email']))
@@ -252,8 +253,10 @@ if (isset($_POST['form_sent']))
 		}
 	}
 
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require_once FORUM_ROOT.'include/cache.php';
+
 	// Regenerate the config cache
-	require_once FORUM_ROOT.'include/cache.php';
 	generate_config_cache();
 
 	redirect(forum_link($forum_url['admin_options_'.$section]), $lang_admin['Options updated'].' '.$lang_admin['Redirect']);
