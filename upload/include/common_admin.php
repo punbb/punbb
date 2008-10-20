@@ -68,11 +68,11 @@ function generate_admin_menu()
 		}
 		else if (FORUM_PAGE_SECTION == 'options')
 		{
-			$adnav_sublinks['options_setup'] = '<li'.((FORUM_PAGE == 'admin-options-setup') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_options_setup']).'">'.$lang_admin['Setup'].'</a></li>';
-			$adnav_sublinks['options_features'] = '<li'.((FORUM_PAGE == 'admin-options-features') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_options_features']).'">'.$lang_admin['Features'].'</a></li>';
-			$adnav_sublinks['options-announcements'] = '<li'.((FORUM_PAGE == 'admin-options-announcements') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_options_announcements']).'">'.$lang_admin['Announcements'].'</a></li>';
-			$adnav_sublinks['options-email'] = '<li'.((FORUM_PAGE == 'admin-options-email') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_options_email']).'">'.$lang_admin['E-mail'].'</a></li>';
-			$adnav_sublinks['options-registration'] = '<li'.((FORUM_PAGE == 'admin-options-registration') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_options_registration']).'">'.$lang_admin['Registration'].'</a></li>';
+			$adnav_sublinks['settings-setup'] = '<li'.((FORUM_PAGE == 'admin-settings-setup') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_setup']).'">'.$lang_admin['Setup'].'</a></li>';
+			$adnav_sublinks['settings-features'] = '<li'.((FORUM_PAGE == 'admin-settings-features') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin['Features'].'</a></li>';
+			$adnav_sublinks['settings-announcements'] = '<li'.((FORUM_PAGE == 'admin-settings-announcements') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_announcements']).'">'.$lang_admin['Announcements'].'</a></li>';
+			$adnav_sublinks['settings-email'] = '<li'.((FORUM_PAGE == 'admin-settings-email') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_email']).'">'.$lang_admin['E-mail'].'</a></li>';
+			$adnav_sublinks['settings-registration'] = '<li'.((FORUM_PAGE == 'admin-settings-registration') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_registration']).'">'.$lang_admin['Registration'].'</a></li>';
 			$adnav_sublinks['censoring'] = '<li'.((FORUM_PAGE == 'admin-censoring') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_censoring']).'">'.$lang_admin['Censoring'].'</a></li>';
 		}
 		else if (FORUM_PAGE_SECTION == 'management')
@@ -82,7 +82,7 @@ function generate_admin_menu()
 
 			$adnav_sublinks['reindex'] = '<li'.((FORUM_PAGE == 'admin-reindex') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_reindex']).'">'.$lang_admin['Rebuild index'].'</a></li>';
 
-			$adnav_sublinks['options-maintenance'] = '<li'.((FORUM_PAGE == 'admin-options-maintenance') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_options_maintenance']).'">'.$lang_admin['Maintenance mode'].'</a></li>';
+			$adnav_sublinks['settings-maintenance'] = '<li'.((FORUM_PAGE == 'admin-settings-maintenance') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_maintenance']).'">'.$lang_admin['Maintenance mode'].'</a></li>';
 		}
 		else if (FORUM_PAGE_SECTION == 'extensions')
 		{
@@ -103,7 +103,7 @@ function generate_admin_menu()
 	else
 	{
 		$adnav_links['index'] = '<li'.((FORUM_PAGE_SECTION == 'start') ? ' class="topactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'"><span>'.$lang_admin['Start'].'</span></a>'.(((FORUM_PAGE_SECTION == 'start') && ($adnav_submenu != '')) ? $adnav_submenu."\n\t\t\t" : '').'</li>';
-		$adnav_links['options_setup'] = '<li'.((FORUM_PAGE_SECTION == 'options') ? ' class="topactive"' : '').'><a href="'.forum_link($forum_url['admin_options_setup']).'"><span>'.$lang_admin['Settings'].'</span></a>'.(((FORUM_PAGE_SECTION == 'options') && ($adnav_submenu != '')) ? $adnav_submenu."\n\t\t\t" : '').'</li>';
+		$adnav_links['settings-setup'] = '<li'.((FORUM_PAGE_SECTION == 'options') ? ' class="topactive"' : '').'><a href="'.forum_link($forum_url['admin_settings_setup']).'"><span>'.$lang_admin['Settings'].'</span></a>'.(((FORUM_PAGE_SECTION == 'options') && ($adnav_submenu != '')) ? $adnav_submenu."\n\t\t\t" : '').'</li>';
 		$adnav_links['users'] = '<li'.((FORUM_PAGE_SECTION == 'users') ? ' class="topactive"' : '').'><a href="'.forum_link($forum_url['admin_users']).'"><span>'.$lang_admin['Users'].'</span></a>'.(((FORUM_PAGE_SECTION == 'users') && ($adnav_submenu != '')) ? $adnav_submenu."\n\t\t\t" : '').'</li>';
 		$adnav_links['reports'] = '<li'.((FORUM_PAGE_SECTION == 'management') ? ' class="topactive"' : '').'><a href="'.forum_link($forum_url['admin_reports']).'"><span>'.$lang_admin['Management'].'</span></a>'.(((FORUM_PAGE_SECTION == 'management') && ($adnav_submenu != '')) ? $adnav_submenu."\n\t\t\t" : '').'</li>';
 		$adnav_links['extensions_manage'] = '<li'.((FORUM_PAGE_SECTION == 'extensions') ? ' class="topactive"' : '').'><a href="'.forum_link($forum_url['admin_extensions_manage']).'"><span>'.$lang_admin['Extensions'].'</span></a>'.(((FORUM_PAGE_SECTION == 'extensions') && ($adnav_submenu != '')) ? $adnav_submenu."\n\t\t\t" : '').'</li>';

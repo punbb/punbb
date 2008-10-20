@@ -359,7 +359,7 @@ $lang_admin = array(
 'Javascript redirect'			=>	'JavaScript redirect unsuccessful.',
 'Click to continue'				=>	'Click here to continue',
 
-// admin_options - essentials
+// admin_settings - essentials
 'Essentials head'				=>	'Setup PunBB',
 'Essentials personal head'		=>	'<strong>%s.</strong> Personalize your PunBB installation',
 'Essentials local head'			=>	'<strong>%s.</strong> Configure PunBB for your location',
@@ -416,7 +416,7 @@ $lang_admin = array(
 'gzip output'					=>	'Enable output compression using gzip.',
 'gzip info'						=>	'If enabled, PunBB will gzip the output sent to browsers. This will reduce bandwidth usage, but use a little more CPU. This feature requires that PHP is configured with zlib (--with-zlib). Note: If you already have one of the Apache modules mod_gzip or mod_deflate set up to compress PHP scripts, you should disable this feature.',
 
-// admin_options - features
+// admin_settings - features
 'User part head'				=>	'<strong>%s.</strong> User features and information',
 'General part head'				=>	'<strong>%s.</strong> General features',
 'Timeout part head'				=>	'<strong>%s.</strong> Timeouts and redirect (set defaults for idle times and redirect delay)',
@@ -456,7 +456,7 @@ $lang_admin = array(
 'Require guest email'			=>	'Guests must supply e-mail addresses when posting.',
 
 
-// admin_options - content
+// admin_settings - content
 'Posting part head'				=>	'<strong>%s.</strong> Topic and post features and information',
 'Message part head'				=>	'<strong>%s.</strong> Topic and post content',
 'Sigs part head'				=>	'<strong>%s.</strong> User signatures and signature content',
@@ -510,7 +510,7 @@ $lang_admin = array(
 'Allow form e-mail label'		=>	'Hide e-mail address but allow e-mail via the forum.',
 'Disallow form e-mail label'	=>	'Hide e-mail address and disallow e-mail via the forum.',
 
-// admin_options - communications
+// admin_settings - communications
 'E-mail head'					=>	'E-mail',
 'Essentials e-mail head'		=>	'<strong>%s.</strong> Mail server configuration for sending e-mails from the forum',
 'Webmaster e-mail help'			=>	'(The "from" address of e-mails sent by the forum)',
@@ -547,7 +547,7 @@ $lang_admin = array(
 'Mailing list'					=>	'Create mailing list',
 'Mailing list help'				=>	'A comma separated list of recipients of reports and/or new registration notifications.',
 
-// admin_options - registration
+// admin_settings - registration
 'Registration head'				=>	'Registration',
 'Allow reg head'				=>	'<strong>%s.</strong> New registrations',
 'New reg info'					=>	'You may choose to verify all new registrations. When registration verification is enabled, users are e-mailed an activation link when they register. They can then use the link to set their password and log in. This feature also requires users to verify new e-mail addresses if they choose to change from the e-mail addresses they registered with. This is an effective way of avoiding registration abuse and making sure that all users have "correct" e-mail addresses in their profiles.',

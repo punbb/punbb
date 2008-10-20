@@ -259,7 +259,7 @@ if (isset($_POST['form_sent']))
 	// Regenerate the config cache
 	generate_config_cache();
 
-	redirect(forum_link($forum_url['admin_options_'.$section]), $lang_admin['Options updated'].' '.$lang_admin['Redirect']);
+	redirect(forum_link($forum_url['admin_settings_'.$section]), $lang_admin['Options updated'].' '.$lang_admin['Redirect']);
 }
 
 
@@ -279,7 +279,7 @@ if (!$section || $section == 'setup')
 	($hook = get_hook('aop_setup_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'options');
-	define('FORUM_PAGE', 'admin-options-setup');
+	define('FORUM_PAGE', 'admin-settings-setup');
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -301,9 +301,9 @@ if (!$section || $section == 'setup')
 		<div class="frm-head">
 			<h2><span><?php echo $lang_admin['Essentials head'] ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_options_setup']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_settings_setup']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_options_setup'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_settings_setup'])) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 <?php ($hook = get_hook('aop_setup_pre_personal_part')) ? eval($hook) : null; ?>
@@ -654,7 +654,7 @@ else if ($section == 'features')
 	($hook = get_hook('aop_features_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'options');
-	define('FORUM_PAGE', 'admin-options-features');
+	define('FORUM_PAGE', 'admin-settings-features');
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -675,9 +675,9 @@ else if ($section == 'features')
 		<div class="frm-head">
 			<h2><span><?php echo $lang_admin['Features'] ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_options_features']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_settings_features']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_options_features'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_settings_features'])) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 <?php ($hook = get_hook('aop_features_pre_general_part')) ? eval($hook) : null; ?>
@@ -922,7 +922,7 @@ else if ($section == 'announcements')
 	($hook = get_hook('aop_announcements_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'options');
-	define('FORUM_PAGE', 'admin-options-announcements');
+	define('FORUM_PAGE', 'admin-settings-announcements');
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -943,9 +943,9 @@ else if ($section == 'announcements')
 		<div class="frm-head">
 			<h2><span><?php echo $lang_admin['Announcement head'] ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_options_announcements']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_settings_announcements']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_options_announcements'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_settings_announcements'])) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 			<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
@@ -991,7 +991,7 @@ else if ($section == 'registration')
 	($hook = get_hook('aop_registration_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'options');
-	define('FORUM_PAGE', 'admin-options-registration');
+	define('FORUM_PAGE', 'admin-settings-registration');
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -1012,9 +1012,9 @@ else if ($section == 'registration')
 		<div class="frm-head">
 			<h2><span><?php echo $lang_admin['Registration head'] ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_options_registration']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_settings_registration']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_options_registration'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_settings_registration'])) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 <?php ($hook = get_hook('aop_registration_pre_new_regs_part')) ? eval($hook) : null; ?>
@@ -1103,7 +1103,7 @@ else if ($section == 'maintenance')
 	($hook = get_hook('aop_maintenance_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'management');
-	define('FORUM_PAGE', 'admin-options-maintenance');
+	define('FORUM_PAGE', 'admin-settings-maintenance');
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -1124,9 +1124,9 @@ else if ($section == 'maintenance')
 		<div class="frm-head">
 			<h2><span><?php echo $lang_admin['Maintenance head'] ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_options_maintenance']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_settings_maintenance']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_options_maintenance'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_settings_maintenance'])) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 			<div class="frm-info">
@@ -1174,7 +1174,7 @@ else if ($section == 'email')
 	($hook = get_hook('aop_email_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'options');
-	define('FORUM_PAGE', 'admin-options-email');
+	define('FORUM_PAGE', 'admin-settings-email');
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -1195,9 +1195,9 @@ else if ($section == 'email')
 		<div class="frm-head">
 			<h2><span><?php echo $lang_admin['E-mail head'] ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_options_email']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_settings_email']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_options_email'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_settings_email'])) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 <?php ($hook = get_hook('aop_email_pre_addresses_part')) ? eval($hook) : null; ?>
