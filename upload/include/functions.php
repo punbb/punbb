@@ -2132,6 +2132,21 @@ function format_time($timestamp, $date_only = false)
 
 
 //
+// A wrapper for PHP's number_format function
+//
+function forum_number_format($number, $decimals = 0)
+{
+	global $lang_common;
+
+    $return = ($hook = get_hook('fn_forum_number_format_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+	return number_format($number, $decimals, $lang_common['lang_decimal_point'], $lang_common['lang_thousands_sep']);
+}
+
+
+//
 // Generate a random key of length $len
 //
 function random_key($len, $readable = false, $hash = false)
