@@ -29,7 +29,9 @@ if (!defined('FORUM_ROOT'))
 	define('FORUM_ROOT', '../');
 require FORUM_ROOT.'include/common.php';
 require FORUM_ROOT.'include/common_admin.php';
-require_once FORUM_ROOT.'include/xml.php';
+
+if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
+	require FORUM_ROOT.'include/xml.php';
 
 ($hook = get_hook('aex_start')) ? eval($hook) : null;
 
@@ -191,12 +193,14 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 					$forum_db->query_build($query) or error(__FILE__, __LINE__);
 				}
 			}
-			
+
 		// Empty the PHP cache
 		forum_clear_cache();
 
 		// Regenerate the hooks cache
-		require_once FORUM_ROOT.'include/cache.php';
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+			require FORUM_ROOT.'include/cache.php';
+
 		generate_hooks_cache();
 
 		// Display notices if there are any
@@ -410,7 +414,9 @@ else if (isset($_GET['uninstall']))
 		forum_clear_cache();
 
 		// Regenerate the hooks cache
-		require_once FORUM_ROOT.'include/cache.php';
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+			require FORUM_ROOT.'include/cache.php';
+
 		generate_hooks_cache();
 
 		// Display notices if there are any
@@ -613,7 +619,9 @@ else if (isset($_GET['flip']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the hooks cache
-	require_once FORUM_ROOT.'include/cache.php';
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require FORUM_ROOT.'include/cache.php';
+
 	generate_hooks_cache();
 
 	redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? $lang_admin['Extension disabled'] : $lang_admin['Extension enabled']).' '.$lang_admin['Redirect']);
@@ -624,7 +632,7 @@ else if (isset($_GET['reject']))
 
 	if (strpos($id, 'hotfix_') === FALSE)
 		message($lang_common['Bad request']);
-	
+
 	if (empty($forum_config['o_rejected_updates']) || strpos($id, $forum_config['o_rejected_updates']) === FALSE)
 	{
 		$query = array(
@@ -637,7 +645,9 @@ else if (isset($_GET['reject']))
 		$hook = get_hook('aex_qr_update_rejected_hotfixes') ? eval($hook) : null;
 
 		// Regenerate the hooks cache
-		require_once FORUM_ROOT.'include/cache.php';
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+			require_once FORUM_ROOT.'include/cache.php';
+
 		generate_config_cache();
 	}
 	redirect(forum_link($forum_url['admin_extensions_install']), 'Hotfix was rejected.'.' '.$lang_admin['Redirect']);
@@ -707,14 +717,14 @@ if ($section == 'install')
 		// If there's only one hotfix, add one layer of arrays so we can foreach over it
 		if (!is_array(current($forum_updates['hotfix'])))
 			$forum_updates['hotfix'] = array($forum_updates['hotfix']);
-			
+
 		$rej_hotfixes = explode('|', substr($forum_config['o_rejected_updates'], 1, -1));
 		foreach ($forum_updates['hotfix'] as $hotfix)
 		{
 			if (!array_key_exists($hotfix['attributes']['id'], $inst_exts))
 			{
 				$rej_flag = in_array($hotfix['attributes']['id'], $rej_hotfixes);
-				
+
 				$forum_page['ext_item'][] = '<div class="hotfix-item databox">'."\n\t\t\t".'<h3 class="legend"><span>'.forum_htmlencode($hotfix['content']).'</span>'.(($rej_flag) ? ('<span> ( '.'Hotfix rejected.'.' )</span>') : ('')).'</h3>'."\n\t\t\t".'<p><span>'.sprintf($lang_admin['Extension by'], 'PunBB').'</span><br /><span>'.$lang_admin['Hotfix description'].'</span></p>'."\n\t\t\t".'<p class="actions"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.$lang_admin['Install hotfix'].'</a>'.((!$rej_flag) ? ('<a href="'.$base_url.'/admin/extensions.php?section=install&reject='.urlencode($hotfix['attributes']['id']).'">'.$lang_admin['Reject hotfix'].'</a>') : ('')).'</p>'."\n\t\t".'</div>';
 				++$num_exts;
 			}
@@ -773,10 +783,9 @@ if ($section == 'install')
 	{
 		if (isset($forum_updates['hotfix']))
 			echo '<div class="frm-info"><p>'.$lang_admin['Hotfix install alert'].'</p></div>';
-			
+
 		echo "\t\t".implode("\n\t\t", $forum_page['ext_item'])."\n";
 	}
-	
 	else
 	{
 
@@ -831,7 +840,7 @@ else
 	{
 		$repository_urls = array('http://punbb.informer.com/extensions');
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
-		
+
 		$repository_url_by_extension = array();
 		foreach(array_keys($inst_exts) as $id)
 			($hook = get_hook('aex_add_repository_for_'.$id)) ? eval($hook) : null;
@@ -855,7 +864,9 @@ else
 
 		if ($update_new_versions_cache)
 		{
-			require_once FORUM_ROOT.'include/cache.php';
+			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+				require_once FORUM_ROOT.'include/cache.php';
+
 			generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension);
 			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
 		}

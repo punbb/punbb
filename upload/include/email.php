@@ -208,3 +208,5 @@ function smtp_mail($to, $subject, $message, $headers = '')
 
 	return true;
 }
+
+define('FORUM_EMAIL_FUNCTIONS_LOADED', 1);

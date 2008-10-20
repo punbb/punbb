@@ -60,7 +60,9 @@ if (isset($_POST['add_word']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	require_once FORUM_ROOT.'include/cache.php';
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require FORUM_ROOT.'include/cache.php';
+
 	generate_censors_cache();
 
 	redirect(forum_link($forum_url['admin_censoring']), $lang_admin['Censor word added'].' '.$lang_admin['Redirect']);
@@ -90,7 +92,9 @@ else if (isset($_POST['update']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	require_once FORUM_ROOT.'include/cache.php';
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require FORUM_ROOT.'include/cache.php';
+
 	generate_censors_cache();
 
 	redirect(forum_link($forum_url['admin_censoring']), $lang_admin['Censor word updated'].' '.$lang_admin['Redirect']);
@@ -113,7 +117,9 @@ else if (isset($_POST['remove']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	require_once FORUM_ROOT.'include/cache.php';
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require FORUM_ROOT.'include/cache.php';
+
 	generate_censors_cache();
 
 	redirect(forum_link($forum_url['admin_censoring']), $lang_admin['Censor word removed'].' '.$lang_admin['Redirect']);
@@ -126,7 +132,9 @@ if (file_exists(FORUM_CACHE_DIR.'cache_censors.php'))
 
 if (!defined('FORUM_CENSORS_LOADED'))
 {
-	require_once FORUM_ROOT.'include/cache.php';
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require FORUM_ROOT.'include/cache.php';
+
 	generate_censors_cache();
 	require FORUM_CACHE_DIR.'cache_censors.php';
 }

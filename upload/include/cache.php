@@ -380,7 +380,8 @@ function generate_updates_cache()
 	// Make sure we got everything we need
 	if ($result != null && strpos($result['content'], '</updates>') !== false)
 	{
-		require FORUM_ROOT.'/include/xml.php';
+		if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
+			require FORUM_ROOT.'include/xml.php';
 
 		$output = xml_to_array(forum_trim($result['content']));
 		$output = current($output);
@@ -460,3 +461,5 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 
 	fclose($fh);
 }
+
+define('FORUM_CACHE_FUNCTIONS_LOADED', 1);

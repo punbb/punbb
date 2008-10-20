@@ -438,7 +438,8 @@ else if ($action == 'change_email')
 		if (forum_hash($_POST['req_password'], $forum_user['salt']) !== $forum_user['password'])
 			$errors[] = $lang_profile['Wrong password'];
 
-		require FORUM_ROOT.'include/email.php';
+		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
+			require FORUM_ROOT.'include/email.php';
 
 		// Validate the email-address
 		$new_email = strtolower(forum_trim($_POST['req_new_email']));
@@ -898,7 +899,8 @@ else if (isset($_POST['form_sent']))
 
 			if ($forum_user['is_admmod'])
 			{
-				require FORUM_ROOT.'include/email.php';
+				if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
+					require FORUM_ROOT.'include/email.php';
 
 				// Validate the email-address
 				$form['email'] = strtolower(forum_trim($_POST['req_email']));
@@ -1009,6 +1011,7 @@ else if (isset($_POST['form_sent']))
 			{
 				if (!defined('FORUM_PARSER_LOADED'))
 					require FORUM_ROOT.'include/parser.php';
+
 				$form['signature'] = preparse_bbcode($form['signature'], $errors, true);
 			}
 
@@ -1257,7 +1260,9 @@ else if (isset($_POST['form_sent']))
 				}
 
 				// Regenerate the bans cache
-				require_once FORUM_ROOT.'include/cache.php';
+				if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+					require FORUM_ROOT.'include/cache.php';
+
 				generate_bans_cache();
 			}
 		}
