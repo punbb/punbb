@@ -247,45 +247,49 @@ $alert_items = array();
 
 if ($forum_user['g_id'] == FORUM_ADMIN)
 {
-		if ($forum_config['o_check_for_updates'] == '1')
+	if ($forum_config['o_check_for_updates'] == '1')
+	{
+		if (isset($forum_updates['hotfix']))
 		{
-			if (isset($forum_updates['hotfix']))
-			{
-				$hotfixes_id = array();
-				for ($hot_num = 0; $hot_num < count($forum_updates['hotfix']); $hot_num++)
-					$hotfixes_id[] = $forum_updates['hotfix'][$hot_num]['attributes']['id'];
-				
-				$hotfix_available = array_diff($hotfixes_id, explode('|', substr($forum_config['o_rejected_updates'], 1, -1))) != array();
-			}
-			else
-				$hotfix_available = false;
+			$hotfixes_id = array();
+			for ($hot_num = 0; $hot_num < count($forum_updates['hotfix']); $hot_num++)
+				$hotfixes_id[] = $forum_updates['hotfix'][$hot_num]['attributes']['id'];
 
-			if ($forum_updates['fail'])
-			$alert_items['update_fail'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates failed'].'</span></p>';
-			else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']) && $hotfix_available)
-			$alert_items['update_version_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version n hf'], $forum_updates['version']).'</span></p>';
-			else if (isset($forum_updates['version']))
-			$alert_items['update_version'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version'], $forum_updates['version']).'</span></p>';
-			else if (isset($forum_updates['hotfix']) && $hotfix_available)
-			$alert_items['update_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates hf'].'</span></p>';
+			$hotfix_available = array_diff($hotfixes_id, explode('|', substr($forum_config['o_rejected_updates'], 1, -1))) != array();
 		}
+		else
+			$hotfix_available = false;
+
+		if ($forum_updates['fail'])
+		$alert_items['update_fail'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates failed'].'</span></p>';
+		else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']) && $hotfix_available)
+		$alert_items['update_version_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version n hf'], $forum_updates['version']).'</span></p>';
+		else if (isset($forum_updates['version']))
+		$alert_items['update_version'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version'], $forum_updates['version']).'</span></p>';
+		else if (isset($forum_updates['hotfix']) && $hotfix_available)
+		$alert_items['update_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates hf'].'</span></p>';
+	}
 
 	// Warn the admin that maintenance mode is enabled
 	if ($forum_config['o_maintenance'] == '1')
 		$alert_items['maintenance'] = '<p id="maint-alert" class="warn"><strong>'.$lang_common['Maintenance mode'].'</strong> <span>'.$lang_common['Maintenance alert'].'</span></p>';
 
-		// Warn the admin that the install script is accessible
-		if (file_exists(FORUM_ROOT.'install.php'))
-		$alert_items['install'] = '<p id="install-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Install script'].'</strong> <span>'.$lang_common['Install script alert'].'</span></p>';
+	// Warn the admin that the install script is accessible
+	if (file_exists(FORUM_ROOT.'install.php'))
+	$alert_items['install'] = '<p id="install-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Install script'].'</strong> <span>'.$lang_common['Install script alert'].'</span></p>';
 
-		// Warn the admin that the database update script is accessible
-		if (file_exists(FORUM_ROOT.'db_update.php'))
-		$alert_items['db_update'] = '<p id="update-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Update script'].'</strong> <span>'.$lang_common['Update script alert'].'</span></p>';
+	// Warn the admin that the database update script is accessible
+	if (file_exists(FORUM_ROOT.'db_update.php'))
+	$alert_items['db_update'] = '<p id="update-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Update script'].'</strong> <span>'.$lang_common['Update script alert'].'</span></p>';
 }
 
 ($hook = get_hook('hd_alert')) ? eval($hook) : null;
 
-		if (!empty($alert_items))
+// Warn the admin that their version of the database is newer than the version supported by the code
+if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
+	$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
+
+if (!empty($alert_items))
 {
 	ob_start();
 

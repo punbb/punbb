@@ -31,6 +31,9 @@ define('FORUM_DEBUG', 1);
 if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
 
+// Define the version and database revision that this code was written for
+define('FORUM_VERSION', '1.3 Beta');
+define('FORUM_DB_REVISION', 1);
 
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
@@ -49,6 +52,11 @@ ignore_user_abort(true);
 // Attempt to load the configuration file config.php
 if (file_exists(FORUM_ROOT.'config.php'))
 	include FORUM_ROOT.'config.php';
+
+// If we have the 1.2 constant defined, define the proper 1.3 constant so we don't get
+// an incorrect "need to install" message
+if (defined('PUN'))
+	define('FORUM', 1);
 
 if (!defined('FORUM'))
 	error('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="'.FORUM_ROOT.'install.php">install.php</a> to install PunBB first.');
@@ -106,6 +114,11 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	generate_config_cache();
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
+
+
+// Verify that we are running the proper database schema revision
+if (defined('PUN') || !isset($forum_config['o_database_revision']) || $forum_config['o_database_revision'] < FORUM_DB_REVISION || version_compare($forum_config['o_cur_version'], FORUM_VERSION, '<'))
+	error('Your PunBB database is out-of-date and must be upgraded in order to continue. Please run db_update.php in order to complete the upgrade process.');
 
 
 // Load hooks

@@ -146,6 +146,8 @@ $lang_common = array(
 
 // Alerts
 'Alert notice'			=>	'<strong>ATTENTION!</strong> There are important %s that you should view immediately.',
+'Database mismatch'			=>	'Database version mismatch:',
+'Database mismatch alert'	=>	'Your PunBB database is meant to be used in conjunction with a newer version of the PunBB code. This mismatch can lead to your forum not working properly. It is suggested that you upgrade your forum to the newest version of PunBB.',
 'Admin alerts'			=>	'Administrator Alerts',
 'Maintenance mode'		=>	'Maintenance mode is enabled!',
 'Maintenance alert'		=>	'<strong>WARNING!</strong> This board is in maintenance mode. <em>DO NOT</em> logout, if you do you will not be able to login.',
