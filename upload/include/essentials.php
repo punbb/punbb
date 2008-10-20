@@ -59,7 +59,7 @@ if (defined('PUN'))
 	define('FORUM', 1);
 
 if (!defined('FORUM'))
-	error('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="'.FORUM_ROOT.'install.php">install.php</a> to install PunBB first.');
+	error('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="'.FORUM_ROOT.'admin/install.php">install.php</a> to install PunBB first.');
 
 
 // Block prefetch requests
@@ -118,7 +118,7 @@ if (!defined('FORUM_CONFIG_LOADED'))
 
 // Verify that we are running the proper database schema revision
 if (defined('PUN') || !isset($forum_config['o_database_revision']) || $forum_config['o_database_revision'] < FORUM_DB_REVISION || version_compare($forum_config['o_cur_version'], FORUM_VERSION, '<'))
-	error('Your PunBB database is out-of-date and must be upgraded in order to continue. Please run db_update.php in order to complete the upgrade process.');
+	error('Your PunBB database is out-of-date and must be upgraded in order to continue. Please run <a href="'.FORUM_ROOT.'admin/db_update.php">db_update.php</a> in order to complete the upgrade process.');
 
 
 // Load hooks

@@ -243,10 +243,14 @@ ob_end_clean();
 
 
 // START SUBST - <!-- forum_alert -->
-$alert_items = array();
-
 if ($forum_user['g_id'] == FORUM_ADMIN)
 {
+	$alert_items = array();
+
+	// Warn the admin that maintenance mode is enabled
+	if ($forum_config['o_maintenance'] == '1')
+		$alert_items['maintenance'] = '<p id="maint-alert" class="warn"><strong>'.$lang_common['Maintenance mode'].'</strong> <span>'.$lang_common['Maintenance alert'].'</span></p>';
+
 	if ($forum_config['o_check_for_updates'] == '1')
 	{
 		if (isset($forum_updates['hotfix']))
@@ -270,49 +274,37 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		$alert_items['update_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates hf'].'</span></p>';
 	}
 
-	// Warn the admin that maintenance mode is enabled
-	if ($forum_config['o_maintenance'] == '1')
-		$alert_items['maintenance'] = '<p id="maint-alert" class="warn"><strong>'.$lang_common['Maintenance mode'].'</strong> <span>'.$lang_common['Maintenance alert'].'</span></p>';
+	// Warn the admin that their version of the database is newer than the version supported by the code
+	if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
+		$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
 
-	// Warn the admin that the install script is accessible
-	if (file_exists(FORUM_ROOT.'install.php'))
-	$alert_items['install'] = '<p id="install-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Install script'].'</strong> <span>'.$lang_common['Install script alert'].'</span></p>';
+	($hook = get_hook('hd_alert')) ? eval($hook) : null;
 
-	// Warn the admin that the database update script is accessible
-	if (file_exists(FORUM_ROOT.'db_update.php'))
-	$alert_items['db_update'] = '<p id="update-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Update script'].'</strong> <span>'.$lang_common['Update script alert'].'</span></p>';
-}
+	if (!empty($alert_items))
+	{
+		ob_start();
 
-($hook = get_hook('hd_alert')) ? eval($hook) : null;
+	?>
+	<div id="brd-alert">
+		<p class="warn"><?php printf($lang_common['Alert notice'], '<a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin alerts'].'</a>') ?></p>
+	</div>
+	<?php
 
-// Warn the admin that their version of the database is newer than the version supported by the code
-if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
-	$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
+		if ($forum_config['o_maintenance'] == '1')
+	{
 
-if (!empty($alert_items))
-{
-	ob_start();
+	?>
+	<div id="brd-maintenance">
+		<p class="warn"><?php echo $lang_common['Maintenance alert'] ?></p>
+	</div>
+	<?php
 
-?>
-<div id="brd-alert">
-	<p class="warn"><?php printf($lang_common['Alert notice'], '<a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin alerts'].'</a>') ?></p>
-</div>
-<?php
+		}
 
-	if ($forum_config['o_maintenance'] == '1')
-{
-
-?>
-<div id="brd-maintenance">
-	<p class="warn"><?php echo $lang_common['Maintenance alert'] ?></p>
-</div>
-<?php
-
+		$tpl_temp = ob_get_contents();
+		$tpl_main = str_replace('<!-- forum_alert -->', $tpl_temp, $tpl_main);
+		ob_end_clean();
 	}
-
-	$tpl_temp = ob_get_contents();
-	$tpl_main = str_replace('<!-- forum_alert -->', $tpl_temp, $tpl_main);
-	ob_end_clean();
 }
 // END SUBST - <!-- forum_alert -->
 

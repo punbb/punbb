@@ -146,8 +146,6 @@ $lang_common = array(
 
 // Alerts
 'Alert notice'			=>	'<strong>ATTENTION!</strong> There are important %s that you should view immediately.',
-'Database mismatch'			=>	'Database version mismatch:',
-'Database mismatch alert'	=>	'Your PunBB database is meant to be used in conjunction with a newer version of the PunBB code. This mismatch can lead to your forum not working properly. It is suggested that you upgrade your forum to the newest version of PunBB.',
 'Admin alerts'			=>	'Administrator Alerts',
 'Maintenance mode'		=>	'Maintenance mode is enabled!',
 'Maintenance alert'		=>	'<strong>WARNING!</strong> This board is in maintenance mode. <em>DO NOT</em> logout, if you do you will not be able to login.',
@@ -156,10 +154,8 @@ $lang_common = array(
 'Updates version n hf'	=> 	'A newer version of PunBB, version %s, is available for download at <a href="http://punbb.informer.com/">PunBB.Informer.com</a>. Furthermore, there are hotfixes available for install on the Extensions tab of the admin interface.',
 'Updates version' 		=> 	'A newer version of PunBB, version %s, is available for download at <a href="http://punbb.informer.com/">PunBB.Informer.com</a>.',
 'Updates hf'			=>	'There are hotfixes available for install on the Extensions tab of the admin interface.',
-'Install script'		=>	'Install script uploaded:',
-'Install script alert'	=>	'PunBB\'s installation script (install.php) is currently uploaded to the forum root. Since PunBB is already installed, the file should be deleted or moved out of the forum root for security reasons.',
-'Update script'			=>	'Database update script uploaded:',
-'Update script alert'	=>	'PunBB\'s database update script (db_update.php) is currently uploaded to the forum root. Once it has been used to update the forum, it should be deleted or moved out of the forum root for security reasons.',
+'Database mismatch'			=>	'Database version mismatch:',
+'Database mismatch alert'	=>	'Your PunBB database is meant to be used in conjunction with a newer version of the PunBB code. This mismatch can lead to your forum not working properly. It is suggested that you upgrade your forum to the newest version of PunBB.',
 'Maint script'			=>	'Maintenance mode disabling script uploaded:',
 'Maint script alert'	=>	'PunBB\'s maintenance mode disabling script (turn_off_maintenance_mode.php) is currently uploaded to the forum root. It should be deleted or moved out of the forum root if it is not being used.',
 
