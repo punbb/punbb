@@ -1,28 +1,13 @@
 <?php
-/***********************************************************************
-
-  Copyright (C) 2002-2008  PunBB
-
-  Partially based on code copyright (C) 2008  FluxBB.org
-
-  This file is part of PunBB.
-
-  PunBB is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation; either version 2 of the License,
-  or (at your option) any later version.
-
-  PunBB is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-  MA  02111-1307  USA
-
-************************************************************************/
+/**
+ * Group management page.
+ *
+ * Allows administrators to control group permissions.
+ *
+ * @copyright Copyright (C) 2008 PunBB, partially based on code copyright (C) 2008 FluxBB.org
+ * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * @package PunBB
+ */
 
 
 if (!defined('FORUM_ROOT'))
@@ -208,7 +193,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 			<div class="frm-part part<?php echo ++ $forum_page['part_count'] ?>">
 				<h3><span><?php printf($lang_admin['Group flood head'], $forum_page['part_count']) ?></span></h3>
 				<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-					<legend class="frm-legend"><span><?php echo $lang_admin['Restrictions'] ?></span></legend>					
+					<legend class="frm-legend"><span><?php echo $lang_admin['Restrictions'] ?></span></legend>
 					<div class="frm-fld text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
 							<span class="fld-label"><?php echo $lang_admin['Flood interval'] ?></span><br />
@@ -280,7 +265,7 @@ else if (isset($_POST['add_edit_group']))
 	$set_title = (isset($_POST['set_title']) && $_POST['set_title'] == '1') || $is_admin_group ? '1' : '0';
 	$search = (isset($_POST['search']) && $_POST['search'] == '1') || $is_admin_group ? '1' : '0';
 	$search_users = (isset($_POST['search_users']) && $_POST['search_users'] == '1') || $is_admin_group ? '1' : '0';
-	$send_email = (isset($_POST['send_email']) && $_POST['send_email'] == '1') || $is_admin_group ? '1' : '0';	
+	$send_email = (isset($_POST['send_email']) && $_POST['send_email'] == '1') || $is_admin_group ? '1' : '0';
 	$post_flood = isset($_POST['post_flood']) ? intval($_POST['post_flood']) : '0';
 	$search_flood = isset($_POST['search_flood']) ? intval($_POST['search_flood']) : '0';
 	$email_flood = isset($_POST['email_flood']) ? intval($_POST['email_flood']) : '0';

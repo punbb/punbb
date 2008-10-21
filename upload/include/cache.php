@@ -1,28 +1,13 @@
 <?php
-/***********************************************************************
-
-  Copyright (C) 2002-2008  PunBB
-
-  Partially based on code copyright (C) 2008  FluxBB.org
-
-  This file is part of PunBB.
-
-  PunBB is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation; either version 2 of the License,
-  or (at your option) any later version.
-
-  PunBB is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-  MA  02111-1307  USA
-
-************************************************************************/
+/**
+ * Caching functions.
+ *
+ * This file contains all of the functions used to generate the cache files used by the site.
+ *
+ * @copyright Copyright (C) 2008 PunBB, partially based on code copyright (C) 2008 FluxBB.org
+ * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * @package PunBB
+ */
 
 
 // Make sure no one attempts to run this script "directly"
@@ -407,33 +392,33 @@ function generate_updates_cache()
 function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension)
 {
 	$forum_ext_last_versions = array();
-	$forum_ext_repos = array();	
-	
+	$forum_ext_repos = array();
+
 	foreach ( array_unique( array_merge($repository_urls, $repository_url_by_extension) ) as $url)
 	{
 		//Get repository timestamp
 		$repository_timestamp = @forum_trim(end(get_remote_file( $url.'/timestamp', 2)));
 		if (!is_numeric($repository_timestamp))
 			continue;
-		
+
 		if (!isset( $forum_ext_repos[ $url ][ 'timestamp' ] ))
 			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
-		
-		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp) 
+
+		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp)
 		{
 			foreach ($inst_exts as $ext)
 			{
 				$version = @forum_trim(end(get_remote_file($url.'/'.$ext['id'].'/lastversion', 2)));
 				if (empty($version) || !preg_match('~^[0-9a-zA-Z\. +-]+$~u', $version))
 					continue;
-				
+
 				$forum_ext_repos[ $url ][ 'extension_versions' ][ $ext['id'] ] = $version;
-				
+
 				//If key with current extension exist in array, compare it with version in rep-ry
 				if (!isset($forum_ext_last_versions[ $ext['id'] ]) || ( version_compare($forum_ext_last_versions[ $ext['id'] ][ 'version' ], $version, '<') ) )
 				{
 					$forum_ext_last_versions[ $ext['id'] ] = array('version' => $version, 'repo_url' => $url);
-					
+
 					$last_changes = @forum_trim(end(get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2)));
 					if ( !empty($last_changes) )
 						$forum_ext_last_versions[ $ext['id'] ][ 'changes' ] = $last_changes;
@@ -443,14 +428,14 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
 		}
 	}
-   
+
 	if (array_keys($forum_ext_last_versions) != array_keys($inst_exts))
 		foreach ($inst_exts as $ext)
 			if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
 				$forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
-	 
-	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
-	
+
+	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;
+
 	// Output config as PHP code
 	$fh = @fopen(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', 'wb');
 
