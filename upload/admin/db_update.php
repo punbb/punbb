@@ -501,7 +501,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'ident'			=> array(
 						'datatype'		=> 'VARCHAR(200)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'search_data'	=> array(
 						'datatype'		=> 'TEXT',
@@ -553,7 +553,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'word'			=> array(
 						'datatype'		=> 'VARCHAR(20)',
 						'allow_null'	=> false,
-						'default'		=> '""',
+						'default'		=> '\'\'',
 						'collation'		=> 'bin'
 					)
 				),
@@ -574,17 +574,17 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'id'				=> array(
 						'datatype'		=> 'VARCHAR(50)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'title'				=> array(
 						'datatype'		=> 'VARCHAR(255)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'version'			=> array(
 						'datatype'		=> 'VARCHAR(25)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'description'		=> array(
 						'datatype'		=> 'TEXT',
@@ -593,7 +593,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'author'			=> array(
 						'datatype'		=> 'VARCHAR(50)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'uninstall'			=> array(
 						'datatype'		=> 'TEXT',
@@ -611,7 +611,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'dependencies'		=> array(
 						'datatype'		=> 'VARCHAR(255)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					)
 				),
 				'PRIMARY KEY'	=> array('id')
@@ -656,12 +656,12 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'id'			=> array(
 						'datatype'		=> 'VARCHAR(50)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'extension_id'	=> array(
 						'datatype'		=> 'VARCHAR(50)',
 						'allow_null'	=> false,
-						'default'		=> '""'
+						'default'		=> '\'\''
 					),
 					'code'			=> array(
 						'datatype'		=> 'TEXT',

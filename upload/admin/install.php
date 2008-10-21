@@ -493,7 +493,7 @@ else
 			'cat_name'		=> array(
 				'datatype'		=> 'VARCHAR(80)',
 				'allow_null'	=> false,
-				'default'		=> '"New Category"'
+				'default'		=> '\'New Category\''
 			),
 			'disp_position'	=> array(
 				'datatype'		=> 'INT(10)',
@@ -516,12 +516,12 @@ else
 			'search_for'	=> array(
 				'datatype'		=> 'VARCHAR(60)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'replace_with'	=> array(
 				'datatype'		=> 'VARCHAR(60)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			)
 		),
 		'PRIMARY KEY'	=> array('id')
@@ -535,7 +535,7 @@ else
 			'conf_name'		=> array(
 				'datatype'		=> 'VARCHAR(255)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'conf_value'	=> array(
 				'datatype'		=> 'TEXT',
@@ -553,17 +553,17 @@ else
 			'id'				=> array(
 				'datatype'		=> 'VARCHAR(50)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'title'				=> array(
 				'datatype'		=> 'VARCHAR(255)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'version'			=> array(
 				'datatype'		=> 'VARCHAR(25)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'description'		=> array(
 				'datatype'		=> 'TEXT',
@@ -572,7 +572,7 @@ else
 			'author'			=> array(
 				'datatype'		=> 'VARCHAR(50)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'uninstall'			=> array(
 				'datatype'		=> 'TEXT',
@@ -590,7 +590,7 @@ else
 			'dependencies'		=> array(
 				'datatype'		=> 'VARCHAR(255)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			)
 		),
 		'PRIMARY KEY'	=> array('id')
@@ -604,12 +604,12 @@ else
 			'id'			=> array(
 				'datatype'		=> 'VARCHAR(50)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'extension_id'	=> array(
 				'datatype'		=> 'VARCHAR(50)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'code'			=> array(
 				'datatype'		=> 'TEXT',
@@ -675,7 +675,7 @@ else
 			'forum_name'	=> array(
 				'datatype'		=> 'VARCHAR(80)',
 				'allow_null'	=> false,
-				'default'		=> '"New forum"'
+				'default'		=> '\'New forum\''
 			),
 			'forum_desc'	=> array(
 				'datatype'		=> 'TEXT',
@@ -742,7 +742,7 @@ else
 			'g_title'					=> array(
 				'datatype'		=> 'VARCHAR(50)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'g_user_title'				=> array(
 				'datatype'		=> 'VARCHAR(50)',
@@ -860,7 +860,7 @@ else
 			'ident'			=> array(
 				'datatype'		=> 'VARCHAR(200)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'logged'		=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
@@ -875,7 +875,7 @@ else
 			'csrf_token'	=> array(
 				'datatype'		=> 'VARCHAR(40)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'prev_url'		=> array(
 				'datatype'		=> 'VARCHAR(255)',
@@ -910,7 +910,7 @@ else
 			'poster'		=> array(
 				'datatype'		=> 'VARCHAR(200)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'poster_id'		=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
@@ -972,7 +972,7 @@ else
 			'rank'			=> array(
 				'datatype'		=> 'VARCHAR(50)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'min_posts'		=> array(
 				'datatype'		=> 'MEDIUMINT(8) UNSIGNED',
@@ -1049,7 +1049,7 @@ else
 			'ident'			=> array(
 				'datatype'		=> 'VARCHAR(200)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'search_data'	=> array(
 				'datatype'		=> 'TEXT',
@@ -1104,7 +1104,7 @@ else
 			'word'			=> array(
 				'datatype'		=> 'VARCHAR(20)',
 				'allow_null'	=> false,
-				'default'		=> '""',
+				'default'		=> '\'\'',
 				'collation'		=> 'bin'
 			)
 		),
@@ -1151,12 +1151,12 @@ else
 			'poster'		=> array(
 				'datatype'		=> 'VARCHAR(200)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'subject'		=> array(
 				'datatype'		=> 'VARCHAR(255)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'posted'		=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
@@ -1238,12 +1238,12 @@ else
 			'username'			=> array(
 				'datatype'		=> 'VARCHAR(200)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'password'			=> array(
 				'datatype'		=> 'VARCHAR(40)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'salt'				=> array(
 				'datatype'		=> 'VARCHAR(12)',
@@ -1252,7 +1252,7 @@ else
 			'email'				=> array(
 				'datatype'		=> 'VARCHAR(80)',
 				'allow_null'	=> false,
-				'default'		=> '""'
+				'default'		=> '\'\''
 			),
 			'title'				=> array(
 				'datatype'		=> 'VARCHAR(50)',
@@ -1370,12 +1370,12 @@ else
 			'language'			=> array(
 				'datatype'		=> 'VARCHAR(25)',
 				'allow_null'	=> false,
-				'default'		=> '"English"'
+				'default'		=> '\'English\''
 			),
 			'style'				=> array(
 				'datatype'		=> 'VARCHAR(25)',
 				'allow_null'	=> false,
-				'default'		=> '"Oxygen"'
+				'default'		=> '\'Oxygen\''
 			),
 			'num_posts'			=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
@@ -1402,7 +1402,7 @@ else
 			'registration_ip'	=> array(
 				'datatype'		=> 'VARCHAR(39)',
 				'allow_null'	=> false,
-				'default'		=> '"0.0.0.0"'
+				'default'		=> '\'0.0.0.0\''
 			),
 			'last_visit'		=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
