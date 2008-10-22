@@ -471,13 +471,13 @@ class DBLayer
 
 		foreach ($table['columns'] as $cur_column => $column_details)
 			$new_table .= "\n".$cur_column.' '.$column_details;
-			
+
 		if (isset($table['unique']))
 			$new_table .= "\n".$table['unique'].',';
-			
+
 		if (isset($table['primary_key']))
 			$new_table .= "\n".$table['primary_key'];
-			
+
 		$new_table .= "\n".');';
 
 		// Drop old table
@@ -522,13 +522,13 @@ class DBLayer
 
 		foreach ($table['columns'] as $cur_column => $column_details)
 			$new_table .= "\n".$cur_column.' '.$column_details;
-			
+
 		if (isset($table['unique']))
 			$new_table .= "\n".$table['unique'].',';
-			
+
 		if (isset($table['primary_key']))
 			$new_table .= "\n".$table['primary_key'];
-			
+
 		$new_table .= "\n".');';
 
 		// Drop old table

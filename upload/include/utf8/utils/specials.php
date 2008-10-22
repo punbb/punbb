@@ -29,7 +29,7 @@
 */
 function utf8_specials_pattern() {
     static $pattern = NULL;
-    
+
     if ( !$pattern ) {
         $UTF8_SPECIAL_CHARS = array(
     0x001a, 0x001b, 0x001c, 0x001d, 0x001e, 0x001f, 0x0020, 0x0021, 0x0022, 0x0023,
@@ -86,7 +86,7 @@ function utf8_specials_pattern() {
         $pattern = preg_quote(utf8_from_unicode($UTF8_SPECIAL_CHARS), '/');
         $pattern = '/[\x00-\x19'.$pattern.']/u';
     }
-    
+
     return $pattern;
 }
 

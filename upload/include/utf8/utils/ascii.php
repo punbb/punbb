@@ -155,12 +155,12 @@ function utf8_strip_non_ascii_ctrl($str) {
 * @subpackage ascii
 */
 function utf8_accents_to_ascii( $str, $case=0 ){
-    
+
     static $UTF8_LOWER_ACCENTS = NULL;
     static $UTF8_UPPER_ACCENTS = NULL;
-    
+
     if($case <= 0){
-        
+
         if ( is_null($UTF8_LOWER_ACCENTS) ) {
             $UTF8_LOWER_ACCENTS = array(
   'à' => 'a', 'ô' => 'o', 'ď' => 'd', 'ḟ' => 'f', 'ë' => 'e', 'š' => 's', 'ơ' => 'o',
@@ -180,14 +180,14 @@ function utf8_accents_to_ascii( $str, $case=0 ){
   'û' => 'u', 'þ' => 'th', 'ð' => 'dh', 'æ' => 'ae', 'µ' => 'u', 'ĕ' => 'e', 
             );
         }
-        
+
         $str = str_replace(
                 array_keys($UTF8_LOWER_ACCENTS),
                 array_values($UTF8_LOWER_ACCENTS),
                 $str
             );
     }
-    
+
     if($case >= 0){
         if ( is_null($UTF8_UPPER_ACCENTS) ) {
             $UTF8_UPPER_ACCENTS = array(
@@ -214,7 +214,7 @@ function utf8_accents_to_ascii( $str, $case=0 ){
                 $str
             );
     }
-    
+
     return $str;
-    
+
 }

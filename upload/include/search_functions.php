@@ -397,7 +397,7 @@ function generate_cached_search_query($search_id, &$show_as)
 				'FROM'		=> 'posts AS p',
 				'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
 			);
-		
+
 			$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
 		}
 

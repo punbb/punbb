@@ -1,7 +1,7 @@
 /*************************************************************
 A - SETUP
 **************************************************************/
-	
+
 /* Start from scratch
 ----------------------------------------------------------=--*/
 
@@ -13,7 +13,7 @@ A - SETUP
 	margin-left: -7px;
 	}
 
-	
+
 /* Make the skip link work
 ----------------------------------------------------------=--*/
 
@@ -27,7 +27,7 @@ A - SETUP
 #brd-visit {
 	zoom: 1;
 	}
-	
+
 /* Alert Box
 ----------------------------------------------------------=--*/
 
@@ -42,11 +42,11 @@ A - SETUP
  #brd-info {
  	min-height: 1px;
  	}
- 
+
  #brd-info #stats ul, #brd-info #onlinelist {
  	min-height: 1px;
  	}
-	
+
 /* About Box (Footer / Copyright / Jump Menu)
 ----------------------------------------------------------=--*/
 
@@ -56,46 +56,46 @@ A - SETUP
 
 /* Paging and Posting
 ----------------------------------------------------------=--*/
-	
+
 .brd .crumbs,
 .main .paged-head,
 .main .paged-foot,
 .main .paged-foot .submitting {
 	min-height: 1px;
 	}
-	
+
 /* Main Headings
 ----------------------------------------------------------=--*/
-	
+
 .main .main-head,
 .main .main-foot {
 	min-height: 1px;
 	}
-	
+
 /* Tabbed Navigation
 -------------------------------------------------------------*/
-	
+
 .main .main-nav {
 	min-height: 1px;
 	}
-	
+
 
 /* Forms
 -------------------------------------------------------------*/
-	
+
 .frm .frm-set div,
 .frm .link,
 .frm .frm-group,
 .frm .radbox {
 	min-height: 1px;
 	}
-	
+
 .radbox input,
 .post-select input {
 	height: 13px;
 	width: 13px;
 	}
-	
+
 .brd span.submit input,
 .brd span.cancel input {
 	padding-bottom: 0;
@@ -113,11 +113,11 @@ A - SETUP
 .frm .radbox label {
 	float: left;
 	}
-	
+
 .main .dataset, .main .datagrid {
 	min-height: 1px;
 	}
-	
+
 
 /* Posts
 -------------------------------------------------------------*/
@@ -126,7 +126,7 @@ A - SETUP
 	min-height: 1px;
 	position: relative;
 	}
-	
+
 .main .post .user {
 	min-height: 1px;
 	position: relative;
@@ -137,10 +137,10 @@ A - SETUP
 	overflow-x:auto;
 	padding-bottom: 2em;
 	}
-  
+
 .entry-content .codebox pre { /* 7 Only */
 	min-height: 3em
 	}
-	
+
 	
 

@@ -1,7 +1,7 @@
 /*************************************************************
 A - SETUP
 **************************************************************/
-	
+
 /* Start from scratch
 ----------------------------------------------------------=--*/
 
@@ -13,7 +13,7 @@ A - SETUP
 	margin-left: -7px;
 	}
 
-	
+
 /* Make the skip link work
 ----------------------------------------------------------=--*/
 
@@ -27,7 +27,7 @@ A - SETUP
 #brd-visit {
 	zoom: 1;
 	}
-	
+
 /* Alert Box
 ----------------------------------------------------------=--*/
 
@@ -42,11 +42,11 @@ A - SETUP
  #brd-info {
  	height: 1px;
  	}
- 
+
  #brd-info #stats ul, #brd-info #onlinelist {
  	zoom: 1;
  	}
-	
+
 /* About Box (Footer / Copyright / Jump Menu)
 ----------------------------------------------------------=--*/
 
@@ -57,46 +57,46 @@ A - SETUP
 
 /* Paging and Posting
 ----------------------------------------------------------=--*/
-	
+
 .brd .crumbs,
 .main .paged-head,
 .main .paged-foot,
 .main .paged-foot .submitting {
 	zoom: 1;
 	}
-	
+
 /* Main Headings
 ----------------------------------------------------------=--*/
-	
+
 .main .main-head,
 .main .main-foot {
 	zoom: 1;
 	}
-	
+
 /* Tabbed Navigation
 -------------------------------------------------------------*/
-	
+
 .main .main-nav {
 	zoom: 1;
 	}
-	
+
 
 /* Forms
 -------------------------------------------------------------*/
-	
+
 .frm .frm-set div,
 .frm .link,
 .frm .frm-group,
 .frm .radbox {
 	height: 1px;
 	}
-	
+
 * html .radbox input,
 * html .post-select input {
 	height: 13px;
 	width: 13px;
 	}
-	
+
 .brd span.submit input,
 .brd span.cancel input {
 	padding-bottom: 0;
@@ -114,11 +114,11 @@ A - SETUP
 .frm .radbox label {
 	float: left;
 	}
-	
+
 .main .dataset, .main .datagrid {
 	height: 1%;
 	}
-	
+
 
 /* Posts
 -------------------------------------------------------------*/
@@ -127,7 +127,7 @@ A - SETUP
 	zoom: 1;
 	position: relative;
 	}
-	
+
 .main .post .user {
 	zoom: 1;
 	position: relative;

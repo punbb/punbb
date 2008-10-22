@@ -15,24 +15,24 @@
 * @see http://www.php.net/manual/en/function.ord.php#46267
 */
 function utf8_ord($chr) {
-    
+
     $ord0 = ord($chr);
-    
+
     if ( $ord0 >= 0 && $ord0 <= 127 ) {
         return $ord0;
     }
-    
+
     if ( !isset($chr{1}) ) {
         trigger_error('Short sequence - at least 2 bytes expected, only 1 seen');
         return FALSE;
     }
-    
+
     $ord1 = ord($chr{1});
     if ( $ord0 >= 192 && $ord0 <= 223 ) {
         return ( $ord0 - 192 ) * 64 
             + ( $ord1 - 128 );
     }
-    
+
     if ( !isset($chr{2}) ) {
         trigger_error('Short sequence - at least 3 bytes expected, only 2 seen');
         return FALSE;
@@ -43,7 +43,7 @@ function utf8_ord($chr) {
             + ($ord1-128)*64 
                 + ($ord2-128);
     }
-    
+
     if ( !isset($chr{3}) ) {
         trigger_error('Short sequence - at least 4 bytes expected, only 3 seen');
         return FALSE;
@@ -54,9 +54,9 @@ function utf8_ord($chr) {
             + ($ord1-128)*4096 
                 + ($ord2-128)*64 
                     + ($ord3-128);
-    
+
     }
-    
+
     if ( !isset($chr{4}) ) {
         trigger_error('Short sequence - at least 5 bytes expected, only 4 seen');
         return FALSE;
@@ -69,7 +69,7 @@ function utf8_ord($chr) {
                     + ($ord3-128)*64 
                         + ($ord4-128);
     }
-    
+
     if ( !isset($chr{5}) ) {
         trigger_error('Short sequence - at least 6 bytes expected, only 5 seen');
         return FALSE;
@@ -82,11 +82,11 @@ function utf8_ord($chr) {
                         + ($ord4-128)*64 
                             + (ord($c{5})-128);
     }
-    
+
     if ( $ord0 >= 254 && $ord0 <= 255 ) { 
         trigger_error('Invalid UTF-8 with surrogate ordinal '.$ord0);
         return FALSE;
     }
-    
+
 }
 

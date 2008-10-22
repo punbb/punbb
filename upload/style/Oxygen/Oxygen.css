@@ -1,7 +1,7 @@
 /*************************************************************
 A - SETUP
 **************************************************************/
-	
+
 /* Start from scratch
 -------------------------------------------------------------*/
 
@@ -36,12 +36,12 @@ html, body, /* Remove this line if integrating */
 	empty-cells: show;
 	border-spacing: 0;
 	}
-	
+
 .brd td {
 	overflow: hidden;
 	vertical-align: middle;
 	}
-	
+
 .brd span.submit input,
 .brd span.cancel input {
 	overflow: visible;
@@ -49,16 +49,16 @@ html, body, /* Remove this line if integrating */
 	padding-right: 0.5em;
 	padding-bottom: 2px;
 	}
-	
+
 .brd a {
 	cursor: pointer;
 	text-decoration: underline;
 	}
-	
+
 .brd div.divider, .brd fieldset br {
 	display: none;
 	}
-	
+
 	
 /* Text Setup
 -------------------------------------------------------------*/
@@ -66,7 +66,7 @@ html, body, /* Remove this line if integrating */
 .brd { /* Needs modifying if body has non default font-size */
 	font: 75%/130% Verdana, Arial, Helvetica, sans-serif;
 	}
-	
+
 .brd samp, .brd code, .brd pre, .brd option, .brd optgroup {
 	font-size: 1em;
 	font-family: Verdana, Arial, sans-serif;
@@ -77,13 +77,13 @@ html, body, /* Remove this line if integrating */
 	font-size: 1.1em;
 	font-family: Verdana, Arial, sans-serif;
 	}
-	
+
 .brd code {
 	font-size: 1.1em;
 	line-height: 140%;
 	font-family: 'andale mono', 'lucida console', monospace
 	}
-	
+
 .frm .frm-info li span strong,
 .brd .important strong,
 .brd .warn strong,
@@ -91,7 +91,7 @@ html, body, /* Remove this line if integrating */
 .brd .post-entry .entry-content strong * {
 	font-weight: bold;
 	}
-	
+
 .brd .entry-content em.bbuline {
 	text-decoration: underline;
 	}
@@ -99,7 +99,7 @@ html, body, /* Remove this line if integrating */
 /*************************************************************
 B - FLOAT CLEARING AND HIDDEN STUFF
 **************************************************************/
-	
+
 /* Clear Me
 -------------------------------------------------------------*/
 
@@ -130,7 +130,7 @@ B - FLOAT CLEARING AND HIDDEN STUFF
 	visibility: hidden;
  	clear: both;
 	}
-	
+
 /* Hide Me
 -------------------------------------------------------------*/
 
@@ -163,7 +163,7 @@ B - FLOAT CLEARING AND HIDDEN STUFF
  	position:absolute;
  	line-height: 0em;
  	}
-	
+
 	
 /*************************************************************
 C - PAGE LAYOUT and COMMON ELEMENTS
@@ -184,17 +184,17 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	margin: 50px auto 12px auto;
 	width: 60%;
 	}
-	
+
 .brd { /* Confines clearing behaviour within forum wrapper */
 	float: left;
 	width: 100%;
 	position: relative;
 	}
-	
+
 	
 /* Skip Link
 -------------------------------------------------------------*/
-	
+
 #brd-access {
 	text-align: right;
 	padding: 0;
@@ -203,7 +203,7 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	position: absolute;
 	background: transparent;
 	}
-	
+
 #brd-access a, #brd-access a:link, #brd-access a:visited {
 	height: 2em;
 	padding: 0 1.3em;
@@ -213,18 +213,18 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	margin: 1px;
 	width: 12em;
 	}
-	
+
 #brd-access a:hover, #brd-access a:active, #brd-access a:focus {
 	text-indent: 0;
 	background: #000;
 	position: static;
 	float: right;
 	}
-	
+
 	
 /* Board Title and Description
 -------------------------------------------------------------*/
-	
+
 #brd-title {
 	padding: 1.3em 1.3em 0.3em 1.3em;
 	white-space: nowrap;
@@ -232,29 +232,29 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 #brd-title p {
 	font-size: 1.5em;
 	}	
-	
+
 #brd-title a:link, #brd-title a:visited {
 	text-decoration: none;
 	}
-	
+
 #brd-desc {
 	padding: 0 1.3em 1em 1.3em;
 	}
-	
+
 	
 /* Main Menu
 -------------------------------------------------------------*/
-	
+
 #brd-navlinks ul {
 	padding: 0.7em 1.3em;
 	}
-	
+
 #brd-navlinks ul li {
 	display: inline;
 	margin-right: 0.8em;
 	font-size: 1.2em;
 	}
-	
+
 	
 /* Welcome Box
 -------------------------------------------------------------*/
@@ -265,25 +265,25 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	padding: 0.8em 1.3em 0.8em 1.3em;
 	margin: 0 0 1em 0;
 	}
-	
+
 #brd-visit ul {
 	float: right;
 	}
-	
+
 #brd-visit ul li {
 	display: inline;
 	margin-left: 0.7em;
 	}
-	
+
 #brd-visit p span, #brd-visit ul li a {
 	white-space: nowrap;
 	}
-	
+
 #brd-visit p strong,
 #brd-visit ul li strong {
 	font-weight: bold;
 	}
-	
+
 	
 /* Alert Box
 -------------------------------------------------------------*/
@@ -293,65 +293,65 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	border-width: 1px;
 	margin: 0 0 1em 0;
 	}
-	
+
 #brd-alert p, #brd-maintenance p {
 	padding: 0.8em 0 0.8em 0;
 	margin: 0 1.3em;
 	font-size: 1.084em;
 	}
-	
+
 #brd-alert strong,
 #brd-maintenance strong,
 #brd-maintenance em {
 	font-weight: bold;
 	font-style: normal;
 	}
-	
+
 .brd #admin-alerts p strong {
 	font-weight: bold;
 	}
-	
+
 /* Statistics
 -------------------------------------------------------------*/
 
  #stats ul {
  	padding: 0.6em 1.3em;
  	}
- 	
+
  #stats ul li.st-users {
  	float: left;
  	clear: both;
  	white-space: nowrap;
  	line-height: 150%;
  	}
- 
+
  #stats ul li.st-activity {
  	text-align: right;
  	display: block;
  	white-space: nowrap;
  	line-height: 150%;
  	}
- 	
+
 #stats ul li strong {
 	font-weight: bold;
 	}
- 
+
 #onlinelist {
 	border-top-style: dashed;
 	border-top-width: 1px;
 	line-height: 150%;
 	padding: 0.6em 1.3em;
 	}
- 
+
 #onlinelist h3 {
 	float: left;
 	margin: 0 0.5em 0 0;
 	}
-	
+
 #onlinelist h3 strong {
 	font-weight: bold;
 	}
-	
+
 	
 /* About Box (Footer / Copyright / Jump Menu) and Home Link
 -------------------------------------------------------------*/
@@ -366,23 +366,23 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 #brd-about p {
 	text-align: right;
 	}
-	
+
 #brd-about #qjump {
 	float: left;
 	width: 40%;
 	}
-	
+
 #brd-about #qjump label {
 	font-weight: bold;
 	display: block;
 	}
-	
+
 #brd-home {
 	font-weight: normal;
 	float:right;
 	padding: 0.4em 1.3em 0 0;
 	}
-	
+
 /* Announcements
 -------------------------------------------------------------*/
 
@@ -390,7 +390,7 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	margin: 0 0 1em 0;
 	padding-bottom: 1em;
 	}
-	
+
 #brd-announcement .msg-head {
 	font-size: 1.2em;
 	padding-bottom: 0.5em;
@@ -401,18 +401,18 @@ C - PAGE LAYOUT and COMMON ELEMENTS
 	font-weight: bold;
 	}
 
-	
+
 /*************************************************************
 D - MAIN CONTENT COMMON ELEMENTS
 **************************************************************/
 
 /* Common Styling
 -------------------------------------------------------------*/
-	
+
 .main .main-content, .paged .paged-foot {
 	margin-bottom: 1em;
 	}
-	
+
 .paged .main-content {
 	margin-bottom: 0;
 	}
@@ -421,7 +421,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	border-style: solid;
 	border-width: 1px;
 	}
-	
+
 
 
 /* Breadcrumbs
@@ -431,7 +431,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	padding: 0 1.3em;
 	margin: 0 0 1em 0;
 	}
-	
+
 .brd-crumbs .crumb {
 	padding-left: 1.5em;
 	padding-right: 0.5em;
@@ -451,11 +451,11 @@ D - MAIN CONTENT COMMON ELEMENTS
 .brd-crumbs .crumblast {
 	font-weight: bold;
 	}
-	
+
 	
 /* Paging and Posting
 -------------------------------------------------------------*/
-	
+
 .main .paged-head,
 .main .paged-foot {
 	border-style: solid;
@@ -463,40 +463,40 @@ D - MAIN CONTENT COMMON ELEMENTS
 	padding: 0 1.3em;
 	min-height: 2em;
 	}
-	
+
 .main .paged-head .paging,
 .main .paged-foot .paging {
 	float: left;
 	padding: 0.4em 0;
 	}
-	
+
 .main .paged-head .posting,
 .main .paged-foot .posting {
 	float: right;
 	font-size: 1.1em;
 	padding: 0.4em 0;
 	}
-	
+
 .brd .posting, .brd .posting * {
 	white-space: nowrap;
 	}
-	
+
 .main .paged-head .posting span,
 .main .paged-head .paging strong,
 .main .paged-foot .posting span,
 .main .paged-foot .paging strong {
 	font-weight: bold;
 	}
-	
+
 .main .paged-foot .submitting {
 	float: right;
 	padding: 0.3em 0 0.3em 0;
 	}
-	
+
 .main .submitting {
 	text-align: right;
 	}
-	
+
 .main .paged-foot .submitting span {
 	margin-left: 0.8em;
 	}
@@ -512,7 +512,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	text-decoration: none;
 	padding: 0 0.2em 0 0.6em;
 	}
-	
+
 .brd .paging .item1, .brd .paging .pages {
 	border: 0;
 	padding-left: 0;
@@ -521,7 +521,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 .brd .paging .pages {
 	padding-right: 0.3em;
 	}
-	
+
 
 /* Main Headers and Footers
 -------------------------------------------------------------*/
@@ -535,7 +535,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 #brd-install .main-head {
 	padding-left: 1.7em;
 	}
-	
+
 .main .main-head h1 {
 	position: static;
 	font-size: 1em;
@@ -573,17 +573,17 @@ D - MAIN CONTENT COMMON ELEMENTS
 	line-height: 1.2em;
 	height: 1.3em;
 	}
-	
+
 .main .main-head .main-options a.sub-option {
 	float: left;
 	margin-right: 1em;
 	}
-	
+
 .main .main-foot .main-options a.mod-option,
 .main .main-foot .main-options a.user-option {
 	margin-left: 0.8em;
 	}
-	
+
 .main .main-head .main-options a.feed-option,
 .main .main-head .main-options a.feed-option:link,
 .main .main-head .main-options a.feed-option:visited {
@@ -601,7 +601,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	background-position: left;
 	background-image: url(helpdark.png);
 	}
-	
+
 .main .frm-head {
 	padding: 0.5em 1.7em;
 	border-style: solid none solid none;
@@ -646,7 +646,7 @@ D - MAIN CONTENT COMMON ELEMENTS
 	padding: 0 1em;
 	}
 
-	
+
 /* Tabbed Navigation (with submenu)
 -------------------------------------------------------------*/
 .main .submenu {
@@ -695,19 +695,19 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 	width: 30%;
 	text-align: left;
 	}
-	
+
 #brd-userlist table .tcl,
 #brd-searchtopics table .tcl,
 #brd-modforum table .tcl {
 	width: 40%
 	}
-	
+
 #brd-userlist table .tc2,
 #brd-searchtopics table .tc2 {
 	width: 20%;
 	text-align: left;
 	}
-	
+
 #brd-debug  table .tcl {
 	white-space:normal;
 	width: 15%;
@@ -717,37 +717,37 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 	white-space: normal;
 	width: 90%;
 	}
-	
+
 #brd-admin-users table .tcl {
 	width: 35%;
 	line-height: 1.4em;
 	}
-	
+
 	
 #brd-admin-users table .tc2 {
 	width: 20%;
 	}
-	
+
 #brd-admin-users table .tc3 {
 	width: 10%;
 	}
-	
+
 #brd-admin-users table .tcr {
 	width: 20%;
 	}
-	
+
 #brd-admin-users table .actions {
 	width: 15%;
 	}
-	
+
 #brd-admin-users td.tcl span {
 	display: block;
 	}
-	
+
 #brd-admin-users td.tcl strong {
 	font-weight: bold;
 	}
-	
+
 	
 /* Table Cell Styling
 -------------------------------------------------------------*/
@@ -762,24 +762,24 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 .main table .tcr a {
 	white-space: nowrap;
 	}
-	
+
 .main table .tcl .modlist {
 	display: block;
 	padding-top: 0.3em
 	}
-	
+
 .main table td {
 	padding: 0.6em 1.3em 0.7em 1.3em;
 	border-width: 1px;
 	border-style: solid none none solid;
 	line-height: 130%;
 	}
-	
+
 .main table td.tcl {
 	border-left-style: none;
 	border-left-width: 0
 	} 
-	
+
 .main table th {
 	padding: 0.5em 1.3em;
 	border-style: none;
@@ -788,7 +788,7 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 .main table tbody.statused td.tcl {
 	padding-left: 3.4em;
 	}
-	
+
 .main table tbody.statused span.status {
 	margin-left: -2.4em;
 	position: absolute;
@@ -804,7 +804,7 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 	margin-right: 0.4em;
 	margin-top: 0.1em;
 	}
-	
+
 #brd-index .main table .tcl img {
 	border-width: 0.7em;
 	}
@@ -812,7 +812,7 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 #brd-index .main table .tcr .byuser {
 	display: block;
 	}
-	
+
 .main table td.actions, .main table th.actions {
 	text-align: right;
 	}
@@ -820,18 +820,18 @@ E - MAIN TABLES ( Index / Forums / Userlist )
 .main table td.actions span {
 	display: block;
 	}
-	
+
 /*************************************************************
 E - MAIN FORMS
 **************************************************************/
 
 /* General Styling
 -------------------------------------------------------------*/
-	
+
 .frm .frm-form {
 	margin: 1.7em 1.7em 0.7em 1.7em;
 	}
-	
+
 .frm .frm-set {
 	border-top-style: dashed;
 	border-top-width: 1px;
@@ -842,30 +842,30 @@ E - MAIN FORMS
 	border-top-style: none;
 	padding-top: 0;
 	}
-	
+
 .frm .frm-buttons {
 	padding: 0.8em 0 0.3em 15.6em;
 	border-top-style: double;
 	border-top-width: 3px;
 	margin-top: 0.5em;
 	}
-	
+
 .frm .frm-buttons span {
 	margin-right: 1em;
 	}
-	
+
 .frm .frm-fld span.submit {
 	clear: left;
 	display: block;
 	padding-top: 0.3em;
 	}
-	
+
 .frm table {
 	border-style: solid;
 	border-width: 1px;
 	margin-bottom: 1em;
 	}
-	
+
 /* Text, Select. Link Field and Textarea
 -------------------------------------------------------------*/
 
@@ -885,25 +885,25 @@ E - MAIN FORMS
 	font-weight: bold;
 	padding: 3px 1em 2px 0;
 	}
-	
+
 .main form .link .fld-label {
 	padding: 0 1em 0 0;
 	}
-	
+
 .admin .frm form fieldset .link .fld-input {
 	float: left;
 	}
-	
+
 .main form .frm-fld .fld-input,
 .main form .frm-fld .fld-input input,
 .main form .frm-fld .fld-input select {
 	float: left;
 	}
-	
+
 .main form .frm-fld .fld-input {
 	padding-right: 0.5em;
 	}
-	
+
 .main form .frm-fld label span.fld-help,
 .main form .frm-fld label span.fld-extra {
 	float: left;
@@ -917,14 +917,14 @@ E - MAIN FORMS
 .main form .textarea label span.fld-help {
 	width: 86%;
 	}
-	
+
 .main form .frm-fld label span.fld-extra {
 	display: inline;
 	width: auto;
 	margin: 0;
 	padding-top: 3px;
 	}
-	
+
 .main form .frm-fld label small.extra {
 	font-size: 1em;
 	}
@@ -932,17 +932,17 @@ E - MAIN FORMS
 .main form .frm-fld .fld-label a {
 	margin-left: 0.5em;
 	}
-	
+
 .main form .frm-fld .fld-label a span {
 	font-weight: bold;
 	}
-	
+
 .main form .textarea .fld-input,
 .main form .longtext .fld-input {
  	width: 84%;
  	padding-right: 0.8em;
  	}
-	
+
 .main form .textarea textarea,
 .main form .longtext input {
 	width: 100%;
@@ -952,14 +952,14 @@ E - MAIN FORMS
  	float: left;
  	padding-top: 2px;
  	}
- 	
+
  .main .frm .frm-part {
 	margin: 0 -1.7em;
  	padding: 0 1.7em;
  	border-top: 1px solid #ddd;
  	margin-top: 1em;
  	}
- 	
+
  .main .frm .frm-part h3 {
  	margin-top: 0;
  	background: #f1f1f1;
@@ -970,19 +970,19 @@ E - MAIN FORMS
  	border-top: 1px solid #fff;
  	border-bottom: 1px solid #bbb;
  	}
- 	
+
  .main .frm .part1 {
 	margin-top: -1.7em;
 	border-top: none;
  	}
- 	
+
  .main .frm .frm-part h3 * {
  	color: #113C5E;
  	}
- 	
+
  /* Checkboxes and Radio Buttons
 -------------------------------------------------------------*/
-	
+
 .main form .frm-group {
 	padding: 0 0 0.7em 0;
 	position: relative;
@@ -998,7 +998,7 @@ E - MAIN FORMS
 .main form .checkbox {
 	padding-bottom: 1em;
 	}
-	
+
 .main form .radbox input {
 	float: left;
 	position: relative;
@@ -1008,7 +1008,7 @@ E - MAIN FORMS
 	min-width: 13px;
 	min-height: 13px;
 	}
-	
+
 .main form .checkbox .fld-label {
 	float: left;
 	width: 14.6em;
@@ -1019,20 +1019,20 @@ E - MAIN FORMS
 	margin-left: -15.6em;
 	font-weight: bold;
 	}
-	
+
 .main form .frm-yesno label,
 .main form .frm-choice label {
 	float: left;
 	}
-	
+
 .main form .frm-yesno label {
 	width: 8em;
 	}
-	
+
 .main form .frm-choice label {
 	width: 11em;
 	}
-	
+
 .main form .frm-group legend span {
 	position: absolute;
 	left: 0;
@@ -1041,11 +1041,11 @@ E - MAIN FORMS
 	padding-top: 3px;
 	font-weight: bold;
 	}
-	
+
 	
  /* Form Information Boxes
 -------------------------------------------------------------*/
-	
+
 .frm .frm-info,
 .frm .frm-error,
 .frm .req-warn {
@@ -1054,7 +1054,7 @@ E - MAIN FORMS
 	border-style: solid;
 	border-width: 1px;
 	}
-	
+
 .frm .frm-form .frm-info {
 	margin: 0.7em 0 1.7em 0;
 	}
@@ -1064,19 +1064,19 @@ E - MAIN FORMS
 .frm .frm-error .important {
 	padding: 0 0 0.8em 0;
 	}
-	
+
 .frm .frm-info ul {
 	padding: 0 0 0.2em 1em;
 	margin: 0 0 0 8px;
 	}
-	
+
 .frm .frm-info li,
 .frm .frm-error li {
 	padding: 0 0 0.7em 0.5em;
 	list-style-type: square;
 	line-height: normal;
 	}
-	
+
 #brd-main .frm .actions a, #brd-main .frm .actions a * {
 	font-weight: bold;
 	}
@@ -1089,23 +1089,23 @@ E - MAIN FORMS
 	margin-right: 0.7em;
 	white-space: nowrap;
 	}
-	
+
 #brd-search .frm .frm-info .actions {
 	background: url('searchicon.png') no-repeat top left;
 	padding-left: 2.2em;
 	}
-	
+
 .frm .frm-error ul {
 	margin-top: 0;
 	margin-bottom: 0;
 	padding-left: 0;
 	margin-left: 1.6em;
 	}
-	
+
 .frm .frm-error li {
 	line-height: 1.5em;
 	}
-	
+
 .main form .item-select {
 	position: relative;
 	float: right;
@@ -1117,11 +1117,11 @@ E - MAIN FORMS
 .main form div.item-select * {
 	font-weight: bold;
 	}
-	
+
 .main form div.item-select .fld-label {
 	font-weight: normal;
 	}
-	
+
 	
  /* Data Boxes
 -------------------------------------------------------------*/
@@ -1129,7 +1129,7 @@ E - MAIN FORMS
 .main .frm-form .databox {
 	margin: 1.7em 0;
 	}
-	
+
 .main .databox {
 	margin: 1.7em;
 	padding: 1em 1em 0.3em 1em;
@@ -1137,39 +1137,39 @@ E - MAIN FORMS
 	border-width: 1px;
 	overflow: hidden;
 	}
-	
+
 .main .databox p,
 .main .databox ul {
 	padding-bottom: 0.8em;
 	overflow: hidden;
 	}
-	
+
 .main .databox .legend {
 	padding-bottom: 0.5em;
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 	margin-bottom: 0.7em;
 	}
-	
+
 .main .databox .legend span,
 .main .databox .term span {
 	font-weight: bold;
 	}
-	
+
 .main .databox .legend strong {
 	float: right;
 	font-weight: bold;
 	}
-	
+
 .main .databox .note {
 	font-weight: bold;
 	padding-bottom: 0.3em;
 	}
-	
+
  /* Multiple Data Boxes (Data Sets)
 -------------------------------------------------------------*/
 
-	
+
 .main .dataset {
 	margin: 1.7em;
 	border-style: solid solid solid solid;
@@ -1189,7 +1189,7 @@ E - MAIN FORMS
 .main .dataset .db1 {
 	border: none;
 	}
-	
+
 .main .dataset .databox .legend {
 	padding: 0;
 	margin: 0;
@@ -1204,7 +1204,7 @@ E - MAIN FORMS
 	border-style: solid solid solid solid;
 	border-width: 1px;
 	}
-	
+
 .main .datagrid .databox {
 	margin: 0;
 	padding: 0;
@@ -1212,18 +1212,18 @@ E - MAIN FORMS
 	position: relative;
 	border-style: dashed none none none;
 	}
-	
+
 .main .datagrid .db1 {
 	border: none;
 	}
-	
+
 .main .datagrid .databox .data {
 	padding: 0.8em 1em 0.8em 1em;
 	margin: 0 0 0 16em;
 	border-left-style: dashed;
 	border-left-width: 1px;
 	}
-	
+
 .main .datagrid .legend {
 	position: absolute;
 	padding: 0.8em 1em 0 1em;
@@ -1232,14 +1232,14 @@ E - MAIN FORMS
 	left: 0;
 	top: 0;
 	}
-	
+
 /*************************************************************
 F - USER PROFILES
 **************************************************************/
 
  /* User Identity (Profile and Viewtopic)
 -------------------------------------------------------------*/
-	
+
 .user .user-ident {
 	position: relative;
 	padding-top: 1.6em;
@@ -1260,16 +1260,16 @@ F - USER PROFILES
 	margin: 0;
 	line-height:1.2em;
 	}
-	
+
 .user .user-ident a {
 	text-decoration: none;
 	}
-	
+
 .user .user-info li {
 	padding-bottom: 0.2em;
 	line-height: 1.3em;
 	}
-	
+
 .user .user-info .status,
 .user .user-info .title {
 	padding-bottom: 0.8em;
@@ -1278,7 +1278,7 @@ F - USER PROFILES
 .user .user-info .title span {
 	font-weight: bold;
 	}
-	
+
 .user .user-info .status span {
 	border-left-style: solid;
 	border-left-width: 0.7em;
@@ -1320,7 +1320,7 @@ F - USER PROFILES
 	overflow: hidden;
 	width: 16em;
 	}
-	
+
 .frm .profile .username {
 	width: 14em;
 	overflow: hidden;
@@ -1334,11 +1334,11 @@ F - USER PROFILES
 	list-style-type: disc;
 	white-space: nowrap;
 	}
-	
+
 .frm .profile .user-actions li a {
 	font-weight: bold;
 	}
-	
+
 .frm .sig-demo {
 	margin-left: 15.6em;
 	margin-right: 13%;
@@ -1347,17 +1347,17 @@ F - USER PROFILES
 	border-top: 1px dashed #ccc;
 	clear:left;
 	}
-	
+
 .frm .profile .sig-demo {
 	margin-left: 3em;
 	}
-	
+
 .frm .av-preview img {
 	float: right;
 	margin-left: 2em;
 	margin-bottom: 1em;
 	}
-	
+
 /*************************************************************
 G - TOPICS / POSTS
 **************************************************************/
@@ -1374,7 +1374,7 @@ G - TOPICS / POSTS
 	overflow: hidden;
 	width: 100%
 	}
-	
+
 .main .sig-content {
 	padding-top: 0.8em
 	}	
@@ -1394,19 +1394,19 @@ G - TOPICS / POSTS
 	margin: 0 1em 1em 1em;
 	padding: 1em 1em 0.3em 1em;
 	}
-  
+
 .main .entry-content blockquote {
 	overflow: hidden;
 	width: 100%;
 	}
-	
+
 .main .entry-content .quotebox cite {
 	display: block;
 	font-style: normal;
 	font-weight: bold;
 	margin-bottom: 0.8em;
 	}
-	
+
 .main .entry-content .codebox strong {
 	display: block;
 	margin-bottom: 0.8em;
@@ -1420,7 +1420,7 @@ G - TOPICS / POSTS
 	padding: 0 2% 0.1em 0;
 	width: 98%;
 	}
-	
+
 .main .entry-content em {
 	font-style: italic
 	}
@@ -1433,26 +1433,26 @@ G - TOPICS / POSTS
 .main .entry-content p {
 	margin: 0 0 1em 0;
 	}
-	
+
 .brd .entry-content ul {
 	margin: 0 0 0.5em 2em;
 	list-style-type: disc;
 	}
-	
+
 .brd .entry-content ol {
 	margin: 0 0 0.5em 2.5em;
 	list-style-type: decimal;
 	}
-	
+
 .brd .entry-content ol.alpha {
 	list-style-type: upper-alpha;
 	}
-	
+
 .main .entry-content li {
 	padding: 0 0 0.5em 0;
 	line-height: 1.3em;
 	}
-	
+
 .frm .post-entry {
 	margin: 1.7em;
 	border-style: solid;
@@ -1478,18 +1478,18 @@ G - TOPICS / POSTS
 	border-left-style: solid;
 	border-left-width: 1px;
 	}
-	
+
 .main .topic .post .posthead {
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 	margin-bottom: 0.7em;
 	}
-	
+
 .main .topic .post .posthead h3 {
 	padding: 0.5em 0 0.5em 1em;
 	margin: 0;
 	}
-	
+
 .main .topic .post .posthead h3 strong {
 	float: right;
 	font-weight: bold;
@@ -1497,13 +1497,13 @@ G - TOPICS / POSTS
 	text-decoration: none;
 	padding-right: 1em;
 	}
-	
+
 .main .topic .post .postmain  .user {
 	float: left;
 	margin: -2.6em 0 0 -16em;
 	width: 15em;
 	}
-	
+
 .main .topic .user-info {
 	overflow: hidden;
 	width: 15em;
@@ -1513,11 +1513,11 @@ G - TOPICS / POSTS
 	overflow: hidden;
 	width: 13em;
 	}
-	
+
 .main .topic .post .user .user-info {
 	padding-bottom: 1em;
 	}
-	
+
 .main .topic .post .postmain .postfoot {
 	margin-left: -17em;
 	text-align: right;
@@ -1525,7 +1525,7 @@ G - TOPICS / POSTS
 	border-top-width: 1px;
 	padding: 0.5em 1em;
 	}
-	
+
 .main .topic .post .postmain .postfoot .post-options a {
 	margin-left: 1em;
 	}
@@ -1535,7 +1535,7 @@ G - TOPICS / POSTS
 	margin-right: 1em;
 	margin-left: 0;
 	}
-	
+
 .main .topic .post .postmain .entry-info {
 	padding: 0 0 1em 0;
 	margin: 0 0 0 1.5em;
@@ -1549,7 +1549,7 @@ G - TOPICS / POSTS
 	position: static;
 	font-size: 1em;
 	}
-	
+
 #brd-searchposts .main .post h4.entry-title {
 	position: static;
 	font-size: 1em;
@@ -1558,16 +1558,16 @@ G - TOPICS / POSTS
 	line-height: 1.3em;
 	text-indent: 0;
 	}
-	
+
 #brd-searchposts .main h3 strong {
 	text-decoration: none;
 	}
-	
+
 #brd-searchposts .main h4.entry-title strong {
 	display: block;
 	font-weight: bold;
 	}
-	
+
 	
 /*************************************************************
 H - OTHER MAIN CONTENT ITEMS
@@ -1584,16 +1584,16 @@ H - OTHER MAIN CONTENT ITEMS
 	padding: 0 1.3em 0;
 	margin: 1em 0;
 	}
-	
+
 .main .message p span {
 	display: block;
 	padding-top: 1em;
 	}
 
-	
+
 /* Help File
 -------------------------------------------------------------*/
-	
+
 .frm .example code {
 	display: block;
 	}
@@ -1605,11 +1605,11 @@ H - OTHER MAIN CONTENT ITEMS
 	margin: 0 0 0 1.5em;
 	list-style: disc;
 	}
-	
+
 .frm .example code {
 	padding-bottom: 0.1em;
 	}
-	
+
 .frm ul.example {
 	padding: 0 0 0 0.5em;
 	margin: 0;
@@ -1618,59 +1618,59 @@ H - OTHER MAIN CONTENT ITEMS
 .frm .example span {
 	font-size: 0.9em;
 	}
-	
+
 #brd-help h3 {
 	padding: 0 0 0.7em 0;
 	margin: 0;
 	}
-	
+
 #brd-help .quotebox, #brd-help .codebox {
 	margin: 0.3em 0 0 0;
 	}
-	
+
 .frm .example code * {
 	vertical-align: middle;
 	}
-	
+
 	
 /* Rules
 -------------------------------------------------------------*/
-	
+
 .brd .userbox {
 	padding: 1em 1.3em 0.7em 1.3em;
 	margin: 1.7em;
 	border-style: solid;
 	border-width: 1px;
 	}
-	
+
 .brd .userbox p, .brd .userbox h2, .brd .userbox h3, .brd .userbox h4 {
 	margin: 0 0 0.8em 0;
 	list-style: disc;
 	}
-	
+
 .brd .userbox h2 {
 	font-size: 1.2em;
 	font-weight: bold;
 	}
-	
+
 .brd .userbox h3 {
 	font-size: 1.1em;
 	font-weight: bold;
 	}
-	
+
 .brd .userbox ul, .brd .userbox ol {
 	margin: 0 0 0.3em 1.5em;
 	list-style: disc;
 	}
-	
+
 .brd .userbox li {
 	margin-bottom: 0.5em;
 	}
-	
+
 .brd .userbox strong {
 	font-weight: bold;
 	}
-	
+
 .brd .userbox em {
 	font-style: italic;
 	}
