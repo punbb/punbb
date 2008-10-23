@@ -2604,9 +2604,8 @@ function redirect($destination_url, $message)
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
-	foreach (explode("\n", $head_temp) as $style_temp) {
+	foreach (explode("\n", $head_temp) as $style_temp)
 		$forum_head['style'.$num_temp++] = $style_temp;
-	}
 
 	ob_end_clean();
 
