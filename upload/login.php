@@ -285,7 +285,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('li_pre_new_password_errors')) ? eval($hook) : null;
@@ -395,7 +395,7 @@ ob_start();
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('li_pre_login_errors')) ? eval($hook) : null;

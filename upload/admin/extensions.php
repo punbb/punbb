@@ -219,7 +219,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 			<ul>
 <?php
 
-			while (list(, $cur_notice) = each($notices))
+			foreach ($notices as $cur_notice)
 				echo "\t\t\t\t".'<li><span>'.$cur_notice.'</span></li>'."\n";
 
 ?>
@@ -436,7 +436,7 @@ else if (isset($_GET['uninstall']))
 			<ul>
 <?php
 
-			while (list(, $cur_notice) = each($notices))
+			foreach ($notices as $cur_notice)
 				echo "\t\t\t\t".'<li><span>'.$cur_notice.'</span></li>'."\n";
 
 ?>
@@ -892,7 +892,7 @@ else
 		</div>
 <?php
 
-		while (list($id, $ext) = @each($inst_exts))
+		foreach ($inst_exts as $id => $ext)
 		{
 			$forum_page['ext_actions'] = array(
 				'flip'			=> '<a href="'.$base_url.'/admin/extensions.php?section=manage&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ? $lang_admin['Disable'] : $lang_admin['Enable']).'</a>',

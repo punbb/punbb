@@ -204,7 +204,7 @@ if (isset($_POST['form_sent']))
 
 	($hook = get_hook('aop_pre_update_configuration')) ? eval($hook) : null;
 
-	while (list($key, $input) = @each($form))
+	foreach ($form as $key => $input)
 	{
 		// Only update permission values that have changed
 		if (array_key_exists('p_'.$key, $forum_config) && $forum_config['p_'.$key] != $input)
@@ -325,7 +325,7 @@ if (!$section || $section == 'setup')
 
 		@natcasesort($styles);
 
-		while (list(, $temp) = @each($styles))
+		foreach($styles as $temp)
 		{
 			if ($forum_config['o_default_style'] == $temp)
 				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
@@ -369,7 +369,7 @@ $forum_page['set_count'] = 0;
 
 		@natcasesort($languages);
 
-		while (list(, $temp) = @each($languages))
+		foreach($languages as $temp)
 		{
 			if ($forum_config['o_default_lang'] == $temp)
 				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
@@ -571,7 +571,7 @@ $forum_page['set_count'] = 0;
 
 		@natcasesort($url_schemes);
 
-		while (list(, $temp) = @each($url_schemes))
+		foreach($url_schemes as $temp)
 		{
 			$temp = substr($temp, 0, -4);
 			if ($forum_config['o_sef'] == $temp)

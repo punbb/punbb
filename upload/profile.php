@@ -144,7 +144,7 @@ if ($action == 'change_pass')
 			if (!empty($errors))
 			{
 				$forum_page['errors'] = array();
-				while (list(, $cur_error) = each($errors))
+				foreach($errors as $cur_error)
 					$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 				($hook = get_hook('pf_pre_change_pass_key_errors')) ? eval($hook) : null;
@@ -306,7 +306,7 @@ if ($action == 'change_pass')
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('pf_pre_change_pass_errors')) ? eval($hook) : null;
@@ -555,7 +555,7 @@ else if ($action == 'change_email')
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('pf_pre_change_email_errors')) ? eval($hook) : null;
@@ -840,7 +840,7 @@ else if (isset($_POST['form_sent']))
 	{
 		$form = array();
 
-		while (list($key, $value) = @each($_POST['form']))
+		foreach($_POST['form'] as $key => $value)
 		{
 			if (in_array($key, $allowed_elements))
 				$form[$key] = $value;
@@ -1131,7 +1131,7 @@ else if (isset($_POST['form_sent']))
 
 		// Singlequotes around non-empty values and NULL for empty values
 		$temp = array();
-		while (list($key, $input) = @each($form))
+		foreach($form as $key => $input)
 		{
 			$value = ($input !== '') ? '\''.$forum_db->escape($input).'\'' : 'NULL';
 
@@ -1608,7 +1608,7 @@ else
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('pf_pre_change_details_identity_errors')) ? eval($hook) : null;
@@ -1817,7 +1817,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[language]">
 <?php
 
-			while (list(, $temp) = @each($forum_page['languages']))
+			foreach($forum_page['languages'] as $temp)
 			{
 				if ($forum_user['language'] == $temp)
 					echo "\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
@@ -1947,7 +1947,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[style]">
 <?php
 
-			while (list(, $temp) = @each($forum_page['styles']))
+			foreach($forum_page['styles'] as $temp)
 			{
 				if ($user['style'] == $temp)
 					echo "\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
@@ -2084,7 +2084,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('pf_pre_change_details_signature_errors')) ? eval($hook) : null;
@@ -2204,7 +2204,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('pf_pre_change_details_avatar_errors')) ? eval($hook) : null;

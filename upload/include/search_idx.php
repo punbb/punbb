@@ -9,7 +9,7 @@
 
 
 // The contents of this file are very much inspired by the file functions_search.php
-// from the phpBB Group forum software phpBB2 (http://www.phpbb.com). 
+// from the phpBB Group forum software phpBB2 (http://www.phpbb.com).
 
 
 // Make sure no one attempts to run this script "directly"
@@ -56,7 +56,7 @@ function split_words($text)
 
 	if (!empty($words))
 	{
-		while (list($i, $word) = @each($words))
+		foreach($words as $i => $word)
 		{
 			$words[$i] = forum_trim($word, '.');
 			$num_chars = utf8_strlen($word);
@@ -168,14 +168,14 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	}
 
 	// Delete matches (only if editing a post)
-	while (list($match_in, $wordlist) = @each($words['del']))
+	foreach($words['del'] as $match_in => $wordlist)
 	{
 		$subject_match = ($match_in == 'subject') ? 1 : 0;
 
 		if (!empty($wordlist))
 		{
 			$sql = '';
-			while (list(, $word) = @each($wordlist))
+			foreach($wordlist as $word)
 				$sql .= (($sql != '') ? ',' : '').$cur_words[$match_in][$word];
 
 			$query = array(
@@ -189,7 +189,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	}
 
 	// Add new matches
-	while (list($match_in, $wordlist) = @each($words['add']))
+	foreach($words['add'] as $match_in => $wordlist)
 	{
 		$subject_match = ($match_in == 'subject') ? 1 : 0;
 

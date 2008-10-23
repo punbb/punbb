@@ -66,7 +66,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 		if (empty($keywords_array))
 			message($lang_search['No hits']);
 
-		while (list($i, $word) = @each($keywords_array))
+		foreach($keywords_array as $i => $word)
 		{
 			$num_chars = utf8_strlen($word);
 
@@ -78,7 +78,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 		$match_type = 'and';
 		$result_list = array();
 		@reset($keywords_array);
-		while (list(, $cur_word) = @each($keywords_array))
+		foreach($keywords_array as $cur_word)
 		{
 			switch ($cur_word)
 			{
@@ -127,7 +127,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 					if ($match_type == 'and' && $word_count)
 					{
 						@reset($result_list);
-						while (list($post_id,) = @each($result_list))
+						foreach(array_keys($result_list) as $post_id)
 						{
 							if (!isset($row[$post_id]))
 								$result_list[$post_id] = 0;
@@ -143,7 +143,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 		}
 
 		@reset($result_list);
-		while (list($post_id, $matches) = @each($result_list))
+		foreach($result_list as $post_id => $matches)
 		{
 			if ($matches)
 				$keyword_results[] = $post_id;

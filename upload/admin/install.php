@@ -1523,7 +1523,7 @@ else
 		'p_force_guest_email'		=> "'1'"
 	);
 
-	while (list($conf_name, $conf_value) = @each($config))
+	foreach ($config as $conf_name => $conf_value)
 		$forum_db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)") or error(__FILE__, __LINE__);
 
 	// Insert some other default data

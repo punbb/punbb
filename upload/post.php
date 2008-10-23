@@ -380,7 +380,7 @@ if (isset($_POST['preview']) && empty($errors))
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('po_pre_post_errors')) ? eval($hook) : null;

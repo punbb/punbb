@@ -297,7 +297,7 @@ ob_start();
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		while (list(, $cur_error) = each($errors))
+		foreach($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('rg_pre_register_errors')) ? eval($hook) : null;
@@ -393,7 +393,7 @@ ob_start();
 
 			$select_lang = isset($_POST['language']) ? $_POST['language'] : $forum_config['o_default_lang'];
 
-			while (list(, $temp) = @each($languages))
+			foreach($languages as $temp)
 			{
 				if ($select_lang == $temp)
 					echo "\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";

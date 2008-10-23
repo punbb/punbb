@@ -346,8 +346,11 @@ if ($num_cats)
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_to_delete">
 <?php
 
-	while (list(, list($cat_id, $cat_name, ,)) = @each($cat_list))
+	foreach ($cat_list as $cur_category)
+	{
+		list($cat_id, $cat_name, ,) = $cur_category;
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cat_id.'">'.forum_htmlencode($cat_name).'</option>'."\n";
+	}
 
 ?>
 						</select></span>
@@ -373,10 +376,9 @@ if ($num_cats)
 
 <?php
 
-	@reset($cat_list);
-	for ($i = 0; $i < $num_cats; ++$i)
+	foreach ($cat_list as $cur_category)
 	{
-		list(, list($cat_id, $cat_name, $position)) = @each($cat_list);
+		list($cat_id, $cat_name, $position) = $cur_category;
 		// Reset fieldset counter
 		$forum_page['set_count'] = 0;
 
