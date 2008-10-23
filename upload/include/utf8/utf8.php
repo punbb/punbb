@@ -17,6 +17,9 @@
 * utf8_strtolower, utf8_strtoupper
 * Other functions in the ./native directory depend on these
 * six functions being available
+* 
+* @license http://www.gnu.org/copyleft/lesser.html LGPL
+* @see http://sourceforge.net/projects/phputf8
 * @package utf8
 */
 
