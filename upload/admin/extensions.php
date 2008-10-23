@@ -699,10 +699,6 @@ if ($section == 'install')
 	// Loop through any available hotfixes
 	if (isset($forum_updates['hotfix']))
 	{
-		// If there's only one hotfix, add one layer of arrays so we can foreach over it
-		if (!is_array(current($forum_updates['hotfix'])))
-			$forum_updates['hotfix'] = array($forum_updates['hotfix']);
-
 		$rej_hotfixes = explode('|', substr($forum_config['o_rejected_updates'], 1, -1));
 		foreach ($forum_updates['hotfix'] as $hotfix)
 		{
