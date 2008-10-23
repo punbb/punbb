@@ -78,8 +78,13 @@ function cookie_login(&$forum_user)
 	$cookie = array('user_id' => 1, 'password_hash' => 'Guest', 'expiration_time' => 0, 'expire_hash' => 'Guest');
 
 	// If a cookie is set, we get the user_id and password hash from it
-	if (isset($_COOKIE[$cookie_name]))
-		@list($cookie['user_id'], $cookie['password_hash'], $cookie['expiration_time'], $cookie['expire_hash']) = @explode('|', base64_decode($_COOKIE[$cookie_name]));
+	if (!empty($_COOKIE[$cookie_name]))
+	{
+		$cookie_data = explode('|', base64_decode($_COOKIE[$cookie_name]));
+
+		if (!empty($cookie_data) && count($cookie_data) == 4)
+			list($cookie['user_id'], $cookie['password_hash'], $cookie['expiration_time'], $cookie['expire_hash']) = $cookie_data;
+	}
 
 	($hook = get_hook('fn_cookie_login_fetch_cookie')) ? eval($hook) : null;
 
@@ -289,6 +294,8 @@ function set_default_user()
 
 //
 // Set a cookie, PunBB style!
+// Like other headers, cookies must be sent before any output from your script.
+// Use headers_sent() to ckeck wether HTTP headers has been sent already.
 //
 function forum_setcookie($name, $value, $expire)
 {
@@ -299,7 +306,7 @@ function forum_setcookie($name, $value, $expire)
 		return;
 
 	// Enable sending of a P3P header
-	@header('P3P: CP="CUR ADM"');
+	header('P3P: CP="CUR ADM"');
 
 	if (version_compare(PHP_VERSION, '5.2.0', '>='))
 		setcookie($name, $value, $expire, $cookie_path, $cookie_domain, $cookie_secure, true);
@@ -689,12 +696,21 @@ function get_tracked_topics()
 
 	// Unserialize data from cookie
 	$tracked_topics = array('topics' => array(), 'forums' => array());
-	$temp = explode(';', $cookie_data);
-	foreach ($temp as $t)
+	foreach (explode(';', $cookie_data) as $id_data)
 	{
-		$type = substr($t, 0, 1) == 'f' ? 'forums' : 'topics';
-		$id = intval(substr($t, 1));
-		$timestamp = intval(@substr($t, strpos($t, '=') + 1));
+		switch (substr($id_data, 0, 1))
+		{
+			case 'f': $type = 'forums'; break;
+			case 't': $type = 'topics'; break;
+			default: continue;
+		}
+
+		$id = intval(substr($id_data, 1));
+
+		if (($pos = strpos($id_data, '=')) === false)
+			continue;
+		$timestamp = intval(substr($id_data, $pos + 1));
+
 		if ($id > 0 && $timestamp > 0)
 			$tracked_topics[$type][$id] = $timestamp;
 	}

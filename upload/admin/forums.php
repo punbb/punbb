@@ -362,11 +362,11 @@ else if (isset($_GET['edit_forum']))
 							'WHERE'		=> 'group_id='.$cur_group['g_id'].' AND forum_id='.$forum_id
 						);
 
-						$temp = array();
+						$perms_new_values = array();
 						foreach ($perms_new as $key => $value)
-							$temp[] = $key.'='.$value;
+							$perms_new_values[] = $key.'='.$value;
 
-						$query['SET'] = implode(', ', $temp);
+						$query['SET'] = implode(', ', $perms_new_values);
 
 						($hook = get_hook('afo_qr_update_forum_perms')) ? eval($hook) : null;
 						$forum_db->query_build($query) or error(__FILE__, __LINE__);

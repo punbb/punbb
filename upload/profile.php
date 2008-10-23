@@ -1130,22 +1130,22 @@ else if (isset($_POST['form_sent']))
 		($hook = get_hook('pf_change_details_database_validation')) ? eval($hook) : null;
 
 		// Singlequotes around non-empty values and NULL for empty values
-		$temp = array();
+		$new_values = array();
 		foreach($form as $key => $input)
 		{
 			$value = ($input !== '') ? '\''.$forum_db->escape($input).'\'' : 'NULL';
 
-			$temp[] = $key.'='.$value;
+			$new_values[] = $key.'='.$value;
 		}
 
 		// Make sure we have something to update
-		if (empty($temp))
+		if (empty($new_values))
 			message($lang_common['Bad request']);
 
 		// Run the update
 		$query = array(
 			'UPDATE'	=> 'users',
-			'SET'		=> implode(',', $temp),
+			'SET'		=> implode(',', $new_values),
 			'WHERE'		=> 'id='.$id
 		);
 
@@ -1817,12 +1817,12 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[language]">
 <?php
 
-			foreach($forum_page['languages'] as $temp)
+			foreach($forum_page['languages'] as $language)
 			{
-				if ($forum_user['language'] == $temp)
-					echo "\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
+				if ($forum_user['language'] == $language)
+					echo "\t\t\t\t\t\t".'<option value="'.$language.'" selected="selected">'.$language.'</option>'."\n";
 				else
-					echo "\t\t\t\t\t\t".'<option value="'.$temp.'">'.$temp.'</option>'."\n";
+					echo "\t\t\t\t\t\t".'<option value="'.$language.'">'.$language.'</option>'."\n";
 			}
 
 ?>
@@ -1947,12 +1947,12 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="frm-warn">
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[style]">
 <?php
 
-			foreach($forum_page['styles'] as $temp)
+			foreach($forum_page['styles'] as $style)
 			{
-				if ($user['style'] == $temp)
-					echo "\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
+				if ($user['style'] == $style)
+					echo "\t\t\t\t\t\t\t".'<option value="'.$style.'" selected="selected">'.str_replace('_', ' ', $style).'</option>'."\n";
 				else
-					echo "\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.str_replace('_', ' ', $temp).'</option>'."\n";
+					echo "\t\t\t\t\t\t\t".'<option value="'.$style.'">'.str_replace('_', ' ', $style).'</option>'."\n";
 			}
 
 ?>

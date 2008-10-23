@@ -72,14 +72,15 @@ if (function_exists('sys_getloadavg') && is_array(sys_getloadavg()))
 	array_walk($load_averages, create_function('&$v', '$v = round($v, 3);'));
 	$server_load = $load_averages[0].' '.$load_averages[1].' '.$load_averages[2];
 }
-else if (@file_exists('/proc/loadavg') && is_readable('/proc/loadavg'))
+else if (@is_readable('/proc/loadavg'))
 {
 	// We use @ just in case
 	$fh = @fopen('/proc/loadavg', 'r');
 	$load_averages = @fread($fh, 64);
 	@fclose($fh);
 
-	$load_averages = @explode(' ', $load_averages);
+	$load_averages = empty($load_averages) ? array() : explode(' ', $load_averages);
+
 	$server_load = isset($load_averages[2]) ? $load_averages[0].' '.$load_averages[1].' '.$load_averages[2] : 'Not available';
 }
 else if (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))

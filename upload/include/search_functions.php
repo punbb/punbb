@@ -77,7 +77,6 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 		$word_count = 0;
 		$match_type = 'and';
 		$result_list = array();
-		@reset($keywords_array);
 		foreach($keywords_array as $cur_word)
 		{
 			switch ($cur_word)
@@ -112,21 +111,20 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 					$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 					$row = array();
-					while ($temp = $forum_db->fetch_row($result))
+					while (list($post_id) = $forum_db->fetch_row($result))
 					{
-						$row[$temp[0]] = 1;
+						$row[$post_id] = 1;
 
 						if (!$word_count)
-							$result_list[$temp[0]] = 1;
+							$result_list[$post_id] = 1;
 						else if ($match_type == 'or')
-							$result_list[$temp[0]] = 1;
+							$result_list[$post_id] = 1;
 						else if ($match_type == 'not')
-							$result_list[$temp[0]] = 0;
+							$result_list[$post_id] = 0;
 					}
 
 					if ($match_type == 'and' && $word_count)
 					{
-						@reset($result_list);
 						foreach(array_keys($result_list) as $post_id)
 						{
 							if (!isset($row[$post_id]))
@@ -142,7 +140,6 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 			}
 		}
 
-		@reset($result_list);
 		foreach($result_list as $post_id => $matches)
 		{
 			if ($matches)
@@ -264,18 +261,19 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = -1
 	$search_results = implode(',', $search_ids);
 
 	// Fill an array with our results and search properties
-	$temp['search_results'] = $search_results;
-	$temp['sort_by'] = $sort_by;
-	$temp['sort_dir'] = $sort_dir;
-	$temp['show_as'] = $show_as;
-	$temp = serialize($temp);
+	$search_data = array();
+	$search_data['search_results'] = $search_results;
+	$search_data['sort_by'] = $sort_by;
+	$search_data['sort_dir'] = $sort_dir;
+	$search_data['show_as'] = $show_as;
+	$search_data = serialize($search_data);
 	$search_id = mt_rand(1, 2147483647);
 	$ident = ($forum_user['is_guest']) ? get_remote_address() : $forum_user['username'];
 
 	$query = array(
 		'INSERT'	=> 'id, ident, search_data',
 		'INTO'		=> 'search_cache',
-		'VALUES'	=> $search_id.', \''.$forum_db->escape($ident).'\', \''.$forum_db->escape($temp).'\''
+		'VALUES'	=> $search_id.', \''.$forum_db->escape($ident).'\', \''.$forum_db->escape($search_data).'\''
 	);
 
 	($hook = get_hook('sf_qr_cache_search')) ? eval($hook) : null;
@@ -317,14 +315,14 @@ function generate_cached_search_query($search_id, &$show_as)
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	if ($row = $forum_db->fetch_assoc($result))
 	{
-		$temp = unserialize($row['search_data']);
+		$search_data = unserialize($row['search_data']);
 
-		$search_results = $temp['search_results'];
-		$sort_by = $temp['sort_by'];
-		$sort_dir = $temp['sort_dir'];
-		$show_as = $temp['show_as'];
+		$search_results = $search_data['search_results'];
+		$sort_by = $search_data['sort_by'];
+		$sort_dir = $search_data['sort_dir'];
+		$show_as = $search_data['show_as'];
 
-		unset($temp);
+		unset($search_data);
 	}
 	else
 		return false;

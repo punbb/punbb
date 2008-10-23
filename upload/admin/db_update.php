@@ -266,9 +266,9 @@ function db_seems_utf8()
 		$id = ($i == 0) ? $min_id : (($i == 1) ? $max_id : rand($min_id, $max_id));
 
 		$result = $forum_db->query('SELECT p.message, p.poster, t.subject, f.forum_name FROM '.$forum_db->prefix.'posts AS p INNER JOIN '.$forum_db->prefix.'topics AS t ON t.id = p.topic_id INNER JOIN '.$forum_db->prefix.'forums AS f ON f.id = t.forum_id WHERE p.id>='.$id.' LIMIT 1') or error(__FILE__, __LINE__);
-		$temp = $forum_db->fetch_row($result);
+		$random_row = $forum_db->fetch_row($result);
 
-		if (!seems_utf8($temp[0].$temp[1].$temp[2].$temp[3]))
+		if (!seems_utf8($random_row[0].$random_row[1].$random_row[2].$random_row[3]))
 		{
 			$seems_utf8 = false;
 			break;
@@ -1302,8 +1302,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		while ($cur_item = $forum_db->fetch_assoc($result))
 		{
 			echo 'Preparsing post '.$cur_item['id'].' â€¦<br />'."\n";
-			$temp = array();
-			$forum_db->query('UPDATE '.$forum_db->prefix.'posts SET message=\''.$forum_db->escape(preparse_bbcode($cur_item['message'], $temp)).'\' WHERE id='.$cur_item['id']) or error(__FILE__, __LINE__);
+			$preparse_errors = array();
+			$forum_db->query('UPDATE '.$forum_db->prefix.'posts SET message=\''.$forum_db->escape(preparse_bbcode($cur_item['message'], $preparse_errors)).'\' WHERE id='.$cur_item['id']) or error(__FILE__, __LINE__);
 		}
 
 		// Check if there is more work to do
@@ -1330,8 +1330,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		while ($cur_item = $forum_db->fetch_assoc($result))
 		{
 			echo 'Preparsing signature '.$cur_item['id'].' …<br />'."\n";
-			$temp = array();
-			$forum_db->query('UPDATE '.$forum_db->prefix.'users SET signature=\''.$forum_db->escape(preparse_bbcode($cur_item['signature'], $temp, true)).'\' WHERE id='.$cur_item['id']) or error(__FILE__, __LINE__);
+			$preparse_errors = array();
+			$forum_db->query('UPDATE '.$forum_db->prefix.'users SET signature=\''.$forum_db->escape(preparse_bbcode($cur_item['signature'], $preparse_errors, true)).'\' WHERE id='.$cur_item['id']) or error(__FILE__, __LINE__);
 		}
 
 		// Check if there is more work to do

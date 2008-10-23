@@ -323,14 +323,15 @@ if (!$section || $section == 'setup')
 		}
 		$d->close();
 
-		@natcasesort($styles);
+		if (!empty($styles))
+			natcasesort($styles);
 
-		foreach($styles as $temp)
+		foreach($styles as $style)
 		{
-			if ($forum_config['o_default_style'] == $temp)
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
+			if ($forum_config['o_default_style'] == $style)
+				echo "\t\t\t\t\t\t\t\t".'<option value="'.$style.'" selected="selected">'.str_replace('_', ' ', $style).'</option>'."\n";
 			else
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.str_replace('_', ' ', $temp).'</option>'."\n";
+				echo "\t\t\t\t\t\t\t\t".'<option value="'.$style.'">'.str_replace('_', ' ', $style).'</option>'."\n";
 		}
 
 ?>
@@ -367,14 +368,15 @@ $forum_page['set_count'] = 0;
 		}
 		$d->close();
 
-		@natcasesort($languages);
+		if (!empty($languages))
+			natcasesort($languages);
 
-		foreach($languages as $temp)
+		foreach($languages as $lang)
 		{
-			if ($forum_config['o_default_lang'] == $temp)
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
+			if ($forum_config['o_default_lang'] == $lang)
+				echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'" selected="selected">'.$lang.'</option>'."\n";
 			else
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.$temp.'</option>'."\n";
+				echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'">'.$lang.'</option>'."\n";
 		}
 
 		// Load the profile.php language file
@@ -569,15 +571,16 @@ $forum_page['set_count'] = 0;
 		}
 		$d->close();
 
-		@natcasesort($url_schemes);
+		if (!empty($url_schemes))
+			natcasesort($url_schemes);
 
-		foreach($url_schemes as $temp)
+		foreach($url_schemes as $scheme)
 		{
-			$temp = substr($temp, 0, -4);
-			if ($forum_config['o_sef'] == $temp)
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
+			$scheme = substr($scheme, 0, -4);
+			if ($forum_config['o_sef'] == $scheme)
+				echo "\t\t\t\t\t\t\t\t".'<option value="'.$scheme.'" selected="selected">'.str_replace('_', ' ', $scheme).'</option>'."\n";
 			else
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.str_replace('_', ' ', $temp).'</option>'."\n";
+				echo "\t\t\t\t\t\t\t\t".'<option value="'.$scheme.'">'.str_replace('_', ' ', $scheme).'</option>'."\n";
 		}
 
 ?>
@@ -833,6 +836,8 @@ $forum_page['set_count'] = 0;
 
 ($hook = get_hook('aop_features_pre_updates_part')) ? eval($hook) : null;
 
+$get_remote_file_is_avalable = function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'));
+
 ?>
 			<div class="frm-part part<?php echo ++ $forum_page['part_count'] ?>">
 				<h3><span><?php printf($lang_admin['Essentials automatic head'], $forum_page['part_count']) ?></span></h3>
@@ -841,7 +846,7 @@ $forum_page['set_count'] = 0;
 				</div>
 				<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
 					<legend class="frm-legend"><strong><?php echo $lang_admin['Updates legend'] ?></strong></legend>
-<?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>				<div class="radbox checkbox">
+<?php if ($get_remote_file_is_avalable): ?>				<div class="radbox checkbox">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span class="fld-label"><?php echo $lang_admin['Check for updates'] ?></span><br /><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[check_for_updates]" value="1"<?php if ($forum_config['o_check_for_updates'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Auto check for updates'] ?></label>
 					</div>
 <?php else: ?>					<div class="frm-fld link">
@@ -851,7 +856,7 @@ $forum_page['set_count'] = 0;
 
 <?php endif; ?>
 
-<?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>				<div class="radbox checkbox">
+<?php if ($get_remote_file_is_avalable): ?>				<div class="radbox checkbox">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span class="fld-label"><?php echo $lang_admin['Check for versions'] ?></span><br /><input type="checkbox" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[check_for_versions]" value="1"<?php if ($forum_config['o_check_for_versions'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_admin['Auto check for versions'] ?></label>
 					</div>
 <?php else: ?>					<div class="frm-fld link">

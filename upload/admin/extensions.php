@@ -46,9 +46,13 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	// Load manifest (either locally or from punbb.informer.com updates service)
 	if (isset($_GET['install']))
-		$manifest = @file_get_contents(FORUM_ROOT.'extensions/'.$id.'/manifest.xml');
+		$manifest = is_readable(FORUM_ROOT.'extensions/'.$id.'/manifest.xml') ? file_get_contents(FORUM_ROOT.'extensions/'.$id.'/manifest.xml') : false;
 	else
-		$manifest = @forum_trim(end(get_remote_file('http://punbb.informer.com/update/manifest/'.$id.'.xml', 16)));
+	{
+		$remote_file = get_remote_file('http://punbb.informer.com/update/manifest/'.$id.'.xml', 16);
+		if (!empty($remote_file['content']))
+			$manifest = $remote_file['content'];
+	}
 
 	// Parse manifest.xml into an array and validate it
 	$ext_data = xml_to_array($manifest);
@@ -731,7 +735,7 @@ if ($section == 'install')
 			}
 
 			// Parse manifest.xml into an array
-			$ext_data = xml_to_array(@file_get_contents(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml'));
+			$ext_data = is_readable(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml') ? xml_to_array(file_get_contents(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml')) : '';
 			if (empty($ext_data))
 			{
 				$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.sprintf($lang_admin['Extension loading error'], forum_htmlencode($entry)).'<span></h3>'."\n\t\t\t\t".'<p>'.$lang_admin['Failed parse manifest'].'</p>'."\n\t\t\t".'</div>';
@@ -826,7 +830,8 @@ else
 		foreach(array_keys($inst_exts) as $id)
 			($hook = get_hook('aex_add_repository_for_'.$id)) ? eval($hook) : null;
 
-		@include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
+		if (is_readable(FORUM_CACHE_DIR.'cache_ext_version_notifications.php'))
+			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
 
 		//Get latest timestamp in cache
 		if ( isset($forum_ext_repos) )
