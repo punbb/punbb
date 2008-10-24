@@ -7,6 +7,13 @@
  * @package PunBB
  */
 
+//
+// Converts the CDATA end sequence ]]> into ]]&gt;
+//
+function escape_cdata($str)
+{
+	return str_replace(']]>', ']]&gt;', $str);
+}
 
 //
 // Return all code blocks that hook into $hook_id
