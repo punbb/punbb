@@ -307,7 +307,11 @@ if ($action == 'feed')
 		while ($cur_post = $forum_db->fetch_assoc($result))
 		{
 			if ($forum_config['o_censoring'] == '1')
+			{
 				$cur_post['subject'] = censor_words($cur_post['subject']);
+				$cur_post['message'] = censor_words($cur_post['message']);
+			}
+
 				$feed['items'][] = array(
 				'id'			=>	$cur_post['id'],
 				'title'			=>	$cur_topic['first_post_id'] == $cur_post['id'] ? $cur_topic['subject'] : $lang_common['RSS reply'].$cur_topic['subject'],
@@ -334,7 +338,7 @@ if ($action == 'feed')
 			$fids = array_map('intval', $fids);
 
 			if (!empty($fids))
-				$forum_sql = ' AND f.id IN('.implode(',', $fids).')';
+				$forum_sql = ' AND t.forum_id IN('.implode(',', $fids).')';
 		}
 
 		// Any forum ID's to exclude?
@@ -344,7 +348,7 @@ if ($action == 'feed')
 			$nfids = array_map('intval', $nfids);
 
 			if (!empty($nfids))
-				$forum_sql = ' AND f.id NOT IN('.implode(',', $nfids).')';
+				$forum_sql = ' AND t.forum_id NOT IN('.implode(',', $nfids).')';
 		}
 
 		// Setup the feed
@@ -358,16 +362,16 @@ if ($action == 'feed')
 
 		// Fetch $show topics
 		$query = array(
-			'SELECT'	=> 't.id, t.poster, t.subject, t.last_post, t.last_poster, f.id AS fid, f.forum_name',
+			'SELECT'	=> 't.id, t.poster, t.subject, t.last_post, t.last_poster, p.message',
 			'FROM'		=> 'topics AS t',
 			'JOINS'		=> array(
 				array(
-					'INNER JOIN'	=> 'forums AS f',
-					'ON'			=> 'f.id=t.forum_id'
+					'INNER JOIN'	=> 'posts AS p',
+					'ON'			=> 'p.id=t.first_post_id'
 				),
 				array(
 					'LEFT JOIN'		=> 'forum_perms AS fp',
-					'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.$forum_user['g_id'].')'
 				)
 			),
 			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL',
@@ -383,13 +387,16 @@ if ($action == 'feed')
 		while ($cur_topic = $forum_db->fetch_assoc($result))
 		{
 			if ($forum_config['o_censoring'] == '1')
+			{
 				$cur_topic['subject'] = censor_words($cur_topic['subject']);
+				$cur_topic['message'] = censor_words($cur_topic['message']);
+			}
 
 			$feed['items'][] = array(
 				'id'			=>	$cur_topic['id'],
 				'title'			=>	$cur_topic['subject'],
 				'link'			=>	forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
-				'description'	=>	$lang_common['Forum'].': <a href="'.forum_link($forum_url['forum'], array($cur_topic['fid'], sef_friendly($cur_topic['forum_name']))).'">'.$cur_topic['forum_name'].'</a>',
+				'description'		=>	$cur_topic['message'],
 				'author'		=>	$cur_topic['last_poster'],
 				'pubdate'		=>	$cur_topic['last_post']
 			);
