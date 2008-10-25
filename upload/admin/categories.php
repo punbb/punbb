@@ -21,7 +21,8 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 	message($lang_common['No permission']);
 
 // Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin.php';
+require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
+require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_categories.php';
 
 
 // Add a new category
@@ -29,7 +30,7 @@ if (isset($_POST['add_cat']))
 {
 	$new_cat_name = forum_trim($_POST['new_cat_name']);
 	if ($new_cat_name == '')
-		message($lang_admin['Must name category']);
+		message($lang_admin_categories['Must name category']);
 
 	$new_cat_pos = intval($_POST['position']);
 
@@ -41,10 +42,12 @@ if (isset($_POST['add_cat']))
 		'VALUES'	=> '\''.$forum_db->escape($new_cat_name).'\', '.$new_cat_pos
 	);
 
-	($hook = get_hook('acg_qr_add_category')) ? eval($hook) : null;
+	($hook = get_hook('acg_add_cat_qr_add_category')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	redirect(forum_link($forum_url['admin_categories']), $lang_admin['Category added'].' '.$lang_admin['Redirect']);
+	($hook = get_hook('acg_add_cat_pre_redirect')) ? eval($hook) : null;
+
+	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category added'].' '.$lang_admin_common['Redirect']);
 }
 
 
@@ -57,7 +60,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_cat_cancel']))
-		redirect(forum_link($forum_url['admin_categories']), $lang_admin['Cancel redirect']);
+		redirect(forum_link($forum_url['admin_categories']), $lang_admin_common['Cancel redirect']);
 
 	($hook = get_hook('acg_del_cat_form_submitted')) ? eval($hook) : null;
 
@@ -71,7 +74,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 			'WHERE'		=> 'cat_id='.$cat_to_delete
 		);
 
-		($hook = get_hook('acg_qr_get_forums_to_delete')) ? eval($hook) : null;
+		($hook = get_hook('acg_del_cat_qr_get_forums_to_delete')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$num_forums = $forum_db->num_rows($result);
 
@@ -88,7 +91,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 				'WHERE'		=> 'id='.$cur_forum
 			);
 
-			($hook = get_hook('acg_qr_delete_forum')) ? eval($hook) : null;
+			($hook = get_hook('acg_del_cat_qr_delete_forum')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
 
@@ -100,7 +103,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 			'WHERE'		=> 'id='.$cat_to_delete
 		);
 
-		($hook = get_hook('acg_qr_delete_category')) ? eval($hook) : null;
+		($hook = get_hook('acg_del_cat_qr_delete_category')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
@@ -109,7 +112,9 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		generate_quickjump_cache();
 
-		redirect(forum_link($forum_url['admin_categories']), $lang_admin['Category deleted'].' '.$lang_admin['Redirect']);
+		($hook = get_hook('acg_del_cat_pre_redirect')) ? eval($hook) : null;
+
+		redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category deleted'].' '.$lang_admin_common['Redirect']);
 	}
 	else	// If the user hasn't comfirmed the delete
 	{
@@ -119,7 +124,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 			'WHERE'		=> 'c.id='.$cat_to_delete
 		);
 
-		($hook = get_hook('acg_qr_get_category_name')) ? eval($hook) : null;
+		($hook = get_hook('acg_del_cat_qr_get_category_name')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		if (!$forum_db->num_rows($result))
 			message($lang_common['Bad request']);
@@ -127,12 +132,20 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		$cat_name = $forum_db->result($result);
 
 
+		// Setup the form
+		$forum_page['form_action'] = forum_link($forum_url['admin_categories']);
+
+		$forum_page['hidden_fields'] = array(
+			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+			'cat_to_delete'	=> '<input type="hidden" name="cat_to_delete" value="'.$cat_to_delete.'" />'
+		);
+
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
-			array($lang_admin['Categories'], forum_link($forum_url['admin_categories'])),
-			$lang_admin['Delete category']
+			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+			array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories'])),
+			$lang_admin_categories['Delete category']
 		);
 
 		($hook = get_hook('acg_del_cat_pre_header_load')) ? eval($hook) : null;
@@ -144,39 +157,29 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		// START SUBST - <!-- forum_main -->
 		ob_start();
 
-		($hook = get_hook('acg_delete_cat_output_start')) ? eval($hook) : null;
+		($hook = get_hook('acg_del_cat_output_start')) ? eval($hook) : null;
 
 ?>
-<div id="brd-main" class="main sectioned admin">
-
-
-<?php echo generate_admin_menu(); ?>
-
-	<div class="main-head">
-		<h1><span>{ <?php echo end($forum_page['crumbs']) ?> }</span></h1>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php printf($lang_admin_categories['Confirm delete cat'], forum_htmlencode($cat_name)) ?></span></h2>
 	</div>
-
-	<div class="main-content frm">
-		<div class="frm-head">
-			<h2><span><?php printf($lang_admin['Confirm delete cat'], forum_htmlencode($cat_name)) ?></span></h2>
+	<div class="main-content main-frm">
+		<div class="ct-box warn-box">
+			<p class="warn"><?php echo $lang_admin_categories['Delete category warning'] ?></p>
 		</div>
-		<div class="frm-info">
-			<p class="warn"><?php echo $lang_admin['Delete category warning'] ?></p>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_categories']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_categories'])) ?>" />
-				<input type="hidden" name="cat_to_delete" value="<?php echo $cat_to_delete ?>" />
+				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="del_cat_comply" value="<?php echo $lang_admin['Delete category'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="del_cat_cancel" value="<?php echo $lang_admin['Cancel'] ?>" /></span>
+				<span class="submit"><input type="submit" name="del_cat_comply" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="del_cat_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
 	</div>
-
-</div>
 <?php
+
+		($hook = get_hook('acg_del_cat_end')) ? eval($hook) : null;
 
 		$tpl_temp = forum_trim(ob_get_contents());
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
@@ -201,7 +204,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 		'ORDER BY'	=> 'c.id'
 	);
 
-	($hook = get_hook('acg_qr_get_categories')) ? eval($hook) : null;
+	($hook = get_hook('acg_update_cats_qr_get_categories')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	while ($cur_cat = $forum_db->fetch_assoc($result))
 	{
@@ -210,10 +213,10 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 		if (isset($cat_name[$cur_cat['id']]) && isset($cat_order[$cur_cat['id']]))
 		{
 			if ($cat_name[$cur_cat['id']] == '')
-				message($lang_admin['Must enter category']);
+				message($lang_admin_categories['Must enter category']);
 
 			if ($cat_order[$cur_cat['id']] < 0)
-				message($lang_admin['Must be integer']);
+				message($lang_admin_categories['Must be integer']);
 
 			// We only want to update if we changed anything
 			if ($cur_cat['cat_name'] != $cat_name[$cur_cat['id']] || $cur_cat['disp_position'] != $cat_order[$cur_cat['id']])
@@ -224,7 +227,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 					'WHERE'		=> 'id='.$cur_cat['id']
 				);
 
-				($hook = get_hook('acg_qr_update_category')) ? eval($hook) : null;
+				($hook = get_hook('acg_update_cats_qr_update_category')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
@@ -236,7 +239,9 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 
 	generate_quickjump_cache();
 
-	redirect(forum_link($forum_url['admin_categories']), $lang_admin['Categories updated'].' '.$lang_admin['Redirect']);
+	($hook = get_hook('acg_update_cats_pre_redirect')) ? eval($hook) : null;
+
+	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Categories updated'].' '.$lang_admin_common['Redirect']);
 }
 
 
@@ -247,7 +252,7 @@ $query = array(
 	'ORDER BY'	=> 'c.disp_position'
 );
 
-($hook = get_hook('acg_qr_get_categories2')) ? eval($hook) : null;
+($hook = get_hook('acg_qr_get_categories')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $num_cats = $forum_db->num_rows($result);
 
@@ -255,17 +260,21 @@ for ($i = 0; $i < $num_cats; ++$i)
 	$cat_list[] = $forum_db->fetch_row($result);
 
 // Setup the form
-$forum_page['fld_count'] = $forum_page['set_count'] = $forum_page['part_count'] = 0;
+$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
+$forum_page['form_action'] = forum_link($forum_url['admin_categories']).'?action=foo';
 
+$forum_page['hidden_fields'] = array(
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+);
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin['Categories']
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+	$lang_admin_common['Categories']
 );
 
-($hook = get_hook('acg_cat_header_load')) ? eval($hook) : null;
+($hook = get_hook('acg_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-categories');
@@ -277,72 +286,68 @@ ob_start();
 ($hook = get_hook('acg_main_output_start')) ? eval($hook) : null;
 
 ?>
-<div id="brd-main" class="main sectioned admin">
-
-
-<?php echo generate_admin_menu(); ?>
-
-	<div class="main-head">
-		<h1><span>{ <?php echo end($forum_page['crumbs']) ?> }</span></h1>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_admin_categories['Add category head'] ?></span></h2>
 	</div>
-
-	<div class="main-content frm">
-		<div class="frm-head">
-			<h2><span><?php echo $lang_admin['Add category head'] ?></span></h2>
-		</div>
-		<div class="frm-info">
-			<p><?php printf($lang_admin['Add category info'], '<a href="'.forum_link($forum_url['admin_forums']).'">'.$lang_admin['Add category info link text'].'</a>') ?></p>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_categories']) ?>?action=foo">
+	<div class="main-content main-frm">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_categories']).'?action=foo') ?>" />
+				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
-			<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-				<legend class="frm-legend"><strong><?php echo $lang_admin['Add category'] ?></strong></legend>
-				<div class="frm-fld text">
-					<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_admin['New category name'] ?></span><br />
+<?php ($hook = get_hook('acg_pre_add_cat_fieldset')) ? eval($hook) : null; ?>
+			<div class="ct-box">
+				<p><?php printf($lang_admin_categories['Add category info'], '<a href="'.forum_link($forum_url['admin_forums']).'">'.$lang_admin_categories['Add category info link text'].'</a>') ?></p>
+			</div>
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+				<legend class="group-legend"><span><?php echo $lang_admin_categories['Add category legend'] ?></span></legend>
+<?php ($hook = get_hook('acg_pre_new_category_name')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['New category label'] ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="new_cat_name" size="35" maxlength="80" /></span>
-					</label>
+					</div>
 				</div>
-				<div class="frm-fld text">
-					<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_admin['Position'] ?></span><br />
+<?php ($hook = get_hook('acg_pre_new_category_position')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['Position label'] ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="position" size="3" maxlength="3" /></span>
-						<span class="fld-extra"><?php echo $lang_admin['Category position help'] ?></span>
-					</label>
+					</div>
 				</div>
-<?php ($hook = get_hook('acg_add_cat_fieldset_end')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('acg_pre_add_cat_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
+<?php ($hook = get_hook('acg_add_cat_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_cat" value="<?php echo $lang_admin['Add category'] ?>" /></span>
+				<span class="submit"><input type="submit" name="add_cat" value="<?php echo $lang_admin_categories['Add category'] ?>" /></span>
 			</div>
 		</form>
 	</div>
 <?php
 
-($hook = get_hook('acg_new_form')) ? eval($hook) : null;
+($hook = get_hook('acg_post_add_cat_form')) ? eval($hook) : null;
 
-// Reset fieldset counter
-$forum_page['set_count'] = 0;
+// Reset counter
+$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 if ($num_cats)
 {
 
 ?>
-	<div class="main-content frm">
-		<div class="frm-head">
-			<h2><span><?php echo $lang_admin['Del category head'] ?></span></h2>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_categories']) ?>?action=foo">
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_admin_categories['Del category head'] ?></span></h2>
+	</div>
+	<div class="main-content main-frm">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_categories']).'?action=foo') ?>" />
+				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
-			<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-				<legend class="frm-legend"><strong><?php echo $lang_admin['Delete category'] ?></strong></legend>
-				<div class="frm-fld select">
-					<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_admin['Select category'] ?></span><br />
+<?php ($hook = get_hook('acg_pre_del_cat_fieldset')) ? eval($hook) : null; ?>
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+				<legend class="group-legend"><strong><?php echo $lang_admin_categories['Delete category'] ?></strong></legend>
+<?php ($hook = get_hook('acg_pre_del_category_select')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box select">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['Select category label'] ?></span> <small><?php echo $lang_admin_common['Delete help'] ?></small></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_to_delete">
 <?php
 
@@ -354,68 +359,79 @@ if ($num_cats)
 
 ?>
 						</select></span>
-						<span class="fld-help"><?php echo $lang_admin['Delete help'] ?></span>
-					</label>
+					</div>
 				</div>
-<?php ($hook = get_hook('acg_del_cat_fieldset_end')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('acg_pre_del_cat_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
+<?php ($hook = get_hook('acg_del_cat_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="del_cat" value="<?php echo $lang_admin['Delete category'] ?>" /></span>
+				<span class="submit"><input type="submit" name="del_cat" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
 			</div>
 		</form>
 	</div>
-
-	<div class="main-content frm">
-		<div class="frm-head">
-			<h2><span><?php echo $lang_admin['Edit categories head'] ?></span></h2>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_categories']) ?>?action=foo">
-			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_categories']).'?action=foo') ?>" />
-			</div>
-
 <?php
 
+($hook = get_hook('acg_post_del_cat_form')) ? eval($hook) : null;
+
+// Reset counter
+$forum_page['group_count'] = $forum_page['item_count'] = 0;
+
+?>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_admin_categories['Edit categories head'] ?></span></h2>
+	</div>
+	<div class="main-content main-frm">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+			<div class="hidden">
+				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+			</div>
+<?php
+
+	($hook = get_hook('acg_edit_cat_fieldsets_start')) ? eval($hook) : null;
 	foreach ($cat_list as $cur_category)
 	{
 		list($cat_id, $cat_name, $position) = $cur_category;
-		// Reset fieldset counter
-		$forum_page['set_count'] = 0;
+
+		$forum_page['item_count'] = 0;
+
+		($hook = get_hook('acg_pre_edit_cur_cat_fieldset')) ? eval($hook) : null;
 
 ?>
-			<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-				<legend class="frm-legend"><strong><?php echo forum_htmlencode($cat_name) ?></strong></legend>
-				<div class="frm-fld text twin">
-					<label for="fld<?php echo ++$forum_page['fld_count'] ?>" class="twin1">
-						<span class="fld-label"><?php echo $lang_admin['Edit category'] ?></span><br />
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+				<legend class="group-legend"><span><?php printf($lang_admin_categories['Edit category legend'],  '<span class="hideme"> ('.forum_htmlencode($cat_name).')</span>') ?></span></legend>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php ($hook = get_hook('acg_pre_edit_cat_name')) ? eval($hook) : null; ?>
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['Category name label'] ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_name[<?php echo $cat_id ?>]" value="<?php echo forum_htmlencode($cat_name) ?>" size="35" maxlength="80" /></span>
-					</label><br />
-					<label for="fld<?php echo ++$forum_page['fld_count'] ?>" class="twin2">
-						<span class="fld-label"><?php echo $lang_admin['Position'] ?></span><br />
+					</div>
+<?php ($hook = get_hook('acg_pre_edit_cat_position')) ? eval($hook) : null; ?>
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['Position label'] ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_order[<?php echo $cat_id ?>]" value="<?php echo $position ?>" size="3" maxlength="3" /></span>
-					</label>
+					</div>
 				</div>
-<?php ($hook = get_hook('acg_edit_cat_fieldset_end')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('acg_pre_edit_cur_cat_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php
 
+		($hook = get_hook('acg_edit_cur_cat_fieldset_end')) ? eval($hook) : null;
 	}
+
+	($hook = get_hook('acg_edit_cat_fieldsets_end')) ? eval($hook) : null;
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" class="button" name="update" value="<?php echo $lang_admin['Update all'] ?>" /></span>
+				<span class="submit"><input type="submit" class="button" name="update" value="<?php echo $lang_admin_categories['Update all categories'] ?>" /></span>
 			</div>
 		</form>
 	</div>
 <?php
 
-	($hook = get_hook('acg_has_cats_new_form')) ? eval($hook) : null;
+	($hook = get_hook('acg_post_edit_cat_form')) ? eval($hook) : null;
 }
 
-?>
-
-</div>
-<?php
+($hook = get_hook('acg_end')) ? eval($hook) : null;
 
 $tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);

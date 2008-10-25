@@ -1,140 +1,69 @@
 /*************************************************************
-A - SETUP
+IE6 - FIXES
 **************************************************************/
 
-/* Start from scratch
-----------------------------------------------------------=--*/
-
-* html .main table {
-	border-collapse: collapse
-	}
-
-* html .brd legend {
-	margin-left: -7px;
-	}
-
-
-/* Make the skip link work
-----------------------------------------------------------=--*/
-
-.ietabfix:active, #brd-main {
-	zoom: 1;
-	}
-
-/* Welcome Box
-----------------------------------------------------------=--*/
-
-#brd-visit {
-	zoom: 1;
-	}
-
-/* Alert Box
-----------------------------------------------------------=--*/
-
-#brd-alert, #brd-alert h1 {
-	zoom: 1;
-	}
-
-
-/* Statistics
+/* Float Clearing and Has Layout Fixes
 -------------------------------------------------------------*/
 
- #brd-info {
- 	height: 1px;
- 	}
-
- #brd-info #stats ul, #brd-info #onlinelist {
- 	zoom: 1;
- 	}
-
-/* About Box (Footer / Copyright / Jump Menu)
-----------------------------------------------------------=--*/
-
-#brd-about,
-.brd .userbox {
+.brd-page,
+.brd .main,
+#brd-index .main-subhead,
+.brd .main-content .main-item,
+.brd .main-content .main-item ul,
+.brd .gen-content,
+.brd .main-content,
+.brd .ct-box,
+.brd .ct-box *,
+.brd .frm-group,
+.brd .mf-set,
+.brd .sf-set,
+.brd .mf-box,
+.brd .sf-box,
+.brd .mf-item,
+.brd .txt-set,
+.brd .txt-box,
+.brd .frm-form label,
+.brd fieldset,
+.brd span.fld-input,
+.brd .main-subhead .hn,
+.brd .post,
+.brd .postbody,
+.brd .post-entry,
+.brd .postfoot .post-options {
 	zoom: 1;
 	}
-
-/* Paging and Posting
-----------------------------------------------------------=--*/
-
-.brd .crumbs,
-.main .paged-head,
-.main .paged-foot,
-.main .paged-foot .submitting {
-	zoom: 1;
-	}
-
-/* Main Headings
-----------------------------------------------------------=--*/
-
-.main .main-head,
-.main .main-foot {
-	zoom: 1;
-	}
-
-/* Tabbed Navigation
--------------------------------------------------------------*/
-
-.main .main-nav {
-	zoom: 1;
-	}
-
 
 /* Forms
 -------------------------------------------------------------*/
 
-.frm .frm-set div,
-.frm .link,
-.frm .frm-group,
-.frm .radbox {
-	height: 1px;
-	}
-
-* html .radbox input,
-* html .post-select input {
-	height: 13px;
-	width: 13px;
-	}
-
-.brd span.submit input,
-.brd span.cancel input {
-	padding-bottom: 0;
-	}
-
-.brd .frm,
-.frm .profile {
-	height: 1px
-	}
-
-.frm .profile .sig-demo {
-	zoom: 1;
-	}
-
-.frm .radbox label {
-	float: left;
-	}
-
-.main .dataset, .main .datagrid {
-	height: 1%;
-	}
-
-
-/* Posts
--------------------------------------------------------------*/
-
-.main .topic, .main .post, .main .post .postbody, .main .topic .post .postfoot {
-	zoom: 1;
+#brd-wrap fieldset {
+	padding-top: 1px;
 	position: relative;
 	}
 
-.main .post .user {
-	zoom: 1;
-	position: relative;
+.brd fieldset legend {
+	margin-left: -7px;
 	}
 
-* html .entry-content .codebox pre { /* 6 Only */
-	overflow: visible;
-	overflow-x:auto;
-	padding-bottom: 2em;
+#brd-wrap .checklist {
+	height: 9em;
+	width: 30em;
+	overflow: auto;
+	}
+
+.brd .sf-set .checkbox label span {
+	padding-right: 0em;
+	padding-left: 5em;
+	}
+
+#brd-admin-censoring #info-censored-intro {
+	margin-bottom: 3em;
+	}
+
+.main-forum .main-item .item-starter {
+	margin-left: 1ex;
+	}
+
+#brd-stats .st-users {
+	margin-bottom: -1ex;
 	}

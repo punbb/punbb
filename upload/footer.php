@@ -16,10 +16,7 @@ if (!defined('FORUM'))
 ob_start();
 
 ($hook = get_hook('ft_about_output_start')) ? eval($hook) : null;
-
-?>
-<div id="brd-about">
-<?php
+($hook = get_hook('ft_about_pre_quickjump')) ? eval($hook) : null;
 
 // Display the "Jump to" drop list
 if ($forum_user['g_read_board'] == '1' && $forum_config['o_quickjump'] == '1')
@@ -39,12 +36,13 @@ if ($forum_user['g_read_board'] == '1' && $forum_config['o_quickjump'] == '1')
 }
 
 
+($hook = get_hook('ft_about_pre_copyright')) ? eval($hook) : null;
+
 // End the transaction
 $forum_db->end_transaction();
 
 ?>
 	<p id="copyright">Powered by <strong><a href="http://punbb.informer.com/">PunBB</a><?php if ($forum_config['o_show_version'] == '1') echo ' '.$forum_config['o_cur_version']; ?></strong></p>
-</div>
 <?php
 
 ($hook = get_hook('ft_about_end')) ? eval($hook) : null;
@@ -67,8 +65,8 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 	{
 		// Calculate script generation time
 		list($usec, $sec) = explode(' ', microtime());
-		$time_diff = sprintf('%.3f', ((float)$usec + (float)$sec) - $forum_start);
-		echo '<p id="querytime">[ Generated in '.$time_diff.' seconds, '.$forum_db->get_num_queries().' queries executed ]</p>'."\n";
+		$time_diff = forum_number_format(((float)$usec + (float)$sec) - $forum_start, 3);
+		echo '<p id="querytime">[ Generated in '.$time_diff.' seconds, '.forum_number_format($forum_db->get_num_queries()).' queries executed ]</p>'."\n";
 	}
 
 	if (defined('FORUM_SHOW_QUERIES'))

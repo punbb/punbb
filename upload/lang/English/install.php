@@ -1,13 +1,10 @@
 <?php
 
-// Language definitions used in delete.php
+// Language definitions used in install.php
 $lang_install = array(
 
 // Install Form
 'Install PunBB'			=>	'Install PunBB %s',
-'Required'					=>	'(Required)',
-'Install welcome'			=>	'Welcome to PunBB installation. You are about to install PunBB %s.',
-'Install head'				=>	'Complete all three parts of this form to install your forum',
 'Install intro'				=>	'In order to install PunBB you must complete the form set out below. Please read the instructions provided before completing the form. If you encounter any difficulties with the installation, please refer to the documentation supplied as part of PunBB\'s download package.',
 'Part1'						=>	'Part 1 - Database setup',
 'Part1 intro'				=>	'Please enter the requested information in order to setup your database for PunBB. You must know all the information asked for before proceeding with the installation. Help with completing this part of the form is set out below.',
@@ -20,6 +17,7 @@ $lang_install = array(
 'Table prefix'				=>	'Table prefix:',
 'Database type info'		=>	'PunBB currently supports MySQL, PostgreSQL and SQLite. If your database of choice is missing from the drop-down menu below, it means this PHP environment does not have support for that particular database. More information regarding support for particular versions of each database can be found in the FAQ.',
 'Mysql type info'			=>	'PunBB has detected that your PHP environment supports two different ways of communicating with MySQL. The two options are called "<em>standard</em>" and "<em>improved</em>". If you are uncertain which one to use, start by trying improved and if that fails, try standard.',
+'MySQL InnoDB info'			=>	'PunBB has detected that your MySQL server might support <a href="http://dev.mysql.com/doc/refman/5.0/en/innodb-overview.html">InnoDB</a>. This would be a good choice if you are planning to run a large forum. If you are uncertain, it is recommended to not use InnoDB.',
 'Database server info'		=>	'Enter the address of the database server (example: <em>localhost</em>, <em>mysql1.example.com</em> or <em>208.77.188.166</em>). You can specify a custom port number if your database doesn\'t run on the default port (example: <em>localhost:3580</em>). For SQLite support, just enter anything or leave it at \'localhost\'.',
 'Database name info'		=>	'Enter the name of the database that PunBB will be installed into. The database must exist. For SQLite, this is the relative path to the database file. If the SQLite database file does not exist, PunBB will attempt to create it.',
 'Database username info'	=>	'Enter the username and password used for connecting to the selected database. Ignore for SQLite.',
@@ -33,21 +31,15 @@ $lang_install = array(
 'Table prefix help'			=>	'Optional database table prefix e.g. "foo_".',
 'Part2'						=>	'Part 2 - Forum Administrator setup',
 'Part2 legend'				=>	'Administrator\'s details',
-'Part2 intro'				=>	'Please enter the requested information in order to setup an administrator for your PunBB installation. You can later create more administrators and moderators.',
-'Username'					=>	'Username:',
-'Password'					=>	'Password:',
-'E-mail address'			=>	'E-mail address:',
-'Admin username'			=>	'Administrator\'s username:',
-'Admin password'			=>	'Administrator\'s password:',
+'Part2 intro'				=>	'Please enter the requested information in order to setup an administrator (Admin) for your PunBB installation. You can create more administrators and moderators later.',
+'Admin username'			=>	'Admin\'s username:',
+'Admin password'			=>	'Admin\'s password:',
 'Admin confirm password'	=>	'Confirm password:',
-'Admin e-mail'				=>	'Administrator\'s e-mail:',
-'Admin username info'		=>	'Enter the username of the forum administrator. Usernames can be between 2 and 25 characters long.',
-'Admin password info'		=>	'Enter then re-enter the forum administrator\'s password. Passwords must be at least 4 characters long and are case sensitive.',
-'Admin e-mail info'			=>	'Enter a current and valid e-mail address for the forum administrator.',
+'Admin e-mail'				=>	'Admin\'s e-mail address:',
 'Username help'				=>	'Between 2 and 25 characters.',
 'Password help'				=>	'Minimum 4 characters. Case sensitive.',
 'Confirm password help'		=>	'Re-enter exactly as before.',
-'E-mail address help'		=>	'The e-mail address of the forum administrator.',
+'E-mail address help'		=>	'A valid current e-mail address for the forum administrator.',
 'Part3'						=>	'Part 3 - Forum setup',
 'Part3 legend'				=>	'Forum information',
 'Part3 intro'				=>	'Please enter the requested information. Pay particular attention to entering your base URL and read the instructions set out below carefully.',
@@ -59,6 +51,8 @@ $lang_install = array(
 'Base URL info'				=>	'Please pay particular attention when entering your Base URL. You must set the correct Base URL or your forum will not work properly. The Base URL is the URL (without trailing slash) of your PunBB forum (example: <em>http://forum.example.com</em> or <em>http://example.com/~myuser</em>). Please note that the preset value below is just an educated guess by PunBB.',
 'Base URL help'				=>	'The URL (without trailing slash) of your PunBB installation. Please read information above.',
 'Start install'				=>	'Start install', // Label for submit button
+'Required'					=>	'(Required)',
+'Required warn'				=>	'All fields labelled %s must be completed before this form is submitted.',
 
 // Install errors
 'No database support'		=>	'This PHP environment does not have support for any of the databases that PunBB supports. PHP needs to have support for either MySQL, PostgreSQL or SQLite in order for PunBB to be installed.',
@@ -78,6 +72,7 @@ $lang_install = array(
 'Invalid table prefix'		=>	'The table prefix \'%s\' contains illegal characters or is too long. The prefix may contain the letters a to z, any numbers and the underscore character. They must however not start with a number. The maximum length is 40 characters. Please choose a different prefix.',
 'SQLite prefix collision'	=>	'The table prefix \'sqlite_\' is reserved for use by the SQLite engine. Please choose a different prefix.',
 'PunBB already installed'	=>	'A table called "%1$susers" is already present in the database "%2$s". This could mean that PunBB is already installed or that another piece of software is installed and is occupying one or more of the table names PunBB requires. If you want to install multiple copies of PunBB in the same database, you must choose a different table prefix.',
+'InnoDB not enabled'		=>	'InnoDB does not seem to be enabled. Please choose a database layer that does not have InnoDB support, or enable InnoDB on your MySQL server.',
 
 // Used in the install
 'Default announce heading'	=>	'Sample announcement',
@@ -91,6 +86,7 @@ $lang_install = array(
 'Default post contents'		=>	'If you are looking at this (which I guess you are), the install of PunBB appears to have worked! Now log in and head over to the administration control panel to configure your forum.',
 'Default rank 1'			=>	'New member',
 'Default rank 2'			=>	'Member',
+
 
 // Installation completed form
 'Success description'		=>	'Congratulations! PunBB %s has been successfully installed.',

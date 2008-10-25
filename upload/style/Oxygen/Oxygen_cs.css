@@ -1,265 +1,398 @@
-/*************************************************************
-COLOUR CHART			
-**************************************************************/
+/* General colour scheme
+----------------------------------------------------------------*/
 
-/* Basic					#fff / #333 */
-/* (Light back) a, a:link, a:visited		#00569c */
-/* (Light back) a:hover, a:active, a:focus	#b42000 */
-/* (Dark back) a, a:link, a:visited		#ddd */
-/* (Dark back) a:hover, a:active, a:focus	#fff */
-/* Logo						#296fa5 / #fff */
-/* Main menu					#113C5E / #ddd */
-/* Main headings				#1f537b / #ddd */
-/* Info Boxes (Yellow)				#ffffe1 */
-/* Info Boxes (Blue)				#f4f9fd */
-/* General Background (Lightest)		#fbfbfb */
-/* General Background (Slightly darker)		#f4f4f4 */
-/* Strong text (not in bold)			#000 */
-
-
-/*************************************************************
-A - BACKGROUND and BORDERS
-**************************************************************/
-
-.main-content, #brd-visit, .paged-head, .paged-foot, .postmain {
-	background: #fbfbfb;
-	}
-
-#brd-about, .main th, .main td.tc2, .main td.tc3, #brd-debug td.tcl {
-	background: #f4f4f4;
-	}
-
-.posthead {
-	background: #f1f1f1;
-	}
-
-#brd-title, #brd-desc {
-	background:#296fa5;
-	}
-
-#brd-navlinks {
-	background: #113c5e;
-	}
-
-.main-head, .main-foot {
-	background: #1f537b;
-	}
-
-.frm-info, .frm-error, #brd-alert, #brd-maintenance, .dataset .ext-error, .brd #admin-alerts {
-	background: #ffffe1;
-	}
-
-.entry-content .codebox, .entry-content .quotebox {
+body {
 	background: #fff;
-	}
-
-.brd div, div.brd, .brd td, .brd table, #stats h3, .frm .frm-set {
-	border-color: #ddd;
-	}
-
-.profile, .user, .topic, .databox, .userbox {
-	background: #f4f9fd;
-	}
-
-.status span, .sig-content span.sig-line, .databox .legend, #brd-announcement .msg-head {
-	border-color: #bbb;
-	}
-
-.online .status span {
-	border-color: #296FA5;
-	}
-
-.main .frm-head {
-	border-color: #fff #fff #bbb #fff;
-	}
-
-.main .frm-head {
-	background: #f1f1f1;
-	}
-
-.frm .frm-subhead, .frm .frm-info, .dataset, .datagrid, .databox, .databox .data {
-	border-color: #ddd;
-	}
-
-.brd .paging a, .brd .paging strong, .brd .paging span {
-	border-color: #ddd;
-	}
-
-.brd .paged-head, .brd .paged-foot {
-	background: #fff;
-	}
-
-/*************************************************************
-B - TEXT
-**************************************************************/
-
-.brd {
 	color: #333;
 	}
 
-#brd-title p, #brd-title a {
-	color: #fff;
+.brd a:link, .brd a:visited {
+	color: #00579C;
 	}
 
-#brd-desc, #brd-navlinks, .main-head, .main-foot, #brd-home {
-	color: #ddd;
+.brd p.feed a:link, .brd p.feed a:visited,
+.brd .main-foot .options a:link, .brd .main-foot .options a:visited {
+	color:#DDDDDD;
 	}
 
-.main-content li span, .databox .data, .frm-info, .frm-info span, .frm-set, .fld-label,
-.isonline, .example code, .example li code, .example li samp, .frm .frm-group legend,
-.example li span, .example li .samp, p.item span, .entry-info li * {
-	color: #666;
-	}
-
-.main-content li strong, .important strong, .user-info li.title span,
-.frm-error li span, .frm-info li span strong, .online .isonline, .frm h3.link *, .frm h4.link *,
-#brd-help h3, .main th, #brd-maintenance em, .brd #admin-alerts p strong {
-	color: #000;
-	}
-
-.user .username {
-	color: #00569c;
-	}
-
-.main .frm-head, .main .databox .legend, .brd .userbox .msg-head {
-	color: #113C5E;
-	}
-
-.main-content li {
-	color: #9AAFB4;
-	}
-
-.main-content .userbox li {
-	color: #333;
-	}
-
-.user-actions li {
-	color: #CD9C96;
-	}
-
-em.req-text, #req-msg p em, .brd li.warn, .brd .warn strong, .brd .frm-group .warn, .main .ext-error .legend,
-.brd #admin-alerts .legend span {
+.brd a:hover, .brd a:active, .brd a:focus,
+.brd p.feed a:hover, .brd p.feed a:active, .brd p.feed a:focus,
+.brd .main-foot .options a:hover, .brd .main-foot .options a:active, .brd .main-foot .options a:focus {
 	color: #b42000;
-	}
-
-.main .entry-content li {
-	color: #333;
-	}
-
-/*************************************************************
-C - LINKS
-**************************************************************/
-
-.brd a, .brd a:link, .brd a:visited {
-	color: #00569c;
-	}
-
-#brd-home a, #brd-home a:link, #brd-home a:visited,
-.main-head a, .main-head a:link, .main-head a:visited,
-#brd-navlinks a, #brd-navlinks a:link, #brd-navlinks a:visited {
-	color: #ddd;
 	text-decoration: none;
-	}	
-
-.main-foot a, .main-foot a:link, .main-foot a:visited {
-	color: #ddd;
 	}
 
-.main-head a.feed-option, .main-head a.feed-option:link, .main-head a.feed-option:visited {	
-	border-color: #6F9EFF;
-	background: #4D80E7;
-	color: #fff;
+.brd .main-pagepost a:link, .brd .crumbs a:link,
+.brd .main-pagepost a:visited, .brd .crumbs a:visited {
+	text-decoration: none;
 	}
 
-.brd a:hover, .brd a:active, .brd a:focus {
-	color: #b42000;
-	}
-
-.main-head a:hover, .main-head a:active, .main-head a:focus,
-.main-foot a:hover, .main-foot a:active, .main-foot a:focus,
-#brd-home a:hover, #brd-home a:active, #brd-home a:focus,
-#brd-navlinks a:hover, #brd-navlinks a:active, #brd-navlinks a:focus,
-#brd-access a:hover, #brd-access a:active, #brd-access a:focus {
-	color: #fff;
+.brd .main-pagepost a:hover, .brd .crumbs a:hover,
+.brd .main-pagepost a:active, .brd .crumbs a:active,
+.brd .main-pagepost a:focus, .brd .crumbs a:focus {
 	text-decoration: underline;
-	}	
+	}
 
-.main-head a.feed-option:hover, .main-head a.feed-option:active, .main-head a.feed-option:focus {
-	text-decoration: none;
+.brd .gen-content, .brd .main-content {
+	background: #fbfbfb;
+	border-color: #DFE6ED;
+	border-bottom-color: #CBD1D8;
+	}
+
+.brd .main-pagepost {
+	background: #fff;
+	border-color: #DDE4EB;
+	}
+
+.brd .crumbs {
+	background: #fff;
 	border-color: #fff;
 	}
 
 
-.posting a, p.crumbs a {
-	text-decoration: none;
+.brd .main-item, .brd .main-item li, .brd .main-item div, .brd td {
+	border-color: #DDE4EB;
 	}
 
-.main .topic .post .posthead h3 a strong {
-	text-decoration: none;
+.brd .main-item li.info-posts,
+.brd .main-item li.info-replies,
+.brd .main-item li.info-views,
+.brd .main-item li.info-topics {
+	}
+
+.brd .main-content .main-item .item-nav {
+	color: #888;
+	}
+
+.brd .main-content .sticky {
+	background: #F2F4FA;
+	}
+
+.brd .main-content .main-item .hn .item-status em.sticky {
+ 	color: #314B60;
+ 	font-weight: bold;
+ 	}
+
+.brd .main-content .main-item .hn .item-status em.closed {
+ 	color: #314B60;
+ 	font-weight: bold;
+ 	}
+
+.brd .post * {
+	border-color: #DDE4EB
+	}
+
+.brd .post {
+	border-color: #DDE4EB;
+	border-top-color: #fff;
+	border-bottom-color: #ccc;
+	}
+
+#topic-review .firstpost, .brd .singlepost {
+	border-top-color: #DDE4EB;
+	border-bottom-color: #DDE4EB;
+	}
+
+.brd .post {
+	background: #EDF1F5;
+	}
+
+.brd .posthead, .brd .postbody, .brd .post-options {
+	background: #f9f9f9;
+	}
+
+.brd .posthead .hn {
+	background: #F1F1F1;
+	}
+
+.brd .online .userstatus span {
+	border-color: #517CA1;
+	}
+
+.brd .ct-box, .brd .ct-set, .brd .ct-group, .brd .frm-group {
+	border-color: #DBE0E4;
+	}
+
+.brd .admin-page .ct-box {
+	background: #FEFFE6;
+	}
+
+.brd .admin-page .ct-set .ct-box {
+	background: #F4F9FD;
+	}
+
+.brd .admin-page .warn-set .warn-box {
+	background: #FEFFE6;
+	}
+
+.brd .main-frm .ct-group, .brd #brd-announcement {
+	background: #F4F9FD;
+	}
+
+.brd .main-content .info-set .info-box {
+	background: none;
+	}
+
+.brd .main-content .info-box {
+	background: #FFFFE1;
+	}
+
+.brd .warn-group, .brd .warn-set, .brd .warn-box, .brd .error-box, .brd #admin-alerts {
+	background: #FEFFE6;
+	border-color: #F4EBCE;
+	}
+
+.brd .warn-group, .brd .warn-set, .brd .warn-box, .brd .error-box {
+	border-color: #E6D190;
+	}
+
+.brd ul.info-list li {
+	color: #6A97BF;
+	}
+
+.brd ul.info-list li span {
+	color: #666;
+	}
+
+.brd ul li strong {
+	font-weight: normal;
+	color: #333;
+	}
+
+.brd .user-box {
+	background: #F4F9FD;
+	}
+.brd .ct-box .hn, .brd .ct-box .sig-demo {
+	border-color: #DBE0E4;
+	color: #1F537B;
+	}
+
+.brd .help-box {
+	background: #f4f4f4;
+	}
+
+.brd .frm-buttons {
+	border-color: #DBE0E4;
+	}
+
+.brd .checklist {
+	background: #fff;
+	border-color: #ccc;
+	}
+
+.brd label, .brd .aslabel, .brd .mf-set legend, .brd .ct-legend * {
+	color: #1F537B;
+	}
+
+.brd .paging * {
+	border-color: #dedfdf;
 	}
 
 
-/*************************************************************
-D - TABBED NAVIGATION
-**************************************************************/
+.brd .required label em, .brd #req-msg em {
+	color: #b42000;
+	}
 
-.main-nav ul li a, .main-nav ul li a:link, .main-nav ul li a:visited {
-	text-decoration: none;
+.brd .entry-content .quotebox, .brd .entry-content .codebox {
+	background: #fff;
 	border-color: #ddd;
 	}
 
-.main-nav ul li a:hover, .main-nav ul li a:active, .main-nav ul li a:focus {
-	border-top-color: #b42000;
+#brd-announcement .userbox {
+	background:#F4F9FD none repeat scroll 0 0;
 	}
 
-.main-nav ul li.topactive a, .main-nav ul li.topactive a:link,
-.main-nav ul li.topactive a:visited {
-	color: #F4F9FD;
+/* Menus
+----------------------------------------------------------------*/
+
+#brd-navlinks {
+	background: #113C5E;
+	border-color: #113C5E;
+	color: #ddd;
+	}
+
+#brd-navlinks a:link, #brd-navlinks a:visited {
+	color: #ddd;
+	}
+
+#brd-navlinks a:hover, #brd-navlinks a:active, #brd-navlinks a:focus {
+	color: #fff;
 	text-decoration: underline;
-	background: #1f537b;
+	}
+
+.brd .main-options, .brd .main-options span {
+	border-color: #CBD1D8;
+	background: #DDE4EB;
+	}
+
+.brd .options span {
+	border-color: #dedfdf;
+	}
+
+.brd .main-options .options span {
+	border-color: #ABAFB6
+	}
+
+.brd .main-menu, .brd .admin-menu {
+	background: #1F537B;
+	}
+
+.brd .main-menu ul, .brd .admin-menu ul {
+	border-right-color: #1A4566;
+	}
+
+.brd .main-menu li, .brd .admin-menu li {
+	border-left-color: #1A4566;
+	border-right-color: #426482;
+	}
+
+.brd .admin-submenu {
+	background: #E4E4E4;
+	border-color: #DFE6ED;
+	}
+
+.brd .main-menu a:link,
+.brd .main-menu a:visited,
+.brd .admin-menu a:link,
+.brd .admin-menu a:visited {
+	color: #ddd;
+	text-decoration: none;
+	}
+
+.brd .main-menu a:hover,
+.brd .main-menu a:active,
+.brd .main-menu a:focus,
+.brd .admin-menu a:hover,
+.brd .admin-menu a:active,
+.brd .admin-menu a:focus {
+	text-decoration: underline;
+	color: #fff;
+	}
+
+.brd .main-menu li.active a:hover,
+.brd .main-menu li.active a:active,
+.brd .main-menu li.active a:focus,
+.brd .main-menu li.active a:visited,
+.brd .admin-menu li.active a:hover,
+.brd .admin-menu li.active a:active,
+.brd .admin-menu li.active a:focus,
+.brd .admin-menu li.active a:visited {
+	text-decoration: none;
+	}
+
+.brd .admin-submenu li.active a {
+	text-decoration: none;
+	}
+
+.brd .main-menu li.active a {
+	color: #fff;
+	}
+
+.brd .admin-menu li.active a {
+	color: #eef;
+	}
+
+#brd-admod #alert a {
+	color: yellow;
+	}
+
+/* Logo and Headings
+----------------------------------------------------------------*/
+
+#brd-head {
+	background: #296FA5;
+	color: #ddd;
+	border-color: #296FA5;
+	}
+
+#brd-head a, #brd-head a:link, #brd-head a:visited {
+	color: #fff;
+	}
+
+.brd .main-head, .brd .main-foot {
+	background: #1F537B;
+	color: #ddd;
 	border-color: #1f537b;
 	}
 
-.submenu ul li.topactive ul li a,
-.submenu ul li.topactive ul li a:link,
-.submenu ul li.topactive ul li a:visited {
-	background: transparent;
-	text-decoration: none;
-	color: #dedfdf;
+.brd #brd-announcement .msg-head {
+	border-color: #BBBBBB;
 	}
 
-.submenu ul li.topactive ul li.isactive a,
-.submenu ul li.topactive ul li.isactive a:link,
-.submenu ul li.topactive ul li.isactive a:visited {
-	text-decoration: underline;
+.brd .main-subhead {
+	border-color: #DFE6ED #DFE6ED #CBD1D8 #DFE6ED;
+	background: #F4F4F4;
+	}
+
+.brd .column-title {
+	border-color: #F4F4F4 #F4F4F4 #CBD1D8 #F4F4F4;
+	background: #F4F4F4;
+	}
+
+.brd .content-head, .brd th {
+	background: #EAEEF5;
+	border-bottom-color: #fff;
+	border-top-color: #ddd;
+	}
+
+.brd .group-head {
+	background: #EDF1F5;
+	border-color: #DBE0E4;
+	}
+
+.brd .content-head .hn {
+	border-bottom-color: #ddd;
+	}
+
+.brd .main-head a:link, .brd .main-head a:visited {
+	color: #ddd;
+	}
+
+.brd .main-head a:hover, .brd .main-head a:active, .brd .main-head a:focus {
 	color: #fff;
-	background:#1f537b;
-	}
-
-.submenu ul li.topactive ul li a:hover,
-.submenu ul li.topactive ul li a:active,
-.submenu ul li.topactive ul li a:focus {
 	text-decoration: underline;
-	color: #fff;
-	background: #1f537b;
+	}
+
+.brd th {
+	background: #F4F4F4;
+	}
+
+.brd .main-frm .ct-group td{
+	background: #FBFBFB;
 	}
 
 
+/* Status indicators
+----------------------------------------------------------------*/
 
-	
-/*************************************************************
-E - POST STATUS INDICATORS
-**************************************************************/
-
-td.tcl span.status img {
-	border-color: #E6E6E6 #DEDEDE #DADADA #E2E2E2
+.brd .main-content .main-item .icon {
+	border-color: #EDF1F5 #DDE0E4 #C6CBD3 #BABFC6
 	}
 
-tr.redirect td.tcl img {
+.brd .main-content .redirect .icon {
 	border-color: #f4f4f4 #f4f4f4 #f4f4f4 #f4f4f4
 	}
 
-td.tcl span.new img {
+.brd .main-content .sticky .icon {
+	border-color: #D7E5F3 #C3CFDC #9FB3C7 #90A2B4
+	}
+
+.brd .main-content .closed .icon {
+	border-color: #ACACAC #979797 #898989 #7A7A7A
+	}
+
+.brd .main-content .sticky .closed {
+	border-color: #D7E5F3 #C3CFDC #898989 #7A7A7A
+	}
+
+.brd .main-content .new .icon {
 	border-color: #2B75AD #235E8C #1F537B #266799
 	}
-	
+
+
+/* Multi Checkbox Widget
+-------------------------------------------------------------*/
+
+.brd .checklist .checklist-item label:hover {
+	background: #EDF1F5;
+	}

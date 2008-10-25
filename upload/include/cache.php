@@ -32,7 +32,7 @@ function generate_config_cache()
 		'FROM'		=> 'config AS c'
 	);
 
-	($hook = get_hook('ch_qr_get_config')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_config_cache_qr_get_config')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
@@ -74,7 +74,7 @@ function generate_bans_cache()
 		'ORDER BY'	=> 'b.id'
 	);
 
-	($hook = get_hook('ch_qr_get_bans')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_bans_cache_qr_get_bans')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
@@ -110,7 +110,7 @@ function generate_ranks_cache()
 		'ORDER BY'	=> 'r.min_posts'
 	);
 
-	($hook = get_hook('ch_qr_get_ranks')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_ranks_cache_qr_get_ranks')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
@@ -146,7 +146,7 @@ function generate_censors_cache()
 		'ORDER BY'	=> 'c.search_for'
 	);
 
-	($hook = get_hook('ch_qr_get_censored_words')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_censors_cache_qr_get_censored_words')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
@@ -186,7 +186,7 @@ function generate_quickjump_cache($group_id = false)
 			'FROM'		=> 'groups AS g'
 		);
 
-		($hook = get_hook('ch_qr_get_groups')) ? eval($hook) : null;
+		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_groups')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$num_groups = $forum_db->num_rows($result);
 
@@ -203,7 +203,7 @@ function generate_quickjump_cache($group_id = false)
 			error('Unable to write quickjump cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 
 		$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);'."\n".'$forum_id = isset($forum_id) ? $forum_id : 0;'."\n\n".'?>';
-		$output .= "\t".'<form id="qjump" method="get" accept-charset="utf-8" action="'.$base_url.'/viewforum.php">'."\n\t\t".'<fieldset>'."\n\t\t\t".'<legend>'.$lang_common['Quick jump legend'].'</legend>'."\n\t\t\t".'<label for="qjump-select"><?php echo $lang_common[\'Jump to\'] ?>'.'</label><br />'."\n\t\t\t".'<span><select id="qjump-select" name="id">'."\n";
+		$output .= '<form id="qjump" method="get" accept-charset="utf-8" action="'.$base_url.'/viewforum.php">'."\n\t".'<div class="frm-fld frm-select">'."\n\t\t".'<label for="qjump-select"><span><?php echo $lang_common[\'Jump to\'] ?>'.'</span></label><br />'."\n\t\t".'<span class="frm-input"><select id="qjump-select" name="id">'."\n";
 
 		// Get the list of categories and forums from the DB
 		$query = array(
@@ -223,7 +223,7 @@ function generate_quickjump_cache($group_id = false)
 			'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
 		);
 
-		($hook = get_hook('ch_qr_get_cats_and_forums')) ? eval($hook) : null;
+		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_cats_and_forums')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		$cur_category = 0;
@@ -231,7 +231,7 @@ function generate_quickjump_cache($group_id = false)
 		$sef_friendly_names = array();
 		while ($cur_forum = $forum_db->fetch_assoc($result))
 		{
-			($hook = get_hook('ch_quickjump_forum_loop_start')) ? eval($hook) : null;
+			($hook = get_hook('ch_fn_generate_quickjump_cache_forum_loop_start')) ? eval($hook) : null;
 
 			if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
 			{
@@ -248,13 +248,13 @@ function generate_quickjump_cache($group_id = false)
 			$forum_count++;
 		}
 
-		$output .= "\t\t\t".'</optgroup>'."\n\t\t\t".'</select>'."\n\t\t\t".'<input type="submit" value="<?php echo $lang_common[\'Go\'] ?>" onclick="return Forum.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);" /></span>'."\n\t\t".'</fieldset>'."\n\t".'</form>'."\n";
-		$output .= "\t".'<script type="text/javascript">'."\n\t\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t\t".'var sef_friendly_url_array = new Array('.$forum_db->num_rows($result).');';
+		$output .= "\t\t\t".'</optgroup>'."\n\t\t".'</select>'."\n\t\t".'<input type="submit" value="<?php echo $lang_common[\'Go\'] ?>" onclick="return Forum.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);" /></span>'."\n\t".'</div>'."\n".'</form>'."\n";
+		$output .= '<script type="text/javascript">'."\n\t\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t\t".'var sef_friendly_url_array = new Array('.$forum_db->num_rows($result).');';
 
 		foreach ($sef_friendly_names as $forum_id => $forum_name)
-			$output .= "\n\t\t".'sef_friendly_url_array['.$forum_id.'] = "'.forum_htmlencode($forum_name).'";';
+			$output .= "\n\t".'sef_friendly_url_array['.$forum_id.'] = "'.forum_htmlencode($forum_name).'";';
 
-		$output .= "\n\t".'</script>'."\n";
+		$output .= "\n".'</script>'."\n";
 
 		if ($forum_count < 2)
 			$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);';
@@ -291,7 +291,7 @@ function generate_hooks_cache()
 		'ORDER BY'	=> 'eh.priority, eh.installed'
 	);
 
-	($hook = get_hook('ch_qr_get_hooks')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_hooks_cache_qr_get_hooks')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
@@ -351,7 +351,7 @@ function generate_updates_cache()
 		'WHERE'		=> 'e.id LIKE \'hotfix_%\''
 	);
 
-	($hook = get_hook('ch_qr_get_hotfixes')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_updates_cache_qr_get_hotfixes')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	$num_hotfixes = $forum_db->num_rows($result);
 
@@ -381,7 +381,7 @@ function generate_updates_cache()
 		$output = array('cached' => time(), 'fail' => true);
 
 	// This hook could potentially (and responsibly) be used by an extension to do its own little update check
-	($hook = get_hook('ch_generate_updates_cache_write')) ? eval($hook) : null;
+	($hook = get_hook('ch_fn_generate_updates_cache_write')) ? eval($hook) : null;
 
 	// Output update status as PHP code
 	$fh = @fopen(FORUM_CACHE_DIR.'cache_updates.php', 'wb');
@@ -396,7 +396,7 @@ function generate_updates_cache()
 function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension)
 {
 	$forum_ext_last_versions = array();
-	$forum_ext_repos = array();
+	$forum_ext_repos = array();	
 
 	foreach ( array_unique( array_merge($repository_urls, $repository_url_by_extension) ) as $url)
 	{
@@ -410,7 +410,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 		if (!isset( $forum_ext_repos[ $url ][ 'timestamp' ] ))
 			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
 
-		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp)
+		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp) 
 		{
 			foreach ($inst_exts as $ext)
 			{
@@ -429,6 +429,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 
 					$remote_file = get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2);
 					$last_changes = empty($remote_file['content']) ? '' : forum_trim($remote_file['content']);
+					unset($remote_file);
 					if ( !empty($last_changes) )
 						$forum_ext_last_versions[ $ext['id'] ][ 'changes' ] = $last_changes;
 				}
@@ -443,7 +444,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 			if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
 				$forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
 
-	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;
+	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
 
 	// Output config as PHP code
 	$fh = @fopen(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', 'wb');

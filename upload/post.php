@@ -50,6 +50,8 @@ if ($tid)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$tid
 	);
+
+	($hook = get_hook('po_qr_get_topic_forum_info')) ? eval($hook) : null;
 }
 else
 {
@@ -64,9 +66,10 @@ else
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fid
 	);
+
+	($hook = get_hook('po_qr_get_forum_info')) ? eval($hook) : null;
 }
 
-($hook = get_hook('po_qr_get_forum_info')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 if (!$forum_db->num_rows($result))
@@ -83,6 +86,8 @@ if ($cur_posting['redirect_url'] != '')
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_posting['moderators'] != '') ? unserialize($cur_posting['moderators']) : array();
 $forum_page['is_admmod'] = ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && array_key_exists($forum_user['username'], $mods_array))) ? true : false;
+
+($hook = get_hook('po_pre_permission_check')) ? eval($hook) : null;
 
 // Do we have permission to post?
 if ((($tid && (($cur_posting['post_replies'] == '' && $forum_user['g_post_replies'] == '0') || $cur_posting['post_replies'] == '0')) ||
@@ -147,7 +152,7 @@ if (isset($_POST['form_sent']))
 				require FORUM_ROOT.'include/email.php';
 
 			if (!is_valid_email($email))
-				$errors[] = $lang_common['Invalid e-mail'];
+				$errors[] = $lang_post['Invalid e-mail'];
 		}
 	}
 
@@ -158,8 +163,8 @@ if (isset($_POST['form_sent']))
 	// Clean up message from POST
 	$message = forum_linebreaks(forum_trim($_POST['req_message']));
 
-	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-		$errors[] = sprintf($lang_post['Too long message'], strlen($message), FORUM_MAX_POSTSIZE_BYTES, intval(100*(FORUM_MAX_POSTSIZE_BYTES/strlen($message))));
+	if (utf8_strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
+		$errors[] = $lang_post['Too long message'];
 	else if ($forum_config['p_message_all_caps'] == '0' && utf8_strtoupper($message) == $message && !$forum_page['is_admmod'])
 		$message = utf8_ucwords(utf8_strtolower($message));
 
@@ -178,9 +183,9 @@ if (isset($_POST['form_sent']))
 	$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 	$subscribe = isset($_POST['subscribe']) ? 1 : 0;
 
-	($hook = get_hook('po_end_validation')) ? eval($hook) : null;
-
 	$now = time();
+
+	($hook = get_hook('po_end_validation')) ? eval($hook) : null;
 
 	// Did everything go according to plan?
 	if (empty($errors) && !isset($_POST['preview']))
@@ -229,7 +234,7 @@ if (isset($_POST['form_sent']))
 			add_topic($post_info, $new_tid, $new_pid);
 		}
 
-		($hook = get_hook('po_pre_posted_redirect')) ? eval($hook) : null;
+		($hook = get_hook('po_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['post'], $new_pid), $lang_post['Post redirect']);
 	}
@@ -287,30 +292,30 @@ if ($tid && isset($_GET['qid']))
 
 
 // Setup form
-$forum_page['set_count'] = $forum_page['fld_count'] = 0;
+$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 $forum_page['form_action'] = ($tid ? forum_link($forum_url['new_reply'], $tid) : forum_link($forum_url['new_topic'], $fid));
 $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
-	'<input type="hidden" name="form_sent" value="1" />',
-	'<input type="hidden" name="form_user" value="'.((!$forum_user['is_guest']) ? forum_htmlencode($forum_user['username']) : 'Guest').'" />'
+	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
+	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!$forum_user['is_guest']) ? forum_htmlencode($forum_user['username']) : 'Guest').'" />',
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 );
-if ($forum_user['is_admmod'])
-	$forum_page['hidden_fields']['csrf_token'] = '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />';
 
 // Setup help
-$forum_page['main_head_options'] = array();
+$forum_page['text_options'] = array();
 if ($forum_config['p_message_bbcode'] == '1')
-	$forum_page['main_head_options']['bbcode'] = '<a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'"><span>'.$lang_common['BBCode'].'</span></a>';
+	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a></span>';
 if ($forum_config['p_message_img_tag'] == '1')
-	$forum_page['main_head_options']['img'] = '<a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'"><span>'.$lang_common['Images'].'</span></a>';
+	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
 if ($forum_config['o_smilies'] == '1')
-	$forum_page['main_head_options']['smilies'] = '<a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'"><span>'.$lang_common['Smilies'].'</span></a>';
+	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
 
 // Setup breadcrumbs
 $forum_page['crumbs'][] = array($forum_config['o_board_title'], forum_link($forum_url['index']));
 $forum_page['crumbs'][] = array($cur_posting['forum_name'], forum_link($forum_url['forum'], array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
-if ($tid) $forum_page['crumbs'][] = array($cur_posting['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_posting['subject']))));
+if ($tid)
+	$forum_page['crumbs'][] = array($cur_posting['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_posting['subject']))));
 $forum_page['crumbs'][] = $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'];
 
 ($hook = get_hook('po_pre_header_load')) ? eval($hook) : null;
@@ -323,12 +328,6 @@ ob_start();
 
 ($hook = get_hook('po_main_output_start')) ? eval($hook) : null;
 
-?>
-<div id="brd-main" class="main">
-
-	<h1><span><?php echo end($forum_page['crumbs']) ?></span></h1>
-<?php
-
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($errors))
 {
@@ -337,127 +336,135 @@ if (isset($_POST['preview']) && empty($errors))
 
 	$forum_page['preview_message'] = parse_message(forum_trim($message), $hide_smilies);
 
-	($hook = get_hook('po_pre_preview_display')) ? eval($hook) : null;
+	// Generate the post heading
+	$forum_page['post_ident'] = array();
+	$forum_page['post_ident']['num'] = '<span class="post-num">#</span>';
+	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($tid) ? $lang_post['Reply byline'] : $lang_post['Topic byline']), '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span>';
+	$forum_page['post_ident']['link'] = '<span class="post-link">'.format_time(time()).'</span>';
+
+	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;
 
 ?>
 	<div class="main-head">
-		<h2><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic']; ?></span></h2>
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
 	</div>
-
-<div id="post-preview" class="main-content topic">
-	<div class="post firstpost">
-		<div class="postmain">
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic']; ?></span></h2>
+	</div>
+	<div id="post-preview" class="main-content main-frm">
+		<div class="post singlepost">
 			<div class="posthead">
-				<h3><?php echo $lang_post['Preview info'] ?></h3>
+				<h3 class="hn"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
+<?php ($hook = get_hook('po_preview_new_post_head_option')) ? eval($hook) : null; ?>
 			</div>
 			<div class="postbody">
-				<div class="user">
-					<h4 class="user-ident"><strong class="username"><?php echo $forum_user['username'] ?></strong></h4>
-				</div>
 				<div class="post-entry">
 					<div class="entry-content">
 						<?php echo $forum_page['preview_message']."\n" ?>
 					</div>
+<?php ($hook = get_hook('po_preview_new_post_entry_data')) ? eval($hook) : null; ?>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 <?php
 
 }
 
 ?>
 	<div class="main-head">
-		<h2><span><?php echo $lang_post['Compose your'].' '.($tid ? $lang_post['New reply'] : $lang_post['New topic']) ?></span></h2>
-<?php if (!empty($forum_page['main_head_options'])): ?>		<p class="main-options"><?php printf($lang_common['You may use'], implode(' ', $forum_page['main_head_options'])) ?></p>
-<?php endif; ?>	</div>
-
-<div class="main-content frm">
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
+	</div>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo ($tid) ? $lang_post['Compose your reply'] : $lang_post['Compose your topic'] ?></span></h2>
+	</div>
+	<div id="post-form" class="main-content main-frm">
 <?php
+
+	if (!empty($forum_page['text_options']))
+		echo "\t\t".'<p class="ct-options options">'.sprintf($lang_common['You may use'], implode(' ', $forum_page['text_options'])).'</p>'."\n";
 
 	// If there were any errors, show them
 	if (!empty($errors))
 	{
 		$forum_page['errors'] = array();
-		foreach($errors as $cur_error)
+		foreach ($errors as $cur_error)
 			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
 		($hook = get_hook('po_pre_post_errors')) ? eval($hook) : null;
 
 ?>
-	<div class="frm-error">
-		<h3 class="warn"><?php echo $lang_post['Post errors'] ?></h3>
-		<ul>
-			<?php echo implode("\n\t\t\t\t\t", $forum_page['errors'])."\n" ?>
-		</ul>
-	</div>
+		<div class="ct-box error-box">
+			<h3 class="warn"><?php echo $lang_post['Post errors'] ?></h3>
+			<ul class="error-list">
+				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
+			</ul>
+		</div>
 <?php
 
 	}
 
 ?>
-		<div id="req-msg" class="frm-warn">
-			<p class="important"><?php printf($lang_common['Required warn'], '<em class="req-text">'.$lang_common['Required'].'</em>') ?></p>
-	</div>
-
-		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
-		<div class="hidden">
-			<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+		<div id="req-msg" class="req-warn ct-box error-box">
+			<p><?php printf($lang_common['Required warn'], '<em>'.$lang_common['Required'].'</em>') ?></p>
 		</div>
+		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
+			<div class="hidden">
+				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+			</div>
 <?php
-
-($hook = get_hook('po_pre_guest_info_fieldset')) ? eval($hook) : null;
 
 if ($forum_user['is_guest'])
 {
 	$forum_page['email_form_name'] = ($forum_config['p_force_guest_email'] == '1') ? 'req_email' : 'email';
 
+	($hook = get_hook('po_pre_guest_info_fieldset')) ? eval($hook) : null;
+
 ?>
-		<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-			<legend class="frm-legend"><strong><?php echo $lang_post['Guest post legend'] ?></strong></legend>
-<?php ($hook = get_hook('po_guest_info_start')) ? eval($hook) : null; ?>
-			<div class="frm-fld text required">
-				<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-					<span class="fld-label"><?php echo $lang_post['Guest name'] ?></span><br />
-					<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php if (isset($_POST['req_username'])) echo forum_htmlencode($username); ?>" size="35" maxlength="25" /></span>
-					<em class="req-text"><?php echo $lang_common['Required'] ?></em>
-				</label>
-			</div>
-<?php ($hook = get_hook('po_post_guest_name_div')) ? eval($hook) : null; ?>
-			<div class="frm-fld text<?php if ($forum_config['p_force_guest_email'] == '1') echo ' required' ?>">
-				<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-					<span class="fld-label"><?php echo $lang_post['Guest e-mail'] ?></span><br />
-					<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="<?php echo $forum_page['email_form_name'] ?>" value="<?php if (isset($_POST[$forum_page['email_form_name']])) echo forum_htmlencode($email); ?>" size="35" maxlength="80" /></span>
-					<?php if ($forum_config['p_force_guest_email'] == '1') echo '<em class="req-text">'.$lang_common['Required'].'</em>' ?>
-				</label>
-			</div>
-<?php ($hook = get_hook('po_guest_info_end')) ? eval($hook) : null; ?>
-		</fieldset>
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+				<legend class="group-legend"><strong><?php echo $lang_post['Guest post legend'] ?></strong></legend>
+<?php ($hook = get_hook('po_pre_guest_username')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><em><?php echo $lang_common['Required'] ?></em> <?php echo $lang_post['Guest name'] ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php if (isset($_POST['req_username'])) echo forum_htmlencode($username); ?>" size="35" maxlength="25" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('po_pre_guest_email')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text<?php if ($forum_config['p_force_guest_email'] == '1') echo ' required' ?>">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Guest e-mail'] ?><?php if ($forum_config['p_force_guest_email'] == '1') echo ' <em>'.$lang_common['Required'].'</em>' ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="<?php echo $forum_page['email_form_name'] ?>" value="<?php if (isset($_POST[$forum_page['email_form_name']])) echo forum_htmlencode($email); ?>" size="35" maxlength="80" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('po_pre_guest_info_fieldset_end')) ? eval($hook) : null; ?>
+			</fieldset>
 <?php
 
+	($hook = get_hook('po_guest_info_fieldset_end')) ? eval($hook) : null;
+
+	// Reset counters
+	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 }
 
 ($hook = get_hook('po_pre_req_info_fieldset')) ? eval($hook) : null;
 
 ?>
-		<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-			<legend class="frm-legend"><strong><?php echo $lang_common['Required information'] ?></strong></legend>
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+				<legend class="group-legend"><strong><?php echo $lang_common['Required information'] ?></strong></legend>
 <?php
-
-($hook = get_hook('po_req_info_fieldset_start')) ? eval($hook) : null;
 
 if ($fid)
 {
+	($hook = get_hook('po_pre_req_subject')) ? eval($hook) : null;
 
 ?>
-				<div class="frm-fld text required longtext">
-				<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_post['Topic subject'] ?></span><br />
-				<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="80" maxlength="70" /></span>
-						<em class="req-text"><?php echo $lang_common['Required'] ?></em>
-					</label>
-			</div>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text required longtext">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Topic subject'] ?> <?php if ($forum_config['p_force_guest_email'] == '1') echo '<em>'.$lang_common['Required'].'</em>' ?></span></label><br />
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="80" maxlength="70" /></span>
+					</div>
+				</div>
 <?php
 
 }
@@ -465,19 +472,17 @@ if ($fid)
 ($hook = get_hook('po_pre_post_contents')) ? eval($hook) : null;
 
 ?>
-				<div class="frm-fld text textarea required">
-				<label for="fld<?php echo ++$forum_page['fld_count'] ?>">
-						<span class="fld-label"><?php echo $lang_post['Write message'] ?></span><br />
-				<span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="14" cols="95"><?php echo isset($_POST['req_message']) ? forum_htmlencode($message) : (isset($forum_page['quote']) ? $forum_page['quote'] : ''); ?></textarea></span><br />
-						<em class="req-text"><?php echo $lang_common['Required'] ?></em>
-					</label>
-			</div>
-		</fieldset>
+				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="txt-box textarea required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Write message'] ?> <?php if ($forum_config['p_force_guest_email'] == '1') echo '<em>'.$lang_common['Required'].'</em>' ?></span></label>
+						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="14" cols="95"><?php echo isset($_POST['req_message']) ? forum_htmlencode($message) : (isset($forum_page['quote']) ? forum_htmlencode($forum_page['quote']) : ''); ?></textarea></span></div>
+					</div>
+				</div>
 <?php
 
 $forum_page['checkboxes'] = array();
 if ($forum_config['o_smilies'] == '1')
-	$forum_page['checkboxes']['hide_smilies'] = '<div class="radbox"><label for="fld'.(++$forum_page['fld_count']).'"><input type="checkbox" id="fld'.$forum_page['fld_count'].'" name="hide_smilies" value="1"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' /> '.$lang_post['Hide smilies'].'</label></div>';
+	$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' /></span> <label for="fld'.$forum_page['fld_count'].'">'.$lang_post['Hide smilies'].'</label></div>';
 
 // Check/uncheck the checkbox for subscriptions depending on scenario
 if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
@@ -494,7 +499,7 @@ if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 	else if ($is_subscribed)
 		$subscr_checked = true;
 
-	$forum_page['checkboxes']['subscribe'] = '<div class="radbox"><label for="fld'.(++$forum_page['fld_count']).'"><input type="checkbox" id="fld'.$forum_page['fld_count'].'" name="subscribe" value="1"'.($subscr_checked ? ' checked="checked"' : '').' /> '.($is_subscribed ? $lang_post['Stay subscribed'] : $lang_post['Subscribe']).'</label></div>';
+	$forum_page['checkboxes']['subscribe'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="subscribe" value="1"'.($subscr_checked ? ' checked="checked"' : '').' /></span> <label for="fld'.$forum_page['fld_count'].'">'.($is_subscribed ? $lang_post['Stay subscribed'] : $lang_post['Subscribe']).'</label></div>';
 }
 
 ($hook = get_hook('po_pre_optional_fieldset')) ? eval($hook) : null;
@@ -503,27 +508,32 @@ if (!empty($forum_page['checkboxes']))
 {
 
 ?>
-		<fieldset class="frm-set set<?php echo ++$forum_page['set_count'] ?>">
-			<legend class="frm-legend"><strong><?php echo $lang_post['Optional legend'] ?></strong></legend>
-			<fieldset class="frm-group">
-				<legend><span><?php echo $lang_post['Post settings'] ?></span></legend>
-					<?php echo implode("\n\t\t\t\t\t\t", $forum_page['checkboxes'])."\n"; ?>
-			</fieldset>
-		</fieldset>
+				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<legend><span><?php echo $lang_post['Post settings'] ?></span></legend>
+					<div class="mf-box checkbox">
+						<?php echo implode("\n\t\t\t\t\t", $forum_page['checkboxes'])."\n"; ?>
+					</div>
+<?php ($hook = get_hook('po_pre_checkbox_fieldset_end')) ? eval($hook) : null; ?>
+				</fieldset>
 <?php
 
 }
 
-($hook = get_hook('po_post_optional_fieldset')) ? eval($hook) : null;
+($hook = get_hook('po_pre_req_info_fieldset_end')) ? eval($hook) : null;
 
 ?>
-		<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" title="<?php echo $lang_common['Submit title'] ?>" /></span>
-				<span class="submit"><input type="submit" name="preview" value="<?php echo $lang_common['Preview'] ?>" accesskey="p" title="<?php echo $lang_common['Preview title'] ?>" /></span>
-		</div>
-	</form>
-</div>
+			</fieldset>
+<?php
 
+($hook = get_hook('po_req_info_fieldset_end')) ? eval($hook) : null;
+
+?>
+			<div class="frm-buttons">
+				<span class="submit"><input type="submit" name="submit" value="<?php echo ($tid) ? $lang_post['Submit reply'] : $lang_post['Submit topic'] ?>" /></span>
+				<span class="submit"><input type="submit" name="preview" value="<?php echo ($tid) ? $lang_post['Preview reply'] : $lang_post['Preview topic'] ?>" /></span>
+			</div>
+		</form>
+	</div>
 <?php
 
 
@@ -542,65 +552,66 @@ if ($tid && $forum_config['o_topic_review'] != '0')
 		'LIMIT'		=>	$forum_config['o_topic_review']
 	);
 
-	($hook = get_hook('po_qr_get_topic_review_posts')) ? eval($hook) : null;
+	($hook = get_hook('po_topic_review_qr_get_topic_review_posts')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 ?>
-
-	<div class="main-head">
-		<h2><span><?php echo $lang_post['Topic review'] ?></span></h2>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_post['Topic review'] ?></span></h2>
 	</div>
-
-<div class="main-content topic">
+	<div  id="topic-review" class="main-content main-frm">
 <?php
 
 	$forum_page['item_count'] = 0;
+	$forum_page['item_total'] = $forum_db->num_rows($result);
+	$forum_page['author_title'] = '';
 
 	while ($cur_post = $forum_db->fetch_assoc($result))
 	{
 		++$forum_page['item_count'];
 
-		$forum_page['item_head'] = array(
-			'<strong>'.$forum_page['item_count'].'</strong>',
-			'<cite class="author">'.$lang_common['Posted by'].' '.forum_htmlencode($cur_post['poster']).'</cite>',
-			'<a class="permalink" rel="bookmark" title="'.$lang_post['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a>'
+		// Generate the post heading
+		$forum_page['post_ident'] = array(
+			'num'	=> '<span class="post-num">'.forum_number_format($forum_page['item_count']).'</span>',
+			'link'	=> '<span class="post-link">'.sprintf($lang_post['Post posted'], '<a class="permalink" rel="bookmark" title="'.$lang_post['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a>').'</span>'
 		);
 
+		($hook = get_hook('po_topic_review_pre_item_indent_merge')) ? eval($hook) : null;
+
 		$forum_page['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+
+		// Generate the post heading
+		$forum_page['post_ident'] = array();
+		$forum_page['post_ident']['num'] = '<span class="post-num">'.forum_number_format($forum_page['item_count']).'</span>';
+		$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf($lang_post['Post byline'], '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
+		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.$lang_post['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 		($hook = get_hook('po_topic_review_row_pre_display')) ? eval($hook) : null;
 
 ?>
-	<div class="post<?php echo ($forum_page['item_count'] == 1) ? ' firstpost' : '' ?>">
-			<div class="postmain">
-		<div class="posthead">
-			<h3><?php echo implode(' ', $forum_page['item_head']) ?></h3>
-		</div>
-		<div class="postbody">
-			<div class="user">
-				<h4 class="user-ident"><strong class="username"><?php echo $cur_post['poster'] ?></strong></h4>
+		<div class="post<?php echo ($forum_page['item_count'] == 1) ? ' firstpost' : '' ?><?php echo ($forum_page['item_total'] == $forum_page['item_count']) ? ' lastpost' : '' ?>">
+			<div class="posthead">
+				<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
+<?php ($hook = get_hook('po_topic_review_new_post_head_option')) ? eval($hook) : null; ?>
 			</div>
-			<div class="post-entry">
-				<div class="entry-content">
-				<?php echo $forum_page['message']."\n" ?>
+			<div class="postbody">
+				<div class="post-entry">
+					<div class="entry-content">
+						<?php echo $forum_page['message']."\n" ?>
+<?php ($hook = get_hook('po_topic_review_new_post_entry_data')) ? eval($hook) : null; ?>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 		</div>
 <?php
 
 	}
 
 ?>
-</div>
+	</div>
 <?php
 
 }
-
-?>
-</div>
-<?php
 
 $forum_id = $cur_posting['id'];
 

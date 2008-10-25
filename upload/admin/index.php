@@ -20,8 +20,9 @@ require FORUM_ROOT.'include/common_admin.php';
 if (!$forum_user['is_admmod'])
 	message($lang_common['No permission']);
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin.php';
+// Load the admin.php language files
+require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
+require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_index.php';
 
 
 // Show phpinfo() output
@@ -31,7 +32,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'
 
 	// Is phpinfo() a disabled function?
 	if (strpos(strtolower((string)@ini_get('disable_functions')), 'phpinfo') !== false)
-		message($lang_admin['phpinfo disabled']);
+		message($lang_admin_index['phpinfo disabled']);
 
 	phpinfo();
 	exit;
@@ -42,7 +43,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'
 if ($forum_user['g_id'] == FORUM_ADMIN)
 {
 	if ($forum_config['o_check_for_updates'] == '1')
-		$punbb_updates = $lang_admin['Check for updates enabled'];
+		$punbb_updates = $lang_admin_index['Check for updates enabled'];
 	else
 	{
 		// Get a list of installed hotfix extensions
@@ -52,7 +53,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 			'WHERE'		=> 'e.id LIKE \'hotfix_%\''
 		);
 
-		($hook = get_hook('ain_qr_get_hotfixes')) ? eval($hook) : null;
+		($hook = get_hook('ain_update_check_qr_get_hotfixes')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$num_hotfixes = $forum_db->num_rows($result);
 
@@ -86,7 +87,7 @@ else if (@is_readable('/proc/loadavg'))
 else if (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
 	$server_load = $load_averages[1].' '.$load_averages[2].' '.$load_averages[3];
 else
-	$server_load = $lang_admin['Not available'];
+	$server_load = $lang_admin_index['Not available'];
 
 
 // Get number of current visitors
@@ -133,9 +134,9 @@ if ($db_type == 'mysql' || $db_type == 'mysqli')
 	$total_size = $total_size / 1024;
 
 	if ($total_size > 1024)
-		$total_size = round($total_size / 1024, 2).' MB';
+		$total_size = forum_number_format($total_size / 1024, 2).' MB';
 	else
-		$total_size = round($total_size, 2).' KB';
+		$total_size = forum_number_format($total_size, 2).' KB';
 }
 
 
@@ -153,13 +154,13 @@ else if (ini_get('eaccelerator.enable'))
 else if (ini_get('xcache.cacher'))
 	$php_accelerator = '<a href="http://trac.lighttpd.net/xcache/">XCache</a>';
 else
-	$php_accelerator = $lang_admin['Not applicable'];
+	$php_accelerator = $lang_admin_index['Not applicable'];
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin['Information']
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+	$lang_admin_common['Information']
 );
 
 ($hook = get_hook('ain_pre_header_load')) ? eval($hook) : null;
@@ -168,69 +169,69 @@ define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-information');
 require FORUM_ROOT.'header.php';
 
+$forum_page['item_count'] = 0;
+
 // START SUBST - <!-- forum_main -->
 ob_start();
 
 ($hook = get_hook('ain_main_output_start')) ? eval($hook) : null;
 
 ?>
-<div id="brd-main" class="main sectioned admin">
-
-<?php echo generate_admin_menu(); ?>
-
-	<div class="main-head">
-		<h1><span>{ <?php echo end($forum_page['crumbs']) ?> }</span></h1>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_admin_index['Information head'] ?></span></h2>
 	</div>
-
-	<div class="main-content frm">
-		<div class="frm-head">
-			<h2><span><?php echo $lang_admin['Information head'] ?></span></h2>
+	<div class="main-content main-frm">
+<?php if (!empty($alert_items)): ?>		<div id="admin-alerts" class="ct-set warn-set">
+			<div class="ct-box warn-box">
+				<h3 class="ct-legend hn warn"><span><?php echo $lang_admin_index['Alerts'] ?></span></h3>
+				<?php echo implode(' ', $alert_items)."\n" ?>
+			</div>
 		</div>
-<?php if (!empty($alert_items)): ?>		<div class="datagrid">
-			<div id="admin-alerts" class="idx-item databox db1">
-				<h3 class="legend warn"><span><?php echo $lang_admin['Alerts'] ?></span></h3>
-				<div class="data">
-					<?php echo implode(' ',$alert_items) ?>
+<?php endif; ?>		<div class="ct-group">
+<?php ($hook = get_hook('ain_pre_version')) ? eval($hook) : null; ?>
+			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
+				<div class="ct-box">
+					<h3 class="ct-legend hn"><span><?php echo $lang_admin_index['PunBB version'] ?></span></h3>
+					<ul class="data-list">
+						<li><span>PunBB <?php echo $forum_config['o_cur_version'] ?></span></li>
+						<li><span>&copy; Copyright 2008 <a href="http://punbb.informer.com/">PunBB</a></span></li>
+<?php if (isset($punbb_updates)): ?>						<li><span><?php echo $punbb_updates ?></span></li>
+<?php endif; ?>					</ul>
 				</div>
 			</div>
-		</div>
-<?php endif; ?>		<div class="datagrid">
-<?php ($hook = get_hook('ain_pre_version')) ? eval($hook) : null; ?>
-			<div class="idx-item databox db1">
-				<h3 class="legend"><span><?php echo $lang_admin['PunBB version'] ?></span></h3>
-				<ul class="data">
-					<li><span>PunBB <?php echo $forum_config['o_cur_version'] ?></span></li>
-					<li><span>&copy; Copyright 2008 <a href="http://punbb.informer.com/">PunBB</a></span></li>
-<?php if (isset($punbb_updates)): ?>					<li><span><?php echo $punbb_updates ?></span></li>
-<?php endif; ?>				</ul>
-			</div>
 <?php ($hook = get_hook('ain_pre_server_load')) ? eval($hook) : null; ?>
-			<div class="idx-item databox">
-				<h3 class="legend"><span><?php echo $lang_admin['Server load'] ?></span></h3>
-				<p class="data"><?php echo $server_load ?> (<?php echo $num_online.' '.$lang_admin['users online']?>)</p>
+			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
+				<div class="ct-box">
+					<h3 class="ct-legend hn"><span><?php echo $lang_admin_index['Server load'] ?></span></h3>
+					<p><span><?php echo $server_load ?> (<?php echo $num_online.' '.$lang_admin_index['users online']?>)</span></p>
+				</div>
 			</div>
-<?php ($hook = get_hook('ain_pre_environment')) ? eval($hook) : null; if ($forum_user['g_id'] == FORUM_ADMIN): ?>					<div class="idx-item databox">
-				<h3 class="legend"><span><?php echo $lang_admin['Environment'] ?></span></h3>
-				<ul class="data">
-					<li><span><?php echo $lang_admin['Operating system'] ?>: <?php echo PHP_OS ?></span></li>
-					<li><span>PHP: <?php echo PHP_VERSION ?> - <a href="<?php echo forum_link($forum_url['admin_index']) ?>?action=phpinfo"><?php echo $lang_admin['Show info'] ?></a></span></li>
-					<li><span><?php echo $lang_admin['Accelerator'] ?>: <?php echo $php_accelerator ?></span></li>
-				</ul>
+<?php ($hook = get_hook('ain_pre_environment')) ? eval($hook) : null; if ($forum_user['g_id'] == FORUM_ADMIN): ?>			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
+				<div class="ct-box">
+					<h3 class="ct-legend hn"><span><?php echo $lang_admin_index['Environment'] ?></span></h3>
+					<ul class="data-list">
+						<li><span><?php echo $lang_admin_index['Operating system'] ?>: <?php echo PHP_OS ?></span></li>
+						<li><span>PHP: <?php echo PHP_VERSION ?> - <a href="<?php echo forum_link($forum_url['admin_index']) ?>?action=phpinfo"><?php echo $lang_admin_index['Show info'] ?></a></span></li>
+						<li><span><?php echo $lang_admin_index['Accelerator'] ?>: <?php echo $php_accelerator ?></span></li>
+					</ul>
+				</div>
 			</div>
 <?php ($hook = get_hook('ain_pre_database')) ? eval($hook) : null; ?>
-			<div class="idx-item databox">
-				<h3 class="legend"><span><?php echo $lang_admin['Database'] ?></span></h3>
-				<ul class="data">
-					<li><span><?php echo $db_version ?></span></li>
-<?php if (isset($total_records) && isset($total_size)): ?>						<li><span><?php echo $lang_admin['Rows'] ?>: <?php echo $total_records ?></span></li>
-					<li><span><?php echo $lang_admin['Size'] ?>: <?php echo $total_size ?></span></li>
-				</ul>
+			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
+				<div class="ct-box">
+					<h3 class="ct-legend hn"><span><?php echo $lang_admin_index['Database'] ?></span></h3>
+					<ul class="data-list">
+						<li><span><?php echo $db_version ?></span></li>
+<?php if (isset($total_records) && isset($total_size)): ?>							<li><span><?php echo $lang_admin_index['Rows'] ?>: <?php echo forum_number_format($total_records) ?></span></li>
+						<li><span><?php echo $lang_admin_index['Size'] ?>: <?php echo $total_size ?></span></li>
+					</ul>
+				</div>
 			</div>
-<?php endif; endif; ($hook = get_hook('ain_items_end')) ? eval($hook) : null; ?>			</div>
+<?php endif; endif; ($hook = get_hook('ain_items_end')) ? eval($hook) : null; ?>		</div>
 	</div>
-
-</div>
 <?php
+
+($hook = get_hook('ain_end')) ? eval($hook) : null;
 
 $tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
