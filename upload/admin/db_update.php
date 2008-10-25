@@ -778,6 +778,13 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$forum_db->query('INSERT INTO '.$forum_db->prefix.'config (conf_name, conf_value) VALUES(\'o_check_for_updates\', \''.$check_for_updates.'\')') or error(__FILE__, __LINE__);
 		}
 
+		// Insert new config option o_check_for_version
+		if (!array_key_exists('o_check_for_versions', $forum_config))
+		{
+			$o_check_for_versions = array_key_exists('o_check_for_updates', $forum_config) ? $forum_config['o_check_for_updates'] : $check_for_updates;
+			$forum_db->query('INSERT INTO '.$forum_db->prefix.'config (conf_name, conf_value) VALUES(\'o_check_for_updates\', \''.$check_for_updates.'\')') or error(__FILE__, __LINE__);
+		}
+
 		// Insert new config option o_announcement_heading
 		if (!array_key_exists('o_announcement_heading', $forum_config))
 			$forum_db->query('INSERT INTO '.$forum_db->prefix.'config (conf_name, conf_value) VALUES(\'o_announcement_heading\', \'\')') or error(__FILE__, __LINE__);
