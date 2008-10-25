@@ -163,14 +163,28 @@ class DBLayer
 			if (is_array($query['VALUES']))
 			{
 				$new_query = $query;
-				$result_set = null;
-				foreach ($query['VALUES'] as $cur_values)
+				if ($return_query_string)
 				{
-					$new_query['VALUES'] = $cur_values;
-					$result_set = $this->query_build($new_query, $unbuffered);
-				}
+					$query_set = array();
+					foreach ($query['VALUES'] as $cur_values)
+					{
+						$new_query['VALUES'] = $cur_values;
+						$query_set[] = $this->query_build($new_query, true, $unbuffered);
+					}
 
-				return $result_set;
+					$sql = implode('; ', $query_set);
+				}
+				else
+				{
+					$result_set = null;
+					foreach ($query['VALUES'] as $cur_values)
+					{
+						$new_query['VALUES'] = $cur_values;
+						$result_set = $this->query_build($new_query, false, $unbuffered);
+					}
+	
+					return $result_set;
+				}
 			}
 			else
 				$sql .= ' VALUES('.$query['VALUES'].')';
@@ -324,6 +338,21 @@ class DBLayer
 	}
 
 
+	function set_names($names)
+	{
+		return;
+	}
+
+
+	function get_version()
+	{
+		return array(
+			'name'		=> 'SQLite',
+			'version'	=> sqlite_libversion()
+		);
+	}
+
+
 	function table_exists($table_name, $no_prefix = false)
 	{
 		$result = $this->query('SELECT 1 FROM sqlite_master WHERE name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' AND type=\'table\'');
@@ -429,14 +458,15 @@ class DBLayer
 		$table['columns'] = array();
 		foreach ($table_lines as $table_line)
 		{
+			$table_line = forum_trim($table_line);
 			if (substr($table_line, 0, 12) == 'CREATE TABLE') 
 				continue;
-			else if	(substr($table_line, 0, 11) == 'PRIMARY KEY')
+			else if (substr($table_line, 0, 11) == 'PRIMARY KEY')
 				$table['primary_key'] = $table_line;
 			else if (substr($table_line, 0, 6) == 'UNIQUE')
 				$table['unique'] = $table_line;
-			else if (substr($table_line, -1) == ',')
-				$table['columns'][substr($table_line, 0, strpos($table_line, ' '))] = substr($table_line, strpos($table_line, ' '));
+			else if (substr($table_line, 0, strpos($table_line, ' ')) != '')
+				$table['columns'][substr($table_line, 0, strpos($table_line, ' '))] = forum_trim(substr($table_line, strpos($table_line, ' ')));
 		}
 
 		return $table;
@@ -461,8 +491,10 @@ class DBLayer
 		$query = $field_type;
 		if (!$allow_null)
 			$query .= ' NOT NULL';
-		if (isset($default_value))
-			$query .= ' DEFAULT '.$default_value;
+		if ($default_value === null || $default_value === '')
+			$default_value = '\'\'';
+
+		$query .= ' DEFAULT '.$default_value;
 
 		$old_columns = array_keys($table['columns']);
 		array_insert($table['columns'], $after_field, $query.',', $field_name);
@@ -471,14 +503,14 @@ class DBLayer
 
 		foreach ($table['columns'] as $cur_column => $column_details)
 			$new_table .= "\n".$cur_column.' '.$column_details;
-
+			
 		if (isset($table['unique']))
 			$new_table .= "\n".$table['unique'].',';
-
+			
 		if (isset($table['primary_key']))
 			$new_table .= "\n".$table['primary_key'];
-
-		$new_table .= "\n".');';
+			
+		$new_table = trim($new_table, ',')."\n".');';
 
 		// Drop old table
 		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name));
@@ -498,6 +530,12 @@ class DBLayer
 
 		// Drop temp table
 		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_t'.$now);
+	}
+
+
+	function alter_field($table_name, $field_name, $field_type, $allow_null, $default_value = null, $after_field = 0, $no_prefix = false)
+	{
+		return;
 	}
 
 
@@ -522,14 +560,14 @@ class DBLayer
 
 		foreach ($table['columns'] as $cur_column => $column_details)
 			$new_table .= "\n".$cur_column.' '.$column_details;
-
+			
 		if (isset($table['unique']))
 			$new_table .= "\n".$table['unique'].',';
-
+			
 		if (isset($table['primary_key']))
 			$new_table .= "\n".$table['primary_key'];
-
-		$new_table .= "\n".');';
+			
+		$new_table = trim($new_table, ',')."\n".');';
 
 		// Drop old table
 		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name));
