@@ -445,7 +445,7 @@ function update_users_online()
 		else
 		{
 			// If the entry is older than "o_timeout_visit", update last_visit for the user in question, then delete him/her from the online list
-			if ($cur_user['logged'] < ($now-$forum_config['o_timeout_visit']))
+			if ($cur_user['idle'] != '0')			
 			{
 				$query = array(
 					'UPDATE'	=> 'users',
@@ -464,7 +464,7 @@ function update_users_online()
 				($hook = get_hook('fn_qr_delete_online_user3')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 			}
-			else if ($cur_user['idle'] == '0')
+			else 
 			{
 				$query = array(
 					'UPDATE'	=> 'online',
@@ -526,15 +526,12 @@ function generate_navlinks()
 	}
 
 	// Are there any additional navlinks we should insert into the array before imploding it?
-	if ($forum_config['o_additional_navlinks'] != '')
+	if ($forum_config['o_additional_navlinks'] != '' && preg_match_all('#([0-9]+)\s*=\s*(.*?)\n#s', $forum_config['o_additional_navlinks']."\n", $extra_links))
 	{
-		if (preg_match_all('#([0-9]+)\s*=\s*(.*?)\n#s', $forum_config['o_additional_navlinks']."\n", $extra_links))
-		{
-			// Insert any additional links into the $links array (at the correct index)
-			$num_links = count($extra_links[1]);
-			for ($i = 0; $i < $num_links; ++$i)
-				array_insert($links, (int)$extra_links[1][$i], '<li id="navextra'.($i + 1).'">'.$extra_links[2][$i].'</li>');
-		}
+		// Insert any additional links into the $links array (at the correct index)
+		$num_links = count($extra_links[1]);
+		for ($i = 0; $i < $num_links; ++$i)
+			array_insert($links, (int)$extra_links[1][$i], '<li id="navextra'.($i + 1).'">'.$extra_links[2][$i].'</li>');	
 	}
 
 	($hook = get_hook('fn_generate_navlinks_end')) ? eval($hook) : null;
@@ -630,7 +627,6 @@ function generate_crumbs($reverse)
 			$crumbs .= (is_array($forum_page['crumbs'][$i]) ? forum_htmlencode($forum_page['crumbs'][$i][0]) : forum_htmlencode($forum_page['crumbs'][$i])).((isset($forum_page['page']) && $i == ($num_crumbs - 1)) ? ' ('.$lang_common['Page'].' '.$forum_page['page'].')' : '').($i > 0 ? $lang_common['Title separator'] : '');
 	}
 	else
-	{
 		for ($i = 0; $i < $num_crumbs; ++$i)
 		{
 			if ($i < ($num_crumbs - 1))
@@ -638,7 +634,6 @@ function generate_crumbs($reverse)
 			else
 				$crumbs .= '<span class="crumb crumblast'.(($i == 0) ? ' crumbfirst' : '').'">'.(($i >= 1) ? '<span>'.$lang_common['Crumb separator'].'</span>' : '').(is_array($forum_page['crumbs'][$i]) ? '<a href="'.$forum_page['crumbs'][$i][1].'">'.forum_htmlencode($forum_page['crumbs'][$i][0]).'</a>' : forum_htmlencode($forum_page['crumbs'][$i])).'</span> ';
 		}
-	}
 
 	($hook = get_hook('fn_generate_crumbs_end')) ? eval($hook) : null;
 
@@ -1055,14 +1050,21 @@ function clean_forum_moderators()
 	($hook = get_hook('fn_qr_get_forum_moderators')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+	$removed_moderators = array();
 	while ($cur_forum = $forum_db->fetch_assoc($result))
 	{
 		$cur_moderators = unserialize($cur_forum['moderators']);
 		$new_moderators = $cur_moderators;
-
+		
 		// Iterate through each user in the list and check if he/she is in a moderator or admin group
 		foreach ($cur_moderators as $username => $user_id)
 		{
+			if (in_array($user_id, $removed_moderators))
+			{
+				unset($new_moderators[$username]);
+				continue;
+			}
+
 			$query = array(
 				'SELECT'	=> '1',
 				'FROM'		=> 'users AS u',
@@ -1079,7 +1081,10 @@ function clean_forum_moderators()
 			$result2 = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 			if (!$forum_db->num_rows($result2))	// If the user isn't in a moderator or admin group, remove him/her from the list
+			{
 				unset($new_moderators[$username]);
+				$removed_moderators[] = $user_id;
+			}
 		}
 
 		// If we changed anything, update the forum
@@ -1130,10 +1135,8 @@ function delete_avatar($user_id)
 
 	// Delete user avatar
 	foreach ($filetypes as $cur_type)
-	{
-		if (file_exists(FORUM_ROOT.$forum_config['o_avatars_dir'].'/'.$user_id.'.'.$cur_type))
-			@unlink(FORUM_ROOT.$forum_config['o_avatars_dir'].'/'.$user_id.'.'.$cur_type);
-	}
+		@unlink(FORUM_ROOT.$forum_config['o_avatars_dir'].'/'.$user_id.'.'.$cur_type);
+
 }
 
 
@@ -1598,60 +1601,54 @@ function send_subscriptions($post_info, $new_pid)
 		while ($cur_subscriber = $forum_db->fetch_assoc($result))
 		{
 			// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
-			if (!isset($notification_emails[$cur_subscriber['language']]))
+			if (!isset($notification_emails[$cur_subscriber['language']]) && file_exists(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
 			{
-				if (file_exists(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
-				{
-					// Load the "new reply" template
-					$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
+				// Load the "new reply" template
+				$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
 
-					// Load the "new reply full" template (with post included)
-					$mail_tpl_full = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
+				// Load the "new reply full" template (with post included)
+				$mail_tpl_full = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
 
-					// The first row contains the subject (it also starts with "Subject:")
-					$first_crlf = strpos($mail_tpl, "\n");
-					$mail_subject = forum_trim(substr($mail_tpl, 8, $first_crlf-8));
-					$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
+				// The first row contains the subject (it also starts with "Subject:")
+				$first_crlf = strpos($mail_tpl, "\n");
+				$mail_subject = forum_trim(substr($mail_tpl, 8, $first_crlf-8));
+				$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
-					$first_crlf = strpos($mail_tpl_full, "\n");
-					$mail_subject_full = forum_trim(substr($mail_tpl_full, 8, $first_crlf-8));
-					$mail_message_full = forum_trim(substr($mail_tpl_full, $first_crlf));
+				$first_crlf = strpos($mail_tpl_full, "\n");
+				$mail_subject_full = forum_trim(substr($mail_tpl_full, 8, $first_crlf-8));
+				$mail_message_full = forum_trim(substr($mail_tpl_full, $first_crlf));
 
-					$mail_subject = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject);
-					$mail_message = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message);
-					$mail_message = str_replace('<replier>', $post_info['poster'], $mail_message);
-					$mail_message = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message);
-					$mail_message = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message);
-					$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
+				$mail_subject = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject);
+				$mail_message = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message);
+				$mail_message = str_replace('<replier>', $post_info['poster'], $mail_message);
+				$mail_message = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message);
+				$mail_message = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message);
+				$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
 
-					$mail_subject_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject_full);
-					$mail_message_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message_full);
-					$mail_message_full = str_replace('<replier>', $post_info['poster'], $mail_message_full);
-					$mail_message_full = str_replace('<message>', $post_info['message'], $mail_message_full);
-					$mail_message_full = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message_full);
-					$mail_message_full = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message_full);
-					$mail_message_full = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message_full);
+				$mail_subject_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject_full);
+				$mail_message_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message_full);
+				$mail_message_full = str_replace('<replier>', $post_info['poster'], $mail_message_full);
+				$mail_message_full = str_replace('<message>', $post_info['message'], $mail_message_full);
+				$mail_message_full = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message_full);
+				$mail_message_full = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message_full);
+				$mail_message_full = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message_full);
 
-					$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
-					$notification_emails[$cur_subscriber['language']][1] = $mail_message;
-					$notification_emails[$cur_subscriber['language']][2] = $mail_subject_full;
-					$notification_emails[$cur_subscriber['language']][3] = $mail_message_full;
+				$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
+				$notification_emails[$cur_subscriber['language']][1] = $mail_message;
+				$notification_emails[$cur_subscriber['language']][2] = $mail_subject_full;
+				$notification_emails[$cur_subscriber['language']][3] = $mail_message_full;
 
-					$mail_subject = $mail_message = $mail_subject_full = $mail_message_full = null;
-				}
+				$mail_subject = $mail_message = $mail_subject_full = $mail_message_full = null;
 			}
 
 			// We have to double check here because the templates could be missing
-			if (isset($notification_emails[$cur_subscriber['language']]))
+			// Make sure the e-mail address format is valid before sending
+			if (isset($notification_emails[$cur_subscriber['language']]) && is_valid_email($cur_subscriber['email']))
 			{
-				// Make sure the e-mail address format is valid before sending
-				if (is_valid_email($cur_subscriber['email']))
-				{
-					if ($cur_subscriber['notify_with_post'] == '0')
-						forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][0], $notification_emails[$cur_subscriber['language']][1]);
-					else
-						forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][2], $notification_emails[$cur_subscriber['language']][3]);
-				}
+				if ($cur_subscriber['notify_with_post'] == '0')
+					forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][0], $notification_emails[$cur_subscriber['language']][1]);
+				else
+					forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][2], $notification_emails[$cur_subscriber['language']][3]);	
 			}
 		}
 	}
@@ -1804,13 +1801,9 @@ function get_title($user)
 	{
 		// Are there any ranks?
 		if ($forum_config['o_ranks'] == '1' && !empty($forum_ranks))
-		{
 			foreach ($forum_ranks as $cur_rank)
-			{
 				if (intval($user['num_posts']) >= $cur_rank['min_posts'])
 					$user_title = forum_htmlencode($cur_rank['rank']);
-			}
-		}
 
 		// If the user didn't "reach" any rank (or if ranks are disabled), we assign the default
 		if (!isset($user_title))
@@ -1860,14 +1853,12 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null)
 
 		// Don't ask me how the following works. It just does, OK? :-)
 		for ($current = ($cur_page == 5) ? $cur_page - 3 : $cur_page - 2, $stop = ($cur_page + 4 == $num_pages) ? $cur_page + 4 : $cur_page + 3; $current < $stop; ++$current)
-		{
 			if ($current < 1 || $current > $num_pages)
 				continue;
 			else if ($current != $cur_page || $link_to_all)
 				$pages[] = '<a'.(empty($pages) ? ' class="item1" ' : '').' href="'.forum_sublink($link, $forum_url['page'], $current, $args).'">'.$current.'</a>';
 			else
 				$pages[] = '<strong'.(empty($pages) ? ' class="item1"' : '').'>'.$current.'</strong>';
-		}
 
 		if ($cur_page <= ($num_pages-3))
 		{
@@ -1998,14 +1989,12 @@ function csrf_confirm_form()
 	);
 
 	foreach ($_POST as $submitted_key => $submitted_val)
-	{
 		if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url')
 		{
 			$hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
 			foreach ($hidden_fields as $field_key => $field_val)
 				$forum_page['hidden_fields'][$field_key] = '<input type="hidden" name="'.forum_htmlencode($field_key).'" value="'.forum_htmlencode($field_val).'" />';
 		}
-	}
 
 	define('FORUM_PAGE', 'dialogue');
 	require FORUM_ROOT.'header.php';
@@ -2189,10 +2178,8 @@ function random_key($len, $readable = false, $hash = false)
 			$key .= substr($chars, (mt_rand() % strlen($chars)), 1);
 	}
 	else
-	{
 		for ($i = 0; $i < $len; ++$i)
 			$key .= chr(mt_rand(33, 126));
-	}
 
 	($hook = get_hook('fn_random_key_end')) ? eval($hook) : null;
 
@@ -2808,13 +2795,11 @@ function forum_unregister_globals()
 	// Remove elements in $GLOBALS that are present in any of the superglobals
 	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
 	foreach ($input as $k => $v)
-	{
 		if (!in_array($k, $no_unset) && isset($GLOBALS[$k]))
 		{
 			unset($GLOBALS[$k]);
 			unset($GLOBALS[$k]);	// Double unset to circumvent the zend_hash_del_key_or_index hole in PHP <4.4.3 and <5.1.4
 		}
-	}
 }
 
 
