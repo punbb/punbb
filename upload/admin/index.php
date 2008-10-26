@@ -61,7 +61,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		for ($i = 0; $i < $num_hotfixes; ++$i)
 			$hotfixes[] = urlencode($forum_db->result($result, $i));
 
-		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode($forum_config['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.$lang_admin['Check for updates manual'].'</a>';
+		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode($forum_config['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.$lang_admin_index['Check for updates manual'].'</a>';
 	}
 }
 
