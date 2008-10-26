@@ -189,7 +189,7 @@ body {
 	}
 
 
-.brd .required label em, .brd #req-msg em {
+.brd .required label em, .brd #req-msg em, .brd .warn strong, .brd .important strong {
 	color: #b42000;
 	}
 
