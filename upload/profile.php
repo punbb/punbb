@@ -2281,7 +2281,8 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_profile['Signature'] ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_signature_pre_signature_demo')) ? eval($hook) : null; ?>
-<?php if (isset($forum_page['sig_demo'])): ?>				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php if (isset($forum_page['sig_demo'])): ?>
+				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="ct-box info-box">
 						<h3 class="ct-legend hn"><?php echo $lang_profile['Current signature'] ?></h3>
 						<div class="sig-demo"><?php echo $forum_page['sig_demo'] ?></div>
@@ -2401,9 +2402,11 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 <?php ($hook = get_hook('pf_change_details_avatar_pre_avatar_demo')) ? eval($hook) : null; ?>
 				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="ct-box info-box">
-<?php if (isset($forum_page['avatar_demo'])): ?>						<h3 class="hn ct-legend avatar-demo"><span><?php echo $forum_page['avatar_demo'] ?></span></h3>
-<?php endif; ?>						<ul class="info-list">
-						<?php echo implode("\n\t\t\t\t", $forum_page['frm_info'])."\n\t\t\t" ?>
+<?php if (isset($forum_page['avatar_demo'])): ?>
+						<h3 class="hn ct-legend avatar-demo"><span><?php echo $forum_page['avatar_demo'] ?></span></h3>
+<?php endif; ?>
+						<ul class="info-list">
+							<?php echo implode("\n\t\t\t\t\t\t\t", $forum_page['frm_info'])."\n" ?>
 						</ul>
 						<p id="req-msg" class="req-warn important"><?php echo $lang_profile['No upload warn'] ?></p>
 					</div>
