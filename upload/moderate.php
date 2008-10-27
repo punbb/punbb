@@ -102,7 +102,6 @@ if (!$forum_user['is_guest'])
 if (isset($_POST['cancel']))
 	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_common['Cancel redirect']);
 
-
 // All topic moderation features require a topic id in GET
 if (isset($_GET['tid']))
 {
@@ -211,7 +210,7 @@ if (isset($_GET['tid']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_misc['Confirm post delete'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -362,7 +361,7 @@ if (isset($_GET['tid']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_misc['Confirm post split'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -1036,7 +1035,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_misc['Confirm topic merge'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -1206,7 +1205,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_misc['Confirm topic delete'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
