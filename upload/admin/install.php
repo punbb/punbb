@@ -1774,10 +1774,10 @@ else
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PunBB Installation</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen/Oxygen.css" />
-<link rel="stylesheet" type="text/css" href="style/Oxygen/Oxygen_forms.css" />
-<link rel="stylesheet" type="text/css" href="style/Oxygen/Oxygen_cs.css" />
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="style/Oxygen/Oxygen_ie.css" /><![endif]-->
+<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_forms.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_cs.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_ie.css" /><![endif]-->
 </head>
 
 <body>
