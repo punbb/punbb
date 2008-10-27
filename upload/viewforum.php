@@ -219,11 +219,7 @@ if ($forum_db->num_rows($result))
 			// Combine everything to produce the Topic heading
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span>'.$forum_page['item_title']['link'].'</h3>';
 
-			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], format_time($cur_topic['posted'], 1), '<cite>'.sprintf($lang_forum['by poster'], forum_htmlencode($cur_topic['poster'])).'</cite>').'</span>';
-
 			($hook = get_hook('vf_topic_loop_moved_topic_pre_item_subject_merge')) ? eval($hook) : null;
-
-			$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
 
 			if ($forum_config['o_topic_views'] == '1')
 				$forum_page['item_body']['info']['views'] = '<li class="info-views"><span class="label">'.$lang_forum['No views info'].'</span></li>';
@@ -267,8 +263,6 @@ if ($forum_db->num_rows($result))
 
 			// Assemble the Topic subject
 
-			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';
-
 			if (empty($forum_page['item_status']))
 				$forum_page['item_status']['normal'] = 'normal';
 
@@ -301,6 +295,9 @@ if ($forum_db->num_rows($result))
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_forum['Last post'].'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_topic['last_post_id']).'">'.format_time($cur_topic['last_post']).'</a></strong> <cite>'.sprintf($lang_forum['by poster'], forum_htmlencode($cur_topic['last_poster'])).'</cite></li>';
 		}
 
+		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';		
+		$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
+		
 		($hook = get_hook('vf_row_pre_item_status_merge')) ? eval($hook) : null;
 
 		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');

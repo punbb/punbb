@@ -1550,11 +1550,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			// Combine everything to produce the Topic heading
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> <strong>'.$forum_page['item_title']['link'].'</strong></h3>';
 
-			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], format_time($cur_topic['posted'], 1), '<cite>'.sprintf($lang_forum['by poster'], forum_htmlencode($cur_topic['poster'])).'</cite>').'</span>';
-
 			($hook = get_hook('mr_topic_actions_moved_row_pre_item_subject_merge')) ? eval($hook) : null;
-
-			$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
 
 			if ($forum_config['o_topic_views'] == '1')
 				$forum_page['item_body']['info']['views'] = '<li class="info-views"><span class="label">'.$lang_forum['No views info'].'</span></li>';
@@ -1618,9 +1614,6 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			if (!empty($forum_page['item_subject_status']))
 				$forum_page['item_subject']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(' ', $forum_page['item_subject_status'])).'</span>';
 
-			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], format_time($cur_topic['posted'], 1), sprintf($lang_forum['by poster'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>')).'</span>';
-			$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
-
 			if (empty($forum_page['item_status']))
 				$forum_page['item_status']['normal'] = 'normal';
 
@@ -1634,6 +1627,9 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			($hook = get_hook('mr_topic_actions_normal_row_pre_output')) ? eval($hook) : null;
 		}
 
+		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';
+		$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
+		
 		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 
 		($hook = get_hook('mr_topic_actions_row_pre_display')) ? eval($hook) : null;
