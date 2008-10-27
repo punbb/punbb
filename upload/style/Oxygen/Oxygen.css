@@ -148,10 +148,6 @@ B - GLOBAL STYLES
 	border-width: 1px;
 	}
 
-.brd .main-content {
-	margin-bottom: 1em;
-	}
-
 .brd .gen-content {
 	padding: 0 1.5em;
 	}
@@ -160,6 +156,7 @@ B - GLOBAL STYLES
 	margin-top: 1em;
 	}
 
+.brd .main-content,
 #brd-index #brd-visit, #brd-qpost,
 #brd-index #brd-announcement {
 	margin-bottom: 1em;
