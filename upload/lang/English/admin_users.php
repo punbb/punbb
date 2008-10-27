@@ -4,7 +4,7 @@
 $lang_admin_users = array(
 
 // admin_users
-'Search head'					=>	'Searches : Find a user or users',
+'Search head'					=>	'Searches : Find users',
 'User search head'				=>	'Enter one or more criteria. Use wildcard character <strong>*</strong> for partial matches.',
 'Searches personal legend'		=>	'Personal details',
 'Username label'				=>	'Username:',
