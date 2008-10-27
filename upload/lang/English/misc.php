@@ -14,10 +14,10 @@ $lang_misc = array(
 'Too long e-mail message'	=>	'Your message length is %d bytes. This exceeds the %d bytes limit (%s%% of the current message length).',
 'Email flood'				=>	'At least %s seconds have to pass between sent emails. Please wait a while and try sending again.',
 'E-mail sent redirect'		=>	'E-mail sent. Redirecting …',
-'E-mail subject'			=>	'Subject:',
-'E-mail message'			=>	'Message:',
+'E-mail subject'			=>	'Subject',
+'E-mail message'			=>	'Message',
 'E-mail disclosure note'	=>	'<strong>Important!</strong> When you send an e-mail using this form your e-mail address will be disclosed to the recipient.',
-'Write e-mail'				=>	'Compose e-mail:',
+'Write e-mail'				=>	'Compose e-mail',
 'Send forum e-mail'			=>	'Send e-mail to %s via the forum',
 
 // Report
@@ -25,7 +25,7 @@ $lang_misc = array(
 'Report flood'				=>	'At least %s seconds have to pass between reports. Please wait a while and try sending again.',
 'Report redirect'			=>	'Post reported. Redirecting …',
 'Report post'				=>	'Report post',
-'Reason'					=>	'Reason:',
+'Reason'					=>	'Reason',
 'Reason help'				=>	'Enter a short reason why you are reporting this post.',
 
 // Subscriptions
@@ -56,8 +56,8 @@ $lang_misc = array(
 'Merge topics'				=>	'Merge topics',
 'Delete topics'				=>	'Delete topics',
 'To new forum'				=>	'to a new forum',
-'Move to'					=>	'Destination forum:',
-'Redirect topic'			=>	'Redirect setting:',
+'Move to'					=>	'Destination forum',
+'Redirect topic'			=>	'Redirect setting',
 'Nowhere to move'			=>	'There are no forums into which you can move topics.',
 'Leave redirect'			=>	'Leave a redirect topic in the forum from which the topic was moved.',
 'Leave redirects'			=>	'Leave redirect topics in the forum from which topics were moved.',

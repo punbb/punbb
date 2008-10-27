@@ -6,10 +6,10 @@ $lang_login = array(
 // Miscellaneous
 'Login'								=>	'Login',
 'Login info'						=>	'Login to %s',
-'Username'							=>	'Username:',
-'Password'							=>	'Password:',
-'Remember me'						=>	'Remember me:',
-'E-mail address'					=>	'E-mail address:',
+'Username'							=>	'Username',
+'Password'							=>	'Password',
+'Remember me'						=>	'Remember me',
+'E-mail address'					=>	'E-mail address',
 'E-mail address help'				=>	'Enter the e-mail address set in your profile.',
 'Login errors'						=>	'<strong>Warning!</strong> The following errors must be corrected before you can login:',
 'Wrong user/pass'					=>	'Incorrect username and/or password.',
@@ -27,7 +27,6 @@ $lang_login = array(
 'New password info'					=>	'<strong>Important!</strong> An e-mail will be sent to the specified address with instructions on how to change your password.',
 'New password cancel redirect'		=>	'New password request cancelled. Redirecting …',
 'Forget mail'						=>	'An e-mail has been sent to the specified address with instructions on how to change your password. If it does not arrive you can contact the forum administrator at %s.',
-'Remember me'						=>	'Remember me:',
 'Persistent login'					=>	'Log me in automatically each time I visit.'
 
 );

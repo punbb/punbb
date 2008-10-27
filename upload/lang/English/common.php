@@ -53,7 +53,7 @@ $lang_common = array(
 'Write message'				=>	'Write message:',
 'Forum'						=>	'Forum',
 'Posts'						=>	'Posts',
-'Pages'						=>	'Pages:',
+'Pages'						=>	'Pages',
 'Page'						=>	'Page',
 'BBCode'					=>	'BBCode',	// You probably shouldn't change this
 'Smilies'					=>	'Smilies',
@@ -132,12 +132,12 @@ $lang_common = array(
 // Alerts
 'New alerts'				=>	'New Alerts',
 'Maintenance alert'			=>	'<strong>WARNING! Maintenance mode enabled.</strong> This board is currently in maintenance mode. <em>DO NOT</em> logout, if you do you will not be able to login again.',
-'Updates'					=>	'PunBB updates:',
+'Updates'					=>	'PunBB updates',
 'Updates failed'			=>	'The latest attempt at checking for updates against the punbb.informer.com updates service failed. This probably just means that the service is temporarily overloaded or out of order. However, if this alert does not disappear within a day or two, you should disable the automatic check for updates and check for updates manually in the future.',
 'Updates version n hf'		=>	'A newer version of PunBB, version %s, is available for download at <a href="http://punbb.informer.com/">punbb.informer.com</a>. Furthermore, one or more hotfix extensions are available for install on the Extensions tab of the admin interface.',
 'Updates version'			=>	'A newer version of PunBB, version %s, is available for download at <a href="http://punbb.informer.com/">punbb.informer.com</a>.',
 'Updates hf'				=>	'One or more hotfix extensions are available for install on the Extensions tab of the admin interface.',
-'Database mismatch'			=>	'Database version mismatch:',
+'Database mismatch'			=>	'Database version mismatch',
 'Database mismatch alert'	=>	'Your PunBB database is meant to be used in conjunction with a newer version of the PunBB code. This mismatch can lead to your forum not working properly. It is suggested that you upgrade your forum to the newest version of PunBB.',
 
 // Stuff for Jump Menu and Debug
