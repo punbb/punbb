@@ -55,7 +55,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 
 		// Filter out non-alphabetical chars
 		$noise_match = array('^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!', '');
-		$noise_replace = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ',  ' ', ' ', ' ');
+		$noise_replace = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '', ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' , ' ', ' ', ' ', ' ',  ' ', ' ', ' ');
 		$keywords = str_replace($noise_match, $noise_replace, $keywords);
 
 		// Strip out excessive whitespace
@@ -273,7 +273,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	$query = array(
 		'INSERT'	=> 'id, ident, search_data',
 		'INTO'		=> 'search_cache',
-		'VALUES'	=> $search_id.', \''.$forum_db->escape($ident).'\', \''.$forum_db->escape($temp).'\''
+		'VALUES'	=> $search_id.', \''.$forum_db->escape($ident).'\', \''.$forum_db->escape($search_data).'\''
 	);
 
 	($hook = get_hook('sf_fn_create_search_cache_qr_cache_search')) ? eval($hook) : null;
