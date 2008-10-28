@@ -14,39 +14,39 @@ function escape_cdata($str)
 {
 	return str_replace(']]>', ']]&gt;', $str);
 }
- 
- 
+
+
  //
  // Return a list of all URL schemes installed
  //
  function get_scheme_packs()
  {
   	$schemes = array();
- 
+
  	foreach (glob(FORUM_ROOT.'include/url/*') as $dirname)
  		if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
  			$schemes[] = basename($dirname);
-	
+
 	($hook = get_hook('fn_get_scheme_packs_end')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
 
 	return $schemes;
  }
- 
- 
+
+
  //
  // Return a list of all styles installed
  //
  function get_style_packs()
  {
  	$styles = array();
- 
+
  	foreach (glob(FORUM_ROOT.'style/*') as $dirname)
  	{
  		$tempname = basename($dirname);
  		if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
  			$styles[] = $tempname;
  	}
- 
+
  	($hook = get_hook('fn_get_style_packs_end')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
 
 	return $styles;
@@ -356,6 +356,7 @@ function set_default_user()
 	$forum_user['disp_topics'] = $forum_config['o_disp_topics_default'];
 	$forum_user['disp_posts'] = $forum_config['o_disp_posts_default'];
 	$forum_user['timezone'] = $forum_config['o_default_timezone'];
+	$forum_user['dst'] = $forum_config['o_default_dst'];
 	$forum_user['language'] = $forum_config['o_default_lang'];
 	$forum_user['style'] = $forum_config['o_default_style'];
 	$forum_user['is_guest'] = true;
@@ -513,7 +514,7 @@ function update_users_online()
 		else
 		{
 			// If the entry is older than "o_timeout_visit", update last_visit for the user in question, then delete him/her from the online list
-			if ($cur_user['idle'] != '0')			
+			if ($cur_user['idle'] != '0')
 			{
 				$query = array(
 					'UPDATE'	=> 'users',
@@ -532,7 +533,7 @@ function update_users_online()
 				($hook = get_hook('fn_update_users_online_qr_delete_online_user')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 			}
-			else 
+			else
 			{
 				$query = array(
 					'UPDATE'	=> 'online',
@@ -603,7 +604,7 @@ function generate_navlinks()
 		// Insert any additional links into the $links array (at the correct index)
 		$num_links = count($extra_links[1]);
 		for ($i = 0; $i < $num_links; ++$i)
-			array_insert($links, (int)$extra_links[1][$i], '<li id="navextra'.($i + 1).'">'.$extra_links[2][$i].'</li>');	
+			array_insert($links, (int)$extra_links[1][$i], '<li id="navextra'.($i + 1).'">'.$extra_links[2][$i].'</li>');
 	}
 
 	($hook = get_hook('fn_generate_navlinks_end')) ? eval($hook) : null;
@@ -1112,7 +1113,7 @@ function clean_forum_moderators()
 	{
 		$cur_moderators = unserialize($cur_forum['moderators']);
 		$new_moderators = $cur_moderators;
-		
+
 		// Iterate through each user in the list and check if he/she is in a moderator or admin group
 		foreach ($cur_moderators as $username => $user_id)
 		{
@@ -1725,7 +1726,7 @@ function send_subscriptions($post_info, $new_pid)
 				if ($cur_subscriber['notify_with_post'] == '0')
 					forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][0], $notification_emails[$cur_subscriber['language']][1]);
 				else
-					forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][2], $notification_emails[$cur_subscriber['language']][3]);	
+					forum_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][2], $notification_emails[$cur_subscriber['language']][3]);
 			}
 		}
 	}
