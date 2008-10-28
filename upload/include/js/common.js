@@ -104,7 +104,8 @@ var Forum = {
 		flt = [];
 		for (var i=0,len=arr.length; i<len; i++)
 		{
-			if (typeof arr[i] == 'object' && arr.length) {
+			if (typeof arr[i] == 'object' && arr.length)
+			{
 				flt.concat(Forum.flatten(arr[i]))
 				alert('length1!!'+ arr.length);
 				//x.hasChildNodes()
@@ -125,8 +126,8 @@ var Forum = {
 		//if (Forum.find(fn, nodes) > -1)
 		{
 			var n = document.getElementById('req-msg');
-			Forum.removeClass(n, 'frm-warn');
-			var newlyAdded = Forum.addClass(n, 'frm-error');
+			Forum.removeClass(n, 'req-warn');
+			var newlyAdded = Forum.addClass(n, 'req-error');
 			if (!Forum.onScreen(n))
 			{
 				n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
@@ -209,7 +210,7 @@ Forum.addLoadEvent(Forum.autoFocus);
    believe that it is legally necessary to note which parts of a Copyrighted
    work are based on Public Domain content, a list of the Public Domain
    code (functions and methods) contained in this file is included below:
-
+   
    * addLoadEvent: Released into the Public Domain by Shawn Brown and
         based on Simon Willison's Public Domain function of the same name.
    * hasClass, addClass & removeClass: Released into the Public Domain
