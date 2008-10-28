@@ -11,7 +11,7 @@
 
 
 define('FORUM_VERSION', '1.3dev');
-define('FORUM_DB_REVISION', 2);
+define('FORUM_DB_REVISION', 3);
 define('MIN_PHP_VERSION', '4.3.0');
 define('MIN_MYSQL_VERSION', '4.1.2');
 
@@ -107,7 +107,7 @@ if (!isset($_POST['form_sent']))
 		error($lang_install['No database support']);
 
 	// Make an educated guess regarding base_url
-	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).substr(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), 0, -6); 
+	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).substr(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), 0, -6);
 	if (substr($base_url_guess, -1) == '/')
 		$base_url_guess = substr($base_url_guess, 0, -1);
 
@@ -1080,7 +1080,15 @@ else
 			'zapped_by'		=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
 				'allow_null'	=> true
-			)
+			),
+			'last_post'			=> array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> true
+			),
+			'last_search'		=> array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> true
+			),
 		),
 		'PRIMARY KEY'	=> array('id'),
 		'INDEXES'		=> array(

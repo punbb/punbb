@@ -11,7 +11,7 @@
 
 
 define('UPDATE_TO', '1.3dev');
-define('UPDATE_TO_DB_REVISION', 2);
+define('UPDATE_TO_DB_REVISION', 3);
 
 // The number of items to process per pageview (lower this if the update script times out during UTF-8 conversion)
 define('PER_PAGE', 300);
@@ -737,6 +737,12 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Add the prev_url field to the online table
 		$forum_db->add_field('online', 'prev_url', 'VARCHAR(255)', true, null, null);
+		
+		// Add the last_post field to the online table
+		$forum_db->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
+		
+		// Add the last_search field to the online table
+		$forum_db->add_field('online', 'last_search', 'INT(10) UNSIGNED', true, null, null);
 
 		// Add the last_post field to the online table
 		$forum_db->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
