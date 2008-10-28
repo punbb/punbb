@@ -5,7 +5,6 @@ $lang_admin_settings = array(
 'Settings updated'				=>	'Settings updated.',
 
 // Setup section
-'Setup head'					=>	'Setup : %s',
 'Setup personal'				=>	'Personalize your PunBB installation',
 'Setup personal legend'			=>	'PunBB installation',
 'Board description label'		=>	'Board description',
@@ -54,7 +53,6 @@ $lang_admin_settings = array(
 
 
 // Features section
-'Features head'					=>	'Features : %s',
 'Features general'				=>	'General PunBB features which are optional',
 'Features general legend'		=>	'General features',
 'Searching'						=>	'Searching',
@@ -137,7 +135,7 @@ $lang_admin_settings = array(
 'Enable gzip label'				=>	'Enable output compression using gzip.',
 
 // Announcements section
-'Announcements head'			=>	'Announcements : Display an announcement on each page of your board',
+'Announcements head'			=>	'Display an announcement on each page of your board',
 'Announcements legend'			=>	'Announcement',
 'Enable announcement'			=>	'Enable announcement',
 'Enable announcement label'		=>	'Display an announcement message.',
@@ -147,7 +145,6 @@ $lang_admin_settings = array(
 'Announcement message default'	=>	'<p>Enter your announcement here.</p>',
 
 // Registration section
-'Registration head'				=>	'Registration : %s',
 'Registration new'				=>	'New registrations',
 'New reg info'					=>	'You may choose to verify all new registrations. When registration verification is enabled, users are e-mailed an activation link when they register. They can then use the link to set their password and log in. This feature also requires users to verify new e-mail addresses if they choose to change from the e-mail addresses they registered with. This is an effective way of avoiding registration abuse and making sure that all users have "correct" e-mail addresses in their profiles.',
 'Registration new legend'		=>	'New registration settings',
@@ -174,7 +171,6 @@ $lang_admin_settings = array(
 'Rules default'					=>	'Enter your rules here.',
 
 // Email section
-'E-mail head'					=>	'E-mail : %s',
 'E-mail addresses'				=>	'Forum e-mail addresses and mailing list',
 'E-mail addresses legend'		=>	'E-mail addresses',
 'Admin e-mail'					=>	'Administrator\'s e-mail',
