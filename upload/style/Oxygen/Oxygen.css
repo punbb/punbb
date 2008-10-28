@@ -1607,6 +1607,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	padding: 1em 0.75em;
 	}
 
+.brd .entry-content .codebox code {
+	font-family: monotype;
+	}
+
 .brd .entry-content blockquote {
 	overflow: hidden;
 	width: 100%;
