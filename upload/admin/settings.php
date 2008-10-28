@@ -285,7 +285,7 @@ if (!$section || $section == 'setup')
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup personal']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup personal'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_setup_pre_personal_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -351,7 +351,7 @@ if (!$section || $section == 'setup')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup local']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup local'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_setup_pre_local_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -462,7 +462,7 @@ if (!$section || $section == 'setup')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup timeouts']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup timeouts'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_setup_pre_timeouts_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -499,7 +499,7 @@ if (!$section || $section == 'setup')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup pagination']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup pagination'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_setup_pre_pagination_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -536,7 +536,7 @@ if (!$section || $section == 'setup')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup reports']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup reports'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_setup_pre_reports_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -570,7 +570,7 @@ if (!$section || $section == 'setup')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup URL']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup URL'] ?></span></h2>
 				</div>
 				<div class="ct-box">
 					<p class="warn"><?php echo $lang_admin_settings['URL scheme info'] ?></p>
@@ -620,7 +620,7 @@ if (!$section || $section == 'setup')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Setup links']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Setup links'] ?></span></h2>
 				</div>
 				<div class="ct-box">
 					<p class="warn"><?php echo $lang_admin_settings['Setup links info'] ?></p>
@@ -680,7 +680,7 @@ else if ($section == 'features')
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Features general']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Features general'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_features_pre_general_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -738,7 +738,7 @@ else if ($section == 'features')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Features posting']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Features posting'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_features_pre_posting_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -803,7 +803,7 @@ else if ($section == 'features')
 
 ?>
 				<div class="content-head">
-					<h2 class="hn"><span><?php printf($lang_admin_settings['Features posts']) ?></span></h2>
+					<h2 class="hn"><span><?php echo $lang_admin_settings['Features posts'] ?></span></h2>
 				</div>
 <?php ($hook = get_hook('aop_features_pre_message_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -873,7 +873,7 @@ else if ($section == 'features')
 
 ?>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['Features sigs']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Features sigs'] ?></span></h2>
 			</div>
 <?php ($hook = get_hook('aop_features_pre_sig_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -934,7 +934,7 @@ else if ($section == 'features')
 
 ?>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['Features Avatars']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Features Avatars'] ?></span></h2>
 			</div>
 <?php ($hook = get_hook('aop_features_pre_avatars_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -985,7 +985,7 @@ else if ($section == 'features')
 
 ?>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['Features update']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Features update'] ?></span></h2>
 			</div>
 <?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>				<div class="ct-box">
 					<p><?php echo $lang_admin_settings['Features update info'] ?></p>
@@ -1026,7 +1026,7 @@ else if ($section == 'features')
 
 ?>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['Features gzip']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Features gzip'] ?></span></h2>
 			</div>
 				<div class="ct-box">
 					<p><?php echo $lang_admin_settings['Features gzip info'] ?></p>
@@ -1152,7 +1152,7 @@ else if ($section == 'registration')
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['Registration new']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Registration new'] ?></span></h2>
 			</div>
 			<div class="ct-box">
 				<p><?php echo $lang_admin_settings['New reg info'] ?></p>
@@ -1228,7 +1228,7 @@ else if ($section == 'registration')
 
 ?>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['Registration rules']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Registration rules'] ?></span></h2>
 			</div>
 				<div class="ct-box">
 					<p><?php echo $lang_admin_settings['Registration rules info'] ?></p>
@@ -1361,7 +1361,7 @@ else if ($section == 'email')
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['E-mail addresses']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['E-mail addresses'] ?></span></h2>
 			</div>
 <?php ($hook = get_hook('aop_email_pre_addresses_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -1398,7 +1398,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
 			<div class="content-head">
-				<h2 class="hn"><span><?php printf($lang_admin_settings['E-mail server']) ?></span></h2>
+				<h2 class="hn"><span><?php echo $lang_admin_settings['E-mail server'] ?></span></h2>
 			</div>
 				<div class="ct-box">
 					<p><?php echo $lang_admin_settings['E-mail server info'] ?></p>
