@@ -320,6 +320,10 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	position: relative;
 	}
 
+.brd .warn-set {
+	padding: 0 0 0 18em;
+	}
+
 .brd .ct-group {
 	border-style: solid;
 	border-width: 1px;
@@ -1008,7 +1012,7 @@ F - MAIN CONTENT - FORMS
 	margin: 1.417em;
 	padding:1.3em 0pt 0em;
 	}
-
+	
 .brd .group1{
 	border-top:none;
 	padding-top:0;
@@ -1151,7 +1155,7 @@ F - MAIN CONTENT - FORMS
 	position: absolute;
 	left: -17em;
 	width: 16em;
-	padding: 0.2em 1em;
+	padding: 0.3em 1em;
 	margin: 1px 0 2px 0;
 	overflow: hidden;
 	display:block;
