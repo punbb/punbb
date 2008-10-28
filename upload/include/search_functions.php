@@ -261,12 +261,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	$search_results = implode(',', $search_ids);
 
 	// Fill an array with our results and search properties
-	$search_data = array();
-	$search_data['search_results'] = $search_results;
-	$search_data['sort_by'] = $sort_by;
-	$search_data['sort_dir'] = $sort_dir;
-	$search_data['show_as'] = $show_as;
-	$search_data = serialize($search_data);
+	$search_data = serialize(compact($search_results, $sort_by, $sort_dir, $show_as));
 	$search_id = mt_rand(1, 2147483647);
 	$ident = ($forum_user['is_guest']) ? get_remote_address() : $forum_user['username'];
 
