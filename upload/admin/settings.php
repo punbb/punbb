@@ -263,7 +263,7 @@ if (!$section || $section == 'setup')
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		$lang_admin_common['Setup']
+		array($lang_admin_common['Setup'], forum_link($forum_url['admin_settings_setup']))
 	);
 
 	$forum_page['main_head'] = $lang_admin_common['Settings'];
@@ -667,7 +667,7 @@ else if ($section == 'features')
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		$lang_admin_common['Features']
+		array($lang_admin_common['Features'], forum_link($forum_url['admin_settings_features']))
 	);
 
 	($hook = get_hook('aop_features_pre_header_load')) ? eval($hook) : null;
@@ -1071,7 +1071,7 @@ else if ($section == 'announcements')
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		$lang_admin_common['Announcements']
+		array($lang_admin_common['Announcements'], forum_link($forum_url['admin_settings_announcements']))
 	);
 
 	($hook = get_hook('aop_announcements_pre_header_load')) ? eval($hook) : null;
@@ -1139,7 +1139,7 @@ else if ($section == 'registration')
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		$lang_admin_common['Registration']
+		array($lang_admin_common['Registration'], forum_link($forum_url['admin_settings_registration']))
 	);
 
 	($hook = get_hook('aop_registration_pre_header_load')) ? eval($hook) : null;
@@ -1280,8 +1280,8 @@ else if ($section == 'maintenance')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_maintenance'])),
-		$lang_admin_common['Maintenance mode']
+		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
+		array($lang_admin_common['Maintenance mode'], forum_link($forum_url['admin_settings_maintenance']))
 	);
 
 	($hook = get_hook('aop_maintenance_pre_header_load')) ? eval($hook) : null;
@@ -1348,7 +1348,7 @@ else if ($section == 'email')
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		$lang_admin_common['E-mail']
+		array($lang_admin_common['E-mail'], forum_link($forum_url['admin_settings_email']))
 	);
 
 	($hook = get_hook('aop_email_pre_header_load')) ? eval($hook) : null;

@@ -144,6 +144,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+			array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
 			array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories'])),
 			$lang_admin_categories['Delete category']
 		);
@@ -271,7 +272,8 @@ $forum_page['hidden_fields'] = array(
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Categories']
+	array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
+	array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories'])) 
 );
 
 ($hook = get_hook('acg_pre_header_load')) ? eval($hook) : null;

@@ -78,6 +78,8 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
 		$lang_admin_reindex['Rebuilding index title']
 	);
 
@@ -182,7 +184,8 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Rebuild index']
+	array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
+	array($lang_admin_common['Rebuild index'], forum_link($forum_url['admin_reindex']))
 );
 
 ($hook = get_hook('ari_pre_header_load')) ? eval($hook) : null;

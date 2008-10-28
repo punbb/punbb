@@ -120,6 +120,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
 		array($lang_admin_prune['Prune topics'], forum_link($forum_url['admin_prune'])),
 		$lang_admin_prune['Confirm prune heading']
 	);
@@ -181,7 +182,8 @@ else
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		$lang_admin_common['Prune topics']
+		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
+		array($lang_admin_common['Prune topics'], forum_link($forum_url['admin_prune']))
 	);
 
 	($hook = get_hook('apr_pre_header_load')) ? eval($hook) : null;

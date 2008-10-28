@@ -142,6 +142,7 @@ else if (isset($_GET['del_forum']))
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+			array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
 			array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums'])),
 			$lang_admin_forums['Delete forum']
 		);
@@ -439,6 +440,7 @@ else if (isset($_GET['edit_forum']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums'])),
 		$lang_admin_forums['Edit forum']
 	);
@@ -641,7 +643,8 @@ $forum_page['fld_count'] = $forum_page['group_count'] = $forum_page['item_count'
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Forums']
+	array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
+	array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums']))
 );
 
 ($hook = get_hook('afo_pre_header_load')) ? eval($hook) : null;

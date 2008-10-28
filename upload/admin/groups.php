@@ -77,6 +77,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups'])),
 		$mode == 'edit' ? $lang_admin_groups['Edit group heading'] : $lang_admin_groups['Add group heading']
 	);
@@ -585,6 +586,7 @@ else if (isset($_GET['del_group']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups'])),
 		$lang_admin_groups['Remove group']
 	);
@@ -670,7 +672,8 @@ $forum_page['item_count'] = $forum_page['fld_count'] = $forum_page['group_count'
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Groups']
+	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
+	array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups']))
 );
 
 ($hook = get_hook('agr_pre_header_load')) ? eval($hook) : null;

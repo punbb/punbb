@@ -93,6 +93,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
 		array((strpos($id, 'hotfix_') === 0) ? $lang_admin_common['Manage hotfixes'] : $lang_admin_common['Manage extensions'], (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
 		(strpos($id, 'hotfix_') === 0) ? $lang_admin_ext['Install hotfix'] : $lang_admin_ext['Install extension']
 	);
@@ -390,6 +391,7 @@ else if (isset($_GET['uninstall']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
 		array((strpos($id, 'hotfix_') === 0) ? $lang_admin_common['Manage hotfixes'] : $lang_admin_common['Manage extensions'], (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
 		(strpos($id, 'hotfix_') === 0) ? $lang_admin_ext['Uninstall hotfix'] : $lang_admin_ext['Uninstall extension']
 	);
@@ -666,7 +668,8 @@ if ($section == 'hotfixes')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		$lang_admin_common['Manage hotfixes']
+		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
+		array($lang_admin_common['Manage hotfixes'], forum_link($forum_url['admin_extensions_hotfixes']))
 	);
 
 	($hook = get_hook('aex_section_hotfixes_pre_header_load')) ? eval($hook) : null;
@@ -835,7 +838,8 @@ else
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		$lang_admin_common['Manage extensions']
+		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
+		array($lang_admin_common['Manage extensions'], forum_link($forum_url['admin_extensions_manage']))
 	);
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;

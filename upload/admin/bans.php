@@ -135,6 +135,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans'])),
 		$lang_admin_bans['Ban advanced']
 	);
@@ -387,7 +388,8 @@ $forum_page['hidden_fields'] = array(
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Bans']
+	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
+	array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']))
 );
 
 ($hook = get_hook('aba_pre_header_load')) ? eval($hook) : null;

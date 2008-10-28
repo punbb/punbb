@@ -169,7 +169,8 @@ $forum_page['fld_count'] = $forum_page['item_count'] = $forum_page['group_count'
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Ranks']
+	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
+	array($lang_admin_common['Ranks'], forum_link($forum_url['admin_ranks']))
 );
 
 ($hook = get_hook('ark_pre_header_load')) ? eval($hook) : null;

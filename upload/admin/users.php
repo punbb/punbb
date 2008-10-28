@@ -50,6 +50,7 @@ if (isset($_GET['ip_stats']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 		$lang_admin_users['User search results']
 	);
@@ -197,6 +198,7 @@ else if (isset($_GET['show_users']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 		$lang_admin_users['User search results']
 	);
@@ -442,6 +444,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 		$lang_admin_users['Delete users']
 	);
@@ -603,6 +606,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 		$lang_admin_users['Ban users']
 	);
@@ -730,6 +734,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 		$lang_admin_users['Change group']
 	);
@@ -895,6 +900,7 @@ else if (isset($_POST['find_user']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
+		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 		$lang_admin_users['User search results']
 	);
@@ -1071,7 +1077,8 @@ $forum_page['form_action'] = '';
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	$lang_admin_common['Searches']
+	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
+	array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
 );
 
 ($hook = get_hook('aus_search_form_pre_header_load')) ? eval($hook) : null;
