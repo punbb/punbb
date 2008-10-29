@@ -187,7 +187,7 @@ if (!isset($_POST['form_sent']))
 		<h2 class="hn"><span><?php echo $lang_install['Part1'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box">
+		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part1 intro'] ?></p>
 			<ul class="spaced">
 				<li><span><strong><?php echo $lang_install['Database type'] ?></strong> <?php echo $lang_install['Database type info']; if ($dual_mysql) echo ' '.$lang_install['Mysql type info'] ?></span></li>
@@ -252,7 +252,7 @@ if (!isset($_POST['form_sent']))
 		<h2 class="hn"><span><?php echo $lang_install['Part2'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box">
+		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part2 intro'] ?></p>
 		</div>
 		<fieldset class="frm-group group1">
@@ -287,7 +287,7 @@ if (!isset($_POST['form_sent']))
 		<h2 class="hn"><span><?php echo $lang_install['Part3'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box">
+		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part3 intro'] ?></p>
 			<ul class="spaced">
 				<li><span><strong><?php echo $lang_install['Board title and desc'] ?></strong> <?php echo $lang_install['Board title info'] ?></span></li>
