@@ -408,7 +408,7 @@ require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php'
 	</div>
 
 	<div class="main-content frm">
-		<div class="ct-box">
+		<div class="ct-box info-box">
 			<ul class="spaced">
 				<li class="warn"><span><strong>WARNING!</strong> This script will update your PunBB forum database. The update procedure might take anything from a few seconds to a few minutes (or in extreme cases, hours) depending on the speed of the server, the size of the forum database and the number of changes required.</span></li>
 				<li><span>Do not forget to make a backup of the database before continuing.</span></li>
@@ -450,7 +450,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		{
 
 ?>
-			<div class="ct-box">
+			<div class="ct-box info-box">
 				<p class="important"><strong>Enable conversion:</strong> When enabled this update script will, after it has made the required structural changes to the database, convert all text in the database from the current character set to UTF-8. This conversion is required if you're upgrading from PunBB 1.2 and you are not currently using an UTF-8 language pack.</p>
 				<p class="important"><strong>Current character set:</strong> If the primary language in your forum is English, you can leave this at the default value. However, if your forum is non-English, you should enter the character set of the primary language pack used in the forum.</p>
 			</div>
@@ -458,7 +458,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				<p class="important"><strong>Important!</strong> All fields labelled <em>(Required)</em> must be completed before submitting this form.</p>
 			</div>
 			<fieldset class="frm-group group1">
-				<legend class="frm-legend"><span>Charset conversion</span></legend>
+				<legend class="group-legend"><span>Charset conversion</span></legend>
 				<div class="sf-set set1">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld1" name="convert_charset" value="1" checked="checked" /></span>
@@ -1965,13 +1965,13 @@ require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php'
 	</div>
 
 	<div class="main-content frm">
-		<div class="ct-box">
+		<div class="ct-box info-box">
 			<p>Your forum database was updated successfully.</p>
 <?php if (isset($new_config) && !$written): ?>					<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file.</p>
 <?php endif; ?>		</div>
 <?php if (isset($new_config) && !$written): ?>		<form class="frm-form" action="foo">
 			<fieldset class="frm-group group1">
-				<legend class="frm-legend"><span>New config.php contents</span></legend>
+				<legend class="group-legend"><span>New config.php contents</span></legend>
 				<div class="txt-set set1">
 					<div class="txt-box textarea">
 						<label for="fld1"><span>Copy contents:</span></label>
