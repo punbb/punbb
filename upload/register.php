@@ -274,7 +274,8 @@ if ($forum_config['o_regs_verify'] != '0')
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	sprintf($lang_profile['Register at'], $forum_config['o_board_title'])
+	array(sprintf($lang_profile['Register at'], $forum_config['o_board_title']), forum_link($forum_url['register'])),
+	
 );
 
 ($hook = get_hook('rg_register_pre_header_load')) ? eval($hook) : null;

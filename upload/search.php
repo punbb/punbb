@@ -442,7 +442,7 @@ $forum_page['frm-sort'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	$lang_common['Search']
+	array($lang_common['Search'], forum_link($forum_url['search']))
 );
 
 // Setup form

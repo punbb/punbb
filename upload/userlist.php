@@ -96,7 +96,8 @@ $forum_page['form_action'] = $base_url.'/userlist.php';
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['index'])), $lang_common['User list']
+	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+	array($lang_common['User list'], forum_link($forum_url['users']))
 );
 
 // Setup main heading
