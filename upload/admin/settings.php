@@ -53,7 +53,7 @@ if (isset($_POST['form_sent']))
 				message($lang_common['Bad request']);
 			if (!file_exists(FORUM_ROOT.'lang/'.$form['default_lang'].'/common.php'))
 				message($lang_common['Bad request']);
-			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'.php'))
+			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'/forum_urls.php'))
 				message($lang_common['Bad request']);
 			if (!isset($form['default_dst']) || $form['default_dst'] != '1')
 				$form['default_dst'] = '0';
@@ -319,23 +319,13 @@ if (!$section || $section == 'setup')
 							<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[default_style]">
 <?php
 
-	$styles = array();
-	$d = dir(FORUM_ROOT.'style');
-	while (($entry = $d->read()) !== false)
+	$styles = get_style_packs();
+	foreach($styles as $style)
 	{
-		if ($entry != '.' && $entry != '..' && is_dir(FORUM_ROOT.'style/'.$entry) && file_exists(FORUM_ROOT.'style/'.$entry.'/'.$entry.'.php'))
-			$styles[] = $entry;
-	}
-	$d->close();
-
-	@natcasesort($styles);
-
-	while (list(, $temp) = @each($styles))
-	{
-		if ($forum_config['o_default_style'] == $temp)
-			echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
+		if ($forum_config['o_default_style'] == $style)
+			echo "\t\t\t\t\t\t\t\t".'<option value="'.$style.'" selected="selected">'.str_replace('_', ' ', $style).'</option>'."\n";
 		else
-			echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.str_replace('_', ' ', $temp).'</option>'."\n";
+			echo "\t\t\t\t\t\t\t\t".'<option value="'.$style.'">'.str_replace('_', ' ', $style).'</option>'."\n";
 	}
 
 ?>
@@ -365,28 +355,17 @@ if (!$section || $section == 'setup')
 							<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[default_lang]">
 <?php
 
-		$languages = array();
-		$d = dir(FORUM_ROOT.'lang');
-		while (($entry = $d->read()) !== false)
-		{
-			if ($entry != '.' && $entry != '..' && is_dir(FORUM_ROOT.'lang/'.$entry) && file_exists(FORUM_ROOT.'lang/'.$entry.'/common.php'))
-				$languages[] = $entry;
-		}
-		$d->close();
+	$languages = get_language_packs();
+	foreach($languages as $lang)
+	{
+		if ($forum_config['o_default_lang'] == $lang)
+			echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'" selected="selected">'.$lang.'</option>'."\n";
+		else
+			echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'">'.$lang.'</option>'."\n";
+	}
 
-		if (!empty($languages))
-			natcasesort($languages);
-
-		foreach($languages as $lang)
-		{
-			if ($forum_config['o_default_lang'] == $lang)
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'" selected="selected">'.$lang.'</option>'."\n";
-			else
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'">'.$lang.'</option>'."\n";
-		}
-
-		// Load the profile.php language file
-		require FORUM_ROOT.'lang/'.$forum_user['language'].'/profile.php';
+	// Load the profile.php language file
+	require FORUM_ROOT.'lang/'.$forum_user['language'].'/profile.php';
 
 ?>
 							</select></span>
@@ -594,25 +573,14 @@ if (!$section || $section == 'setup')
 							<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[sef]">
 <?php
 
-		$url_schemes = array();
-		$d = dir(FORUM_ROOT.'include/url');
-		while (($entry = $d->read()) !== false)
-		{
-			if ($entry != '.' && $entry != '..' && substr($entry, strlen($entry)-4) == '.php')
-				$url_schemes[] = $entry;
-		}
-		$d->close();
-
-		@natcasesort($url_schemes);
-
-		while (list(, $temp) = @each($url_schemes))
-		{
-			$temp = substr($temp, 0, -4);
-			if ($forum_config['o_sef'] == $temp)
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
-			else
-				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.str_replace('_', ' ', $temp).'</option>'."\n";
-		}
+	$url_schemes = get_scheme_packs();
+	foreach($url_schemes as $schema)
+	{
+		if ($forum_config['o_sef'] == $schema)
+			echo "\t\t\t\t\t\t\t\t".'<option value="'.$schema.'" selected="selected">'.str_replace('_', ' ', $schema).'</option>'."\n";
+		else
+			echo "\t\t\t\t\t\t\t\t".'<option value="'.$schema.'">'.str_replace('_', ' ', $schema).'</option>'."\n";
+	}
 
 ?>
 							</select></span>

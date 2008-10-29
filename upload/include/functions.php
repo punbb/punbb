@@ -1754,11 +1754,20 @@ function send_subscriptions($post_info, $new_pid)
 //
 function sef_friendly($str)
 {
-	global $forum_user;
-	static $lang_replace;
+	global $forum_config, $forum_user;
+	static $lang_url_replace, $forum_reserved_strings;
 
 	if (!isset($lang_replace))
 		require FORUM_ROOT.'lang/'.$forum_user['language'].'/url_replace.php';
+
+	if (!isset($forum_reserved_strings))
+	{
+		// Bring in any reserved strings
+		if (file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/reserved_strings.php'))
+			require FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/reserved_strings.php';
+		else
+			require FORUM_ROOT.'include/url/Default/reserved_strings.php';
+	}
 
 	$return = ($hook = get_hook('fn_sef_friendly_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -1766,9 +1775,13 @@ function sef_friendly($str)
 
 	$str = strtr($str, $lang_url_replace);
 	$str = strtolower(utf8_decode($str));
-	$str = preg_replace(array('/[^a-z0-9\s]/', '/[\s]+/'), array('', '-'), $str);
+	$str = forum_trim(preg_replace(array('/[^a-z0-9\s]/', '/[\s]+/'), array('', '-'), $str), '-');
 
-	return $str != '-' ? forum_trim($str, '-') : '';
+	foreach ($forum_reserved_strings as $match => $replace)
+		if ($str == $match)
+			return $replace;
+
+	return $str;
 }
 
 
