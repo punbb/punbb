@@ -910,6 +910,11 @@ else if ($section == 'features')
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[smilies_sig]" value="1"<?php if ($forum_config['o_smilies_sig'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_settings['Smilies in sigs label'] ?></label>
 							</div>
+						</div>
+					</fieldset>
+					<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
+						<legend><span><?php echo $lang_admin_settings['Allow capitals group'] ?></span></legend>
+						<div class="mf-box">
 							<div class="mf-item">
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[sig_all_caps]" value="1"<?php if ($forum_config['p_sig_all_caps'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_settings['All caps sigs label'] ?></label>
