@@ -62,14 +62,14 @@ function generate_admin_menu($submenu)
 				$forum_page['admin_submenu']['settings-announcements'] = '<li class="'.((FORUM_PAGE == 'admin-settings-announcements') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_settings_announcements']).'">'.$lang_admin_common['Announcements'].'</a></li>';
 				$forum_page['admin_submenu']['settings-email'] = '<li class="'.((FORUM_PAGE == 'admin-settings-email') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_settings_email']).'">'.$lang_admin_common['E-mail'].'</a></li>';
 				$forum_page['admin_submenu']['settings-registration'] = '<li class="'.((FORUM_PAGE == 'admin-settings-registration') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_settings_registration']).'">'.$lang_admin_common['Registration'].'</a></li>';
-				$forum_page['admin_submenu']['censoring'] = '<li class="'.((FORUM_PAGE == 'admin-settings-censoring') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_censoring']).'">'.$lang_admin_common['Censoring'].'</a></li>';
+				$forum_page['admin_submenu']['censoring'] = '<li class="'.((FORUM_PAGE == 'admin-censoring') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_censoring']).'">'.$lang_admin_common['Censoring'].'</a></li>';
 			}
 			else if (FORUM_PAGE_SECTION == 'management')
 			{
 				$forum_page['admin_submenu']['reports'] = '<li class="'.((FORUM_PAGE == 'admin-reports') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_reports']).'">'.$lang_admin_common['Reports'].'</a></li>';
 				$forum_page['admin_submenu']['prune'] = '<li class="'.((FORUM_PAGE == 'admin-prune') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_prune']).'">'.$lang_admin_common['Prune topics'].'</a></li>';
 				$forum_page['admin_submenu']['reindex'] = '<li class="'.((FORUM_PAGE == 'admin-reindex') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_reindex']).'">'.$lang_admin_common['Rebuild index'].'</a></li>';
-				$forum_page['admin_submenu']['options-maintenance'] = '<li class="'.((FORUM_PAGE == 'admin-maintenace') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_settings_maintenance']).'">'.$lang_admin_common['Maintenance mode'].'</a></li>';
+				$forum_page['admin_submenu']['options-maintenance'] = '<li class="'.((FORUM_PAGE == 'admin-settings-maintenance') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_settings_maintenance']).'">'.$lang_admin_common['Maintenance mode'].'</a></li>';
 			}
 			else if (FORUM_PAGE_SECTION == 'extensions')
 			{
