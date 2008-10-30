@@ -68,5 +68,6 @@ $lang_admin_ext = array(
 'Uninstall dependency'			=>	'This extension cannot be uninstall while "%s" is installed.',
 'Disable dependency'			=>	'This extension cannot be disabled while "%s" is enabled.',
 'Disabled dependency'			=>	'This extension cannot be enabled while "%s" is disabled.',
+'Download latest version'		=>	'Download latest version',
 
 );
