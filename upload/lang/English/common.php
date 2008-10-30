@@ -85,6 +85,7 @@ $lang_common = array(
 'Item info single'			=>	'%s [ %s ]',
 'Item info plural'			=>	'%s [ %s to %s of %s ]', // e.g. Topics [ 10 to 20 of 30 ]
 'Info separator'			=>	' ', // e.g. 1 Page | 10 Topics
+'Powered by'				=>	'Powered by <strong>%s</strong>',
 'Maintenance'				=>	'Maintenance',
 
 // CSRF confirmation form
@@ -140,10 +141,9 @@ $lang_common = array(
 'Database mismatch'			=>	'Database version mismatch',
 'Database mismatch alert'	=>	'Your PunBB database is meant to be used in conjunction with a newer version of the PunBB code. This mismatch can lead to your forum not working properly. It is suggested that you upgrade your forum to the newest version of PunBB.',
 
-// Stuff for Jump Menu and Debug
+// Stuff for Jump Menu
 'Go'						=>	'Go',		// submit button in forum jump
 'Jump to'					=>	'Jump to forum:',
-'Debug table'				=>	'Debug information',
 
 // For extern.php RSS feed
 'ATOM Feed'					=>	'Atom',
@@ -153,6 +153,14 @@ $lang_common = array(
 'RSS reply'					=>	'Re: ',	// The topic subject will be appended to this string (to signify a reply)
 
 // Accessibility
-'Skip to content'		=>	'Skip to forum content'
+'Skip to content'					=>	'Skip to forum content',
+
+// Debug information
+'Querytime'						=>	'Generated in %1$s seconds, %2$s queries executed',
+'Debug table'						=>	'Debug information',
+'Debug summary'						=>	'Database query performance information',
+'Query times'						=>	'Time (s)',
+'Query'							=>	'Query',
+'Total query time'					=>	'Total query time',
 
 );
