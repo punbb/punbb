@@ -130,7 +130,7 @@ define('FORUM_GUEST', 2);
 // A good place to add common functions for your extension
 ($hook = get_hook('es_essentials')) ? eval($hook) : null;
 
-if (!defined('FORUM_MAX_POSTSIZE'))
-	define('FORUM_MAX_POSTSIZE', 65535);
+if (!defined('FORUM_MAX_POSTSIZE_BYTES'))
+	define('FORUM_MAX_POSTSIZE_BYTES', 65535);
 
 define('FORUM_ESSENTIALS_LOADED', 1);
