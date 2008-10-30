@@ -144,12 +144,15 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 			<div class="content-head">
 				<h3 class="hn"><span><?php echo $lang_admin_groups['Group perms head'] ?></span></h3>
 			</div>
-<?php if ($mode == 'edit' && $forum_config['o_default_user_group'] == $group['g_id']): ?>				<div class="ct-box">
+<?php if ($mode == 'edit' && $forum_config['o_default_user_group'] == $group['g_id']): ?>
+				<div class="ct-box">
 					<p class="warn"><?php echo $lang_admin_groups['Moderator default group'] ?></p>
 				</div>
-<?php endif; ($hook = get_hook('agr_add_edit_group_pre_permissions_fieldset')) ? eval($hook) : null; ?>							<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+<?php endif; ($hook = get_hook('agr_add_edit_group_pre_permissions_fieldset')) ? eval($hook) : null; ?>
+				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 					<legend class="group-legend"><strong><?php echo $lang_admin_groups['Permissions'] ?></strong></legend>
-<?php ($hook = get_hook('agr_add_edit_group_pre_mod_permissions_fieldset')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): if ($mode != 'edit' || $forum_config['o_default_user_group'] != $group['g_id']): ?>				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php ($hook = get_hook('agr_add_edit_group_pre_mod_permissions_fieldset')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): if ($mode != 'edit' || $forum_config['o_default_user_group'] != $group['g_id']): ?>
+					<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 						<legend><span><?php echo $lang_admin_groups['Mod permissions'] ?></span></legend>
 						<div class="mf-box">
 <?php ($hook = get_hook('agr_add_edit_group_pre_allow_moderate_checkbox')) ? eval($hook) : null; ?>
@@ -180,7 +183,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 						</div>
 <?php ($hook = get_hook('agr_add_edit_group_pre_mod_permissions_fieldset_end')) ? eval($hook) : null; ?>
 					</fieldset>
-<?php ($hook = get_hook('agr_add_edit_group_mod_permissions_fieldset_end')) ? eval($hook) : null; endif; endif; ?>					<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php ($hook = get_hook('agr_add_edit_group_mod_permissions_fieldset_end')) ? eval($hook) : null; endif; endif; ?>
+					<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 						<legend><span><?php echo $lang_admin_groups['User permissions'] ?></span></legend>
 						<div class="mf-box">
 <?php ($hook = get_hook('agr_add_edit_group_pre_allow_read_board_checkbox')) ? eval($hook) : null; ?>
@@ -203,7 +207,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="post_topics" value="1"<?php if ($group['g_post_topics'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow post topics label'] ?></label>
 							</div>
-<?php ($hook = get_hook('agr_add_edit_group_pre_allow_edit_posts_checkbox')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): ?>							<div class="mf-item">
+<?php ($hook = get_hook('agr_add_edit_group_pre_allow_edit_posts_checkbox')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): ?>
+							<div class="mf-item">
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="edit_posts" value="1"<?php if ($group['g_edit_posts'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow edit posts label'] ?></label>
 							</div>
@@ -222,7 +227,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="set_title" value="1"<?php if ($group['g_set_title'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow set user title label'] ?></label>
 							</div>
-<?php endif; ($hook = get_hook('agr_add_edit_group_pre_allow_search_checkbox')) ? eval($hook) : null; ?>							<div class="mf-item">
+<?php endif; ($hook = get_hook('agr_add_edit_group_pre_allow_search_checkbox')) ? eval($hook) : null; ?>
+							<div class="mf-item">
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="search" value="1"<?php if ($group['g_search'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow use search label'] ?></label>
 							</div>
@@ -231,11 +237,13 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="search_users" value="1"<?php if ($group['g_search_users'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow search users label'] ?></label>
 							</div>
-<?php ($hook = get_hook('agr_add_edit_group_pre_allow_send_email_checkbox')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): ?>							<div class="mf-item">
+<?php ($hook = get_hook('agr_add_edit_group_pre_allow_send_email_checkbox')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): ?>
+							<div class="mf-item">
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="send_email" value="1"<?php if ($group['g_send_email'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow send email label'] ?></label>
 							</div>
-<?php endif; ?>					</div>
+<?php endif; ?>
+						</div>
 <?php ($hook = get_hook('agr_add_edit_group_pre_user_permissions_fieldset_end')) ? eval($hook) : null; ?>
 					</fieldset>
 <?php ($hook = get_hook('agr_add_edit_group_user_permissions_fieldset_end')) ? eval($hook) : null; ?>
@@ -697,7 +705,7 @@ ob_start();
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_groups']).'?action=foo') ?>" />
 			</div>
 <?php ($hook = get_hook('agr_pre_add_group_fieldset')) ? eval($hook) : null; ?>
-			<fieldset class="frm-group set<?php echo ++$forum_page['group_count'] ?>">
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?php echo $lang_admin_groups['Add group legend'] ?></span></legend>
 <?php ($hook = get_hook('agr_pre_add_base_group')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -716,12 +724,7 @@ $query = array(
 ($hook = get_hook('agr_qr_get_allowed_base_groups')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 while ($cur_group = $forum_db->fetch_assoc($result))
-{
-	if ($cur_group['g_id'] == $forum_config['o_default_user_group'])
-		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
-	else
-		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
-}
+	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].($cur_group['g_id'] == $forum_config['o_default_user_group'] ? '" selected="selected">' : '">').forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 
 ?>
 						</select></span>
