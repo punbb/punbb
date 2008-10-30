@@ -486,31 +486,6 @@ class DBLayer
 	}
 
 
-	function alter_field($table_name, $field_name, $field_type, $allow_null, $default_value = null, $after_field = null, $no_prefix = false)
-	{
-		if (!$this->field_exists($table_name, $field_name, $no_prefix))
-			return;
-
-		$field_type = preg_replace(array_keys($this->datatype_transformations), array_values($this->datatype_transformations), $field_type);
-
-		$this->add_field($table_name, 'tmp_'.$field_name, $field_type, $allow_null, $default_value, $after_field, $no_prefix);
-		$this->query('UPDATE '.($no_prefix ? '' : $this->prefix).$table_name.' SET tmp_'.$field_name.' = '.$field_name) or error(__FILE__, __LINE__);
-		$this->drop_field($table_name, $field_name, $no_prefix);
-		$this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' RENAME COLUMN tmp_'.$field_name.' TO '.$field_name) or error(__FILE__, __LINE__);
-
-		// Set the default value
-		if ($default_value === null)
-			$default_value = 'NULL';
-		else if (!is_int($default_value) && !is_float($default_value))
-			$default_value = '\''.$this->escape($default_value).'\'';
-
-		$this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' ALTER '.$field_name.' SET DEFAULT '.$default_value) or error(__FILE__, __LINE__);
-
-		if (!$allow_null)
-			$this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' ALTER '.$field_name.' SET NOT NULL') or error(__FILE__, __LINE__);
-	}
-
-
 	function drop_field($table_name, $field_name, $no_prefix = false)
 	{
 		if (!$this->field_exists($table_name, $field_name, $no_prefix))
@@ -520,7 +495,6 @@ class DBLayer
 	}
 
 
-
 	function add_index($table_name, $index_name, $index_fields, $unique = false, $no_prefix = false)
 	{
 		if ($this->index_exists($table_name, $index_name, $no_prefix))
@@ -528,7 +502,6 @@ class DBLayer
 
 		$this->query('CREATE '.($unique ? 'UNIQUE ' : '').'INDEX '.($no_prefix ? '' : $this->prefix).$table_name.'_'.$index_name.' ON '.($no_prefix ? '' : $this->prefix).$table_name.'('.implode(',', $index_fields).')') or error(__FILE__, __LINE__);
 	}
-
 
 
 	function drop_index($table_name, $index_name, $no_prefix = false)
