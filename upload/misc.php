@@ -193,7 +193,7 @@ else if (isset($_GET['email']))
 		if ($message == '')
 			$errors[] = $lang_misc['No e-mail message'];
 		else if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-			$errors[] = sprintf($lang_misc['Too long e-mail message'], strlen($message), FORUM_MAX_POSTSIZE_BYTES, intval(100*(FORUM_MAX_POSTSIZE_BYTES/strlen($message))));
+			$errors[] = sprintf($lang_misc['Too long e-mail message'], forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 		if ($forum_user['last_email_sent'] != '' && (time() - $forum_user['last_email_sent']) < $forum_user['g_email_flood'] && (time() - $forum_user['last_email_sent']) >= 0)
 			$errors[] = sprintf($lang_misc['Email flood'], $forum_user['g_email_flood']);
 

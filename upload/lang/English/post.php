@@ -7,7 +7,7 @@ $lang_post = array(
 'No subject'			=>	'Topics must contain a subject.',
 'Too long subject'		=>	'Subjects cannot be longer than 70 characters.',
 'No message'			=>	'You must enter a message.',
-'Too long message'		=>	'Your post length is %d bytes. This exceeds the %d bytes limit (%s%% of the current post length).',
+'Too long message'		=>	'Your post length is %s bytes. This exceeds the %s bytes limit.',
 'CSRF token mismatch'	=>	'Unable to confirm security token. A likely cause for this is that some time passed between when you first entered the page and when you posted the form. Clicking "Submit" again should solve the problem.',
 'Invalid e-mail'		=>	'The e-mail address you entered is invalid.',
 
