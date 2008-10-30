@@ -192,10 +192,6 @@ ob_start();
 <?php ($hook = get_hook('acs_add_word_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 		</form>
-	</div>
-	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_censoring['Edit censored word legend'] ?></span></h2>
-	</div>
 <?php
 
 if (!empty($forum_censors))
@@ -204,7 +200,6 @@ if (!empty($forum_censors))
 	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
-	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_censoring']) ?>?action=foo">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_censoring']).'?action=foo') ?>" />
@@ -254,7 +249,6 @@ else
 {
 
 ?>
-	<div class="main-content main-frm">
 		<div class="frm-form">
 			<div class="ct-box">
 				<p><?php echo $lang_admin_censoring['No censored words'] ?></p>

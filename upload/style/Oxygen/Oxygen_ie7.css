@@ -46,4 +46,8 @@ IE7 - FIXES
 	margin-left: -7px;
 	}
 
-#brd-wrap .entry-content .codebox pre {min-height: 3em}	
+#brd-wrap .entry-content .codebox pre {min-height: 3em}
+
+#brd-admin-censoring #info-censored-intro, #brd-admin-ranks #info-ranks-intro {
+	margin-bottom: 3em;
+	}

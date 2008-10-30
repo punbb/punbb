@@ -189,12 +189,12 @@ ob_start();
 		<h2 class="hn"><span><?php echo $lang_admin_ranks['Rank head'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box">
-			<p><?php printf($lang_admin_ranks['Add rank intro'], '<strong><a href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin_common['Settings'].' - '.$lang_admin_common['Features'].'</a></strong>') ?></p>
-		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_ranks']) ?>?action=foo">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_ranks']).'?action=foo') ?>" />
+			</div>
+			<div class="ct-box" id="info-ranks-intro">
+				<p><?php printf($lang_admin_ranks['Add rank intro'], '<strong><a href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin_common['Settings'].' - '.$lang_admin_common['Features'].'</a></strong>') ?></p>
 			</div>
 			<fieldset class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_admin_ranks['Add rank legend'] ?></strong></legend>
@@ -263,7 +263,7 @@ if (!empty($forum_ranks))
 					</div>
 <?php ($hook = get_hook('ark_pre_edit_cur_rank_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
-	<?php
+<?php
 
 		($hook = get_hook('ark_edit_cur_rank_fieldset_end')) ? eval($hook) : null;
 
@@ -280,12 +280,8 @@ else
 {
 
 ?>
-	<div class="main-content main-frm">
-		<div class="frm-head">
-			<h2><span><?php echo $lang_admin_ranks['Existing ranks intro'] ?></span></h2>
-		</div>
 		<div class="frm-form">
-			<div class="frm-info">
+			<div class="ct-box">
 				<p><?php echo $lang_admin_ranks['No ranks'] ?></p>
 			</div>
 		</div>
