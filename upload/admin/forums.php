@@ -668,7 +668,7 @@ ob_start();
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_forums']).'?action=adddel') ?>" />
 			</div>
 <?php ($hook = get_hook('afo_pre_add_forum_fieldset')) ? eval($hook) : null; ?>
-			<fieldset class="frm-group set<?php echo ++$forum_page['group_count'] ?>">
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_admin_forums['Add forum legend'] ?></strong></legend>
 <?php ($hook = get_hook('afo_pre_new_forum_name')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -765,7 +765,7 @@ if ($forum_db->num_rows($result))
 			<div class="content-head">
 				<h3 class="hn"><span><?php printf($lang_admin_forums['Forums in category'], forum_htmlencode($cur_forum['cat_name'])) ?></span></h3>
 			</div>
-			<div class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
+			<div class="frm-group frm-hdgroup group1">
 
 <?php
 

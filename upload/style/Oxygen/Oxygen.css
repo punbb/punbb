@@ -1007,15 +1007,15 @@ F - MAIN CONTENT - FORMS
 -------------------------------------------------------------*/
 
 .brd .frm-group {
-	border-top-style:dashed;
-	border-top-width:1px;
+	border-top-style: dashed;
+	border-top-width: 1px;
 	margin: 1.417em;
-	padding:1.3em 0pt 0em;
+	padding: 1.3em 0pt 0em;
 	}
 
 .brd .group1{
-	border-top:none;
-	padding-top:0;
+	border-top: none;
+	padding-top: 0;
 	}
 
 .brd .sf-box, .brd .mf-box, .brd .txt-box {
@@ -1045,9 +1045,9 @@ F - MAIN CONTENT - FORMS
 .brd .frm-buttons {
 	margin: 0.75em 1.417em 1em 1.417em;
 	position: relative;
-	border-top-style:double;
-    border-top-width:3px;
-    padding:0.8em 0pt 0.3em 18em;
+	border-top-style: double;
+	border-top-width: 3px;
+	padding: 0.8em 0pt 0.3em 18em;
 	}
 
 .brd .frm-buttons span.submit {
