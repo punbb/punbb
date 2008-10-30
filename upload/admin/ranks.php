@@ -214,7 +214,7 @@ ob_start();
 						</div>
 <?php ($hook = get_hook('ark_pre_add_rank_submit')) ? eval($hook) : null; ?>
 						<div class="mf-field text">
-							<span class="fld-input"><input type="submit" name="add_rank" value="<?php echo $lang_admin_ranks['Add rank'] ?>" /></span>
+							<span class="submit"><input type="submit" name="add_rank" value="<?php echo $lang_admin_ranks['Add rank'] ?>" /></span>
 						</div>
 					</div>
 <?php ($hook = get_hook('ark_pre_add_rank_fieldset_end')) ? eval($hook) : null; ?>
@@ -258,7 +258,7 @@ if (!empty($forum_ranks))
 						</div>
 <?php ($hook = get_hook('ark_pre_edit_cur_rank_submit')) ? eval($hook) : null; ?>
 						<div class="mf-field text">
-							<span class="fld-input"><input type="submit" name="update[<?php echo $cur_rank['id'] ?>]" value="<?php echo $lang_admin_ranks['Update'] ?>" /> <input type="submit" name="remove[<?php echo $cur_rank['id'] ?>]" value="<?php echo $lang_admin_ranks['Remove'] ?>" /></span>
+							<span class="submit"><input type="submit" name="update[<?php echo $cur_rank['id'] ?>]" value="<?php echo $lang_admin_ranks['Update'] ?>" /> <input type="submit" name="remove[<?php echo $cur_rank['id'] ?>]" value="<?php echo $lang_admin_ranks['Remove'] ?>" /></span>
 						</div>
 					</div>
 <?php ($hook = get_hook('ark_pre_edit_cur_rank_fieldset_end')) ? eval($hook) : null; ?>

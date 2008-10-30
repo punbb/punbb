@@ -207,7 +207,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 			</fieldset>
 <?php ($hook = get_hook('aba_add_edit_ban_criteria_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" class="button" name="add_edit_ban" value=" <?php echo $lang_admin_bans['Save ban'] ?>" /></span>
+				<span class="submit"><input type="submit" name="add_edit_ban" value=" <?php echo $lang_admin_bans['Save ban'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -425,7 +425,7 @@ ob_start();
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" class="button" name="add_ban" value=" <?php echo $lang_admin_bans['Add ban'] ?> " /></span>
+				<span class="submit"><input type="submit" name="add_ban" value=" <?php echo $lang_admin_bans['Add ban'] ?> " /></span>
 			</div>
 		</form>
 	</div>

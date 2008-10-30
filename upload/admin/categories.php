@@ -424,7 +424,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" class="button" name="update" value="<?php echo $lang_admin_categories['Update all categories'] ?>" /></span>
+				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_admin_categories['Update all categories'] ?>" /></span>
 			</div>
 		</form>
 	</div>

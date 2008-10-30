@@ -184,7 +184,7 @@ ob_start();
 						</div>
 <?php ($hook = get_hook('acs_pre_add_submit')) ? eval($hook) : null; ?>
 						<div class="mf-field">
-							<span class="submit"><input type="submit" class="button" name="add_word" value=" <?php echo $lang_admin_censoring['Add word'] ?> " /></span>
+							<span class="submit"><input type="submit" name="add_word" value=" <?php echo $lang_admin_censoring['Add word'] ?> " /></span>
 						</div>
 					</div>
 <?php ($hook = get_hook('acs_pre_add_word_fieldset_end')) ? eval($hook) : null; ?>

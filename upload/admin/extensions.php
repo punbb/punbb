@@ -523,8 +523,8 @@ else if (isset($_GET['uninstall']))
 				<p class="warn"><?php echo $lang_admin_ext['Installed extensions warn'] ?></p>
 			</div>
 <?php endif; ?>				<div class="frm-buttons">
-				<span class="submit"><input type="submit" class="button" name="uninstall_comply" value="<?php echo $lang_admin_ext['Uninstall'] ?>" /></span>
-				<span class="cancel"><input type="submit" class="button" name="uninstall_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="submit"><input type="submit" name="uninstall_comply" value="<?php echo $lang_admin_ext['Uninstall'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="uninstall_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
 	</div>
