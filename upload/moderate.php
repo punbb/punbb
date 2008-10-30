@@ -292,9 +292,7 @@ if (isset($_GET['tid']))
 			$query = array(
 				'SELECT'	=> 'p.id, p.poster, p.posted',
 				'FROM'		=> 'posts AS p',
-				'WHERE'		=> 'p.id IN('.implode(',', $posts).')',
-				'ORDER BY'	=> 'p.id',
-				'LIMIT'		=> '1'
+				'WHERE'		=> 'p.id = '.min($posts)
 			);
 
 			($hook = get_hook('mr_confirm_split_posts_qr_get_first_post_data')) ? eval($hook) : null;
@@ -756,8 +754,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
-		$topics = implode(',', $topics);
-		$action = 'multi';
+		if (count($topics) == 1)
+			$topics = $topics[0];
 	}
 	else
 	{
@@ -808,8 +806,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		message($lang_misc['Nowhere to move']);
 
 	$forum_list = array();
-	while ($cur_forum = $forum_db->fetch_assoc($result))
-		$forum_list[] = $cur_forum;
+	while ($cur_sel_forum = $forum_db->fetch_assoc($result))
+		$forum_list[] = $cur_sel_forum;
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -921,6 +919,9 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
+	
+	if (count($topics) == 1)
+			message($lang_misc['Merge error']);
 
 	if (isset($_POST['merge_topics_comply']))
 	{
@@ -928,25 +929,16 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 		// Verify that the topic IDs are valid
 		$query = array(
-			'SELECT'	=> 'COUNT(t.id)',
+			'SELECT'	=> 'COUNT(t.id), MIN(t.id)',
 			'FROM'		=> 'topics AS t',
 			'WHERE'		=> 't.id IN('.implode(',', $topics).') AND t.moved_to IS NULL AND t.forum_id='.$fid
 		);
 
 		($hook = get_hook('mr_confirm_merge_topics_qr_verify_topic_ids')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->result($result) != count($topics))
+		list($num_topics, $merge_to_tid) = $forum_db->fetch_row($result);
+		if ($num_topics != count($topics))
 			message($lang_common['Bad request']);
-
-		// Fetch the topic that we're merging into
-		$query = array(
-			'SELECT'	=> 'MIN(t.id)',
-			'FROM'		=> 'topics AS t',
-			'WHERE'		=> 't.id IN('.implode(',', $topics).')'
-		);
-		($hook = get_hook('mr_confirm_merge_topics_qr_fetch_merge_to_topic')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$merge_to_tid = $forum_db->result($result);
 
 		// Make any redirect topics point to our new, merged topic
 		$query = array(
@@ -1083,7 +1075,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
-
+	
+	$multi = count($topics) > 1; 
 	if (isset($_POST['delete_topics_comply']))
 	{
 		if (!isset($_POST['req_confirm']))
@@ -1171,7 +1164,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 		($hook = get_hook('mr_confirm_delete_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_misc['Delete topics redirect']);
+		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $multi ? $lang_misc['Delete topics redirect'] : $lang_misc['Delete topic redirect']);
 	}
 
 
@@ -1189,7 +1182,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array($lang_misc['Moderate forum'], forum_link($forum_url['moderate_forum'], $fid)),
-		$lang_misc['Delete topics']
+		$multi ? $lang_misc['Delete topics'] : $lang_misc['Delete topic']
 	);
 
 	($hook = get_hook('mr_delete_topics_pre_header_load')) ? eval($hook) : null;
@@ -1213,12 +1206,12 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 			</div>
 <?php ($hook = get_hook('mr_delete_topics_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_misc['Delete topics'] ?></strong></legend>
+				<legend class="group-legend"><strong><?php echo $multi ? $lang_misc['Delete topics'] : $lang_misc['Delete topics'] ?></strong></legend>
 <?php ($hook = get_hook('mr_delete_topics_pre_confirm_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_confirm" value="1" checked="checked" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_common['Please confirm'] ?></span> <?php echo $lang_misc['Delete topics comply'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_common['Please confirm'] ?></span> <?php echo $multi ? $lang_misc['Delete topics comply'] : $lang_misc['Delete topic comply'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('mr_delete_topics_pre_fieldset_end')) ? eval($hook) : null; ?>
@@ -1270,8 +1263,11 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		($hook = get_hook('mr_open_close_multi_topics_qr_open_close_topics')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
-
+		if (count($topics) == 1)
+			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect']; 
+		else
+			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
+		
 		($hook = get_hook('mr_open_close_multi_topics_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['moderate_forum'], $fid), $forum_page['redirect_msg']);

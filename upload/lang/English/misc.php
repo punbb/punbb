@@ -55,6 +55,7 @@ $lang_misc = array(
 'Move topics'				=>	'Move topics',
 'Merge topics'				=>	'Merge topics',
 'Delete topics'				=>	'Delete topics',
+'Delete topic'				=>	'Delete topic',
 'To new forum'				=>	'to a new forum',
 'Move to'					=>	'Destination forum',
 'Redirect topic'			=>	'Redirect setting',
@@ -65,7 +66,9 @@ $lang_misc = array(
 'Move topic redirect'		=>	'Topic moved. Redirecting …',
 'Move topics redirect'		=>	'Topics moved. Redirecting …',
 'Merge topics redirect'		=>	'Topics merged. Redirecting …',
+'Delete topic comply'		=>	'Are you sure you want to delete the selected topic?',
 'Delete topics comply'		=>	'Are you sure you want to delete all the selected topics?',
+'Delete topic redirect'		=>	'Topic deleted. Redirecting …',
 'Delete topics redirect'	=>	'Topics deleted. Redirecting …',
 'Open topic redirect'		=>	'Topic opened. Redirecting …',
 'Open topics redirect'		=>	'Topics opened. Redirecting …',
@@ -74,6 +77,7 @@ $lang_misc = array(
 'No topics selected'		=>	'You must select at least one topic.',
 'Stick topic redirect'		=>	'Topic is now sticky. Redirecting …',
 'Unstick topic redirect'	=>	'Topic no longer sticky. Redirecting …',
+'Merge error'				=>	'You should select more than 1 topic to merge.',
 
 // Moderate topic
 'Posts'						=>	'Posts',
