@@ -153,9 +153,7 @@ if ($forum_page['num_pages'] > 1)
 
 ($hook = get_hook('vf_pre_header_load')) ? eval($hook) : null;
 
-// Allow indexing if this isn't a link with p=1
-if (!isset($_GET['p']) || $forum_page['page'] != 1)
-	define('FORUM_ALLOW_INDEX', 1);
+define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'viewforum');
 require FORUM_ROOT.'header.php';
