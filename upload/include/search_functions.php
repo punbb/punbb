@@ -32,6 +32,9 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	if (!$keywords && !$author)
 		message($lang_search['No terms']);
 
+	$keywords = utf8_strtolower($keywords);
+	$author = utf8_strtolower($author);
+
 	// Flood protection
 	if ($forum_user['last_search'] && (time() - $forum_user['last_search']) < $forum_user['g_search_flood'] && (time() - $forum_user['last_search']) >= 0)
 		message(sprintf($lang_search['Search flood'], $forum_user['g_search_flood']));
@@ -67,7 +70,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		$keywords = substr(preg_replace('((?<=\W)\'|\'(?=\W))', '', ' '.$keywords.' '), 1, -1);
 		// Remove symbols and multiple whitespace
 
-		$keywords = preg_replace('/[\^\$&\(\)<>`"\|,@_\?%~\+\[\]{}:=\/#\\\\;!\*\.\s]+/', ' ', $keywords);
+		$keywords = preg_replace('/[\^\$&\(\)<>`"\|,@_\?%~\+\[\]{}:=\/#\\\\;!\.\s]+/', ' ', $keywords);
 
 		// Fill an array with all the words
 		$keywords_array = array_unique(explode(' ', $keywords));
@@ -152,7 +155,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	}
 
 	// If it's a search for author name (and that author name isn't Guest)
-	if ($author && strtolower($author) != 'guest' && utf8_strtolower($author) != utf8_strtolower($lang_common['Guest']))
+	if ($author && $author != 'guest' && $author != utf8_strtolower($lang_common['Guest']))
 	{
 		$query = array(
 			'SELECT'	=> 'u.id',
@@ -676,10 +679,7 @@ function get_search_results($query, &$search_set)
 	if ($return != null)
 		return $return;
 
-	if (is_array($query))
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	else
-		$result = $forum_db->query($query) or error(__FILE__, __LINE__);
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Make sure we actually have some results
 	$num_hits = $forum_db->num_rows($result);
