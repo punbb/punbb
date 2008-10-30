@@ -8,6 +8,42 @@
  */
 
 //
+// Checks if a word is a valid searchable word
+//
+function validate_search_word($word)
+{
+	global $forum_user;
+	static $stopwords;
+
+	$return = ($hook = get_hook('fn_validate_search_word_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+	if (!isset($stopwords))
+	{
+		if (file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/stopwords.txt'))
+		{
+			$stopwords = file(FORUM_ROOT.'lang/'.$forum_user['language'].'/stopwords.txt');
+			$stopwords = array_map('forum_trim', $stopwords);
+			$stopwords = array_filter($stopwords);
+		}
+		else
+			$stopwords = array();
+
+		($hook = get_hook('fn_validate_search_word_modify_stopwords')) ? eval($hook) : null;
+	}
+
+	$num_chars = utf8_strlen($word);
+
+	$return = ($hook = get_hook('fn_validate_search_word_end')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+	return $num_chars >= FORUM_SEARCH_MIN_WORD && $num_chars <= FORUM_SEARCH_MAX_WORD && !in_array($word, $stopwords);
+}
+
+
+//
 // Converts the CDATA end sequence ]]> into ]]&gt;
 //
 function escape_cdata($str)
@@ -16,41 +52,43 @@ function escape_cdata($str)
 }
 
 
- //
- // Return a list of all URL schemes installed
- //
- function get_scheme_packs()
- {
+//
+// Return a list of all URL schemes installed
+//
+function get_scheme_packs()
+{
   	$schemes = array();
 
- 	foreach (glob(FORUM_ROOT.'include/url/*') as $dirname)
- 		if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
- 			$schemes[] = basename($dirname);
+	foreach (glob(FORUM_ROOT.'include/url/*') as $dirname)
+		if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
+			$schemes[] = basename($dirname);
 
 	($hook = get_hook('fn_get_scheme_packs_end')) ? eval($hook) : null;
 
 	return $schemes;
- }
+}
 
 
- //
- // Return a list of all styles installed
- //
- function get_style_packs()
- {
- 	$styles = array();
 
- 	foreach (glob(FORUM_ROOT.'style/*') as $dirname)
- 	{
- 		$tempname = basename($dirname);
- 		if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
- 			$styles[] = $tempname;
- 	}
 
- 	($hook = get_hook('fn_get_style_packs_end')) ? eval($hook) : null;
+//
+// Return a list of all styles installed
+//
+function get_style_packs()
+{
+	$styles = array();
+
+	foreach (glob(FORUM_ROOT.'style/*') as $dirname)
+	{
+		$tempname = basename($dirname);
+		if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
+			$styles[] = $tempname;
+	}
+
+	($hook = get_hook('fn_get_style_packs_end')) ? eval($hook) : null;
 
 	return $styles;
- }
+}
 
 
 //
@@ -58,11 +96,11 @@ function escape_cdata($str)
 //
 function get_language_packs()
 {
- 	$languages = array();
+	$languages = array();
 
- 	foreach (glob(FORUM_ROOT.'lang/*') as $dirname)
- 		if (is_dir($dirname) && file_exists($dirname.'/common.php'))
- 			$languages[] = basename($dirname);
+	foreach (glob(FORUM_ROOT.'lang/*') as $dirname)
+		if (is_dir($dirname) && file_exists($dirname.'/common.php'))
+			$languages[] = basename($dirname);
 
 	($hook = get_hook('fn_get_language_packs_end')) ? eval($hook) : null;
 
