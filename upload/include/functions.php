@@ -1853,7 +1853,7 @@ function censor_words($text)
 
 		foreach ($forum_censors as $censor_key => $cur_word)
 		{
-			$search_for[$censor_key] = '/\b('.str_replace('\*', '\w*?', preg_quote($cur_word['search_for'], '/')).')\b/iu';
+			$search_for[$censor_key] = '/(?<=\W)('.str_replace('\*', '\w*?', preg_quote($cur_word['search_for'], '/')).')(?=\W)/iu';
 			$replace_with[$censor_key] = $cur_word['replace_with'];
 
 			($hook = get_hook('fn_censor_words_setup_regex')) ? eval($hook) : null;
@@ -2262,6 +2262,9 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 	$return = ($hook = get_hook('fn_forum_sublink_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
+
+	if ($sublink == $forum_url['page'] && $subarg == 1)
+		return forum_link($link, $args);
 
 	$gen_link = $link;
 	if (!is_array($args) && $args != null)
@@ -2917,9 +2920,12 @@ function error()
 	else if ($num_args == 1)
 		$message = func_get_arg(0);
 
-	// Set a default title if the script failed before $forum_config could be populated
+	// Set a default title and gzip setting if the script failed before $forum_config could be populated
 	if (empty($forum_config))
+	{
 		$forum_config['o_board_title'] = 'PunBB';
+		$forum_config['o_gzip'] = '0';
+	}
 
 	// Empty all output buffers and stop buffering
 	while (@ob_end_clean());
