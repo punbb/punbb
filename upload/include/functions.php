@@ -27,7 +27,7 @@ function escape_cdata($str)
  		if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
  			$schemes[] = basename($dirname);
 
-	($hook = get_hook('fn_get_scheme_packs_end')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
+	($hook = get_hook('fn_get_scheme_packs_end')) ? eval($hook) : null;
 
 	return $schemes;
  }
@@ -47,7 +47,7 @@ function escape_cdata($str)
  			$styles[] = $tempname;
  	}
 
- 	($hook = get_hook('fn_get_style_packs_end')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
+ 	($hook = get_hook('fn_get_style_packs_end')) ? eval($hook) : null;
 
 	return $styles;
  }
@@ -64,7 +64,7 @@ function get_language_packs()
  		if (is_dir($dirname) && file_exists($dirname.'/common.php'))
  			$languages[] = basename($dirname);
 
-	($hook = get_hook('fn_get_language_packs_end')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
+	($hook = get_hook('fn_get_language_packs_end')) ? eval($hook) : null;
 
 	return $languages;
 }
@@ -1490,7 +1490,7 @@ function add_topic($post_info, &$new_tid, &$new_pid)
 			);
 		}
 
-		($hook = get_hook('fn_add_topic_qr_update_last_post')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
+		($hook = get_hook('fn_add_topic_qr_update_last_post')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
 
@@ -1611,7 +1611,7 @@ function add_post($post_info, &$new_pid)
 			);
 		}
 
-		($hook = get_hook('fn_add_post_qr_update_last_post')) ? (defined('FORUM_USE_INCLUDE') ? include $hook : eval($hook)) : null;
+		($hook = get_hook('fn_add_post_qr_update_last_post')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
 
