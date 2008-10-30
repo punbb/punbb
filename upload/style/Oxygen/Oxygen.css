@@ -129,7 +129,11 @@ B - GLOBAL STYLES
 -------------------------------------------------------------*/
 
 .brd {
-	padding: 20px 30px;
+	padding: 1.3em 2em;
+	margin: 0 auto;
+	max-width: 1100px;
+	min-width: 700px;
+	width: 90%;
 	}
 
 #brd-redirect, #brd-maint, #brd-util {
@@ -285,10 +289,8 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 -------------------------------------------------------------*/
 
 .brd .options span {
-	border-left-style: solid;
-	border-left-width: 1px;
 	padding: 0 0 0 0.5em;
-	margin: 0 0 0 0.25em;
+	margin: 0 0 0 0.5em;
 	}
 
 .brd .options span.first-item {
@@ -457,8 +459,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	font-size: 1.084em;
 	float: left;
 	display: inline;
-	border-style: none solid;
-	border-width: 0 1px 0 2px;
 	}
 
 .brd .main-menu a, .brd .admin-menu a {

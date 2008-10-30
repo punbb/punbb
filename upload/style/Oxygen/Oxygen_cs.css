@@ -10,14 +10,12 @@ body {
 	color: #00579C;
 	}
 
-.brd p.feed a:link, .brd p.feed a:visited,
-.brd .main-foot .options a:link, .brd .main-foot .options a:visited {
+.brd p.feed a:link, .brd p.feed a:visited {
 	color:#DDDDDD;
 	}
 
 .brd a:hover, .brd a:active, .brd a:focus,
-.brd p.feed a:hover, .brd p.feed a:active, .brd p.feed a:focus,
-.brd .main-foot .options a:hover, .brd .main-foot .options a:active, .brd .main-foot .options a:focus {
+.brd p.feed a:hover, .brd p.feed a:active, .brd p.feed a:focus {
 	color: #b42000;
 	text-decoration: none;
 	}
@@ -180,7 +178,7 @@ body {
 	}
 
 .brd label, .brd .aslabel, .brd .mf-set legend, .brd .ct-legend * {
-	color: #1F537B;
+	color: #357;
 	}
 
 .brd .paging * {
@@ -220,29 +218,11 @@ body {
 	}
 
 .brd .main-options, .brd .main-options span {
-	border-color: #CBD1D8;
 	background: #DDE4EB;
-	}
-
-.brd .options span {
-	border-color: #dedfdf;
-	}
-
-.brd .main-options .options span {
-	border-color: #ABAFB6
 	}
 
 .brd .main-menu, .brd .admin-menu {
 	background: #1F537B;
-	}
-
-.brd .main-menu ul, .brd .admin-menu ul {
-	border-right-color: #1A4566;
-	}
-
-.brd .main-menu li, .brd .admin-menu li {
-	border-left-color: #1A4566;
-	border-right-color: #426482;
 	}
 
 .brd .admin-submenu {
@@ -343,13 +323,14 @@ body {
 	border-bottom-color: #ddd;
 	}
 
-.brd .main-head a:link, .brd .main-head a:visited {
-	color: #ddd;
+.brd .main-head a:link, .brd .main-head a:visited,
+.brd .main-foot .options a:link, .brd .main-foot .options a:visited {
+	color: #ccc;
 	}
 
-.brd .main-head a:hover, .brd .main-head a:active, .brd .main-head a:focus {
+.brd .main-head a:hover, .brd .main-head a:active, .brd .main-head a:focus,
+.brd .main-foot .options a:hover, .brd .main-foot .options a:active, .brd .main-foot .options a:focus {
 	color: #fff;
-	text-decoration: underline;
 	}
 
 .brd th {
