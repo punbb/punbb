@@ -77,10 +77,7 @@ function get_hook($hook_id)
 {
 	global $forum_hooks;
 
-	if (defined('FORUM_USE_INCLUDE'))
-		return !defined('FORUM_DISABLE_HOOKS') && file_exists(FORUM_ROOT.'/cache/cache_hook_'.$hook_id.'.php') ? FORUM_ROOT.'/cache/cache_hook_'.$hook_id.'.php' : false;
-	else
-		return !defined('FORUM_DISABLE_HOOKS') && isset($forum_hooks[$hook_id]) ? implode("\n", $forum_hooks[$hook_id]) : false;
+	return !defined('FORUM_DISABLE_HOOKS') && isset($forum_hooks[$hook_id]) ? implode("\n", $forum_hooks[$hook_id]) : false;
 }
 
 
