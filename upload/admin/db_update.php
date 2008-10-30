@@ -66,11 +66,12 @@ require FORUM_ROOT.'include/utf8/utf8.php';
 require FORUM_ROOT.'include/utf8/ucwords.php';
 require FORUM_ROOT.'include/utf8/trim.php';
 
-// If the request_uri is invalid try fix it
-forum_fix_request_uri();
-
 // Strip out "bad" UTF-8 characters
 forum_remove_bad_characters();
+
+// If the request_uri is invalid try fix it
+if (!defined('FORUM_IGNORE_REQUEST_URI'))
+	forum_fix_request_uri();
 
 // Instruct DB abstraction layer that we don't want it to "SET NAMES". If we need to, we'll do it ourselves below.
 define('FORUM_NO_SET_NAMES', 1);
@@ -740,16 +741,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Add the prev_url field to the online table
 		$forum_db->add_field('online', 'prev_url', 'VARCHAR(255)', true, null, null);
-
+		
 		// Add the last_post field to the online table
 		$forum_db->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
-
-		// Add the last_search field to the online table
-		$forum_db->add_field('online', 'last_search', 'INT(10) UNSIGNED', true, null, null);
-
-		// Add the last_post field to the online table
-		$forum_db->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
-
+		
 		// Add the last_search field to the online table
 		$forum_db->add_field('online', 'last_search', 'INT(10) UNSIGNED', true, null, null);
 
@@ -761,7 +756,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Drop g_edit_subjects_interval column from groups table
 		$forum_db->drop_field('groups', 'g_edit_subjects_interval');
-
+		
 		$new_config = array();
 
 		// Add quote depth option
@@ -824,7 +819,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	      			'INTO'		=> 'config',
 	      			'VALUES'	=> $new_config
 	      		);
-
+	
 	      		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
 		unset($new_config);
@@ -893,14 +888,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'g_id=3'
 			);
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-
+			
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=3',
 				'WHERE'		=> 'g_id=4'
 			);
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-
+			
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=4',
@@ -1064,7 +1059,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$query = array(
 				'DELETE'	=> 'online'
 			);
-
+			
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 			switch ($db_type)

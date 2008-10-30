@@ -110,7 +110,7 @@ if (!isset($_POST['form_sent']))
 	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).substr(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), 0, -6);
 	if (substr($base_url_guess, -1) == '/')
 		$base_url_guess = substr($base_url_guess, 0, -1);
-
+	
 	// Check for available language packs
 	$languages = get_language_packs();
 
@@ -143,7 +143,7 @@ if (!isset($_POST['form_sent']))
 	</div>
 
 <?php
-
+	
 	if (count($languages) > 1)
 	{
 
@@ -315,7 +315,7 @@ if (!isset($_POST['form_sent']))
 				</div>
 			</div>
 <?php
-
+	
 	if (count($languages) > 1)
 	{
 ?>
@@ -425,7 +425,7 @@ else
 
 	if (utf8_strlen($base_url) == 0)
 		error($lang_install['Missing base url']);
-
+	
 	if (!file_exists(FORUM_ROOT.'lang/'.$default_lang.'/common.php'))
 		error($lang_install['Invalid language']);
 
@@ -1080,15 +1080,7 @@ else
 			'zapped_by'		=> array(
 				'datatype'		=> 'INT(10) UNSIGNED',
 				'allow_null'	=> true
-			),
-			'last_post'			=> array(
-				'datatype'		=> 'INT(10) UNSIGNED',
-				'allow_null'	=> true
-			),
-			'last_search'		=> array(
-				'datatype'		=> 'INT(10) UNSIGNED',
-				'allow_null'	=> true
-			),
+			)
 		),
 		'PRIMARY KEY'	=> array('id'),
 		'INDEXES'		=> array(
