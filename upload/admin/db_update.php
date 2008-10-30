@@ -584,7 +584,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$schema = array(
 				'FIELDS'		=> array(
 					'id'				=> array(
-						'datatype'		=> 'VARCHAR(50)',
+						'datatype'		=> 'VARCHAR(150)',
 						'allow_null'	=> false,
 						'default'		=> '\'\''
 					),
