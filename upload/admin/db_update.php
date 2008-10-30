@@ -313,9 +313,9 @@ function db_seems_utf8()
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$temp = $forum_db->fetch_row($result);
+		$random_row = $forum_db->fetch_row($result);
 
-		if (!seems_utf8($temp[0].$temp[1].$temp[2].$temp[3]))
+		if (!seems_utf8($random_row[0].$random_row[1].$random_row[2].$random_row[3]))
 		{
 			$seems_utf8 = false;
 			break;
@@ -1781,11 +1781,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		while ($cur_item = $forum_db->fetch_assoc($result))
 		{
 			echo 'Preparsing post '.$cur_item['id'].' …<br />'."\n";
-			$temp = array();
+			$preparse_errors = array();
 
 			$query = array(
 				'UPDATE'	=> 'posts',
-				'SET'		=> 'message = \''.$forum_db->escape(preparse_bbcode($cur_item['message'], $temp)).'\'',
+				'SET'		=> 'message = \''.$forum_db->escape(preparse_bbcode($cur_item['message'], $preparse_errors)).'\'',
 				'WHERE'		=> 'id = '.$cur_item['id']
 			);
 
@@ -1834,11 +1834,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		while ($cur_item = $forum_db->fetch_assoc($result))
 		{
 			echo 'Preparsing signature '.$cur_item['id'].' …<br />'."\n";
-			$temp = array();
+			$preparse_errors = array();
 
 			$query = array(
 				'UPDATE'	=> 'users',
-				'SET'		=> 'signature = \''.$forum_db->escape(preparse_bbcode($cur_item['signature'], $temp, true)).'\'',
+				'SET'		=> 'signature = \''.$forum_db->escape(preparse_bbcode($cur_item['signature'], $preparse_errors, true)).'\'',
 				'WHERE'		=> 'id = '.$cur_item['id']
 			);
 

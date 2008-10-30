@@ -275,7 +275,7 @@ if ($forum_config['o_regs_verify'] != '0')
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array(sprintf($lang_profile['Register at'], $forum_config['o_board_title']), forum_link($forum_url['register'])),
-	
+
 );
 
 ($hook = get_hook('rg_register_pre_header_load')) ? eval($hook) : null;
@@ -389,12 +389,12 @@ ob_start();
 <?php
 
 			$select_lang = isset($_POST['language']) ? $_POST['language'] : $forum_config['o_default_lang'];
-			foreach ($languages as $temp)
+			foreach ($languages as $lang)
 			{
-				if ($select_lang == $temp)
-					echo "\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
+				if ($select_lang == $lang)
+					echo "\t\t\t\t\t\t".'<option value="'.$lang.'" selected="selected">'.$lang.'</option>'."\n";
 				else
-					echo "\t\t\t\t\t\t".'<option value="'.$temp.'">'.$temp.'</option>'."\n";
+					echo "\t\t\t\t\t\t".'<option value="'.$lang.'">'.$lang.'</option>'."\n";
 			}
 
 ?>

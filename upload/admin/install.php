@@ -161,8 +161,8 @@ if (!isset($_POST['form_sent']))
 					<span class="fld-input"><select id="fld0" name="lang">
 <?php
 
-		foreach ($languages as $temp)
-			echo "\t\t\t\t\t".'<option value="'.$temp.'"'.($language == $temp ? ' selected="selected"' : '').'>'.$temp.'</option>'."\n";
+		foreach ($languages as $lang)
+			echo "\t\t\t\t\t".'<option value="'.$lang.'"'.($language == $lang ? ' selected="selected"' : '').'>'.$lang.'</option>'."\n";
 
 ?>
 					</select></span>
@@ -325,8 +325,8 @@ if (!isset($_POST['form_sent']))
 					<span class="fld-input"><select id="fld14" name="req_language">
 <?php
 
-		foreach ($languages as $temp)
-			echo "\t\t\t\t\t".'<option value="'.$temp.'"'.($language == $temp ? ' selected="selected"' : '').'>'.$temp.'</option>'."\n";
+		foreach ($languages as $lang)
+			echo "\t\t\t\t\t".'<option value="'.$lang.'"'.($language == $lang ? ' selected="selected"' : '').'>'.$lang.'</option>'."\n";
 
 ?>
 					</select></span>

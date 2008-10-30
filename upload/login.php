@@ -25,7 +25,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 $errors = array();
 
 // Login
-if (isset($_POST['form_sent']) && $action == 'in')
+if (isset($_POST['form_sent']) && empty($action))
 {
 	$form_username = forum_trim($_POST['req_username']);
 	$form_password = forum_trim($_POST['req_password']);
@@ -260,7 +260,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = $base_url.'/login.php?action=forget_2';
+	$forum_page['form_action'] = forum_link($forum_url['login']);
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
@@ -352,7 +352,7 @@ if (!$forum_user['is_guest'])
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = $base_url.'/login.php?action=in';
+$forum_page['form_action'] = forum_link($forum_url['login']);
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
