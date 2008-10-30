@@ -2589,7 +2589,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 			if ($content !== false && $max_redirects > 0 && preg_match('#^HTTP/1.[01] 30[12]#', $content))
 			{
 				$headers = explode("\r\n", forum_trim($content));
-				foreach($headers as $header)
+				foreach ($headers as $header)
 					if (substr($header, 0, 10) == 'Location: ')
 					{
 						$responce = get_remote_file(substr($header, 10), $timeout, $head_only, $max_redirects - 1);

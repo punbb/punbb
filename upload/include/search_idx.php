@@ -153,14 +153,14 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	}
 
 	// Delete matches (only if editing a post)
-	foreach($words['del'] as $match_in => $wordlist)
+	foreach ($words['del'] as $match_in => $wordlist)
 	{
 		$subject_match = ($match_in == 'subject') ? 1 : 0;
 
 		if (!empty($wordlist))
 		{
 			$sql = '';
-			foreach($wordlist as $word)
+			foreach ($wordlist as $word)
 				$sql .= (($sql != '') ? ',' : '').$forum_db->escape($cur_words[$match_in][$word]);
 
 			$query = array(
@@ -174,7 +174,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	}
 
 	// Add new matches
-	foreach($words['add'] as $match_in => $wordlist)
+	foreach ($words['add'] as $match_in => $wordlist)
 	{
 		if (!empty($wordlist))
 		{

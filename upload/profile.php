@@ -1155,7 +1155,7 @@ else if (isset($_POST['form_sent']))
 
 		// Singlequotes around non-empty values and NULL for empty values
 		$new_values = array();
-		foreach($form as $key => $input)
+		foreach ($form as $key => $input)
 		{
 			$value = ($input !== '') ? '\''.$forum_db->escape($input).'\'' : 'NULL';
 

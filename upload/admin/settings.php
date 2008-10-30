@@ -320,7 +320,7 @@ if (!$section || $section == 'setup')
 <?php
 
 	$styles = get_style_packs();
-	foreach($styles as $style)
+	foreach ($styles as $style)
 	{
 		if ($forum_config['o_default_style'] == $style)
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$style.'" selected="selected">'.str_replace('_', ' ', $style).'</option>'."\n";
@@ -356,7 +356,7 @@ if (!$section || $section == 'setup')
 <?php
 
 	$languages = get_language_packs();
-	foreach($languages as $lang)
+	foreach ($languages as $lang)
 	{
 		if ($forum_config['o_default_lang'] == $lang)
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$lang.'" selected="selected">'.$lang.'</option>'."\n";
@@ -574,7 +574,7 @@ if (!$section || $section == 'setup')
 <?php
 
 	$url_schemes = get_scheme_packs();
-	foreach($url_schemes as $schema)
+	foreach ($url_schemes as $schema)
 	{
 		if ($forum_config['o_sef'] == $schema)
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$schema.'" selected="selected">'.str_replace('_', ' ', $schema).'</option>'."\n";

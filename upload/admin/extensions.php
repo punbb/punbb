@@ -806,7 +806,7 @@ else
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
 
 		$repository_url_by_extension = array();
-		foreach(array_keys($inst_exts) as $id)
+		foreach (array_keys($inst_exts) as $id)
 			($hook = get_hook('aex_add_repository_for_'.$id)) ? eval($hook) : null;
 
 		if (is_readable(FORUM_CACHE_DIR.'cache_ext_version_notifications.php'))

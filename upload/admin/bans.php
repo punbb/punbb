@@ -247,37 +247,37 @@ else if (isset($_POST['add_edit_ban']))
 		$addresses = explode(' ', $ban_ip);
 		$addresses = array_map('trim', $addresses);
 
-		for ($i = 0; $i < count($addresses); ++$i)
+		foreach ($addresses as $cur_addr)
 		{
-			if (strpos($addresses[$i], ':') !== false)
+			if (strpos($cur_addr, ':') !== false)
 			{
-				$octets = explode(':', $addresses[$i]);
+				$octets = explode(':', $cur_addr);
 
-				for ($c = 0; $c < count($octets); ++$c)
+				foreach ($octets as $cur_octet)
 				{
-					$octets[$c] = utf8_ltrim($octets[$c], "0");
+					$cur_octet = utf8_ltrim($cur_octet, "0");
 
-					if ($c > 7 || (!empty($octets[$c]) && !ctype_xdigit($octets[$c])) || intval($octets[$c], 16) > 65535)
+					if ($c > 7 || (!empty($cur_octet) && !ctype_xdigit($cur_octet)) || intval($cur_octet, 16) > 65535)
 						message($lang_admin_bans['Invalid IP message']);
 				}
 
 				$cur_address = implode(':', $octets);
-				$addresses[$i] = $cur_address;
+				$cur_addr = $cur_address;
 			}
 			else
 			{
-				$octets = explode('.', $addresses[$i]);
+				$octets = explode('.', $cur_addr);
 
 				for ($c = 0; $c < count($octets); ++$c)
 				{
-					$octets[$c] = (strlen($octets[$c]) > 1) ? utf8_ltrim($octets[$c], "0") : $octets[$c];
+					$cur_octet = (strlen($cur_octet) > 1) ? utf8_ltrim($cur_octet, "0") : $cur_octet;
 
-					if ($c > 3 || !ctype_digit($octets[$c]) || intval($octets[$c]) > 255)
+					if ($c > 3 || !ctype_digit($cur_octet) || intval($cur_octet) > 255)
 						message($lang_admin_bans['Invalid IP message']);
 				}
 
 				$cur_address = implode('.', $octets);
-				$addresses[$i] = $cur_address;
+				$cur_addr = $cur_address;
 			}
 		}
 
