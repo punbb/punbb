@@ -395,7 +395,7 @@ if (isset($_POST['preview']) && empty($errors))
 
 ?>
 		<div class="ct-box error-box">
-			<h3 class="warn"><?php echo $lang_post['Post errors'] ?></h3>
+			<h2 class="warn"><?php echo $lang_post['Post errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>

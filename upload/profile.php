@@ -155,7 +155,7 @@ if ($action == 'change_pass')
 ?>
 		<div class="ct-box error-box">
 			<h2 class="warn"><?php echo $lang_profile['Change pass errors'] ?></h2>
-			<ul>
+			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
 		</div>
@@ -322,7 +322,7 @@ if ($action == 'change_pass')
 ?>
 		<div class="ct-box error-box">
 			<h2 class="warn"><?php echo $lang_profile['Change pass errors'] ?></h2>
-			<ul>
+			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
 		</div>
@@ -571,7 +571,7 @@ else if ($action == 'change_email')
 ?>
 		<div class="ct-box error-box">
 			<h2 class="warn"><?php echo $lang_profile['Change e-mail errors'] ?></h2>
-			<ul>
+			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
 		</div>
