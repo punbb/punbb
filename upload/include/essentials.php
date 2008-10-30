@@ -98,6 +98,18 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
 
+// If the request_uri is invalid try fix it
+forum_fix_request_uri();
+
+if (!isset($base_url))
+{
+	// Make an educated guess regarding base_url
+	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+	if (substr($base_url_guess, -1) == '/')
+		$base_url_guess = substr($base_url_guess, 0, -1);
+
+	$base_url = $base_url_guess;
+}
 
 // Verify that we are running the proper database schema revision
 if (defined('PUN') || !isset($forum_config['o_database_revision']) || $forum_config['o_database_revision'] < FORUM_DB_REVISION || version_compare($forum_config['o_cur_version'], FORUM_VERSION, '<'))
