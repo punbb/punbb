@@ -204,7 +204,7 @@ if (!empty($forum_censors))
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_censoring']).'?action=foo') ?>" />
 			</div>
-			<fieldset class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?php echo $lang_admin_censoring['Edit censored word legend'] ?></span></legend>
 <?php
 
@@ -213,7 +213,7 @@ if (!empty($forum_censors))
 
 	?>
 <?php ($hook = get_hook('acs_pre_edit_word_fieldset')) ? eval($hook) : null; ?>
-				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?><?php echo ($forum_page['item_count'] == 1) ? ' mf-head' : ' mf-extra' ?>">
+				<fieldset class="mf-set mf-extra set<?php echo ++$forum_page['item_count'] ?><?php echo ($forum_page['item_count'] == 1) ? ' mf-head' : ' mf-extra' ?>">
 					<legend><span><?php echo $lang_admin_censoring['Existing censored word legend'] ?></span></legend>
 					<div class="mf-box">
 <?php ($hook = get_hook('acs_pre_edit_search_for')) ? eval($hook) : null; ?>
