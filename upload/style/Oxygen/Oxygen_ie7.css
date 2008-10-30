@@ -55,3 +55,7 @@ IE7 - FIXES
 .main-forum .main-item .item-starter {
 	margin-left: 1ex;
 	}
+
+#brd-admin-settings-setup #fld19, #brd-post #fld1, #brd-post #fld2, #brd-postedit #fld2 {
+	margin-top: -19px;
+}
