@@ -123,7 +123,7 @@ $lang_admin_settings = array(
 'Avatar Max size label'			=>	'Avatar max size',
 'Avatar Max size help'			=>	'Bytes (10,240 is recommended).',
 'Features update'				=>	'Automatically check for updates',
-'Features update info'			=>	'PunBB is able to periodically check if there are any important updates to your software. The updates may be new releases or hotfix extensions. When updates are available a message will appear to administrators near the top of your board.',
+'Features update info'			=>	'PunBB is able to periodically check if there are any important updates to your software. The updates may be new releases or hotfix extensions. When updates are available an alert for administrator will appear.',
 'Features update disabled info'	=>	'The ability to automatically check for updates is not available. In order to support this feature, the PHP environment under which PunBB runs, must support either the <a href="http://www.php.net/manual/en/ref.curl.php">cURL extension</a>, the <a href="http://www.php.net/manual/en/function.fsockopen.php">fsockopen() function</a> or be configured with <a href="http://www.php.net/manual/en/ref.filesystem.php#ini.allow-url-fopen">allow_url_fopen</a> enabled.',
 'Features update legend'		=>	'Automatic updates',
 'Update check'					=>	'Check for updates',
