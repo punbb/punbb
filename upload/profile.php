@@ -120,7 +120,7 @@ if ($action == 'change_pass')
 			$forum_page['crumbs'] = array(
 				array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 				array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-				($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
+				($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password']), $id)
 			);
 
 			// Setup headings
@@ -286,8 +286,8 @@ if ($action == 'change_pass')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
+		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['profile_about'], $id)),
+		($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password'], $id))
 	);
 
 	// Setup headings
@@ -533,7 +533,7 @@ else if ($action == 'change_email')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))
+		($forum_page['own_profile']) ? array($lang_profile['Change your e-mail'], forum_link($forum_url['change_email'], $id)) : array(sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username'])), forum_link($forum_url['change_email'], $id))
 	);
 
 	// Setup headings
@@ -1376,7 +1376,7 @@ if ($forum_user['id'] != $id &&
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		sprintf($lang_profile['Users profile'], $user['username'])
+		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id))
 	);
 
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1456,7 +1456,7 @@ else
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		sprintf($lang_profile['Users profile'], $user['username'])
+		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id))
 	);
 
 	// Is this users own profile
@@ -1482,6 +1482,13 @@ else
 
 	if ($section == 'about')
 	{
+		// Setup breadcrumbs
+		$forum_page['crumbs'] = array(
+			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
+			array(sprintf($lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
+		);
+		
 		// Setup user identification
 		$forum_page['user_ident'] = array();
 
@@ -1586,7 +1593,7 @@ else
 			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_email'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))).'</a></span>';
 
 		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'])), $lang_profile['Section about']);
+		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section about']);
 
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
@@ -1672,6 +1679,12 @@ else
 
 	else if ($section == 'identity')
 	{
+		// Setup breadcrumbs
+		$forum_page['crumbs'] = array(
+			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
+			array($lang_profile['Section identity'],forum_link($forum_url['profile_identity'], $id))
+		);
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_identity'], $id);
@@ -1688,7 +1701,7 @@ else
 		$forum_page['has_required'] = ((($forum_user['is_admmod'] && ($forum_user['g_id'] == FORUM_ADMIN || $forum_user['g_mod_rename_users'] == '1')) || ($forum_user['is_admmod'] || $forum_config['o_regs_verify'] != '1')) ? true : false);
 
 		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'])), $lang_profile['Section identity']);
+		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section identity']);
 
 		($hook = get_hook('pf_change_details_identity_pre_header_load')) ? eval($hook) : null;
 
@@ -1875,7 +1888,14 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 				$forum_page['languages'][] = $forum_page['entry'];
 		}
 		$forum_page['d']->close();
-
+		
+		// Setup breadcrumbs
+		$forum_page['crumbs'] = array(
+			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
+			array($lang_profile['Section settings'],forum_link($forum_url['profile_settings'], $id))
+		);
+		
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_settings'], $id);
@@ -1886,7 +1906,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 		);
 
 		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'])), $lang_profile['Section settings']);
+		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section settings']);
 
 		($hook = get_hook('pf_change_details_settings_pre_header_load')) ? eval($hook) : null;
 
@@ -2211,6 +2231,13 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 		if ($user['signature'] != '')
 			$forum_page['sig_demo'] = $parsed_signature;
 
+		// Setup breadcrumbs
+		$forum_page['crumbs'] = array(
+			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
+			array($lang_profile['Section signature'],forum_link($forum_url['profile_signature'], $id))
+		);
+		
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_signature'], $id);
@@ -2230,7 +2257,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 			$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
 
 		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'])), $lang_profile['Section signature']);
+		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section signature']);
 
 		($hook = get_hook('pf_change_details_signature_pre_header_load')) ? eval($hook) : null;
 
@@ -2316,7 +2343,14 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 	else if ($section == 'avatar' && $forum_config['o_avatars'] == '1')
 	{
 		$forum_page['avatar_markup'] = generate_avatar_markup($id);
-
+		
+		// Setup breadcrumbs
+		$forum_page['crumbs'] = array(
+			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
+			array($lang_profile['Section avatar'],forum_link($forum_url['profile_avatar'], $id))
+		);
+		
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_avatar'], $id);
@@ -2345,7 +2379,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 		}
 
 		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'])), $lang_profile['Section avatar']);
+		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section avatar']);
 
 		($hook = get_hook('pf_change_details_avatar_pre_header_load')) ? eval($hook) : null;
 
@@ -2442,7 +2476,14 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 	{
 		if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0' || $forum_user['id'] == $id))
 			message($lang_common['Bad request']);
-
+		
+		// Setup breadcrumbs
+		$forum_page['crumbs'] = array(
+			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
+			array($lang_profile['Section admin'],forum_link($forum_url['profile_admin'], $id))
+		);
+		
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_admin'], $id);
@@ -2464,7 +2505,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 		}
 
 		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'])), $lang_profile['Section admin']);
+		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section admin']);
 
 		($hook = get_hook('pf_change_details_admin_pre_header_load')) ? eval($hook) : null;
 
