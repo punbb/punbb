@@ -256,7 +256,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 
 	// Warn the admin that their version of the database is newer than the version supported by the code
 	// NOTE: Why is it done on any page, but shown in admin section only.
-	//if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
+	if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
 		$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
 
 	if (!empty($alert_items))
