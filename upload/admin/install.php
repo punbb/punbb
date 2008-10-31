@@ -10,7 +10,7 @@
  */
 
 
-define('FORUM_VERSION', '1.3dev');
+define('FORUM_VERSION', '1.3RC2');
 define('FORUM_DB_REVISION', 3);
 define('MIN_PHP_VERSION', '4.3.0');
 define('MIN_MYSQL_VERSION', '4.1.2');

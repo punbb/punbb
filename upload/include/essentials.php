@@ -15,7 +15,7 @@ if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
 
 // Define the version and database revision that this code was written for
-define('FORUM_VERSION', '1.3 Beta');
+define('FORUM_VERSION', '1.3RC2');
 define('FORUM_DB_REVISION', 3);
 
 // Load the functions script
