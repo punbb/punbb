@@ -135,6 +135,14 @@ body {
 	background: #FFFFE1;
 	}
 
+.brd .main-extensions .extension, .brd .main-hotfixes .hotfix {
+	background: #F4F9FD;
+	}
+
+.brd .main-extensions .disabled, .brd .main-hotfixes .disabled {
+	background: #FFFFE1;
+	}
+
 .brd .warn-group, .brd .warn-set, .brd .warn-box, .brd .error-box, .brd #admin-alerts {
 	background: #FEFFE6;
 	border-color: #F4EBCE;
