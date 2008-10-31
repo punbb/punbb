@@ -260,7 +260,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link($forum_url['login']);
+	$forum_page['form_action'] = forum_link($forum_url['request_password']);
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
