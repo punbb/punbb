@@ -664,7 +664,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section admin']), forum_link($forum_url['profile_admin'], $id)),
-		$lang_profile['Delete user']
+		array($lang_profile['Delete user'], forum_link($forum_url['delete_user'], $id))
 	);
 
 	// Setup headings
