@@ -919,7 +919,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
-	
+
 	if (count($topics) == 1)
 			message($lang_misc['Merge error']);
 
@@ -1075,8 +1075,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
-	
-	$multi = count($topics) > 1; 
+
+	$multi = count($topics) > 1;
 	if (isset($_POST['delete_topics_comply']))
 	{
 		if (!isset($_POST['req_confirm']))
@@ -1264,10 +1264,10 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		if (count($topics) == 1)
-			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect']; 
+			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
 		else
 			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
-		
+
 		($hook = get_hook('mr_open_close_multi_topics_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['moderate_forum'], $fid), $forum_page['redirect_msg']);
@@ -1624,7 +1624,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';
 		$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
-		
+
 		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 
 		($hook = get_hook('mr_topic_actions_row_pre_display')) ? eval($hook) : null;

@@ -3075,7 +3075,7 @@ function get_saved_queries()
 
 	// Get the queries so that we can print them out
 	$saved_queries = $forum_db->get_saved_queries();
-	
+
 	ob_start();
 
 ?>

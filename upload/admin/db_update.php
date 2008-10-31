@@ -741,10 +741,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Add the prev_url field to the online table
 		$forum_db->add_field('online', 'prev_url', 'VARCHAR(255)', true, null, null);
-		
+
 		// Add the last_post field to the online table
 		$forum_db->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
-		
+
 		// Add the last_search field to the online table
 		$forum_db->add_field('online', 'last_search', 'INT(10) UNSIGNED', true, null, null);
 
@@ -756,7 +756,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Drop g_edit_subjects_interval column from groups table
 		$forum_db->drop_field('groups', 'g_edit_subjects_interval');
-		
+
 		$new_config = array();
 
 		// Add quote depth option
@@ -819,7 +819,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	      			'INTO'		=> 'config',
 	      			'VALUES'	=> $new_config
 	      		);
-	
+
 	      		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
 		unset($new_config);
@@ -888,14 +888,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'g_id=3'
 			);
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-			
+
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=3',
 				'WHERE'		=> 'g_id=4'
 			);
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-			
+
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=4',
@@ -1059,7 +1059,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$query = array(
 				'DELETE'	=> 'online'
 			);
-			
+
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 			switch ($db_type)

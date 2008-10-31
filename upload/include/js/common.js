@@ -210,7 +210,7 @@ Forum.addLoadEvent(Forum.autoFocus);
    believe that it is legally necessary to note which parts of a Copyrighted
    work are based on Public Domain content, a list of the Public Domain
    code (functions and methods) contained in this file is included below:
-   
+
    * addLoadEvent: Released into the Public Domain by Shawn Brown and
         based on Simon Willison's Public Domain function of the same name.
    * hasClass, addClass & removeClass: Released into the Public Domain

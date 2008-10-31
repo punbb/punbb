@@ -182,7 +182,7 @@ class DBLayer
 						$new_query['VALUES'] = $cur_values;
 						$result_set = $this->query_build($new_query, false, $unbuffered);
 					}
-	
+
 					return $result_set;
 				}
 			}
@@ -459,7 +459,7 @@ class DBLayer
 		foreach ($table_lines as $table_line)
 		{
 			$table_line = forum_trim($table_line);
-			if (substr($table_line, 0, 12) == 'CREATE TABLE') 
+			if (substr($table_line, 0, 12) == 'CREATE TABLE')
 				continue;
 			else if (substr($table_line, 0, 11) == 'PRIMARY KEY')
 				$table['primary_key'] = $table_line;
@@ -503,13 +503,13 @@ class DBLayer
 
 		foreach ($table['columns'] as $cur_column => $column_details)
 			$new_table .= "\n".$cur_column.' '.$column_details;
-			
+
 		if (isset($table['unique']))
 			$new_table .= "\n".$table['unique'].',';
-			
+
 		if (isset($table['primary_key']))
 			$new_table .= "\n".$table['primary_key'];
-			
+
 		$new_table = trim($new_table, ',')."\n".');';
 
 		// Drop old table
@@ -560,13 +560,13 @@ class DBLayer
 
 		foreach ($table['columns'] as $cur_column => $column_details)
 			$new_table .= "\n".$cur_column.' '.$column_details;
-			
+
 		if (isset($table['unique']))
 			$new_table .= "\n".$table['unique'].',';
-			
+
 		if (isset($table['primary_key']))
 			$new_table .= "\n".$table['primary_key'];
-			
+
 		$new_table = trim($new_table, ',')."\n".');';
 
 		// Drop old table
