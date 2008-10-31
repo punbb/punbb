@@ -168,7 +168,7 @@ body {
 	background: #f4f4f4;
 	}
 
-.brd .frm-buttons {
+.brd .frm-buttons, .brd .extension .options, .brd .hotfix .options {
 	border-color: #DBE0E4;
 	}
 

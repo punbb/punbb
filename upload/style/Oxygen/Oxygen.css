@@ -256,7 +256,7 @@ B - GLOBAL STYLES
 	margin-top: -1em;
 	}
 
-.brd #brd-announcement .msg-head {
+.brd #brd-announcement .msg-head, .brd .main-extensions .ct-legend, .brd .main-hotfixes .ct-legend {
 	border-bottom-style:dashed;
 	border-bottom-width:1px;
 	font-size:1.1em;
@@ -298,6 +298,11 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding-left: 0;
 	margin-left: 0;
 	}
+
+.brd .extension .options, .brd .hotfix .options {
+	border-top-style:dashed;
+	border-top-width:1px;
+}
 
 /* Content Containers
 -------------------------------------------------------------*/
