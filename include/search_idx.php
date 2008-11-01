@@ -30,7 +30,7 @@ function split_words($text)
 	// Remove BBCode
 	$text = preg_replace('/\[\/?(b|u|i|h|colou?r|quote|code|img|url|email|list)(?:\=[^\]]*)?\]/', ' ', $text);
 	// Remove any apostrophes which aren't part of words
-	$text = substr(preg_replace('((?<=\W)\'|\'(?=\W))', '', ' '.$text.' '), 1, -1);
+	$text = substr(preg_replace('((?>=\W)\'|\'(?=\W))', '', ' '.$text.' '), 1, -1);
 	// Remove symbols and multiple whitespace
 	$text = preg_replace('/[\^\$&\(\)<>`"\|,@_\?%~\+\[\]{}:=\/#\\\\;!\*\.\s]+/', ' ', $text);
 
@@ -159,9 +159,9 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
 		if (!empty($wordlist))
 		{
-			$sql = '';
+			$word_ids = array();
 			foreach ($wordlist as $word)
-				$sql .= (($sql != '') ? ',' : '').$forum_db->escape($cur_words[$match_in][$word]);
+				$word_ids[] = $cur_words[$match_in][$word];
 
 			$query = array(
 				'DELETE'	=> 'search_matches',
