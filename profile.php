@@ -2424,25 +2424,22 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 <?php ($hook = get_hook('pf_change_details_avatar_pre_fieldset')) ? eval($hook) : null; ?>
+			<div class="ct-box info-box">
+				<ul class="info-list">
+					<?php echo implode("\n\t\t\t\t\t", $forum_page['frm_info'])."\n" ?>
+				</ul>
+				<p id="req-msg" class="req-warn important"><?php echo $lang_profile['No upload warn'] ?></p>
+			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_profile['Avatar'] ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_avatar_pre_cur_avatar_info')) ? eval($hook) : null; ?>
 				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="ct-box info-box">
 						<h3 class="hn ct-legend"><?php echo $lang_profile['Current avatar'] ?></h3>
-						<p><?php echo (isset($forum_page['avatar_demo'])) ? '<a href="'.forum_link($forum_url['delete_avatar'], array($id, generate_form_token('delete_avatar'.$id.$forum_user['id']))).'"><strong>'.$lang_profile['Delete avatar info'].'</strong></a>' : $lang_profile['No avatar info'] ?></p>
-					</div>
-				</div>
-<?php ($hook = get_hook('pf_change_details_avatar_pre_avatar_demo')) ? eval($hook) : null; ?>
-				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="ct-box info-box">
 <?php if (isset($forum_page['avatar_demo'])): ?>
-						<h3 class="hn ct-legend avatar-demo"><span><?php echo $forum_page['avatar_demo'] ?></span></h3>
+						<p class="avatar-demo"><span><?php echo $forum_page['avatar_demo'] ?></span></p>
 <?php endif; ?>
-						<ul class="info-list">
-							<?php echo implode("\n\t\t\t\t\t\t\t", $forum_page['frm_info'])."\n" ?>
-						</ul>
-						<p id="req-msg" class="req-warn important"><?php echo $lang_profile['No upload warn'] ?></p>
+						<p><?php echo (isset($forum_page['avatar_demo'])) ? '<a href="'.forum_link($forum_url['delete_avatar'], array($id, generate_form_token('delete_avatar'.$id.$forum_user['id']))).'"><strong>'.$lang_profile['Delete avatar info'].'</strong></a>' : $lang_profile['No avatar info'] ?></p>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_details_avatar_pre_avatar_upload')) ? eval($hook) : null; ?>
