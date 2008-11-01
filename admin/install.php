@@ -1843,7 +1843,7 @@ else
 {
 
 ?>
-		<div class="ct-box">
+		<div class="ct-box info-box">
 			<p class="warn"><?php printf($lang_install['Write info'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
 		</div>
 <?php
