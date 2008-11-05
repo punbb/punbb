@@ -465,7 +465,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 		<h2 class="hn"><span><?php echo $lang_admin_users['Confirm delete'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="cbox info-box">
+		<div class="ct-box warn-box">
 			<p class="warn"><?php echo $lang_admin_users['Delete warning'] ?></p>
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
@@ -483,7 +483,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete'] ?>" /></span>
+				<span class="submit"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete users'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="delete_users_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
