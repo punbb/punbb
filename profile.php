@@ -2432,8 +2432,10 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 				<ul class="info-list">
 					<?php echo implode("\n\t\t\t\t\t", $forum_page['frm_info'])."\n" ?>
 				</ul>
-				<p id="req-msg" class="req-warn important"><?php echo $lang_profile['No upload warn'] ?></p>
 			</div>
+			<div id="req-msg" class="req-warn ct-box info-box">
+    			<p class="important"><?php echo $lang_profile['No upload warn'] ?></p>
+   			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_profile['Avatar'] ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_avatar_pre_cur_avatar_info')) ? eval($hook) : null; ?>
