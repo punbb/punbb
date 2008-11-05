@@ -63,7 +63,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
 	// Split old and new post/subject to obtain array of 'words'
 	$words_message = split_words($message);
-	$words_subject = ($subject) ? split_words($subject) : array();
+	$words_subject = empty($subject) ? array() : split_words($subject);
 
 	if ($mode == 'edit')
 	{
@@ -88,8 +88,8 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			'subject'	=> array()
 		);
 
-		while ($row = $forum_db->fetch_row($result))
-			$cur_words[$row[2] ? 'subject' : 'post'][$row[1]] = $row[0];
+		while ($row = $forum_db->fetch_assoc($result))
+			$cur_words[$row['subject_match'] == 1 ? 'subject' : 'post'][$row['word']] = $row['id'];
 
 		$forum_db->free_result($result);
 
@@ -155,8 +155,6 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	// Delete matches (only if editing a post)
 	foreach ($words['del'] as $match_in => $wordlist)
 	{
-		$subject_match = ($match_in == 'subject') ? 1 : 0;
-
 		if (!empty($wordlist))
 		{
 			$word_ids = array();
@@ -165,7 +163,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
 			$query = array(
 				'DELETE'	=> 'search_matches',
-				'WHERE'		=> 'word_id IN('.implode(',', $word_ids).') AND post_id='.$post_id.' AND subject_match='.($match_in == 'subject' ? '1' : '0')
+				'WHERE'		=> 'word_id IN ('.implode(', ', $word_ids).') AND post_id='.$post_id.' AND subject_match='.($match_in == 'subject' ? '1' : '0')
 			);
 
 			($hook = get_hook('si_fn_update_search_index_qr_delete_matches')) ? eval($hook) : null;
@@ -187,7 +185,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			// Really this should use the query builder too, though it doesn't currently support the syntax
 			$sql = 'INSERT INTO '.$forum_db->prefix.'search_matches (post_id, word_id, subject_match) '.$forum_db->query_build($subquery, true);
 
-			($hook = get_hook('si_fn_update_search_index_qr_delete_matches')) ? eval($hook) : null;
+			($hook = get_hook('si_fn_update_search_index_qr_add_matches')) ? eval($hook) : null;
 			$forum_db->query($sql) or error(__FILE__, __LINE__);
 		}
 	}
