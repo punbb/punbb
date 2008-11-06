@@ -181,17 +181,31 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 		curl_setopt($ch, CURLOPT_NOBODY, $head_only);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'PunBB');
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, $max_redirects);
 
 		// Grab the page
 		$content = @curl_exec($ch);
+		$responce_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+
+		// Process 301/302 redirect
+		if ($content !== false && ($responce_code == '301' || $responce_code == '302') && $max_redirects > 0)
+		{
+			$headers = explode("\r\n", trim($content));
+			foreach ($headers as $header)
+				if (substr($header, 0, 10) == 'Location: ')
+				{
+					$responce = get_remote_file(substr($header, 10), $timeout, $head_only, $max_redirects - 1);
+					if ($responce !== null)
+						$responce['headers'] = array_merge($headers, $responce['headers']);
+					return $responce;
+				}
+		}
 
 		// Ignore everything except a 200 response code
-		if ($content !== false && curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200')
+		if ($content !== false && $responce_code == '200')
 		{
 			if ($head_only)
-				$result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", forum_trim($content)));
+				$result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", trim($content)));
 			else
 			{
 				preg_match('#HTTP/1.[01] 200 OK#', $content, $match, PREG_OFFSET_CAPTURE);
@@ -204,8 +218,6 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 				}
 			}
 		}
-
-		curl_close($ch);
 	}
 	// fsockopen() is the second best thing
 	else if (function_exists('fsockopen'))
@@ -235,7 +247,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 			// Process 301/302 redirect
 			if ($content !== false && $max_redirects > 0 && preg_match('#^HTTP/1.[01] 30[12]#', $content))
 			{
-				$headers = explode("\r\n", forum_trim($content));
+				$headers = explode("\r\n", trim($content));
 				foreach ($headers as $header)
 					if (substr($header, 0, 10) == 'Location: ')
 					{
@@ -250,7 +262,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 			if ($content !== false && preg_match('#^HTTP/1.[01] 200 OK#', $content))
 			{
 				if ($head_only)
-					$result['headers'] = explode("\r\n", forum_trim($content));
+					$result['headers'] = explode("\r\n", trim($content));
 				else
 				{
 					$content_start = strpos($content, "\r\n\r\n");
@@ -275,7 +287,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 					'http' => array(
 						'method'		=> $head_only ? 'HEAD' : 'GET',
 						'user_agent'	=> 'PunBB',
-						'max_redirects'	=> $max_redirects,		// PHP >=5.1.0 only
+						'max_redirects'	=> $max_redirects + 1,	// PHP >=5.1.0 only
 						'timeout'		=> $timeout	// PHP >=5.2.1 only
 					)
 				)
@@ -292,7 +304,7 @@ function get_remote_file($url, $timeout, $head_only = false, $max_redirects = 10
 			// Gotta love the fact that $http_response_header just appears in the global scope (*cough* hack! *cough*)
 			$result['headers'] = $http_response_header;
 			if (!$head_only)
-				$result['content'] = forum_trim($content);
+				$result['content'] = $content;
 		}
 	}
 
