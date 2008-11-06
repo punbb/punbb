@@ -275,7 +275,7 @@ class DBLayer
 
 	function affected_rows()
 	{
-		return ($this->query_result) ? @sqlite_changes($this->query_result) : false;
+		return ($this->query_result) ? @sqlite_changes($this->link_id) : false;
 	}
 
 
@@ -513,7 +513,7 @@ class DBLayer
 		$new_table = trim($new_table, ',')."\n".');';
 
 		// Drop old table
-		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name));
+		$this->drop_table($table_name, $no_prefix);
 
 		// Create new table
 		$this->query($new_table) or error(__FILE__, __LINE__);
@@ -529,7 +529,7 @@ class DBLayer
 		$this->query('INSERT INTO '.($no_prefix ? '' : $this->prefix).$this->escape($table_name).' ('.implode(', ', $old_columns).') SELECT * FROM '.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_t'.$now) or error(__FILE__, __LINE__);
 
 		// Drop temp table
-		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_t'.$now);
+		$this->drop_table($table_name.'_t'.$now, $no_prefix);
 	}
 
 
@@ -570,7 +570,7 @@ class DBLayer
 		$new_table = trim($new_table, ',')."\n".');';
 
 		// Drop old table
-		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name));
+		$this->drop_table($table_name, $no_prefix);
 
 		// Create new table
 		$this->query($new_table) or error(__FILE__, __LINE__);
@@ -586,7 +586,7 @@ class DBLayer
 		$this->query('INSERT INTO '.($no_prefix ? '' : $this->prefix).$this->escape($table_name).' SELECT '.implode(', ', $new_columns).' FROM '.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_t'.$now) or error(__FILE__, __LINE__);
 
 		// Drop temp table
-		$this->drop_table(($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_t'.$now);
+		$this->drop_table($table_name.'_t'.$now, $no_prefix);
 	}
 
 
