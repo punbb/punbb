@@ -268,15 +268,13 @@ B - GLOBAL STYLES
 	}
 
 .brd .content-head {
-	border-style: solid none;
-	border-width: 1px 0 2px 0;
-	margin-top: -1px;
+	margin: 0.5em 1em 0 1em;
 	}
 
 .brd .content-head .hn {
 	font-size: 1.084em;
-	border-style: none none solid none;
-	border-width: 1px;
+	border-style: none none double none;
+	border-width: 3px;
 	padding: 0.462em 1.417em;
 	}
 

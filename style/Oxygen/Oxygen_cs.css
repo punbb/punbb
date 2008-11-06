@@ -318,7 +318,11 @@ body {
 	background: #F4F4F4;
 	}
 
-.brd .content-head, .brd th {
+.brd .content-head {
+
+	}
+
+.brd th {
 	background: #EAEEF5;
 	border-bottom-color: #fff;
 	border-top-color: #ddd;
@@ -330,7 +334,8 @@ body {
 	}
 
 .brd .content-head .hn {
-	border-bottom-color: #ddd;
+	border-color: #DBE0E4;
+	color: #666;
 	}
 
 .brd .main-head a:link, .brd .main-head a:visited,
