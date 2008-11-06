@@ -969,7 +969,8 @@ else if ($section == 'features')
 			<div class="content-head">
 				<h2 class="hn"><span><?php echo $lang_admin_settings['Features update'] ?></span></h2>
 			</div>
-<?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>				<div class="ct-box">
+<?php if (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))): ?>
+				<div class="ct-box">
 					<p><?php echo $lang_admin_settings['Features update info'] ?></p>
 				</div>
 <?php ($hook = get_hook('aop_features_pre_updates_fieldset')) ? eval($hook) : null; ?>
@@ -996,7 +997,8 @@ else if ($section == 'features')
 <?php ($hook = get_hook('aop_features_pre_version_updates_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
 <?php ($hook = get_hook('aop_features_updates_fieldset_end')) ? eval($hook) : null; ?>
-<?php else: ?>				<div class="ct-box">
+<?php else: ?>
+				<div class="ct-box">
 					<p><?php echo $lang_admin_settings['Features update disabled info'] ?></p>
 				</div>
 <?php ($hook = get_hook('aop_features_post_updates_disabled_box')) ? eval($hook) : null; ?>

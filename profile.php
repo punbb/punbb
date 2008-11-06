@@ -1488,7 +1488,7 @@ else
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
 			array(sprintf($lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
 		);
-		
+
 		// Setup user identification
 		$forum_page['user_ident'] = array();
 
@@ -2113,19 +2113,23 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<legend><span><?php echo $lang_profile['Image display'] ?></span></legend>
 					<div class="mf-box">
-<?php if ($forum_config['o_smilies'] == '1' || $forum_config['o_smilies_sig'] == '1'): ?>						<div class="mf-item">
+<?php if ($forum_config['o_smilies'] == '1' || $forum_config['o_smilies_sig'] == '1'): ?>
+						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_smilies]" value="1"<?php if ($user['show_smilies'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_profile['Show smilies'] ?></label>
 						</div>
-<?php endif; if ($forum_config['o_avatars'] == '1'): ?>						<div class="mf-item">
+<?php endif; if ($forum_config['o_avatars'] == '1'): ?>
+						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_avatars]" value="1"<?php if ($user['show_avatars'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_profile['Show avatars'] ?></label>
 						</div>
-<?php endif; if ($forum_config['p_message_img_tag'] == '1'): ?>						<div class="mf-item">
+<?php endif; if ($forum_config['p_message_img_tag'] == '1'): ?>
+						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_img]" value="1"<?php if ($user['show_img'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_profile['Show images'] ?></label>
 						</div>
-<?php endif; if ($forum_config['o_signatures'] == '1' && $forum_config['p_sig_img_tag'] == '1'): ?>						<div class="mf-item">
+<?php endif; if ($forum_config['o_signatures'] == '1' && $forum_config['p_sig_img_tag'] == '1'): ?>
+						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_img_sig]" value="1"<?php if ($user['show_img_sig'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_profile['Show images sigs'] ?></label>
 						</div>
@@ -2135,14 +2139,16 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 <?php ($hook = get_hook('pf_change_details_settings_pre_image_display_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
 <?php ($hook = get_hook('pf_change_details_settings_pre_show_sigs_checkbox')) ? eval($hook) : null; ?>
-<?php if ($forum_config['o_signatures'] == '1'): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php if ($forum_config['o_signatures'] == '1'): ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_sig]" value="1"<?php if ($user['show_sig'] == '1') echo ' checked="checked"' ?> /></span>
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Signature display'] ?></span> <?php echo $lang_profile['Show sigs'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_details_settings_pre_display_fieldset_end')) ? eval($hook) : null; ?>
-<?php endif; ?>			</fieldset>
+<?php endif; ?>
+			</fieldset>
 <?php ($hook = get_hook('pf_change_details_settings_display_fieldset_end')) ? eval($hook) : null; ?>
 <?php $forum_page['item_count'] = 0; ?>
 <?php ($hook = get_hook('pf_change_details_settings_pre_pagination_fieldset')) ? eval($hook) : null; ?>
@@ -2190,7 +2196,8 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 <?php ($hook = get_hook('pf_change_details_settings_pre_email_settings_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
 <?php ($hook = get_hook('pf_change_details_settings_email_settings_fieldset_end')) ? eval($hook) : null; ?>
-<?php if ($forum_config['o_subscriptions'] == '1'): ?>				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php if ($forum_config['o_subscriptions'] == '1'): ?>
+				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<legend><span><?php echo $lang_profile['Subscription settings'] ?></span></legend>
 					<div class="mf-box">
 						<div class="mf-item">
@@ -2294,7 +2301,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 
 ?>
 		<div class="ct-box error-box">
-			<h3 class="warn"><?php echo $lang_profile['Profile update errors'] ?></h3>
+			<h2 class="warn"><?php echo $lang_profile['Profile update errors'] ?></h3>
 			<ul>
 				<?php echo implode("\n\t\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
