@@ -2336,8 +2336,8 @@ if ($forum_page['has_required']): ?>
 				<legend class="group-legend"><strong><?php echo $lang_profile['Signature'] ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_signature_pre_signature_demo')) ? eval($hook) : null; ?>
 <?php if (isset($forum_page['sig_demo'])): ?>
-				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="ct-box info-box">
+				<div class="ct-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="ct-box">
 						<h3 class="ct-legend hn"><?php echo $lang_profile['Current signature'] ?></h3>
 						<div class="sig-demo"><?php echo $forum_page['sig_demo'] ?></div>
 					</div>
@@ -2464,8 +2464,8 @@ if ($forum_page['has_required']): ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_profile['Avatar'] ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_avatar_pre_cur_avatar_info')) ? eval($hook) : null; ?>
-				<div class="ct-set info-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="ct-box info-box">
+				<div class="ct-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="ct-box">
 						<h3 class="hn ct-legend"><?php echo $lang_profile['Current avatar'] ?></h3>
 <?php if (isset($forum_page['avatar_demo'])): ?>
 						<p class="avatar-demo"><span><?php echo $forum_page['avatar_demo'] ?></span></p>
@@ -2525,11 +2525,11 @@ if ($forum_page['has_required']): ?>
 		$forum_page['user_management'] = array();
 
 		if ($forum_user['g_moderator'] == '1')
-			$forum_page['user_management']['ban'] = '<div class="ct-set info-set set'.++$forum_page['item_count'].'">'."\n\t\t".'<div class="ct-box info-box"><h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'?add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p></div></div>';
+			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'?add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		else if ($forum_user['g_moderator'] != '1' && $user['g_id'] != FORUM_ADMIN )
 		{
-			$forum_page['user_management']['ban'] = '<div class="ct-set info-set set'.++$forum_page['item_count'].'">'."\n\t\t".'<div class="ct-box info-box"><h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'?add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p></div></div>';
-			$forum_page['user_management']['delete'] = '<div class="ct-set info-set set'.++$forum_page['item_count'].'">'."\n\t\t".'<div class="ct-box info-box"><h3 class="ct-legend hn">'.$lang_profile['Delete user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['delete_user'], $id).'">'.$lang_profile['Delete user info'].'</a></p></div></div>';
+			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'?add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
+			$forum_page['user_management']['delete'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Delete user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['delete_user'], $id).'">'.$lang_profile['Delete user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		}
 
 		// Setup headings
@@ -2555,7 +2555,6 @@ if ($forum_page['has_required']): ?>
 		</div>
 		<div class="main-content main-frm">
 			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-
 <?php
 
 		($hook = get_hook('pf_change_details_admin_pre_user_management')) ? eval($hook) : null;
@@ -2563,9 +2562,7 @@ if ($forum_page['has_required']): ?>
 		if (!empty($forum_page['user_management']))
 		{
 
-?>
-			<?php echo implode("\n\t\t\t", $forum_page['user_management'])."\n\t\t" ?>
-<?php
+			echo "\t\t\t".implode("\n\t\t\t", $forum_page['user_management'])."\n";
 
 			($hook = get_hook('pf_change_details_admin_pre_group_membership')) ? eval($hook) : null;
 
