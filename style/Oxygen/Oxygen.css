@@ -1146,6 +1146,7 @@ F - MAIN CONTENT - FORMS
 
 .brd .mf-box .mf-item {
 	position: relative;
+	top: -0.15em;
 	padding: 0.25em 0;
 	}
 
@@ -1162,9 +1163,9 @@ F - MAIN CONTENT - FORMS
 	padding: 0.3em 1em;
 	margin: 1px 0 2px 0;
 	overflow: hidden;
-	display:block;
-	text-align:right;
-	font-weight:bold;
+	display: block;
+	text-align: right;
+	font-weight: bold;
 	}
 
 .brd .mf-set legend span em {
