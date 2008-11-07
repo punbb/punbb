@@ -1965,7 +1965,8 @@ require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php'
 	<div class="main-content frm">
 		<div class="ct-box info-box">
 			<p>Your forum database was updated successfully.</p>
-<?php if (isset($new_config) && !$written): ?>					<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file.</p>
+<?php if (isset($new_config) && !$written): ?>			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?php echo $base_url ?>index.php">go to the forum index</a> once config.php has been updated.</p>
+<?php else: ?>			<p>You may <a href="<?php echo $base_url ?>index.php">go to the forum index</a> now.</p>
 <?php endif; ?>		</div>
 <?php if (isset($new_config) && !$written): ?>		<form class="frm-form" action="foo">
 			<fieldset class="frm-group group1">
