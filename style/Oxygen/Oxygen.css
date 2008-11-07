@@ -172,6 +172,10 @@ B - GLOBAL STYLES
 	/*margin: 0em 0em 1em 0em;*/
 	}
 
+.brd #brd-announcement br {
+	display: inline;
+	}
+
 .brd .main-options {
 	border-top: none;
 	margin: -1em 0 1em 0;
@@ -256,11 +260,15 @@ B - GLOBAL STYLES
 	margin-top: -1em;
 	}
 
-.brd #brd-announcement .msg-head, .brd .main-extensions .ct-legend, .brd .main-hotfixes .ct-legend {
+.brd #brd-announcement h1, .brd .main-extensions .ct-legend, .brd .main-hotfixes .ct-legend {
 	border-bottom-style:dashed;
 	border-bottom-width:1px;
 	font-size:1.1em;
 	font-weight:bold;
+	}
+
+.brd #brd-announcement h1 {
+	margin-bottom: 0.5em;
 	}
 
 .brd .main-pagehead .hn {
