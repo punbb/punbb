@@ -333,7 +333,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	position: relative;
 	}
 
-.brd .warn-set {
+.brd #admin-alerts {
 	padding: 0 0 0 18em;
 	}
 
@@ -1839,7 +1839,7 @@ H - MAIN CONTENT - ODDMENTS
 	}
 
 #brd-admin-reports .frm-buttons {
-	margin-left: 3.5em;
+	margin-left: 4em;
 	margin-top: 0;
 	}
 

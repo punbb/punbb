@@ -11,7 +11,7 @@ body {
 	}
 
 .brd p.feed a:link, .brd p.feed a:visited {
-	color:#DDDDDD;
+	color: #DDDDDD;
 	}
 
 .brd a:hover, .brd a:active, .brd a:focus,
@@ -115,7 +115,7 @@ body {
 	background: #FEFFE6;
 	}
 
-.brd .admin-page .ct-set .ct-box {
+.brd .admin-page .ct-set .ct-box, .brd .report {
 	background: #F4F9FD;
 	}
 
@@ -206,7 +206,7 @@ body {
 	}
 
 #brd-announcement .userbox {
-	background:#F4F9FD none repeat scroll 0 0;
+	background: #F4F9FD none repeat scroll 0 0;
 	}
 
 /* Menus
