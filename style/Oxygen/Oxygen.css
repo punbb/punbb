@@ -261,10 +261,10 @@ B - GLOBAL STYLES
 	}
 
 .brd #brd-announcement h1, .brd .main-extensions .ct-legend, .brd .main-hotfixes .ct-legend {
-	border-bottom-style:dashed;
-	border-bottom-width:1px;
-	font-size:1.1em;
-	font-weight:bold;
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+	font-size: 1.1em;
+	font-weight: bold;
 	}
 
 .brd #brd-announcement h1 {
@@ -333,10 +333,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	position: relative;
 	}
 
-.brd #admin-alerts {
-	padding: 0 0 0 18em;
-	}
-
 .brd .ct-group {
 	border-style: solid;
 	border-width: 1px;
@@ -351,6 +347,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .brd .ct-group .ct-set {
 	border-style: dashed none none none;
 	margin: 0 1em;
+	padding: 0 0 0 16em;
 	}
 .brd .ct-group .group-item1 {
 	border: none;
@@ -377,21 +374,17 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .brd .ct-set .ct-legend {
 	float: left;
-	margin-left: -18em;
-	width: 17em;
+	margin-left: -17em;
+	width: 16em;
 	display: inline;
 	position: relative;
-	text-align:right;
-	font-weight:bold;
+	text-align: right;
+	font-weight: bold;
 	}
 
 .brd .ct-set ul {
 	padding-left: 0;
 	list-style: none;
-	}
-.brd .ct-set ul.user-ident {
-	padding-left: 1em;
-	width: 16em;
 	}
 
 .brd .ct-box div {
