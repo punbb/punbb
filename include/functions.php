@@ -2626,9 +2626,6 @@ function csrf_confirm_form()
 
 ?>
 <div id="brd-main" class="main">
-
-	<h1><?php echo end($forum_page['crumbs']) ?></h1>
-
 	<div class="main-head">
 		<h2 class="hn"><span><?php echo $lang_common['Confirm action head'] ?></span></h2>
 	</div>
