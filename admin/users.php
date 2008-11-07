@@ -23,6 +23,7 @@ if (!$forum_user['is_admmod'])
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_users.php';
+require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_bans.php';
 
 
 // Show IP statistics for a certain user ID
@@ -624,7 +625,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_users['Ban advanced heading'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_admin_users['Ban users'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box">
@@ -639,13 +640,13 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 				<legend class="group-legend"><span><?php echo $lang_admin_users['Ban settings legend'] ?></span></legend>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Ban message'] ?></span> <small><?php echo $lang_admin_users['Ban message info'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_bans['Ban message label'] ?></span> <small><?php echo $lang_admin_bans['Ban message help'] ?></small></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="ban_message" size="50" maxlength="255" /></span>
 					</div>
 				</div>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Expire date'] ?></span> <small><?php echo $lang_admin_users['Expire date info'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_bans['Expire date label'] ?></span> <small><?php echo $lang_admin_bans['Expire date help'] ?></small></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="ban_expire" size="17" maxlength="10" /></span>
 					</div>
 				</div>
