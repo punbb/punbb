@@ -760,12 +760,12 @@ if ($forum_db->num_rows($result))
 		{
 			if ($i > 2) echo "\t\t\t".'</div>'."\n";
 
-			$forum_page['item_count'] = 0;
+			$forum_page['group_count'] = $forum_page['item_count'] = 0;
 ?>
 			<div class="content-head">
 				<h3 class="hn"><span><?php printf($lang_admin_forums['Forums in category'], forum_htmlencode($cur_forum['cat_name'])) ?></span></h3>
 			</div>
-			<div class="frm-group frm-hdgroup group1">
+			<div class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
 
 <?php
 
