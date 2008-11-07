@@ -70,4 +70,9 @@ IE6 - FIXES
 
 #brd-admin-settings-setup #fld19, #brd-post #fld1, #brd-post #fld2, #brd-postedit #fld2 {
 	margin-top: -19px;
-}
+	}
+
+.brd .sf-set .fld-input input{
+	position:absolute;
+	top: 24px;
+	}
