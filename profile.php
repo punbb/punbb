@@ -154,7 +154,7 @@ if ($action == 'change_pass')
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_profile['Change pass errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_profile['Change pass errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -321,7 +321,7 @@ if ($action == 'change_pass')
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_profile['Change pass errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_profile['Change pass errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -571,7 +571,7 @@ else if ($action == 'change_email')
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_profile['Change e-mail errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_profile['Change e-mail errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -1740,7 +1740,7 @@ else
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_profile['Profile update errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -2317,7 +2317,7 @@ if ($forum_page['has_required']): ?>
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_profile['Profile update errors'] ?></h3>
+			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h3>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -2438,7 +2438,7 @@ if ($forum_page['has_required']): ?>
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_profile['Profile update errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>

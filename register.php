@@ -309,7 +309,7 @@ ob_start();
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><span><?php echo $lang_profile['Register errors'] ?></span></h2>
+			<h2 class="warn hn"><span><?php echo $lang_profile['Register errors'] ?></span></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>

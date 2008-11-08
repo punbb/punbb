@@ -299,7 +299,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_login['New password errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_login['New password errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -397,7 +397,7 @@ ob_start();
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn"><?php echo $lang_login['Login errors'] ?></h2>
+			<h2 class="warn hn"><?php echo $lang_login['Login errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
