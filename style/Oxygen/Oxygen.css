@@ -1621,7 +1621,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	}
 
 .brd .entry-content .codebox code {
-	font-family: monotype;
+	font-family: monospace;
 	}
 
 .brd .entry-content blockquote {
