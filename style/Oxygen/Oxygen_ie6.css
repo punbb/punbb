@@ -67,8 +67,10 @@ IE6 - FIXES
 /* Fixes for the forms in post.php and edit.php. */
 .brd .txt-box label span { position: absolute; }
 #brd-post #post-form .sf-set .fld-input { padding-top: 1.7em; }
-#brd-post #post-form .txt-set .fld-input { padding-top: 1.3em; }
-#brd-postedit #post-form #fld2 { top: 1.25em; left: -0.25em; position: relative; }
+#brd-postedit	#post-form .set2 .txt-box .fld-input,
+#brd-post		#post-form .txt-box .fld-input { padding-top: 1.3em; }
+#brd-postedit	#post-form .mf-item #fld2,
+#brd-post		#post-form .mf-item #fld2 { top: 1.25em; left: -0.25em; position: relative; }
 
 /* Fix for index.php: no backgroud for the first main-head. */
 .brd #brd-index .main-head { position: relative; }
