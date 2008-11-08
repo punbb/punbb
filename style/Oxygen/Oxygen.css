@@ -322,7 +322,8 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	}
 
 .brd .ct-box li {
-	padding: 0pt 0pt 0.7em 0;
+	padding: 0;
+	margin: 0 0 0.7em 0;
 	}
 
 .brd .ct-set {
@@ -1350,7 +1351,7 @@ F - MAIN CONTENT - FORMS
 	}
 
 .brd .required label span em {
-	float: left;таня 
+	float: left;таня
 	font-size: 0.917em;
 	line-height: 1.2em;
 	width: 100%;
