@@ -65,8 +65,6 @@ IE6 - FIXES
 
 #brd-stats .st-users { margin-bottom: -1ex; }
 
-#brd-admin-settings-setup #fld19, #brd-post #fld1, #brd-post #fld2, #brd-postedit #fld2 { margin-top: -19px; }
-
 /* Fixes for the forms in post.php and edit.php. */
 .brd .txt-box label span { position: absolute; }
 #brd-post #post-form .sf-set .fld-input { padding-top: 1.7em; }
