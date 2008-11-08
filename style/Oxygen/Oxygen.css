@@ -396,6 +396,10 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	float: none;
 	}
 
+.brd .ct-box .info-list {
+	padding-bottom: 0;
+	}
+
  /* User Identity
 -------------------------------------------------------------*/
 
