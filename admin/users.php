@@ -548,15 +548,14 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		else
 			$ban_expire = 'NULL';
 
-		$ban_message = ($ban_message != '') ? '"'.$forum_db->escape($ban_message).'"' : 'NULL';
+		$ban_message = ($ban_message != '') ? '\''.$forum_db->escape($ban_message).'\'' : 'NULL';
 
 		// Get the latest IPs for the posters and store them for a little later
 		$query = array(
 			'SELECT'	=> 'p.poster_id, p.poster_ip',
 			'FROM'		=> 'posts AS p',
 			'WHERE'		=> 'p.poster_id IN ('.implode(',', $users).') AND p.poster_id>1',
-			'GROUP BY'	=> 'p.poster_id',
-			'ORDER BY'	=> 'p.posted DESC'
+			'ORDER BY'	=> 'p.posted ASC'
 		);
 
 		($hook = get_hook('aus_ban_users_qr_get_latest_user_ips')) ? eval($hook) : null;
