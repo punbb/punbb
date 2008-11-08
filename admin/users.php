@@ -543,7 +543,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 			$ban_expire = strtotime($ban_expire);
 
 			if ($ban_expire == -1 || $ban_expire <= time())
-				message($lang_admin_users['Invalid expire message']);
+				message($lang_admin_bans['Invalid expire message']);
 		}
 		else
 			$ban_expire = 'NULL';
