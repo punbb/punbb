@@ -825,7 +825,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$forum_page['crumbs'][] = array($subject, forum_link($forum_url['topic'], array($topics, sef_friendly($subject))));
 	else
 		$forum_page['crumbs'][] = array($lang_misc['Moderate forum'], forum_link($forum_url['moderate_forum'], $fid));
-	$forum_page['crumbs'][] =	($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'];
+	$forum_page['crumbs'][] = ($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'];
 
 	//Setup main heading
 	$forum_page['main_title'] = end($forum_page['crumbs']).' '.$lang_misc['To new forum'];
@@ -842,7 +842,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+		<h2 class="hn"><span><?php echo end($forum_page['crumbs']).' '.$lang_misc['To new forum'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
