@@ -75,3 +75,7 @@ IE6 - FIXES
 
 /* Fix for index.php: no backgroud for the first main-head. */
 .brd #brd-index .main-head { position: relative; }
+
+.brd .main-content .main-item .hn .posted-mark {
+ 	left: 0.2em;
+	}
