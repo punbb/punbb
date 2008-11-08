@@ -1452,7 +1452,6 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	padding: 0 1.5em 0.5em 1em;
 	margin-top: -1px;
 	position: relative;
-	font-family: arial, helvetica, sans-serif;
 	}
 
 .brd .posthead .post-title span {
@@ -1462,7 +1461,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	}
 
 .brd .posthead .post-title a {
-	font-size: 1.167em;
+	font-size: 1em;
 	text-decoration: none;
 	font-weight: bold;
 	}
@@ -1470,7 +1469,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 .brd .posthead .post-title small,
 .brd .posthead .post-title small a {
 	font-size: 1em;
-	font-weight:normal;
+	font-weight: normal;
 	white-space: nowrap;
 	}
 

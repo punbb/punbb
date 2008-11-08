@@ -103,6 +103,10 @@ body {
 	background: #F1F1F1;
 	}
 
+.brd .posthead .post-title small {
+	color: #999;
+	}
+
 .brd .online .userstatus span {
 	border-color: #517CA1;
 	}
