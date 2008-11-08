@@ -76,3 +76,8 @@ IE6 - FIXES
 	position:absolute;
 	top: 24px;
 	}
+
+.brd .main-head, .brd .main-foot {
+	position: relative;
+	}
+
