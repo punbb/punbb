@@ -77,7 +77,6 @@ IE6 - FIXES
 	top: 24px;
 	}
 
-.brd .main-head, .brd .main-foot {
+.brd #brd-index .main-head {
 	position: relative;
 	}
-
