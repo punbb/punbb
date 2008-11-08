@@ -1312,7 +1312,7 @@ F - MAIN CONTENT - FORMS
 	margin-left: -17em;
 	display: block;
 	position: relative;
-	padding:2px 0pt 2px 1em;
+	padding: 2px 1em;
 	width: 16em;
 	text-align:right;
 	font-weight:bold;
@@ -1355,7 +1355,7 @@ F - MAIN CONTENT - FORMS
 	}
 
 .brd .required label span em {
-	float: left;таня
+	float: left;
 	font-size: 0.917em;
 	line-height: 1.2em;
 	width: 100%;
