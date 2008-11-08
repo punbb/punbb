@@ -328,6 +328,12 @@ ob_start();
 
 ($hook = get_hook('po_main_output_start')) ? eval($hook) : null;
 
+?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
+	</div>
+<?php
+
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($errors))
 {
@@ -345,9 +351,6 @@ if (isset($_POST['preview']) && empty($errors))
 	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;
 
 ?>
-	<div class="main-head">
-		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
-	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic']; ?></span></h2>
 	</div>
@@ -372,9 +375,6 @@ if (isset($_POST['preview']) && empty($errors))
 }
 
 ?>
-	<div class="main-head">
-		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
-	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo ($tid) ? $lang_post['Compose your reply'] : $lang_post['Compose your topic'] ?></span></h2>
 	</div>
@@ -474,7 +474,7 @@ if ($fid)
 ?>
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Write message'] ?> <em><?php echo $lang_common['Required'] ?></em></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Write message'] ?> <em><?php echo $lang_common['Required'] ?></em></span></label>
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="14" cols="95"><?php echo isset($_POST['req_message']) ? forum_htmlencode($message) : (isset($forum_page['quote']) ? forum_htmlencode($forum_page['quote']) : ''); ?></textarea></span></div>
 					</div>
 				</div>
@@ -559,7 +559,7 @@ if ($tid && $forum_config['o_topic_review'] != '0')
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_post['Topic review'] ?></span></h2>
 	</div>
-	<div  id="topic-review" class="main-content main-frm">
+	<div id="topic-review" class="main-content main-frm">
 <?php
 
 	$forum_page['item_count'] = 0;

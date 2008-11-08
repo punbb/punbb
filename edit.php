@@ -211,6 +211,12 @@ ob_start();
 
 ($hook = get_hook('ed_main_output_start')) ? eval($hook) : null;
 
+?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php echo ($id == $cur_post['first_post_id']) ? $lang_post['Edit topic'] : $lang_post['Edit reply'] ?></span></h2>
+	</div>
+<?php
+
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($forum_page['errors']))
 {
