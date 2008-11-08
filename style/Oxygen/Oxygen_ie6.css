@@ -58,7 +58,8 @@ IE6 - FIXES
 
 #brd-admin-censoring #info-censored-intro, #brd-admin-ranks #info-ranks-intro { margin-bottom: 3em; }
 
-.main-forum .main-item .item-starter { margin-left: 1ex; }
+/* Adding space between topic subject and its' info */
+#brd-viewforum .item-nav, #brd-viewforum .item-starter { margin-left: 1ex; }
 
 #brd-stats .st-users { margin-bottom: -1ex; }
 
