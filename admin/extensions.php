@@ -704,7 +704,7 @@ if ($section == 'hotfixes')
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_admin_ext['Hotfixes available'] ?></span></h2>
 	</div>
-	<div class="main-content main-frm main-hotfixes">
+	<div class="main-content main-hotfixes">
 <?php
 
 	$num_exts = 0;
@@ -730,7 +730,7 @@ if ($section == 'hotfixes')
 		}
 	}
 
-	($hook = get_hook('aex_section_hotfixes_pre_display_ext_list')) ? eval($hook) : null;
+	($hook = get_hook('aex_section_hotfixes_pre_display_available_ext_list')) ? eval($hook) : null;
 
 	if ($num_exts)
 		echo "\t\t".implode("\n\t\t", $forum_page['ext_item'])."\n";
@@ -749,13 +749,13 @@ if ($section == 'hotfixes')
 	</div>
 <?php
 
-	($hook = get_hook('aex_section_hotfixes_output_start')) ? eval($hook) : null;
+	($hook = get_hook('aex_section_hotfixes_pre_display_installed_ext_list')) ? eval($hook) : null;
 
 ?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_admin_ext['Installed hotfixes'] ?></span></h2>
 	</div>
-	<div class="main-content main-frm main-hotfixes">
+	<div class="main-content main-hotfixes">
 <?php
 
 	$installed_count = 0;
@@ -874,7 +874,7 @@ else
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_admin_ext['Extensions available'] ?></span></h2>
 	</div>
-	<div class="main-content main-frm main-extensions">
+	<div class="main-content main-extensions">
 <?php
 
 	$num_exts = 0;
@@ -929,7 +929,7 @@ else
 	}
 	$d->close();
 
-	($hook = get_hook('aex_section_install_pre_display_ext_list')) ? eval($hook) : null;
+	($hook = get_hook('aex_section_install_pre_display_available_ext_list')) ? eval($hook) : null;
 
 	if ($num_exts)
 		echo "\t\t".implode("\n\t\t", $forum_page['ext_item'])."\n";
@@ -961,13 +961,13 @@ else
 	</div>
 <?php
 
-	($hook = get_hook('aex_section_manage_output_start')) ? eval($hook) : null;
+	($hook = get_hook('aex_section_manage_pre_display_installed_ext_list')) ? eval($hook) : null;
 
 ?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_admin_ext['Installed extensions'] ?></span></h2>
 	</div>
-	<div class="main-content main-frm main-extensions">
+	<div class="main-content main-extensions">
 <?php
 
 	$installed_count = 0;
