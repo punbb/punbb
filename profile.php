@@ -1908,14 +1908,14 @@ if ($forum_page['has_required']): ?>
 				$forum_page['languages'][] = $forum_page['entry'];
 		}
 		$forum_page['d']->close();
-		
+
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
 			array($lang_profile['Section settings'],forum_link($forum_url['profile_settings'], $id))
 		);
-		
+
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_settings'], $id);
@@ -2264,7 +2264,7 @@ if ($forum_page['has_required']): ?>
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
 			array($lang_profile['Section signature'],forum_link($forum_url['profile_signature'], $id))
 		);
-		
+
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_signature'], $id);
@@ -2372,14 +2372,14 @@ if ($forum_page['has_required']): ?>
 	else if ($section == 'avatar' && $forum_config['o_avatars'] == '1')
 	{
 		$forum_page['avatar_markup'] = generate_avatar_markup($id);
-		
+
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
 			array($lang_profile['Section avatar'],forum_link($forum_url['profile_avatar'], $id))
 		);
-		
+
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_avatar'], $id);
@@ -2504,14 +2504,14 @@ if ($forum_page['has_required']): ?>
 	{
 		if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0' || $forum_user['id'] == $id))
 			message($lang_common['Bad request']);
-		
+
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
 			array($lang_profile['Section admin'],forum_link($forum_url['profile_admin'], $id))
 		);
-		
+
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_admin'], $id);

@@ -14,7 +14,6 @@ if (!defined('FORUM'))
 
 // START SUBST - <!-- forum_about -->
 ob_start();
-
 ($hook = get_hook('ft_about_output_start')) ? eval($hook) : null;
 ($hook = get_hook('ft_about_pre_quickjump')) ? eval($hook) : null;
 
@@ -44,7 +43,6 @@ $forum_db->end_transaction();
 ?>
 	<p id="copyright"><?php echo sprintf($lang_common['Powered by'], '<a href="http://punbb.informer.com/">PunBB</a>'.($forum_config['o_show_version'] == '1' ? ' '.$forum_config['o_cur_version'] : '')); ?></p>
 <?php
-
 ($hook = get_hook('ft_about_end')) ? eval($hook) : null;
 
 $tpl_temp = forum_trim(ob_get_contents());

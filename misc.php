@@ -269,6 +269,9 @@ else if (isset($_GET['email']))
 	($hook = get_hook('mi_email_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php echo $forum_page['main_head'] ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box warn-box">
 			<p class="important"><?php echo $lang_misc['E-mail disclosure note'] ?></p>
@@ -470,6 +473,9 @@ else if (isset($_GET['report']))
 	($hook = get_hook('mi_report_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php echo $forum_page['main_head'] ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php printf($lang_common['Required warn'], '<em>'.$lang_common['Required'].'</em>') ?></p>
