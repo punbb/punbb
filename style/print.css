@@ -1,0 +1,36 @@
+/* This is just a test stylesheet to be completed later */
+
+.brd-common,
+.brd-form,
+.brd-modmenu,
+.brd-mainhead,
+.brd-mainfoot,
+.postlinks,
+#brd-maintitle,
+.post dt span,
+.brd-main h2 span.item2 {
+	display: none
+	}
+
+.post {
+	border-bottom: 1px dashed black;
+	margin-bottom: 2em;
+	padding-bottom: 1em;
+	}
+
+.post ul, .post dd {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+
+.post dt {
+	border-top: 1px dotted #666;
+	width: 40%;
+	padding-bottom: 0.5em;
+	}
+
+.brd-main h2 {
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid black;
+	}
