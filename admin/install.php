@@ -344,6 +344,12 @@ if (!isset($_POST['form_sent']))
 	}
 
 ?>
+			<div class="sf-set set5">
+				<div class="sf-box checkbox">
+					<span class="fld-input"><input id="fld15" type="checkbox" name="install_pun_repository" value="1" checked="checked" /></span>
+					<label for="fld15"><span><?php echo $lang_install['Pun repository'] ?></span> <?php echo $lang_install['Pun repository help'] ?></label><br />
+				</div>
+			</div>
 		</fieldset>
 		<div class="frm-buttons">
 			<span class="submit"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
@@ -383,6 +389,7 @@ else
 	$board_title = unescape(forum_trim($_POST['board_title']));
 	$board_descrip = unescape(forum_trim($_POST['board_descrip']));
 	$default_lang = preg_replace('#[\.\\\/]#', '', unescape(forum_trim($_POST['req_language'])));
+	$install_pun_repository = !empty($_POST['install_pun_repository']);
 
 	// Make sure base_url doesn't end with a slash
 	if (substr($_POST['req_base_url'], -1) == '/')
@@ -1763,6 +1770,44 @@ else
 			fclose($fh);
 
 			$written = true;
+		}
+	}
+
+
+	if ($install_pun_repository && is_readable(FORUM_ROOT.'extensions/pun_repository/manifest.xml'))
+	{
+		require FORUM_ROOT.'include/xml.php';
+
+		$ext_data = xml_to_array(file_get_contents(FORUM_ROOT.'extensions/pun_repository/manifest.xml'));
+
+		if (!empty($ext_data))
+		{
+			$query = array(
+				'INSERT'	=> 'id, title, version, description, author, uninstall, uninstall_note, dependencies',
+				'INTO'		=> 'extensions',
+				'VALUES'	=> '\'pun_repository\', \''.$forum_db->escape($ext_data['extension']['title']).'\', \''.$forum_db->escape($ext_data['extension']['version']).'\', \''.$forum_db->escape($ext_data['extension']['description']).'\', \''.$forum_db->escape($ext_data['extension']['author']).'\', NULL, NULL, \'||\'',
+			);
+
+			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+			if (isset($ext_data['extension']['hooks']['hook']))
+			{
+				foreach ($ext_data['extension']['hooks']['hook'] as $ext_hook)
+				{
+					$cur_hooks = explode(',', $ext_hook['attributes']['id']);
+					foreach ($cur_hooks as $cur_hook)
+					{
+						$query = array(
+							'INSERT'	=> 'id, extension_id, code, installed, priority',
+							'INTO'		=> 'extension_hooks',
+							'VALUES'	=> '\''.$forum_db->escape(forum_trim($cur_hook)).'\', \'pun_repository\', \''.$forum_db->escape(forum_trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
+						);
+
+						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+					}
+				}
+			}
+			echo 'done';
 		}
 	}
 
