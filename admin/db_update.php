@@ -1915,6 +1915,13 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+		// Empty the online table too (we did not convert strings there)
+		$query = array(
+			'DELETE'	=> 'online'
+		);
+
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 		// Empty the PHP cache
 		forum_clear_cache();
 
