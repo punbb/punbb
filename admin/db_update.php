@@ -804,6 +804,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$o_check_for_versions = array_key_exists('o_check_for_updates', $forum_config) ? $forum_config['o_check_for_updates'] : $check_for_updates;
 			$new_config[] = '\'o_check_for_versions\', \''.$o_check_for_versions.'\'';
 		}
+
 		// Insert new config option o_announcement_heading
 		if (!array_key_exists('o_announcement_heading', $forum_config))
 			$new_config[] = '\'o_announcement_heading\', \'\'';
@@ -814,13 +815,13 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		if (!empty($new_config))
 		{
-	      		$query = array(
-	      			'INSERT'	=> 'conf_name, conf_value',
-	      			'INTO'		=> 'config',
-	      			'VALUES'	=> $new_config
-	      		);
+			$query = array(
+				'INSERT'	=> 'conf_name, conf_value',
+				'INTO'		=> 'config',
+				'VALUES'	=> $new_config
+			);
 
-	      		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
 		unset($new_config);
 
