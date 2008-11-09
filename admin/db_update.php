@@ -1218,6 +1218,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			break;
 		}
 
+		// We need to set names to utf8 before we execute update query
+		$forum_db->set_names('utf8');
+
 		// Convert config
 		echo 'Converting configuration …'."<br />\n";
 		foreach ($forum_config as $conf_name => $conf_value)
@@ -1374,6 +1377,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			break;
 		}
 
+		// We need to set names to utf8 before we execute update query
+		$forum_db->set_names('utf8');
+
 		// Determine where to start
 		if ($start_at == 0)
 		{
@@ -1439,6 +1445,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$query_str = '?stage=conv_tables';
 			break;
 		}
+
+		// We need to set names to utf8 before we execute update query
+		$forum_db->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1506,6 +1515,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			break;
 		}
 
+		// We need to set names to utf8 before we execute update query
+		$forum_db->set_names('utf8');
+
 		// Determine where to start
 		if ($start_at == 0)
 			$start_at = 2;
@@ -1566,6 +1578,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$query_str = '?stage=conv_tables';
 			break;
 		}
+
+		// We need to set names to utf8 before we execute update query
+		$forum_db->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1632,6 +1647,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$query_str = '?stage=conv_tables';
 			break;
 		}
+
+		// We need to set names to utf8 before we execute update query
+		$forum_db->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
