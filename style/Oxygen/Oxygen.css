@@ -702,22 +702,28 @@ D - COMMON INTERFACE ELEMENTS
 /* Footer
 -------------------------------------------------------------*/
 
-#qjump {
+#brd-about p {
+	float: left;
+	margin: 0 1em;
+	}
+
+#brd-about #qjump {
 	float: left;
 	padding: 0.5em 0;
 	}
 
-#qjump div, #qjump label {
+#brd-about #qjump div, #qjump label {
 	padding: 0;
 	border: none;
 	}
 
-#copyright {
+#brd-about #copyright {
 	text-align: right;
 	float: right;
+	margin: 0;
 	}
 
-#querytime {
+#brd-about #querytime {
 	text-align: center;
 	font-size: 0.9em;
 	}
