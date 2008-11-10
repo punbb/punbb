@@ -983,7 +983,7 @@ else
 		);
 
 		if ($forum_config['o_check_for_versions'] == 1 && isset($forum_ext_last_versions[$id]) && version_compare($ext['version'], $forum_ext_last_versions[$id]['version'], '<'))
-			$forum_page['ext_actions']['latest_ver'] = '<a href="'.$forum_ext_last_versions[$id]['repo_url'].'/'.$id.'/'.$id.'.zip">'.$lang_admin_ext['Download latest version'].'</a>';
+			$forum_page['ext_actions']['latest_ver'] = '<span><a href="'.$forum_ext_last_versions[$id]['repo_url'].'/'.$id.'/'.$id.'.zip">'.$lang_admin_ext['Download latest version'].'</a></span>';
 
 		($hook = get_hook('aex_section_manage_pre_ext_actions')) ? eval($hook) : null;
 
