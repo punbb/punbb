@@ -4,7 +4,11 @@
 $lang_install = array(
 
 // Install Form
-'Install PunBB'			=>	'Install PunBB %s',
+'Install PunBB'				=>	'Install PunBB %s',
+'Choose language'			=>	'Change installer language',
+'Choose language help'		=>	'You can change the language of this install script if you find it easier to follow the instructions in your own language. Just choose your language from the list of installed ones below.',
+'Installer language'		=>	'Installer language:',
+'Choose language legend'	=>	'Installer language',
 'Install intro'				=>	'In order to install PunBB you must complete the form set out below. Please read the instructions provided before completing the form. If you encounter any difficulties with the installation, please refer to the documentation supplied as part of PunBB\'s download package.',
 'Part1'						=>	'Part 1 - Database setup',
 'Part1 intro'				=>	'Please enter the requested information in order to setup your database for PunBB. You must know all the information asked for before proceeding with the installation. Help with completing this part of the form is set out below.',
