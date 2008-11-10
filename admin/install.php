@@ -147,8 +147,7 @@ if (!isset($_POST['form_sent']))
 	if (count($languages) > 1)
 	{
 
-?>
-	<form class="frm-form" method="get" accept-charset="utf-8" action="install.php">
+?>	<form class="frm-form" method="get" accept-charset="utf-8" action="install.php">
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_install['Choose language'] ?></span></h2>
 	</div>
@@ -164,8 +163,7 @@ if (!isset($_POST['form_sent']))
 		foreach ($languages as $lang)
 			echo "\t\t\t\t\t".'<option value="'.$lang.'"'.($language == $lang ? ' selected="selected"' : '').'>'.$lang.'</option>'."\n";
 
-?>
-					</select></span>
+?>					</select></span>
 				</div>
 			</div>
 		</fieldset>
@@ -178,8 +176,7 @@ if (!isset($_POST['form_sent']))
 
 	}
 
-?>
-	<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
+?>	<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
 	<div class="hidden">
 		<input type="hidden" name="form_sent" value="1" />
 	</div>
@@ -211,8 +208,7 @@ if (!isset($_POST['form_sent']))
 	foreach ($db_extensions as $db_type)
 		echo "\t\t\t\t\t".'<option value="'.$db_type[0].'">'.$db_type[1].'</option>'."\n";
 
-?>
-					</select></span>
+?>					</select></span>
 				</div>
 			</div>
 			<div class="sf-set set1">
@@ -318,8 +314,8 @@ if (!isset($_POST['form_sent']))
 
 	if (count($languages) > 1)
 	{
-?>
-			<div class="sf-set set4">
+
+?>			<div class="sf-set set4">
 				<div class="sf-box text">
 					<label for="fld14"><span><?php echo $lang_install['Default language'] ?></span> <small><?php echo $lang_install['Default language help'] ?></small></label><br />
 					<span class="fld-input"><select id="fld14" name="req_language">
@@ -328,28 +324,35 @@ if (!isset($_POST['form_sent']))
 		foreach ($languages as $lang)
 			echo "\t\t\t\t\t".'<option value="'.$lang.'"'.($language == $lang ? ' selected="selected"' : '').'>'.$lang.'</option>'."\n";
 
-?>
-					</select></span>
+?>					</select></span>
 				</div>
 			</div>
 <?php
+
 	}
 	else
 	{
-?>
-			<div class="hidden">
+
+?>			<div class="hidden">
 				<input type="hidden" name="req_language" value="<?php echo $languages[0]; ?>" />
 			</div>
 <?php
 	}
 
-?>
-			<div class="sf-set set5">
+	if (file_exists(FORUM_ROOT.'extensions/pun_repository/manifest.xml'))
+	{
+
+?>			<div class="sf-set set5">
 				<div class="sf-box checkbox">
 					<span class="fld-input"><input id="fld15" type="checkbox" name="install_pun_repository" value="1" checked="checked" /></span>
 					<label for="fld15"><span><?php echo $lang_install['Pun repository'] ?></span> <?php echo $lang_install['Pun repository help'] ?></label><br />
 				</div>
 			</div>
+<?php
+
+	}
+
+?>
 		</fieldset>
 		<div class="frm-buttons">
 			<span class="submit"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
