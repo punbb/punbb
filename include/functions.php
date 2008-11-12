@@ -937,10 +937,17 @@ function get_title($user)
 function get_scheme_packs()
 {
   	$schemes = array();
-
-	foreach (glob(FORUM_ROOT.'include/url/*') as $dirname)
-		if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
-			$schemes[] = basename($dirname);
+	
+	if($handle = opendir(FORUM_ROOT.'include/url'))
+	{
+		while (false !== ($dirname = readdir($handle)))
+		{
+			$dirname =  FORUM_ROOT.'include/url/'.$dirname;
+			if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
+				$schemes[] = basename($dirname);
+		}
+		closedir($handle);
+	}
 
 	($hook = get_hook('fn_get_scheme_packs_end')) ? eval($hook) : null;
 
@@ -952,12 +959,17 @@ function get_scheme_packs()
 function get_style_packs()
 {
 	$styles = array();
-
-	foreach (glob(FORUM_ROOT.'style/*') as $dirname)
+	
+	if($handle = opendir(FORUM_ROOT.'style'))
 	{
-		$tempname = basename($dirname);
-		if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
-			$styles[] = $tempname;
+		while (false !== ($dirname = readdir($handle)))
+		{
+			$dirname =  FORUM_ROOT.'style/'.$dirname;
+			$tempname = basename($dirname);
+			if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
+				$styles[] = $tempname;
+		}
+		closedir($handle);
 	}
 
 	($hook = get_hook('fn_get_style_packs_end')) ? eval($hook) : null;
@@ -971,9 +983,16 @@ function get_language_packs()
 {
 	$languages = array();
 
-	foreach (glob(FORUM_ROOT.'lang/*') as $dirname)
-		if (is_dir($dirname) && file_exists($dirname.'/common.php'))
-			$languages[] = basename($dirname);
+	if($handle = opendir(FORUM_ROOT.'lang'))
+	{
+		while (false !== ($dirname = readdir($handle)))
+		{
+			$dirname =  FORUM_ROOT.'lang/'.$dirname;
+			if (is_dir($dirname) && file_exists($dirname.'/common.php'))
+				$languages[] = basename($dirname);
+		}
+		closedir($handle);
+	}
 
 	($hook = get_hook('fn_get_language_packs_end')) ? eval($hook) : null;
 
