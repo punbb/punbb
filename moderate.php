@@ -755,7 +755,12 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 			message($lang_misc['No topics selected']);
 
 		if (count($topics) == 1)
+		{
 			$topics = $topics[0];
+			$action = 'single';
+		}
+		else
+			$action = 'multiple';
 	}
 	else
 	{
@@ -764,7 +769,9 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 			message($lang_common['Bad request']);
 
 		$action = 'single';
-
+	}
+	if ($action == 'single')
+	{
 		// Fetch the topic subject
 		$query = array(
 			'SELECT'	=> 't.subject',
@@ -815,7 +822,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	$forum_page['hidden_fields'] = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
-		'topics'		=> '<input type="hidden" name="topics" value="'.$topics.'" />'
+		'topics'		=> '<input type="hidden" name="topics" value="'.($action == 'single' ? $topics : implode(',', $topics)).'" />'
 	);
 
 	// Setup breadcrumbs
@@ -921,7 +928,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		message($lang_misc['No topics selected']);
 
 	if (count($topics) == 1)
-			message($lang_misc['Merge error']);
+		message($lang_misc['Merge error']);
 
 	if (isset($_POST['merge_topics_comply']))
 	{
