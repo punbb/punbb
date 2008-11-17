@@ -1822,9 +1822,9 @@ else
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PunBB Installation</title>
 <link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_forms.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_cs.css" />
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_ie.css" /><![endif]-->
+<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_ie7.css" /><![endif]-->
 </head>
 
 <body>
@@ -1857,17 +1857,19 @@ if (!$written)
 {
 
 ?>
-		<div class="ct-box warn-box">
+		<div class="ct-box info-box">
 			<p class="warn"><?php echo $lang_install['No write info 1'] ?></p>
 			<p class="warn"><?php printf($lang_install['No write info 2'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
 		</div>
-<?php if (!empty($alerts)): ?>		<div class="ct-box error-box">
-			<?php echo $lang_install['Warning'] ?></p>
+<?php if (!empty($alerts)): ?>
+		<div class="ct-box error-box">
+			<p class="warn"><strong><?php echo $lang_install['Warning'] ?></strong></p>
 			<ul>
 				<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
 			</ul>
 		</div>
-<?php endif; ?>		<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
+<?php endif; ?>
+		<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
 			<div class="hidden">
 			<input type="hidden" name="generate_config" value="1" />
 			<input type="hidden" name="db_type" value="<?php echo $db_type; ?>" />
