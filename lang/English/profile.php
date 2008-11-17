@@ -6,7 +6,6 @@ $lang_profile = array(
 'Profile redirect'			=>	'Profile updated. Redirecting …',
 'Instructions'				=>	'You will be redirected back to this page',
 'Update profile'			=>	'Update profile',
-'Subform heading'			=>	'%1$s : %2$s',
 
 // Administration stuff
 'User delete redirect'		=>	'User deleted. Redirecting …',
