@@ -123,9 +123,6 @@ if ($action == 'change_pass')
 				($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password']), $id)
 			);
 
-			// Setup headings
-			$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], sprintf($lang_profile['Users profile'], forum_htmlencode($user['username'])), end($forum_page['crumbs']));
-
 			($hook = get_hook('pf_change_pass_key_pre_header_load')) ? eval($hook) : null;
 
 			define('FORUM_PAGE', 'profile-changepass');
@@ -138,7 +135,7 @@ if ($action == 'change_pass')
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+		<h2 class="hn"><span><?php echo $forum_page['own_profile'] ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 <?php
@@ -290,9 +287,6 @@ if ($action == 'change_pass')
 		($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password'], $id))
 	);
 
-	// Setup headings
-	$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], sprintf($lang_profile['Users profile'], forum_htmlencode($user['username'])), end($forum_page['crumbs']));
-
 	($hook = get_hook('pf_change_pass_normal_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'profile-changepass');
@@ -305,7 +299,7 @@ if ($action == 'change_pass')
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+		<h2 class="hn"><span><?php echo $forum_page['own_profile'] ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 <?php
@@ -537,9 +531,6 @@ else if ($action == 'change_email')
 		($forum_page['own_profile']) ? array($lang_profile['Change your e-mail'], forum_link($forum_url['change_email'], $id)) : array(sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username'])), forum_link($forum_url['change_email'], $id))
 	);
 
-	// Setup headings
-	$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], sprintf($lang_profile['Users profile'], forum_htmlencode($user['username'])), end($forum_page['crumbs']));
-
 	($hook = get_hook('pf_change_email_normal_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'profile-changemail');
@@ -666,11 +657,6 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section admin']), forum_link($forum_url['profile_admin'], $id)),
 		array($lang_profile['Delete user'], forum_link($forum_url['delete_user'], $id))
-	);
-
-	// Setup headings
-	$forum_page['main_head'] = array(
-		'head' => '<h1 class="hn"><span>'.sprintf($lang_profile['Subform heading'], sprintf($lang_profile['Users profile'], forum_htmlencode($user['username'])), end($forum_page['crumbs'])).'</span></h1>'
 	);
 
 	($hook = get_hook('pf_delete_user_pre_header_load')) ? eval($hook) : null;
@@ -1597,9 +1583,6 @@ else
 		if (!$forum_user['is_admmod'] && $forum_config['o_regs_verify'] == '1')
 			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_email'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))).'</a></span>';
 
-		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section about']);
-
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 		($hook = get_hook('pf_change_details_about_pre_header_load')) ? eval($hook) : null;
@@ -1708,9 +1691,6 @@ else
 
 		// Does the form have required fields
 		$forum_page['has_required'] = ((($forum_user['is_admmod'] && ($forum_user['g_id'] == FORUM_ADMIN || $forum_user['g_mod_rename_users'] == '1')) || ($forum_user['is_admmod'] || $forum_config['o_regs_verify'] != '1')) ? true : false);
-
-		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section identity']);
 
 		($hook = get_hook('pf_change_details_identity_pre_header_load')) ? eval($hook) : null;
 
@@ -1924,9 +1904,6 @@ if ($forum_page['has_required']): ?>
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 		);
-
-		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section settings']);
 
 		($hook = get_hook('pf_change_details_settings_pre_header_load')) ? eval($hook) : null;
 
@@ -2283,9 +2260,6 @@ if ($forum_page['has_required']): ?>
 		if ($forum_config['o_smilies_sig'] == '1')
 			$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
 
-		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section signature']);
-
 		($hook = get_hook('pf_change_details_signature_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-signature');
@@ -2406,9 +2380,6 @@ if ($forum_page['has_required']): ?>
 			$forum_page['frm_info']['avatar_info'] = '<li><span>'.$lang_profile['Avatar info type'].'</span></li>';
 			$forum_page['frm_info']['avatar_size'] = '<li><span>'.sprintf($lang_profile['Avatar info size'], $forum_config['o_avatars_width'], $forum_config['o_avatars_height'], forum_number_format($forum_config['o_avatars_size']), forum_number_format(ceil($forum_config['o_avatars_size'] / 1024))).'</span></li>';
 		}
-
-		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section avatar']);
 
 		($hook = get_hook('pf_change_details_avatar_pre_header_load')) ? eval($hook) : null;
 
@@ -2531,9 +2502,6 @@ if ($forum_page['has_required']): ?>
 			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'?add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 			$forum_page['user_management']['delete'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Delete user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['delete_user'], $id).'">'.$lang_profile['Delete user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		}
-
-		// Setup headings
-		$forum_page['main_head'] = sprintf($lang_profile['Subform heading'], forum_htmlencode(end($forum_page['crumbs'][0])), $lang_profile['Section admin']);
 
 		($hook = get_hook('pf_change_details_admin_pre_header_load')) ? eval($hook) : null;
 

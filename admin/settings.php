@@ -266,8 +266,6 @@ if (!$section || $section == 'setup')
 		array($lang_admin_common['Setup'], forum_link($forum_url['admin_settings_setup']))
 	);
 
-	$forum_page['main_head'] = $lang_admin_common['Settings'];
-
 	($hook = get_hook('aop_setup_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'settings');
