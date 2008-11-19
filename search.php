@@ -304,7 +304,7 @@ if (isset($query))
 		else
 		{
 			// Start from scratch
-			$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_title_status'] = array();
+			$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_subject_status'] = array();
 			$forum_page['item_indicator'] = '';
 
 			// Assemble the Topic heading
@@ -338,7 +338,6 @@ if (isset($query))
 			($hook = get_hook('se_results_topics_row_pre_item_title_merge')) ? eval($hook) : null;
 
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
-
 
 			if ($cur_set['sticky'] == '1')
 			{
