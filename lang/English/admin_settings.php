@@ -43,7 +43,7 @@ $lang_admin_settings = array(
 'Report email label'			=>	'By e-mail to those on mailing list.',
 'Setup URL'						=>	'URL Scheme (<abbr title ="Search Engine Friendly">SEF</abbr> URLs) for your board\'s pages',
 'Setup URL legend'				=>	'Select a scheme',
-'URL scheme info'				=>	'<strong>WARNING!</strong> If you select any scheme other than the default scheme you must copy/upload the file .htaccess from the extras directory into the forum root directory. The server that hosts the forums must be configured with mod_rewrite support and must allow the use of .htaccess files. For servers other than Apache, please refer to your servers documentation.',
+'URL scheme info'				=>	'<strong>WARNING!</strong> If you select any scheme other than the default scheme you must copy/rename the file <em>.htaccess.dist</em> to <em>.htaccess</em> in the forum root directory. The server that hosts the forums must be configured with mod_rewrite support and must allow the use of <em>.htaccess</em> files. For servers other than Apache, please refer to your servers documentation.',
 'URL scheme label'				=>	'URL scheme',
 'URL scheme help'				=>	'Make sure you have read and understood the information above.',
 'Setup links'					=>	'Add your own links to the main navigation menu',
