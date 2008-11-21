@@ -700,7 +700,7 @@ function do_bbcode($text, $is_signature = false)
 
 	$replace[] = '<strong>$1</strong>';
 	$replace[] = '<em>$1</em>';
-	$replace[] = '<em class="bbuline">$1</em>';
+	$replace[] = '<span class="bbu">$1</span>';
 	$replace[] = '<span style="color: $1">$2</span>';
 	$replace[] = '</p><h5>$1</h5><p>';
 
