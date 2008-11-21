@@ -66,15 +66,15 @@ body {
 	background: #F2F4FA;
 	}
 
-.brd .main-content .main-item .hn .item-status em.sticky {
- 	color: #314B60;
- 	font-weight: bold;
- 	}
+.brd .main-content .main-item .hn .item-status em.sticky ,
+.brd .main-content .main-item .hn .item-status em.closed{
+	color: #314B60;
+	font-weight: bold;
+	}
 
-.brd .main-content .main-item .hn .item-status em.closed {
- 	color: #314B60;
- 	font-weight: bold;
- 	}
+.brd .main-content .main-item .hn .item-status em.moved {
+	color: #666;
+	}
 
 .brd .post * {
 	border-color: #DDE4EB

@@ -49,7 +49,7 @@ $lang_misc = array(
 'Show more users'			=>	'Show more users for this IP',
 
 // Moderate forum
-'Moderate forum head'		=>	'Moderate : %s',
+'Moderate forum head'		=>	'Moderate: %s',
 'Topics'					=>	'Topics',
 'Move topic'				=>	'Move topic',
 'Move topics'				=>	'Move topics',
@@ -84,7 +84,7 @@ $lang_misc = array(
 'Delete posts'				=>	'Delete selected posts',
 'Split posts'				=>	'Split selected posts',
 'Delete whole topic'		=>	'Delete whole topic',
-'Moderate topic head'		=>	'Moderate topic : %s',
+'Moderate topic head'		=>	'Moderate topic: %s',
 'New subject'				=>	'New topic subject:',
 'Select post'				=>	'Select post', // Label for checkbox
 'Confirm post delete'		=>	'Confirm deletion of all selected posts',

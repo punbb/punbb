@@ -304,7 +304,7 @@ if (isset($query))
 		else
 		{
 			// Start from scratch
-			$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_subject_status'] = array();
+			$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_title_status'] = array();
 			$forum_page['item_indicator'] = '';
 
 			// Assemble the Topic heading
@@ -315,6 +315,23 @@ if (isset($query))
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">'.$lang_forum['You posted indicator'].'</span>';
 				$forum_page['item_status']['posted'] = 'posted';
 			}
+
+			if ($cur_set['sticky'] == '1')
+			{
+				$forum_page['item_title_status']['sticky'] = '<em class="sticky">'.$lang_forum['Sticky'].'</em>';
+				$forum_page['item_status']['sticky'] = 'sticky';
+			}
+
+			if ($cur_set['closed'] != '0')
+			{
+				$forum_page['item_title_status']['closed'] = '<em class="closed">'.$lang_forum['Closed'].'</em>';
+				$forum_page['item_status']['closed'] = 'closed';
+			}
+
+			($hook = get_hook('se_results_topics_row_pre_item_subject_status_merge')) ? eval($hook) : null;
+
+			if (!empty($forum_page['item_title_status']))
+				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(', ', $forum_page['item_title_status'])).'</span>';
 
 			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.forum_htmlencode($cur_set['subject']).'</a>';
 
@@ -338,23 +355,6 @@ if (isset($query))
 			($hook = get_hook('se_results_topics_row_pre_item_title_merge')) ? eval($hook) : null;
 
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
-
-			if ($cur_set['sticky'] == '1')
-			{
-				$forum_page['item_subject_status']['sticky'] = $lang_forum['Sticky'];
-				$forum_page['item_status']['sticky'] = 'sticky';
-			}
-
-			if ($cur_set['closed'] != '0')
-			{
-				$forum_page['item_subject_status']['closed'] = $lang_forum['Closed'];
-				$forum_page['item_status']['closed'] = 'closed';
-			}
-
-			($hook = get_hook('se_results_topics_row_pre_item_subject_status_merge')) ? eval($hook) : null;
-
-			if (!empty($forum_page['item_subject_status']))
-				$forum_page['item_subject']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(' ', $forum_page['item_subject_status'])).'</span>';
 
 			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_set['poster']).'</cite>').'</span>';
 
