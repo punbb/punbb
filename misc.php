@@ -33,7 +33,7 @@ if ($action == 'rules')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		$lang_common['Rules']
+		array($lang_common['Rules'], forum_link($forum_url['rules']))
 	);
 
 	($hook = get_hook('mi_rules_pre_header_load')) ? eval($hook) : null;
@@ -458,9 +458,6 @@ else if (isset($_GET['report']))
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		$lang_misc['Report post']
 	);
-
-	// Setup main heading
-	$forum_page['main_head'] = end($forum_page['crumbs']);
 
 	($hook = get_hook('mi_report_pre_header_load')) ? eval($hook) : null;
 

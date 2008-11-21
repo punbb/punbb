@@ -1018,9 +1018,6 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		$lang_misc['Merge topics']
 	);
 
-	// Setup main heading
-	$forum_page['main_title'] = end($forum_page['crumbs']);
-
 	($hook = get_hook('mr_merge_topics_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'dialogue');
