@@ -27,8 +27,6 @@ $lang_ul = array(
 'Perform new search'	=>	'Perform new user search',
 'Submit user search'	=>	'Submit user criteria',
 'Title'					=>	'Title',
-'Posts'					=>	'Posts',
-'User list options'		=>	'User list options'
-
+'Posts'					=>	'Posts'
 
 );
