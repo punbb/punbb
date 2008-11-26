@@ -147,10 +147,11 @@ else
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Information'], forum_link($forum_url['admin_index']))
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 );
+if ($forum_user['g_id'] == FORUM_ADMIN)
+	$forum_page['crumbs'][] = array($lang_admin_common['Start'], forum_link($forum_url['admin_index']));
+$forum_page['crumbs'][] = array($lang_admin_common['Information'], forum_link($forum_url['admin_index']));
 
 ($hook = get_hook('ain_pre_header_load')) ? eval($hook) : null;
 

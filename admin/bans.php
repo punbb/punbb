@@ -134,11 +134,12 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans'])),
-		$lang_admin_bans['Ban advanced']
+		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 	);
+	if ($forum_user['g_id'] == FORUM_ADMIN)
+		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']));
+	$forum_page['crumbs'][] = $lang_admin_bans['Ban advanced'];
 
 	($hook = get_hook('aba_add_edit_ban_pre_header_load')) ? eval($hook) : null;
 
@@ -390,10 +391,12 @@ $forum_page['hidden_fields'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-	array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']))
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 );
+if ($forum_user['g_id'] == FORUM_ADMIN)
+	$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+$forum_page['crumbs'][] = array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']));
+
 
 ($hook = get_hook('aba_pre_header_load')) ? eval($hook) : null;
 

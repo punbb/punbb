@@ -50,11 +50,12 @@ if (isset($_GET['ip_stats']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
-		$lang_admin_users['User search results']
+		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 	);
+	if ($forum_user['g_id'] == FORUM_ADMIN)
+		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
 
 	($hook = get_hook('aus_ip_stats_pre_header_load')) ? eval($hook) : null;
 
@@ -198,11 +199,12 @@ else if (isset($_GET['show_users']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
-		$lang_admin_users['User search results']
+		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 	);
+	if ($forum_user['g_id'] == FORUM_ADMIN)
+		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
 
 	($hook = get_hook('aus_show_users_pre_header_load')) ? eval($hook) : null;
 
@@ -605,11 +607,12 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
-		$lang_admin_users['Ban users']
+		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 	);
+	if ($forum_user['g_id'] == FORUM_ADMIN)
+		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = $lang_admin_users['Ban users'];
 
 	($hook = get_hook('aus_ban_users_pre_header_load')) ? eval($hook) : null;
 
@@ -899,11 +902,12 @@ else if (isset($_POST['find_user']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
-		$lang_admin_users['User search results']
+		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 	);
+	if ($forum_user['g_id'] == FORUM_ADMIN)
+		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
 
 	($hook = get_hook('aus_find_user_pre_header_load')) ? eval($hook) : null;
 
@@ -1076,10 +1080,11 @@ $forum_page['form_action'] = '';
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-	array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 );
+if ($forum_user['g_id'] == FORUM_ADMIN)
+	$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
+$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
 
 ($hook = get_hook('aus_search_form_pre_header_load')) ? eval($hook) : null;
 

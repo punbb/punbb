@@ -138,10 +138,12 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-	array($lang_admin_common['Censoring'], forum_link($forum_url['admin_censoring']))
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 );
+if ($forum_user['g_id'] == FORUM_ADMIN)
+	$forum_page['crumbs'][] = array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup']));
+$forum_page['crumbs'][] = array($lang_admin_common['Censoring'], forum_link($forum_url['admin_censoring']));
+
 
 ($hook = get_hook('acs_pre_header_load')) ? eval($hook) : null;
 

@@ -54,10 +54,11 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
-	array($lang_admin_common['Reports'], forum_link($forum_url['admin_reports']))
+	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
 );
+if ($forum_user['g_id'] == FORUM_ADMIN)
+	$forum_page['crumbs'][] = array($lang_admin_common['Management'], forum_link($forum_url['admin_reports']));
+$forum_page['crumbs'][] = array($lang_admin_common['Reports'], forum_link($forum_url['admin_reports']));
 
 ($hook = get_hook('arp_pre_header_load')) ? eval($hook) : null;
 
