@@ -459,6 +459,9 @@ else if (isset($_GET['report']))
 		$lang_misc['Report post']
 	);
 
+	// Setup main heading
+	$forum_page['main_head'] = end($forum_page['crumbs']);
+
 	($hook = get_hook('mi_report_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'report');
