@@ -251,7 +251,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		else if (isset($forum_updates['version']))
 			$alert_items['update_version'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.sprintf($lang_common['Updates version'], $forum_updates['version']).'</p>';
 		else if (isset($forum_updates['hotfix']))
-			$alert_items['update_hotfix'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.$lang_common['Updates hf'].'</p>';
+			$alert_items['update_hotfix'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.sprintf($lang_common['Updates hf'], forum_link($forum_url['admin_extensions_hotfixes'])).'</p>';
 	}
 
 	// Warn the admin that their version of the database is newer than the version supported by the code

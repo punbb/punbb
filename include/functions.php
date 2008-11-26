@@ -2591,9 +2591,9 @@ function csrf_confirm_form()
 	if (isset($_POST['confirm_cancel']))
 		redirect(forum_htmlencode($_POST['prev_url']), $lang_common['Cancel redirect']);
 
-		// A helper function for csrf_confirm_form. It takes a multi-dimensional array and returns it as a
+	// A helper function for csrf_confirm_form. It takes a multi-dimensional array and returns it as a
 	// single-dimensional array suitable for use in hidden fields.
-		function _csrf_confirm_form($key, $values)
+	function _csrf_confirm_form($key, $values)
 	{
 		$fields = array();
 
