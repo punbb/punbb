@@ -978,10 +978,6 @@ else if ($section == 'features')
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Update check'] ?></span> <?php echo $lang_admin_settings['Update check label'] ?></label>
 					</div>
 				</div>
-<?php ($hook = get_hook('aop_features_pre_updates_fieldset_end')) ? eval($hook) : null; ?>
-			</fieldset>
-			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_admin_settings['Check for versions'] ?></strong></legend>
 <?php ($hook = get_hook('aop_features_pre_version_updates_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
@@ -989,7 +985,7 @@ else if ($section == 'features')
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Check for versions'] ?></span> <?php echo $lang_admin_settings['Auto check for versions'] ?></label>
 					</div>
 				</div>
-<?php ($hook = get_hook('aop_features_pre_version_updates_fieldset_end')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('aop_features_pre_updates_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('aop_features_updates_fieldset_end')) ? eval($hook) : null; ?>
 <?php else: ?>
