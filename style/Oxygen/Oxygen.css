@@ -1554,7 +1554,9 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	border-left-width: 0.7em;
 	text-indent: 0.5em;
 	}
-
+.brd .postbody .author-info li span strong {
+	font-weight: normal;
+}
 .brd .online .author-ident .userstatus span {
 	font-weight: bold;
 	}
