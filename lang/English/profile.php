@@ -3,21 +3,21 @@
 $lang_profile = array(
 
 // Navigation and sections
-'Profile redirect'			=>	'Profile updated. Redirecting …',
+'Profile redirect'			=>	'Profile updated. Redirecting…',
 'Instructions'				=>	'You will be redirected back to this page',
 'Update profile'			=>	'Update profile',
 
 // Administration stuff
-'User delete redirect'		=>	'User deleted. Redirecting …',
+'User delete redirect'		=>	'User deleted. Redirecting…',
 'Section admin'				=>	'Administration',
 'Delete user'				=>	'Delete user',
 'Delete warning'			=>	'<strong>Warning!</strong> Once deleted a user and/or their posts cannot be restored.',
 'Delete posts info'			=>	'<strong>Warning!</strong> If you choose not to delete this user\'s posts they can only be deleted manually at a later time.',
 'Delete posts'				=>	'Delete posts',
 'Delete posts label'		=>	'Delete any posts and topics %s has made.',
-'Group membership redirect'	=>	'Group membership updated. Redirecting …',
-'Moderate forums redirect'	=>	'Forum moderator rights updated. Redirecting …',
-'Ban redirect'				=>	'Redirecting …',
+'Group membership redirect'	=>	'Group membership updated. Redirecting…',
+'Moderate forums redirect'	=>	'Forum moderator rights updated. Redirecting…',
+'Ban redirect'				=>	'Redirecting…',
 'Ban user'					=>	'Ban user',
 'Ban user info'				=>	'Ban this user via the administration console.',
 'Delete user info'			=>	'Permanently delete this user and, optionally, all their posts.',
@@ -32,7 +32,7 @@ $lang_profile = array(
 // Avatar stuff
 'Avatar welcome'			=>	'Set an avatar image to enhance your forum identity',
 'Avatar welcome user'		=>	'Set an avatar image to enhance  %s\'s forum identity',
-'Avatar deleted redirect'	=>	'Avatar deleted. Redirecting …',
+'Avatar deleted redirect'	=>	'Avatar deleted. Redirecting…',
 'Avatars disabled'			=>	'The administrator has disabled avatar support.',
 'No file'					=>	'You did not select a file for upload.',
 'Too large ini'				=>	'The selected file was too large to upload. The server didn\'t allow the upload.',
@@ -169,7 +169,7 @@ $lang_profile = array(
 'Change pass errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your password can be updated:',
 'Pass logout'				=>	'A user is currently logged in. Please logout and try again.',
 'Pass key bad'				=>	'The specified password activation key was incorrect or has expired. Please re-request a new password. If that fails, contact the forum administrator at %s.',
-'Pass updated'				=>	'Password updated. Login with your new password. Redirecting …',
+'Pass updated'				=>	'Password updated. Login with your new password. Redirecting…',
 'Change your password'		=>	'Change your password',
 'Change user password'		=>	'Change %s\'s password',
 'Old password'				=>	'Old password',
@@ -177,7 +177,7 @@ $lang_profile = array(
 'New password'				=>	'New password',
 'Confirm new password'		=>	'Confirm new password',
 'Wrong old password'		=>	'The old password you entered was incorrect.',
-'Pass updated redirect'		=>	'Password updated. Redirecting …',
+'Pass updated redirect'		=>	'Password updated. Redirecting…',
 
 // Change E-mail stuff
 'Change e-mail errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your e-mail address can be updated:',
@@ -201,7 +201,7 @@ $lang_profile = array(
 
 // Registration stuff (some of these also used by profile)
 'No new regs'				=>	'This forum is not accepting new registrations.',
-'Reg cancel redirect'		=>	'Registration cancelled. Redirecting …',
+'Reg cancel redirect'		=>	'Registration cancelled. Redirecting…',
 'Agreement'					=>	'Agreement',
 'Agreement label'			=>	'I agree to the rules set out above and wish to register.',
 'Agree'						=>	'Agree',
@@ -212,7 +212,7 @@ $lang_profile = array(
 'Banned e-mail'				=>	'The e-mail address you entered is banned in this forum. Please choose another e-mail address.',
 'Dupe e-mail'				=>	'Someone else is already registered with that e-mail address. Please choose another e-mail address.',
 'Reg e-mail'				=>	'Thank you for registering. An email has been sent to the specified address with instructions on how to activate your new account. If it doesn\'t arrive you can contact the forum administrator at %s.',
-'Reg complete'				=>	'Registration complete. Logging in and redirecting …',
+'Reg complete'				=>	'Registration complete. Logging in and redirecting…',
 'Register errors'			=>	'<strong>Warning!</strong> The following errors must be corrected before you can register:',
 'E-mail info'				=>	'<strong>Important!</strong> An e-mail will be sent to your new address with an activation link. You must click the link in the e-mail you receive to activate the new address. You must therefore ensure that you enter a valid and current e-mail address.',
 'Reg e-mail info'			=>	'<strong>Important!</strong> An e-mail with an activation link will be sent to the address you provide. You must click the link in the e-mail in order to activate your new account. You must therefore ensure that you enter a valid and current e-mail address.',

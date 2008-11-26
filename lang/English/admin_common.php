@@ -5,7 +5,7 @@ $lang_admin_common = array(
 
 // Common items
 'Save changes'					=>	'Save changes',
-'Redirect'						=>	'Redirecting …',
+'Redirect'						=>	'Redirecting…',
 'Add'							=>	'Add',
 'Add new'						=>	'Add new',
 'Delete'						=>	'Delete',
@@ -19,7 +19,7 @@ $lang_admin_common = array(
 'Save'							=>	'Save',
 'E-mail'						=>	'E-mail',
 'Cancel'						=>	'Cancel',
-'Cancel redirect'				=>	'Operation cancelled. Redirecting …',
+'Cancel redirect'				=>	'Operation cancelled. Redirecting…',
 'Unknown'						=>	'Unknown',
 'Delete help'					=>	'Requires confirmation via separate form.',
 'Select all'					=>	'Select all',
