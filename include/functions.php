@@ -448,7 +448,7 @@ function generate_navlinks()
 		else
 		{
 			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
-			$links['profile'] = '<li id="navprofile"'.((FORUM_PAGE == 'editprofile' || FORUM_PAGE == 'viewprofile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
+			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
 			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
 			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin'].'</a></li>';
 		}
