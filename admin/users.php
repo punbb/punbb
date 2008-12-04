@@ -817,6 +817,14 @@ else if (isset($_POST['find_user']))
 	$form = $_POST['form'];
 	$form['username'] = $_POST['username'];
 
+	//Check up for order_by and direction values
+	$order_by = isset($_POST['order_by']) ? forum_trim($_POST['order_by']) : null;
+	$direction = isset($_POST['direction']) ? forum_trim($_POST['direction']) : null;
+	if ($order_by == null || $direction == null)
+		message($lang_common['Bad request']);
+	if (!in_array($order_by, array('username', 'email', 'num_posts', 'num_posts', 'registered')) || !in_array($direction, array('ASC', 'DESC')))
+		message($lang_common['Bad request']);
+
 	($hook = get_hook('aus_find_user_selected')) ? eval($hook) : null;
 
 	// forum_trim() all elements in $form
@@ -829,8 +837,6 @@ else if (isset($_POST['find_user']))
 	$last_post_before = forum_trim($_POST['last_post_before']);
 	$registered_after = forum_trim($_POST['registered_after']);
 	$registered_before = forum_trim($_POST['registered_before']);
-	$order_by = $_POST['order_by'];
-	$direction = $_POST['direction'];
 	$user_group = $_POST['user_group'];
 
 	if ((!empty($posts_greater) || !empty($posts_less)) && !ctype_digit($posts_greater.$posts_less))
@@ -891,7 +897,7 @@ else if (isset($_POST['find_user']))
 			)
 		),
 		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions),
-		'ORDER BY'	=> $forum_db->escape($order_by).' '.$forum_db->escape($direction)
+		'ORDER BY'	=> $order_by.' '.$direction
 	);
 
 	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
