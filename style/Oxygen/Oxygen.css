@@ -786,7 +786,10 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	padding: 0.5em 0;
 	white-space: nowrap;
 	font-weight: normal;
-	text-transform: capitalize;
+	}
+
+.brd .item-summary strong:first-letter {
+	text-transform: uppercase;
 	}
 
 .brd .item-summary .subject-title {
