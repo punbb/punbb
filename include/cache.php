@@ -371,7 +371,7 @@ function generate_updates_cache()
 		$output = xml_to_array(forum_trim($result['content']));
 		$output = current($output);
 
-		if (is_array($output['hotfix']) && !is_array(current($output['hotfix'])))
+		if (!empty($output['hotfix']) && is_array($output['hotfix']) && !is_array(current($output['hotfix'])))
 			$output['hotfix'] = array($output['hotfix']);
 
 		$output['cached'] = time();
