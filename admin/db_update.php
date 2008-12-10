@@ -284,12 +284,15 @@ function db_seems_utf8()
 	$seems_utf8 = true;
 
 	$query = array(
-		'SELECT'	=> 'MIN(id), MAX(id)',
+		'SELECT'	=> 'MIN(id), MAX(id), COUNT(id)',
 		'FROM'		=> 'posts'
 	);
 
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($min_id, $max_id) = $forum_db->fetch_row($result);
+	list($min_id, $max_id, $count_id) = $forum_db->fetch_row($result);
+
+	if ($count_id == 0)
+		return false;
 
 	// Get a random soup of data and check if it appears to be UTF-8
 	for ($i = 0; $i < 100; ++$i)
