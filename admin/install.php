@@ -83,6 +83,7 @@ if (isset($_POST['generate_config']))
 	exit;
 }
 
+header('Content-Type: text/xml; charset=utf-8');
 
 if (!isset($_POST['form_sent']))
 {
