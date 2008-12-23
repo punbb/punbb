@@ -1039,7 +1039,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 			</div>
 <?php ($hook = get_hook('mr_merge_topics_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_misc['Merge topic'] ?></strong></legend>
+				<legend class="group-legend"><strong><?php echo $lang_misc['Merge topics'] ?></strong></legend>
 <?php ($hook = get_hook('mr_merge_topics_pre_redirect_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
