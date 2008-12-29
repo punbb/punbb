@@ -412,6 +412,12 @@ else if (isset($_GET['uninstall']))
 	{
 		($hook = get_hook('aex_uninstall_comply_form_submitted')) ? eval($hook) : null;
 
+		$ext_info = array(
+			'id'			=> $id,
+			'path'			=> FORUM_ROOT.'extensions/'.$id,
+			'url'			=> $base_url.'/extensions/'.$id
+		);
+
 		$notices = array();
 
 		// Run uninstall code
