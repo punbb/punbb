@@ -2792,7 +2792,7 @@ function maintenance_message()
 	ob_start();
 
 ?>
-<div id="brd-main" class="main basic">
+<div id="brd-maint" class="main basic">
 
 	<div class="main-head">
 		<h1 class="hn"><span><?php echo $lang_common['Maintenance mode'] ?></span></h1>
