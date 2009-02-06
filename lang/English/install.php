@@ -81,6 +81,8 @@ $lang_install = array(
 'InnoDB not enabled'		=>	'InnoDB does not seem to be enabled. Please choose a database layer that does not have InnoDB support, or enable InnoDB on your MySQL server.',
 
 // Used in the install
+'Default language'			=>	'Default language',
+'Default language help'		=>	'(If you remove a language pack you must update this setting)',
 'Default announce heading'	=>	'Sample announcement',
 'Default announce message'	=>	'<p>Enter your announcement here.</p>',
 'Default maint message'		=>	"The forums are temporarily down for maintenance. Please try again in a few minutes.<br />\\n<br />\\n/Administrator",
