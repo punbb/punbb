@@ -42,9 +42,9 @@ if ($forum_page['show_group'] > -1)
 
 // Fetch user count
 $query = array(
-	'SELECT'	=> 'COUNT(u.id) - 1',
+	'SELECT'	=> 'COUNT(u.id)',
 	'FROM'		=> 'users AS u',
-	'WHERE'		=> 'u.group_id != '.FORUM_UNVERIFIED
+	'WHERE'		=> 'u.id > 1 AND u.group_id != '.FORUM_UNVERIFIED
 );
 
 if (!empty($where_sql))
@@ -121,7 +121,7 @@ ob_start();
 <?php
 
 	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+		echo "\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>'."\n";
 
 ?>
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
@@ -133,7 +133,8 @@ ob_start();
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_ul['User find legend'] ?></strong></legend>
 <?php ($hook = get_hook('ul_pre_username')) ? eval($hook) : null; ?>
-<?php if ($forum_user['g_search_users'] == '1'): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+<?php if ($forum_user['g_search_users'] == '1'): ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_ul['Search for username'] ?></span> <small><?php echo $lang_ul['Username help'] ?></small></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="username" value="<?php echo forum_htmlencode($forum_page['username']) ?>" size="35" maxlength="25" /></span>
@@ -180,8 +181,10 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="sort_by">
 						<option value="username"<?php if ($forum_page['sort_by'] == 'username') echo ' selected="selected"' ?>><?php echo $lang_ul['Username'] ?></option>
 						<option value="registered"<?php if ($forum_page['sort_by'] == 'registered') echo ' selected="selected"' ?>><?php echo $lang_ul['Registered'] ?></option>
-<?php if ($forum_page['show_post_count']): ?>						<option value="num_posts"<?php if ($forum_page['sort_by'] == 'num_posts') echo ' selected="selected"' ?>><?php echo $lang_ul['No of posts'] ?></option>
-<?php endif; ($hook = get_hook('ul_new_sort_by_option')) ? eval($hook) : null; ?>						</select></span>
+<?php if ($forum_page['show_post_count']): ?>
+						<option value="num_posts"<?php if ($forum_page['sort_by'] == 'num_posts') echo ' selected="selected"' ?>><?php echo $lang_ul['No of posts'] ?></option>
+<?php endif; ($hook = get_hook('ul_new_sort_by_option')) ? eval($hook) : null; ?>
+						</select></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('ul_pre_sort_order_fieldset')) ? eval($hook) : null; ?>
