@@ -1284,8 +1284,6 @@ if ($forum_user['id'] != $id &&
 	$forum_user['g_id'] != FORUM_ADMIN &&
 	($forum_user['g_moderator'] != '1' || $forum_user['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 {
-	($hook = get_hook('pf_view_details_selected')) ? eval($hook) : null;
-
 	// Setup user identification
 	$forum_page['user_ident'] = array();
 
