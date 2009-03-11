@@ -297,6 +297,9 @@ if ($action == 'feed')
 
 		$cur_topic = $forum_db->fetch_assoc($result);
 
+		if (!defined('FORUM_PARSER_LOADED'))
+			require FORUM_ROOT.'include/parser.php';
+
 		if ($forum_config['o_censoring'] == '1')
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
@@ -311,7 +314,7 @@ if ($action == 'feed')
 
 		// Fetch $show posts
 		$query = array(
-			'SELECT'	=> 'p.id, p.poster, p.message, p.posted, p.poster_id, u.email_setting, u.email, p.poster_email',
+			'SELECT'	=> 'p.id, p.poster, p.message, p.hide_smilies, p.posted, p.poster_id, u.email_setting, u.email, p.poster_email',
 			'FROM'		=> 'posts AS p',
 			'JOINS'		=> array(
 				array(
@@ -330,6 +333,8 @@ if ($action == 'feed')
 		{
 			if ($forum_config['o_censoring'] == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
+
+			$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 			$item = array(
 				'id'			=>	$cur_post['id'],
@@ -364,6 +369,9 @@ if ($action == 'feed')
 	}
 	else
 	{
+		if (!defined('FORUM_PARSER_LOADED'))
+			require FORUM_ROOT.'include/parser.php';
+
 		// Were any forum ID's supplied?
 		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '')
 		{
@@ -395,7 +403,7 @@ if ($action == 'feed')
 
 		// Fetch $show topics
 		$query = array(
-			'SELECT'	=> 't.id, t.poster, t.subject, t.last_post, t.last_poster, p.message, u.email_setting, u.email, p.poster_id, p.poster_email',
+			'SELECT'	=> 't.id, t.poster, t.subject, t.last_post, t.last_poster, p.message, p.hide_smilies, u.email_setting, u.email, p.poster_id, p.poster_email',
 			'FROM'		=> 'topics AS t',
 			'JOINS'		=> array(
 				array(
@@ -429,11 +437,13 @@ if ($action == 'feed')
 				$cur_topic['message'] = censor_words($cur_topic['message']);
 			}
 
+			$cur_topic['message'] = parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
+
 			$item = array(
 				'id'			=>	$cur_topic['id'],
 				'title'			=>	$cur_topic['subject'],
 				'link'			=>	forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
-				'description'		=>	$cur_topic['message'],
+				'description'	=>	$cur_topic['message'],
 				'author'		=>	array(
 					'name'	=> $cur_topic['last_poster']
 				),
