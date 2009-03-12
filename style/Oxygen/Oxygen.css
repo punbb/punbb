@@ -305,9 +305,9 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	}
 
 .brd .extension .options, .brd .hotfix .options {
-	border-top-style:dashed;
-	border-top-width:1px;
-}
+	border-top-style: dashed;
+	border-top-width: 1px;
+	}
 
 /* Content Containers
 -------------------------------------------------------------*/
