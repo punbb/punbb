@@ -701,11 +701,6 @@ D - COMMON INTERFACE ELEMENTS
 /* Footer
 -------------------------------------------------------------*/
 
-#brd-about p {
-	float: left;
-	margin: 0 1em;
-	}
-
 #brd-about #qjump {
 	float: left;
 	padding: 0.5em 0;
@@ -718,7 +713,6 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-about #copyright {
 	text-align: right;
-	float: right;
 	margin: 0;
 	}
 
