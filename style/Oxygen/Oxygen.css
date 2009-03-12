@@ -83,7 +83,7 @@ body {
 	line-height: 0.0;
 	overflow:hidden;
 	visibility: hidden;
- 	clear: both;
+	clear: both;
 	}
 
 /* Hidden items
@@ -112,13 +112,13 @@ body {
 .brd .main-head .hn small,
 .brd .entry-title,
 .brd .menu-page .main-head {
- 	font-size: 0;
- 	left: -999em;
- 	text-indent: -999em;
- 	position:absolute;
- 	line-height: 0em;
- 	visibility: hidden;
- 	}
+	font-size: 0;
+	left: -999em;
+	text-indent: -999em;
+	position:absolute;
+	line-height: 0em;
+	visibility: hidden;
+	}
 
 
 /*************************************************************
@@ -668,20 +668,20 @@ D - COMMON INTERFACE ELEMENTS
 	}
 
 #brd-stats ul li.st-users {
- 	float: left;
- 	clear: both;
- 	white-space: nowrap;
- 	}
+	float: left;
+	clear: both;
+	white-space: nowrap;
+	}
 
  #brd-stats ul li.st-activity {
- 	text-align: right;
- 	display: block;
- 	white-space: nowrap;
- 	}
+	text-align: right;
+	display: block;
+	white-space: nowrap;
+	}
 
  #brd-stats li strong {
- 	font-weight: bold;
- 	}
+	font-weight: bold;
+	}
 
 #brd-online {
 	padding-top: 0.5em;
@@ -694,9 +694,9 @@ D - COMMON INTERFACE ELEMENTS
 	}
 
  #brd-online .hn {
- 	float: left;
- 	margin-right: 0.5em;
- 	}
+	float: left;
+	margin-right: 0.5em;
+	}
 
 /* Footer
 -------------------------------------------------------------*/
@@ -844,49 +844,49 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 
 .brd .main-content .main-item p,
 .brd .main-content .main-item .hn {
- 	padding: 0;
- 	}
+	padding: 0;
+	}
 
 .brd .main-content .main-item .hn .item-status {
- 	font-weight:normal;
- 	}
+	font-weight:normal;
+	}
 
 .brd .main-content .main-item .hn .item-status em {
- 	font-style:normal;
- 	}
+	font-style:normal;
+	}
 
 .brd .main-content .main-item .item-subject,
 .brd .main-content .main-item li {
- 	float: left;
- 	border-left-style: solid;
- 	border-left-width: 1px;
- 	margin: 0 -2px -9.7em 0;
- 	position: relative;
- 	padding-top: 0.6em;
- 	padding-bottom: 10.4em;
- 	}
+	float: left;
+	border-left-style: solid;
+	border-left-width: 1px;
+	margin: 0 -2px -9.7em 0;
+	position: relative;
+	padding-top: 0.6em;
+	padding-bottom: 10.4em;
+	}
 
 .brd .main-content .main-item .item-subject {
- 	overflow: hidden;
- 	width: 100%;
-  	}
+	overflow: hidden;
+	width: 100%;
+	}
 
 .brd .main-content .main-item li.info-topics,
 .brd .main-content .main-item li.info-forum,
 .brd .main-content .main-item li.info-posts,
 .brd .main-content .main-item li.info-views,
 .brd .main-content .main-item li.info-replies {
- 	width: 7em;
- 	text-align:center;
- 	}
+	width: 7em;
+	text-align:center;
+	}
 
 .brd .main-content .main-item li.info-forum {
- 	width: 20em;
- 	}
+	width: 20em;
+	}
 
 .brd .main-content .main-item li.info-lastpost {
-  	width: 20em;
-  	}
+	width: 20em;
+	}
 
 .brd .main-content .main-item li.info-lastpost cite {
 	overflow: hidden;
@@ -927,12 +927,12 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	}
 
 .brd .main-content .main-item .item-subject span.modlist {
- 	display: block;
- 	}
+	display: block;
+	}
 
 .brd .main-content .main-item .hn strong {
-  	font-size: 1em;
-  	}
+	font-size: 1em;
+	}
 
 .brd .main-content .main-item .hn strong span {
 	font-weight: normal;
@@ -941,7 +941,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  #brd-index .main-content .main-item .hn span {
 	font-size: 1.084em;
 	font-weight: bold;
- 	}
+	}
 #brd-index .main-content .main-item .hn small {
 	font-size: 1em;
 	}
@@ -961,54 +961,54 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	}
 
 .brd .main-content .main-item .item-subject .hn {
-	display:inline;
+	display: inline;
 	margin: 0 0 0 1.5em;
- 	}
+	}
 
 .brd .main-content .main-item .item-subject p {
 	margin: 0 0 0 1.5em;
- 	}
+	}
 
 .brd .main-content .main-item li.info-lastpost cite,
 .brd .main-content .main-item li.info-lastpost span {
- 	display: block;
- 	padding: 0 1em;
- 	font-style: normal;
- 	font-weight: normal;
- 	}
+	display: block;
+	padding: 0 1em;
+	font-style: normal;
+	font-weight: normal;
+	}
 
 .brd .main-content .main-item li.info-lastpost strong {
- 	padding: 0 0 0 1em;
- 	font-style: normal;
- 	font-weight: normal;
- 	}
+	padding: 0 0 0 1em;
+	font-style: normal;
+	font-weight: normal;
+	}
 
 .brd .main-content .main-item li.info-select {
- 	position: absolute;
- 	right: 0;
- 	top: 0;
- 	padding: 0.3em;
- 	border-style: none none solid solid;
- 	border-width: 1px;
- 	}
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 0.3em;
+	border-style: none none solid solid;
+	border-width: 1px;
+	}
 
 .brd .main-content .main-item .icon {
- 	border-style: solid;
- 	border-width: 0.5833em;
- 	height: 0;
- 	width: 0;
- 	float: left;
- 	margin-top: 0.667em;
- 	margin-left: -2.417em;
- 	}
+	border-style: solid;
+	border-width: 0.5833em;
+	height: 0;
+	width: 0;
+	float: left;
+	margin-top: 0.667em;
+	margin-left: -2.417em;
+	}
 
 .brd .main-content .main-item .hn .posted-mark {
- 	position: absolute;
- 	font-size: 2em;
- 	width: 1em;
- 	left: -0.5em;
- 	top: 0;
- 	}
+	position: absolute;
+	font-size: 2em;
+	width: 1em;
+	left: -0.5em;
+	top: 0;
+	}
 
 /*************************************************************
 F - MAIN CONTENT - FORMS
