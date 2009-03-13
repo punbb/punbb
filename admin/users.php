@@ -1081,7 +1081,6 @@ else if (isset($_POST['find_user']))
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = '';
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(

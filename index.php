@@ -91,7 +91,6 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 {
 	($hook = get_hook('in_forum_loop_start')) ? eval($hook) : null;
 
-	$forum_page['item_mods'] = '';
 	++$forum_page['item_count'];
 
 	if ($cur_forum['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
@@ -125,7 +124,6 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 	// Reset arrays and globals for each forum
 	$forum_page['item_status'] = $forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_title'] = array();
-	$forum_page['item_indicator'] = '';
 
 	// Is this a redirect forum?
 	if ($cur_forum['redirect_url'] != '')
