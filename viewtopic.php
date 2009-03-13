@@ -193,10 +193,12 @@ $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$l
 
 if ($forum_user['may_post'])
 	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link($forum_url['new_reply'], $id).'"><span>'.$lang_topic['Post reply'].'</span></a></p>';
-else if (!$forum_user['may_post'] && !$forum_user['is_guest'] && $cur_topic['closed'] != '1')
-	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_topic['No permission'].'</p>';
-if (!$forum_user['may_post'] && $forum_user['is_guest'])
+else if ($forum_user['is_guest'])
 	$forum_page['page_post']['posting'] = '<p class="posting">'.sprintf($lang_topic['Login to post'], '<a href="'.forum_link($forum_url['login']).'">'.$lang_common['login'].'</a>', '<a href="'.forum_link($forum_url['register']).'">'.$lang_common['register'].'</a>').'</p>';
+else if ($cur_topic['closed'] == '1')
+	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_topic['Topic closed info'].'</p>';
+else
+	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_topic['No permission'].'</p>';
 
 // Setup main options
 $forum_page['main_title'] = $lang_topic['Topic options'];
