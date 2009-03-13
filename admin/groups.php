@@ -180,8 +180,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="mod_ban_users" value="1"<?php if ($group['g_mod_ban_users'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow mod bans label'] ?></label>
 							</div>
-						</div>
 <?php ($hook = get_hook('agr_add_edit_group_pre_mod_permissions_fieldset_end')) ? eval($hook) : null; ?>
+						</div>
 					</fieldset>
 <?php ($hook = get_hook('agr_add_edit_group_mod_permissions_fieldset_end')) ? eval($hook) : null; endif; endif; ?>
 					<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -242,9 +242,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 								<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="send_email" value="1"<?php if ($group['g_send_email'] == '1') echo ' checked="checked"' ?> /></span>
 								<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_groups['Allow send email label'] ?></label>
 							</div>
-<?php endif; ?>
+<?php endif; ($hook = get_hook('agr_add_edit_group_pre_user_permissions_fieldset_end')) ? eval($hook) : null; ?>
 						</div>
-<?php ($hook = get_hook('agr_add_edit_group_pre_user_permissions_fieldset_end')) ? eval($hook) : null; ?>
 					</fieldset>
 <?php ($hook = get_hook('agr_add_edit_group_user_permissions_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
