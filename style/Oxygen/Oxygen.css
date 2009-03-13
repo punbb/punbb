@@ -962,12 +962,11 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 
 .brd .main-content .main-item .item-subject .hn,
 .brd .main-content .main-item .item-subject p {
-	margin: 0 0 0 1em;
+	margin: 0 0 0 1.5em;
 	}
 
 .brd .main-content .main-item li.info-lastpost cite,
-.brd .main-content .main-item li.info-lastpost span,
-.brd .main-content .main-item .item-subject .item-starter {
+.brd .main-content .main-item li.info-lastpost span {
 	display: block;
 	padding: 0 1em;
 	font-style: normal;
