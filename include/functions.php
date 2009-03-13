@@ -2775,7 +2775,7 @@ function maintenance_message()
 	ob_start();
 
 ?>
-<title><?php echo $lang_common['Maintenance'].' - '.forum_htmlencode($forum_config['o_board_title']) ?></title>
+<title><?php echo $lang_common['Maintenance'].$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_title']) ?></title>
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'.css' ?>" />
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'_cs.css' ?>" />
 <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'_fix.css' ?>" /><![endif]-->
@@ -2887,7 +2887,7 @@ function redirect($destination_url, $message)
 	// START SUBST - <!-- forum_head -->
 
 	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.$forum_config['o_redirect_delay'].';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';
-	$forum_head['title'] = '<title>'.$lang_common['Redirecting'].' - '.forum_htmlencode($forum_config['o_board_title']).'</title>';
+	$forum_head['title'] = '<title>'.$lang_common['Redirecting'].$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_title']).'</title>';
 
 	ob_start();
 

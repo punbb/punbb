@@ -157,15 +157,17 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		<h2 class="hn"><span><?php echo $lang_admin_bans['Ban advanced heading'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box">
+		<div class="ct-box warn-box">
 			<p class="warn"><?php echo $lang_admin_bans['Ban IP warning'] ?></p>
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_bans']) ?>">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_bans'])) ?>" />
 				<input type="hidden" name="mode" value="<?php echo $mode ?>" />
-<?php if ($mode == 'edit'): ?>				<input type="hidden" name="ban_id" value="<?php echo $ban_id ?>" />
-<?php endif; ?>			</div>
+<?php if ($mode == 'edit'): ?>
+				<input type="hidden" name="ban_id" value="<?php echo $ban_id ?>" />
+<?php endif; ?>
+			</div>
 <?php ($hook = get_hook('aba_add_edit_ban_pre_criteria_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?php echo $lang_admin_bans['Ban criteria legend'] ?></span></legend>
@@ -484,10 +486,12 @@ if (!empty($forum_bans))
 						<h3 class=""><span><?php printf($lang_admin_bans['Current ban head'], $forum_page['ban_creator']) ?></span></h3>
 						<p><?php printf($lang_admin_bans['Edit or remove'], '<a href="'.forum_link($forum_url['admin_bans']).'?edit_ban='.$cur_ban['id'].'">'.$lang_admin_bans['Edit ban'].'</a>', '<a href="'.forum_link($forum_url['admin_bans']).'?del_ban='.$cur_ban['id'].'&amp;csrf_token='.generate_form_token('del_ban'.$cur_ban['id']).'">'.$lang_admin_bans['Remove ban'].'</a>') ?></p>
 					</div>
-<?php if (!empty($forum_page['ban_info'])): ?>				<ul>
+<?php if (!empty($forum_page['ban_info'])): ?>
+				<ul>
 					<?php echo implode("\n", $forum_page['ban_info'])."\n" ?>
 					</ul>
-<?php endif; ?>				</div>
+<?php endif; ?>
+				</div>
 			</div>
 <?php
 
