@@ -43,9 +43,8 @@
 
 <div id="brd-about" class="gen-content">
 	<!-- forum_about -->
+	<!-- forum_debug -->
 </div>
-
-<!-- forum_debug -->
 
 </div>
 </div>
