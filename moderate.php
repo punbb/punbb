@@ -1534,15 +1534,17 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 		++$forum_page['item_count'];
 
 		// Start from scratch
-		$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_subject_status'] = array();
+		$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_title_status'] = array();
 
 		if ($forum_config['o_censoring'] == '1')
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
+		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';
+
 		if ($cur_topic['moved_to'] != null)
 		{
 			$forum_page['item_status']['moved'] = 'moved';
-			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_topic['moved_to'], sef_friendly($cur_topic['subject']))).'"><span>'.$lang_forum['Moved'].'</span> '.forum_htmlencode($cur_topic['subject']).'</a>';
+			$forum_page['item_title']['link'] = '<span class="item-status"><em class="moved">'.sprintf($lang_forum['Item status'], $lang_forum['Moved']).'</em></span> <a href="'.forum_link($forum_url['topic'], array($cur_topic['moved_to'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 			// Combine everything to produce the Topic heading
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> <strong>'.$forum_page['item_title']['link'].'</strong></h3>';
@@ -1571,7 +1573,27 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 				$forum_page['item_status']['posted'] = 'posted';
 			}
 
+			if ($cur_topic['sticky'] == '1')
+			{
+				$forum_page['item_title_status']['sticky'] = '<em class="sticky">'.$lang_forum['Sticky'].'</em>';
+				$forum_page['item_status']['sticky'] = 'sticky';
+			}
+
+			if ($cur_topic['closed'] == '1')
+			{
+				$forum_page['item_title_status']['closed'] = '<em class="closed">'.$lang_forum['Closed'].'</em>';
+				$forum_page['item_status']['closed'] = 'closed';
+			}
+
+			($hook = get_hook('mr_topic_actions_moved_row_pre_item_title_status_merge')) ? eval($hook) : null;
+
+			if (!empty($forum_page['item_title_status']))
+				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(' ', $forum_page['item_title_status'])).'</span>';
+
 			$forum_page['item_title']['link'] = '<strong><a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a></strong>';
+
+			if (empty($forum_page['item_status']))
+				$forum_page['item_status']['normal'] = 'normal';
 
 			$forum_page['item_pages'] = ceil(($cur_topic['num_replies'] + 1) / $forum_user['disp_posts']);
 
@@ -1586,33 +1608,13 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			}
 
 			if (!empty($forum_page['item_nav']))
-				$forum_page['item_title']['nav'] = '<span class="item-nav">'.sprintf($lang_forum['Topic navigation'], implode('&#160;&#160;', $forum_page['item_nav'])).'</span>';
+				$forum_page['item_subject']['nav'] = '<span class="item-nav">'.sprintf($lang_forum['Topic navigation'], implode('&#160;&#160;', $forum_page['item_nav'])).'</span>';
 
 			($hook = get_hook('mr_topic_actions_moved_row_pre_item_title_merge')) ? eval($hook) : null;
 
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
 
 			// Assemble the Topic subject
-
-			if ($cur_topic['sticky'] == '1')
-			{
-				$forum_page['item_subject_status']['sticky'] = $lang_forum['Sticky'];
-				$forum_page['item_status']['sticky'] = 'sticky';
-			}
-
-			if ($cur_topic['closed'] == '1')
-			{
-				$forum_page['item_subject_status']['closed'] = $lang_forum['Closed'];
-				$forum_page['item_status']['closed'] = 'closed';
-			}
-
-			($hook = get_hook('mr_topic_actions_moved_row_pre_item_subject_status_merge')) ? eval($hook) : null;
-
-			if (!empty($forum_page['item_subject_status']))
-				$forum_page['item_subject']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(' ', $forum_page['item_subject_status'])).'</span>';
-
-			if (empty($forum_page['item_status']))
-				$forum_page['item_status']['normal'] = 'normal';
 
 			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><strong>'.forum_number_format($cur_topic['num_replies']).'</strong> <span class="label">'.(($cur_topic['num_replies'] == 1) ? $lang_forum['Reply'] : $lang_forum['Replies']).'</span></li>';
 
@@ -1625,8 +1627,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			($hook = get_hook('mr_topic_actions_normal_row_pre_output')) ? eval($hook) : null;
 		}
 
-		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';
-		$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
+		$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
 
 		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 

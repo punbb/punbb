@@ -359,7 +359,7 @@ if (isset($query))
 
 			($hook = get_hook('se_results_topics_row_pre_item_subject_merge')) ? eval($hook) : null;
 
-			$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
+			$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
 
 			if (empty($forum_page['item_status']))
 				$forum_page['item_status']['normal'] = 'normal';
