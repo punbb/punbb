@@ -120,8 +120,9 @@ function output_rss($feed)
 	else
 		echo "\t\t".'<generator>PunBB</generator>'."\n";
 
-	foreach ($feed['items'] as $item)
+	($hook = get_hook('ex_add_new_rss_info')) ? eval($hook) : null;
 
+	foreach ($feed['items'] as $item)
 	{
 		echo "\t\t".'<item>'."\n";
 		echo "\t\t\t".'<title><![CDATA['.escape_cdata($item['title']).']]></title>'."\n";
@@ -130,6 +131,8 @@ function output_rss($feed)
 		echo "\t\t\t".'<author><![CDATA['.(isset($item['author']['email']) ? escape_cdata($item['author']['email']) : 'dummy@example.com').' ('.escape_cdata($item['author']['name']).')]]></author>'."\n";
 		echo "\t\t\t".'<pubDate>'.gmdate('r', $item['pubdate']).'</pubDate>'."\n";
 		echo "\t\t\t".'<guid>'.$item['link'].'</guid>'."\n";
+
+		($hook = get_hook('ex_add_new_rss_item_info')) ? eval($hook) : null;
 
 		echo "\t\t".'</item>'."\n";
 	}
@@ -164,6 +167,8 @@ function output_atom($feed)
 	else
 		echo "\t".'<generator>PunBB</generator>'."\n";
 
+	($hook = get_hook('ex_add_new_atom_info')) ? eval($hook) : null;
+
 	echo "\t".'<id>'.$feed['link'].'</id>'."\n";
 
 	$content_tag = ($feed['type'] == 'posts') ? 'content' : 'summary';
@@ -185,6 +190,8 @@ function output_atom($feed)
 
 		echo "\t\t\t".'</author>'."\n";
 		echo "\t\t\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', $item['pubdate']).'</updated>'."\n";
+
+		($hook = get_hook('ex_add_new_atom_item_info')) ? eval($hook) : null;
 
 		echo "\t\t\t".'<id>'.$item['link'].'</id>'."\n";
 		echo "\t\t".'</entry>'."\n";
@@ -211,6 +218,8 @@ function output_xml($feed)
 	echo '<source>'."\n";
 	echo "\t".'<url>'.$feed['link'].'</url>'."\n";
 
+	($hook = get_hook('ex_add_new_xml_info')) ? eval($hook) : null;
+
 	$forum_tag = ($feed['type'] == 'posts') ? 'post' : 'topic';
 
 	foreach ($feed['items'] as $item)
@@ -232,6 +241,8 @@ function output_xml($feed)
 		echo "\t\t".'</author>'."\n";
 		echo "\t\t".'<posted>'.gmdate('r', $item['pubdate']).'</posted>'."\n";
 
+		($hook = get_hook('ex_add_new_xml_item_info')) ? eval($hook) : null;
+
 		echo "\t".'</'.$forum_tag.'>'."\n";
 	}
 
@@ -247,6 +258,9 @@ function output_html($feed)
 
 	// Send the Content-type header in case the web server is setup to send something else
 	header('Content-type: text/html; charset=utf-8');
+	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
 
 	foreach ($feed['items'] as $item)
 	{
@@ -268,6 +282,8 @@ if ($action == 'feed')
 	$show = isset($_GET['show']) ? intval($_GET['show']) : 15;
 	if ($show < 1 || $show > 50)
 		$show = 15;
+
+	($hook = get_hook('ex_set_syndication_type')) ? eval($hook) : null;
 
 	// Was a topic ID supplied?
 	if (isset($_GET['tid']))
@@ -305,7 +321,7 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title' 		=>	$forum_config['o_board_title'].' - '.$cur_topic['subject'],
+			'title' 		=>	$forum_config['o_board_title'].$lang_common['Title separator'].$cur_topic['subject'],
 			'link'			=>	forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
 			'description'	=>	sprintf($lang_common['RSS description topic'], $cur_topic['subject']),
 			'items'			=>	array(),
@@ -349,12 +365,12 @@ if ($action == 'feed')
 
 			if ($cur_post['poster_id'] > 1)
 			{
-				if ($cur_post['email_setting'] == '0')
+				if ($cur_post['email_setting'] == '0' && !$forum_user['is_guest'])
 					$item['author']['email'] = $cur_post['email'];
 
 				$item['author']['uri'] = forum_link($forum_url['user'], $cur_post['poster_id']);
 			}
-			else if ($cur_post['poster_email'] != '')
+			else if ($cur_post['poster_email'] != '' && !$forum_user['is_guest'])
 				$item['author']['email'] = $cur_post['poster_email'];
 
 			$feed['items'][] = $item;
@@ -369,6 +385,8 @@ if ($action == 'feed')
 	}
 	else
 	{
+		$forum_name = '';
+
 		if (!defined('FORUM_PARSER_LOADED'))
 			require FORUM_ROOT.'include/parser.php';
 
@@ -380,6 +398,26 @@ if ($action == 'feed')
 
 			if (!empty($fids))
 				$forum_sql = ' AND t.forum_id IN('.implode(',', $fids).')';
+
+			if (count($fids) == 1)
+			{
+			// Fetch forum name
+			$query = array(
+				'SELECT'	=> 'f.forum_name',
+				'FROM'		=> 'forums AS f',
+				'JOINS'		=> array(
+					array(
+						'LEFT JOIN'		=> 'forum_perms AS fp',
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+					)
+				),
+				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fids[0]
+			);
+
+			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			if ($forum_db->num_rows($result))
+				$forum_name = $lang_common['Title separator'].$forum_db->result($result);
+			}
 		}
 
 		// Any forum ID's to exclude?
@@ -394,7 +432,7 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title' 		=>	$forum_config['o_board_title'],
+			'title' 		=>	$forum_config['o_board_title'].$forum_name,
 			'link'			=>	forum_link($forum_url['index']),
 			'description'	=>	sprintf($lang_common['RSS description'], $forum_config['o_board_title']),
 			'items'			=>	array(),
@@ -452,12 +490,12 @@ if ($action == 'feed')
 
 			if ($cur_topic['poster_id'] > 1)
 			{
-				if ($cur_topic['email_setting'] == '0')
+				if ($cur_topic['email_setting'] == '0' && !$forum_user['is_guest'])
 					$item['author']['email'] = $cur_topic['email'];
 
 				$item['author']['uri'] = forum_link($forum_url['user'], $cur_topic['poster_id']);
 			}
-			else if ($cur_topic['poster_email'] != '')
+			else if ($cur_topic['poster_email'] != '' && !$forum_user['is_guest'])
 				$item['author']['email'] = $cur_topic['poster_email'];
 
 			$feed['items'][] = $item;
@@ -505,6 +543,12 @@ else if ($action == 'online' || $action == 'online_full')
 	}
 
 	($hook = get_hook('ex_pre_online_output')) ? eval($hook) : null;
+	// Send the Content-type header in case the web server is setup to send something else
+	header('Content-type: text/html; charset=utf-8');
+	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+
 
 	echo $lang_index['Guests online'].': '.forum_number_format($num_guests).'<br />'."\n";
 
@@ -553,6 +597,12 @@ else if ($action == 'stats')
 	($hook = get_hook('ex_qr_get_post_stats')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	list($stats['total_topics'], $stats['total_posts']) = $forum_db->fetch_row($result);
+
+	// Send the Content-type header in case the web server is setup to send something else
+	header('Content-type: text/html; charset=utf-8');
+	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
 
 	($hook = get_hook('ex_pre_stats_output')) ? eval($hook) : null;
 

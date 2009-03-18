@@ -11,7 +11,7 @@
 
 
 define('UPDATE_TO', '1.3.2');
-define('UPDATE_TO_DB_REVISION', 3);
+define('UPDATE_TO_DB_REVISION', 4);
 
 // The number of items to process per pageview (lower this if the update script times out during UTF-8 conversion)
 define('PER_PAGE', 300);
@@ -39,7 +39,8 @@ if (!defined('FORUM'))
 	exit('Cannot find config.php, are you sure it exists?');
 
 // Enable debug mode
-define('FORUM_DEBUG', 1);
+if (!defined('FORUM_DEBUG')) 
+	define('FORUM_DEBUG', 1);
 
 // Turn on full PHP error reporting
 error_reporting(E_ALL);
@@ -728,7 +729,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Make all IP fields VARCHAR(39) to support IPv6
 		$forum_db->alter_field('posts', 'poster_ip', 'VARCHAR(39)', true);
-		$forum_db->alter_field('user', 'registration_ip', 'VARCHAR(39)', false, '0.0.0.0');
+		$forum_db->alter_field('users', 'registration_ip', 'VARCHAR(39)', false, '0.0.0.0');
 
 		// Add the DST option to the users table
 		$forum_db->add_field('users', 'dst', 'TINYINT(1)', false, 0, 'timezone');
@@ -1994,10 +1995,13 @@ require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php'
 	<div class="main-content frm">
 		<div class="ct-box info-box">
 			<p>Your forum database was updated successfully.</p>
-<?php if (isset($new_config) && !$written): ?>			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> once config.php has been updated.</p>
-<?php else: ?>			<p>You may <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> now.</p>
+<?php if (isset($new_config) && !$written): ?>
+			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> once config.php has been updated.</p>
+<?php else: ?>
+			<p>You may <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> now.</p>
 <?php endif; ?>		</div>
-<?php if (isset($new_config) && !$written): ?>		<form class="frm-form" action="foo">
+<?php if (isset($new_config) && !$written): ?>
+		<form class="frm-form" action="foo">
 			<fieldset class="frm-group group1">
 				<legend class="group-legend"><span>New config.php contents</span></legend>
 				<div class="txt-set set1">

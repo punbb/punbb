@@ -16,7 +16,7 @@ if (!defined('FORUM_ROOT'))
 
 // Define the version and database revision that this code was written for
 define('FORUM_VERSION', '1.3.2');
-define('FORUM_DB_REVISION', 3);
+define('FORUM_DB_REVISION', 4);
 
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';

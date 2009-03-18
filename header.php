@@ -279,7 +279,7 @@ $main_elements['<!-- forum_crumbs_top -->'] = (FORUM_PAGE != 'index') ? '<div id
 // Bottom breadcrumbs
 $main_elements['<!-- forum_crumbs_end -->'] = (FORUM_PAGE != 'index') ? '<div id="brd-crumbs-end" class="crumbs gen-content">'."\n\t".'<p>'.generate_crumbs(false).'</p>'."\n".'</div>' : '';
 // Main section heading
-$main_elements['<!-- forum_main_title -->'] =  '<h1 class="main-title">'.((isset($forum_page['main_title'])) ? $forum_page['main_title'] : (is_array($last_crumb = end($forum_page['crumbs'])) ? reset($last_crumb) : $last_crumb)).(isset($forum_page['main_head_pages']) ? ' <small>'.$forum_page['main_head_pages'].'</small>' : '').'</h1>'."\n";
+$main_elements['<!-- forum_main_title -->'] =  '<h1 class="main-title">'.((isset($forum_page['main_title'])) ? $forum_page['main_title'] : forum_htmlencode(is_array($last_crumb = end($forum_page['crumbs'])) ? reset($last_crumb) : $last_crumb)).(isset($forum_page['main_head_pages']) ? ' <small>'.$forum_page['main_head_pages'].'</small>' : '').'</h1>'."\n";
 
 // Top pagination and post links
 $main_elements['<!-- forum_main_pagepost_top -->'] = (!empty($forum_page['page_post'])) ? '<div id="brd-pagepost-top" class="main-pagepost gen-content">'."\n\t".implode("\n\t", $forum_page['page_post'])."\n".'</div>' : '';

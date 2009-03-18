@@ -1747,15 +1747,15 @@ else
 	$alerts = array();
 	// Check if the cache directory is writable
 	if (!is_writable('./cache/'))
-		$alerts[] = '<li>'.$lang_install['No cache write'].'</li>';
+		$alerts[] = '<li><span>'.$lang_install['No cache write'].'</span></li>';
 
 	// Check if default avatar directory is writable
 	if (!is_writable('./img/avatars/'))
-		$alerts[] = '<li>'.$lang_install['No avatar write'].'</li>';
+		$alerts[] = '<li><span>'.$lang_install['No avatar write'].'</span></li>';
 
 	// Check if we disabled uploading avatars because file_uploads was disabled
 	if ($avatars == '0')
-		$alerts[] = '<li>'.$lang_install['File upload alert'].'</li>';
+		$alerts[] = '<li><span>'.$lang_install['File upload alert'].'</span></li>';
 
 	// Add some random bytes at the end of the cookie name to prevent collisions
 	$cookie_name = 'forum_cookie_'.random_key(6, false, true);
