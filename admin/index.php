@@ -186,7 +186,7 @@ ob_start();
 					<h3 class="ct-legend hn"><span><?php echo $lang_admin_index['PunBB version'] ?></span></h3>
 					<ul class="data-list">
 						<li><span>PunBB <?php echo $forum_config['o_cur_version'] ?></span></li>
-						<li><span>&copy; Copyright 2008 <a href="http://punbb.informer.com/">PunBB</a></span></li>
+						<li><span><?php echo $lang_admin_index['Copyright message'] ?></span></li>
 <?php if (isset($punbb_updates)): ?>
 						<li><span><?php echo $punbb_updates ?></span></li>
 <?php endif; ?>
