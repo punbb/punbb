@@ -166,10 +166,10 @@ $lang_admin_settings = array(
 'Registration rules'			=>	'Forum rules (enable and compose forum rules)',
 'Registration rules info'		=>	'You may require new users to agree to a set of rules when registering. The rules will always be available through a link in the navigation table at the top of every page. You may enable the use of rules and then compose your rules below.',
 'Registration rules legend'		=>	'Forum rules',
-'Require rules'					=>	'Require agreement',
+'Require rules'					=>	'Use rules',
 'Require rules label'			=>	'Users must agree to forum rules before registering.',
 'Compose rules label'			=>	'Compose rules',
-'Compose rules help'			=>	'You may use HTML as text is not parsed. Leaving empty disables the use of rules.',
+'Compose rules help'			=>	'You may use HTML as text is not parsed.',
 'Rules default'					=>	'Enter your rules here.',
 
 // Email section
