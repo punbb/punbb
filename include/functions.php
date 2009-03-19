@@ -1408,6 +1408,8 @@ function set_default_user()
 	$forum_user['style'] = $forum_config['o_default_style'];
 	$forum_user['is_guest'] = true;
 	$forum_user['is_admmod'] = false;
+
+	($hook = get_hook('fn_set_default_user_end')) ? eval($hook) : null;
 }
 
 
