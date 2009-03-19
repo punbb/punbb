@@ -877,7 +877,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 .brd .main-content .main-item li.info-views,
 .brd .main-content .main-item li.info-replies {
 	width: 7em;
-	text-align:center;
+	text-align: center;
 	}
 
 .brd .main-content .main-item li.info-forum {
@@ -921,6 +921,16 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	}
 
 .brd .forum-noview .main-item ul {
+	width: 27em;
+	right: -28em;
+	margin-left: -27em;
+	}
+
+.brd .forum-forums .main-item {
+	padding-right: 48em;
+	}
+
+.brd .forum-forums .main-item ul {
 	width: 47em;
 	right: -48em;
 	margin-left: -47em;

@@ -1585,12 +1585,17 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 				$forum_page['item_status']['closed'] = 'closed';
 			}
 
-			($hook = get_hook('mr_topic_actions_moved_row_pre_item_title_status_merge')) ? eval($hook) : null;
+			($hook = get_hook('mr_topic_loop_normal_topic_pre_item_title_status_merge')) ? eval($hook) : null;
 
 			if (!empty($forum_page['item_title_status']))
-				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(' ', $forum_page['item_title_status'])).'</span>';
+				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(', ', $forum_page['item_title_status'])).'</span>';
 
 			$forum_page['item_title']['link'] = '<strong><a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a></strong>';
+
+			($hook = get_hook('mr_topic_loop_normal_topic_pre_item_title_merge')) ? eval($hook) : null;
+
+			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
+
 
 			if (empty($forum_page['item_status']))
 				$forum_page['item_status']['normal'] = 'normal';
@@ -1607,12 +1612,10 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 				$forum_page['item_status']['new'] = 'new';
 			}
 
+			($hook = get_hook('mr_topic_loop_normal_topic_pre_item_nav_merge')) ? eval($hook) : null;
+
 			if (!empty($forum_page['item_nav']))
 				$forum_page['item_subject']['nav'] = '<span class="item-nav">'.sprintf($lang_forum['Topic navigation'], implode('&#160;&#160;', $forum_page['item_nav'])).'</span>';
-
-			($hook = get_hook('mr_topic_actions_moved_row_pre_item_title_merge')) ? eval($hook) : null;
-
-			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
 
 			// Assemble the Topic subject
 
@@ -1628,6 +1631,8 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 		}
 
 		$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
+
+		($hook = get_hook('mr_topic_actions_row_pre_item_status_merge')) ? eval($hook) : null;
 
 		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 

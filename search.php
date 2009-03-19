@@ -191,7 +191,7 @@ if (isset($query))
 	<div class="main-subhead">
 		<p class="item-summary forum-noview"><span><?php printf($lang_forum['Search subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
 	</div>
-	<div class="main-content main-forum forum-noview">
+	<div class="main-content main-forum forum-forums">
 <?php
 
 	}
@@ -334,6 +334,10 @@ if (isset($query))
 
 			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.forum_htmlencode($cur_set['subject']).'</a>';
 
+			($hook = get_hook('se_results_topics_row_pre_item_title_merge')) ? eval($hook) : null;
+
+			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
+
 			$forum_page['item_pages'] = ceil(($cur_set['num_replies'] + 1) / $forum_user['disp_posts']);
 
 			if ($forum_page['item_pages'] > 1)
@@ -348,14 +352,10 @@ if (isset($query))
 
 			($hook = get_hook('se_results_topics_row_pre_item_nav_merge')) ? eval($hook) : null;
 
-			if (!empty($forum_page['item_nav']))
-				$forum_page['item_title']['nav'] = '<span class="item-nav">'.sprintf($lang_forum['Topic navigation'], implode('&#160;&#160;', $forum_page['item_nav'])).'</span>';
-
-			($hook = get_hook('se_results_topics_row_pre_item_title_merge')) ? eval($hook) : null;
-
-			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
-
 			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_set['poster']).'</cite>').'</span>';
+
+			if (!empty($forum_page['item_nav']))
+				$forum_page['item_subject']['nav'] = '<span class="item-nav">'.sprintf($lang_forum['Topic navigation'], implode('&#160;&#160;', $forum_page['item_nav'])).'</span>';
 
 			($hook = get_hook('se_results_topics_row_pre_item_subject_merge')) ? eval($hook) : null;
 
