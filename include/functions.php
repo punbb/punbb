@@ -631,7 +631,7 @@ function get_saved_queries()
 <div id="brd-debug" class="main">
 
 	<div class="main-head">
-		<h2><span><?php echo $lang_common['Debug table'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_common['Debug table'] ?></span></h2>
 	</div>
 
 	<div class="main-content debug">
