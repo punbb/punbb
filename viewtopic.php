@@ -203,7 +203,7 @@ else
 // Setup main options
 $forum_page['main_title'] = $lang_topic['Topic options'];
 $forum_page['main_head_options'] = array(
-	'rss' => '<span class="feed first-item"><a class="feed-option" href="'.forum_link($forum_url['topic_rss'], $id).'">'.$lang_topic['RSS topic feed'].'</a></span>'
+	'rss' => '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['topic_rss'], $id).'">'.$lang_topic['RSS topic feed'].'</a></span>'
 );
 
 if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
