@@ -211,7 +211,7 @@ B - GLOBAL STYLES
 	border-bottom-width: 1px;
 	}
 
-.brd .main-head {
+.brd .main-head, .brd .main-foot {
 	border-style: solid;
 	border-width: 1px;
 	padding: 0 1.417em;
@@ -246,13 +246,6 @@ B - GLOBAL STYLES
 	font-size: 1.084em;
 	padding: 0.462em 1.417em;
 	position: relative;
-	}
-
-.brd .main-head,
-.brd .main-foot {
-	padding: 0 1.5em;
-	border-style: none;
-	border-width: 1px;
 	}
 
 .brd .main-foot {
@@ -651,7 +644,7 @@ D - COMMON INTERFACE ELEMENTS
 
 .brd .crumbs {
 	margin: 0.5em 0em;
-	padding: 0em 1.5em;
+	padding: 0em 1.417em;
 	font-size: 1.084em;
 	}
 

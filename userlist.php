@@ -313,7 +313,7 @@ else
 		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<p><?php echo $forum_page['items_info'] ?></p>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 <?php
 

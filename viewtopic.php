@@ -544,12 +544,14 @@ while ($cur_post = $forum_db->fetch_assoc($result))
 <?php ($hook = get_hook('vt_row_new_post_entry_data')) ? eval($hook) : null; ?>
 				</div>
 			</div>
-<?php if (!empty($forum_page['post_options'])): ?>			<div class="postfoot">
+<?php if (!empty($forum_page['post_options'])): ?>
+			<div class="postfoot">
 				<div class="post-options">
 					<?php echo implode("\n\t\t\t\t\t", $forum_page['post_options'])."\n" ?>
 				</div>
 			</div>
-<?php endif; ?>		</div>
+<?php endif; ?>
+		</div>
 <?php
 
 }
@@ -557,14 +559,14 @@ while ($cur_post = $forum_db->fetch_assoc($result))
 ?>
 	</div>
 
-		<div class="main-foot">
+	<div class="main-foot">
 <?php
 
 	if (!empty($forum_page['main_foot_options']))
 		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<p><?php echo $forum_page['items_info'] ?></p>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 <?php
 
