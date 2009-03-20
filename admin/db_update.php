@@ -420,7 +420,7 @@ require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php'
 			<ul class="spaced">
 				<li class="warn"><span><strong>WARNING!</strong> This script will update your PunBB forum database. The update procedure might take anything from a few seconds to a few minutes (or in extreme cases, hours) depending on the speed of the server, the size of the forum database and the number of changes required.</span></li>
 				<li><span>Do not forget to make a backup of the database before continuing.</span></li>
-				<li><span> Did you read the update instructions in the documentation? If not, start there.</span></li>
+				<li><span>Did you read the update instructions in the documentation? If not, start there.</span></li>
 <?php
 
 if (strpos($cur_version, '1.2') === 0 && (!$db_seems_utf8 || isset($_GET['force'])))
