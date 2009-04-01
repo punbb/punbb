@@ -33,8 +33,8 @@ IE6 - FIXES
 	zoom: 1;
 	}
 
-.brd .ct-box ol li {
-	display: list-item;
+.brd .ct-box ol, .brd .ct-box ol * {
+	zoom: normal;
 	}
 
 /* Forms
