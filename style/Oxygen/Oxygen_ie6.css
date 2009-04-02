@@ -37,6 +37,10 @@ IE6 - FIXES
 	zoom: normal;
 	}
 
+.brd .postfoot .post-contacts {
+	position: absolute;
+	}
+
 /* Forms
 -------------------------------------------------------------*/
 
