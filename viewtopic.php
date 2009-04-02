@@ -113,7 +113,7 @@ else if ($action == 'last')
 
 // Fetch some info about the topic
 $query = array(
-	'SELECT'	=> 't.subject, t.posted, t.poster, t.first_post_id, t.closed, t.num_replies, t.sticky, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies',
+	'SELECT'	=> 't.subject, t.first_post_id, t.closed, t.num_replies, t.sticky, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies',
 	'FROM'		=> 'topics AS t',
 	'JOINS'		=> array(
 		array(
@@ -128,7 +128,7 @@ $query = array(
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$id.' AND t.moved_to IS NULL'
 );
 
-if (!$forum_user['is_guest'])
+if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 {
 	$query['SELECT'] .= ', s.user_id AS is_subscribed';
 	$query['JOINS'][] = array(
