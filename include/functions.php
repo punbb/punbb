@@ -1360,44 +1360,47 @@ function set_default_user()
 
 	$forum_user = $forum_db->fetch_assoc($result);
 
-	// Update online list
-	if (!$forum_user['logged'])
+	if (!defined('FORUM_QUIET_VISIT'))
 	{
-		$forum_user['logged'] = time();
-		$forum_user['csrf_token'] = random_key(40, false, true);
-		$forum_user['prev_url'] = get_current_url(255);
-
-		// REPLACE INTO avoids a user having two rows in the online table
-		$query = array(
-			'REPLACE'	=> 'user_id, ident, logged, csrf_token',
-			'INTO'		=> 'online',
-			'VALUES'	=> '1, \''.$forum_db->escape($remote_addr).'\', '.$forum_user['logged'].', \''.$forum_user['csrf_token'].'\'',
-			'UNIQUE'	=> 'user_id=1 AND ident=\''.$forum_db->escape($remote_addr).'\''
-		);
-
-		if ($forum_user['prev_url'] != null)
+		// Update online list
+		if (!$forum_user['logged'])
 		{
-			$query['REPLACE'] .= ', prev_url';
-			$query['VALUES'] .= ', \''.$forum_db->escape($forum_user['prev_url']).'\'';
+			$forum_user['logged'] = time();
+			$forum_user['csrf_token'] = random_key(40, false, true);
+			$forum_user['prev_url'] = get_current_url(255);
+
+			// REPLACE INTO avoids a user having two rows in the online table
+			$query = array(
+				'REPLACE'	=> 'user_id, ident, logged, csrf_token',
+				'INTO'		=> 'online',
+				'VALUES'	=> '1, \''.$forum_db->escape($remote_addr).'\', '.$forum_user['logged'].', \''.$forum_user['csrf_token'].'\'',
+				'UNIQUE'	=> 'user_id=1 AND ident=\''.$forum_db->escape($remote_addr).'\''
+			);
+
+			if ($forum_user['prev_url'] != null)
+			{
+				$query['REPLACE'] .= ', prev_url';
+				$query['VALUES'] .= ', \''.$forum_db->escape($forum_user['prev_url']).'\'';
+			}
+
+			($hook = get_hook('fn_set_default_user_qr_add_online_guest_user')) ? eval($hook) : null;
+			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
+		else
+		{
+			$query = array(
+				'UPDATE'	=> 'online',
+				'SET'		=> 'logged='.time(),
+				'WHERE'		=> 'ident=\''.$forum_db->escape($remote_addr).'\''
+			);
 
-		($hook = get_hook('fn_set_default_user_qr_add_online_guest_user')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
-	}
-	else
-	{
-		$query = array(
-			'UPDATE'	=> 'online',
-			'SET'		=> 'logged='.time(),
-			'WHERE'		=> 'ident=\''.$forum_db->escape($remote_addr).'\''
-		);
+			$current_url = get_current_url(255);
+			if ($current_url != null)
+				$query['SET'] .= ', prev_url=\''.$forum_db->escape($current_url).'\'';
 
-		$current_url = get_current_url(255);
-		if ($current_url != null)
-			$query['SET'] .= ', prev_url=\''.$forum_db->escape($current_url).'\'';
-
-		($hook = get_hook('fn_set_default_user_qr_update_online_guest_user')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			($hook = get_hook('fn_set_default_user_qr_update_online_guest_user')) ? eval($hook) : null;
+			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		}
 	}
 
 	$forum_user['disp_topics'] = $forum_config['o_disp_topics_default'];
