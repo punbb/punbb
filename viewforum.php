@@ -208,7 +208,7 @@ if ($forum_db->num_rows($result))
 		if ($forum_config['o_censoring'] == '1')
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
-		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_topic['poster']).'</cite>').'</span>';
+		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], forum_htmlencode($cur_topic['poster'])).'</span>';
 
 		if ($cur_topic['moved_to'] != null)
 		{

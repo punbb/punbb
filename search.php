@@ -352,7 +352,7 @@ if (isset($query))
 
 			($hook = get_hook('se_results_topics_row_pre_item_nav_merge')) ? eval($hook) : null;
 
-			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], '<cite>'.forum_htmlencode($cur_set['poster']).'</cite>').'</span>';
+			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], forum_htmlencode($cur_set['poster'])).'</span>';
 
 			if (!empty($forum_page['item_nav']))
 				$forum_page['item_subject']['nav'] = '<span class="item-nav">'.sprintf($lang_forum['Topic navigation'], implode('&#160;&#160;', $forum_page['item_nav'])).'</span>';

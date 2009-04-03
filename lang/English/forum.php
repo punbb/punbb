@@ -24,7 +24,7 @@ $lang_forum = array(
 'No lastpost info'			=>	'No last post information',
 'by poster'					=>	'by %s',
 'Item status'				=>	'%s:',
-'Topic starter'				=>	'by %s',
+'Topic starter'				=>	'by <cite>%s</cite>',
 'New posts'					=>	'New posts',
 'Topic navigation'			=>	'( %s )',
 'Location'					=>	'Found in forum: %s',
@@ -43,7 +43,7 @@ $lang_forum = array(
 'Forum options'				=>	'Forum options',
 'Moderate forum'			=>	'Moderate forum',
 'Mark forum read'			=>	'Mark forum as read',
-'RSS forum feed'			=>	'RSS Forum Feed',
+'RSS forum feed'			=>	'RSS forum feed',
 'New posts info'			=>	'Go to the first new post since your last visit.'
 
 );

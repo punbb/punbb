@@ -218,7 +218,7 @@ ob_start();
 					<ul class="data-list">
 						<li><span><?php echo implode(' ', $forum_db->get_version()) ?></span></li>
 <?php if (isset($total_records) && isset($total_size)): ?>
-							<li><span><?php echo $lang_admin_index['Rows'] ?>: <?php echo forum_number_format($total_records) ?></span></li>
+						<li><span><?php echo $lang_admin_index['Rows'] ?>: <?php echo forum_number_format($total_records) ?></span></li>
 						<li><span><?php echo $lang_admin_index['Size'] ?>: <?php echo $total_size ?></span></li>
 <?php endif; ?>
 					</ul>
