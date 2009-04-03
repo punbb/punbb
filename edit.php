@@ -297,7 +297,7 @@ if (isset($forum_page['errors']))
 <?php if ($can_edit_subject): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++ $forum_page['fld_count'] ?>"><span><?php echo $lang_post['Topic subject'] ?>  <em><?php echo $lang_common['Required'] ?></em></span></label><br />
-						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" size="80" maxlength="70" value="<?php echo forum_htmlencode(isset($_POST['req_subject']) ? $_POST['req_subject'] : $cur_post['subject']) ?>" /></span>
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" size="70" maxlength="70" value="<?php echo forum_htmlencode(isset($_POST['req_subject']) ? $_POST['req_subject'] : $cur_post['subject']) ?>" /></span>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('ed_pre_message_box')) ? eval($hook) : null; ?>				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">

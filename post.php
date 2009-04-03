@@ -465,7 +465,7 @@ if ($fid)
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required longtext">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Topic subject'] ?> <em><?php echo $lang_common['Required'] ?></em></span></label><br />
-						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="80" maxlength="70" /></span>
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="70" maxlength="70" /></span>
 					</div>
 				</div>
 <?php
