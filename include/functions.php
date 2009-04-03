@@ -2971,13 +2971,15 @@ function redirect($destination_url, $message)
 // Display a simple error message
 function error()
 {
+	global $forum_config;
+
 	if (!headers_sent())
 	{
+		// if no HTTP responce code is set we send 503
+		if (!defined('FORUM_HTTP_RESPONSE_CODE_SET'))
+			header('HTTP/1.1 503 Service Temporarily Unavailable');
 		header('Content-type: text/html; charset=utf-8');
-		header('HTTP/1.1 503 Service Temporarily Unavailable');
 	}
-
-	global $forum_config;
 
 	/*
 		Parse input parameters. Possible function signatures:
