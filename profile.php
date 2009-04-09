@@ -1307,7 +1307,6 @@ if ($forum_user['id'] != $id &&
 	($hook = get_hook('pf_view_details_selected')) ? eval($hook) : null;
 
 	$forum_page['user_ident']['username'] = '<li class="username'.(($user['realname'] =='') ? ' fn nickname' :  ' nickname').'"><strong>'.forum_htmlencode($user['username']).'</strong></li>';
-	$forum_page['user_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($user).'</span></li>';
 
 	if ($forum_config['o_avatars'] == '1')
 	{
@@ -1316,6 +1315,8 @@ if ($forum_user['id'] != $id &&
 		if (!empty($forum_page['avatar_markup']))
 			$forum_page['user_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
 	}
+
+	$forum_page['user_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($user).'</span></li>';
 
 	// Setup user information
 	$forum_page['user_info'] = array();
@@ -1501,7 +1502,6 @@ else
 		($hook = get_hook('pf_change_details_about_selected')) ? eval($hook) : null;
 
 		$forum_page['user_ident']['username'] = '<li class="username'.(($user['realname'] =='') ? ' fn nickname' :  ' nickname').'"><strong>'.forum_htmlencode($user['username']).'</strong></li>';
-		$forum_page['user_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($user).'</span></li>';
 
 		if ($forum_config['o_avatars'] == '1')
 		{
@@ -1510,6 +1510,8 @@ else
 			if (!empty($forum_page['avatar_markup']))
 				$forum_page['user_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
 		}
+
+		$forum_page['user_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($user).'</span></li>';
 
 		// Create array for private information
 		$forum_page['user_private'] = array();
@@ -1564,15 +1566,15 @@ else
 
 		// Setup user messaging
 		if ($user['jabber'] !='')
-			$forum_page['user_contact']['jabber'] = '<li><span><strong>'.$lang_profile['Jabber'].':</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</span></li>';
+			$forum_page['user_contact']['jabber'] = '<li><span>'.$lang_profile['Jabber'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
 		if ($user['icq'] !='')
-			$forum_page['user_contact']['icq'] = '<li><span><strong>'.$lang_profile['ICQ'].':</strong> '.forum_htmlencode($user['icq']).'</span></li>';
+			$forum_page['user_contact']['icq'] = '<li><span>'.$lang_profile['ICQ'].': <strong>'.forum_htmlencode($user['icq']).'</strong></span></li>';
 		if ($user['msn'] !='')
-			$forum_page['user_contact']['msn'] = '<li><span><strong>'.$lang_profile['MSN'].':</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</span></li>';
+			$forum_page['user_contact']['msn'] = '<li><span>'.$lang_profile['MSN'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</strong></span></li>';
 		if ($user['aim'] !='')
-			$forum_page['user_contact']['aim'] = '<li><span><strong>'.$lang_profile['AOL IM'].':</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</span></li>';
+			$forum_page['user_contact']['aim'] = '<li><span>'.$lang_profile['AOL IM'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</strong></span></li>';
 		if ($user['yahoo'] !='')
-			$forum_page['user_contact']['yahoo'] = '<li><span><strong>'.$lang_profile['Yahoo'].':</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</span></li>';
+			$forum_page['user_contact']['yahoo'] = '<li><span>'.$lang_profile['Yahoo'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</strong></span></li>';
 
 		// Setup signature demo
 		if ($forum_config['o_signatures'] == '1' && isset($parsed_signature))
