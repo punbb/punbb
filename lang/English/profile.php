@@ -183,6 +183,7 @@ $lang_profile = array(
 'Change e-mail errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your e-mail address can be updated:',
 'E-mail key bad'			=>	'The specified e-mail activation key was incorrect or has expired. Please re-request change of e-mail address. If that fails, contact the forum administrator at %s.',
 'E-mail updated'			=>	'Your e-mail address has been updated.',
+'E-mail updated redirect'	=>	'Your e-mail address has been updated. Redirecting…',
 'Wrong password'			=>	'The password you entered was incorrect.',
 'Activate e-mail sent'		=>	'An email has been sent to the specified address with instructions on how to activate the new e-mail address. If it doesn\'t arrive you can contact the forum administrator at %s.',
 'Change your e-mail'		=>	'Change your e-mail address',

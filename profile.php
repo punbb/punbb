@@ -476,6 +476,24 @@ else if ($action == 'change_email')
 		// Did everything go according to plan?
 		if (empty($errors))
 		{
+			if ($forum_config['o_regs_verify'] != '1')
+			{
+				// We have no confirmed e-mail so we change e-mail right now
+				$query = array(
+					'UPDATE'	=> 'users',
+					'SET'		=> 'email=\''.$forum_db->escape($new_email).'\'',
+					'WHERE'		=> 'id='.$id
+				);
+
+				($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
+				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+//				message($lang_profile['E-mail updated']);
+				redirect(forum_link($forum_url['profile_about'], $id), $lang_profile['E-mail updated redirect']);
+			}
+
+			// We have a confirmed e-mail so we going to send an activation link
+
 			$new_email_key = random_key(8, true);
 
 			// Save new e-mail and activation key
@@ -889,7 +907,7 @@ else if (isset($_POST['form_sent']))
 					$form['num_posts'] = intval($_POST['num_posts']);
 			}
 
-			if ($forum_config['o_regs_verify'] == '0' || $forum_user['is_admmod'])
+			if ($forum_user['is_admmod'])
 			{
 				if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 					require FORUM_ROOT.'include/email.php';
@@ -1578,7 +1596,7 @@ else
 		if ($forum_page['own_profile'] || $forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_change_passwords'] == '1'))
 			$forum_page['user_options']['change_password'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_password'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))).'</a></span>';
 
-		if (!$forum_user['is_admmod'] && $forum_config['o_regs_verify'] == '1')
+		if (!$forum_user['is_admmod'])
 			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_email'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))).'</a></span>';
 
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1688,7 +1706,7 @@ else
 			$forum_page['hidden_fields']['old_username'] = '<input type="hidden" name="old_username" value="'.forum_htmlencode($user['username']).'" />';
 
 		// Does the form have required fields
-		$forum_page['has_required'] = ((($forum_user['is_admmod'] && ($forum_user['g_id'] == FORUM_ADMIN || $forum_user['g_mod_rename_users'] == '1')) || ($forum_user['is_admmod'] || $forum_config['o_regs_verify'] != '1')) ? true : false);
+		$forum_page['has_required'] = ((($forum_user['is_admmod'] && ($forum_user['g_id'] == FORUM_ADMIN || $forum_user['g_mod_rename_users'] == '1')) || $forum_user['is_admmod']) ? true : false);
 
 		($hook = get_hook('pf_change_details_identity_pre_header_load')) ? eval($hook) : null;
 
@@ -1748,7 +1766,7 @@ if ($forum_page['has_required']): ?>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('pf_change_details_identity_pre_email')) ? eval($hook) : null; ?>
-<?php if ($forum_user['is_admmod'] || $forum_config['o_regs_verify'] != '1'): ?>
+<?php if ($forum_user['is_admmod']): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['E-mail'] ?> <em><?php echo $lang_common['Required'] ?></em></span> <small><?php echo $lang_profile['E-mail help'] ?></small></label><br />
