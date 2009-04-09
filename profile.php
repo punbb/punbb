@@ -488,7 +488,6 @@ else if ($action == 'change_email')
 				($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-//				message($lang_profile['E-mail updated']);
 				redirect(forum_link($forum_url['profile_about'], $id), $lang_profile['E-mail updated redirect']);
 			}
 
