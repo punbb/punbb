@@ -430,7 +430,7 @@ else if ($action == 'change_email')
 		if (!is_valid_email($new_email))
 			$errors[] = $lang_common['Invalid e-mail'];
 
-		// Check it it's a banned e-mail address
+		// Check if it's a banned e-mail address
 		if (is_banned_email($new_email))
 		{
 			($hook = get_hook('pf_change_email_normal_banned_email')) ? eval($hook) : null;
