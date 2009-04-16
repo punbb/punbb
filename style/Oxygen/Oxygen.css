@@ -969,7 +969,8 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	}
 
 .brd .main-content .main-item li.info-lastpost cite,
-.brd .main-content .main-item li.info-lastpost span {
+.brd .main-content .main-item li.info-lastpost span,
+.brd .main-content .main-item li.info-forum a {
 	display: block;
 	padding: 0 1em;
 	font-style: normal;
