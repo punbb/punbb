@@ -32,6 +32,10 @@ $lang_search = array(
 'Show as posts'				=>	'As posts',
 'Submit search'				=>	'Submit search',
 'User defined search'		=>	'User defined search',
+'Search in'					=>	'Search in',
+'Message and subject'		=>	'Message text and topic subject',
+'Message only'				=>	'Message text only',
+'Topic only'				=>	'Topic subject only',
 
 // Results
 'Search results'			=>	'Search results',

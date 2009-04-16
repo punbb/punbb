@@ -237,7 +237,7 @@ if (isset($query))
 		{
 			// Generate the result heading
 			$forum_page['post_ident'] = array();
-			$forum_page['post_ident']['num']	= '<span class="post-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span>';
+			$forum_page['post_ident']['num'] = '<span class="post-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span>';
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_set['pid'] == $cur_set['first_post_id']) ? $lang_topic['Topic byline'] : $lang_topic['Reply byline']), '<strong>'.forum_htmlencode($cur_set['pposter']).'</strong>').'</span>';
 			$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.$lang_topic['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_set['pid']).'">'.format_time($cur_set['pposted']).'</a></span>';
 
@@ -491,6 +491,17 @@ ob_start();
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_search['Author search'] ?></span></label><br />
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="author" size="25" maxlength="25" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('se_pre_search_in')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box select">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_search['Search in'] ?></span></label><br />
+						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="search_in">
+							<option value="all"><?php echo $lang_search['Message and subject'] ?></option>
+							<option value="message"><?php echo $lang_search['Message only'] ?></option>
+							<option value="topic"><?php echo $lang_search['Topic only'] ?></option>
+						</select></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('se_pre_forum_fieldset')) ? eval($hook) : null; ?>
