@@ -30,7 +30,7 @@ NOTE: Make a backup of your current forum directory before proceeding. Also, don
  2. Log into the forum and go to "Administration" console, "Extensions" section, choose "Install extensions" tab (e.g. http://example.com/punbb/admin/extensions.php?section=install). The downloaded extension will be listed there.
  3. Click the "Install extension" link to install the extension.
 
-NOTE: You may use the pun_admin_repository official PunBB extension to download and install extensions from PunBB repository with one click.
+NOTE: You may use the pun_repository official PunBB extension to download and install extensions from PunBB repository with one click.
 
 	 Maximizing Performance
 	------------------------
@@ -53,8 +53,8 @@ NOTE: You may use the pun_admin_repository official PunBB extension to download 
 
 	 Copyright and disclaimer
 	--------------------------
-This package and its contents are copyright (C) 2002-2008 PunBB, all rights reserved.
-Partially based on code copyright (C) 2008 FluxBB.org.
+This package and its contents are (C) 2002-2009 PunBB, all rights reserved.
+Partially based on code (C) 2008-2009 FluxBB.org.
 
 PunBB is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

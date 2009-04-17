@@ -1,5 +1,6 @@
 <?php
 
+// Language definitions used in the index page of the admin panel
 $lang_admin_index = array(
 
 'Information head'				=>	'Welcome to PunBB administration control panel',

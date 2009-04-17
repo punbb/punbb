@@ -4,7 +4,7 @@
  *
  * This file contains all of the functions used to generate the cache files used by the site.
  *
- * @copyright Copyright (C) 2008 PunBB, partially based on code copyright (C) 2008 FluxBB.org
+ * @copyright (C) 2008-2009 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
