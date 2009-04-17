@@ -326,10 +326,6 @@ body {
 	background: #F4F4F4;
 	}
 
-.brd .content-head {
-
-	}
-
 .brd .group-head {
 	background: #EDF1F5;
 	border-color: #DBE0E4;
@@ -357,6 +353,10 @@ body {
 .brd .main-frm .ct-group td {
 	background: #FBFBFB;
 	}
+
+#extensions-used {
+	border-bottom-color: #999;
+}
 
 
 /* Status indicators

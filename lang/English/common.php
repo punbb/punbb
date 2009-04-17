@@ -8,8 +8,8 @@ $lang_common = array(
 'lang_identifier'			=>	'en',
 
 // Number formatting
-'lang_decimal_point'	=>	'.',
-'lang_thousands_sep'	=>	',',
+'lang_decimal_point'		=>	'.',
+'lang_thousands_sep'		=>	',',
 
 // Notices
 'Bad request'				=>	'Bad request. The link you followed is incorrect or outdated.',
@@ -151,14 +151,17 @@ $lang_common = array(
 'RSS reply'					=>	'Re: ',	// The topic subject will be appended to this string (to signify a reply)
 
 // Accessibility
-'Skip to content'					=>	'Skip to forum content',
+'Skip to content'			=>	'Skip to forum content',
 
 // Debug information
-'Querytime'						=>	'Generated in %1$s seconds, %2$s queries executed',
-'Debug table'						=>	'Debug information',
-'Debug summary'						=>	'Database query performance information',
-'Query times'						=>	'Time (s)',
-'Query'							=>	'Query',
-'Total query time'					=>	'Total query time',
+'Querytime'					=>	'Generated in %1$s seconds, %2$s queries executed',
+'Debug table'				=>	'Debug information',
+'Debug summary'				=>	'Database query performance information',
+'Query times'				=>	'Time (s)',
+'Query'						=>	'Query',
+'Total query time'			=>	'Total query time',
+
+// For official extensions
+'Official extensions inst'	=>	'<span id="extensions-used" title="%1$s">Official extensions: %2$s installed.</span>',
 
 );

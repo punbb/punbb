@@ -92,6 +92,6 @@ IE6 - FIXES
 /* Footer
 -------------------------------------------------------------*/
 
-#brd-about #extensions-used {
+#brd-about p#extensions-used {
 	clear: left;
 	}

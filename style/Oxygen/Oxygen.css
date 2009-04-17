@@ -714,6 +714,10 @@ D - COMMON INTERFACE ELEMENTS
 	font-size: 0.9em;
 	}
 
+#extensions-used {
+	border-bottom: 1px dotted;
+}
+
 /* Main and Content Options
 -------------------------------------------------------------*/
 
