@@ -265,6 +265,8 @@ if ($tid && isset($_GET['qid']))
 
 	list($q_poster, $q_message) = $forum_db->fetch_row($result);
 
+	($hook = get_hook('po_modify_quote_info')) ? eval($hook) : null;
+
 	if ($forum_config['p_message_bbcode'] == '1')
 	{
 		// If username contains a square bracket, we add "" or '' around it (so we know when it starts and ends)
