@@ -59,4 +59,9 @@ IE7 - FIXES
 
 #brd-admin-settings-setup #fld19, #brd-post textarea#fld1, #brd-post textarea#fld2, #brd-viewtopic textarea#fld1, #brd-postedit #fld2 {
 	margin-top: -19px;
-}
+	}
+
+.item-starter{
+	position: relative;
+	left: -0.5em;
+	}
