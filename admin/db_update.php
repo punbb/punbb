@@ -412,7 +412,7 @@ require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php'
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
-		<h1 class="hn"><span>PunBB Database Update : Perform update of database tables</span></h1>
+		<h1 class="hn"><span>PunBB Database Update: Perform update of database tables</span></h1>
 	</div>
 
 	<div class="main-content frm">
