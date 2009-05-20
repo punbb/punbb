@@ -9,7 +9,7 @@
 
 
 // Enable DEBUG mode by removing // from the following line
-//define('FORUM_DEBUG', 1);
+define('FORUM_DEBUG', 1);
 
 if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
