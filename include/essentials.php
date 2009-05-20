@@ -63,7 +63,10 @@ list($usec, $sec) = explode(' ', microtime());
 $forum_start = ((float)$usec + (float)$sec);
 
 // Make sure PHP reports all errors except E_NOTICE. PunBB supports E_ALL, but a lot of scripts it may interact with, do not.
-error_reporting(E_ALL ^ E_NOTICE);
+if (defined('FORUM_DEBUG'))
+	error_reporting(E_ALL);
+else
+	error_reporting(E_ALL ^ E_NOTICE);
 
 // Force POSIX locale (to prevent functions such as strtolower() from messing up UTF-8 strings)
 setlocale(LC_CTYPE, 'C');
