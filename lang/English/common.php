@@ -161,7 +161,4 @@ $lang_common = array(
 'Query'						=>	'Query',
 'Total query time'			=>	'Total query time',
 
-// For official extensions
-'Official extensions inst'	=>	'<span id="extensions-used" title="%1$s">Official extensions: %2$s installed.</span>',
-
 );
