@@ -87,6 +87,7 @@ $lang_common = array(
 'Info separator'			=>	' ', // e.g. 1 Page | 10 Topics
 'Powered by'				=>	'Powered by <strong>%s</strong>, supported by <strong>%s</strong>.',
 'Maintenance'				=>	'Maintenance',
+'Installed extensions'		=>	'Currently used extensions',
 
 // CSRF confirmation form
 'Confirm'					=>	'Confirm',	// Button
