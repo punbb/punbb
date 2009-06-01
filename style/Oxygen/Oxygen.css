@@ -723,7 +723,7 @@ D - COMMON INTERFACE ELEMENTS
 
 .brd p.options {
 	border-top: none;
-	float:right;
+	float: right;
 	}
 
 .brd .main-modoptions .options {
@@ -845,11 +845,11 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	}
 
 .brd .main-content .main-item .hn .item-status {
-	font-weight:normal;
+	font-weight: normal;
 	}
 
 .brd .main-content .main-item .hn .item-status em {
-	font-style:normal;
+	font-style: normal;
 	}
 
 .brd .main-content .main-item .item-subject,
