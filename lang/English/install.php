@@ -84,7 +84,6 @@ $lang_install = array(
 'Default language help'		=>	'(If you remove a language pack you must update this setting)',
 'Default announce heading'	=>	'Sample announcement',
 'Default announce message'	=>	'<p>Enter your announcement here.</p>',
-'Default maint message'		=>	"The forums are temporarily down for maintenance. Please try again in a few minutes.<br />\\n<br />\\n/Administrator",
 'Default rules'				=>	'Enter your rules here.',
 'Default category name'		=>	'Test category',
 'Default forum name'		=>	'Test forum',

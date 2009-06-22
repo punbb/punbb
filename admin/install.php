@@ -62,9 +62,9 @@ $language = preg_replace('#[\.\\\/]#', '', $language);
 if (!file_exists(FORUM_ROOT.'lang/'.$language.'/install.php'))
 	exit('The language pack you have chosen doesn\'t seem to exist or is corrupt. Please recheck and try again.');
 
-// Load the language file
+// Load the language files
 require FORUM_ROOT.'lang/'.$language.'/install.php';
-
+require FORUM_ROOT.'lang/'.$language.'/admin_settings.php';
 
 if (isset($_POST['generate_config']))
 {
@@ -1655,7 +1655,7 @@ else
 		'o_rules'					=> "'0'",
 		'o_rules_message'			=> "'".$lang_install['Default rules']."'",
 		'o_maintenance'				=> "'0'",
-		'o_maintenance_message'		=> "'".$lang_install['Default maint message']."'",
+		'o_maintenance_message'		=> "'".$lang_admin_settings['Maintenance message default']."'",
 		'o_default_dst'				=> "'0'",
 		'p_message_bbcode'			=> "'1'",
 		'p_message_img_tag'			=> "'1'",
