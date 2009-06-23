@@ -959,7 +959,7 @@ else if (isset($_POST['form_sent']))
 			$form['date_format'] = (isset($form['date_format'])) ? intval($form['date_format']) : 0;
 
 			$form['email_setting'] = intval($form['email_setting']);
-			if ($form['email_setting'] < 0 && $form['email_setting'] > 2) $form['email_setting'] = 1;
+			if ($form['email_setting'] < 0 || $form['email_setting'] > 2) $form['email_setting'] = 1;
 
 			if ($forum_config['o_subscriptions'] == '1')
 			{
