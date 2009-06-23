@@ -196,7 +196,7 @@ $lang_admin_settings = array(
 
 // Maintenance section
 'Maintenance head'				=>	'Setup maintenance message and activate maintenance mode',
-'Maintenance mode info'			=>	'<strong>IMPORTANT!</strong> Putting the board into maintenance mode means it will only be available to administrators. This should be used if the board needs to taken down temporarily for maintenance.',
+'Maintenance mode info'			=>	'<strong>IMPORTANT!</strong> Putting the board into maintenance mode means it will only be available to administrators. This should be used if the board needs to be taken down temporarily for maintenance.',
 'Maintenance mode warn'			=>	'<strong>WARNING!</strong> DO NOT LOGOUT when the board is in maintenance mode. You will not be able to login again.',
 'Maintenance legend'			=>	'Maintenance',
 'Maintenance mode'				=>	'Maintenance mode',
