@@ -51,7 +51,7 @@ $lang_admin_settings = array(
 'Setup links legend'			=>	'Menu items',
 'Enter links label'				=>	'Enter your links',
 'Error no board title'			=>	'You must enter a board title.',
-'Error timeout value'			=>	'The value of "Timeout online" must be smaller than the value of "Timeout visit".',
+'Error timeout value'			=>	'The value of "Online timeout" must be smaller than the value of "Visit timeout".',
 
 
 // Features section
@@ -164,7 +164,7 @@ $lang_admin_settings = array(
 'Allow form e-mail label'		=>	'Hide e-mail address but allow e-mail via the forum.',
 'Disallow form e-mail label'	=>	'Hide e-mail address and disallow e-mail via the forum.',
 'Registration rules'			=>	'Forum rules (enable and compose forum rules)',
-'Registration rules info'		=>	'You may require new users to agree to a set of rules when registering. The rules will always be available through a link in the navigation table at the top of every page. You may enable the use of rules and then compose your rules below.',
+'Registration rules info'		=>	'You may require new users to agree to a set of rules when registering. The rules will always be available through a link in the navigation menu at the top of every page. You may enable the use of rules and then compose your rules below.',
 'Registration rules legend'		=>	'Forum rules',
 'Require rules'					=>	'Use rules',
 'Require rules label'			=>	'Users must agree to forum rules before registering.',
