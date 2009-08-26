@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension SYSTEM "ext-1.0.dtd">
+
+<!--
+***********************************************************************
+
+	Copyright (C) 2008  PunBB
+
+	PunBB is free software; you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published
+	by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
+
+	PunBB is distributed in the hope that it will be useful, but
+	WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+	MA  02111-1307  USA
+
+***********************************************************************
+-->
+
+<extension engine="1.0">
+	<id>pun_karma</id>
+	<title>Post karma</title>
+	<version>1.0b.1</version>
+	<description>Adds karma/reputation to posts.</description>
+	<author>PunBB Development Team</author>
+	<minversion>1.3 Beta</minversion>
+	<maxtestedon>1.3 Beta</maxtestedon>
+
+	 <install><![CDATA[
+$forum_db->query('CREATE TABLE '.$forum_db->prefix.'pun_karma(
+	user_id INT( 10 ) NOT NULL,
+	post_id INT( 10 ) NOT NULL,
+	mark TINYINT( 1 ) NOT NULL ,
+	updated_at TIMESTAMP NOT NULL,
+	PRIMARY KEY ( user_id , post_id )
+)
+');
+		]]></install>
+
+	<uninstall><![CDATA[
+$forum_db->query('DROP TABLE '.$forum_db->prefix.'pun_karma');
+	]]></uninstall>
+
+	<hooks>
+		<hook id="vt_qr_get_topic_info"><![CDATA[
+require_once $ext_info['path'].'/functions.php';
+if (!$forum_user['is_guest'])
+{
+	if (isset($_GET['plusmark']) && ($post_id = intval($_GET['plusmark'])) > 0)
+		plus_mark_to_post( $post_id );
+	else if (isset($_GET['minusmark']) && ($post_id = intval($_GET['minusmark'])) > 0)
+		minus_mark_to_post( $post_id );
+	else if (isset($_GET['cancelmark']) && ($post_id = intval($_GET['cancelmark'])) > 0)
+		cancel_mark_to_post( $post_id );
+}
+			]]></hook>
+		<hook id="vt_row_pre_display"><![CDATA[
+if (!$forum_user['is_guest'])
+{
+	$forum_page['user_info'][] = '<li>'.$lang_pun_karma['Post mark'].'&nbsp;'.post_mark($cur_post['id']).'</li>';
+
+	//User can't to vote for his posts
+	if ($forum_user['id'] != $cur_post['poster_id'])
+	{
+		//Check if user marked this post
+		$query = array(
+			'SELECT'	=> 'mark',
+			'FROM'		=> 'pun_karma',
+			'WHERE'		=> 'user_id = '.$forum_user['id'].' AND post_id = '.$cur_post['id']
+		);
+
+		$res_pun_karma = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+		list($mark) = $forum_db->fetch_row($res_pun_karma);
+		$page = (isset($_GET['p'])) ? ($_GET['p']) : (1);
+
+		if (!$mark)
+		{
+			$vote  = '<a href="'.forum_link($forum_url['Plus mark'], array($id, $cur_post['id'], $page)).'"><span>'.$lang_pun_karma['Plus mark'].'</span></a>&nbsp;';
+			$vote .= '<a href="'.forum_link($forum_url['Minus mark'], array($id, $cur_post['id'], $page)).'"><span>'.$lang_pun_karma['Minus mark'].'</span></a>';
+		}
+		else if ($mark == 1)
+		{
+			$vote  = '<strong><span>'.$lang_pun_karma['Plus mark'].'</span></strong>&nbsp;';
+			$vote .= '<a href="'.forum_link($forum_url['Cancel mark'], array($id, $cur_post['id'], $page)).'"><span>'.$lang_pun_karma['Cancel mark'].'</span></a>&nbsp;';
+			$vote .= '<a href="'.forum_link($forum_url['Minus mark'],  array($id, $cur_post['id'], $page)).'"><span>'.$lang_pun_karma['Minus mark'].'</span></a>';
+		}
+		else if ($mark == -1)
+		{
+			$vote  = '<a href="'.forum_link($forum_url['Plus mark'],   array($id, $cur_post['id'], $page)).'"><span>'.$lang_pun_karma['Plus mark'].'</span></a>&nbsp;';
+			$vote .= '<a href="'.forum_link($forum_url['Cancel mark'], array($id, $cur_post['id'], $page)).'"><span>'.$lang_pun_karma['Cancel mark'].'</span></a>&nbsp;';
+			$vote .= '<strong><span>'.$lang_pun_karma['Minus mark'].'</span></strong>';
+		}
+
+		$forum_page['user_info'][] = '<li>'.$lang_pun_karma['Vote'].'&nbsp;<strong>['.$vote.']</strong></li>';
+	}
+}
+			]]></hook>
+		<hook id="vt_qr_get_posts"><![CDATA[
+$forum_url['Plus mark']   = 'viewtopic.php?id=$1&amp;plusmark=$2&amp;p=$3#p$2';
+$forum_url['Minus mark']  = 'viewtopic.php?id=$1&amp;minusmark=$2&amp;p=$3#p$2';
+$forum_url['Cancel mark'] = 'viewtopic.php?id=$1&amp;cancelmark=$2&amp;p=$3#p$2';
+
+if (file_exists($ext_info['path'].'/lang/'.$forum_user['language'].'/'.$ext_info['id'].'.php'))
+	require $ext_info['path'].'/lang/'.$forum_user['language'].'/'.$ext_info['id'].'.php';
+else
+	require $ext_info['path'].'/lang/English/'.$ext_info['id'].'.php';
+
+			]]></hook>
+		<hook id="dl_form_submitted"><![CDATA[
+require_once $ext_info['path'].'/functions.php';
+if (isset($_POST['req_confirm']))
+	if ($cur_post['is_topic'])
+		delete_topic_karma( $cur_post['tid'] );
+	else
+		delete_post_karma( $id );
+		]]></hook>
+	</hooks>
+</extension>
