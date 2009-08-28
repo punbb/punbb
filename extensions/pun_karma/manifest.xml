@@ -34,18 +34,38 @@
 	<maxtestedon>1.3 Beta</maxtestedon>
 
 	 <install><![CDATA[
-$forum_db->query('CREATE TABLE '.$forum_db->prefix.'pun_karma(
-	user_id INT( 10 ) NOT NULL,
-	post_id INT( 10 ) NOT NULL,
-	mark TINYINT( 1 ) NOT NULL ,
-	updated_at TIMESTAMP NOT NULL,
-	PRIMARY KEY ( user_id , post_id )
-)
-');
-		]]></install>
+if (!$forum_db->table_exists('pun_karma'))
+{
+	$schema = array(
+		'FIELDS'	=> array(
+			'user_id'	=>	array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> false
+			),
+			'post_id'	=>	array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> false
+			),
+			'mark' => array(
+				'datatype'		=> 'TINYINT(1)',
+				'allow_null'	=> false
+			),
+			'updated_at'	=>	array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> false
+			)
+		),
+		'PRIMARY KEY'	=> array('user_id', 'post_id'),
+		'INDEXES'		=> array('karmapost_idx' => array('post_id'))
+	);
+	$forum_db->create_table('pun_karma', $schema);
+}
+$forum_db->add_field('posts', 'karma', 'INT(10)', FALSE, '0');
+	]]></install>
 
 	<uninstall><![CDATA[
-$forum_db->query('DROP TABLE '.$forum_db->prefix.'pun_karma');
+$forum_db->drop_table('pun_karma');
+$forum_db->drop_field('posts', 'karma');
 	]]></uninstall>
 
 	<hooks>
