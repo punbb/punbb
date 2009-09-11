@@ -772,6 +772,8 @@ function sef_friendly($str)
 	foreach ($forum_reserved_strings as $match => $replace)
 		if ($str == $match)
 			return $replace;
+		else if ($match != '')
+			$str = str_replace($match, $replace, $str);
 
 	return $str;
 }
