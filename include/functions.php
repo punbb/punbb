@@ -1541,7 +1541,7 @@ function update_users_online()
 		else
 		{
 			// If the entry is older than "o_timeout_visit", update last_visit for the user in question, then delete him/her from the online list
-			if ($cur_user['idle'] != '0')
+			if ($cur_user['logged'] < ($now - $forum_config['o_timeout_visit']))
 			{
 				$query = array(
 					'UPDATE'	=> 'users',
