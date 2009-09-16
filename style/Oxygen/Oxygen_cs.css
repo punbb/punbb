@@ -378,7 +378,7 @@ body {
 	border-color: #ACACAC #979797 #898989 #7A7A7A;
 	}
 
-.brd .main-content .sticky .closed .icon {
+.brd .main-content .sticky.closed .icon {
 	border-color: #D7E5F3 #C3CFDC #898989 #7A7A7A;
 	}
 
