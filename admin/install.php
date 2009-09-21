@@ -92,12 +92,18 @@ if (!isset($_POST['form_sent']))
 	$dual_mysql = false;
 	$db_extensions = array();
 	if (function_exists('mysqli_connect'))
+	{
 		$db_extensions[] = array('mysqli', 'MySQL Improved');
+		$db_extensions[] = array('mysqli_innodb', 'MySQL Improved (InnoDB)');
+		$mysql_innodb = true;
+	}
 	if (function_exists('mysql_connect'))
 	{
 		$db_extensions[] = array('mysql', 'MySQL Standard');
+		$db_extensions[] = array('mysql_innodb', 'MySQL Standard (InnoDB)');
+		$mysql_innodb = true;
 
-		if (count($db_extensions) > 1)
+		if (count($db_extensions) > 2)
 			$dual_mysql = true;
 	}
 	if (function_exists('sqlite_open'))
@@ -447,11 +453,19 @@ else
 		case 'mysql':
 			require FORUM_ROOT.'include/dblayer/mysql.php';
 			break;
+			
+		case 'mysql_innodb':
+			require FORUM_ROOT.'include/dblayer/mysql_innodb.php';
+			break;
 
 		case 'mysqli':
 			require FORUM_ROOT.'include/dblayer/mysqli.php';
 			break;
 
+		case 'mysqli_innodb':
+			require FORUM_ROOT.'include/dblayer/mysqli_innodb.php';
+			break;
+			
 		case 'pgsql':
 			require FORUM_ROOT.'include/dblayer/pgsql.php';
 			break;
@@ -497,6 +511,15 @@ else
 		error(sprintf($lang_install['PunBB already installed'], $db_prefix, $db_name));
 
 
+	// Check if InnoDB is available
+ 	if ($db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
+ 	{
+		$result = $db->query('SHOW VARIABLES LIKE \'have_innodb\'');
+		list (, $result) = $db->fetch_row($result);
+		if ((strtoupper($result) != 'YES'))
+			error('InnoDB does not seem to be enabled. Please choose a database layer that does not have InnoDB support, or enable InnoDB on your MySQL server.');
+ 	}
+	
 	// Start a transaction
 	$forum_db->start_transaction();
 
@@ -956,11 +979,14 @@ else
 		'ENGINE'		=> 'HEAP'
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if ($db_type == 'mysql' || $db_type == 'mysqli' || $db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
 	{
 		$schema['UNIQUE KEYS']['user_id_ident_idx'] = array('user_id', 'ident(25)');
 		$schema['INDEXES']['ident_idx'] = array('ident(25)');
 	}
+	
+	if ($db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
+		$schema['ENGINE'] = 'InnoDB';
 
 	$forum_db->create_table('online', $schema);
 
@@ -1126,7 +1152,7 @@ else
 		)
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if ($db_type == 'mysql' || $db_type == 'mysqli' || $db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
 		$schema['INDEXES']['ident_idx'] = array('ident(8)');
 
 	$forum_db->create_table('search_cache', $schema);
@@ -1493,7 +1519,7 @@ else
 		)
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if ($db_type == 'mysql' || $db_type == 'mysqli' || $db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
 		$schema['INDEXES']['username_idx'] = array('username(8)');
 
 	$forum_db->create_table('users', $schema);
