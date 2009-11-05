@@ -533,25 +533,29 @@ $query = array(
 ($hook = get_hook('se_qr_get_cats_and_forums')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-$cur_category = 0;
-while ($cur_forum = $forum_db->fetch_assoc($result))
+if ($forum_db->num_rows($result) > 0)
 {
-	($hook = get_hook('se_forum_loop_start')) ? eval($hook) : null;
-
-	if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
+	$cur_category = 0;
+	while ($cur_forum = $forum_db->fetch_assoc($result))
 	{
-		if ($cur_category)
-			echo "\t\t\t\t\t\t\t".'</fieldset>'."\n";
+		($hook = get_hook('se_forum_loop_start')) ? eval($hook) : null;
 
-		echo "\t\t\t\t\t\t\t".'<fieldset>'."\n\t\t\t\t\t\t\t\t".'<legend><span>'.forum_htmlencode($cur_forum['cat_name']).':</span></legend>'."\n";
-		$cur_category = $cur_forum['cid'];
+		if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
+		{
+			if ($cur_category)
+				echo "\t\t\t\t\t\t\t".'</fieldset>'."\n";
+
+			echo "\t\t\t\t\t\t\t".'<fieldset>'."\n\t\t\t\t\t\t\t\t".'<legend><span>'.forum_htmlencode($cur_forum['cat_name']).':</span></legend>'."\n";
+			$cur_category = $cur_forum['cid'];
+		}
+
+		echo "\t\t\t\t\t\t\t\t".'<div class="checklist-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'"  name="forum[]" value="'.$cur_forum['fid'].'" /></span> <label for="fld'.$forum_page['fld_count'].'">'.forum_htmlencode($cur_forum['forum_name']).'</label></div>'."\n";
 	}
 
-	echo "\t\t\t\t\t\t\t\t".'<div class="checklist-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'"  name="forum[]" value="'.$cur_forum['fid'].'" /></span> <label for="fld'.$forum_page['fld_count'].'">'.forum_htmlencode($cur_forum['forum_name']).'</label></div>'."\n";
+	echo "\t\t\t\t\t\t\t".'</fieldset>'."\n";
 }
 
 ?>
-							</fieldset>
 						</div>
 					</div>
 <?php ($hook = get_hook('se_pre_forum_fieldset_end')) ? eval($hook) : null; ?>
