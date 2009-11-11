@@ -63,7 +63,7 @@ if ($fid < 1)
 
 // Get some info about the forum we're moderating
 $query = array(
-	'SELECT'	=> 'f.forum_name, f.redirect_url, f.num_topics, f.moderators',
+	'SELECT'	=> 'f.forum_name, f.redirect_url, f.num_topics, f.moderators, f.sort_by',
 	'FROM'		=> 'forums AS f',
 	'JOINS'		=> array(
 		array(
@@ -1433,7 +1433,7 @@ $query = array(
 	'SELECT'	=> 't.id, t.poster, t.subject, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to',
 	'FROM'		=> 'topics AS t',
 	'WHERE'		=> 'forum_id='.$fid,
-	'ORDER BY'	=> 't.sticky DESC, last_post DESC',
+	'ORDER BY'	=> 't.sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 't.posted' : 't.last_post').' DESC',
 	'LIMIT'		=>	$forum_page['start_from'].', '.$forum_user['disp_topics']
 );
 
