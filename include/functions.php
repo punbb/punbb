@@ -749,7 +749,7 @@ function sef_friendly($str)
 	global $forum_config, $forum_user;
 	static $lang_url_replace, $forum_reserved_strings;
 
-	if (!isset($lang_replace))
+	if (!isset($lang_url_replace))
 		require FORUM_ROOT.'lang/'.$forum_user['language'].'/url_replace.php';
 
 	if (!isset($forum_reserved_strings))
