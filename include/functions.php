@@ -404,6 +404,8 @@ function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null,
 	if ($type == FORUM_FT_DATETIME || $type == FORUM_FT_TIME)
 		$formatted_time .= gmdate($time_format, $timestamp);
 
+	($hook = get_hook('fn_format_time_end')) ? eval($hook) : null;
+
 	return $formatted_time;
 }
 
