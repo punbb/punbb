@@ -76,7 +76,7 @@ $tpl_main = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_
 if (!defined('FORUM_ALLOW_INDEX'))
 	$forum_head['robots'] = '<meta name="ROBOTS" content="NOINDEX, FOLLOW" />';
 else
-	$forum_head['descriptions'] = '<meta name="description" content="'.generate_crumbs(true).' '.$lang_common['Title separator'].' '.forum_htmlencode($forum_config['o_board_desc']).'" />';
+	$forum_head['descriptions'] = '<meta name="description" content="'.generate_crumbs(true).$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_desc']).'" />';
 
 // Should we output a MicroID? http://microid.org/
 if (strpos(FORUM_PAGE, 'profile') === 0)
