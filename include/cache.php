@@ -297,7 +297,7 @@ function generate_hooks_cache()
 	$output = array();
 	while ($cur_hook = $forum_db->fetch_assoc($result))
 	{
-		$load_ext_info = '$ext_info_stack[] = array('."\n".
+		$load_ext_info = '$GLOBALS[\'ext_info_stack\'][] = array('."\n".
 			'\'id\'				=> \''.$cur_hook['extension_id'].'\','."\n".
 			'\'path\'			=> FORUM_ROOT.\'extensions/'.$cur_hook['extension_id'].'\','."\n".
 			'\'url\'			=> $GLOBALS[\'base_url\'].\'/extensions/'.$cur_hook['extension_id'].'\','."\n".
@@ -316,8 +316,8 @@ function generate_hooks_cache()
 				'\'url\'			=> $GLOBALS[\'base_url\'].\'/extensions/'.$cur_dependency.'\'),'."\n";
 		}
 
-		$load_ext_info .= ')'."\n".');'."\n".'$ext_info = $ext_info_stack[count($ext_info_stack) - 1];';
-		$unload_ext_info = 'array_pop($ext_info_stack);'."\n".'$ext_info = empty($ext_info_stack) ? array() : $ext_info_stack[count($ext_info_stack) - 1];';
+		$load_ext_info .= ')'."\n".');'."\n".'$ext_info = $GLOBALS[\'ext_info_stack\'][count($GLOBALS[\'ext_info_stack\']) - 1];';
+		$unload_ext_info = 'array_pop($GLOBALS[\'ext_info_stack\']);'."\n".'$ext_info = empty($GLOBALS[\'ext_info_stack\']) ? array() : $GLOBALS[\'ext_info_stack\'][count($GLOBALS[\'ext_info_stack\']) - 1];';
 
 		$output[$cur_hook['id']][] = $load_ext_info."\n\n".$cur_hook['code']."\n\n".$unload_ext_info."\n";
 	}
