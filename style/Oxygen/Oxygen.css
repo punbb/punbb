@@ -1288,7 +1288,6 @@ F - MAIN CONTENT - FORMS
 	padding: 0 0 0 2.25em;
 	float: none;
 	height: 100%;
-	background-color: #fff;
 	}
 
 .brd .checklist .checklist-item .fld-input {
@@ -1881,5 +1880,4 @@ H - MAIN CONTENT - ODDMENTS
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 	margin-bottom: 0.5em;
-	color: #294F6E
 	}

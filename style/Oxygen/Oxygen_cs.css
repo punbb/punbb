@@ -182,6 +182,10 @@ body {
 	background: #f4f4f4;
 	}
 
+.brd .help-box .hn {
+	color: #294F6E
+	}
+
 .brd .frm-buttons, .brd .extension .options, .brd .hotfix .options {
 	border-color: #DBE0E4;
 	}
@@ -389,6 +393,10 @@ body {
 
 /* Multi Checkbox Widget
 -------------------------------------------------------------*/
+
+.brd .checklist .checklist-item label {
+	background: #fff;
+	}
 
 .brd .checklist .checklist-item label:hover {
 	background: #EDF1F5;
