@@ -1461,6 +1461,9 @@ function check_bans()
 		if ($cur_ban['username'] != '' && utf8_strtolower($forum_user['username']) == utf8_strtolower($cur_ban['username']))
 			$is_banned = true;
 
+		if ($cur_ban['email'] != '' && $forum_user['email'] == $cur_ban['email'])
+			$is_banned = true;
+
 		if ($cur_ban['ip'] != '')
 		{
 			$cur_ban_ips = explode(' ', $cur_ban['ip']);
