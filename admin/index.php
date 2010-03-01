@@ -140,7 +140,7 @@ else if (ini_get('zend_optimizer.optimization_level'))
 else if (ini_get('eaccelerator.enable'))
 	$php_accelerator = '<a href="http://eaccelerator.net/">eAccelerator</a>';
 else if (ini_get('xcache.cacher'))
-	$php_accelerator = '<a href="http://trac.lighttpd.net/xcache/">XCache</a>';
+	$php_accelerator = '<a href="http://xcache.lighttpd.net/">XCache</a>';
 else
 	$php_accelerator = $lang_admin_index['Not applicable'];
 
