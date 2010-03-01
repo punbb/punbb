@@ -579,7 +579,8 @@ class DBLayer
 		if (!empty($table['indices']))
 		{
 			foreach ($table['indices'] as $cur_index)
-				$this->query($cur_index) or error(__FILE__, __LINE__);
+				if (!preg_match('#\(.*'.$field_name.'.*\)#', $cur_index))
+					$this->query($cur_index) or error(__FILE__, __LINE__);
 		}
 
 		//Copy content back
