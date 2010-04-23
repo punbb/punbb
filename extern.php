@@ -30,26 +30,29 @@
   display posts) and type (output as HTML or RSS). The only
   mandatory variable is action. Possible/default values are:
 
-    action: feed - show most recent topics/posts (HTML or RSS)
-            online - show users online (HTML)
-            online_full - as above, but includes a full list (HTML)
-            stats - show board statistics (HTML)
+    action:  feed - show most recent topics/posts (HTML or RSS)
+             online - show users online (HTML)
+             online_full - as above, but includes a full list (HTML)
+             stats - show board statistics (HTML)
 
-    type:   rss - output as RSS 2.0
-            atom - output as Atom 1.0
-            xml - output as XML
-            html - output as HTML (<li>'s)
+    type:    rss - output as RSS 2.0
+             atom - output as Atom 1.0
+             xml - output as XML
+             html - output as HTML (<li>'s)
 
-    fid:    One or more forum ID's (comma-separated). If ignored,
-            topics from all readable forums will be pulled.
+    content: topics - show last topics in the specified forums
+             posts - show last posts in the specified forums or topics
 
-    nfid:   One or more forum ID's (comma-separated) that are to be
-            excluded. E.g. the ID of a a test forum.
+    fid:     One or more forum ID's (comma-separated). If ignored,
+             topics from all readable forums will be pulled.
 
-    tid:    A topic ID from which to show posts. If a tid is supplied,
-            fid and nfid are ignored.
+    nfid:    One or more forum ID's (comma-separated) that are to be
+             excluded. E.g. the ID of a a test forum.
 
-    show:   Any integer value between 1 and 50. The default is 15.
+    tid:     A topic ID from which to show posts. If a tid is supplied,
+             fid and nfid are ignored.
+
+    show:    Any integer value between 1 and 50. The default is 15.
 
 
 
@@ -288,6 +291,7 @@ if ($action == 'feed')
 	// Was a topic ID supplied?
 	if (isset($_GET['tid']))
 	{
+		// We have the topic ID(s) and we're going to display its posts
 		$tid = intval($_GET['tid']);
 
 		// Fetch topic subject
@@ -335,16 +339,16 @@ if ($action == 'feed')
 			'JOINS'		=> array(
 				array(
 					'INNER JOIN'	=> 'users AS u',
-					'ON'		=> 'u.id = p.poster_id'
+					'ON'			=> 'u.id = p.poster_id'
 				)
 			),
 			'WHERE'		=> 'p.topic_id='.$tid,
 			'ORDER BY'	=> 'p.posted DESC',
 			'LIMIT'		=> $show
 		);
-
 		($hook = get_hook('ex_qr_get_posts')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 		while ($cur_post = $forum_db->fetch_assoc($result))
 		{
 			if ($forum_config['o_censoring'] == '1')
@@ -401,22 +405,22 @@ if ($action == 'feed')
 
 			if (count($fids) == 1)
 			{
-			// Fetch forum name
-			$query = array(
-				'SELECT'	=> 'f.forum_name',
-				'FROM'		=> 'forums AS f',
-				'JOINS'		=> array(
-					array(
-						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
-					)
-				),
-				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fids[0]
-			);
+				// Fetch forum name
+				$query = array(
+					'SELECT'	=> 'f.forum_name',
+					'FROM'		=> 'forums AS f',
+					'JOINS'		=> array(
+						array(
+							'LEFT JOIN'		=> 'forum_perms AS fp',
+							'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						)
+					),
+					'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fids[0]
+				);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
-				$forum_name = $lang_common['Title separator'].$forum_db->result($result);
+				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+				if ($forum_db->num_rows($result))
+					$forum_name = $lang_common['Title separator'].$forum_db->result($result);
 			}
 		}
 
@@ -430,77 +434,157 @@ if ($action == 'feed')
 				$forum_sql = ' AND t.forum_id NOT IN('.implode(',', $nfids).')';
 		}
 
-		// Setup the feed
-		$feed = array(
-			'title' 		=>	$forum_config['o_board_title'].$forum_name,
-			'link'			=>	forum_link($forum_url['index']),
-			'description'	=>	sprintf($lang_common['RSS description'], $forum_config['o_board_title']),
-			'items'			=>	array(),
-			'type'			=>	'topics'
-		);
-
-		// Fetch $show topics
-		$query = array(
-			'SELECT'	=> 't.id, t.poster, t.subject, t.last_post, t.last_poster, p.message, p.hide_smilies, u.email_setting, u.email, p.poster_id, p.poster_email',
-			'FROM'		=> 'topics AS t',
-			'JOINS'		=> array(
-				array(
-					'INNER JOIN'	=> 'posts AS p',
-					'ON'			=> 'p.id=t.first_post_id'
-				),
-				array(
-					'INNER JOIN'		=> 'users AS u',
-					'ON'			=> 'u.id = p.poster_id'
-				),
-				array(
-					'LEFT JOIN'		=> 'forum_perms AS fp',
-					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.$forum_user['g_id'].')'
-				)
-			),
-			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL',
-			'ORDER BY'	=> 't.last_post DESC',
-			'LIMIT'		=> $show
-		);
-
-		if (isset($forum_sql))
-			$query['WHERE'] .= $forum_sql;
-
-		($hook = get_hook('ex_qr_get_topics')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_topic = $forum_db->fetch_assoc($result))
+		if (isset($_GET['content']) && $_GET['content'] == 'posts')
 		{
-			if ($forum_config['o_censoring'] == '1')
-			{
-				$cur_topic['subject'] = censor_words($cur_topic['subject']);
-				$cur_topic['message'] = censor_words($cur_topic['message']);
-			}
+			// Fetching last posts from the forums specified
 
-			$cur_topic['message'] = parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
-
-			$item = array(
-				'id'			=>	$cur_topic['id'],
-				'title'			=>	$cur_topic['subject'],
-				'link'			=>	forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
-				'description'	=>	$cur_topic['message'],
-				'author'		=>	array(
-					'name'	=> $cur_topic['last_poster']
-				),
-				'pubdate'		=>	$cur_topic['last_post']
+			// Setup the feed
+			$feed = array(
+				'title' 		=>	$forum_config['o_board_title'].$forum_name,
+				'link'			=>	forum_link($forum_url['index']),
+				'description'	=>	sprintf($lang_common['RSS description topic'], $forum_config['o_board_title']),
+				'items'			=>	array(),
+				'type'			=>	'posts'
 			);
 
-			if ($cur_topic['poster_id'] > 1)
+			// Fetch $show posts
+			$query = array(
+				'SELECT'	=> 'p.id, p.poster, p.posted, p.poster_id, p.poster_email, t.subject, t.first_post_id, p.message, p.hide_smilies, u.email_setting, u.email',
+				'FROM'		=> 'topics AS t',
+				'JOINS'		=> array(
+					array(
+						'INNER JOIN'	=> 'posts AS p',
+						'ON'			=> 'p.topic_id = t.id'
+					),
+					array(
+						'INNER JOIN'	=> 'users AS u',
+						'ON'			=> 'u.id = p.poster_id'
+					),
+					array(
+						'LEFT JOIN'		=> 'forum_perms AS fp',
+						'ON'			=> '(fp.forum_id = t.forum_id AND fp.group_id = '.$forum_user['g_id'].')'
+					)
+				),
+				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum = 1) AND t.moved_to IS NULL',
+				'ORDER BY'	=> 'p.posted DESC',
+				'LIMIT'		=> $show
+			);
+//echo $forum_db->query_build($query, true);
+			if (isset($forum_sql))
+				$query['WHERE'] .= $forum_sql;
+
+			($hook = get_hook('ex_qr_get_topics')) ? eval($hook) : null;
+			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+			while ($cur_post = $forum_db->fetch_assoc($result))
 			{
-				if ($cur_topic['email_setting'] == '0' && !$forum_user['is_guest'])
-					$item['author']['email'] = $cur_topic['email'];
+				if ($forum_config['o_censoring'] == '1')
+					$cur_post['message'] = censor_words($cur_post['message']);
 
-				$item['author']['uri'] = forum_link($forum_url['user'], $cur_topic['poster_id']);
+				$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+
+				$item = array(
+					'id'			=>	$cur_post['id'],
+					'title'			=>	$cur_post['first_post_id'] == $cur_post['id'] ? $cur_post['subject'] : $lang_common['RSS reply'].$cur_post['subject'],
+					'link'			=>	forum_link($forum_url['post'], $cur_post['id']),
+					'description'	=>	$cur_post['message'],
+					'author'		=>	array(
+						'name'			=> $cur_post['poster']
+					),
+					'pubdate'		=>	$cur_post['posted']
+				);
+
+				if ($cur_post['poster_id'] > 1)
+				{
+					if ($cur_post['email_setting'] == '0' && !$forum_user['is_guest'])
+						$item['author']['email'] = $cur_post['email'];
+
+					$item['author']['uri'] = forum_link($forum_url['user'], $cur_post['poster_id']);
+				}
+				else if ($cur_post['poster_email'] != '' && !$forum_user['is_guest'])
+					$item['author']['email'] = $cur_post['poster_email'];
+
+				$feed['items'][] = $item;
+
+				($hook = get_hook('ex_modify_forum_cur_post_item')) ? eval($hook) : null;
 			}
-			else if ($cur_topic['poster_email'] != '' && !$forum_user['is_guest'])
-				$item['author']['email'] = $cur_topic['poster_email'];
+		}
+		else
+		{
+			// Fetching last topics from the forums specified
 
-			$feed['items'][] = $item;
+			// Setup the feed
+			$feed = array(
+				'title' 		=>	$forum_config['o_board_title'].$forum_name,
+				'link'			=>	forum_link($forum_url['index']),
+				'description'	=>	sprintf($lang_common['RSS description'], $forum_config['o_board_title']),
+				'items'			=>	array(),
+				'type'			=>	'topics'
+			);
 
-			($hook = get_hook('ex_modify_cur_topic_item')) ? eval($hook) : null;
+			// Fetch $show topics
+			$query = array(
+				'SELECT'	=> 't.id, t.poster, t.posted, t.subject, p.message, p.hide_smilies, u.email_setting, u.email, p.poster_id, p.poster_email',
+				'FROM'		=> 'topics AS t',
+				'JOINS'		=> array(
+					array(
+						'INNER JOIN'	=> 'posts AS p',
+						'ON'			=> 'p.id = t.first_post_id'
+					),
+					array(
+						'INNER JOIN'	=> 'users AS u',
+						'ON'			=> 'u.id = p.poster_id'
+					),
+					array(
+						'LEFT JOIN'		=> 'forum_perms AS fp',
+						'ON'			=> '(fp.forum_id = t.forum_id AND fp.group_id = '.$forum_user['g_id'].')'
+					)
+				),
+				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum = 1) AND t.moved_to IS NULL',
+				'ORDER BY'	=> 't.posted DESC',
+				'LIMIT'		=> $show
+			);
+
+			if (isset($forum_sql))
+				$query['WHERE'] .= $forum_sql;
+
+			($hook = get_hook('ex_qr_get_topics')) ? eval($hook) : null;
+			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			while ($cur_topic = $forum_db->fetch_assoc($result))
+			{
+				if ($forum_config['o_censoring'] == '1')
+				{
+					$cur_topic['subject'] = censor_words($cur_topic['subject']);
+					$cur_topic['message'] = censor_words($cur_topic['message']);
+				}
+
+				$cur_topic['message'] = parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
+
+				$item = array(
+					'id'			=>	$cur_topic['id'],
+					'title'			=>	$cur_topic['subject'],
+					'link'			=>	forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
+					'description'	=>	$cur_topic['message'],
+					'author'		=>	array(
+						'name'			=> $cur_topic['poster']
+					),
+					'pubdate'		=>	$cur_topic['posted']
+				);
+
+				if ($cur_topic['poster_id'] > 1)
+				{
+					if ($cur_topic['email_setting'] == '0' && !$forum_user['is_guest'])
+						$item['author']['email'] = $cur_topic['email'];
+
+					$item['author']['uri'] = forum_link($forum_url['user'], $cur_topic['poster_id']);
+				}
+				else if ($cur_topic['poster_email'] != '' && !$forum_user['is_guest'])
+					$item['author']['email'] = $cur_topic['poster_email'];
+
+				$feed['items'][] = $item;
+
+				($hook = get_hook('ex_modify_cur_topic_item')) ? eval($hook) : null;
+			}
 		}
 
 		($hook = get_hook('ex_pre_forum_output')) ? eval($hook) : null;
