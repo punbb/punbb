@@ -469,7 +469,7 @@ if ($action == 'feed')
 				'ORDER BY'	=> 'p.posted DESC',
 				'LIMIT'		=> $show
 			);
-//echo $forum_db->query_build($query, true);
+
 			if (isset($forum_sql))
 				$query['WHERE'] .= $forum_sql;
 

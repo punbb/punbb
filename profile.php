@@ -2256,7 +2256,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section signature'],forum_link($forum_url['profile_signature'], $id))
+			array($lang_profile['Section signature'], forum_link($forum_url['profile_signature'], $id))
 		);
 
 		// Setup the form
