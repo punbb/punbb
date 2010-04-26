@@ -1207,7 +1207,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Should we do charset conversion or not?
-		if (strpos($cur_version, '1.2') === 0 && isset($_GET['convert_charset']))
+		if (strpos($cur_version, '1.3') === 0)
+			$query_str = '?stage=finish';
+		elseif (strpos($cur_version, '1.2') === 0 && isset($_GET['convert_charset']))
 			$query_str = '?stage=conv_misc&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
 		else
 			$query_str = '?stage=conv_tables';
