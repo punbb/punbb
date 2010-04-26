@@ -43,7 +43,8 @@ $lang_forum = array(
 'Forum options'				=>	'Forum options',
 'Moderate forum'			=>	'Moderate forum',
 'Mark forum read'			=>	'Mark forum as read',
-'RSS forum feed'			=>	'RSS forum feed',
+'RSS forum feed'			=>	'Topics RSS feed',
+'RSS forum posts feed'		=>	'Posts RSS feed',
 'New posts info'			=>	'Go to the first new post since your last visit.'
 
 );
