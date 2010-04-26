@@ -1046,7 +1046,8 @@ else
 		'PRIMARY KEY'	=> array('id'),
 		'INDEXES'		=> array(
 			'topic_id_idx'	=> array('topic_id'),
-			'multi_idx'		=> array('poster_id', 'topic_id')
+			'multi_idx'		=> array('poster_id', 'topic_id'),
+			'posted_idx'	=> array('posted')
 		)
 	);
 

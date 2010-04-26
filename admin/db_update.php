@@ -1169,6 +1169,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			}
 		}
 
+		// Add the index for the post time
+		if (!$forum_db->index_exists('posts', 'posted_idx'))
+			$forum_db->add_index('posts', 'posted_idx', array('posted'));
+
 		// Move any users with the old unverified status to their new group
 		$query = array(
 			'UPDATE'	=> 'users',
