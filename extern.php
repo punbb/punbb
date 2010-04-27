@@ -30,29 +30,26 @@
   display posts) and type (output as HTML or RSS). The only
   mandatory variable is action. Possible/default values are:
 
-    action:  feed - show most recent topics/posts (HTML or RSS)
-             online - show users online (HTML)
-             online_full - as above, but includes a full list (HTML)
-             stats - show board statistics (HTML)
+    action: feed - show most recent topics/posts (HTML or RSS)
+            online - show users online (HTML)
+            online_full - as above, but includes a full list (HTML)
+            stats - show board statistics (HTML)
 
-    type:    rss - output as RSS 2.0
-             atom - output as Atom 1.0
-             xml - output as XML
-             html - output as HTML (<li>'s)
+    type:   rss - output as RSS 2.0
+            atom - output as Atom 1.0
+            xml - output as XML
+            html - output as HTML (<li>'s)
 
-    content: topics - show last topics in the specified forums
-             posts - show last posts in the specified forums or topics
+    fid:    One or more forum ID's (comma-separated). If ignored,
+            topics from all readable forums will be pulled.
 
-    fid:     One or more forum ID's (comma-separated). If ignored,
-             topics from all readable forums will be pulled.
+    nfid:   One or more forum ID's (comma-separated) that are to be
+            excluded. E.g. the ID of a a test forum.
 
-    nfid:    One or more forum ID's (comma-separated) that are to be
-             excluded. E.g. the ID of a a test forum.
+    tid:    A topic ID from which to show posts. If a tid is supplied,
+            fid and nfid are ignored.
 
-    tid:     A topic ID from which to show posts. If a tid is supplied,
-             fid and nfid are ignored.
-
-    show:    Any integer value between 1 and 50. The default is 15.
+    show:   Any integer value between 1 and 50. The default is 15.
 
 
 
@@ -291,7 +288,6 @@ if ($action == 'feed')
 	// Was a topic ID supplied?
 	if (isset($_GET['tid']))
 	{
-		// We have the topic ID(s) and we're going to display its posts
 		$tid = intval($_GET['tid']);
 
 		// Fetch topic subject
