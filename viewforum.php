@@ -127,8 +127,7 @@ else
 
 // Setup main options
 $forum_page['main_head_options'] = array(
-	'feed topics'	=> '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_topics_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>',
-	'feed posts'	=> '<span class="feed"><a class="feed" href="'.forum_link($forum_url['forum_posts_rss'], $id).'">'.$lang_forum['RSS forum posts feed'].'</a></span>'
+	'feed'	=> '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
 );
 
 $forum_page['main_foot_options'] = array();
