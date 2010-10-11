@@ -597,6 +597,9 @@ D - COMMON INTERFACE ELEMENTS
 	border-bottom: none;
 	}
 
+#brd-admin-bans #brd-pagepost-end {
+	margin-top: -1em;
+	}
 .brd .paging {
 	float: left;
 	}
@@ -1880,4 +1883,5 @@ H - MAIN CONTENT - ODDMENTS
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 	margin-bottom: 0.5em;
+	color: #294F6E
 	}
