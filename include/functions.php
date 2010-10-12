@@ -2800,8 +2800,6 @@ function maintenance_message()
 	ob_start();
 
 ?>
-<div id="brd-maint" class="main basic">
-
 	<div class="main-head">
 		<h1 class="hn"><span><?php echo $lang_common['Maintenance mode'] ?></span></h1>
 	</div>
@@ -2810,8 +2808,6 @@ function maintenance_message()
 			<?php echo $message."\n" ?>
 		</div>
 	</div>
-
-</div>
 <?php
 
 	$tpl_temp = "\t".forum_trim(ob_get_contents());
