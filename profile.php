@@ -336,7 +336,7 @@ if ($action == 'change_pass')
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo $lang_common['Required information'] ?></strong></legend>
 <?php ($hook = get_hook('pf_change_pass_normal_pre_old_password')) ? eval($hook) : null; ?>
-<?php if (!$forum_user['is_admmod']): ?>
+<?php if (!$forum_user['is_admmod'] || $forum_user['id'] == $id): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Old password'] ?> <em><?php echo $lang_common['Required'] ?></em></span> <small><?php echo $lang_profile['Old password help'] ?></small></label><br />
