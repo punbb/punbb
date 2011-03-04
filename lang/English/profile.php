@@ -253,5 +253,6 @@ $lang_profile = array(
 'Username too short'		=>	'Usernames must be at least 2 characters long. Please choose another (longer) username.',
 'Signature quote/code'		=>	'The quote and code BBCodes are not allowed in signatures.',
 'Invalid e-mail'			=>	'The e-mail address you entered is invalid.',
+'Signature quote/code/list'	=>	'Signature may not contain of the text formatting tags (BBCode) [quote], [code] or [list]. Please choose another tags or delete it.',
 
 );
