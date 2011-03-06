@@ -173,7 +173,7 @@ else if (isset($_GET['email']))
 
 		($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
 	}
-	else 
+	else
 	{
 		$query = array(
 			'SELECT'	=> 'p.poster, p.poster_email, 1',
@@ -183,7 +183,7 @@ else if (isset($_GET['email']))
 
 		($hook = get_hook('mi_email_qr_get_form_guest_email_data')) ? eval($hook) : null;
 	}
-		
+
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	if (!$forum_db->num_rows($result))
 		message($lang_common['Bad request']);
@@ -195,7 +195,7 @@ else if (isset($_GET['email']))
 
 	if ($recipient_email == '')
 		message($lang_common['Bad request']);
-		
+
 	if (isset($_POST['form_sent']))
 	{
 		($hook = get_hook('mi_email_form_submitted')) ? eval($hook) : null;
@@ -383,6 +383,9 @@ else if (isset($_GET['report']))
 	{
 		($hook = get_hook('mi_report_form_submitted')) ? eval($hook) : null;
 
+		// Start with a clean slate
+		$errors = array();
+
 		// Flood protection
 		if ($forum_user['last_email_sent'] != '' && (time() - $forum_user['last_email_sent']) < $forum_user['g_email_flood'] && (time() - $forum_user['last_email_sent']) >= 0)
 			message(sprintf($lang_misc['Report flood'], $forum_user['g_email_flood']));
@@ -392,72 +395,79 @@ else if (isset($_GET['report']))
 		if ($reason == '')
 			message($lang_misc['No reason']);
 
-		// Get some info about the topic we're reporting
-		$query = array(
-			'SELECT'	=> 't.id, t.subject, t.forum_id',
-			'FROM'		=> 'posts AS p',
-			'JOINS'		=> array(
-				array(
-					'INNER JOIN'	=> 'topics AS t',
-					'ON'			=> 't.id=p.topic_id'
-				)
-			),
-			'WHERE'		=> 'p.id='.$post_id
-		);
-
-		($hook = get_hook('mi_report_qr_get_topic_data')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
-		list($topic_id, $subject, $forum_id) = $forum_db->fetch_row($result);
-
-		($hook = get_hook('mi_report_pre_reports_sent')) ? eval($hook) : null;
-
-		// Should we use the internal report handling?
-		if ($forum_config['o_report_method'] == 0 || $forum_config['o_report_method'] == 2)
+		if (strlen($reason) > FORUM_MAX_POSTSIZE_BYTES)
 		{
+			$errors[] = sprintf($lang_misc['Too long reason'], forum_number_format(strlen($reason)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+		}
+
+		if (empty($errors)) {
+			// Get some info about the topic we're reporting
 			$query = array(
-				'INSERT'	=> 'post_id, topic_id, forum_id, reported_by, created, message',
-				'INTO'		=> 'reports',
-				'VALUES'	=> $post_id.', '.$topic_id.', '.$forum_id.', '.$forum_user['id'].', '.time().', \''.$forum_db->escape($reason).'\''
+				'SELECT'	=> 't.id, t.subject, t.forum_id',
+				'FROM'		=> 'posts AS p',
+				'JOINS'		=> array(
+					array(
+						'INNER JOIN'	=> 'topics AS t',
+						'ON'			=> 't.id=p.topic_id'
+					)
+				),
+				'WHERE'		=> 'p.id='.$post_id
 			);
 
-			($hook = get_hook('mi_report_add_report')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-		}
+			($hook = get_hook('mi_report_qr_get_topic_data')) ? eval($hook) : null;
+			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			if (!$forum_db->num_rows($result))
+				message($lang_common['Bad request']);
 
-		// Should we e-mail the report?
-		if ($forum_config['o_report_method'] == 1 || $forum_config['o_report_method'] == 2)
-		{
-			// We send it to the complete mailing-list in one swoop
-			if ($forum_config['o_mailing_list'] != '')
+			list($topic_id, $subject, $forum_id) = $forum_db->fetch_row($result);
+
+			($hook = get_hook('mi_report_pre_reports_sent')) ? eval($hook) : null;
+
+			// Should we use the internal report handling?
+			if ($forum_config['o_report_method'] == 0 || $forum_config['o_report_method'] == 2)
 			{
-				$mail_subject = 'Report('.$forum_id.') - \''.$subject.'\'';
-				$mail_message = 'User \''.$forum_user['username'].'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
+				$query = array(
+					'INSERT'	=> 'post_id, topic_id, forum_id, reported_by, created, message',
+					'INTO'		=> 'reports',
+					'VALUES'	=> $post_id.', '.$topic_id.', '.$forum_id.', '.$forum_user['id'].', '.time().', \''.$forum_db->escape($reason).'\''
+				);
 
-				if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
-					require FORUM_ROOT.'include/email.php';
-
-				($hook = get_hook('mi_report_modify_message')) ? eval($hook) : null;
-
-				forum_mail($forum_config['o_mailing_list'], $mail_subject, $mail_message);
+				($hook = get_hook('mi_report_add_report')) ? eval($hook) : null;
+				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 			}
+
+			// Should we e-mail the report?
+			if ($forum_config['o_report_method'] == 1 || $forum_config['o_report_method'] == 2)
+			{
+				// We send it to the complete mailing-list in one swoop
+				if ($forum_config['o_mailing_list'] != '')
+				{
+					$mail_subject = 'Report('.$forum_id.') - \''.$subject.'\'';
+					$mail_message = 'User \''.$forum_user['username'].'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
+
+					if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
+						require FORUM_ROOT.'include/email.php';
+
+					($hook = get_hook('mi_report_modify_message')) ? eval($hook) : null;
+
+					forum_mail($forum_config['o_mailing_list'], $mail_subject, $mail_message);
+				}
+			}
+
+			// Set last_email_sent time to prevent flooding
+			$query = array(
+				'UPDATE'	=> 'users',
+				'SET'		=> 'last_email_sent='.time(),
+				'WHERE'		=> 'id='.$forum_user['id']
+			);
+
+			($hook = get_hook('mi_report_qr_update_last_email_sent')) ? eval($hook) : null;
+			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+			($hook = get_hook('mi_report_pre_redirect')) ? eval($hook) : null;
+
+			redirect(forum_link($forum_url['post'], $post_id), $lang_misc['Report redirect']);
 		}
-
-		// Set last_email_sent time to prevent flooding
-		$query = array(
-			'UPDATE'	=> 'users',
-			'SET'		=> 'last_email_sent='.time(),
-			'WHERE'		=> 'id='.$forum_user['id']
-		);
-
-		($hook = get_hook('mi_report_qr_update_last_email_sent')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-		($hook = get_hook('mi_report_pre_redirect')) ? eval($hook) : null;
-
-		redirect(forum_link($forum_url['post'], $post_id), $lang_misc['Report redirect']);
 	}
 
 	// Setup form
@@ -496,6 +506,25 @@ else if (isset($_GET['report']))
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php printf($lang_common['Required warn'], '<em>'.$lang_common['Required'].'</em>') ?></p>
 		</div>
+<?php
+		// If there were any errors, show them
+		if (!empty($errors)) {
+			$forum_page['errors'] = array();
+			foreach ($errors as $cur_error) {
+				$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+			}
+
+			($hook = get_hook('mi_pre_report_errors')) ? eval($hook) : null;
+?>
+		<div class="ct-box error-box">
+			<h2 class="warn hn"><?php echo $lang_misc['Report errors'] ?></h2>
+			<ul class="error-list">
+				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
+			</ul>
+		</div>
+<?php
+		}
+?>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
