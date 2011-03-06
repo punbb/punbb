@@ -957,6 +957,12 @@ else if (isset($_POST['form_sent']))
 			$form['dst'] = (isset($form['dst'])) ? 1 : 0;
 			$form['time_format'] = (isset($form['time_format'])) ? intval($form['time_format']) : 0;
 			$form['date_format'] = (isset($form['date_format'])) ? intval($form['date_format']) : 0;
+			$form['timezone'] = (isset($form['timezone'])) ? floatval($form['timezone']) : $forum_config['o_default_timezone'];
+
+			// Validate timezone
+			if (($form['timezone'] > 14.0) || ($form['timezone'] < -12.0)) {
+				message($lang_common['Bad request']);
+			}
 
 			$form['email_setting'] = intval($form['email_setting']);
 			if ($form['email_setting'] < 0 || $form['email_setting'] > 2) $form['email_setting'] = 1;
