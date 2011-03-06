@@ -153,7 +153,7 @@ else if (isset($_GET['email']))
 	if ($forum_user['is_guest'] || $forum_user['g_send_email'] == '0')
 		message($lang_common['No permission']);
 
-	$recipient_id = intval($_GET['email']);
+	$recipient_id = $post_id = intval($_GET['email']);
 	if ($recipient_id < 2)
 		message($lang_common['Bad request']);
 
@@ -163,13 +163,27 @@ else if (isset($_GET['email']))
 	if (isset($_POST['cancel']))
 		redirect(forum_htmlencode($_POST['redirect_url']), $lang_common['Cancel redirect']);
 
-	$query = array(
-		'SELECT'	=> 'u.username, u.email, u.email_setting',
-		'FROM'		=> 'users AS u',
-		'WHERE'		=> 'u.id='.$recipient_id
-	);
+	if (!isset($_GET['by_post']))
+	{
+		$query = array(
+			'SELECT'	=> 'u.username, u.email, u.email_setting',
+			'FROM'		=> 'users AS u',
+			'WHERE'		=> 'u.id='.$recipient_id
+		);
 
-	($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
+		($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
+	}
+	else 
+	{
+		$query = array(
+			'SELECT'	=> 'p.poster, p.poster_email, 1',
+			'FROM'		=> 'posts AS p',
+			'WHERE'		=> 'p.id='.$post_id
+		);
+
+		($hook = get_hook('mi_email_qr_get_form_guest_email_data')) ? eval($hook) : null;
+	}
+		
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	if (!$forum_db->num_rows($result))
 		message($lang_common['Bad request']);
@@ -179,7 +193,9 @@ else if (isset($_GET['email']))
 	if ($email_setting == 2 && !$forum_user['is_admmod'])
 		message($lang_misc['Form e-mail disabled']);
 
-
+	if ($recipient_email == '')
+		message($lang_common['Bad request']);
+		
 	if (isset($_POST['form_sent']))
 	{
 		($hook = get_hook('mi_email_form_submitted')) ? eval($hook) : null;
@@ -241,7 +257,7 @@ else if (isset($_GET['email']))
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link($forum_url['email'], $recipient_id);
+	$forum_page['form_action'] = (isset($_GET['by_post']) ? forum_link($forum_url['poster_email'], $post_id) : forum_link($forum_url['email'], $recipient_id));
 
 	$forum_page['hidden_fields'] = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',

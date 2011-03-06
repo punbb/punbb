@@ -23,6 +23,7 @@ $forum_url = array(
 	'delete_user'					=>	'delete/user/$1/',
 	'edit'							=>	'edit/$1/',
 	'email'							=>	'email/$1/',
+	'poster_email'					=>	'email/post/$1/',
 	'forum'							=>	'forum/$1/',
 	'forum_rss'						=>	'feed/rss/forum/$1/',
 	'forum_atom'					=>	'feed/atom/forum/$1/',

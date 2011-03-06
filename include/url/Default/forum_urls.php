@@ -23,6 +23,7 @@ $forum_url = array(
 	'delete_avatar'					=>	'profile.php?action=delete_avatar&amp;id=$1&amp;csrf_token=$2',
 	'edit'							=>	'edit.php?id=$1',
 	'email'							=>	'misc.php?email=$1',
+	'poster_email'					=>	'misc.php?email=$1&amp;by_post',
 	'forum'							=>	'viewforum.php?id=$1',
 	'forum_rss'						=>	'extern.php?action=feed&amp;fid=$1&amp;type=rss',
 	'forum_atom'					=>	'extern.php?action=feed&amp;fid=$1&amp;type=atom',

@@ -25,6 +25,7 @@ $forum_url = array(
 	'delete_avatar'					=>	'delete-avatar$1-$2.html',
 	'edit'							=>	'edit$1.html',
 	'email'							=>	'email$1.html',
+	'poster_email'					=>	'email-post$1.html',
 	'forum'							=>	'forum$1.html',
 	'forum_rss'						=>	'feed-rss-forum$1.xml',
 	'forum_atom'					=>	'feed-atom-forum$1.xml',
