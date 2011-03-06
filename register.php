@@ -163,6 +163,13 @@ else if (isset($_POST['form_sent']))
 		if ($banned_email && $forum_config['p_allow_banned_email'] == '0')
 			$errors[] = $lang_profile['Banned e-mail'];
 
+		// Clean old unverified registrators - delete older than 72 hours
+		$query = array(
+			'DELETE'	=> 'users',
+			'WHERE'		=> 'group_id='.FORUM_UNVERIFIED.' AND registered < '.(time() - 259200)
+		);
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 		// Check if someone else already has registered with that e-mail address
 		$dupe_list = array();
 
