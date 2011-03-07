@@ -942,7 +942,7 @@ function get_title($user)
 function get_scheme_packs()
 {
   	$schemes = array();
-	
+
 	if($handle = opendir(FORUM_ROOT.'include/url'))
 	{
 		while (false !== ($dirname = readdir($handle)))
@@ -964,7 +964,7 @@ function get_scheme_packs()
 function get_style_packs()
 {
 	$styles = array();
-	
+
 	if($handle = opendir(FORUM_ROOT.'style'))
 	{
 		while (false !== ($dirname = readdir($handle)))
@@ -3062,4 +3062,10 @@ function error()
 		$GLOBALS['forum_db']->close();
 
 	exit;
+}
+
+// Check the text is CAPSED
+function check_is_all_caps($text)
+{
+	return (bool)/**/(utf8_strtoupper($text) == $text && utf8_strtolower($text) != $text);
 }
