@@ -18,6 +18,10 @@ if (!defined('FORUM_ROOT'))
 define('FORUM_VERSION', '1.3.4');
 define('FORUM_DB_REVISION', 4);
 
+// Record the start time (will be used to calculate the generation time for the page)
+list($usec, $sec) = explode(' ', microtime());
+$forum_start = ((float)$usec + (float)$sec);
+
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
 
@@ -57,10 +61,6 @@ if (isset($_SERVER['HTTP_X_MOZ']) && $_SERVER['HTTP_X_MOZ'] == 'prefetch')
 
 	exit;
 }
-
-// Record the start time (will be used to calculate the generation time for the page)
-list($usec, $sec) = explode(' ', microtime());
-$forum_start = ((float)$usec + (float)$sec);
 
 // Make sure PHP reports all errors except E_NOTICE. PunBB supports E_ALL, but a lot of scripts it may interact with, do not.
 if (defined('FORUM_DEBUG'))
