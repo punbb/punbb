@@ -812,83 +812,116 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 }
 
 
-else if (isset($_POST['find_user']))
+else if (isset($_GET['find_user']))
 {
-	$form = $_POST['form'];
-	$form['username'] = $_POST['username'];
+	$form = isset($_GET['form']) ? $_GET['form'] : array();
+
+	// trim() all elements in $form
+	$form = array_map('forum_trim', $form);
+	$conditions = $query_str = array();
 
 	//Check up for order_by and direction values
-	$order_by = isset($_POST['order_by']) ? forum_trim($_POST['order_by']) : null;
-	$direction = isset($_POST['direction']) ? forum_trim($_POST['direction']) : null;
+	$order_by = isset($_GET['order_by']) ? forum_trim($_GET['order_by']) : null;
+	$direction = isset($_GET['direction']) ? forum_trim($_GET['direction']) : null;
 	if ($order_by == null || $direction == null)
 		message($lang_common['Bad request']);
+		
 	if (!in_array($order_by, array('username', 'email', 'num_posts', 'num_posts', 'registered')) || !in_array($direction, array('ASC', 'DESC')))
 		message($lang_common['Bad request']);
 
 	($hook = get_hook('aus_find_user_selected')) ? eval($hook) : null;
+	
+	$query_str[] = 'order_by='.$order_by;
+	$query_str[] = 'direction='.$direction;
+		
+	$posts_greater = isset($_GET['posts_greater']) ? forum_trim($_GET['posts_greater']) : '';
+	$posts_less = isset($_GET['posts_less']) ? forum_trim($_GET['posts_less']) : '';
+	$last_post_after = isset($_GET['last_post_after']) ? forum_trim($_GET['last_post_after']) : '';
+	$last_post_before = isset($_GET['last_post_before']) ? forum_trim($_GET['last_post_before']) : '';
+	$registered_after = isset($_GET['registered_after']) ? forum_trim($_GET['registered_after']) : '';
+	$registered_before = isset($_GET['registered_before']) ? forum_trim($_GET['registered_before']) : '';	
+	$user_group = isset($_GET['user_group']) ? intval($_GET['user_group']) : -1;
 
-	// forum_trim() all elements in $form
-	$form = array_map('trim', $form);
-	$conditions = array();
-
-	$posts_greater = forum_trim($_POST['posts_greater']);
-	$posts_less = forum_trim($_POST['posts_less']);
-	$last_post_after = forum_trim($_POST['last_post_after']);
-	$last_post_before = forum_trim($_POST['last_post_before']);
-	$registered_after = forum_trim($_POST['registered_after']);
-	$registered_before = forum_trim($_POST['registered_before']);
-	$user_group = $_POST['user_group'];
-
+	$query_str[] = 'user_group='.$user_group;	
+	
 	if ((!empty($posts_greater) || !empty($posts_less)) && !ctype_digit($posts_greater.$posts_less))
 		message($lang_admin_users['Non numeric value message']);
 
 	// Try to convert date/time to timestamps
 	if ($last_post_after != '')
+	{
+		$query_str[] = 'last_post_after='.$last_post_after;
+		
 		$last_post_after = strtotime($last_post_after);
-	if ($last_post_before != '')
-		$last_post_before = strtotime($last_post_before);
-	if ($registered_after != '')
-		$registered_after = strtotime($registered_after);
-	if ($registered_before != '')
-		$registered_before = strtotime($registered_before);
-
-	if ($last_post_after == -1 || $last_post_before == -1 || $registered_after == -1 || $registered_before == -1)
-		message($lang_admin_users['Invalid date/time message']);
-
-	if ($last_post_after != '')
+		if ($last_post_after === false || $last_post_after == -1)
+			message($lang_admin_users['Invalid date/time message']);
+			
 		$conditions[] = 'u.last_post>'.$last_post_after;
+	}
 	if ($last_post_before != '')
-		$conditions[] = 'u.last_post<'.$last_post_before;
-	if ($registered_after != '')
-		$conditions[] = 'u.registered>'.$registered_after;
-	if ($registered_before != '')
-		$conditions[] = 'u.registered<'.$registered_before;
+	{
+		$query_str[] = 'last_post_before='.$last_post_before;
 
+		$last_post_before = strtotime($last_post_before);
+		if ($last_post_before === false || $last_post_before == -1)
+			message($lang_admin_users['Invalid date/time message']);
+		
+		$conditions[] = 'u.last_post<'.$last_post_before;
+	}
+	if ($registered_after != '')
+	{
+		$query_str[] = 'registered_after='.$registered_after;
+		
+		$registered_after = strtotime($registered_after);
+		if ($registered_after === false || $registered_after == -1)
+			message($lang_admin_users['Invalid date/time message']);
+		
+		$conditions[] = 'u.registered>'.$registered_after;
+	}
+	if ($registered_before != '')
+	{
+		$query_str[] = 'registered_before='.$registered_before;
+
+		$registered_before = strtotime($registered_before);
+		if ($registered_before === false || $registered_before == -1)
+			message($lang_admin_users['Invalid date/time message']);
+		
+		$conditions[] = 'u.registered<'.$registered_before;
+	}
+	
 	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
 	foreach ($form as $key => $input)
 	{
 		if ($input != '' && in_array($key, array('username', 'email', 'title', 'realname', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note')))
+		{
 			$conditions[] = 'u.'.$forum_db->escape($key).' '.$like_command.' \''.$forum_db->escape(str_replace('*', '%', $input)).'\'';
+			$query_str[] = 'form%5B'.$key.'%5D='.urlencode($input);
+		}
 	}
 
 	if ($posts_greater != '')
+	{
+		$query_str[] = 'posts_greater='.$posts_greater;
 		$conditions[] = 'u.num_posts>'.$posts_greater;
+	}
 	if ($posts_less != '')
+	{
+		$query_str[] = 'posts_less='.$posts_less;
 		$conditions[] = 'u.num_posts<'.$posts_less;
+	}
 
-	if ($user_group != 'all')
+	if ($user_group > -1)
 		$conditions[] = 'u.group_id='.intval($user_group);
 
 	if (empty($conditions))
 		message($lang_admin_users['No search terms message']);
 
-
 	// Load the misc.php language file
 	require FORUM_ROOT.'lang/'.$forum_user['language'].'/misc.php';
 
-	// Find any users matching the conditions
+	// Fetch user count
 	$query = array(
-		'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
+		'SELECT'	=> 'COUNT(id)',
 		'FROM'		=> 'users AS u',
 		'JOINS'		=> array(
 			array(
@@ -896,15 +929,18 @@ else if (isset($_POST['find_user']))
 				'ON'			=> 'g.g_id=u.group_id'
 			)
 		),
-		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions),
-		'ORDER BY'	=> $order_by.' '.$direction
-	);
-
-	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
+		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions)
+	);	
+	
+	($hook = get_hook('aus_find_user_qr_count_find_users')) ? eval($hook) : null;
+	
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_page['num_users'] = $forum_db->num_rows($result);
-
-
+	$forum_page['num_users'] = $forum_db->result($result);
+	$forum_page['num_pages'] = ceil($forum_page['num_users'] / $forum_user['disp_topics']);
+	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+	$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
+	$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_users']));	
+	
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
@@ -914,7 +950,13 @@ else if (isset($_POST['find_user']))
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
-
+	
+	// Fix invalid page & insertion_find for Default URL scheme 
+	$forum_url['page'] = '&amp;p=$1'; 
+	unset($forum_url['insertion_find']);
+	// Generate paging
+	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str), $lang_common['Paging separator']).'</p>';
+	
 	($hook = get_hook('aus_find_user_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'users');
@@ -960,6 +1002,25 @@ else if (isset($_POST['find_user']))
 			</thead>
 			<tbody>
 <?php
+
+	// Find any users matching the conditions
+	$query = array(
+		'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
+		'FROM'		=> 'users AS u',
+		'JOINS'		=> array(
+			array(
+				'LEFT JOIN'		=> 'groups AS g',
+				'ON'			=> 'g.g_id=u.group_id'
+			)
+		),
+		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions),
+		'ORDER BY'	=> $order_by.' '.$direction,
+		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
+	);
+
+	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
+
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_page['num_users'] > 0)
 	{
@@ -1107,7 +1168,7 @@ ob_start();
 		<h2 class="hn"><span><?php echo $lang_admin_users['Search head'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=find_user">
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_users']).'?action=find_user') ?>" />
 			</div>
@@ -1121,7 +1182,7 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Username label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="username" size="25" maxlength="25" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[username]" size="25" maxlength="25" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_user_title')) ? eval($hook) : null; ?>
@@ -1303,7 +1364,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 					<div class="sf-box select">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['User group label'] ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="user_group">
-							<option value="all" selected="selected"><?php echo $lang_admin_users['All groups'] ?></option>
+							<option value="-1" selected="selected"><?php echo $lang_admin_users['All groups'] ?></option>
 							<option value="<?php echo FORUM_UNVERIFIED ?>"><?php echo $lang_admin_users['Unverified users'] ?></option>
 <?php
 
