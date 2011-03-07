@@ -7,7 +7,7 @@ $lang_admin_index = array(
 'Alerts'						=>	'Administrator Alerts',
 'Check for updates enabled'		=>	'This board is setup to automatically check for updates and hotfixes against the punbb.informer.com updates service.',
 'Check for updates manual'		=>	'Check for updates',	// Link text
-'Copyright message'				=>	'&copy; 2008-2009 <a href="http://punbb.informer.com/">PunBB</a>, partially based on code &copy; 2008-2009 <a href="http://fluxbb.org/">FluxBB</a>',
+'Copyright message'				=>	'&copy; 2008-2011 <a href="http://punbb.informer.com/">PunBB</a>, partially based on code &copy; 2008-2009 <a href="http://fluxbb.org/">FluxBB</a>',
 'PunBB version'					=>	'PunBB version',
 'Not available'					=>	'Not available',
 'Not applicable'				=>	'N/A',
