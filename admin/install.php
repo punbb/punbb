@@ -453,7 +453,7 @@ else
 		case 'mysql':
 			require FORUM_ROOT.'include/dblayer/mysql.php';
 			break;
-			
+
 		case 'mysql_innodb':
 			require FORUM_ROOT.'include/dblayer/mysql_innodb.php';
 			break;
@@ -465,7 +465,7 @@ else
 		case 'mysqli_innodb':
 			require FORUM_ROOT.'include/dblayer/mysqli_innodb.php';
 			break;
-			
+
 		case 'pgsql':
 			require FORUM_ROOT.'include/dblayer/pgsql.php';
 			break;
@@ -519,7 +519,7 @@ else
 		if ((strtoupper($result) != 'YES'))
 			error('InnoDB does not seem to be enabled. Please choose a database layer that does not have InnoDB support, or enable InnoDB on your MySQL server.');
  	}
-	
+
 	// Start a transaction
 	$forum_db->start_transaction();
 
@@ -984,7 +984,7 @@ else
 		$schema['UNIQUE KEYS']['user_id_ident_idx'] = array('user_id', 'ident(25)');
 		$schema['INDEXES']['ident_idx'] = array('ident(25)');
 	}
-	
+
 	if ($db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
 		$schema['ENGINE'] = 'InnoDB';
 
@@ -1773,12 +1773,13 @@ else
 
 
 	$alerts = array();
+
 	// Check if the cache directory is writable
-	if (!is_writable('./cache/'))
+	if (!is_writable(FORUM_ROOT.'cache/'))
 		$alerts[] = '<li><span>'.$lang_install['No cache write'].'</span></li>';
 
 	// Check if default avatar directory is writable
-	if (!is_writable('./img/avatars/'))
+	if (!is_writable(FORUM_ROOT.'img/avatars/'))
 		$alerts[] = '<li><span>'.$lang_install['No avatar write'].'</span></li>';
 
 	// Check if we disabled uploading avatars because file_uploads was disabled
@@ -1880,7 +1881,14 @@ else
 	</div>
 
 	<div class="main-content main-frm">
-<?php
+<?php if (!empty($alerts)): ?>
+		<div class="ct-box error-box">
+			<p class="warn"><strong><?php echo $lang_install['Warning'] ?></strong></p>
+			<ul>
+				<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
+			</ul>
+		</div>
+<?php endif;
 
 if (!$written)
 {
@@ -1890,14 +1898,6 @@ if (!$written)
 			<p class="warn"><?php echo $lang_install['No write info 1'] ?></p>
 			<p class="warn"><?php printf($lang_install['No write info 2'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
 		</div>
-<?php if (!empty($alerts)): ?>
-		<div class="ct-box error-box">
-			<p class="warn"><strong><?php echo $lang_install['Warning'] ?></strong></p>
-			<ul>
-				<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
-			</ul>
-		</div>
-<?php endif; ?>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
 			<div class="hidden">
 			<input type="hidden" name="generate_config" value="1" />
