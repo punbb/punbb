@@ -1281,6 +1281,12 @@ F - MAIN CONTENT - FORMS
 	text-align:left;
 	}
 
+.brd .checklist legend span {
+	width: auto;
+	max-width: 25em;
+	}
+
+
 .brd .checklist .checklist-item {
 	position: relative;
 	height: auto;
