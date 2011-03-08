@@ -577,7 +577,7 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_ba
 	}
 
 	if ($num_pages <= 1)
-		$pages = array('<strong class="first-item">1</strong>');
+		$pages = array('<strong class="first-item">'.forum_number_format(1).'</strong>');
 	else
 	{
 		// Add a previous page link
@@ -586,7 +586,7 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_ba
 
 		if ($cur_page > 3)
 		{
-			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, 1, $args).'">1</a>';
+			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, 1, $args).'">'.forum_number_format(1).'</a>';
 
 			if ($cur_page > 5)
 				$pages[] = '<span>'.$lang_common['Spacer'].'</span>';
