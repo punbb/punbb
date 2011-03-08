@@ -1871,9 +1871,6 @@ else
 	<p><?php echo $lang_install['Success welcome'] ?></p>
 </div>
 
-<?php
-?>
-
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
