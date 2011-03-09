@@ -87,8 +87,8 @@ $lang_common = array(
 'Info separator'			=>	' ', // e.g. 1 Page | 10 Topics
 'Powered by'				=>	'Powered by <strong>%s</strong>, supported by <strong>%s</strong>.',
 'Maintenance'				=>	'Maintenance',
-'Installed extension'		=>	'The %s official extension is installed. Copyright &copy; 2003&ndash;2009 <a href="http://punbb.informer.com/">PunBB</a>.',
-'Installed extensions'		=>	'Currently installed <span id="extensions-used" title="%s">%s official extensions</span>. Copyright &copy; 2003&ndash;2009 <a href="http://punbb.informer.com/">PunBB</a>.',
+'Installed extension'		=>	'The %s official extension is installed. Copyright &copy; 2003&ndash;2011 <a href="http://punbb.informer.com/">PunBB</a>.',
+'Installed extensions'		=>	'Currently installed <span id="extensions-used" title="%s">%s official extensions</span>. Copyright &copy; 2003&ndash;2011 <a href="http://punbb.informer.com/">PunBB</a>.',
 
 // CSRF confirmation form
 'Confirm'					=>	'Confirm',	// Button
