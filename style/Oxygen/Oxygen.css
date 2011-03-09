@@ -641,7 +641,7 @@ D - COMMON INTERFACE ELEMENTS
 	font-weight: normal;
 	}
 
-.brd .crumbs span, .brd crumbs span * {
+.brd .crumbs span, .brd .crumbs span * {
 	white-space: nowrap;
 	}
 
