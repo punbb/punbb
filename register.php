@@ -168,6 +168,7 @@ else if (isset($_POST['form_sent']))
 			'DELETE'	=> 'users',
 			'WHERE'		=> 'group_id='.FORUM_UNVERIFIED.' AND activate_key IS NOT NULL AND registered < '.(time() - 259200)
 		);
+		($hook = get_hook('rg_register_qr_delete_unverified')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		// Check if someone else already has registered with that e-mail address
