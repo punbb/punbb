@@ -166,7 +166,7 @@ else if (isset($_POST['form_sent']))
 		// Clean old unverified registrators - delete older than 72 hours
 		$query = array(
 			'DELETE'	=> 'users',
-			'WHERE'		=> 'group_id='.FORUM_UNVERIFIED.' AND registered < '.(time() - 259200)
+			'WHERE'		=> 'group_id='.FORUM_UNVERIFIED.' AND activate_key IS NOT NULL AND registered < '.(time() - 259200)
 		);
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
