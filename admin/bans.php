@@ -399,22 +399,21 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 $forum_page['crumbs'][] = array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']));
 
 
-
-
-//--------------paging---------------------------------------------------
-//get the number of banned user (needed for pagination)
+// Fetch user count
 $query = array(
 	'SELECT'	=>	'COUNT(id)',
-	'FROM'	=>	'bans'
+	'FROM'		=>	'bans'
 );
+
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$forum_page['num_users'] = $forum_db->result($result); //now we got the total number of banned users
-$forum_page['num_pages'] = ceil($forum_page['num_users'] / 50);//here we get the number of pages in bans section
+$forum_page['num_bans'] = $forum_db->result($result);
+$forum_page['num_pages'] = ceil($forum_page['num_bans'] / $forum_user['disp_topics']);
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-$forum_page['start_from'] = 50 * ($forum_page['page'] - 1);
+$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
+$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_bans']));
 
+// Generate paging
 $forum_page['page_post']['paging']='<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'],$forum_page['page'],$forum_url['admin_bans'],$lang_common['Paging separator'], false ,true).'</p>';
-
 
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages'])
@@ -427,8 +426,6 @@ if ($forum_page['page'] > 1)
 	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['admin_bans']).'" title="'.$lang_common['Page'].' 1" />';
 }
-
-//--------------paging---------------------------------------------------
 
 ($hook = get_hook('aba_pre_header_load')) ? eval($hook) : null;
 
@@ -479,15 +476,15 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 	<div class="main-content main-frm">
 <?php
 
-if (!empty($forum_bans))
+if ($forum_page['num_bans'] > 0)
 {
 
 ?>
 		<div class="ct-group">
 <?php
-		//-----------paging-----------------------------------------------------
-		//Grab the bans
-		$query = array(
+
+	// Grab the bans
+	$query = array(
 		'SELECT'	=> 'b.*, u.username AS ban_creator_username',
 		'FROM'		=> 'bans AS b',
 		'JOINS'		=> array(
@@ -497,14 +494,13 @@ if (!empty($forum_bans))
 			)
 		),
 		'ORDER BY'	=> 'b.id',
-		'LIMIT'		=> $forum_page['start_from'].', 50'
+		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
 	);
 
-	$result=$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_page['item_num'] = 0;
-
-	while($cur_ban = $forum_db->fetch_assoc($result))	//while is used instead of foreach to make paging possible
+	while ($cur_ban = $forum_db->fetch_assoc($result))
 	{
 		$forum_page['ban_info'] = array();
 		$forum_page['ban_creator'] = ($cur_ban['ban_creator_username'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_ban['ban_creator']).'">'.forum_htmlencode($cur_ban['ban_creator_username']).'</a>' : $lang_admin_common['Unknown'];
