@@ -825,25 +825,25 @@ else if (isset($_GET['find_user']))
 	$direction = isset($_GET['direction']) ? forum_trim($_GET['direction']) : null;
 	if ($order_by == null || $direction == null)
 		message($lang_common['Bad request']);
-		
+
 	if (!in_array($order_by, array('username', 'email', 'num_posts', 'num_posts', 'registered')) || !in_array($direction, array('ASC', 'DESC')))
 		message($lang_common['Bad request']);
 
 	($hook = get_hook('aus_find_user_selected')) ? eval($hook) : null;
-	
+
 	$query_str[] = 'order_by='.$order_by;
 	$query_str[] = 'direction='.$direction;
-		
+
 	$posts_greater = isset($_GET['posts_greater']) ? forum_trim($_GET['posts_greater']) : '';
 	$posts_less = isset($_GET['posts_less']) ? forum_trim($_GET['posts_less']) : '';
 	$last_post_after = isset($_GET['last_post_after']) ? forum_trim($_GET['last_post_after']) : '';
 	$last_post_before = isset($_GET['last_post_before']) ? forum_trim($_GET['last_post_before']) : '';
 	$registered_after = isset($_GET['registered_after']) ? forum_trim($_GET['registered_after']) : '';
-	$registered_before = isset($_GET['registered_before']) ? forum_trim($_GET['registered_before']) : '';	
+	$registered_before = isset($_GET['registered_before']) ? forum_trim($_GET['registered_before']) : '';
 	$user_group = isset($_GET['user_group']) ? intval($_GET['user_group']) : -1;
 
-	$query_str[] = 'user_group='.$user_group;	
-	
+	$query_str[] = 'user_group='.$user_group;
+
 	if ((!empty($posts_greater) || !empty($posts_less)) && !ctype_digit($posts_greater.$posts_less))
 		message($lang_admin_users['Non numeric value message']);
 
@@ -851,11 +851,11 @@ else if (isset($_GET['find_user']))
 	if ($last_post_after != '')
 	{
 		$query_str[] = 'last_post_after='.$last_post_after;
-		
+
 		$last_post_after = strtotime($last_post_after);
 		if ($last_post_after === false || $last_post_after == -1)
 			message($lang_admin_users['Invalid date/time message']);
-			
+
 		$conditions[] = 'u.last_post>'.$last_post_after;
 	}
 	if ($last_post_before != '')
@@ -865,17 +865,17 @@ else if (isset($_GET['find_user']))
 		$last_post_before = strtotime($last_post_before);
 		if ($last_post_before === false || $last_post_before == -1)
 			message($lang_admin_users['Invalid date/time message']);
-		
+
 		$conditions[] = 'u.last_post<'.$last_post_before;
 	}
 	if ($registered_after != '')
 	{
 		$query_str[] = 'registered_after='.$registered_after;
-		
+
 		$registered_after = strtotime($registered_after);
 		if ($registered_after === false || $registered_after == -1)
 			message($lang_admin_users['Invalid date/time message']);
-		
+
 		$conditions[] = 'u.registered>'.$registered_after;
 	}
 	if ($registered_before != '')
@@ -885,10 +885,10 @@ else if (isset($_GET['find_user']))
 		$registered_before = strtotime($registered_before);
 		if ($registered_before === false || $registered_before == -1)
 			message($lang_admin_users['Invalid date/time message']);
-		
+
 		$conditions[] = 'u.registered<'.$registered_before;
 	}
-	
+
 	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
 	foreach ($form as $key => $input)
 	{
@@ -930,17 +930,17 @@ else if (isset($_GET['find_user']))
 			)
 		),
 		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions)
-	);	
-	
+	);
+
 	($hook = get_hook('aus_find_user_qr_count_find_users')) ? eval($hook) : null;
-	
+
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	$forum_page['num_users'] = $forum_db->result($result);
 	$forum_page['num_pages'] = ceil($forum_page['num_users'] / $forum_user['disp_topics']);
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 	$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
-	$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_users']));	
-	
+	$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_users']));
+
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
@@ -950,10 +950,10 @@ else if (isset($_GET['find_user']))
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
-	
+
 	// Generate paging
 	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str), $lang_common['Paging separator'], false, true).'</p>';
-	
+
 	($hook = get_hook('aus_find_user_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE_SECTION', 'users');
@@ -1179,28 +1179,28 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Username label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[username]" size="25" maxlength="25" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[username]" size="35" maxlength="25" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_user_title')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Title label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[title]" size="30" maxlength="50" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[title]" size="35" maxlength="50" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_realname')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Real name label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[realname]" size="30" maxlength="40" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[realname]" size="35" maxlength="40" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_location')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Location label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[location]" size="30" maxlength="30" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[location]" size="35" maxlength="30" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_signature')) ? eval($hook) : null; ?>
@@ -1214,7 +1214,7 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Admin note label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[admin_note]" size="30" maxlength="30" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[admin_note]" size="35" maxlength="30" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_user_details_fieldset_end')) ? eval($hook) : null; ?>
@@ -1228,7 +1228,7 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['E-mail address label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[email]" size="30" maxlength="80" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[email]" size="35" maxlength="80" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_website')) ? eval($hook) : null; ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -1240,7 +1240,7 @@ ob_start();
 <?php ($hook = get_hook('aus_search_form_pre_jabber')) ? eval($hook) : null; ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Jabber label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[jabber]" size="30" maxlength="80" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[jabber]" size="35" maxlength="80" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_icq')) ? eval($hook) : null; ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -1252,7 +1252,7 @@ ob_start();
 <?php ($hook = get_hook('aus_search_form_pre_msn')) ? eval($hook) : null; ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['MSN Messenger label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[msn]" size="30" maxlength="80" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[msn]" size="35" maxlength="80" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('aus_search_form_pre_aim')) ? eval($hook) : null; ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
