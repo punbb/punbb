@@ -951,11 +951,8 @@ else if (isset($_GET['find_user']))
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
 	
-	// Fix invalid page & insertion_find for Default URL scheme 
-	$forum_url['page'] = '&amp;p=$1'; 
-	unset($forum_url['insertion_find']);
 	// Generate paging
-	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str), $lang_common['Paging separator']).'</p>';
+	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str), $lang_common['Paging separator'], false, true).'</p>';
 	
 	($hook = get_hook('aus_find_user_pre_header_load')) ? eval($hook) : null;
 

@@ -557,10 +557,17 @@ function generate_items_info($label, $first, $total)
 
 
 // Generate a string with numbered links (for multipage scripts)
-function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_bans = null)
+function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_default_scheme = null)
 {
 	global $forum_url, $lang_common;
-	($is_bans==NULL)?$forum_url_page = $forum_url['page']:$forum_url_page = '?p=$1';
+	
+	if ($is_default_scheme == NULL) 
+		$forum_url_page = $forum_url['page'];
+	else
+	{
+		$forum_url_page = '?p=$1';
+		unset($forum_url['insertion_find']);
+	}
 
 	$pages = array();
 	$link_to_all = false;
