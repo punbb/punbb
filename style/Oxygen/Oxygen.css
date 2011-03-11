@@ -1376,10 +1376,6 @@ F - MAIN CONTENT - FORMS
 	position: relative;
 	}
 
-.brd .txt-set .required label span em {
-	margin-bottom: -1.2em;
-	}
-
 .brd .req-error {
 	display: block;
 	}
