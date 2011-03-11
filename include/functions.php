@@ -565,7 +565,7 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 		$forum_url_page = $forum_url['page'];
 	else
 	{
-		$forum_url_page = '?p=$1';
+		$forum_url_page = '&amp;p=$1';
 		unset($forum_url['insertion_find']);
 	}
 

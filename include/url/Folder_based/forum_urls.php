@@ -80,7 +80,7 @@ $forum_url = array(
 	'unstick'						=>	'unstick/$1/$2/$3/',
 	'moderate_topic'				=>	'moderate/$1/$2/',
 	'admin_index'					=>	'admin/index.php',
-	'admin_bans'					=>	'admin/bans.php',
+	'admin_bans'					=>	'admin/bans.php?sort_by=1',
 	'admin_categories'				=>	'admin/categories.php',
 	'admin_censoring'				=>	'admin/censoring.php',
 	'admin_extensions_manage'		=>	'admin/extensions.php?section=manage',
