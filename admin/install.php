@@ -222,7 +222,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set1">
 				<div class="sf-box text required">
 					<label for="fld2"><span><?php echo $lang_install['Database server'] ?> <em><?php echo $lang_install['Required'] ?></em></span> <small><?php echo $lang_install['Database server help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="50" maxlength="100" /></span>
+					<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
@@ -282,7 +282,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set4">
 				<div class="sf-box text required">
 					<label for="fld10"><span><?php echo $lang_install['Admin e-mail'] ?> <em><?php echo $lang_install['Required'] ?></em></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld10" type="text" name="req_email" size="50" maxlength="80" /></span>
+					<span class="fld-input"><input id="fld10" type="text" name="req_email" size="35" maxlength="80" /></span>
 				</div>
 			</div>
 		</fieldset>
@@ -303,19 +303,19 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set1">
 				<div class="sf-box text">
 					<label for="fld11"><span><?php echo $lang_install['Board title'] ?></span></label><br />
-					<span class="fld-input"><input id="fld11" type="text" name="board_title" size="50" maxlength="255" /></span>
+					<span class="fld-input"><input id="fld11" type="text" name="board_title" size="35" maxlength="255" /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text">
 					<label for="fld12"><span><?php echo $lang_install['Board description'] ?></span></label><br />
-					<span class="fld-input"><input id="fld12" type="text" name="board_descrip" size="50" maxlength="255" /></span>
+					<span class="fld-input"><input id="fld12" type="text" name="board_descrip" size="35" maxlength="255" /></span>
 				</div>
 			</div>
 			<div class="sf-set set3">
 				<div class="sf-box text required">
 					<label for="fld13"><span><?php echo $lang_install['Base URL'] ?> <em><?php echo $lang_install['Required'] ?></em></span> <small><?php echo $lang_install['Base URL help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld13" type="text" name="req_base_url" value="<?php echo $base_url_guess ?>" size="60" maxlength="100" /></span>
+					<span class="fld-input"><input id="fld13" type="text" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" /></span>
 				</div>
 			</div>
 <?php
