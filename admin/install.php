@@ -4,13 +4,13 @@
  *
  * Used to actually install PunBB.
  *
- * @copyright (C) 2008-2009 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
 
 
-define('FORUM_VERSION', '1.3.4');
+define('FORUM_VERSION', '1.3.5');
 define('FORUM_DB_REVISION', 4);
 define('MIN_PHP_VERSION', '4.3.0');
 define('MIN_MYSQL_VERSION', '4.1.2');
@@ -1629,7 +1629,7 @@ else
 		'o_date_format'				=> "'Y-m-d'",
 		'o_check_for_updates'		=> "'$check_for_updates'",
 		'o_check_for_versions'		=> "'$check_for_updates'",
-		'o_timeout_visit'			=> "'1800'",
+		'o_timeout_visit'			=> "'5400'",
 		'o_timeout_online'			=> "'300'",
 		'o_redirect_delay'			=> "'1'",
 		'o_show_version'			=> "'0'",

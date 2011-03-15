@@ -1375,7 +1375,11 @@ F - MAIN CONTENT - FORMS
 	width: 100%;
 	position: relative;
 	}
-
+	
+.brd .txt-set .required label span em { 
+	margin-bottom: -1.2em; 
+	}
+	 
 .brd .req-error {
 	display: block;
 	}

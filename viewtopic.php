@@ -409,7 +409,7 @@ while ($cur_post = $forum_db->fetch_assoc($result))
 			else
 			{
 				if ($cur_post['poster_email'] != '' && !$forum_user['is_guest'] && $forum_user['g_send_email'] == '1')
-					$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="'.(($forum_user['is_admmod']) ? 'mailto:'. forum_htmlencode($cur_post['poster_email']) : forum_link($forum_url['poster_email'], $cur_post['id'])).'">'.$lang_topic['E-mail'].'<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
+					$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="mailto:'.forum_htmlencode($cur_post['poster_email']).'">'.$lang_topic['E-mail'].'<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
 			}
 		}
 
