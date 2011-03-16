@@ -10,7 +10,7 @@
  */
 
 
-define('UPDATE_TO', '1.3.4');
+define('UPDATE_TO', '1.3.5');
 define('UPDATE_TO_DB_REVISION', 4);
 
 // The number of items to process per pageview (lower this if the update script times out during UTF-8 conversion)
@@ -39,7 +39,7 @@ if (!defined('FORUM'))
 	exit('Cannot find config.php, are you sure it exists?');
 
 // Enable debug mode
-if (!defined('FORUM_DEBUG')) 
+if (!defined('FORUM_DEBUG'))
 	define('FORUM_DEBUG', 1);
 
 // Turn on full PHP error reporting
