@@ -413,7 +413,7 @@ $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 
 $forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_bans']));
 
 // Generate paging
-$forum_page['page_post']['paging']='<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'],$forum_page['page'],$forum_url['admin_bans'],$lang_common['Paging separator'], false ,true).'</p>';
+$forum_page['page_post']['paging']='<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_bans'], $lang_common['Paging separator'], null).'</p>';
 
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages'])
