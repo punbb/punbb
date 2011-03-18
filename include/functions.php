@@ -589,7 +589,7 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 	{
 		// Add a previous page link
 		if ($num_pages > 1 && $cur_page > 1)
-			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link,$forum_url_page, ($cur_page - 1), $args).'">'.$lang_common['Previous'].'</a>';
+			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page - 1), $args).'">'.$lang_common['Previous'].'</a>';
 
 		if ($cur_page > 3)
 		{
