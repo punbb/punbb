@@ -1,0 +1,4 @@
+*~
+*.diff
+*.patch
+.DS_Store
