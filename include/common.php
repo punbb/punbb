@@ -16,7 +16,7 @@ if (!defined('FORUM_ESSENTIALS_LOADED'))
 
 // Turn off magic_quotes_runtime
 if (get_magic_quotes_runtime())
-	set_magic_quotes_runtime(0);
+	@ini_set('magic_quotes_runtime', false);
 
 // Strip slashes from GET/POST/COOKIE (if magic_quotes_gpc is enabled)
 if (get_magic_quotes_gpc())

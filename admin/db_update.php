@@ -46,7 +46,8 @@ if (!defined('FORUM_DEBUG'))
 error_reporting(E_ALL);
 
 // Turn off magic_quotes_runtime
-ini_set('magic_quotes_runtime', 0);
+if (get_magic_quotes_runtime())
+	@ini_set('magic_quotes_runtime', false);
 
 // Turn off PHP time limit
 @set_time_limit(0);
