@@ -6,24 +6,29 @@ A - SETUP
 -------------------------------------------------------------*/
 
 html, body, /* remove this line if necessary for site integration */
-.brd div, .brd p, .brd dl,.brd dt,.brd dd, .brd ul, .brd ol, .brd li,
-.brd h1,.brd h2,.brd h3, .brd h4, .brd h5, .brd h6, .brd pre,
-.brd form, .brd fieldset, .brd legend, .brd blockquote,
-.brd table, .brd th, .brd td {
+div, p, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+pre, form, fieldset, legend, blockquote,
+table, th, td {
 	margin:0;
 	padding:0;
 	text-align: left;
 	}
 
-.brd fieldset, .brd img, .brd cite {
+fieldset,
+img,
+cite {
 	border: 0;
 	}
 
-.brd br, .brd hr, .brd .hr, .brd .hidden {
+br,
+hr,
+.hr,
+.hidden {
 	display: none;
 	}
 
-.brd table {
+table {
 	width: 100%;
 	table-layout: fixed;
 	empty-cells: show;
@@ -40,13 +45,26 @@ body {
 	font: 75%/1.5em Verdana, Helvetica, Arial, sans-serif;
 	}
 
-.brd h1,.brd h2,.brd h3, .brd h4, .brd h5, .brd h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-size: 1em;
 	font-weight: normal;
 	}
 
-.brd samp, .brd code, .brd pre, .brd option, .brd optgroup,
-.brd input, .brd select, .brd textarea, .brd td, .brd th {
+samp,
+code,
+pre,
+option,
+optgroup,
+input,
+select,
+textarea,
+td,
+th {
 	font-size: 1em;
 	font-family: Verdana,Helvetica,Arial,sans-serif;
 	font-style: normal;
@@ -57,25 +75,25 @@ body {
 -------------------------------------------------------------*/
 
 .brd-page:after,
-.brd .gen-content:after,
-.brd .ct-box:after,
+.gen-content:after,
+.ct-box:after,
 #brd-index .item-head:after,
 #brd-index .main-item:after,
 #brd-index ul.item-info:after,
-.brd .frm-group:after,
-.brd .mf-set:after,
-.brd .sf-set:after,
-.brd .mf-box:after,
-.brd .sf-box:after,
-.brd .mf-item:after,
-.brd .txt-set:after,
-.brd .txt-box:after,
-.brd .frm-form label:after,
-.brd fieldset:after,
-.brd span.fld-input:after,
-.brd .posthead:after,
-.brd .postbody:after,
-.brd .postfoot .post-options:after {
+.frm-group:after,
+.mf-set:after,
+.sf-set:after,
+.mf-box:after,
+.sf-box:after,
+.mf-item:after,
+.txt-set:after,
+.txt-box:after,
+.frm-form label:after,
+fieldset:after,
+span.fld-input:after,
+.posthead:after,
+.postbody:after,
+.postfoot .post-options:after {
 	content: "";
 	display: block;
 	font-size: 0;
@@ -91,27 +109,27 @@ body {
 
 #brd-stats .hn,
 #qjump label,
-.brd .post .post-byline span,
-.brd .post .posthead .post-link span,
+.post-byline span,
+.post .posthead .post-link span,
 .admin .main-subhead,
-.brd .main-item .item-info li span.label,
-.brd .main-item .item-info li label,
-.brd .main-item .you-posted,
-.brd .main-item .item-num,
-.brd .group-legend,
-.brd .group-legend span,
-.brd .sf-set legend,
-.brd .sf-set legend span,
-.brd .main-pagehead .page-info,
-.brd p.item-select label,
-.brd .mf-extra .mf-field label,
-.brd .mf-extra .mf-field .aslabel,
-.brd .item-subject .item-nav span,
-.brd .post-options a span,
-.brd .main-title,
-.brd .main-head .hn small,
-.brd .entry-title,
-.brd .menu-page .main-head {
+.main-item .item-info li span.label,
+.main-item .item-info li label,
+.main-item .you-posted,
+.main-item .item-num,
+.group-legend,
+.group-legend span,
+.sf-set legend,
+.sf-set legend span,
+.main-pagehead .page-info,
+p.item-select label,
+.mf-extra .mf-field label,
+.mf-extra .mf-field .aslabel,
+.item-subject .item-nav span,
+.post-options a span,
+.main-title,
+.main-head .hn small,
+.entry-title,
+.menu-page .main-head {
 	font-size: 0;
 	left: -999em;
 	text-indent: -999em;
@@ -136,7 +154,9 @@ B - GLOBAL STYLES
 	width: 90%;
 	}
 
-#brd-redirect, #brd-maint, #brd-util {
+#brd-redirect,
+#brd-maint,
+#brd-util {
 	margin: 50px auto 12px auto;
 	width: 60%;
 	}
@@ -147,36 +167,38 @@ B - GLOBAL STYLES
 	position: relative;
 	}
 
-.brd .main-content, .brd .gen-content {
+.main-content,
+.gen-content {
 	border-style: solid;
 	border-width: 1px;
 	}
 
-.brd .gen-content {
+.gen-content {
 	padding: 0 1.5em;
 	}
 
-#brd-index #brd-about, #brd-index #brd-stats {
+#brd-index #brd-about,
+#brd-index #brd-stats {
 	margin-top: 1em;
 	}
 
-.brd .main-content,
-#brd-index #brd-visit, #brd-qpost,
+.main-content,
+#brd-index #brd-visit,
+#brd-qpost,
 #brd-index #brd-announcement {
 	margin-bottom: 1em;
 	}
 
-.brd #brd-announcement {
+#brd-announcement {
 	padding: 0.5em 1.5em;
 	margin-top: 1em;
-	/*margin: 0em 0em 1em 0em;*/
 	}
 
-.brd #brd-announcement br {
+#brd-announcement br {
 	display: inline;
 	}
 
-.brd .main-options {
+.main-options {
 	border-top: none;
 	margin: -1em 0 1em 0;
 }
@@ -184,94 +206,100 @@ B - GLOBAL STYLES
 /* Content Text (Default spacing for paragraphs and lists)
 -------------------------------------------------------------*/
 
-.brd p, .brd .hn {
+p,
+.hn {
 	padding: 0.5em 0;
 	}
 
-.brd  ul, .brd ol {
+ul,
+ol {
 	padding: 0.5em 0 0.5em 2em;
 	}
 
 
-.brd ul.spaced {
+ul.spaced {
 	padding: 0.25em 0 0.25em 2em;
 	}
 
-.brd ul.spaced li {
+ul.spaced li {
 	padding: 0.25em 0;
 	}
 
 /* Headings
 -------------------------------------------------------------*/
 
-.brd th {
+th {
 	font-size: 1.084em;
 	padding: 0.462em 1.417em;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	}
 
-.brd .main-head, .brd .main-foot {
+.main-head,
+.main-foot {
 	border-style: solid;
 	border-width: 1px;
 	padding: 0 1.417em;
 	}
 
-.brd .main-head .hn, .brd .main-foot .hn {
+.main-head .hn,
+.main-foot .hn {
 	font-size: 1.084em;
 	padding-right: 10em;
 	}
 
-.brd h2.main-subhead {
+h2.main-subhead {
 	border-style: solid;
 	border-width: 1px;
 	font-size: 1.084em;
 	padding: 0.462em 10em 0.426em 1.417em;
 	}
 
-.brd .column-title {
+.column-title {
 	border-style: solid;
 	border-width: 1px;
 	position: relative;
 	margin-bottom: -1px;
 	}
 
-.brd .main-subhead {
+.main-subhead {
 	border-style: solid;
 	border-width: 1px;
 	border-bottom: none;
 	}
 
-.brd .main-subhead .hn {
+.main-subhead .hn {
 	font-size: 1.084em;
 	padding: 0.462em 1.417em;
 	position: relative;
 	}
 
-.brd .main-foot {
+.main-foot {
 	margin-top: -1em;
 	}
 
-.brd #brd-announcement h1, .brd .main-extensions .ct-legend, .brd .main-hotfixes .ct-legend {
+#brd-announcement h1,
+.main-extensions .ct-legend,
+.main-hotfixes .ct-legend {
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 	font-size: 1.1em;
 	font-weight: bold;
 	}
 
-.brd #brd-announcement h1 {
+#brd-announcement h1 {
 	margin-bottom: 0.5em;
 	}
 
-.brd .main-pagehead .hn {
+.main-pagehead .hn {
 	padding: 0.5em 0;
 	}
 
-.brd .content-head {
+.content-head {
 	margin: 0.5em 1.417em 0;
 	}
 
-.brd .content-head .hn {
+.content-head .hn {
 	font-size: 1.084em;
 	border-style: none none double none;
 	border-width: 3px;
@@ -286,18 +314,19 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 /* Option lists
 -------------------------------------------------------------*/
 
-.brd .options span {
+.options span {
 	padding: 0 0 0 0.5em;
 	margin: 0 0 0 0.5em;
 	}
 
-.brd .options span.first-item {
+.options span.first-item {
 	border-left: 0;
 	padding-left: 0;
 	margin-left: 0;
 	}
 
-.brd .extension .options, .brd .hotfix .options {
+.extension .options,
+.hotfix .options {
 	border-top-style: dashed;
 	border-top-width: 1px;
 	}
@@ -305,7 +334,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 /* Content Containers
 -------------------------------------------------------------*/
 
-.brd .ct-box {
+.ct-box {
 	border-style: solid;
 	border-width: 1px;
 	margin: 1.417em;
@@ -313,12 +342,12 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	position: relative;
 	}
 
-.brd .ct-box li {
+.ct-box li {
 	padding: 0;
 	margin: 0 0 0.7em 0;
 	}
 
-.brd .ct-set {
+.ct-set {
 	border-style: solid;
 	border-width: 1px;
 	margin: 1.417em;
@@ -326,46 +355,50 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	position: relative;
 	}
 
-.brd .ct-group {
+.ct-group {
 	border-style: solid;
 	border-width: 1px;
 	margin: 1.417em;
 	}
 
-.brd .frm-group .ct-set {
+.frm-group .ct-set {
 	border-style: dashed none none none;
 	margin: 0;
 	}
 
-.brd .ct-group .ct-set {
+.ct-group .ct-set {
 	border-style: dashed none none none;
 	margin: 0 1em;
 	padding: 0 0 0 16em;
 	}
-.brd .ct-group .group-item1 {
+
+.ct-group .group-item1 {
 	border: none;
 	}
 
-.brd .ct-group .set1, .brd .frm-group .set1 {
+.ct-group .set1,
+.frm-group .set1 {
 	border-top: none;
 	}
 
-.brd .ct-group .ct-box, .brd .frm-group .ct-box {
+.ct-group .ct-box,
+.frm-group .ct-box {
 	border-style: none;
 	margin: 0;
 	}
 
-.brd .ct-group .ct-set .ct-box, .brd .ct-set .ct-box,
-.brd .frm-group .ct-set .ct-box {
+.ct-group .ct-set .ct-box,
+.ct-set .ct-box,
+.frm-group .ct-set .ct-box {
 	border-style: none;
 	margin: 0;
 	}
 
-.brd .ct-group .set1 {
+.ct-group .set1 {
 	border-top: 0;
 	}
 
-.brd .ct-set .ct-legend {
+.ct-set .ct-legend {
 	float: left;
 	margin-left: -17em;
 	width: 16em;
@@ -375,69 +408,69 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	font-weight: bold;
 	}
 
-.brd .ct-set ul {
+.ct-set ul {
 	padding-left: 0;
 	list-style: none;
 	}
 
-.brd .ct-box div {
+.ct-box div {
 	padding: 0.5em 0;
 	}
 
-.brd .ct-box p.options {
+.ct-box p.options {
 	float: none;
 	}
 
-.brd .ct-box .info-list {
+.ct-box .info-list {
 	padding-bottom: 0;
 	}
 
  /* User Identity
 -------------------------------------------------------------*/
 
-.brd .user-ident {
+.user-ident {
 	padding-left: 0;
 	list-style: none;
 	}
 
-.brd .user-ident .username a,
-.brd .user-ident .username strong {
+.user-ident .username a,
+.user-ident .username strong {
 	font-size: 1.167em;
 	font-weight: bold;
 	}
 
-.brd .user-ident .username a,
-.brd .user-ident .username a:link,
-.brd .user-ident .username a:visited {
+.user-ident .username a,
+.user-ident .username a:link,
+.user-ident .username a:visited {
 	text-decoration: none;
 	}
 
-.brd .user-ident .username a:hover,
-.brd .user-ident .username a:active,
-.brd .user-ident .username a:focus {
+.user-ident .username a:hover,
+.user-ident .username a:active,
+.user-ident .username a:focus {
 	text-decoration: underline;
 	}
 
-.brd .user-ident .usertitle {
+.user-ident .usertitle {
 	font-weight: bold;
 	}
 
-.brd .user-ident .useravatar {
+.user-ident .useravatar {
 	padding: 0.25em 0;
 	}
 
-.brd .user-ident .useravatar img {
+.user-ident .useravatar img {
 	display: block;
 	}
 
  /* Message Boxes
 -------------------------------------------------------------*/
 
-.brd .main-message {
+.main-message {
 	padding: 0.5em 1.417em;
 	}
 
-.brd .main-message p span {
+.main-message p span {
 	display: block;
 	padding-top: 0.5em;
 	}
@@ -445,48 +478,54 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 /* Section Menus (By Default - Profile and Admin)
 -------------------------------------------------------------*/
 
-.brd .main-menu, .brd .admin-menu {
+.main-menu,
+.admin-menu {
 	border: 0;
 	padding: 0.4em 0 0.2em 0.75em;
 	}
 
-.brd .main-menu ul, .brd .admin-menu ul {
+.main-menu ul,
+.admin-menu ul {
 	list-style-type: none;
 	float: left;
 	padding: 0;
 	}
 
-.brd .main-menu li, .brd .admin-menu li {
+.main-menu li,
+.admin-menu li {
 	font-size: 1.084em;
 	float: left;
 	display: inline;
 	}
 
-.brd .main-menu a, .brd .admin-menu a {
+.main-menu a,
+.admin-menu a {
 	float: left;
 	position: relative;
 	padding: 0.2em 0.75em 0.4em 0.75em;
 	}
 
-.brd .main-menu li.active a, .brd .admin-menu li.active a {
+.main-menu .active a,
+.admin-menu .active a {
 	font-weight: bold;
 	}
 
-.brd .main-menu li.first-item, .brd .admin-menu li.first-item {
+.main-menu .first-item,
+.admin-menu .first-item {
 	border-left: 0;
 	}
 
-.brd .admin-submenu {
+.admin-submenu {
 	border-style: solid;
 	border-width: 0px 1px 0px 1px;
 	}
 
-.brd .admin-submenu ul {
+.admin-submenu ul {
 	padding: 0.5em 0;
 	list-style: none;
 	}
 
-.brd .admin-submenu li {
+.admin-submenu li {
 	display: inline;
 	margin-right: 0.75em;
 	}
@@ -507,7 +546,8 @@ D - COMMON INTERFACE ELEMENTS
 	padding-bottom: 0;
 	}
 
-#brd-title a, #brd-title strong {
+#brd-title a,
+#brd-title strong {
 	font-size: 1.5em;
 	text-decoration: none;
 	font-weight: normal;
@@ -556,7 +596,9 @@ D - COMMON INTERFACE ELEMENTS
 	background: transparent;
 	}
 
-#brd-access a, #brd-access a:link, #brd-access a:visited {
+#brd-access a,
+#brd-access a:link,
+#brd-access a:visited {
 	height: 2em;
 	padding: 0 1.3em;
 	line-height: 2em;
@@ -566,7 +608,9 @@ D - COMMON INTERFACE ELEMENTS
 	width: 12em;
 	}
 
-#brd-access a:hover, #brd-access a:active, #brd-access a:focus {
+#brd-access a:hover,
+#brd-access a:active,
+#brd-access a:focus {
 	text-indent: 0;
 	background: #000;
 	position: static;
@@ -600,32 +644,37 @@ D - COMMON INTERFACE ELEMENTS
 #brd-admin-bans #brd-pagepost-end {
 	margin-top: -1em;
 	}
-.brd .paging {
+
+.paging {
 	float: left;
 	}
 
-.brd .posting {
+.posting {
 	text-align: right;
 	float: right;
 	}
 
-.brd .paging, .brd .paging * {
+.paging,
+.paging * {
 	white-space:nowrap;
 	}
 
-.brd .paging a, .brd .paging strong, .brd .paging span {
+.paging a,
+.paging strong,
+.paging span {
 	padding: 0 1em;
 	border-left-style: solid;
 	border-left-width: 1px;
 	float: left;
 	}
 
-.brd .paging .first-item, .brd .paging span.pages {
+.paging .first-item,
+.paging span.pages {
 	border-left: 0;
 	padding-left: 0;
 	}
 
-.brd .posting .newpost {
+.posting .newpost {
 	font-size: 1.084em;
 	font-weight: bold;
 	}
@@ -633,19 +682,20 @@ D - COMMON INTERFACE ELEMENTS
 /* Breadcrumbs
 -------------------------------------------------------------*/
 
-.brd .crumbs .crumblast {
+.crumbs .crumblast {
 	font-weight: bold;
 	}
 
-.brd .crumbs .crumblast  span {
+.crumbs .crumblast  span {
 	font-weight: normal;
 	}
 
-.brd .crumbs span, .brd .crumbs span * {
+.crumbs span,
+.crumbs span * {
 	white-space: nowrap;
 	}
 
-.brd .crumbs {
+.crumbs {
 	margin: 0.5em 0em;
 	padding: 0em 1.417em;
 	font-size: 1.084em;
@@ -669,13 +719,13 @@ D - COMMON INTERFACE ELEMENTS
 	white-space: nowrap;
 	}
 
- #brd-stats ul li.st-activity {
+#brd-stats ul li.st-activity {
 	text-align: right;
 	display: block;
 	white-space: nowrap;
 	}
 
- #brd-stats li strong {
+#brd-stats li strong {
 	font-weight: bold;
 	}
 
@@ -684,12 +734,13 @@ D - COMMON INTERFACE ELEMENTS
 	padding-bottom: 0.5em;
 	}
 
-#brd-online .hn, #brd-online p {
+#brd-online .hn,
+#brd-online p {
 	padding-bottom: 0;
 	padding-top: 0;
 	}
 
- #brd-online .hn {
+#brd-online .hn {
 	float: left;
 	margin-right: 0.5em;
 	}
@@ -702,7 +753,8 @@ D - COMMON INTERFACE ELEMENTS
 	padding: 0.5em 0;
 	}
 
-#brd-about #qjump div, #qjump label {
+#brd-about #qjump div,
+#qjump label {
 	padding: 0;
 	border: none;
 	}
@@ -724,28 +776,29 @@ D - COMMON INTERFACE ELEMENTS
 /* Main and Content Options
 -------------------------------------------------------------*/
 
-.brd p.options {
+p.options {
 	border-top: none;
 	float: right;
 	}
 
-.brd .main-modoptions .options {
+.main-modoptions .options {
 	text-align: center;
 	}
 
-.brd a.feed {
+a.feed {
 	padding-left: 22px;
 	background: url(feed-icon.png) center left no-repeat;
 	}
 
-.brd .content-options, .brd .ct-options {
+.content-options,
+.ct-options {
 	float: right;
 	margin-top: -2.7em;
 	padding: 0.5em 1.417em;
 	position: relative;
 	}
 
-.brd #select-all {
+#select-all {
 	float: right;
 	padding-left: 1em;
 	}
@@ -757,14 +810,14 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 /* Header setup generally
 -------------------------------------------------------------*/
 
-.brd .item-summary {
+.item-summary {
 	height: 2.5em;
 	padding: 0;
 	position: relative;
 	font-size: 1em;
 	}
 
-.brd .item-summary span {
+.item-summary span {
 	width: 100%;
 	position: absolute;
 	left: -999em;
@@ -772,7 +825,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	display: block;
 	}
 
-.brd .item-summary strong {
+.item-summary strong {
 	position: absolute;
 	left: 999em;
 	text-indent: 0;
@@ -781,49 +834,50 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	font-weight: normal;
 	}
 
-.brd .item-summary strong:first-letter {
+.item-summary strong:first-letter {
 	text-transform: uppercase;
 	}
 
-.brd .item-summary .subject-title {
+.item-summary .subject-title {
 	padding-left: 1.417em;
 	}
 
-.brd .item-summary .info-topics,
-.brd .item-summary .info-replies {
+.item-summary .info-topics,
+.item-summary .info-replies {
 	margin-left: 100%;
 	text-align: center;
 	width: 7em;
 	left: 965em;
 	}
 
-.brd .item-summary .info-forum {
+.item-summary .info-forum {
 	margin-left: 100%;
 	text-align: center;
 	width: 20em;
 	left: 952em;
 	}
-.brd .item-summary .info-posts,
-.brd .item-summary .info-views {
+
+.item-summary .info-posts,
+.item-summary .info-views {
 	margin-left: 100%;
 	text-align: center;
 	width: 7em;
 	left: 972em;
 	}
 
-.brd .item-summary .info-lastpost {
+.item-summary .info-lastpost {
 	margin-left: 100%;
 	left: 980em;
 	}
 
-.brd p.forum-noview .info-replies {
+p.forum-noview .info-replies {
 	left: 972em;
 	}
 
 /* Content setup generally
 -------------------------------------------------------------*/
 
-.brd .main-content .main-item {
+.main-content .main-item {
 	border-top-style: solid;
 	border-top-width: 1px;
 	overflow: hidden;
@@ -831,32 +885,32 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	line-height: 1.4em;
 	}
 
-.brd .main-content .main-first-item {
+.main-content .main-first-item {
 	border-top: none;
 	}
 
-.brd .main-content .main-item ul {
+.main-content .main-item ul {
 	float: right;
 	position: relative;
 	padding: 0;
 	list-style: none;
 	}
 
-.brd .main-content .main-item p,
-.brd .main-content .main-item .hn {
+.main-content .main-item p,
+.main-content .main-item .hn {
 	padding: 0;
 	}
 
-.brd .main-content .main-item .hn .item-status {
+/*.main-content */.main-item .hn .item-status {
 	font-weight: normal;
 	}
 
-.brd .main-content .main-item .hn .item-status em {
+/*.main-content */.main-item .hn .item-status em {
 	font-style: normal;
 	}
 
-.brd .main-content .main-item .item-subject,
-.brd .main-content .main-item li {
+.main-content .main-item .item-subject,
+.main-content .main-item li {
 	float: left;
 	border-left-style: solid;
 	border-left-width: 1px;
@@ -866,34 +920,34 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	padding-bottom: 10.4em;
 	}
 
-.brd .main-content .main-item .item-subject {
+/*.main-content */.main-item .item-subject {
 	overflow: hidden;
 	width: 100%;
 	}
 
-.brd .main-content .main-item li.info-topics,
-.brd .main-content .main-item li.info-forum,
-.brd .main-content .main-item li.info-posts,
-.brd .main-content .main-item li.info-views,
-.brd .main-content .main-item li.info-replies {
+/*.main-content */.main-item li.info-topics,
+/*.main-content */.main-item li.info-forum,
+/*.main-content */.main-item li.info-posts,
+/*.main-content */.main-item li.info-views,
+/*.main-content */.main-item li.info-replies {
 	width: 7em;
 	text-align: center;
 	}
 
-.brd .main-content .main-item li.info-forum {
+/*.main-content */.main-item .info-forum {
 	width: 20em;
 	}
 
-.brd .main-content .main-item li.info-lastpost {
+/*.main-content */.main-item .info-lastpost {
 	width: 20em;
 	}
 
-.brd .main-content .main-item li.info-lastpost cite {
+/*.main-content */.main-item .info-lastpost cite {
 	overflow: hidden;
 	width: 18em;
 	}
 
-.brd .main-item li strong {
+.main-item li strong {
 	font-weight: normal;
 	}
 
@@ -901,96 +955,96 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 /* Setup for Index and Forums
 -------------------------------------------------------------*/
 
-.brd .main-content .main-item {
+.main-content .main-item {
 	padding-right: 35em;
 	padding-left: 3.75em;
 	}
 
-.brd .main-content .main-item .hn {
+.main-content .main-item .hn {
 	position: relative;
 	}
 
-.brd .main-content .main-item ul {
+.main-content .main-item ul {
 	width: 34em;
 	right: -35em;
 	margin-left: -34em;
 	}
 
-.brd .forum-noview .main-item {
+.forum-noview .main-item {
 	padding-right: 28em;
 	}
 
-.brd .forum-noview .main-item ul {
+.forum-noview .main-item ul {
 	width: 27em;
 	right: -28em;
 	margin-left: -27em;
 	}
 
-.brd .forum-forums .main-item {
+.forum-forums .main-item {
 	padding-right: 48em;
 	}
 
-.brd .forum-forums .main-item ul {
+.forum-forums .main-item ul {
 	width: 47em;
 	right: -48em;
 	margin-left: -47em;
 	}
 
-.brd .main-content .main-item .item-subject span.modlist {
+/*.main-content*/ .main-item .item-subject span.modlist {
 	display: block;
 	}
 
-.brd .main-content .main-item .hn strong {
+.main-content .main-item .hn strong {
 	font-size: 1em;
 	}
 
-.brd .main-content .main-item .hn strong span {
+/*.main-content*/ .main-item .hn strong span {
 	font-weight: normal;
 	}
 
- #brd-index .main-content .main-item .hn span {
+#brd-index /*.main-content*/ .main-item .hn span {
 	font-size: 1.084em;
 	font-weight: bold;
 	}
-#brd-index .main-content .main-item .hn small {
+#brd-index /*.main-content*/ .main-item .hn small {
 	font-size: 1em;
 	}
 
-.brd .main-content .main-item .item-status {
+.main-content .main-item .item-status {
 	font-weight: bold;
 	}
 
-.brd .main-content .main-item cite {
+.main-content .main-item cite {
 	font-style: normal;
 	}
 
-.brd .main-content .main-item span.item-nav,
-.brd .main-content .main-item span.item-nav * {
+.main-content .main-item .item-nav,
+.main-content .main-item .item-nav * {
 	white-space: nowrap;
 	font-style: normal;
 	}
 
-.brd .main-content .main-item .item-subject .hn,
-.brd .main-content .main-item .item-subject p {
+.main-content .main-item .item-subject .hn,
+.main-content .main-item .item-subject p {
 	margin: 0 0 0 1.5em;
 	}
 
-.brd .main-content .main-item li.info-lastpost cite,
-.brd .main-content .main-item li.info-lastpost span,
-.brd .main-content .main-item li.info-forum a {
+.main-content .main-item .info-lastpost cite,
+.main-content .main-item .info-lastpost span,
+.main-content .main-item .info-forum a {
 	display: block;
 	padding: 0 1em;
 	font-style: normal;
 	font-weight: normal;
 	}
 
-.brd .main-content .main-item li.info-lastpost strong {
+.main-content .main-item .info-lastpost strong {
 	padding: 0 0 0 1em;
 	font-style: normal;
 	font-weight: normal;
 	}
 
-.brd .main-content .main-item li.info-select {
+.main-content .main-item .info-select {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -999,7 +1053,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	border-width: 1px;
 	}
 
-.brd .main-content .main-item .icon {
+.main-content .main-item .icon {
 	border-style: solid;
 	border-width: 0.5833em;
 	height: 0;
@@ -1009,7 +1063,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	margin-left: -2.417em;
 	}
 
-.brd .main-content .main-item .hn .posted-mark {
+/*.main-content */.main-item .hn .posted-mark {
 	position: absolute;
 	font-size: 2em;
 	width: 1em;
@@ -1024,43 +1078,52 @@ F - MAIN CONTENT - FORMS
 /* Generally
 -------------------------------------------------------------*/
 
-.brd .frm-group {
+.frm-group {
 	border-top-style: dashed;
 	border-top-width: 1px;
 	margin: 1.417em;
 	padding: 1.3em 0pt 0em;
 	}
 
-.brd .group1{
+.group1 {
 	border-top: none;
 	padding-top: 0;
 	}
 
-.brd .sf-box, .brd .mf-box, .brd .txt-box {
+.sf-box,
+.mf-box,
+.txt-box {
 	margin: 1.417em;
 	padding: 0.3em 0;
 	position: relative;
 	}
 
-.brd .sf-set, .brd .mf-set, .brd .txt-set {
+.sf-set,
+.mf-set,
+.txt-set {
 	margin: 1.417em;
 	padding: 0 0 0 17em;
 	position: relative;
 	}
 
-.brd .sf-set .sf-box, .brd .mf-set .mf-box, .brd .txt-set .txt-box {
+.sf-set .sf-box,
+.mf-set .mf-box,
+.txt-set .txt-box {
 	margin: 0;
 	}
 
-.brd .frm-group .sf-set, .brd .frm-group .mf-set, .brd .frm-group .txt-set {
+.frm-group .sf-set,
+.frm-group .mf-set,
+.frm-group .txt-set {
 	margin: 0;
 	}
 
-.brd .text input, .brd .select select {
+.text input,
+.select select {
 	font-size: 1.084em;
 	}
 
-.brd .frm-buttons {
+.frm-buttons {
 	margin: 0.75em 1.417em 1em 1.417em;
 	position: relative;
 	border-top-style: double;
@@ -1068,34 +1131,38 @@ F - MAIN CONTENT - FORMS
 	padding: 0.8em 0pt 0.3em 18em;
 	}
 
-.brd .frm-buttons span.submit {
+.frm-buttons span.submit {
 	margin-right: 0.75em;
 	}
 
-.brd span.submit input, .brd span.cancel input {
+span.submit input,
+span.cancel input {
 	overflow: visible;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	font-size: 1.084em;
 	}
 
-.brd .button-set span.submit {
+.button-set span.submit {
 	padding-left: 1em;
 	}
 
 /* Single Field Items (Text, Select, Checkbox)
 -------------------------------------------------------------*/
 
-.brd .sf-box label, .brd .sf-box .aslabel {
+.sf-box label,
+.sf-box .aslabel {
 	float: left;
 	padding: 0;
 	}
 
-.brd .sf-set .checkbox label {
+.sf-set .checkbox label {
 	padding: 2px 0 2px 3em;
 	}
 
-.brd .sf-set .text label span, .brd .sf-set .select label span, .brd .sf-set .aslabel span {
+.sf-set .text label span,
+.sf-set .select label span,
+.sf-set .aslabel span {
 	float: left;
 	margin-left: -17em;
 	display: block;
@@ -1106,7 +1173,7 @@ F - MAIN CONTENT - FORMS
 	font-weight:bold;
 	}
 
-.brd .sf-set .checkbox label span {
+.sf-set .checkbox label span {
 	float: left;
 	margin-left: -18em;
 	display: block;
@@ -1118,15 +1185,16 @@ F - MAIN CONTENT - FORMS
 	font-weight:bold;
 	}
 
-.brd .sf-set .text label small, .brd .sf-set .select label small {
+.sf-set .text label small,
+.sf-set .select label small {
 	display: block;
 	text-align: left;
 	position: relative;
-	margin: 2em 1em 0 1em;
+	margin: 2.2em 1.15em 0 1.15em;
 	font-size: 0.917em;
 	}
 
-.brd .sf-set .fld-input {
+.sf-set .fld-input {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1134,21 +1202,21 @@ F - MAIN CONTENT - FORMS
 	padding: 0.3em 1em;
 	}
 
-.brd .sf-set .checkbox input {
+.sf-set .checkbox input {
 	margin: 2px 0 2px -0.25em;
 	height: 1.55em;
 	width: 1.55em;
 	}
 
-.brd .sf-set .text input:not([title]) { /* Fixes alignment issue in Safari */
+.sf-set .text input:not([title]) { /* Fixes alignment issue in Safari */
 	height: 100%;
 	}
 
-.brd .sf-set .sf-short input {
+.sf-set .sf-short input {
 	width: 4em;
 	}
 
-.brd .sf-set .sf-short label small {
+.sf-set .sf-short label small {
 	font-size: 1em;
 	padding: 2px 0;
 	margin: 0 1em 0 6.5em;
@@ -1158,19 +1226,19 @@ F - MAIN CONTENT - FORMS
 /* Multi-Field Items (Radio/Checkbox Groups)
 -------------------------------------------------------------*/
 
-.brd .mf-box .mf-item {
+.mf-box .mf-item {
 	position: relative;
 	top: -0.166em;
 	padding: 0.25em 0;
 	}
 
-.brd .mf-set legend {
+.mf-set legend {
 	position: absolute;
 	height: 0;
 	background: transparent;
 	}
 
-.brd .mf-set legend span {
+.mf-set legend span {
 	position: absolute;
 	left: -17em;
 	width: 16em;
@@ -1182,7 +1250,7 @@ F - MAIN CONTENT - FORMS
 	font-weight: bold;
 	}
 
-.brd .mf-set legend span em {
+.mf-set legend span em {
 	display: block;
 	white-space: normal;
 	font-style: normal;
@@ -1190,7 +1258,7 @@ F - MAIN CONTENT - FORMS
 	font-size: 0.917em;
 	}
 
-.brd .mf-item .fld-input {
+.mf-item .fld-input {
 	position: absolute;
 	top: 0.25em;
 	left: 0;
@@ -1198,65 +1266,61 @@ F - MAIN CONTENT - FORMS
 	padding: 0 1em;
 	}
 
-.brd .mf-item input {
+.mf-item input {
 	margin: 0 0 0 -0.25em;
 	height: 1.55em;
 	width: 1.55em;
 	}
 
-.brd .mf-item label {
+.mf-item label {
 	padding: 0 0 0 3em;
 	float: left;
 	}
 
-.brd .mf-set .mf-yesno .mf-item {
+.mf-set .mf-yesno .mf-item {
 	width: 11em;
 	float: left;
 	}
 
-.brd .mf-set .mf-field {
+.mf-set .mf-field {
 	float: left;
 	padding: 0 1em 0 1em;
 	border-left: 1px solid #ccc;
 	}
 
-.brd .mf-set .mf-field1 {
+.mf-set .mf-field1 {
 	border-left: none;
 	}
 
-.brd .mf-set .mf-field label, .mf-set .mf-field .aslabel {
+.mf-set .mf-field label,
+.mf-set .mf-field .aslabel {
 	position: absolute;
 	top: -2em;
 	display: block;
 	}
 
-.brd .mf-set .mf-cell .fld-input {
+.mf-set .mf-cell .fld-input {
 	position: static;
 	padding: 0 0 0 1em;
 	border-left: 1px solid #ccc;
 	}
 
-.brd .frm-hdgroup {
+.frm-hdgroup {
 	padding-top: 2em;
 	}
 
-/*.brd .frm-hdgroup .set1 {
-	border-top-style: solid;
-	border-top-width: 1px;
-	}*/
-
-.brd .sf-set .sf-box .sf-forum {
+.sf-set .sf-box .sf-forum {
 	width: 25em;
 	}
 
-.brd .mf-set .mf-box .forum-field {
+.mf-set .mf-box .forum-field {
 	width: 25em;
 	}
 
 /* Multi Checkbox Widget
 -------------------------------------------------------------*/
 
-.brd .checklist {
+.checklist {
 	min-height: 6em;
 	max-height: 9em;
 	max-width: 30em;
@@ -1268,12 +1332,12 @@ F - MAIN CONTENT - FORMS
 	margin: 0 1em;
 	}
 
-.brd .checklist fieldset {
+.checklist fieldset {
 	height: auto;
 	}
 
-.brd .checklist legend,
-.brd .checklist legend span {
+.checklist legend,
+.checklist legend span {
 	font-weight: bold;
 	position: static;
 	padding: 0;
@@ -1281,25 +1345,25 @@ F - MAIN CONTENT - FORMS
 	text-align:left;
 	}
 
-.brd .checklist legend span {
+.checklist legend span {
 	width: auto;
 	max-width: 25em;
 	}
 
 
-.brd .checklist .checklist-item {
+.checklist .checklist-item {
 	position: relative;
 	height: auto;
 	}
 
-.brd .checklist .checklist-item label {
+.checklist .checklist-item label {
 	display: block;
 	padding: 0 0 0 2.25em;
 	float: none;
 	height: 100%;
 	}
 
-.brd .checklist .checklist-item .fld-input {
+.checklist .checklist-item .fld-input {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -1307,7 +1371,7 @@ F - MAIN CONTENT - FORMS
 	margin: 0;
 	}
 
-.brd .checklist .checklist-item input {
+.checklist .checklist-item input {
 	margin: 0;
 	height: 1.55em;
 	width: 1.55em;
@@ -1317,11 +1381,11 @@ F - MAIN CONTENT - FORMS
 /* Single Field Textareas and Long Inputs (Flexi Width)
 -------------------------------------------------------------*/
 
-.brd .txt-box label {
+.txt-box label {
 	float: left;
 	}
 
-.brd .txt-set label span {
+.txt-set label span {
 	float: left;
 	margin-left: -17em;
 	display: block;
@@ -1332,7 +1396,7 @@ F - MAIN CONTENT - FORMS
 	font-weight:bold;
 	}
 
-.brd .txt-set label small {
+.txt-set label small {
 	display: block;
 	text-align: left;
 	position: relative;
@@ -1342,49 +1406,50 @@ F - MAIN CONTENT - FORMS
 	z-index: 100;
 	}
 
-.brd .txt-set .txt-input {
+.txt-set .txt-input {
 	position: relative;
 	width: 100%;
 	}
 
-.brd .txt-set .fld-input {
+.txt-set .fld-input {
 	display: block;
 	padding: 0 0 0 1em;
 	}
 
-.brd .txt-set textarea {
+.txt-set textarea {
 	width: 95%;
 	}
 
 /* Error handling
 -------------------------------------------------------------*/
 
-.brd .req-warn {
+.req-warn {
 	display: none;
 	}
 
-.brd #req-msg p em, .brd .required label span em {
+#req-msg p em,
+.required label span em {
 	font-style: normal;
 	font-weight: normal;
 	}
 
-.brd .required label span em {
+.required label span em {
 	float: left;
 	font-size: 0.917em;
 	line-height: 1.2em;
 	width: 100%;
 	position: relative;
 	}
-	
-.brd .txt-set .required label span em { 
-	margin-bottom: -1.2em; 
+
+.txt-set .required label span em {
+	margin-bottom: -1.2em;
 	}
-	 
-.brd .req-error {
+
+.req-error {
 	display: block;
 	}
 
-.brd .required label span  {
+.required label span  {
 	font-weight: bold;
 	}
 
@@ -1395,7 +1460,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 /* Structure
 -------------------------------------------------------------*/
 
-.brd .post {
+.post {
 	border-style: solid;
 	border-width: 1px;
 	position: relative;
@@ -1403,45 +1468,46 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	margin-top: -1.417em;
 	}
 
-.brd .firstpost, .brd .singlepost {
+.firstpost,
+.singlepost {
 	margin-top: 1.417em;
 	}
 
-.brd .main-topic .lastpost {
+.main-topic .lastpost {
 	border-bottom: 0;
 	}
 
-.brd .main-topic .post {
+.main-topic .post {
 	border-style: solid none;
 	margin: 0;
 	}
 
-.brd  .main-topic .firstpost {
+.main-topic .firstpost {
 	border-top: none;
 	}
 
-.brd .posthead {
+.posthead {
 	margin-left: 18em;
 	border-style: none none none solid;
 	border-width: 1px;
 	}
 
-.brd .posthead .hn {
+.posthead .hn {
 	padding-right: 1.5em;
 	padding-left: 1em;
 	border-style: none none dashed none;
 	border-width: 1px;
 	}
 
-.brd .post .posthead .post-byline a,
-.brd .post .posthead .post-byline strong {
+.post-byline a,
+.post-byline strong {
 	font-size: 1.167em;
 	font-weight: bold;
 	text-decoration: none;
 	font-style: normal;
 	}
 
-.brd .post .posthead .post-byline {
+.post-byline {
 	float: left;
 	width: 15.5em;
 	padding: 0.5em 1em 0.5em 1.5em;
@@ -1452,7 +1518,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	overflow: hidden;
 	}
 
-.brd .posthead .post-num {
+.posthead .post-num {
 	float:right;
 	font-weight: bold;
 	}
@@ -1461,39 +1527,39 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	padding-right: 2.7em;
 	}
 
-.brd .posthead .post-title {
+.posthead .post-title {
 	padding: 0 1.5em 0.5em 1em;
 	margin-top: -1px;
 	position: relative;
 	}
 
-.brd .posthead .post-title span {
+.posthead .post-title span {
 	display: block;
 	width: 100%;
 	overflow: hidden
 	}
 
-.brd .posthead .post-title a {
+.posthead .post-title a {
 	font-size: 1em;
 	text-decoration: none;
 	font-weight: bold;
 	}
 
-.brd .posthead .post-title small,
-.brd .posthead .post-title small a {
+.posthead .post-title small,
+.posthead .post-title small a {
 	font-size: 1em;
 	font-weight: normal;
 	white-space: nowrap;
 	}
 
-.brd .posthead p.item-select {
+.posthead p.item-select {
 	position: absolute;
 	top: 0;
 	right: 0.75em;
 	height: 2.5em;
 	}
 
-.brd .postbody {
+.postbody {
 	margin-left: 18em;
 	position: relative;
 	border-left-style: solid;
@@ -1502,19 +1568,19 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	clear: both;
 	}
 
-.brd .postfoot {
+.postfoot {
 	padding-left: 18em;
 	border-top-style: dashed;
 	border-top-width: 1px;
 	position: relative;
 	}
 
-.brd .postfoot .post-options {
+.postfoot .post-options {
 	border-left-style: solid;
 	border-left-width: 1px;
 	}
 
-.brd .postbody .post-author {
+.postbody .post-author {
 	float: left;
 	width: 15.5em;
 	margin-left: -19em;
@@ -1527,48 +1593,50 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	}
 
 
-.brd .postbody .post-author ul {
+.postbody .post-author ul {
 	margin: 0;
 	padding: 0 0 0.5em 0;
 	list-style: none;
 	}
 
-.brd .post .author-ident .useravatar img {
+.author-ident .useravatar img {
 	display: block;
 	padding: 0.5em 0;
 	}
 
-.brd .post .author-ident .username {
+.author-ident .username {
 	display: none;
 	}
 
-.brd .postbody .author-ident .usertitle {
+.author-ident .usertitle {
 	font-weight: bold;
 	line-height: normal;
 	}
 
-.brd .postbody .author-ident .userstatus {
+.author-ident .userstatus {
 	padding: 0.75em 0 0.25em 0;
 	margin: 0;
 	line-height: 0.75em;
 	width: 100%;
 	}
 
-.brd .postbody .author-ident .userstatus span {
+.author-ident .userstatus span {
 	font-size: 0.917em;
 	display: block;
 	border-left-style: solid;
 	border-left-width: 0.7em;
 	text-indent: 0.5em;
 	}
-.brd .postbody .author-info li span strong {
+
+.author-info li span strong {
 	font-weight: normal;
 }
-.brd .online .author-ident .userstatus span {
+
+.online .author-ident .userstatus span {
 	font-weight: bold;
 	}
 
-.brd .postfoot .post-contacts {
+.postfoot .post-contacts {
 	float: left;
 	margin-left: -18em;
 	width: 15.5em;
@@ -1578,79 +1646,82 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	left: -1px;
 	}
 
-.brd .postfoot .post-actions {
+.postfoot .post-actions {
 	padding: 0.5em 1.5em 0.5em 1em;
 	text-align: right;
 	display: block;
 	float: right;
 	}
 
-.brd .postfoot .post-actions span {
+.postfoot .post-actions span {
 	margin-left: 0.75em;
 	}
 
-.brd .postfoot .post-contacts span {
+.postfoot .post-contacts span {
 	margin-right: 0.75em;
 	}
 
 /* Content
 -------------------------------------------------------------*/
 
-.brd .entry-content {
+.entry-content {
 	padding-bottom: 1em;
 	overflow: hidden;
 	width: 100%;
 	font-size: 1.084em;
 	}
 
-.brd .entry-content ol {
+.entry-content ol {
 	padding-left: 2.5em;
 	list-style-type: decimal;
 	}
 
-.brd .entry-content ol p,
-.brd .entry-content ul p {
+.entry-content ol p,
+.entry-content ul p {
 	padding: 0;
 	}
 
-.brd .entry-content ol.alpha {
+.entry-content ol.alpha {
 	list-style-type: upper-alpha;
 	}
 
-.brd .entry-content h5, .brd .entry-content h5 * {
+.entry-content h5,
+.entry-content h5 * {
 	font-weight: bold;
 	font-size: 1.084em;
 	padding: 0.5em 0;
 	}
 
-.brd .entry-content img {
+.entry-content img {
 	vertical-align: text-top;
 	}
 
-.brd .entry-content .quotebox,
-.brd .entry-content .codebox {
+.entry-content .quotebox,
+.entry-content .codebox {
 	border-style: solid;
 	border-width: 1px;
 	margin: 0.75em 1em;
 	padding: 1em 0.75em;
 	}
 
-.brd .entry-content .codebox code, #brd-debug table .tcl, #brd-debug table .tcr {
+.entry-content .codebox code,
+#brd-debug table .tcl,
+#brd-debug table .tcr {
 	font-family: monospace;
 	}
 
-.brd .entry-content blockquote {
+.entry-content blockquote {
 	overflow: hidden;
 	width: 100%;
 	}
 
-.brd .entry-content .quotebox cite {
+.entry-content .quotebox cite {
 	display: block;
 	font-style: normal;
 	font-weight: bold;
 	}
 
-.brd .entry-content pre {
+.entry-content pre {
 	margin: 0;
 	max-height: 35em;
 	min-height: 2em;
@@ -1659,23 +1730,26 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	width: 98%;
 	}
 
-.brd .entry-content img {
+.entry-content img {
 	max-width: 100%;
 	}
 
-.brd .entry-content span.bbu {
+.entry-content span.bbu {
 	text-decoration: underline;
 	}
 
-.brd .entry-content br, .brd .sig-demo br, .brd .user-box br, .brd .main-message br {
+.entry-content br,
+.sig-demo br,
+.user-box br,
+.main-message br {
 	display: inline;
 	}
 
-.brd .sig-content {
+.sig-content {
 	padding-top: 1em;
 	}
 
-.brd span.sig-line {
+span.sig-line {
 	display: block;
 	width: 200px;
 	border-top-style: solid;
@@ -1691,7 +1765,7 @@ H - MAIN TABLES
 /* Table Cells Widths and Alignment
 -------------------------------------------------------------*/
 
-.brd table {
+table {
 	width: 100%;
 	table-layout: fixed;
 	empty-cells: show;
@@ -1699,7 +1773,7 @@ H - MAIN TABLES
 	line-height: 1.3333em;
 	}
 
-.brd td {
+td {
 	overflow: hidden;
 	vertical-align: middle;
 	}
@@ -1728,85 +1802,37 @@ H - MAIN TABLES
 	width: 90%;
 	}
 
-#brd-admin-uresults table .tc0,
-#brd-admin-iresults table .tc0 {
-	width: 45%;
-	}
-
-#brd-admin-uresults table .tc1,
-#brd-admin-iresults table .tc1,
-#brd-admin-iresults table .tc2 {
-	width: 20%;
-	}
-
-#brd-admin-uresults table .tc2,
-#brd-admin-uresults table .tc4 {
-	width: 10%;
-	text-align: center;
-	}
-
-#brd-admin-uresults .tc3 {
-	width: 15%;
-	}
-
-#brd-admin-uresults td.tc0 span,
-#brd-admin-uresults td.tc3 span {
-	display: block;
-	white-space: nowrap;
-	}
-
-#brd-admin-uresults td.tc0 a,
-#brd-admin-uresults td.tc3 a {
-	font-weight: bold;
-	}
-
-#brd-admin-iresults table .tc0 {
-	width: 25%;
-	}
-
-#brd-admin-iresults table .tc1 {
-	width: 25%;
-	}
-
-#brd-admin-iresults table .tc2 {
-	width: 20%;
-	}
-
-#brd-admin-iresults .tc3 {
-	width: 30%;
-	}
-
-
 /* Table Cell Styling
 -------------------------------------------------------------*/
 
-.brd .main-content th {
+.main-content th {
 	font-size: 1.084em;
 	padding: 0.462em 1.417em;
 	font-weight: normal;
 	}
 
-.brd table td {
+table td {
 	padding: 0.5em 1.417em;
 	border-width: 1px;
 	border-style: solid none none solid;
 	}
 
-.brd table td.tc0 {
+table td.tc0 {
 	border-left-style: none;
 	border-left-width: 0
 	}
 
-.brd table th {
+table th {
 	padding: 0.5em 1.3em;
 	border-style: none;
 	}
 
-.brd table td.actions, .brd table th.actions {
+table td.actions,
+table th.actions {
 	text-align: right;
 	}
 
-.brd table td.actions span {
+table td.actions span {
 	display: block;
 	}
 
@@ -1818,22 +1844,22 @@ H - MAIN CONTENT - ODDMENTS
 /* Reports
 -------------------------------------------------------------*/
 
-.brd .report {
+.report {
 	margin-left: 4em;
 	}
 
-.brd .report h3 span {
+.report h3 span {
 	display: block;
 	font-style: normal;
 	}
 
-.brd .report h3 cite {
+.report h3 cite {
 	font-style: normal;
 	font-size: 1.084em;
 	font-weight: bold;
 	}
 
-.brd .report h3 strong {
+.report h3 strong {
 	position: absolute;
 	left: -3.1em;
 	width: 1.5em;
@@ -1841,12 +1867,12 @@ H - MAIN CONTENT - ODDMENTS
 	font-size: 1.167em;
 	}
 
-.brd .report p strong {
+.report p strong {
 	display: block;
 	font-weight: normal;
 	}
 
-.brd .report h4 {
+.report h4 {
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 	}
@@ -1856,7 +1882,7 @@ H - MAIN CONTENT - ODDMENTS
 	margin-top: 0;
 	}
 
-.brd .report .item-select {
+.report .item-select {
 	position: absolute;
 	top: 0;
 	right: 0.75em;
@@ -1866,25 +1892,25 @@ H - MAIN CONTENT - ODDMENTS
 /* Help File
 -------------------------------------------------------------*/
 
-.brd .help-box samp {
+.help-box samp {
 	display: block;
 	margin-left: 1.5em;
 	}
 
-.brd .help-box h5 samp {
+.help-box h5 samp {
 	margin-left: 1.417em;
 	}
 
-.brd .help-box code {
+.help-box code {
 	font-family: courier;
 	font-size: 1.084em;
 	}
 
-.brd .help-box .entry-content {
+.help-box .entry-content {
 	padding: 0;
 	}
 
-.brd .help-box .hn {
+.help-box .hn {
 	padding-bottom: 0.5em;
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
