@@ -128,8 +128,6 @@ foreach (explode("\n", $head_temp) as $style_temp)
 
 ob_end_clean();
 
-$forum_head['commonjs'] = '<script type="text/javascript" src="'.$base_url.'/include/js/common.js"></script>';
-
 ($hook = get_hook('hd_head')) ? eval($hook) : null;
 
 $tpl_main = str_replace('<!-- forum_head -->', implode("\n", $forum_head), $tpl_main);

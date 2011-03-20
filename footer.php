@@ -76,6 +76,16 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 }
 // END SUBST - <!-- forum_debug -->
 
+
+// START SUBST - <!-- forum_javascript -->
+$forum_javascript['commonjs'] = '<script type="text/javascript" src="'.$base_url.'/include/js/common.js"></script>';
+
+($hook = get_hook('ft_js_include')) ? eval($hook) : null;
+
+$tpl_main = str_replace('<!-- forum_javascript -->', implode("\n", $forum_javascript), $tpl_main);
+unset($forum_javascript);
+// END SUBST - <!-- forum_javascript -->
+
 // Last call!
 ($hook = get_hook('ft_end')) ? eval($hook) : null;
 
