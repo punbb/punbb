@@ -135,6 +135,12 @@ define('FORUM_UNVERIFIED', 0);
 define('FORUM_ADMIN', 1);
 define('FORUM_GUEST', 2);
 
+// Avatars
+define('FORUM_AVATAR_NONE', 0);
+define('FORUM_AVATAR_GIF', 1);
+define('FORUM_AVATAR_JPG', 2);
+define('FORUM_AVATAR_PNG', 3);
+
 // A good place to add common functions for your extension
 ($hook = get_hook('es_essentials')) ? eval($hook) : null;
 

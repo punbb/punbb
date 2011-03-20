@@ -274,7 +274,7 @@ $forum_page['item_count'] = 0;	// Keep track of post numbers
 
 // Retrieve the posts (and their respective poster/online status)
 $query = array(
-	'SELECT'	=> 'u.email, u.title, u.url, u.location, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online',
+	'SELECT'	=> 'u.email, u.title, u.url, u.location, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.avatar, u.avatar_width, u.avatar_height, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online',
 	'FROM'		=> 'posts AS p',
 	'JOINS'		=> array(
 		array(
@@ -334,7 +334,7 @@ while ($cur_post = $forum_db->fetch_assoc($result))
 		{
 			if ($forum_config['o_avatars'] == '1' && $forum_user['show_avatars'] != '0')
 			{
-				$forum_page['avatar_markup'] = generate_avatar_markup($cur_post['poster_id']);
+				$forum_page['avatar_markup'] = generate_avatar_markup($cur_post['poster_id'], $cur_post['avatar'], $cur_post['avatar_width'], $cur_post['avatar_height']);
 
 				if (!empty($forum_page['avatar_markup']))
 					$forum_page['author_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';

@@ -1097,12 +1097,22 @@ else if (isset($_POST['form_sent']))
 				{
 					// Determine type
 					$extension = null;
+					$avatar_type = FORUM_AVATAR_NONE;
 					if ($uploaded_file['type'] == 'image/gif')
+					{
 						$extension = '.gif';
+						$avatar_type = FORUM_AVATAR_GIF;
+					}
 					else if ($uploaded_file['type'] == 'image/jpeg' || $uploaded_file['type'] == 'image/pjpeg')
+					{
 						$extension = '.jpg';
+						$avatar_type = FORUM_AVATAR_JPG;
+					}
 					else
+					{
 						$extension = '.png';
+						$avatar_type = FORUM_AVATAR_PNG;
+					}
 
 					($hook = get_hook('pf_change_details_avatar_determine_extension')) ? eval($hook) : null;
 
@@ -1137,6 +1147,24 @@ else if (isset($_POST['form_sent']))
 							// Put the new avatar in its place
 							@rename($forum_config['o_avatars_dir'].'/'.$id.'.tmp', $forum_config['o_avatars_dir'].'/'.$id.$extension);
 							@chmod($forum_config['o_avatars_dir'].'/'.$id.$extension, 0644);
+
+							// Avatar
+							$avatar_width = (intval($width) > 0) ? intval($width) : 0;
+							$avatar_height = (intval($height) > 0) ? intval($height) : 0;
+
+							// Save to DB
+							$query = array(
+								'UPDATE'	=> 'users',
+								'SET'		=> 'avatar=\''.$avatar_type.'\', avatar_height=\''.$avatar_height.'\', avatar_width=\''.$avatar_width.'\'',
+								'WHERE'		=> 'id='.$id
+							);
+							($hook = get_hook('pf_change_details_avatar_qr_update_avatar')) ? eval($hook) : null;
+							$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+							// Update avatar info
+							$user['avatar'] = $avatar_type;
+							$user['avatar_width'] = $width;
+							$user['avatar_height'] = $height;
 						}
 					}
 				}
@@ -1316,7 +1344,7 @@ if ($forum_user['id'] != $id &&
 
 	if ($forum_config['o_avatars'] == '1')
 	{
-		$forum_page['avatar_markup'] = generate_avatar_markup($id);
+		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], TRUE);
 
 		if (!empty($forum_page['avatar_markup']))
 			$forum_page['user_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
@@ -1511,7 +1539,7 @@ else
 
 		if ($forum_config['o_avatars'] == '1')
 		{
-			$forum_page['avatar_markup'] = generate_avatar_markup($id);
+			$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], TRUE);
 
 			if (!empty($forum_page['avatar_markup']))
 				$forum_page['user_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
@@ -2368,7 +2396,7 @@ if ($forum_page['has_required']): ?>
 
 	else if ($section == 'avatar' && $forum_config['o_avatars'] == '1')
 	{
-		$forum_page['avatar_markup'] = generate_avatar_markup($id);
+		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], TRUE);
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(

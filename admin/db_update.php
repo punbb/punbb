@@ -716,6 +716,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		$forum_db->alter_field('users', 'msn', 'VARCHAR(80)', true);
 		$forum_db->alter_field('users', 'activate_string', 'VARCHAR(80)', true);
 
+		// Add avatars field
+		$forum_db->add_field('users', 'avatar', 'TINYINT(3) UNSIGNED', false, 0);
+		$forum_db->add_field('users', 'avatar_width', 'TINYINT(3) UNSIGNED', false, 0, 'avatar');
+		$forum_db->add_field('users', 'avatar_height', 'TINYINT(3) UNSIGNED', false, 0, 'avatar_width');
+
 		// Remove NOT NULL from TEXT fields for consistency. See http://dev.punbb.org/changeset/596
 		$forum_db->alter_field('posts', 'message', 'TEXT', true);
 		$forum_db->alter_field('reports', 'message', 'TEXT', true);

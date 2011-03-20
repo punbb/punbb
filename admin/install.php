@@ -1489,6 +1489,21 @@ else
 				'datatype'		=> 'VARCHAR(8)',
 				'allow_null'	=> true
 			),
+			'avatar'			=> array(
+				'datatype'		=> 'TINYINT(3) UNSIGNED',
+				'allow_null'	=> false,
+				'default'		=> 0,
+			),
+			'avatar_width'		=> array(
+				'datatype'		=> 'TINYINT(3) UNSIGNED',
+				'allow_null'	=> false,
+				'default'		=> 0,
+			),
+			'avatar_height'		=> array(
+				'datatype'		=> 'TINYINT(3) UNSIGNED',
+				'allow_null'	=> false,
+				'default'		=> 0,
+			),
 		),
 		'PRIMARY KEY'	=> array('id'),
 		'INDEXES'		=> array(

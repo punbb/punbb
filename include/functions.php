@@ -471,27 +471,51 @@ function generate_navlinks()
 }
 
 
+
 // Outputs markup to display a user's avatar
-function generate_avatar_markup($user_id)
+function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_height, $drop_cache = FALSE)
 {
 	global $forum_config, $base_url;
 
-	$filetypes = array('jpg', 'gif', 'png');
-	$avatar_markup = '';
+	$avatar_markup = $avatar_filename = '';
 
 	$return = ($hook = get_hook('fn_generate_avatar_markup_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	foreach ($filetypes as $cur_type)
-	{
-		$path = $forum_config['o_avatars_dir'].'/'.$user_id.'.'.$cur_type;
 
-		if (file_exists(FORUM_ROOT.$path) && $img_size = @getimagesize(FORUM_ROOT.$path))
-		{
-			$avatar_markup = '<img src="'.$base_url.'/'.$path.'" '.$img_size[3].' alt="" />';
+	// Create avatar filename
+	switch ($avatar_type)
+	{
+		case FORUM_AVATAR_GIF:
+			$avatar_filename = $user_id.'.gif';
 			break;
+
+		case FORUM_AVATAR_JPG:
+			$avatar_filename = $user_id.'.jpg';
+			break;
+
+		case FORUM_AVATAR_PNG:
+			$avatar_filename = $user_id.'.png';
+			break;
+
+		case FORUM_AVATAR_NONE:
+		default:
+			break;
+	}
+
+	// Create markup
+	if ($avatar_filename && $avatar_width > 0 && $avatar_height > 0)
+	{
+		$path = $forum_config['o_avatars_dir'].'/'.$avatar_filename;
+
+		//
+		if ($drop_cache)
+		{
+			$path .= '?no_cache='.random_key(8, TRUE);
 		}
+
+		$avatar_markup = '<img src="'.$base_url.'/'.$path.'" height="'.$avatar_height.'" width="'.$avatar_width.'" alt="" />';
 	}
 
 	($hook = get_hook('fn_generate_avatar_markup_end')) ? eval($hook) : null;
@@ -1866,7 +1890,7 @@ function check_username_dupe($username, $exclude_id = null)
 // Deletes any avatars owned by the specified user ID
 function delete_avatar($user_id)
 {
-	global $forum_config;
+	global $forum_db, $db_type, $forum_config;
 
 	$filetypes = array('jpg', 'gif', 'png');
 
@@ -1874,10 +1898,25 @@ function delete_avatar($user_id)
 	if ($return != null)
 		return;
 
-	// Delete user avatar
+	// Delete user avatar from FS
 	foreach ($filetypes as $cur_type)
-		@unlink(FORUM_ROOT.$forum_config['o_avatars_dir'].'/'.$user_id.'.'.$cur_type);
+	{
+		$avatar = FORUM_ROOT.$forum_config['o_avatars_dir'].'/'.$user_id.'.'.$cur_type;
+		if (file_exists($avatar))
+		{
+			@unlink($avatar);
+		}
+	}
 
+	// Delete user avatar from DB
+	$query = array(
+		'UPDATE'	=> 'users',
+		'SET'		=> 'avatar=\''.FORUM_AVATAR_NONE.'\', avatar_height=\'0\', avatar_width=\'0\'',
+		'WHERE'		=> 'id='.$user_id
+	);
+
+	($hook = get_hook('fn_delete_avatar_qr_delete_avatar')) ? eval($hook) : null;
+	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 }
 
 
