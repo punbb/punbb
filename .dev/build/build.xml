@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Webtasks example" default="init">
+
+	<description>Build PunBB</description>
+	<import file="webtasks.xml"/>
+	<property name="webtasks.dir" value="${basedir}" />
+
+
+	<!-- SOURCE DIRS -->
+	<property name="js-src" value="${basedir}/../include/js" />
+	<property name="css-src" value="${basedir}/../style" />
+
+	<target name="init" depends="webtasks.init, make-js, make-css">
+		<echo>Build done.</echo>
+	</target>
+
+
+	<!-- BUILD JS -->
+	<target name="make-js">
+		<compress-js-lib tofile="${js-src}/common.min.js" force="true">
+			<filelist dir="${js-src}">
+				<file name="common.js" />
+			</filelist>
+		</compress-js-lib>
+	</target>
+
+
+	<!-- BUILD CSS -->
+	<target name="make-css">
+		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen.min.css" force="true">
+			<filelist dir="${css-src}">
+				<file name="Oxygen/Oxygen.css" />
+				<file name="Oxygen/Oxygen_cs.css" />
+			</filelist>
+		</compress-css-lib>
+
+		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen_ie6.min.css" force="true">
+			<filelist dir="${css-src}">
+				<file name="Oxygen/Oxygen_ie6.css" />
+			</filelist>
+		</compress-css-lib>
+
+		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen_ie7.min.css" force="true">
+			<filelist dir="${css-src}">
+				<file name="Oxygen/Oxygen_ie7.css" />
+			</filelist>
+		</compress-css-lib>
+
+		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen_ie8.min.css" force="true">
+			<filelist dir="${css-src}">
+				<file name="Oxygen/Oxygen_ie8.css" />
+			</filelist>
+		</compress-css-lib>
+	</target>
+
+</project>
