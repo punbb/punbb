@@ -7,8 +7,8 @@
 
 
 	<!-- SOURCE DIRS -->
-	<property name="js-src" value="${basedir}/../include/js" />
-	<property name="css-src" value="${basedir}/../style" />
+	<property name="js-src" value="${basedir}/../../include/js" />
+	<property name="css-src" value="${basedir}/../../style" />
 
 	<target name="init" depends="webtasks.init, make-js, make-css">
 		<echo>Build done.</echo>
@@ -27,26 +27,26 @@
 
 	<!-- BUILD CSS -->
 	<target name="make-css">
-		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen.min.css" force="true">
+		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen.min.css" force="true">
 			<filelist dir="${css-src}">
 				<file name="Oxygen/Oxygen.css" />
 				<file name="Oxygen/Oxygen_cs.css" />
 			</filelist>
 		</compress-css-lib>
 
-		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen_ie6.min.css" force="true">
+		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen_ie6.min.css" force="true">
 			<filelist dir="${css-src}">
 				<file name="Oxygen/Oxygen_ie6.css" />
 			</filelist>
 		</compress-css-lib>
 
-		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen_ie7.min.css" force="true">
+		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen_ie7.min.css" force="true">
 			<filelist dir="${css-src}">
 				<file name="Oxygen/Oxygen_ie7.css" />
 			</filelist>
 		</compress-css-lib>
 
-		<compress-css-lib tofile="${css-src}/Oxygen/Oxygen_ie8.min.css" force="true">
+		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen_ie8.min.css" force="true">
 			<filelist dir="${css-src}">
 				<file name="Oxygen/Oxygen_ie8.css" />
 			</filelist>
