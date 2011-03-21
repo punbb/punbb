@@ -104,6 +104,7 @@ $lang_profile = array(
 'Edit count'				=>	'Edit post count',
 'Admin note'				=>	'Admin note',
 'Contact legend'			=>	'Contact details',
+'Contact messengers legend'	=>	'Contact messengers details',
 
 // Settings section
 'Local settings'			=>	'Local settings',
