@@ -367,6 +367,78 @@ function convert_table_utf8($table)
 	}
 }
 
+// Move avatars to DB
+function convert_avatars()
+{
+	global $forum_config, $forum_db;
+
+	$avatar_dir = FORUM_ROOT.'img/avatars/';
+	if (!is_dir($avatar_dir))
+	{
+		return false;
+	}
+
+	if ($handle = opendir($avatar_dir))
+	{
+		while (false !== ($avatar = readdir($handle)))
+		{
+			$avatar_file =  $avatar_dir.$avatar;
+			if (!is_file($avatar_file))
+			{
+				continue;
+			}
+
+			//echo $avatar_file;
+
+			$avatar = basename($avatar_file);
+			if (preg_match('/^(\d+)\.(png|gif|jpg)/', $avatar, $matches))
+			{
+
+				$user_id = intval($matches[1], 10);
+				$avatar_ext = $matches[2];
+
+				$avatar_type = FORUM_AVATAR_NONE;
+				if ($avatar_ext == 'png')
+				{
+					$avatar_type = FORUM_AVATAR_PNG;
+				}
+				else if ($avatar_ext == 'gif')
+				{
+					$avatar_type = FORUM_AVATAR_GIF;
+				}
+				else if ($avatar_ext == 'jpg')
+				{
+					$avatar_type = FORUM_AVATAR_JPG;
+				}
+
+				// Check user and avatar type
+				if ($user_id < 2 || $avatar_type == FORUM_AVATAR_NONE)
+				{
+					continue;
+				}
+
+				// Now check the width/height
+				list($width, $height, $type,) = @/**/getimagesize($avatar_file);
+				if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
+				{
+					@/**/unlink($avatar_file);
+				}
+				else
+				{
+					// Save to DB
+					$query = array(
+						'UPDATE'	=> 'users',
+						'SET'		=> 'avatar=\''.$avatar_type.'\', avatar_height=\''.$height.'\', avatar_width=\''.$width.'\'',
+						'WHERE'		=> 'id='.$user_id
+					);
+					$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				}
+			}
+		}
+		closedir($handle);
+	}
+}
+
 
 header('Content-type: text/html; charset=utf-8');
 
@@ -720,6 +792,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		$forum_db->add_field('users', 'avatar', 'TINYINT(3) UNSIGNED', false, 0);
 		$forum_db->add_field('users', 'avatar_width', 'TINYINT(3) UNSIGNED', false, 0, 'avatar');
 		$forum_db->add_field('users', 'avatar_height', 'TINYINT(3) UNSIGNED', false, 0, 'avatar_width');
+
+		// Add avatars to DB
+		convert_avatars();
 
 		// Remove NOT NULL from TEXT fields for consistency. See http://dev.punbb.org/changeset/596
 		$forum_db->alter_field('posts', 'message', 'TEXT', true);
