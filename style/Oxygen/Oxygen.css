@@ -145,6 +145,10 @@ B - GLOBAL STYLES
 
 /* General Layout
 -------------------------------------------------------------*/
+html {
+	height: 99%;
+	overflow-y: scroll;
+	}
 
 .brd {
 	padding: 1.3em 2em;
