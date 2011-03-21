@@ -1081,6 +1081,12 @@ F - MAIN CONTENT - FORMS
 
 /* Generally
 -------------------------------------------------------------*/
+label,
+input[type=button],
+input[type=submit],
+button {
+	cursor: pointer;
+}
 
 .frm-group {
 	border-top-style: dashed;
