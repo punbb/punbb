@@ -2,3 +2,6 @@
 *.diff
 *.patch
 .DS_Store
+config.php
+cache/
+
