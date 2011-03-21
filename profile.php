@@ -882,7 +882,7 @@ else if (isset($_POST['form_sent']))
 	{
 		case 'identity':
 		{
-			$form = extract_elements(array('realname', 'url', 'location', 'jabber', 'icq', 'msn', 'aim', 'yahoo'));
+			$form = extract_elements(array('realname', 'url', 'location', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'facebook', 'twitter', 'linkedin', 'skype'));
 
 			($hook = get_hook('pf_change_details_identity_validation')) ? eval($hook) : null;
 
@@ -1584,6 +1584,7 @@ else
 		else if ($forum_user['id'] == $id || ($forum_user['is_admmod'] && $user['email_setting'] == '2'))
 			$forum_page['user_private']['forum-mail'] = '<li><span>'.$lang_profile['E-mail'].': <a href="'.forum_link($forum_url['email'], $id).'">'.$lang_profile['Send forum e-mail'].'</a></span></li>';
 
+		// Website
 		if ($user['url'] != '')
 		{
 			$user['url'] = forum_htmlencode($user['url']);
@@ -1595,12 +1596,47 @@ else
 			$forum_page['user_contact']['website'] = '<li><span>'.$lang_profile['Website'].': '.$forum_page['url'].'</span></li>';
 		}
 
+		// Facebook
+		if ($user['facebook'] != '')
+		{
+			if ($forum_config['o_censoring'] == '1')
+			{
+				$user['facebook'] = censor_words($user['facebook']);
+			}
+
+			$facebook_url = (strpos($user['facebook'], 'http') === 0) ? forum_htmlencode($user['facebook']) : forum_htmlencode('https://www.facebook.com/'.$user['facebook']);
+			$forum_page['facebook'] = '<a href="'.$facebook_url.'" class="external url">'.$facebook_url.'</a>';
+			$forum_page['user_contact']['facebook'] = '<li><span>'.$lang_profile['Facebook'].': '.$forum_page['facebook'].'</span></li>';
+		}
+
+		// Twitter
+		if ($user['twitter'] != '')
+		{
+			if ($forum_config['o_censoring'] == '1')
+			{
+				$user['twitter'] = censor_words($user['twitter']);
+			}
+
+			$twitter_url = (strpos($user['twitter'], 'http') === 0) ? forum_htmlencode($user['twitter']) : forum_htmlencode('https://twitter.com/'.$user['twitter']);
+			$forum_page['twitter'] = '<a href="'.$twitter_url.'" class="external url">'.$twitter_url.'</a>';
+			$forum_page['user_contact']['twitter'] = '<li><span>'.$lang_profile['Twitter'].': '.$forum_page['twitter'].'</span></li>';
+		}
+
+		// LinkedIn
+		if ($user['linkedin'] != '')
+		{
+			$forum_page['user_contact']['linkedin'] = '<li><span>'.$lang_profile['LinkedIn'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['linkedin']) : $user['linkedin']).'</strong></span></li>';
+		}
+
+
 		if ($forum_user['is_admmod'])
 			$forum_page['user_private']['ip']= '<li><span>'.$lang_profile['IP'].': <a href="'.forum_link($forum_url['get_host'], forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
 
 		// Setup user messaging
 		if ($user['jabber'] !='')
 			$forum_page['user_contact']['jabber'] = '<li><span>'.$lang_profile['Jabber'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
+		if ($user['skype'] !='')
+			$forum_page['user_contact']['skype'] = '<li><span>'.$lang_profile['Skype'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['skype']) : $user['skype']).'</strong></span></li>';
 		if ($user['icq'] !='')
 			$forum_page['user_contact']['icq'] = '<li><span>'.$lang_profile['ICQ'].': <strong>'.forum_htmlencode($user['icq']).'</strong></span></li>';
 		if ($user['msn'] !='')
@@ -1865,11 +1901,39 @@ if ($forum_page['has_required']): ?>
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[url]" value="<?php echo(isset($form['url']) ? forum_htmlencode($form['url']) : forum_htmlencode($user['url'])) ?>" size="35" maxlength="80" /></span>
 					</div>
 				</div>
+<?php ($hook = get_hook('pf_change_details_identity_pre_facebook')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Facebook'] ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[facebook]" value="<?php echo(isset($form['facebook']) ? forum_htmlencode($form['facebook']) : forum_htmlencode($user['facebook'])) ?>" size="35" maxlength="80" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('pf_change_details_identity_pre_twitter')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Twitter'] ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[twitter]" value="<?php echo(isset($form['twitter']) ? forum_htmlencode($form['twitter']) : forum_htmlencode($user['twitter'])) ?>" size="35" maxlength="80" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('pf_change_details_identity_pre_linkedin')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Linkedin'] ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[linkedin]" value="<?php echo(isset($form['linkedin']) ? forum_htmlencode($form['linkedin']) : forum_htmlencode($user['linkedin'])) ?>" size="35" maxlength="80" /></span>
+					</div>
+				</div>
 <?php ($hook = get_hook('pf_change_details_identity_pre_jabber')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Jabber'] ?></span></label><br />
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[jabber]" value="<?php echo(isset($form['jabber']) ? forum_htmlencode($form['jabber']) : forum_htmlencode($user['jabber'])) ?>" size="35" maxlength="80" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('pf_change_details_identity_pre_skype')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Skype'] ?></span></label><br />
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[skype]" value="<?php echo(isset($form['skype']) ? forum_htmlencode($form['skype']) : forum_htmlencode($user['skype'])) ?>" size="35" maxlength="80" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_details_identity_pre_icq')) ? eval($hook) : null; ?>

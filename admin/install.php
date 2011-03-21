@@ -1334,6 +1334,22 @@ else
 				'datatype'		=> 'VARCHAR(100)',
 				'allow_null'	=> true
 			),
+			'facebook'			=> array(
+				'datatype'		=> 'VARCHAR(100)',
+				'allow_null'	=> true
+			),
+			'twitter'			=> array(
+				'datatype'		=> 'VARCHAR(100)',
+				'allow_null'	=> true
+			),
+			'linkedin'			=> array(
+				'datatype'		=> 'VARCHAR(100)',
+				'allow_null'	=> true
+			),
+			'skype'			=> array(
+				'datatype'		=> 'VARCHAR(100)',
+				'allow_null'	=> true
+			),
 			'jabber'			=> array(
 				'datatype'		=> 'VARCHAR(80)',
 				'allow_null'	=> true

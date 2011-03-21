@@ -793,6 +793,12 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		$forum_db->add_field('users', 'avatar_width', 'TINYINT(3) UNSIGNED', false, 0, 'avatar');
 		$forum_db->add_field('users', 'avatar_height', 'TINYINT(3) UNSIGNED', false, 0, 'avatar_width');
 
+		// Add new profile fileds
+		$forum_db->add_field('users', 'facebook', 'VARCHAR(100)', true, null, 'url');
+		$forum_db->add_field('users', 'twitter', 'VARCHAR(100)', true, null, 'facebook');
+		$forum_db->add_field('users', 'linkedin', 'VARCHAR(100)', true, null, 'twitter');
+		$forum_db->add_field('users', 'skype', 'VARCHAR(100)', true, null, 'linkedin');
+
 		// Add avatars to DB
 		convert_avatars();
 
