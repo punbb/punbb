@@ -175,11 +175,14 @@ else if (isset($_GET['email']))
 	($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
 
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$recipient_info = $forum_db->fetch_row($result);
 
-	if (!$forum_db->num_rows($result))
+	if (!$recipient_info)
+	{
 		message($lang_common['Bad request']);
+	}
 
-	list($recipient, $recipient_email, $email_setting) = $forum_db->fetch_row($result);
+	list($recipient, $recipient_email, $email_setting) = $recipient_info;
 
 	if ($email_setting == 2 && !$forum_user['is_admmod'])
 		message($lang_misc['Form e-mail disabled']);
@@ -407,10 +410,14 @@ else if (isset($_GET['report']))
 
 			($hook = get_hook('mi_report_qr_get_topic_data')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if (!$forum_db->num_rows($result))
-				message($lang_common['Bad request']);
+			$topic_info = $forum_db->fetch_row($result);
 
-			list($topic_id, $subject, $forum_id) = $forum_db->fetch_row($result);
+			if (!$topic_info)
+			{
+				message($lang_common['Bad request']);
+			}
+
+			list($topic_id, $subject, $forum_id) = $topic_info;
 
 			($hook = get_hook('mi_report_pre_reports_sent')) ? eval($hook) : null;
 
@@ -591,15 +598,18 @@ else if (isset($_GET['subscribe']))
 	}
 
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(s.user_id)',
 		'FROM'		=> 'subscriptions AS s',
 		'WHERE'		=> 'user_id='.$forum_user['id'].' AND topic_id='.$topic_id
 	);
 
 	($hook = get_hook('mi_subscribe_qr_check_subscribed')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result))
+
+	if ($forum_db->result($result) > 0)
+	{
 		message($lang_misc['Already subscribed']);
+	}
 
 	$query = array(
 		'INSERT'	=> 'user_id, topic_id',
