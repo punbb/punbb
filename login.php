@@ -193,6 +193,8 @@ else if ($action == 'forget' || $action == 'forget_2')
 		// Did everything go according to plan?
 		if (empty($errors))
 		{
+			$users_with_email = array();
+
 			// Fetch user matching $email
 			$query = array(
 				'SELECT'	=> 'u.id, u.username, u.salt, u.last_email_sent',
@@ -202,7 +204,13 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 			($hook = get_hook('li_forgot_pass_qr_get_user_data')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
+
+			while ($cur_user = $forum_db->fetch_assoc($result))
+			{
+				$users_with_email[] = $cur_user;
+			}
+
+			if (!empty($users_with_email))
 			{
 				($hook = get_hook('li_forgot_pass_pre_email')) ? eval($hook) : null;
 
@@ -221,7 +229,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 				($hook = get_hook('li_forgot_pass_new_general_replace_data')) ? eval($hook) : null;
 
 				// Loop through users we found
-				while ($cur_hit = $forum_db->fetch_assoc($result))
+				foreach ($users_with_email as $cur_hit)
 				{
 					$forgot_pass_timeout = 3600;
 
