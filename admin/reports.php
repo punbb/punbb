@@ -101,7 +101,14 @@ $query = array(
 
 $forum_page['new_reports'] = false;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if ($forum_db->num_rows($result))
+
+$unread_reports = array();
+while ($cur_report = $forum_db->fetch_assoc($result))
+{
+	$unread_reports[] = $cur_report;
+}
+
+if (!empty($unread_reports))
 {
 	$forum_page['new_reports'] = true;
 
@@ -118,7 +125,7 @@ if ($forum_db->num_rows($result))
 
 	$forum_page['item_num'] = 0;
 
-	while ($cur_report = $forum_db->fetch_assoc($result))
+	foreach ($unread_reports as $cur_report)
 	{
 		$reporter = ($cur_report['reporter'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_report['reported_by']).'">'.forum_htmlencode($cur_report['reporter']).'</a>' : $lang_admin_reports['Deleted user'];
 		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.forum_link($forum_url['forum'], array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : $lang_admin_reports['Deleted forum'];
@@ -188,7 +195,14 @@ $query = array(
 
 $forum_page['old_reports'] = false;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if ($forum_db->num_rows($result))
+
+$zapped_reports = array();
+while ($cur_report = $forum_db->fetch_assoc($result))
+{
+	$zapped_reports[] = $cur_report;
+}
+
+if (!empty($zapped_reports))
 {
 	$i = 1;
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['item_num'] = 0;
@@ -196,12 +210,12 @@ if ($forum_db->num_rows($result))
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_reports['Read reports heading'] ?><?php echo ($forum_db->num_rows($result)) ? '' : ' '.$lang_admin_reports['No new reports'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $lang_admin_reports['Read reports heading'] ?><?php echo (count($zapped_reports)) ? '' : ' '.$lang_admin_reports['No new reports'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 <?php
 
-	while ($cur_report = $forum_db->fetch_assoc($result))
+	foreach ($zapped_reports as $cur_report)
 	{
 		$reporter = ($cur_report['reporter'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_report['reported_by']).'">'.forum_htmlencode($cur_report['reporter']).'</a>' : $lang_admin_reports['Deleted user'];
 		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.forum_link($forum_url['forum'], array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : $lang_admin_reports['Deleted forum'];
