@@ -143,7 +143,7 @@ body {
 
 	// Check if there is more work to do
 	$query = array(
-		'SELECT'	=> 'p.id',
+		'SELECT'	=> 'COUNT(p.id)',
 		'FROM'		=> 'posts AS p',
 		'WHERE'		=> 'p.id>'.$post_id,
 		'ORDER BY'	=> 'p.id',
@@ -152,8 +152,13 @@ body {
 
 	($hook = get_hook('ari_cycle_qr_find_next_post')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$num_posts_to_proced = $forum_db->result($result);
 
-	$query_str = ($forum_db->num_rows($result)) ? '?i_per_page='.$per_page.'&i_start_at='.$forum_db->result($result).'&csrf_token='.generate_form_token('reindex'.$forum_user['id']) : '';
+	$query_str = '';
+	if ($num_posts_to_proced !== false && $num_posts_to_proced > 0)
+	{
+		$query_str = '?i_per_page='.$per_page.'&i_start_at='.$num_posts_to_proced.'&csrf_token='.generate_form_token('reindex'.$forum_user['id']);
+	}
 
 	($hook = get_hook('ari_cycle_end')) ? eval($hook) : null;
 
@@ -174,8 +179,12 @@ $query = array(
 
 ($hook = get_hook('ari_qr_find_lowest_post_id')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if ($forum_db->num_rows($result))
-	$first_id = $forum_db->result($result);
+$first_id = $forum_db->result($result);
+
+if ($first_id === false)
+{
+	unset($first_id);
+}
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
