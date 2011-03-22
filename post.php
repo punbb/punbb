@@ -259,10 +259,14 @@ if ($tid && isset($_GET['qid']))
 
 	($hook = get_hook('po_qr_get_quote')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
+	$quote_poster_and_message = $forum_db->fetch_row($result);
 
-	list($q_poster, $q_message) = $forum_db->fetch_row($result);
+	if (!$quote_poster_and_message)
+	{
+		message($lang_common['Bad request']);
+	}
+
+	list($q_poster, $q_message) = $quote_poster_and_message;
 
 	($hook = get_hook('po_modify_quote_info')) ? eval($hook) : null;
 
