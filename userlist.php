@@ -233,9 +233,16 @@ if (!empty($where_sql))
 
 ($hook = get_hook('ul_qr_get_users')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+$founded_user_datas = array();
+while ($user_data = $forum_db->fetch_assoc($result))
+{
+	$founded_user_datas[] = $user_data;
+}
+
 $forum_page['item_count'] = 0;
 
-if ($forum_db->num_rows($result))
+if (!empty($founded_user_datas))
 {
 	($hook = get_hook('ul_results_pre_header')) ? eval($hook) : null;
 
@@ -261,7 +268,7 @@ if ($forum_db->num_rows($result))
 				<tbody>
 <?php
 
-	while ($user_data = $forum_db->fetch_assoc($result))
+	foreach ($founded_user_datas as $user_data)
 	{
 		($hook = get_hook('ul_results_row_pre_data')) ? eval($hook) : null;
 
