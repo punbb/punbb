@@ -305,13 +305,13 @@ if ($action == 'feed')
 
 		($hook = get_hook('ex_qr_get_topic_data')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if (!$forum_db->num_rows($result))
+
+		$cur_topic = $forum_db->fetch_assoc($result);
+		if (!$cur_topic)
 		{
 			http_authenticate_user();
 			exit($lang_common['Bad request']);
 		}
-
-		$cur_topic = $forum_db->fetch_assoc($result);
 
 		if (!defined('FORUM_PARSER_LOADED'))
 			require FORUM_ROOT.'include/parser.php';
@@ -415,8 +415,9 @@ if ($action == 'feed')
 				);
 
 				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				if ($forum_db->num_rows($result))
-					$forum_name = $lang_common['Title separator'].$forum_db->result($result);
+				$forum_name_in_db = $forum_db->result($result);
+				if ($forum_name_in_db !== false)
+					$forum_name = $lang_common['Title separator'].$forum_name_in_db;
 			}
 		}
 
