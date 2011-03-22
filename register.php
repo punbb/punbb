@@ -111,15 +111,17 @@ else if (isset($_POST['form_sent']))
 
 	// Check that someone from this IP didn't register a user within the last hour (DoS prevention)
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(u.id)',
 		'FROM'		=> 'users AS u',
 		'WHERE'		=> 'u.registration_ip=\''.$forum_db->escape(get_remote_address()).'\' AND u.registered>'.(time() - 3600)
 	);
 
 	($hook = get_hook('rg_register_qr_check_register_flood')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result))
+	if ($forum_db->result($result) > 0)
+	{
 		$errors[] = $lang_profile['Registration flood'];
+	}
 
 	// Did everything go according to plan so far?
 	if (empty($errors))
@@ -182,13 +184,16 @@ else if (isset($_POST['form_sent']))
 
 		($hook = get_hook('rg_register_qr_check_email_dupe')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result) && empty($errors))
+
+		while ($cur_dupe = $forum_db->fetch_assoc($result))
+		{
+			$dupe_list[] = $cur_dupe['username'];
+		}
+
+		if (!empty($dupe_list) && empty($errors))
 		{
 			if ($forum_config['p_allow_dupe_email'] == '0')
 				$errors[] = $lang_profile['Dupe e-mail'];
-
-			while ($cur_dupe = $forum_db->fetch_assoc($result))
-				$dupe_list[] = $cur_dupe['username'];
 		}
 
 		($hook = get_hook('rg_register_end_validation')) ? eval($hook) : null;
