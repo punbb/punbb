@@ -1081,6 +1081,7 @@ F - MAIN CONTENT - FORMS
 
 /* Generally
 -------------------------------------------------------------*/
+select,
 label,
 input[type=button],
 input[type=submit],
