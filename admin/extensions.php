@@ -141,10 +141,12 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 		($hook = get_hook('aex_install_comply_qr_get_current_ext_version')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
+		$ext_version = $forum_db->result($result);
+
+		if ($ext_version !== false)
 		{
 			// EXT_CUR_VERSION will be available to the extension install routine (to facilitate extension upgrades)
-			define('EXT_CUR_VERSION', $forum_db->result($result));
+			define('EXT_CUR_VERSION', $ext_version);
 
 			// Run the author supplied install code
 			if (isset($ext_data['extension']['install']) && forum_trim($ext_data['extension']['install']) != '')
@@ -377,10 +379,12 @@ else if (isset($_GET['uninstall']))
 
 	($hook = get_hook('aex_uninstall_qr_get_extension')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
-
 	$ext_data = $forum_db->fetch_assoc($result);
+
+	if (!$ext_data)
+	{
+		message($lang_common['Bad request']);
+	}
 
 	// Check dependancies
 	$query = array(
@@ -391,10 +395,10 @@ else if (isset($_GET['uninstall']))
 
 	($hook = get_hook('aex_uninstall_qr_check_dependencies')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$dependency = $forum_db->fetch_assoc($result);
 
-	if ($forum_db->num_rows($result) != 0)
+	if ($dependency !== false)
 	{
-		$dependency = $forum_db->fetch_assoc($result);
 		message(sprintf($lang_admin_ext['Uninstall dependency'], $dependency['id']));
 	}
 
@@ -586,11 +590,16 @@ else if (isset($_GET['flip']))
 
 	($hook = get_hook('aex_flip_qr_get_disabled_status')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
+	$ext_status = $forum_db->result($result);
+
+	// No rows
+	if ($ext_status === false)
+	{
 		message($lang_common['Bad request']);
+	}
 
 	// Are we disabling or enabling?
-	$disable = $forum_db->result($result) == '0';
+	$disable = $ext_status == '0';
 
 	// Check dependancies
 	if ($disable)
@@ -603,10 +612,10 @@ else if (isset($_GET['flip']))
 
 		($hook = get_hook('aex_flip_qr_get_disable_dependencies')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$dependency = $forum_db->fetch_assoc($result);
 
-		if ($forum_db->num_rows($result) != 0)
+		if ($dependency !== false)
 		{
-			$dependency = $forum_db->fetch_assoc($result);
 			message(sprintf($lang_admin_ext['Disable dependency'], $dependency['id']));
 		}
 	}
