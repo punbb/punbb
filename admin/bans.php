@@ -48,10 +48,13 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 			($hook = get_hook('aba_add_ban_qr_get_user_by_id')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if (!$forum_db->num_rows($result))
+			$banned_user_info = $forum_db->fetch_row($result);
+			if (!$banned_user_info)
+			{
 				message($lang_admin_bans['No user id message']);
+			}
 
-			list($group_id, $ban_user, $ban_email, $ban_ip) = $forum_db->fetch_row($result);
+			list($group_id, $ban_user, $ban_email, $ban_ip) = $banned_user_info;
 		}
 		else	// Otherwise the username is in POST
 		{
@@ -69,10 +72,13 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 				($hook = get_hook('aba_add_ban_qr_get_user_by_username')) ? eval($hook) : null;
 				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				if (!$forum_db->num_rows($result))
+				$banned_user_info = $forum_db->fetch_row($result);
+				if (!$banned_user_info)
+				{
 					message($lang_admin_bans['No user username message']);
+				}
 
-				list($user_id, $group_id, $ban_user, $ban_email, $ban_ip) = $forum_db->fetch_row($result);
+				list($user_id, $group_id, $ban_user, $ban_email, $ban_ip) = $banned_user_info;
 			}
 		}
 
@@ -93,8 +99,12 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 			($hook = get_hook('aba_add_ban_qr_get_last_known_ip')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$ban_ip_from_db = $forum_db->result($result)
 
-			$ban_ip = ($forum_db->num_rows($result)) ? $forum_db->result($result) : $ban_ip;
+			if ($ban_ip_from_db)
+			{
+				$ban_ip = $ban_ip_from_db;
+			}
 		}
 
 		$mode = 'add';
@@ -115,10 +125,14 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 		($hook = get_hook('aba_edit_ban_qr_get_ban_data')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			list($ban_user, $ban_ip, $ban_email, $ban_message, $ban_expire) = $forum_db->fetch_row($result);
-		else
+		$banned_user_info = $forum_db->fetch_row($result);
+
+		if (!$banned_user_info)
+		{
 			message($lang_common['Bad request']);
+		}
+
+		list($ban_user, $ban_ip, $ban_email, $ban_message, $ban_expire) = $banned_user_info;
 
 		// We just use GMT for expire dates, as its a date rather than a day I don't think its worth worrying about
 		$ban_expire = ($ban_expire != '') ? gmdate('Y-m-d', $ban_expire) : '';
