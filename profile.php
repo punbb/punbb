@@ -49,10 +49,10 @@ $query = array(
 
 ($hook = get_hook('pf_qr_get_user_info')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if (!$forum_db->num_rows($result))
-	message($lang_common['Bad request']);
-
 $user = $forum_db->fetch_assoc($result);
+
+if (!$user)
+	message($lang_common['Bad request']);
 
 
 if ($action == 'change_pass')
@@ -455,7 +455,14 @@ else if ($action == 'change_email')
 
 		($hook = get_hook('pf_change_email_normal_qr_check_email_dupe')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
+
+		$dupe_list = array();
+		while ($cur_dupe = $forum_db->fetch_assoc($result))
+		{
+			$dupe_list[] = $cur_dupe['username'];
+		}
+
+		if (!empty($dupe_list))
 		{
 			($hook = get_hook('pf_change_email_normal_dupe_email')) ? eval($hook) : null;
 
@@ -463,9 +470,6 @@ else if ($action == 'change_email')
 				$errors[] = $lang_profile['Dupe e-mail'];
 			else if (($forum_config['o_mailing_list'] != '') && empty($errors))
 			{
-				while ($cur_dupe = $forum_db->fetch_assoc($result))
-					$dupe_list[] = $cur_dupe['username'];
-
 				$mail_subject = 'Alert - Duplicate e-mail detected';
 				$mail_message = 'User \''.$forum_user['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link($forum_url['user'], $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
