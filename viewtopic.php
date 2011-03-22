@@ -39,10 +39,14 @@ if ($pid)
 
 	($hook = get_hook('vt_qr_get_post_info')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
+	$topic_info = $forum_db->fetch_row($result);
 
-	list($id, $posted) = $forum_db->fetch_row($result);
+	if (!$topic_info)
+	{
+		message($lang_common['Bad request']);
+	}
+
+	list($id, $posted) = $topic_info;
 
 	// Determine on what page the post is located (depending on $forum_user['disp_posts'])
 	$query = array(
@@ -139,10 +143,12 @@ if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 
 ($hook = get_hook('vt_qr_get_topic_info')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if (!$forum_db->num_rows($result))
-	message($lang_common['Bad request']);
-
 $cur_topic = $forum_db->fetch_assoc($result);
+
+if (!$cur_topic)
+{
+	message($lang_common['Bad request']);
+}
 
 ($hook = get_hook('vt_modify_topic_info')) ? eval($hook) : null;
 
