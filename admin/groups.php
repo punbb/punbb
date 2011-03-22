@@ -62,10 +62,10 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 		($hook = get_hook('agr_edit_group_qr_get_group')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$group = $forum_db->fetch_assoc($result);
+
+		if (!$group)
+			message($lang_common['Bad request']);
 
 		$mode = 'edit';
 	}
