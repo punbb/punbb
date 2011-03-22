@@ -41,10 +41,11 @@ $query = array(
 
 ($hook = get_hook('vf_qr_get_forum_info')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if (!$forum_db->num_rows($result))
+$cur_forum = $forum_db->fetch_assoc($result);
+
+if (!$cur_forum)
 	message($lang_common['Bad request']);
 
-$cur_forum = $forum_db->fetch_assoc($result);
 
 ($hook = get_hook('vf_modify_forum_info')) ? eval($hook) : null;
 
@@ -115,6 +116,12 @@ if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
 ($hook = get_hook('vf_qr_get_topics')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+$topics = array();
+while ($cur_topic = $forum_db->fetch_assoc($result))
+{
+	$topics[] = $cur_topic;
+}
+
 // Generate paging/posting links
 $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['forum'], $lang_common['Paging separator'], array($id, sef_friendly($cur_forum['forum_name']))).'</p>';
 
@@ -131,7 +138,7 @@ $forum_page['main_head_options'] = array(
 );
 
 $forum_page['main_foot_options'] = array();
-if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
+if (!$forum_user['is_guest'] && !empty($topics))
 {
 	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
 
@@ -173,7 +180,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 ($hook = get_hook('vf_main_output_start')) ? eval($hook) : null;
 
 // If there are topics in this forum
-if ($forum_db->num_rows($result))
+if (!empty($topics))
 {
 
 ?>
@@ -196,7 +203,7 @@ if ($forum_db->num_rows($result))
 
 	$forum_page['item_count'] = 0;
 
-	while ($cur_topic = $forum_db->fetch_assoc($result))
+	foreach ($topics as $cur_topic)
 	{
 		($hook = get_hook('vf_topic_loop_start')) ? eval($hook) : null;
 
