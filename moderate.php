@@ -44,10 +44,11 @@ if (isset($_GET['get_host']))
 
 		($hook = get_hook('mr_view_ip_qr_get_poster_ip')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if (!$forum_db->num_rows($result))
+		$ip = $forum_db->result($result);
+
+		if (!$ip)
 			message($lang_common['Bad request']);
 
-		$ip = $forum_db->result($result);
 	}
 
 	($hook = get_hook('mr_view_ip_pre_output')) ? eval($hook) : null;
@@ -76,10 +77,10 @@ $query = array(
 
 ($hook = get_hook('mr_qr_get_forum_data')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-if (!$forum_db->num_rows($result))
-	message($lang_common['Bad request']);
-
 $cur_forum = $forum_db->fetch_assoc($result);
+
+if (!$cur_forum)
+	message($lang_common['Bad request']);
 
 // Make sure we're not trying to moderate a redirect forum
 if ($cur_forum['redirect_url'] != '')
@@ -120,10 +121,10 @@ if (isset($_GET['tid']))
 
 	($hook = get_hook('mr_post_actions_qr_get_topic_info')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
-
 	$cur_topic = $forum_db->fetch_assoc($result);
+
+	if (!$cur_topic)
+		message($lang_common['Bad request']);
 
 	// User pressed the cancel button
 	if (isset($_POST['delete_posts_cancel']))
@@ -671,10 +672,10 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		($hook = get_hook('mr_confirm_move_topics_qr_get_move_to_forum_name')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$move_to_forum_name = $forum_db->result($result);
+
+		if (!$move_to_forum_name)
+			message($lang_common['Bad request']);
 
 		// Verify that the topic IDs are valid
 		$query = array(
@@ -780,11 +781,12 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		($hook = get_hook('mr_move_topics_qr_get_topic_to_move_subject')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$subject = $forum_db->result($result);
+
+		if (!$subject)
+		{
+			message($lang_common['Bad request']);
+		}
 	}
 
 	// Get forums we can move the post into
@@ -808,12 +810,17 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	($hook = get_hook('mr_move_topics_qr_get_target_forums')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	if (!$forum_db->num_rows($result))
-		message($lang_misc['Nowhere to move']);
-
 	$forum_list = array();
 	while ($cur_sel_forum = $forum_db->fetch_assoc($result))
+	{
 		$forum_list[] = $cur_sel_forum;
+	}
+
+	if (empty($forum_list))
+	{
+		message($lang_misc['Nowhere to move']);
+	}
+
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1297,10 +1304,12 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		($hook = get_hook('mr_open_close_single_topic_qr_get_subject')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$subject = $forum_db->result($result);
+
+		if (!$subject)
+		{
+			message($lang_common['Bad request']);
+		}
 
 		$query = array(
 			'UPDATE'	=> 'topics',
@@ -1343,11 +1352,12 @@ else if (isset($_GET['stick']))
 
 	($hook = get_hook('mr_stick_topic_qr_get_subject')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
-
 	$subject = $forum_db->result($result);
+
+	if (!$subject)
+	{
+		message($lang_common['Bad request']);
+	}
 
 	$query = array(
 		'UPDATE'	=> 'topics',
@@ -1387,11 +1397,12 @@ else if (isset($_GET['unstick']))
 
 	($hook = get_hook('mr_unstick_topic_qr_get_subject')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
-
 	$subject = $forum_db->result($result);
+
+	if (!$subject)
+	{
+		message($lang_common['Bad request']);
+	}
 
 	$query = array(
 		'UPDATE'	=> 'topics',
