@@ -533,10 +533,16 @@ $query = array(
 ($hook = get_hook('se_qr_get_cats_and_forums')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-if ($forum_db->num_rows($result) > 0)
+$forums = array();
+while ($cur_forum = $forum_db->fetch_assoc($result))
+{
+	$forums[] = $cur_forum;
+}
+
+if (!empty($forums))
 {
 	$cur_category = 0;
-	while ($cur_forum = $forum_db->fetch_assoc($result))
+	foreach ($forums as $cur_forum)
 	{
 		($hook = get_hook('se_forum_loop_start')) ? eval($hook) : null;
 
