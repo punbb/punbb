@@ -132,10 +132,12 @@ else if ($action == 'markforumread')
 
 	($hook = get_hook('mi_markforumread_qr_get_forum_info')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
-
 	$forum_name = $forum_db->result($result);
+
+	if (!$forum_name)
+	{
+		message($lang_common['Bad request']);
+	}
 
 	$tracked_topics = get_tracked_topics();
 	$tracked_topics['forums'][$fid] = time();
@@ -154,7 +156,7 @@ else if (isset($_GET['email']))
 		message($lang_common['No permission']);
 
 	$recipient_id = intval($_GET['email']);
-	
+
 	if ($recipient_id < 2)
 		message($lang_common['Bad request']);
 
@@ -173,7 +175,7 @@ else if (isset($_GET['email']))
 	($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
 
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	
+
 	if (!$forum_db->num_rows($result))
 		message($lang_common['Bad request']);
 
@@ -581,10 +583,12 @@ else if (isset($_GET['subscribe']))
 	);
 	($hook = get_hook('mi_subscribe_qr_topic_exists')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_common['Bad request']);
-
 	$subject = $forum_db->result($result);
+
+	if (!$subject)
+	{
+		message($lang_common['Bad request']);
+	}
 
 	$query = array(
 		'SELECT'	=> '1',
@@ -643,10 +647,12 @@ else if (isset($_GET['unsubscribe']))
 
 	($hook = get_hook('mi_unsubscribe_qr_check_subscribed')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		message($lang_misc['Not subscribed']);
-
 	$subject = $forum_db->result($result);
+
+	if (!$subject)
+	{
+		message($lang_misc['Not subscribed']);
+	}
 
 	$query = array(
 		'DELETE'	=> 'subscriptions',
