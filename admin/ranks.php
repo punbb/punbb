@@ -41,14 +41,16 @@ if (isset($_POST['add_rank']))
 
 	// Make sure there isn't already a rank with the same min_posts value
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(r.id)',
 		'FROM'		=> 'ranks AS r',
 		'WHERE'		=> 'min_posts='.$min_posts
 	);
 
 	($hook = get_hook('ark_add_rank_qr_check_rank_collision')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result))
+	$rank_num_min_posts = $forum_db->result($result);
+
+	if ($rank_num_min_posts !== false && $rank_num_min_posts > 0)
 		message(sprintf($lang_admin_ranks['Min posts occupied message'], $min_posts));
 
 	$query = array(
@@ -90,14 +92,16 @@ else if (isset($_POST['update']))
 
 	// Make sure there isn't already a rank with the same min_posts value
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(r.id)',
 		'FROM'		=> 'ranks AS r',
 		'WHERE'		=> 'id!='.$id.' AND min_posts='.$min_posts
 	);
 
 	($hook = get_hook('ark_update_qr_check_rank_collision')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result))
+	$rank_num_min_posts = $forum_db->result($result);
+
+	if ($rank_num_min_posts !== false && $rank_num_min_posts > 0)
 		message(sprintf($lang_admin_ranks['Min posts occupied message'], $min_posts));
 
 	$query = array(
