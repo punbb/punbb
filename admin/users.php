@@ -45,7 +45,14 @@ if (isset($_GET['ip_stats']))
 
 	($hook = get_hook('aus_ip_stats_qr_get_user_ips')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_page['num_users'] = $forum_db->num_rows($result);
+
+	$founded_ips = array();
+	while ($cur_ip = $forum_db->fetch_assoc($result))
+	{
+		$founded_ips[] = $cur_ip;
+	}
+
+	$forum_page['num_users'] = count($founded_ips);
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
@@ -99,7 +106,7 @@ if (isset($_GET['ip_stats']))
 	{
 		$forum_page['item_count'] = 0;
 
-		while ($cur_ip = $forum_db->fetch_assoc($result))
+		foreach ($founded_ips as $cur_ip)
 		{
 			++$forum_page['item_count'];
 
