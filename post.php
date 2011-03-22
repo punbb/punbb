@@ -71,13 +71,12 @@ else
 }
 
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$cur_posting = $forum_db->fetch_assoc($result);
 
-if (!$forum_db->num_rows($result))
+if (!$cur_posting)
 	message($lang_common['Bad request']);
 
-$cur_posting = $forum_db->fetch_assoc($result);
 $is_subscribed = $tid && $cur_posting['is_subscribed'];
-
 
 // Is someone trying to post into a redirect forum?
 if ($cur_posting['redirect_url'] != '')
@@ -571,6 +570,12 @@ if ($tid && $forum_config['o_topic_review'] != '0')
 	($hook = get_hook('po_topic_review_qr_get_topic_review_posts')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+	$posts = array();
+	while ($cur_post = $forum_db->fetch_assoc($result))
+	{
+		$posts[] = $cur_post;
+	}
+
 ?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_post['Topic review'] ?></span></h2>
@@ -579,9 +584,9 @@ if ($tid && $forum_config['o_topic_review'] != '0')
 <?php
 
 	$forum_page['item_count'] = 0;
-	$forum_page['item_total'] = $forum_db->num_rows($result);
+	$forum_page['item_total'] = count($posts);
 
-	while ($cur_post = $forum_db->fetch_assoc($result))
+	foreach ($posts as $cur_post)
 	{
 		++$forum_page['item_count'];
 
