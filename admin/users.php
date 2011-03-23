@@ -201,7 +201,14 @@ else if (isset($_GET['show_users']))
 
 	($hook = get_hook('aus_show_users_qr_get_users_matching_ip')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_page['num_users'] = $forum_db->num_rows($result);
+
+	$users = array();
+	while ($cur_user = $forum_db->fetch_row($result))
+	{
+		$users[] = $cur_user;
+	}
+
+	$forum_page['num_users'] = count($users);
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
@@ -264,9 +271,9 @@ else if (isset($_GET['show_users']))
 		$forum_page['item_count'] = 0;
 
 		// Loop through users and print out some info
-		for ($i = 0; $i < $forum_page['num_users']; ++$i)
+		foreach ($users as $user)
 		{
-			list($poster_id, $poster) = $forum_db->fetch_row($result);
+			list($poster_id, $poster) = $user;
 
 			$query = array(
 				'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
@@ -421,14 +428,15 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 	// We check to make sure there are no administrators in this list
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(u.id)',
 		'FROM'		=> 'users AS u',
 		'WHERE'		=> 'u.id IN ('.implode(',', $users).') AND u.group_id='.FORUM_ADMIN
 	);
 
 	($hook = get_hook('aus_delete_users_qr_check_for_admins')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result) > 0)
+
+	if ($forum_db->result($result) > 0)
 		message($lang_admin_users['Delete admin message']);
 
 	if (isset($_POST['delete_users_comply']))
@@ -530,14 +538,14 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 	// We check to make sure there are no administrators in this list
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(u.id)',
 		'FROM'		=> 'users AS u',
 		'WHERE'		=> 'u.id IN ('.implode(',', $users).') AND u.group_id='.FORUM_ADMIN
 	);
 
 	($hook = get_hook('aus_ban_users_qr_check_for_admins')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result) > 0)
+	if ($forum_db->result($result) > 0)
 		message($lang_admin_users['Ban admin message']);
 
 	if (isset($_POST['ban_users_comply']))
