@@ -143,7 +143,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$ext_version = $forum_db->result($result);
 
-		if ($ext_version !== false)
+		if (!is_null($ext_version) && $ext_version !== false)
 		{
 			// EXT_CUR_VERSION will be available to the extension install routine (to facilitate extension upgrades)
 			define('EXT_CUR_VERSION', $ext_version);
@@ -397,7 +397,7 @@ else if (isset($_GET['uninstall']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	$dependency = $forum_db->fetch_assoc($result);
 
-	if ($dependency !== false)
+	if (!is_null($dependency) && $dependency !== false)
 	{
 		message(sprintf($lang_admin_ext['Uninstall dependency'], $dependency['id']));
 	}
