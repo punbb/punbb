@@ -362,14 +362,15 @@ else if (isset($_POST['add_edit_group']))
 		($hook = get_hook('agr_add_add_group')) ? eval($hook) : null;
 
 		$query = array(
-			'SELECT'	=> '1',
+			'SELECT'	=> 'COUNT(g.g_id)',
 			'FROM'		=> 'groups AS g',
 			'WHERE'		=> 'g_title=\''.$forum_db->escape($title).'\''
 		);
 
 		($hook = get_hook('agr_add_end_qr_check_add_group_title_collision')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
+
+		if ($forum_db->result($result) != 0)
 			message(sprintf($lang_admin_groups['Already a group message'], forum_htmlencode($title)));
 
 		// Insert the new group
@@ -419,14 +420,15 @@ else if (isset($_POST['add_edit_group']))
 			message($lang_admin_groups['Moderator default group']);
 
 		$query = array(
-			'SELECT'	=> '1',
+			'SELECT'	=> 'COUNT(g.g_id)',
 			'FROM'		=> 'groups AS g',
 			'WHERE'		=> 'g_title=\''.$forum_db->escape($title).'\' AND g_id!='.$group_id
 		);
 
 		($hook = get_hook('agr_edit_end_qr_check_edit_group_title_collision')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
+
+		if ($forum_db->result($result) != 0)
 			message(sprintf($lang_admin_groups['Already a group message'], forum_htmlencode($title)));
 
 		// Save changes
@@ -469,7 +471,7 @@ else if (isset($_POST['set_default_group']))
 
 	// Make sure it's not a moderator group
 	$query = array(
-		'SELECT'	=> 'g.g_id',
+		'SELECT'	=> 'COUNT(g.g_id)',
 		'FROM'		=> 'groups AS g',
 		'WHERE'		=> 'g.g_id='.$group_id.' AND g.g_moderator=0',
 		'LIMIT'		=> '1'
@@ -477,7 +479,8 @@ else if (isset($_POST['set_default_group']))
 
 	($hook = get_hook('agr_set_default_group_qr_get_group_moderation_status')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
+
+	if ($forum_db->result($result) != 1)
 		message($lang_common['Bad request']);
 
 	$query = array(
