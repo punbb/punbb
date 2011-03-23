@@ -1530,10 +1530,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=conv_reports&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_search_words&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
+		else
+			$query_str = '?stage=conv_reports&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 
@@ -1601,10 +1605,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=conv_search_words&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_users&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
+		else
+			$query_str = '?stage=conv_search_words&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 
@@ -1665,10 +1673,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=conv_users&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_topics&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
+		else
+			$query_str = '?stage=conv_users&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 
@@ -1736,10 +1748,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=conv_topics&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_posts&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
+		else
+			$query_str = '?stage=conv_topics&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 
@@ -1809,10 +1825,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=conv_posts&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_tables';
+		else
+			$query_str = '?stage=conv_posts&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 
@@ -1923,10 +1943,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=preparse_posts&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=preparse_sigs';
+		else
+			$query_str = '?stage=preparse_posts&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 	case 'preparse_sigs':
@@ -1976,10 +2000,14 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		);
 
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->num_rows($result))
-			$query_str = '?stage=preparse_sigs&req_per_page='.PER_PAGE.'&start_at='.$forum_db->result($result);
-		else
+		$start_id = $forum_db->result($result);
+
+		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=finish';
+		else
+			$query_str = '?stage=preparse_sigs&req_per_page='.PER_PAGE.'&start_at='.$start_id;
+
+		unset($start_id);
 		break;
 
 	// Show results page
