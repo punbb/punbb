@@ -1,4 +1,4 @@
-<?php
+num_forums<?php
 /**
  * Category management page.
  *
@@ -76,23 +76,28 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		($hook = get_hook('acg_del_cat_qr_get_forums_to_delete')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$num_forums = $forum_db->num_rows($result);
 
-		for ($i = 0; $i < $num_forums; ++$i)
+		$forum_ids = array();
+		while ($cur_forum_id = $forum_db->fetch_row($result)) {
+			$forum_ids[] = $cur_forum_id[0];
+		}
+
+		if (!empty($forum_ids))
 		{
-			$cur_forum = $forum_db->result($result, $i);
+			foreach ($forum_ids as $cur_forum)
+			{
+				// Prune all posts and topics
+				prune($cur_forum, 1, -1);
 
-			// Prune all posts and topics
-			prune($cur_forum, 1, -1);
+				// Delete the forum
+				$query = array(
+					'DELETE'	=> 'forums',
+					'WHERE'		=> 'id='.$cur_forum
+				);
 
-			// Delete the forum
-			$query = array(
-				'DELETE'	=> 'forums',
-				'WHERE'		=> 'id='.$cur_forum
-			);
-
-			($hook = get_hook('acg_del_cat_qr_delete_forum')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				($hook = get_hook('acg_del_cat_qr_delete_forum')) ? eval($hook) : null;
+				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			}
 		}
 
 		delete_orphans();
@@ -126,10 +131,10 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		($hook = get_hook('acg_del_cat_qr_get_category_name')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$cat_name = $forum_db->result($result);
+
+		if ($cat_name === false)
+			message($lang_common['Bad request']);
 
 
 		// Setup the form
@@ -255,10 +260,12 @@ $query = array(
 
 ($hook = get_hook('acg_qr_get_categories')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$num_cats = $forum_db->num_rows($result);
 
-for ($i = 0; $i < $num_cats; ++$i)
-	$cat_list[] = $forum_db->fetch_row($result);
+$cat_list = array();
+while ($cur_cat = $forum_db->fetch_row($result))
+{
+	$cat_list[] = $cur_cat;
+}
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -273,7 +280,7 @@ $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 	array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories'])) 
+	array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories']))
 );
 
 ($hook = get_hook('acg_pre_header_load')) ? eval($hook) : null;
@@ -331,7 +338,7 @@ ob_start();
 // Reset counter
 $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
-if ($num_cats)
+if (!empty($cat_list))
 {
 
 ?>
