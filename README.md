@@ -3,7 +3,7 @@
 Thank you for downloading PunBB.
 
 ## Quick install
- 1. Download the latest revision of PunBB from http://punbb.informer.com/. Decompress the PunBB archive to a directory.
+ 1. [Download the latest revision of PunBB](http://punbb.informer.com/downloads.php). Decompress the PunBB archive to a directory.
  2. Copy (or upload) all the files contained in this archive into the directory where you want to run your forums. (e.g. /home/user/www/punbb/)
  3. Run install.php from the forum admin directory (e.g. open http://example.com/punbb/admin/install.php in your browser). Follow the instructions.
 
@@ -15,7 +15,7 @@ Thank you for downloading PunBB.
 ## Upgrade from 1.2 or 1.3 pre release versions
 NOTE: Make a backup of your current forum directory before proceeding. Also, don't forget to make a backup of your forum database. Use the tool mysqldump for MySQL and pg_dump if you are using PostgreSQL. If you're using SQLite, just make a backup copy of the SQLite database file. You can also make database backups via most administration tools such as MySQL Administrator, phpMyAdmin and phpPgAdmin.
 
- 1. Download the latest revision of PunBB from http://punbb.informer.com/. Decompress the PunBB archive to a directory.
+ 1. [Download the latest revision of PunBB](http://punbb.informer.com/downloads.php). Decompress the PunBB archive to a directory.
  2. Replace your old 1.2 directory with the contents of the archive's version 1.3.
  3. Run db_update.php from the forum admin directory (e.g. open http://example.com/punbb/admin/db_update.php in your browser). Follow the instructions.
 
@@ -33,13 +33,18 @@ NOTE: You may use the pun_repository official PunBB extension to download and in
  - Make sure that PHP has zlib support so you can enable gzip output compression in "Administration", "Settings". This greatly reduces the size of the XHTML output at a little cost of CPU time. An alternative is to use the Apache modules mod_gzip or mod_deflate. The two methods yield similar results.
  - Visit the administration interface and disable any forum features that are not used or you feel unnecessary.
 
+## Contributing
+
+Please report issues on the [Github issue tracker](https://github.com/punbb/punbb/issues).
+Personal email addresses are not appropriate for bug reports.
+
 ## Links
  - Documentation: http://punbb.informer.com/wiki/
  - Internationalization: http://punbb.informer.com/wiki/punbb13/language_packs
  - Styles: http://punbb.informer.com/wiki/punbb13/syles
  - Extensions repository: http://punbb.informer.com/extensions/
  - Community Forums: http://punbb.informer.com/forums/
- - Development: http://punbb.informer.com/trac/
+ - Development: https://github.com/punbb/punbb/
  - Reporting PunBB core SECURITY bugs (only!): http://punbb.informer.com/bugreport.php
 
 ## Copyright and disclaimer
@@ -47,9 +52,7 @@ This package and its contents are (C) 2002-2009 PunBB, all rights reserved.
 Partially based on code (C) 2008-2009 FluxBB.org.
 
 PunBB is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-
 PunBB is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
 
 Good luck.
