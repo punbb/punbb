@@ -218,12 +218,14 @@ function strip_search_index($post_ids)
 	($hook = get_hook('si_fn_strip_search_index_qr_get_post_words')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->num_rows($result))
+	$word_ids = array();
+	while ($row = $forum_db->fetch_row($result))
 	{
-		$word_ids = array();
-		while ($row = $forum_db->fetch_row($result))
-			$word_ids[] = $row[0];
+		$word_ids[] = $row[0];
+	}
 
+	if (!empty($word_ids))
+	{
 		$query = array(
 			'SELECT'	=> 'word_id',
 			'FROM'		=> 'search_matches',
@@ -235,12 +237,14 @@ function strip_search_index($post_ids)
 		($hook = get_hook('si_fn_strip_search_index_qr_get_removable_words')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		if ($forum_db->num_rows($result))
+		$word_ids = array();
+		while ($row = $forum_db->fetch_row($result))
 		{
-			$word_ids = array();
-			while ($row = $forum_db->fetch_row($result))
-				$word_ids[] = $row[0];
+			$word_ids[] = $row[0];
+		}
 
+		if (!empty($word_ids))
+		{
 			$query = array(
 				'DELETE'	=> 'search_words',
 				'WHERE'		=> 'id IN('.implode(',', $word_ids).')'
