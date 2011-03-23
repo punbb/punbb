@@ -133,7 +133,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$cat_name = $forum_db->result($result);
 
-		if ($cat_name === false)
+		if (is_null($cat_name) || $cat_name === false)
 			message($lang_common['Bad request']);
 
 

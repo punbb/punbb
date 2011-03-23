@@ -181,7 +181,7 @@ $query = array(
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $first_id = $forum_db->result($result);
 
-if ($first_id === false)
+if (is_null($first_id) || $first_id === false)
 {
 	unset($first_id);
 }

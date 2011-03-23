@@ -593,7 +593,7 @@ else if (isset($_GET['flip']))
 	$ext_status = $forum_db->result($result);
 
 	// No rows
-	if ($ext_status === false)
+	if (is_null($ext_status) || $ext_status === false)
 	{
 		message($lang_common['Bad request']);
 	}

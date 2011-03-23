@@ -136,7 +136,7 @@ else if (isset($_GET['del_forum']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$forum_name = $forum_db->result($result);
 
-		if ($forum_name === false)
+		if (is_null($forum_name) || $forum_name === false)
 			message($lang_common['Bad request']);
 
 
@@ -269,7 +269,7 @@ else if (isset($_GET['edit_forum']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	$cur_forum = $forum_db->fetch_assoc($result);
 
-	if ($cur_forum === false)
+	if (is_null($cur_forum) || $cur_forum === false)
 		message($lang_common['Bad request']);
 
 
