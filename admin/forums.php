@@ -42,15 +42,17 @@ if (isset($_POST['add_forum']))
 
 	// Make sure the category we're adding to exists
 	$query = array(
-		'SELECT'	=> '1',
+		'SELECT'	=> 'COUNT(c.id)',
 		'FROM'		=> 'categories AS c',
 		'WHERE'		=> 'c.id='.$add_to_cat
 	);
 
 	($hook = get_hook('afo_add_forum_qr_validate_category_id')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
+
+	if ($forum_db->result($result) != 1)
 		message($lang_common['Bad request']);
+
 
 	$query = array(
 		'INSERT'	=> 'forum_name, disp_position, cat_id',
@@ -132,10 +134,10 @@ else if (isset($_GET['del_forum']))
 
 		($hook = get_hook('afo_del_forum_qr_get_forum_name')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if (!$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$forum_name = $forum_db->result($result);
+
+		if ($forum_name === false)
+			message($lang_common['Bad request']);
 
 
 		// Setup breadcrumbs
@@ -265,10 +267,11 @@ else if (isset($_GET['edit_forum']))
 
 	($hook = get_hook('afo_edit_forum_qr_get_forum_details')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
+	$cur_forum = $forum_db->fetch_assoc($result);
+
+	if ($cur_forum === false)
 		message($lang_common['Bad request']);
 
-	$cur_forum = $forum_db->fetch_assoc($result);
 
 	// Update group permissions for $forum_id
 	if (isset($_POST['save']))
@@ -732,7 +735,13 @@ $query = array(
 ($hook = get_hook('afo_qr_get_cats_and_forums')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-if ($forum_db->num_rows($result))
+$forums = array();
+while ($cur_forum = $forum_db->fetch_assoc($result))
+{
+	$forums[] = $cur_forum;
+}
+
+if (!empty($forums))
 {
 	// Reset fieldset counter
 	$forum_page['set_count'] = 0;
@@ -753,7 +762,7 @@ if ($forum_db->num_rows($result))
 	$i = 2;
 	$forum_page['item_count'] = 0;
 
-	while ($cur_forum = $forum_db->fetch_assoc($result))
+	foreach ($forums as $cur_forum)
 	{
 		if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
 		{
