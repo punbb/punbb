@@ -175,7 +175,7 @@ function generate_quickjump_cache($group_id = false)
 	if ($return != null)
 		return;
 
-	$groups = array()
+	$groups = array();
 
 	// If a group_id was supplied, we generate the quickjump cache for that group only
 	if ($group_id !== false)
