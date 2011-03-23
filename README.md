@@ -39,20 +39,22 @@ Please report issues on the [Github issue tracker](https://github.com/punbb/punb
 Personal email addresses are not appropriate for bug reports.
 
 ## Links
- - Documentation: http://punbb.informer.com/wiki/
- - Internationalization: http://punbb.informer.com/wiki/punbb13/language_packs
- - Styles: http://punbb.informer.com/wiki/punbb13/syles
- - Extensions repository: http://punbb.informer.com/extensions/
- - Community Forums: http://punbb.informer.com/forums/
- - Development: https://github.com/punbb/punbb/
- - Reporting PunBB core SECURITY bugs (only!): http://punbb.informer.com/bugreport.php
+ - [Documentation](http://punbb.informer.com/wiki/)
+ - [Internationalization](http://punbb.informer.com/wiki/punbb13/language_packs)
+ - [Styles](http://punbb.informer.com/wiki/punbb13/syles)
+ - [Extensions repository](http://punbb.informer.com/extensions/)
+ - [Community Forums](http://punbb.informer.com/forums/)
+ - [Development](https://github.com/punbb/punbb/)
+ - [Reporting PunBB core SECURITY bugs (only!)](http://punbb.informer.com/bugreport.php)
 
 ## Copyright and disclaimer
 This package and its contents are (C) 2002-2009 PunBB, all rights reserved.
 Partially based on code (C) 2008-2009 FluxBB.org.
 
 PunBB is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
 PunBB is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
 
 Good luck.
