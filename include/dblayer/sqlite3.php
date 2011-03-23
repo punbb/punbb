@@ -9,8 +9,8 @@
 
 
 // Make sure we have built in support for SQLite
-if (!function_exists('sqlite_open'))
-	exit('This PHP environment doesn\'t have SQLite support built in. SQLite support is required if you want to use a SQLite database to run this forum. Consult the PHP documentation for further assistance.');
+if (!class_exists('SQLite3'))
+	exit('This PHP environment doesn\'t have SQLite3 support built in. SQLite3 support is required if you want to use a SQLite3 database to run this forum. Consult the PHP documentation for further assistance.');
 
 
 class DBLayer
@@ -54,13 +54,10 @@ class DBLayer
 		if (!is_writable($db_name))
 			error('Unable to open database \''.$db_name.'\' for writing. Permission denied.', __FILE__, __LINE__);
 
-		if ($p_connect)
-			$this->link_id = @sqlite_popen($db_name, 0666, $sqlite_error);
-		else
-			$this->link_id = @sqlite_open($db_name, 0666, $sqlite_error);
+		$this->link_id = new SQLite3($db_name, SQLITE3_OPEN_READWRITE);
 
 		if (!$this->link_id)
-			error('Unable to open database \''.$db_name.'\'. SQLite reported: '.$sqlite_error, __FILE__, __LINE__);
+			error('Unable to open database \''.$db_name.'\'.', __FILE__, __LINE__);
 		else
 			return $this->link_id;
 	}
@@ -70,7 +67,7 @@ class DBLayer
 	{
 		++$this->in_transaction;
 
-		return (@sqlite_query($this->link_id, 'BEGIN')) ? true : false;
+		return ($this->link_id->exec('BEGIN')) ? true : false;
 	}
 
 
@@ -78,11 +75,11 @@ class DBLayer
 	{
 		--$this->in_transaction;
 
-		if (@sqlite_query($this->link_id, 'COMMIT'))
+		if ($this->link_id->exec('COMMIT'))
 			return true;
 		else
 		{
-			@sqlite_query($this->link_id, 'ROLLBACK');
+			$this->link_id->exec('ROLLBACK');
 			return false;
 		}
 	}
@@ -96,10 +93,7 @@ class DBLayer
 		if (defined('FORUM_SHOW_QUERIES'))
 			$q_start = get_microtime();
 
-		if ($unbuffered)
-			$this->query_result = @sqlite_unbuffered_query($this->link_id, $sql);
-		else
-			$this->query_result = @sqlite_query($this->link_id, $sql);
+		$this->query_result = $this->link_id->query($sql);
 
 		if ($this->query_result)
 		{
@@ -115,11 +109,11 @@ class DBLayer
 			if (defined('FORUM_SHOW_QUERIES'))
 				$this->saved_queries[] = array($sql, 0);
 
-			$this->error_no = @sqlite_last_error($this->link_id);
-			$this->error_msg = @sqlite_error_string($this->error_no);
+			$this->error_no = $this->link_id->lastErrorCode();
+			$this->error_msg = $this->link_id->lastErrorMsg();
 
 			if ($this->in_transaction)
-				@sqlite_query($this->link_id, 'ROLLBACK');
+				@/**/$this->link_id->exec('ROLLBACK');
 
 			--$this->in_transaction;
 
@@ -224,9 +218,18 @@ class DBLayer
 		if ($query_id)
 		{
 			if ($row != 0)
-				@sqlite_seek($query_id, $row);
+			{
+				$result_rows = array();
+				while ($cur_result_row = $query_id->fetchArray(SQLITE3_NUM))
+				{
+					$result_rows[] = $cur_result_row;
+				}
 
-			$cur_row = @sqlite_current($query_id);
+				$cur_row = array_slice($result_rows, $row);
+			}
+			else
+				$cur_row = $query_id->fetchArray(SQLITE3_NUM);
+
 			return $cur_row[$col];
 		}
 		else
@@ -238,7 +241,7 @@ class DBLayer
 	{
 		if ($query_id)
 		{
-			$cur_row = @sqlite_fetch_array($query_id, SQLITE_ASSOC);
+			$cur_row = $query_id->fetchArray(SQLITE3_ASSOC);
 			if ($cur_row)
 			{
 				// Horrible hack to get rid of table names and table aliases from the array keys
@@ -263,25 +266,25 @@ class DBLayer
 
 	function fetch_row($query_id = 0)
 	{
-		return ($query_id) ? @sqlite_fetch_array($query_id, SQLITE_NUM) : false;
+		return ($query_id) ? $query_id->fetchArray(SQLITE3_NUM) : false;
 	}
 
 
 	function num_rows($query_id = 0)
 	{
-		return ($query_id) ? @sqlite_num_rows($query_id) : false;
+		return false;
 	}
 
 
 	function affected_rows()
 	{
-		return ($this->query_result) ? @sqlite_changes($this->link_id) : false;
+		return ($this->query_result) ? $this->link_id->changes() : false;
 	}
 
 
 	function insert_id()
 	{
-		return ($this->link_id) ? @sqlite_last_insert_rowid($this->link_id) : false;
+		return ($this->link_id) ? $this->link_id->lastInsertRowID() : false;
 	}
 
 
@@ -299,13 +302,18 @@ class DBLayer
 
 	function free_result($query_id = false)
 	{
+		if ($query_id)
+		{
+			$query_id->finalize();
+		}
+
 		return true;
 	}
 
 
 	function escape($str)
 	{
-		return is_array($str) ? '' : sqlite_escape_string($str);
+		return is_array($str) ? '' : $this->link_id->escapeString($str);
 	}
 
 
@@ -323,15 +331,15 @@ class DBLayer
 	{
 		if ($this->link_id)
 		{
-			if ($this->in_transaction)
+			/*if ($this->in_transaction)
 			{
 				if (defined('FORUM_SHOW_QUERIES'))
 					$this->saved_queries[] = array('COMMIT', 0);
 
 				@sqlite_query($this->link_id, 'COMMIT');
-			}
+			}*/
 
-			return @sqlite_close($this->link_id);
+			return $this->link_id->close();
 		}
 		else
 			return false;
@@ -346,9 +354,11 @@ class DBLayer
 
 	function get_version()
 	{
+		$info = SQLite3::version();
+
 		return array(
-			'name'		=> 'SQLite',
-			'version'	=> sqlite_libversion()
+			'name'		=> 'SQLite3',
+			'version'	=> $info['versionString']
 		);
 	}
 
