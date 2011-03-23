@@ -46,14 +46,19 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 			($hook = get_hook('apr_prune_comply_qr_get_all_forums')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$num_forums = $forum_db->num_rows($result);
 
-			for ($i = 0; $i < $num_forums; ++$i)
+			$prune_forums_ids = array();
+			while ($cur_forum_id = $forum_db->fetch_row($result)) {
+				$prune_forums_ids[] = $cur_forum_id[0];
+			}
+
+			if (!empty($prune_forums_ids))
 			{
-				$fid = $forum_db->result($result, $i);
-
-				prune($fid, $_POST['prune_sticky'], $prune_date);
-				sync_forum($fid);
+				foreach ($prune_forums_ids as $fid)
+				{
+					prune($fid, $_POST['prune_sticky'], $prune_date);
+					sync_forum($fid);
+				}
 			}
 		}
 		else
