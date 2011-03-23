@@ -47,18 +47,9 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 			($hook = get_hook('apr_prune_comply_qr_get_all_forums')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			$prune_forums_ids = array();
 			while ($cur_forum_id = $forum_db->fetch_row($result)) {
-				$prune_forums_ids[] = $cur_forum_id[0];
-			}
-
-			if (!empty($prune_forums_ids))
-			{
-				foreach ($prune_forums_ids as $fid)
-				{
-					prune($fid, $_POST['prune_sticky'], $prune_date);
-					sync_forum($fid);
-				}
+				prune($cur_forum_id[0], $_POST['prune_sticky'], $prune_date);
+				sync_forum($cur_forum_id[0]);
 			}
 		}
 		else
