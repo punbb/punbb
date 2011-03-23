@@ -56,19 +56,9 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		($hook = get_hook('ain_update_check_qr_get_hotfixes')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		$ext_hotfix_ids = array();
 		while ($cur_ext_hotfix_id = $forum_db->fetch_row($result))
 		{
-			$ext_hotfix_ids[] = $cur_ext_hotfix_id[0];
-		}
-
-		$hotfixes = array();
-		if (!empty($ext_hotfix_ids))
-		{
-			foreach ($ext_hotfix_ids as $hotfix_id)
-			{
-				$hotfixes[] = urlencode($hotfix_id);
-			}
+			$hotfixes[] = urlencode($cur_ext_hotfix_id[0]);
 		}
 
 		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode($forum_config['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.$lang_admin_index['Check for updates manual'].'</a>';

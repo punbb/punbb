@@ -545,6 +545,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 	($hook = get_hook('aus_ban_users_qr_check_for_admins')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	if ($forum_db->result($result) > 0)
 		message($lang_admin_users['Ban admin message']);
 

@@ -175,6 +175,8 @@ function generate_quickjump_cache($group_id = false)
 	if ($return != null)
 		return;
 
+	$groups = array()
+
 	// If a group_id was supplied, we generate the quickjump cache for that group only
 	if ($group_id !== false)
 		$groups[0] = $group_id;
@@ -188,10 +190,11 @@ function generate_quickjump_cache($group_id = false)
 
 		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_groups')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$num_groups = $forum_db->num_rows($result);
 
-		for ($i = 0; $i < $num_groups; ++$i)
-			$groups[] = $forum_db->result($result, $i);
+		while ($cur_group = $forum_db->fetch_row($result))
+		{
+			$groups[] = $cur_group[0];
+		}
 	}
 
 	// Loop through the groups in $groups and output the cache for each of them
@@ -226,10 +229,16 @@ function generate_quickjump_cache($group_id = false)
 		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_cats_and_forums')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+		$forums = array();
+		while ($cur_forum = $forum_db->fetch_assoc($result))
+		{
+			$forums[] = $cur_forum;
+		}
+
 		$cur_category = 0;
 		$forum_count = 0;
 		$sef_friendly_names = array();
-		while ($cur_forum = $forum_db->fetch_assoc($result))
+		foreach ($forums as $cur_forum)
 		{
 			($hook = get_hook('ch_fn_generate_quickjump_cache_forum_loop_start')) ? eval($hook) : null;
 
@@ -249,7 +258,7 @@ function generate_quickjump_cache($group_id = false)
 		}
 
 		$output .= "\t\t\t".'</optgroup>'."\n\t\t".'</select>'."\n\t\t".'<input type="submit" value="<?php echo $lang_common[\'Go\'] ?>" onclick="return Forum.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);" /></span>'."\n\t".'</div>'."\n".'</form>'."\n";
-		$output .= '<script type="text/javascript">'."\n\t\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t\t".'var sef_friendly_url_array = new Array('.$forum_db->num_rows($result).');';
+		$output .= '<script type="text/javascript">'."\n\t\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t\t".'var sef_friendly_url_array = new Array('.count($forums).');';
 
 		foreach ($sef_friendly_names as $forum_id => $forum_name)
 			$output .= "\n\t".'sef_friendly_url_array['.$forum_id.'] = "'.forum_htmlencode($forum_name).'";';
@@ -353,11 +362,12 @@ function generate_updates_cache()
 
 	($hook = get_hook('ch_fn_generate_updates_cache_qr_get_hotfixes')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_hotfixes = $forum_db->num_rows($result);
 
 	$hotfixes = array();
-	for ($i = 0; $i < $num_hotfixes; ++$i)
-		$hotfixes[] = urlencode($forum_db->result($result, $i));
+	while ($cur_ext_hotfix_id = $forum_db->fetch_row($result))
+	{
+		$hotfixes[] = urlencode($cur_ext_hotfix_id[0]);
+	}
 
 	// Contact the punbb.informer.com updates service
 	$result = get_remote_file('http://punbb.informer.com/update/?type=xml&version='.urlencode($forum_config['o_cur_version']).'&hotfixes='.implode(',', $hotfixes), 8);
@@ -396,7 +406,7 @@ function generate_updates_cache()
 function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension)
 {
 	$forum_ext_last_versions = array();
-	$forum_ext_repos = array();	
+	$forum_ext_repos = array();
 
 	foreach ( array_unique( array_merge($repository_urls, $repository_url_by_extension) ) as $url)
 	{
@@ -410,7 +420,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 		if (!isset( $forum_ext_repos[ $url ][ 'timestamp' ] ))
 			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
 
-		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp) 
+		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp)
 		{
 			foreach ($inst_exts as $ext)
 			{
@@ -444,7 +454,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 			if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
 				$forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
 
-	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;  
+	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;
 
 	// Output config as PHP code
 	$fh = @fopen(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', 'wb');
