@@ -1,48 +1,39 @@
-	==================
-	 PunBB 1.3 Readme
-	==================
+# PunBB 1.3 Readme
 
 Thank you for downloading PunBB.
 
-	 Quick install
-	---------------
+## Quick install
  1. Download the latest revision of PunBB from http://punbb.informer.com/. Decompress the PunBB archive to a directory.
  2. Copy (or upload) all the files contained in this archive into the directory where you want to run your forums. (e.g. /home/user/www/punbb/)
  3. Run install.php from the forum admin directory (e.g. open http://example.com/punbb/admin/install.php in your browser). Follow the instructions.
 
-	 Requirements
-	--------------
+## Requirements
  - A webserver
  - PHP 4.3.0 or later (PHP 5 included)
  - A database where forum data is to be stored, created in one of: MySQL 4.1.2 or later, PostgreSQL 7.0 or later or SQLite 2
 
-	 Upgrade from 1.2 or 1.3 pre release versions
-	----------------------------------------------
+## Upgrade from 1.2 or 1.3 pre release versions
 NOTE: Make a backup of your current forum directory before proceeding. Also, don't forget to make a backup of your forum database. Use the tool mysqldump for MySQL and pg_dump if you are using PostgreSQL. If you're using SQLite, just make a backup copy of the SQLite database file. You can also make database backups via most administration tools such as MySQL Administrator, phpMyAdmin and phpPgAdmin.
 
  1. Download the latest revision of PunBB from http://punbb.informer.com/. Decompress the PunBB archive to a directory.
  2. Replace your old 1.2 directory with the contents of the archive's version 1.3.
  3. Run db_update.php from the forum admin directory (e.g. open http://example.com/punbb/admin/db_update.php in your browser). Follow the instructions.
 
-	 Extension installation
-	------------------------
+## Extension installation
  1. Download an extension's archive from the PunBB extensions repository or any other place. Extract it into your forum’s extensions directory. (e.g. /home/user/example.com/punbb/extensions)
  2. Log into the forum and go to "Administration" console, "Extensions" section, choose "Install extensions" tab (e.g. http://example.com/punbb/admin/extensions.php?section=install). The downloaded extension will be listed there.
  3. Click the "Install extension" link to install the extension.
 
 NOTE: You may use the pun_repository official PunBB extension to download and install extensions from PunBB repository with one click.
 
-	 Maximizing Performance
-	------------------------
-
+## Maximizing Performance
  - Run it under a UNIX-like operating system!
  - Use a proper webserver such as Apache or Zeus.
  - Use a PHP cache/accelerator tool such as eAccelerator or Alternative PHP Cache.
  - Make sure that PHP has zlib support so you can enable gzip output compression in "Administration", "Settings". This greatly reduces the size of the XHTML output at a little cost of CPU time. An alternative is to use the Apache modules mod_gzip or mod_deflate. The two methods yield similar results.
  - Visit the administration interface and disable any forum features that are not used or you feel unnecessary.
 
-	 Links
-	-------
+## Links
  - Documentation: http://punbb.informer.com/wiki/
  - Internationalization: http://punbb.informer.com/wiki/punbb13/language_packs
  - Styles: http://punbb.informer.com/wiki/punbb13/syles
@@ -51,8 +42,7 @@ NOTE: You may use the pun_repository official PunBB extension to download and in
  - Development: http://punbb.informer.com/trac/
  - Reporting PunBB core SECURITY bugs (only!): http://punbb.informer.com/bugreport.php
 
-	 Copyright and disclaimer
-	--------------------------
+## Copyright and disclaimer
 This package and its contents are (C) 2002-2009 PunBB, all rights reserved.
 Partially based on code (C) 2008-2009 FluxBB.org.
 
