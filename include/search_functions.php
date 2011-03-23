@@ -166,12 +166,14 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		($hook = get_hook('sf_fn_create_search_cache_qr_get_author')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		if ($forum_db->num_rows($result))
+		$user_ids = array();
+		while ($row = $forum_db->fetch_row($result))
 		{
-			$user_ids = array();
-			while ($row = $forum_db->fetch_row($result))
-				$user_ids[] = $row[0];
+			$user_ids[] = $row[0];
+		}
 
+		if (!empty($user_ids))
+		{
 			$query = array(
 				'SELECT'	=> 'p.id',
 				'FROM'		=> 'posts AS p',
@@ -247,12 +249,15 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 
 	($hook = get_hook('sf_fn_create_search_cache_qr_get_online_idents')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result))
-	{
-		$online_idents = array();
-		while ($row = $forum_db->fetch_row($result))
-			$online_idents[] = '\''.$forum_db->escape($row[0]).'\'';
 
+	$online_idents = array();
+	while ($row = $forum_db->fetch_row($result))
+	{
+		$online_idents[] = '\''.$forum_db->escape($row[0]).'\'';
+	}
+
+	if (!empty($online_idents))
+	{
 		$query = array(
 			'DELETE'	=> 'search_cache',
 			'WHERE'		=> 'ident NOT IN('.implode(',', $online_idents).')'
@@ -681,8 +686,14 @@ function get_search_results($query, &$search_set)
 
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+	$search_results = array();
+	while ($row = $forum_db->fetch_assoc($result))
+	{
+		$search_results[] = $row;
+	}
+
 	// Make sure we actually have some results
-	$num_hits = $forum_db->num_rows($result);
+	$num_hits = count($search_results);
 	if ($num_hits == 0)
 		return 0;
 
@@ -697,7 +708,8 @@ function get_search_results($query, &$search_set)
 	// Fill $search_set with out search hits
 	$search_set = array();
 	$row_num = 0;
-	while ($row = $forum_db->fetch_assoc($result))
+
+	foreach ($search_results as $row)
 	{
 		if ($forum_page['start_from'] <= $row_num && $forum_page['finish_at'] > $row_num)
 			$search_set[] = $row;
