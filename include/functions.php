@@ -1391,10 +1391,10 @@ function set_default_user()
 
 	($hook = get_hook('fn_set_default_user_qr_get_default_user')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if (!$forum_db->num_rows($result))
-		exit('Unable to fetch guest information. The table \''.$forum_db->prefix.'users\' must contain an entry with id = 1 that represents anonymous users.');
-
 	$forum_user = $forum_db->fetch_assoc($result);
+
+	if (!$forum_user)
+		exit('Unable to fetch guest information. The table \''.$forum_db->prefix.'users\' must contain an entry with id = 1 that represents anonymous users.');
 
 	if (!defined('FORUM_QUIET_VISIT'))
 	{
@@ -1882,8 +1882,9 @@ function check_username_dupe($username, $exclude_id = null)
 
 	($hook = get_hook('fn_check_username_dupe_qr_check_username_dupe')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$dupe_name = $forum_db->result($result);
 
-	return $forum_db->num_rows($result) ? $forum_db->result($result) : false;
+	return (is_null($dupe_name) || $dupe_name === false) ? false : $dupe_name;
 }
 
 
@@ -2127,13 +2128,15 @@ function delete_orphans()
 
 	($hook = get_hook('fn_delete_orphans_qr_get_orphans')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_orphans = $forum_db->num_rows($result);
 
-	if ($num_orphans)
+	$orphans = array();
+	while ($row = $forum_db->fetch_row($result))
 	{
-		for ($i = 0; $i < $num_orphans; ++$i)
-			$orphans[] = $forum_db->result($result, $i);
+		$orphans[] = $row[0];
+	}
 
+	if (!empty($orphans))
+	{
 		// Delete the orphan
 		$query = array(
 			'DELETE'	=> 'topics',
@@ -2367,9 +2370,11 @@ function sync_forum($forum_id)
 
 	($hook = get_hook('fn_sync_forum_qr_get_forum_last_post_data')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->num_rows($result))
+	$last_post_info = $forum_db->fetch_row($result);
+
+	if ($last_post_info)
 	{
-		list($last_post, $last_post_id, $last_poster) = $forum_db->fetch_row($result);
+		list($last_post, $last_post_id, $last_poster) = $last_post_info;
 		$last_poster = '\''.$forum_db->escape($last_poster).'\'';
 	}
 	else
@@ -2471,7 +2476,7 @@ function clean_forum_moderators()
 			}
 
 			$query = array(
-				'SELECT'	=> '1',
+				'SELECT'	=> 'COUNT(u.id)',
 				'FROM'		=> 'users AS u',
 				'JOINS'		=> array(
 					array(
@@ -2484,8 +2489,7 @@ function clean_forum_moderators()
 
 			($hook = get_hook('fn_clean_forum_moderators_qr_check_user_in_moderator_group')) ? eval($hook) : null;
 			$result2 = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-			if (!$forum_db->num_rows($result2))	// If the user isn't in a moderator or admin group, remove him/her from the list
+			if ($forum_db->result($result2) < 1)	// If the user isn't in a moderator or admin group, remove him/her from the list
 			{
 				unset($new_moderators[$username]);
 				$removed_moderators[] = $user_id;
@@ -2565,7 +2569,13 @@ function send_subscriptions($post_info, $new_pid)
 	($hook = get_hook('fn_send_subscriptions_qr_get_users_to_notify')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->num_rows($result))
+	$subscribers = array();
+	while ($row = $forum_db->fetch_assoc($result))
+	{
+		$subscribers[] = $row;
+	}
+
+	if (!empty($subscribers))
 	{
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
@@ -2573,7 +2583,7 @@ function send_subscriptions($post_info, $new_pid)
 		$notification_emails = array();
 
 		// Loop through subscribed users and send e-mails
-		while ($cur_subscriber = $forum_db->fetch_assoc($result))
+		foreach ($subscribers as $cur_subscriber)
 		{
 			// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
 			if (!isset($notification_emails[$cur_subscriber['language']]) && file_exists(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
