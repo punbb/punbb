@@ -538,9 +538,10 @@ else if (isset($_GET['del_group']))
 
 	($hook = get_hook('agr_del_group_qr_get_group_member_count')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$group_info = $forum_db->fetch_row($result);
 
 	// If the group doesn't have any members or if we've already selected a group to move the members to
-	if (!$forum_db->num_rows($result) || isset($_POST['del_group']))
+	if (!$group_info || isset($_POST['del_group']))
 	{
 		($hook = get_hook('agr_del_group_form_submitted')) ? eval($hook) : null;
 
@@ -586,7 +587,7 @@ else if (isset($_GET['del_group']))
 		redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Group removed'].' '.$lang_admin_common['Redirect']);
 	}
 
-	list($group_title, $num_members) = $forum_db->fetch_row($result);
+	list($group_title, $num_members) = $group_info;
 
 
 	// Setup the form
