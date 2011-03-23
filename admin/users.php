@@ -723,10 +723,10 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 		($hook = get_hook('aus_change_group_qr_get_group_moderator_status')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($move_to_group == FORUM_GUEST || !$forum_db->num_rows($result))
-			message($lang_common['Bad request']);
-
 		$group_is_mod = $forum_db->result($result);
+
+		if ($move_to_group == FORUM_GUEST || (is_null($group_is_mod) || $group_is_mod === false))
+			message($lang_common['Bad request']);
 
 		// Move users
 		$query = array(
