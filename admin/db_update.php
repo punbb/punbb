@@ -1489,8 +1489,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			);
 
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
-				$start_at = $forum_db->result($result);
+			$start_at = $forum_db->result($result);
+
+			if (is_null($start_at) || $start_at === false)
+				$start_at = 0;
 		}
 		$end_at = $start_at + PER_PAGE;
 
@@ -1558,8 +1560,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			);
 
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
-				$start_at = $forum_db->result($result);
+			$start_at = $forum_db->result($result);
+
+			if (is_null($start_at) || $start_at === false)
+				$start_at = 0;
 		}
 		$end_at = $start_at + PER_PAGE;
 
@@ -1691,8 +1695,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			);
 
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
-				$start_at = $forum_db->result($result);
+			$start_at = $forum_db->result($result);
+
+			if (is_null($start_at) || $start_at === false)
+				$start_at = 0;
 		}
 		$end_at = $start_at + PER_PAGE;
 
@@ -1760,8 +1766,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			);
 
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
-				$start_at = $forum_db->result($result);
+			$start_at = $forum_db->result($result);
+
+			if (is_null($start_at) || $start_at === false)
+				$start_at = 0;
 		}
 		$end_at = $start_at + PER_PAGE;
 
@@ -1875,8 +1883,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			);
 
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->num_rows($result))
-				$start_at = $forum_db->result($result);
+			$start_at = $forum_db->result($result);
+
+			if (is_null($start_at) || $start_at === false)
+				$start_at = 0;
 		}
 		$end_at = $start_at + PER_PAGE;
 
