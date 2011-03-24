@@ -495,16 +495,18 @@ else
 
 
 	// Make sure PunBB isn't already installed
-	$query = array(
-		'SELECT'	=> 'COUNT(id)',
-		'FROM'		=> 'users',
-		'WHERE'		=> 'id=1'
-	);
+	if ($forum_db->table_exists('users'))
+	{
+		$query = array(
+			'SELECT'	=> 'COUNT(id)',
+			'FROM'		=> 'users',
+			'WHERE'		=> 'id=1'
+		);
 
-	$result = $forum_db->query_build($query);
-	if ($forum_db->result($result))
-		error(sprintf($lang_install['PunBB already installed'], $db_prefix, $db_name));
-
+		$result = $forum_db->query_build($query);
+		if ($forum_db->result($result))
+			error(sprintf($lang_install['PunBB already installed'], $db_prefix, $db_name));
+	}
 
 	// Start a transaction
 	$forum_db->start_transaction();

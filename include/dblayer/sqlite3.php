@@ -94,7 +94,6 @@ class DBLayer
 			$q_start = get_microtime();
 
 		$this->query_result = $this->link_id->query($sql);
-		echo forum_htmlencode($sql);
 
 		if ($this->query_result)
 		{
