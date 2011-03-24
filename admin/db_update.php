@@ -98,7 +98,7 @@ if (version_compare($cur_version, '1.2', '<'))
 $forum_db->set_names(strpos($cur_version, '1.3') === 0 ? 'utf8' : 'latin1');
 
 // If MySQL, make sure it's at least 4.1.2
-if ($db_type == 'mysql' || $db_type == 'mysqli')
+if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 {
 	$mysql_info = $forum_db->get_version();
 	if (version_compare($mysql_info['version'], MIN_MYSQL_VERSION, '<'))
@@ -579,7 +579,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	// Start by updating the database structure
 	case 'start':
 		// Put back dropped search tables
-		if (!$forum_db->table_exists('search_cache') && ($db_type == 'mysql' || $db_type == 'mysqli'))
+		if (!$forum_db->table_exists('search_cache') && in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
 			$schema = array(
 				'FIELDS'		=> array(
@@ -711,7 +711,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Make sure the collation on "word" in the search_words table is utf8_bin
-		if ($db_type == 'mysql' || $db_type == 'mysqli')
+		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
 			$result = $forum_db->query('SHOW FULL COLUMNS FROM '.$forum_db->prefix.'search_words') or error(__FILE__, __LINE__);
 			while ($cur_column = $forum_db->fetch_assoc($result))
@@ -808,7 +808,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 
 		// Drop fulltext indexes  (should only apply to SVN installs)
-		if ($db_type == 'mysql' || $db_type == 'mysqli')
+		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
 			$forum_db->drop_index('topics', 'subject_idx');
 			$forum_db->drop_index('posts', 'message_idx');
@@ -1157,7 +1157,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			switch ($db_type)
 			{
 				case 'mysql':
+				case 'mysql_innodb':
 				case 'mysqli':
+				case 'mysqli_innodb':
 					$forum_db->add_index('online', 'user_id_ident_idx', array('user_id', 'ident(25)'), true);
 					break;
 
@@ -1174,7 +1176,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		switch ($db_type)
 		{
 			case 'mysql':
+			case 'mysql_innodb':
 			case 'mysqli':
+			case 'mysqli_innodb':
 				$forum_db->add_index('online', 'ident_idx', array('ident(25)'));
 				break;
 
@@ -1839,7 +1843,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	// Convert table columns to utf8 (MySQL only)
 	case 'conv_tables':
 		// Do the cumbersome charset conversion of MySQL tables/columns
-		if ($db_type == 'mysql' || $db_type == 'mysqli')
+		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
 			echo 'Converting table '.$forum_db->prefix.'bans…<br />'."\n"; flush();
 			convert_table_utf8($forum_db->prefix.'bans');
