@@ -278,9 +278,9 @@ if (!defined('FORUM_PARSER_LOADED'))
 
 $forum_page['item_count'] = 0;	// Keep track of post numbers
 
-// Retrieve the posts (and their respective poster/online status)
+// 1. Retrieve the posts ids
 $query = array(
-	'SELECT'	=> 'u.email, u.title, u.url, u.location, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.avatar, u.avatar_width, u.avatar_height, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online',
+	'SELECT'	=> 'p.id',
 	'FROM'		=> 'posts AS p',
 	'JOINS'		=> array(
 		array(
@@ -299,6 +299,36 @@ $query = array(
 	'WHERE'		=> 'p.topic_id='.$id,
 	'ORDER BY'	=> 'p.id',
 	'LIMIT'		=> $forum_page['start_from'].','.$forum_user['disp_posts']
+);
+
+($hook = get_hook('vt_qr_get_posts_id')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+$posts_id = array();
+while ($row = $forum_db->fetch_row($result)) {
+	$posts_id[] = $row[0];
+}
+
+// 2. Retrieve the posts (and their respective poster/online status) by known id`s
+$query = array(
+	'SELECT'	=> 'u.email, u.title, u.url, u.location, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.avatar, u.avatar_width, u.avatar_height, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online',
+	'FROM'		=> 'posts AS p',
+	'JOINS'		=> array(
+		array(
+			'INNER JOIN'	=> 'users AS u',
+			'ON'			=> 'u.id=p.poster_id'
+		),
+		array(
+			'INNER JOIN'	=> 'groups AS g',
+			'ON'			=> 'g.g_id=u.group_id'
+		),
+		array(
+			'LEFT JOIN'		=> 'online AS o',
+			'ON'			=> '(o.user_id=u.id AND o.user_id!=1 AND o.idle=0)'
+		),
+	),
+	'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')',
+	'ORDER BY'	=> 'p.id',
 );
 
 ($hook = get_hook('vt_qr_get_posts')) ? eval($hook) : null;
