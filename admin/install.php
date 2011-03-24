@@ -105,6 +105,8 @@ if (!isset($_POST['form_sent']))
 	}
 	if (function_exists('sqlite_open'))
 		$db_extensions[] = array('sqlite', 'SQLite');
+	if (class_exists('SQLite3'))
+		$db_extensions[] = array('sqlite3', 'SQLite3');
 	if (function_exists('pg_connect'))
 		$db_extensions[] = array('pgsql', 'PostgreSQL');
 
@@ -461,6 +463,10 @@ else
 
 		case 'sqlite':
 			require FORUM_ROOT.'include/dblayer/sqlite.php';
+			break;
+
+		case 'sqlite3':
+			require FORUM_ROOT.'include/dblayer/sqlite3.php';
 			break;
 
 		default:
@@ -1182,7 +1188,7 @@ else
 		)
 	);
 
-	if ($db_type == 'sqlite')
+	if ($db_type == 'sqlite' || $db_type == 'sqlite3')
 	{
 		$schema['PRIMARY KEY'] = array('id');
 		$schema['UNIQUE KEYS'] = array('word_idx'	=> array('word'));

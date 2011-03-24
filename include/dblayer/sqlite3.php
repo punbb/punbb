@@ -94,6 +94,7 @@ class DBLayer
 			$q_start = get_microtime();
 
 		$this->query_result = $this->link_id->query($sql);
+		echo forum_htmlencode($sql);
 
 		if ($this->query_result)
 		{
@@ -331,13 +332,13 @@ class DBLayer
 	{
 		if ($this->link_id)
 		{
-			/*if ($this->in_transaction)
+			if ($this->in_transaction)
 			{
 				if (defined('FORUM_SHOW_QUERIES'))
 					$this->saved_queries[] = array('COMMIT', 0);
 
-				@sqlite_query($this->link_id, 'COMMIT');
-			}*/
+				$this->link_id->exec('COMMIT');
+			}
 
 			return $this->link_id->close();
 		}
@@ -365,25 +366,27 @@ class DBLayer
 
 	function table_exists($table_name, $no_prefix = false)
 	{
-		$result = $this->query('SELECT 1 FROM sqlite_master WHERE name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' AND type=\'table\'');
-		return $this->num_rows($result) > 0;
+		$result = $this->query('SELECT COUNT(type) FROM sqlite_master WHERE name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' AND type=\'table\'');
+		return (intval($this->result($result)) > 0);
 	}
 
 
 	function field_exists($table_name, $field_name, $no_prefix = false)
 	{
 		$result = $this->query('SELECT sql FROM sqlite_master WHERE name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' AND type=\'table\'');
-		if (!$this->num_rows($result))
+		$sql = $this->result($result);
+
+		if (is_null($sql) || $sql === false)
 			return false;
 
-		return preg_match('/[\r\n]'.preg_quote($field_name).' /', $this->result($result));
+		return (preg_match('/[\r\n]'.preg_quote($field_name).' /', $sql) === 1);
 	}
 
 
 	function index_exists($table_name, $index_name, $no_prefix = false)
 	{
-		$result = $this->query('SELECT 1 FROM sqlite_master WHERE tbl_name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' AND name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_'.$this->escape($index_name).'\' AND type=\'index\'');
-		return $this->num_rows($result) > 0;
+		$result = $this->query('SELECT COUNT(type) FROM sqlite_master WHERE tbl_name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' AND name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'_'.$this->escape($index_name).'\' AND type=\'index\'');
+		return (intval($this->result($result)) > 0);
 	}
 
 
@@ -448,20 +451,25 @@ class DBLayer
 	{
 		// Grab table info
 		$result = $this->query('SELECT sql FROM sqlite_master WHERE tbl_name = \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\' ORDER BY type DESC') or error(__FILE__, __LINE__);
-		$num_rows = $this->num_rows($result);
-
-		if ($num_rows == 0)
-			return;
 
 		$table = array();
 		$table['indices'] = array();
+		$num_rows = 0;
+
 		while ($cur_index = $this->fetch_assoc($result))
 		{
 			if (!isset($table['sql']))
 				$table['sql'] = $cur_index['sql'];
 			else
 				$table['indices'][] = $cur_index['sql'];
+
+			++$num_rows;
 		}
+
+		// Check for empty
+		if ($num_rows < 1)
+			return;
+
 
 		// Work out the columns in the table currently
 		$table_lines = explode("\n", $table['sql']);
