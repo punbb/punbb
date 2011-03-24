@@ -5,3 +5,4 @@
 config.php
 cache/
 img/avatars/
+db.sqlite
