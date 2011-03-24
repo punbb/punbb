@@ -33,6 +33,10 @@ switch ($db_type)
 		require FORUM_ROOT.'include/dblayer/mysql.php';
 		break;
 
+	case 'mysql_innodb':
+		require FORUM_ROOT.'include/dblayer/mysql_innodb.php';
+		break;
+
 	case 'mysqli':
 		require FORUM_ROOT.'include/dblayer/mysqli.php';
 		break;
