@@ -67,7 +67,7 @@ class DBLayer
 	{
 		++$this->in_transaction;
 
-		return ($this->link_id->exec('BEGIN')) ? true : false;
+		return ($this->link_id->exec('BEGIN DEFFERED TRANSACTION')) ? true : false;
 	}
 
 
@@ -113,7 +113,7 @@ class DBLayer
 			$this->error_msg = $this->link_id->lastErrorMsg();
 
 			if ($this->in_transaction)
-				@/**/$this->link_id->exec('ROLLBACK');
+				$this->link_id->exec('ROLLBACK');
 
 			--$this->in_transaction;
 

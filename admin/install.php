@@ -94,6 +94,7 @@ if (!isset($_POST['form_sent']))
 	if (function_exists('mysqli_connect'))
 	{
 		$db_extensions[] = array('mysqli', 'MySQL Improved');
+		$db_extensions[] = array('mysqli_innodb', 'MySQL Improved (InnoDB)');
 	}
 
 	if (function_exists('mysql_connect'))
@@ -457,6 +458,10 @@ else
 			require FORUM_ROOT.'include/dblayer/mysqli.php';
 			break;
 
+		case 'mysqli_innodb':
+			require FORUM_ROOT.'include/dblayer/mysqli_innodb.php';
+			break;
+
 		case 'pgsql':
 			require FORUM_ROOT.'include/dblayer/pgsql.php';
 			break;
@@ -478,11 +483,23 @@ else
 
 
 	// If MySQL, make sure it's at least 4.1.2
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if (in_array($db_type, array('mysql', 'mysqli', 'mysqli_innodb')))
 	{
 		$mysql_info = $forum_db->get_version();
 		if (version_compare($mysql_info['version'], MIN_MYSQL_VERSION, '<'))
 			error(sprintf($lang_install['Invalid MySQL version'], forum_htmlencode($mysql_info['version']), MIN_MYSQL_VERSION));
+
+		// Check InnoDB support in DB
+		if (in_array($db_type, array('mysqli_innodb')))
+		{
+			$result = $forum_db->query('SHOW VARIABLES LIKE \'have_innodb\'');
+			$row = $forum_db->fetch_assoc($result);
+
+			if (!$row || !isset($row['Value']) || strtolower($row['Value']) != 'yes')
+			{
+				error($lang_install['MySQL InnoDB Not Supported']);
+			}
+		}
 	}
 
 	// Validate prefix
@@ -967,7 +984,7 @@ else
 		'ENGINE'		=> 'HEAP'
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if (in_array($db_type, array('mysql', 'mysqli', 'mysqli_innodb')))
 	{
 		$schema['UNIQUE KEYS']['user_id_ident_idx'] = array('user_id', 'ident(25)');
 		$schema['INDEXES']['ident_idx'] = array('ident(25)');
@@ -1138,7 +1155,7 @@ else
 		)
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if (in_array($db_type, array('mysql', 'mysqli', 'mysqli_innodb')))
 		$schema['INDEXES']['ident_idx'] = array('ident(8)');
 
 	$forum_db->create_table('search_cache', $schema);
@@ -1536,7 +1553,7 @@ else
 		)
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if (in_array($db_type, array('mysql', 'mysqli', 'mysqli_innodb')))
 		$schema['INDEXES']['username_idx'] = array('username(8)');
 
 	$forum_db->create_table('users', $schema);
