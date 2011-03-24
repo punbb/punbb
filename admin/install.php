@@ -89,8 +89,8 @@ header('Content-Type: text/html; charset=utf-8');
 if (!isset($_POST['form_sent']))
 {
 	// Determine available database extensions
-	$dual_mysql = false;
 	$db_extensions = array();
+
 	if (function_exists('mysqli_connect'))
 	{
 		$db_extensions[] = array('mysqli', 'MySQL Improved');
@@ -101,9 +101,6 @@ if (!isset($_POST['form_sent']))
 	{
 		$db_extensions[] = array('mysql', 'MySQL Standard');
 		$db_extensions[] = array('mysql_innodb', 'MySQL Standard (InnoDB)');
-
-		if (count($db_extensions) > 1)
-			$dual_mysql = true;
 	}
 
 	if (function_exists('sqlite_open'))
@@ -199,7 +196,7 @@ if (!isset($_POST['form_sent']))
 		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part1 intro'] ?></p>
 			<ul class="spaced">
-				<li><span><strong><?php echo $lang_install['Database type'] ?></strong> <?php echo $lang_install['Database type info']; if ($dual_mysql) echo ' '.$lang_install['Mysql type info'] ?></span></li>
+				<li><span><strong><?php echo $lang_install['Database type'] ?></strong> <?php echo $lang_install['Database type info']; if (count($db_extensions) > 1) echo ' '.$lang_install['Mysql type info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Database server'] ?></strong> <?php echo $lang_install['Database server info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Database name'] ?></strong> <?php echo $lang_install['Database name info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Database user pass'] ?></strong> <?php echo $lang_install['Database username info'] ?></span></li>

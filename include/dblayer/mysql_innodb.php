@@ -57,7 +57,7 @@ class DBLayer
 	{
 		++$this->in_transaction;
 
-		return mysql_query($this->link_id, 'START TRANSACTION');
+		return mysql_query('START TRANSACTION', $this->link_id);
 	}
 
 
@@ -65,11 +65,11 @@ class DBLayer
 	{
 		--$this->in_transaction;
 
-		if (mysql_query($this->link_id, 'COMMIT'))
+		if (mysql_query('COMMIT', $this->link_id))
 			return true;
 		else
 		{
-			mysql_query($this->link_id, 'ROLLBACK');
+			mysql_query('ROLLBACK', $this->link_id);
 			return false;
 		}
 	}
@@ -103,7 +103,7 @@ class DBLayer
 				$this->saved_queries[] = array($sql, 0);
 
 			if ($this->in_transaction)
-				mysql_query($this->link_id, 'ROLLBACK');
+				mysql_query('ROLLBACK', $this->link_id);
 
 			--$this->in_transaction;
 
