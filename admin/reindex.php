@@ -66,7 +66,9 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 		switch ($db_type)
 		{
 			case 'mysql':
+			case 'mysql_innodb':
 			case 'mysqli':
+			case 'mysqli_innodb':
 				$result = $forum_db->query('ALTER TABLE '.$forum_db->prefix.'search_words auto_increment=1') or error(__FILE__, __LINE__);
 				break;
 

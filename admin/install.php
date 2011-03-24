@@ -512,7 +512,7 @@ else
 		error(sprintf($lang_install['Invalid table prefix'], $db_prefix));
 
 	// Check SQLite prefix collision
-	if ($db_type == 'sqlite' && strtolower($db_prefix) == 'sqlite_')
+	if (in_array($db_type, array('sqlite', 'sqlite3')) && strtolower($db_prefix) == 'sqlite_')
 		error($lang_install['SQLite prefix collision']);
 
 

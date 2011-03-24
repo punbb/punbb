@@ -39,7 +39,7 @@ if (isset($_POST['form_sent']) && empty($action))
 		'FROM'		=> 'users AS u'
 	);
 
-	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		$query['WHERE'] = 'username=\''.$forum_db->escape($form_username).'\'';
 	else
 		$query['WHERE'] = 'LOWER(username)=LOWER(\''.$forum_db->escape($form_username).'\')';
