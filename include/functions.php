@@ -1553,29 +1553,30 @@ function update_users_online()
 	if ($return != null)
 		return;
 
+
+	// Remove all guest that are older than "o_timeout_online"
+	$query = array(
+		'DELETE'	=> 'online',
+		'WHERE'		=> 'user_id=1 AND logged < '.($now - $forum_config['o_timeout_online'])
+	);
+	($hook = get_hook('fn_update_users_online_qr_delete_online_guest_user')) ? eval($hook) : null;
+	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+
 	// Fetch all online list entries that are older than "o_timeout_online"
 	$query = array(
 		'SELECT'	=> 'o.*',
 		'FROM'		=> 'online AS o',
-		'WHERE'		=> 'o.logged<'.($now-$forum_config['o_timeout_online'])
+		'WHERE'		=> 'o.logged < '.($now - $forum_config['o_timeout_online'])
 	);
 
 	($hook = get_hook('fn_update_users_online_qr_get_old_online_users')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	$expired_users_id = $idle_users_id = array();
 	while ($cur_user = $forum_db->fetch_assoc($result))
 	{
-		// If the entry is a guest, delete it
-		if ($cur_user['user_id'] == '1')
-		{
-			$query = array(
-				'DELETE'	=> 'online',
-				'WHERE'		=> 'ident=\''.$forum_db->escape($cur_user['ident']).'\''
-			);
-
-			($hook = get_hook('fn_update_users_online_qr_delete_online_guest_user')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-		}
-		else
+		if ($cur_user['user_id'] != '1')
 		{
 			// If the entry is older than "o_timeout_visit", update last_visit for the user in question, then delete him/her from the online list
 			if ($cur_user['logged'] < ($now - $forum_config['o_timeout_visit']))
@@ -1589,26 +1590,40 @@ function update_users_online()
 				($hook = get_hook('fn_update_users_online_qr_update_user_visit')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-				$query = array(
-					'DELETE'	=> 'online',
-					'WHERE'		=> 'user_id='.$cur_user['user_id']
-				);
-
-				($hook = get_hook('fn_update_users_online_qr_delete_online_user')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				// Add to expired list
+				$expired_users_id[] = $cur_user['user_id'];
 			}
 			else
 			{
-				$query = array(
-					'UPDATE'	=> 'online',
-					'SET'		=> 'idle=1',
-					'WHERE'		=> 'user_id='.$cur_user['user_id']
-				);
-
-				($hook = get_hook('fn_update_users_online_qr_update_user_idle')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				// Add to idle list
+				$idle_users_id[] = $cur_user['user_id'];
 			}
 		}
+	}
+
+	// Delete expired users
+	if (!empty($expired_users_id))
+	{
+		$query = array(
+			'DELETE'	=> 'online',
+			'WHERE'		=> 'user_id IN ('.implode(',', $expired_users_id).')'
+		);
+
+		($hook = get_hook('fn_update_users_online_qr_delete_online_user')) ? eval($hook) : null;
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	}
+
+	// Update idle users
+	if (!empty($idle_users_id))
+	{
+		$query = array(
+			'UPDATE'	=> 'online',
+			'SET'		=> 'idle=1',
+			'WHERE'		=> 'user_id IN ('.implode(',', $idle_users_id).')'
+		);
+
+		($hook = get_hook('fn_update_users_online_qr_update_user_idle')) ? eval($hook) : null;
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	($hook = get_hook('fn_update_users_online_end')) ? eval($hook) : null;
