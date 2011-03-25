@@ -108,10 +108,11 @@ function output_rss($feed)
 	header('Pragma: public');
 
 	echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
-	echo '<rss version="2.0">'."\n";
+	echo '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'."\n";
 	echo "\t".'<channel>'."\n";
 	echo "\t\t".'<title><![CDATA['.escape_cdata($feed['title']).']]></title>'."\n";
 	echo "\t\t".'<link>'.$feed['link'].'</link>'."\n";
+	echo "\t\t".'<atom:link href="'.forum_htmlencode(get_current_url()).'" rel="self" type="application/rss+xml" />'."\n";
 	echo "\t\t".'<description><![CDATA['.escape_cdata($feed['description']).']]></description>'."\n";
 	echo "\t\t".'<lastBuildDate>'.gmdate('r', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</lastBuildDate>'."\n";
 
