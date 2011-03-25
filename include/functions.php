@@ -1596,7 +1596,10 @@ function update_users_online()
 			else
 			{
 				// Add to idle list
-				$idle_users_id[] = $cur_user['user_id'];
+				if ($cur_user['idle'] == '0')
+				{
+					$idle_users_id[] = $cur_user['user_id'];
+				}
 			}
 		}
 	}
