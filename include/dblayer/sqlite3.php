@@ -42,8 +42,8 @@ class DBLayer
 
 		if (!file_exists($db_name))
 		{
-			@touch($db_name);
-			@chmod($db_name, 0666);
+			@/**/touch($db_name);
+			@/**/chmod($db_name, 0666);
 			if (!file_exists($db_name))
 				error('Unable to create new database \''.$db_name.'\'. Permission denied.', __FILE__, __LINE__);
 		}
@@ -54,7 +54,7 @@ class DBLayer
 		if (!is_writable($db_name))
 			error('Unable to open database \''.$db_name.'\' for writing. Permission denied.', __FILE__, __LINE__);
 
-		$this->link_id = new SQLite3($db_name, SQLITE3_OPEN_READWRITE);
+		@/**/$this->link_id = new SQLite3($db_name, SQLITE3_OPEN_READWRITE);
 
 		if (!$this->link_id)
 			error('Unable to open database \''.$db_name.'\'.', __FILE__, __LINE__);
@@ -220,7 +220,7 @@ class DBLayer
 			if ($row != 0)
 			{
 				$result_rows = array();
-				while ($cur_result_row = $query_id->fetchArray(SQLITE3_NUM))
+				while ($cur_result_row = @/**/$query_id->fetchArray(SQLITE3_NUM))
 				{
 					$result_rows[] = $cur_result_row;
 				}
@@ -228,7 +228,7 @@ class DBLayer
 				$cur_row = array_slice($result_rows, $row);
 			}
 			else
-				$cur_row = $query_id->fetchArray(SQLITE3_NUM);
+				$cur_row = @/**/$query_id->fetchArray(SQLITE3_NUM);
 
 			return $cur_row[$col];
 		}
@@ -241,7 +241,7 @@ class DBLayer
 	{
 		if ($query_id)
 		{
-			$cur_row = $query_id->fetchArray(SQLITE3_ASSOC);
+			$cur_row = @/**/$query_id->fetchArray(SQLITE3_ASSOC);
 			if ($cur_row)
 			{
 				// Horrible hack to get rid of table names and table aliases from the array keys
@@ -266,7 +266,7 @@ class DBLayer
 
 	function fetch_row($query_id = 0)
 	{
-		return ($query_id) ? $query_id->fetchArray(SQLITE3_NUM) : false;
+		return ($query_id) ? @/**/$query_id->fetchArray(SQLITE3_NUM) : false;
 	}
 
 
@@ -304,7 +304,7 @@ class DBLayer
 	{
 		if ($query_id)
 		{
-			$query_id->finalize();
+			@/**/$query_id->finalize();
 		}
 
 		return true;
@@ -319,7 +319,7 @@ class DBLayer
 
 	function error()
 	{
-		$result['error_sql'] = @current(@end($this->saved_queries));
+		$result['error_sql'] = @/**/current(@/**/end($this->saved_queries));
 		$result['error_no'] = $this->error_no;
 		$result['error_msg'] = $this->error_msg;
 
@@ -339,7 +339,7 @@ class DBLayer
 				$this->link_id->exec('COMMIT');
 			}
 
-			return $this->link_id->close();
+			return @/**/$this->link_id->close();
 		}
 		else
 			return false;

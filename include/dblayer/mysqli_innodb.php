@@ -82,7 +82,7 @@ class DBLayer
 		if (defined('FORUM_SHOW_QUERIES'))
 			$q_start = get_microtime();
 
-		$this->query_result = @mysqli_query($this->link_id, $sql);
+		$this->query_result = mysqli_query($this->link_id, $sql);
 
 		if ($this->query_result)
 		{
