@@ -813,11 +813,10 @@ function sef_friendly($str)
 }
 
 
-// Replace censored words in $text
+// Replace censored words in $text loader
 function censor_words($text)
 {
 	global $forum_db;
-	static $search_for, $replace_with;
 
 	$return = ($hook = get_hook('fn_censor_words_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -837,10 +836,23 @@ function censor_words($text)
 			generate_censors_cache();
 			require FORUM_CACHE_DIR.'cache_censors.php';
 		}
+	}
 
-		$search_for = array();
-		$replace_with = array();
+	return (isset($forum_censors)) ? censor_words_do($forum_censors, $text) : $text;
+}
 
+
+// Replace censored words in $text
+function censor_words_do($forum_censors, $text)
+{
+	static $search_for, $replace_with;
+
+	$search_for = array();
+	$replace_with = array();
+
+	if (!empty($forum_censors))
+	{
+		// Generate regexp`s
 		foreach ($forum_censors as $censor_key => $cur_word)
 		{
 			$search_for[$censor_key] = '/(?<=\W)('.str_replace('\*', '\w*?', preg_quote($cur_word['search_for'], '/')).')(?=\W)/iu';
@@ -848,10 +860,13 @@ function censor_words($text)
 
 			($hook = get_hook('fn_censor_words_setup_regex')) ? eval($hook) : null;
 		}
-	}
 
-	if (!empty($search_for))
-		$text = utf8_substr(preg_replace($search_for, $replace_with, ' '.$text.' '), 1, -1);
+		// Replace
+		if (!empty($search_for))
+		{
+			$text = utf8_substr(preg_replace($search_for, $replace_with, ' '.$text.' '), 1, -1);
+		}
+	}
 
 	return $text;
 }
