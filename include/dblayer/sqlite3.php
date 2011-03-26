@@ -67,7 +67,7 @@ class DBLayer
 	{
 		++$this->in_transaction;
 
-		return ($this->link_id->exec('BEGIN DEFFERED TRANSACTION')) ? true : false;
+		return ($this->link_id->exec('BEGIN TRANSACTION')) ? true : false;
 	}
 
 
