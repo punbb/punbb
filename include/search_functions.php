@@ -395,14 +395,16 @@ function generate_cached_search_query($search_id, &$show_as)
 		// With "has posted" indication
 		if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
 		{
-			$subquery = array(
-				'SELECT'	=> 'COUNT(p.id)',
-				'FROM'		=> 'posts AS p',
-				'WHERE'		=> 'p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id'
+			$query['SELECT'] .= ', COALESCE(p.id, 0) AS has_posted';
+			$query['JOINS'][]	= array(
+				'LEFT JOIN'		=> 'posts AS p',
+				'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
 			);
 
+			// Must have same columns as in prev SELECT
+			$query['GROUP BY'] = 'p.id, t.id, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name';
+
 			($hook = get_hook('sf_fn_generate_cached_search_query_qr_get_has_posted')) ? eval($hook) : null;
-			$query['SELECT'] .= ', ('.$forum_db->query_build($subquery, true).') AS has_posted';
 		}
 
 		($hook = get_hook('sf_fn_generate_cached_search_query_qr_get_cached_hits_as_topics')) ? eval($hook) : null;
