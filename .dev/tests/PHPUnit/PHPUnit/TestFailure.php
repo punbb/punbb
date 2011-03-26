@@ -108,13 +108,7 @@ class PHPUnit_TestFailure {
      * @access public
      */
     function toString() {
-        return sprintf(
-          "TestCase %s->%s() failed: %s\n",
-
-          get_class($this->_failedTest),
-          $this->_failedTest->getName(),
-          $this->_thrownException
-        );
+        return sprintf('<li class="phpunit-test-failed"><em>FAIL</em> %s &rarr; %s(): %s</li>', get_class($this->_failedTest), $this->_failedTest->getName(), $this->_thrownException);
     }
 }
 

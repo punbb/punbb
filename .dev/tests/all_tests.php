@@ -48,6 +48,24 @@
 	.failed h2 {
 		color: red;
 	}
+
+	.phpunit-test-results {
+		list-style-type: none;
+	}
+
+	.phpunit-test-passed em {
+		color: green;
+		font-style: normal;
+	}
+
+	.phpunit-test-failed em {
+		color: red;
+		font-style: normal;
+	}
+
+	.phpunit-test-failed {
+		margin: .7em 0;
+	}
 </style>
 </head>
 <body>
@@ -78,23 +96,6 @@
 	echo $result->toHTML();
 ?>
 				</div>
-
-
-<?php
-
-	// FAILURE?
-	if (!$result->wasSuccessful()):
-?>
-				<!-- FAILED PASSES -->
-				<div class="main-subhead failed">
-					<h2 class="hn"><span>FAILED TESTS</span></h2>
-				</div>
-				<div class="main-content main-frm">
-					<?php echo $result->reportFailureListing(TRUE); ?>
-				</div>
-<?php
-	endif;
-?>
 
 
 				<!-- RESULTS -->
