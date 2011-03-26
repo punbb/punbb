@@ -23,7 +23,7 @@ function forum_htmlencode($str)
 
 
 // Trim whitespace including non-breaking space
-function forum_trim($str, $charlist = " \t\n\r\x0b\xc2\xa0")
+function forum_trim($str, $charlist = " \t\n\r\0\x0B\xC2\xA0")
 {
 	return utf8_trim($str, $charlist);
 }
