@@ -888,8 +888,8 @@ function censor_words_do($forum_censors, $text, $unicode)
 			else
 			{
 				// Unescape *
-				$replace = str_replace('\*', '\S*?', preg_quote($cur_word['search_for'], '#'));
-				$search_for[$censor_key] = '#(?<!\S)('.$replace.')(?!\S)#iu';
+				$replace = str_replace('\*', '\w*?', preg_quote($cur_word['search_for'], '#'));
+				$search_for[$censor_key] = '#(?<=\W)('.$replace.')(?=\W)#iu'; // This better for ASCII than (?!</S)
 			}
 
 			$replace_with[$censor_key] = $cur_word['replace_with'];
