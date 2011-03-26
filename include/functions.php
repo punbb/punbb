@@ -515,7 +515,7 @@ function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_h
 			$path .= '?no_cache='.random_key(8, TRUE);
 		}
 
-		$avatar_markup = '<img src="'.$base_url.'/'.$path.'" height="'.$avatar_height.'" width="'.$avatar_width.'" alt="" />';
+		$avatar_markup = '<img src="'.$base_url.'/'.$path.'" width="'.$avatar_width.'" height="'.$avatar_height.'" alt="" />';
 	}
 
 	($hook = get_hook('fn_generate_avatar_markup_end')) ? eval($hook) : null;
