@@ -43,6 +43,13 @@ function escape_cdata($str)
 }
 
 
+// Check the text is CAPSED
+function check_is_all_caps($text)
+{
+	return (bool)/**/(utf8_strtoupper($text) == $text && utf8_strtolower($text) != $text);
+}
+
+
 // Inserts $element into $input at $offset
 // $offset can be either a numerical offset to insert at (eg: 0 inserts at the beginning of the array)
 // or a string, which is the key that the new element should be inserted before
@@ -89,6 +96,8 @@ function forum_unregister_globals()
 			unset($GLOBALS[$k]);	// Double unset to circumvent the zend_hash_del_key_or_index hole in PHP <4.4.3 and <5.1.4
 		}
 }
+
+
 // Removes any "bad" characters (characters which mess with the display of a page, are invisible, etc) from user input
 function forum_remove_bad_characters()
 {
@@ -137,6 +146,8 @@ function forum_fix_request_uri()
 			error('The web server you are using is not correctly setting the REQUEST_URI variable. This usually means you are using IIS6, or an unpatched IIS7. Please either disable SEF URLs, upgrade to IIS7 and install any available patches or try a different web server.');
 	}
 }
+
+
 // Set a cookie, PunBB style!
 // Like other headers, cookies must be sent before any output from your script.
 // Use headers_sent() to ckeck wether HTTP headers has been sent already.
@@ -720,6 +731,7 @@ function get_hook($hook_id)
 	return !defined('FORUM_DISABLE_HOOKS') && isset($forum_hooks[$hook_id]) ? implode("\n", $forum_hooks[$hook_id]) : false;
 }
 
+
 // Generate a hyperlink with parameters and anchor
 function forum_link($link, $args = null)
 {
@@ -777,6 +789,8 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 
 	return $gen_link;
 }
+
+
 // Make a string safe to use in a URL
 function sef_friendly($str)
 {
@@ -1080,6 +1094,8 @@ function get_current_url($max_length = 0)
 	// We can't find a short enough url
 	return null;
 }
+
+
 // Checks if a word is a valid searchable word
 function validate_search_word($word)
 {
@@ -1167,6 +1183,8 @@ function forum_hash($str, $salt)
 
 	return sha1($salt.sha1($str));
 }
+
+
 // Delete every .php file in the forum's cache directory
 function forum_clear_cache()
 {
@@ -2834,8 +2852,6 @@ function message($message, $link = '', $heading = '')
 }
 
 
-
-
 // Display a message when board is in maintenance mode
 function maintenance_message()
 {
@@ -3151,10 +3167,4 @@ function error()
 		$GLOBALS['forum_db']->close();
 
 	exit;
-}
-
-// Check the text is CAPSED
-function check_is_all_caps($text)
-{
-	return (bool)/**/(utf8_strtoupper($text) == $text && utf8_strtolower($text) != $text);
 }
