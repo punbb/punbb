@@ -26,6 +26,7 @@
     require_once('functions/utf8_test.php');
 	require_once('functions/array_insert_test.php');
 	require_once('functions/tools_test.php');
+	require_once('censor_words/censor_words_test.php');
 
 
 	// Strip out "bad" UTF-8 characters
@@ -88,8 +89,11 @@
 <?php
 
 	$suite = new PHPUnit_TestSuite('utf8_Test');
+
 	$suite->addTestSuite('array_insert_Test');
 	$suite->addTestSuite('tools_Test');
+	$suite->addTestSuite('censor_words_do_Test');
+
 
 	$result = PHPUnit::run($suite);
 

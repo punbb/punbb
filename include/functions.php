@@ -852,12 +852,19 @@ function censor_words($text)
 		}
 	}
 
-	return (isset($forum_censors)) ? censor_words_do($forum_censors, $text) : $text;
+	// Check Unicode support
+	$unicode = false;
+	if ((version_compare(PHP_VERSION, '5.1.0', '>=') || (version_compare(PHP_VERSION, '5.0.0-dev', '<=') && version_compare(PHP_VERSION, '4.4.0', '>='))) && @preg_match('/\p{L}/u', 'a') !== false)
+	{
+		$unicode = true;
+	}
+
+	return (isset($forum_censors)) ? censor_words_do($forum_censors, $text, $unicode) : $text;
 }
 
 
 // Replace censored words in $text
-function censor_words_do($forum_censors, $text)
+function censor_words_do($forum_censors, $text, $unicode)
 {
 	static $search_for, $replace_with;
 
@@ -869,7 +876,22 @@ function censor_words_do($forum_censors, $text)
 		// Generate regexp`s
 		foreach ($forum_censors as $censor_key => $cur_word)
 		{
-			$search_for[$censor_key] = '/(?<=\W)('.str_replace('\*', '\w*?', preg_quote($cur_word['search_for'], '/')).')(?=\W)/iu';
+			if ($unicode)
+			{
+				// Unescape *
+				$replace = str_replace('\*', '*', preg_quote($cur_word['search_for'], '#'));
+				$replace = preg_replace(array('#(?<=[\p{Nd}\p{L}_])\*(?=[\p{Nd}\p{L}_])#iu', '#^\*#', '#\*$#'), array('([\x20]*?|[\p{Nd}\p{L}_-]*?)', '[\p{Nd}\p{L}_-]*?', '[\p{Nd}\p{L}_-]*?'), $replace);
+
+				// Generate the final substitution
+				$search_for[$censor_key] = '#(?<![\p{Nd}\p{L}_-])('.$replace.')(?![\p{Nd}\p{L}_-])#iu';
+			}
+			else
+			{
+				// Unescape *
+				$replace = str_replace('\*', '\S*?', preg_quote($cur_word['search_for'], '#'));
+				$search_for[$censor_key] = '#(?<!\S)('.$replace.')(?!\S)#iu';
+			}
+
 			$replace_with[$censor_key] = $cur_word['replace_with'];
 
 			($hook = get_hook('fn_censor_words_setup_regex')) ? eval($hook) : null;
