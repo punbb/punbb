@@ -743,24 +743,31 @@ function no_search_results($action = 'search')
 	{
 		case 'show_new':
 			message($lang_search['No new posts'], $forum_page['search_again'], $lang_search['Topics with new']);
+			break;
 
 		case 'show_recent':
 			message($lang_search['No recent posts'], $forum_page['search_again'], $lang_search['Recently active topics']);
+			break;
 
 		case 'show_user_posts':
 			message($lang_search['No user posts'], $forum_page['search_again'], $lang_search['Posts by user']);
+			break;
 
 		case 'show_user_topics':
 			message($lang_search['No user topics'], $forum_page['search_again'], $lang_search['Topics by user']);
+			break;
 
 		case 'show_subscriptions':
 			message($lang_search['No subscriptions'], $forum_page['search_again'], $lang_search['Subscriptions']);
+			break;
 
 		case 'show_unanswered':
 			message($lang_search['No unanswered'], $forum_page['search_again'], $lang_search['Unanswered topics']);
+			break;
 
 		default:
 			message($lang_search['No hits'], $forum_page['search_again'], $lang_search['Search results']);
+			break;
 	}
 }
 
