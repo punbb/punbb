@@ -442,7 +442,7 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="save_pass" value="1" <?php echo isset($_POST['save_pass']) ? 'checked="checked" ' : '' ?>/></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_login['Remember me'] ?></span> <?php echo $lang_login['Persistent login'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_login['Remember me'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('li_login_pre_group_end')) ? eval($hook) : null; ?>
