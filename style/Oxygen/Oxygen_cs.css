@@ -241,6 +241,11 @@ label,
 	color: #b42000;
 }
 
+.sf-set .text label small,
+.sf-set .select label small {
+	color: #999;
+}
+
 .entry-content .quotebox,
 .entry-content .codebox {
 	background: #fff;
