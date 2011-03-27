@@ -1236,6 +1236,7 @@ button:active {
 }
 
 
+
 /* Single Field Items (Text, Select, Checkbox)
 -------------------------------------------------------------*/
 
@@ -1246,7 +1247,7 @@ button:active {
 }
 
 .sf-set .checkbox label {
-	padding: 2px 0 2px 3em;
+	padding: 1px 0 2px 2.7em;
 }
 
 .sf-set .text label span,
@@ -1293,8 +1294,13 @@ button:active {
 	padding: 0.3em 1em;
 }
 
+input[type=checkbox] {
+  vertical-align: bottom;
+  *vertical-align: baseline;
+}
+
 .sf-set .checkbox input {
-	margin: 2px 0 2px -0.25em;
+	margin: 5px 0 2px -0.2em;
 	height: 1.55em;
 	width: 1.55em;
 }
@@ -1313,6 +1319,13 @@ button:active {
 	padding: 2px 0;
 	margin: 0 1em 0 6.5em;
 }
+
+/* vertical alignment of radio buttons
+ */
+input[type=radio] {
+	vertical-align: text-bottom;
+}
+
 
 
 /* Multi-Field Items (Radio/Checkbox Groups)
@@ -1334,7 +1347,7 @@ button:active {
 	position: absolute;
 	left: -17em;
 	width: 16em;
-	padding: 0.3em 1em;
+	padding: 0.5em 1em;
 	margin: 1px 0 2px 0;
 	overflow: hidden;
 	display: block;
@@ -1365,7 +1378,7 @@ button:active {
 }
 
 .mf-item label {
-	padding: 0 0 0 3em;
+	padding: 0 0 0 2.7em;
 	float: left;
 }
 
