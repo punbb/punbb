@@ -975,50 +975,50 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 /* Setup for Index and Forums
 -------------------------------------------------------------*/
 
-.brd .main-content .main-item {
+.main-content .main-item {
 	padding-right: 35em;
 	padding-left: 3.75em;
 }
 
-.brd .main-content .main-item .hn {
+.main-content .main-item .hn {
 	position: relative;
 }
 
-.brd .main-content .main-item ul {
+.main-content .main-item ul {
 	width: 34em;
 	right: -35em;
 	margin-left: -34em;
 }
 
-.brd .forum-noview .main-item {
+.forum-noview .main-item {
 	padding-right: 28em;
 }
 
-.brd .forum-noview .main-item ul {
+.forum-noview .main-item ul {
 	width: 27em;
 	right: -28em;
 	margin-left: -27em;
 }
 
-.brd .forum-forums .main-item {
+.forum-forums .main-item {
 	padding-right: 48em;
 }
 
-.brd .forum-forums .main-item ul {
+.forum-forums .main-item ul {
 	width: 47em;
 	right: -48em;
 	margin-left: -47em;
 }
 
-.brd .main-content .main-item .item-subject span.modlist {
+.main-content .main-item .item-subject span.modlist {
 	display: block;
 }
 
-.brd .main-content .main-item .hn strong {
+.main-content .main-item .hn strong {
 	font-size: 1em;
 }
 
-.brd .main-content .main-item .hn strong span {
+.main-content .main-item .hn strong span {
 	font-weight: normal;
 }
 
@@ -1031,41 +1031,41 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	font-size: 1em;
 }
 
-.brd .main-content .main-item .item-status {
+.main-content .main-item .item-status {
 	font-weight: bold;
 }
 
-.brd .main-content .main-item cite {
+.main-content .main-item cite {
 	font-style: normal;
 }
 
-.brd .main-content .main-item span.item-nav,
-.brd .main-content .main-item span.item-nav * {
+.main-content .main-item span.item-nav,
+.main-content .main-item span.item-nav * {
 	white-space: nowrap;
 	font-style: normal;
 }
 
-.brd .main-content .main-item .item-subject .hn,
-.brd .main-content .main-item .item-subject p {
+.main-content .main-item .item-subject .hn,
+.main-content .main-item .item-subject p {
 	margin: 0 0 0 1.5em;
 }
 
-.brd .main-content .main-item li.info-lastpost cite,
-.brd .main-content .main-item li.info-lastpost span,
-.brd .main-content .main-item li.info-forum a {
+.main-content .main-item li.info-lastpost cite,
+.main-content .main-item li.info-lastpost span,
+.main-content .main-item li.info-forum a {
 	display: block;
 	padding: 0 1em;
 	font-style: normal;
 	font-weight: normal;
 }
 
-.brd .main-content .main-item li.info-lastpost strong {
+.main-content .main-item li.info-lastpost strong {
 	padding: 0 0 0 1em;
 	font-style: normal;
 	font-weight: normal;
 }
 
-.brd .main-content .main-item li.info-select {
+.main-content .main-item li.info-select {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -1074,7 +1074,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	border-width: 1px;
 }
 
-.brd .main-content .main-item .icon {
+.main-content .main-item .icon {
 	border-style: solid;
 	border-width: 0.5833em;
 	height: 0;
@@ -1084,7 +1084,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	margin-left: -2.417em;
 }
 
-.brd .main-content .main-item .hn .posted-mark {
+.main-content .main-item .hn .posted-mark {
 	position: absolute;
 	font-size: 2em;
 	width: 1em;
@@ -1099,52 +1099,52 @@ F - MAIN CONTENT - FORMS
 /* Generally
 -------------------------------------------------------------*/
 
-.brd .frm-group {
+.frm-group {
 	border-top-style: dashed;
 	border-top-width: 1px;
 	margin: 1.417em;
 	padding: 1.3em 0pt 0em;
 }
 
-.brd .group1 {
+.group1 {
 	border-top: none;
 	padding-top: 0;
 }
 
-.brd .sf-box,
-.brd .mf-box,
-.brd .txt-box {
+.sf-box,
+.mf-box,
+.txt-box {
 	margin: 1.417em;
 	padding: 0.3em 0;
 	position: relative;
 }
 
-.brd .sf-set,
-.brd .mf-set,
-.brd .txt-set {
+.sf-set,
+.mf-set,
+.txt-set {
 	margin: 1.417em;
 	padding: 0 0 0 17em;
 	position: relative;
 }
 
-.brd .sf-set .sf-box,
-.brd .mf-set .mf-box,
-.brd .txt-set .txt-box {
+.sf-set .sf-box,
+.mf-set .mf-box,
+.txt-set .txt-box {
 	margin: 0;
 }
 
-.brd .frm-group .sf-set,
-.brd .frm-group .mf-set,
-.brd .frm-group .txt-set {
+.frm-group .sf-set,
+.frm-group .mf-set,
+.frm-group .txt-set {
 	margin: 0;
 }
 
-.brd .text input,
-.brd .select select {
+.text input,
+.select select {
 	font-size: 1.084em;
 }
 
-.brd .frm-buttons {
+.frm-buttons {
 	margin: 0.75em 1.417em 1em 1.417em;
 	position: relative;
 	border-top-style: double;
@@ -1152,38 +1152,38 @@ F - MAIN CONTENT - FORMS
 	padding: 0.8em 0pt 0.3em 18em;
 }
 
-.brd .frm-buttons span.submit {
+.frm-buttons span.submit {
 	margin-right: 0.75em;
 }
 
-.brd span.submit input,
-.brd span.cancel input {
+span.submit input,
+span.cancel input {
 	overflow: visible;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	font-size: 1.084em;
 }
 
-.brd .button-set span.submit {
+.button-set span.submit {
 	padding-left: 1em;
 }
 
 /* Single Field Items (Text, Select, Checkbox)
 -------------------------------------------------------------*/
 
-.brd .sf-box label,
-.brd .sf-box .aslabel {
+.sf-box label,
+.sf-box .aslabel {
 	float: left;
 	padding: 0;
 }
 
-.brd .sf-set .checkbox label {
+.sf-set .checkbox label {
 	padding: 2px 0 2px 3em;
 }
 
-.brd .sf-set .text label span,
-.brd .sf-set .select label span,
-.brd .sf-set .aslabel span {
+.sf-set .text label span,
+.sf-set .select label span,
+.sf-set .aslabel span {
 	float: left;
 	margin-left: -17em;
 	display: block;
@@ -1194,7 +1194,7 @@ F - MAIN CONTENT - FORMS
 	font-weight:bold;
 }
 
-.brd .sf-set .checkbox label span {
+.sf-set .checkbox label span {
 	float: left;
 	margin-left: -18em;
 	display: block;
@@ -1206,8 +1206,8 @@ F - MAIN CONTENT - FORMS
 	font-weight:bold;
 }
 
-.brd .sf-set .text label small,
-.brd .sf-set .select label small {
+.sf-set .text label small,
+.sf-set .select label small {
 	display: block;
 	text-align: left;
 	position: relative;
@@ -1215,7 +1215,7 @@ F - MAIN CONTENT - FORMS
 	font-size: 0.917em;
 }
 
-.brd .sf-set .fld-input {
+.sf-set .fld-input {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1223,22 +1223,22 @@ F - MAIN CONTENT - FORMS
 	padding: 0.3em 1em;
 }
 
-.brd .sf-set .checkbox input {
+.sf-set .checkbox input {
 	margin: 2px 0 2px -0.25em;
 	height: 1.55em;
 	width: 1.55em;
 }
 
  /* Fixes alignment issue in Safari */
-.brd .sf-set .text input:not([title]) {
+.sf-set .text input:not([title]) {
 	height: 100%;
 }
 
-.brd .sf-set .sf-short input {
+.sf-set .sf-short input {
 	width: 4em;
 }
 
-.brd .sf-set .sf-short label small {
+.sf-set .sf-short label small {
 	font-size: 1em;
 	padding: 2px 0;
 	margin: 0 1em 0 6.5em;
@@ -1248,19 +1248,19 @@ F - MAIN CONTENT - FORMS
 /* Multi-Field Items (Radio/Checkbox Groups)
 -------------------------------------------------------------*/
 
-.brd .mf-box .mf-item {
+.mf-box .mf-item {
 	position: relative;
 	top: -0.166em;
 	padding: 0.25em 0;
 }
 
-.brd .mf-set legend {
+.mf-set legend {
 	position: absolute;
 	height: 0;
 	background: transparent;
 }
 
-.brd .mf-set legend span {
+.mf-set legend span {
 	position: absolute;
 	left: -17em;
 	width: 16em;
@@ -1272,7 +1272,7 @@ F - MAIN CONTENT - FORMS
 	font-weight: bold;
 }
 
-.brd .mf-set legend span em {
+.mf-set legend span em {
 	display: block;
 	white-space: normal;
 	font-style: normal;
@@ -1280,7 +1280,7 @@ F - MAIN CONTENT - FORMS
 	font-size: 0.917em;
 }
 
-.brd .mf-item .fld-input {
+.mf-item .fld-input {
 	position: absolute;
 	top: 0.25em;
 	left: 0;
@@ -1288,13 +1288,13 @@ F - MAIN CONTENT - FORMS
 	padding: 0 1em;
 }
 
-.brd .mf-item input {
+.mf-item input {
 	margin: 0 0 0 -0.25em;
 	height: 1.55em;
 	width: 1.55em;
 }
 
-.brd .mf-item label {
+.mf-item label {
 	padding: 0 0 0 3em;
 	float: left;
 }
