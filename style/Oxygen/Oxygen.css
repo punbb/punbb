@@ -525,8 +525,8 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding: 0.2em 0.75em 0.4em 0.75em;
 }
 
-.main-menu li.active a,
-.admin-menu li.active a {
+.main-menu .active a,
+.admin-menu .active a {
 	font-weight: bold;
 }
 
@@ -711,7 +711,7 @@ D - COMMON INTERFACE ELEMENTS
 }
 
 .crumbs span,
-.crumbs span * {
+.crumbs a {
 	white-space: nowrap;
 }
 
@@ -1620,28 +1620,28 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	list-style: none;
 }
 
-.post .author-ident .useravatar img {
+/*.post */.author-ident .useravatar img {
 	display: block;
 	padding: 0.5em 0;
 }
 
-.post .author-ident .username {
+/*.post */.author-ident .username {
 	display: none;
 }
 
-.postbody .author-ident .usertitle {
+/*.postbody */.author-ident .usertitle {
 	font-weight: bold;
 	line-height: normal;
 }
 
-.postbody .author-ident .userstatus {
+/*.postbody */.author-ident .userstatus {
 	padding: 0.75em 0 0.25em 0;
 	margin: 0;
 	line-height: 0.75em;
 	width: 100%;
 }
 
-.postbody .author-ident .userstatus span {
+/*.postbody */.author-ident .userstatus span {
 	font-size: 0.917em;
 	display: block;
 	border-left-style: solid;
@@ -1649,7 +1649,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	text-indent: 0.5em;
 }
 
-.postbody .author-info li span strong {
+/*.postbody */.author-info li span strong {
 	font-weight: normal;
 }
 
@@ -1833,28 +1833,28 @@ td {
 	font-weight: normal;
 }
 
-table td {
+td {
 	padding: 0.5em 1.417em;
 	border-width: 1px;
 	border-style: solid none none solid;
 }
 
-table td.tc0 {
+td.tc0 {
 	border-left-style: none;
 	border-left-width: 0
 }
 
-table th {
+th {
 	padding: 0.5em 1.3em;
 	border-style: none;
 }
 
-table td.actions,
-table th.actions {
+td.actions,
+th.actions {
 	text-align: right;
 }
 
-table td.actions span {
+td.actions span {
 	display: block;
 }
 

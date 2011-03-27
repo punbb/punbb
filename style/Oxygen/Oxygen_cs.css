@@ -175,13 +175,13 @@ td {
 	border-color: #E6D190;
 }
 
-ul.info-list li,
-ul.error-list li {
+.info-list li,
+.error-list li {
 	color: #6A97BF;
 }
 
-ul.info-list li span,
-ul.error-list li span {
+.info-list li span,
+.error-list li span {
 	color: #666;
 }
 
@@ -309,26 +309,26 @@ label,
 	color: #fff;
 }
 
-.main-menu li.active a:hover,
-.main-menu li.active a:active,
-.main-menu li.active a:focus,
-.main-menu li.active a:visited,
-.admin-menu li.active a:hover,
-.admin-menu li.active a:active,
-.admin-menu li.active a:focus,
-.admin-menu li.active a:visited {
+.main-menu .active a:hover,
+.main-menu .active a:active,
+.main-menu .active a:focus,
+.main-menu .active a:visited,
+.admin-menu .active a:hover,
+.admin-menu .active a:active,
+.admin-menu .active a:focus,
+.admin-menu .active a:visited {
 	text-decoration: none;
 }
 
-.admin-submenu li.active a {
+.admin-submenu .active a {
 	text-decoration: none;
 }
 
-.main-menu li.active a {
+.main-menu .active a {
 	color: #fff;
 }
 
-.admin-menu li.active a {
+.admin-menu .active a {
 	color: #eef;
 }
 
