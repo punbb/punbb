@@ -486,11 +486,11 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
  /* Message Boxes
 -------------------------------------------------------------*/
 
-.brd .main-message {
+.main-message {
 	padding: 0.5em 1.417em;
 }
 
-.brd .main-message p span {
+.main-message p span {
 	display: block;
 	padding-top: 0.5em;
 }
@@ -498,54 +498,54 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 /* Section Menus (By Default - Profile and Admin)
 -------------------------------------------------------------*/
 
-.brd .main-menu,
-.brd .admin-menu {
+.main-menu,
+.admin-menu {
 	border: 0;
 	padding: 0.4em 0 0.2em 0.75em;
 }
 
-.brd .main-menu ul,
-.brd .admin-menu ul {
+.main-menu ul,
+.admin-menu ul {
 	list-style-type: none;
 	float: left;
 	padding: 0;
 }
 
-.brd .main-menu li,
-.brd .admin-menu li {
+.main-menu li,
+.admin-menu li {
 	font-size: 1.084em;
 	float: left;
 	display: inline;
 }
 
-.brd .main-menu a,
-.brd .admin-menu a {
+.main-menu a,
+.admin-menu a {
 	float: left;
 	position: relative;
 	padding: 0.2em 0.75em 0.4em 0.75em;
 }
 
-.brd .main-menu li.active a,
-.brd .admin-menu li.active a {
+.main-menu li.active a,
+.admin-menu li.active a {
 	font-weight: bold;
 }
 
-.brd .main-menu li.first-item,
-.brd .admin-menu li.first-item {
+.main-menu li.first-item,
+.admin-menu li.first-item {
 	border-left: 0;
 }
 
-.brd .admin-submenu {
+.admin-submenu {
 	border-style: solid;
 	border-width: 0px 1px 0px 1px;
 }
 
-.brd .admin-submenu ul {
+.admin-submenu ul {
 	padding: 0.5em 0;
 	list-style: none;
 }
 
-.brd .admin-submenu li {
+.admin-submenu li {
 	display: inline;
 	margin-right: 0.75em;
 }
@@ -665,36 +665,36 @@ D - COMMON INTERFACE ELEMENTS
 	margin-top: -1em;
 }
 
-.brd .paging {
+.paging {
 	float: left;
 }
 
-.brd .posting {
+.posting {
 	text-align: right;
 	float: right;
 }
 
-.brd .paging,
-.brd .paging * {
+.paging,
+.paging * {
 	white-space:nowrap;
 }
 
-.brd .paging a,
-.brd .paging strong,
-.brd .paging span {
+.paging a,
+.paging strong,
+.paging span {
 	padding: 0 1em;
 	border-left-style: solid;
 	border-left-width: 1px;
 	float: left;
 }
 
-.brd .paging .first-item,
-.brd .paging span.pages {
+.paging .first-item,
+.paging span.pages {
 	border-left: 0;
 	padding-left: 0;
 }
 
-.brd .posting .newpost {
+.posting .newpost {
 	font-size: 1.084em;
 	font-weight: bold;
 }
@@ -702,20 +702,20 @@ D - COMMON INTERFACE ELEMENTS
 /* Breadcrumbs
 -------------------------------------------------------------*/
 
-.brd .crumbs .crumblast {
+.crumbs .crumblast {
 	font-weight: bold;
 }
 
-.brd .crumbs .crumblast  span {
+.crumbs .crumblast  span {
 	font-weight: normal;
 }
 
-.brd .crumbs span,
-.brd .crumbs span * {
+.crumbs span,
+.crumbs span * {
 	white-space: nowrap;
 }
 
-.brd .crumbs {
+.crumbs {
 	margin: 0.5em 0em;
 	padding: 0em 1.417em;
 	font-size: 1.084em;
@@ -796,29 +796,29 @@ D - COMMON INTERFACE ELEMENTS
 /* Main and Content Options
 -------------------------------------------------------------*/
 
-.brd p.options {
+p.options {
 	border-top: none;
 	float: right;
 }
 
-.brd .main-modoptions .options {
+.main-modoptions .options {
 	text-align: center;
 }
 
-.brd a.feed {
+a.feed {
 	padding-left: 22px;
 	background: url(feed-icon.png) center left no-repeat;
 }
 
-.brd .content-options,
-.brd .ct-options {
+.content-options,
+.ct-options {
 	float: right;
 	margin-top: -2.7em;
 	padding: 0.5em 1.417em;
 	position: relative;
 }
 
-.brd #select-all {
+#select-all {
 	float: right;
 	padding-left: 1em;
 }
@@ -830,14 +830,14 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 /* Header setup generally
 -------------------------------------------------------------*/
 
-.brd .item-summary {
+.item-summary {
 	height: 2.5em;
 	padding: 0;
 	position: relative;
 	font-size: 1em;
 }
 
-.brd .item-summary span {
+.item-summary span {
 	width: 100%;
 	position: absolute;
 	left: -999em;
@@ -845,7 +845,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	display: block;
 }
 
-.brd .item-summary strong {
+.item-summary strong {
 	position: absolute;
 	left: 999em;
 	text-indent: 0;
@@ -854,50 +854,50 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	font-weight: normal;
 }
 
-.brd .item-summary strong:first-letter {
+.item-summary strong:first-letter {
 	text-transform: uppercase;
 }
 
-.brd .item-summary .subject-title {
+.item-summary .subject-title {
 	padding-left: 1.417em;
 }
 
-.brd .item-summary .info-topics,
-.brd .item-summary .info-replies {
+.item-summary .info-topics,
+.item-summary .info-replies {
 	margin-left: 100%;
 	text-align: center;
 	width: 7em;
 	left: 965em;
 }
 
-.brd .item-summary .info-forum {
+.item-summary .info-forum {
 	margin-left: 100%;
 	text-align: center;
 	width: 20em;
 	left: 952em;
 }
 
-.brd .item-summary .info-posts,
-.brd .item-summary .info-views {
+.item-summary .info-posts,
+.item-summary .info-views {
 	margin-left: 100%;
 	text-align: center;
 	width: 7em;
 	left: 972em;
 }
 
-.brd .item-summary .info-lastpost {
+.item-summary .info-lastpost {
 	margin-left: 100%;
 	left: 980em;
 }
 
-.brd p.forum-noview .info-replies {
+p.forum-noview .info-replies {
 	left: 972em;
 }
 
 /* Content setup generally
 -------------------------------------------------------------*/
 
-.brd .main-content .main-item {
+.main-content .main-item {
 	border-top-style: solid;
 	border-top-width: 1px;
 	overflow: hidden;
@@ -905,32 +905,32 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	line-height: 1.4em;
 }
 
-.brd .main-content .main-first-item {
+.main-content .main-first-item {
 	border-top: none;
 }
 
-.brd .main-content .main-item ul {
+.main-content .main-item ul {
 	float: right;
 	position: relative;
 	padding: 0;
 	list-style: none;
 }
 
-.brd .main-content .main-item p,
-.brd .main-content .main-item .hn {
+.main-content .main-item p,
+.main-content .main-item .hn {
 	padding: 0;
 }
 
-.brd .main-content .main-item .hn .item-status {
+.main-content .main-item .hn .item-status {
 	font-weight: normal;
 }
 
-.brd .main-content .main-item .hn .item-status em {
+.main-content .main-item .hn .item-status em {
 	font-style: normal;
 }
 
-.brd .main-content .main-item .item-subject,
-.brd .main-content .main-item li {
+.main-content .main-item .item-subject,
+.main-content .main-item li {
 	float: left;
 	border-left-style: solid;
 	border-left-width: 1px;
@@ -940,34 +940,34 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	padding-bottom: 10.4em;
 }
 
-.brd .main-content .main-item .item-subject {
+.main-content .main-item .item-subject {
 	overflow: hidden;
 	width: 100%;
 }
 
-.brd .main-content .main-item li.info-topics,
-.brd .main-content .main-item li.info-forum,
-.brd .main-content .main-item li.info-posts,
-.brd .main-content .main-item li.info-views,
-.brd .main-content .main-item li.info-replies {
+.main-content .main-item li.info-topics,
+.main-content .main-item li.info-forum,
+.main-content .main-item li.info-posts,
+.main-content .main-item li.info-views,
+.main-content .main-item li.info-replies {
 	width: 7em;
 	text-align: center;
 }
 
-.brd .main-content .main-item li.info-forum {
+.main-content .main-item li.info-forum {
 	width: 20em;
 }
 
-.brd .main-content .main-item li.info-lastpost {
+.main-content .main-item li.info-lastpost {
 	width: 20em;
 }
 
-.brd .main-content .main-item li.info-lastpost cite {
+.main-content .main-item li.info-lastpost cite {
 	overflow: hidden;
 	width: 18em;
 }
 
-.brd .main-item li strong {
+.main-item li strong {
 	font-weight: normal;
 }
 
