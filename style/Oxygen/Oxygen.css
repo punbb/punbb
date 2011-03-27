@@ -1149,11 +1149,11 @@ F - MAIN CONTENT - FORMS
 }
 
 .frm-buttons {
-	margin: 0.75em 1.417em 1em 1.417em;
+	margin: 0.75em 1.417em .8em 1.417em;
 	position: relative;
 	border-top-style: solid;
 	border-top-width: 1px;
-	padding: 1.2em 0pt 0.3em 18em;
+	padding: 1.1em 0pt 0.3em 18em;
 }
 
 .frm-buttons span.submit {
