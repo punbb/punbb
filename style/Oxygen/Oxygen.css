@@ -1204,7 +1204,9 @@ select {
 	padding: 2px 0 2px 1em;
 	width: 16em;
 	text-align:right;
+/*
 	font-weight:bold;
+*/
 }
 
 .sf-set .checkbox label span {
