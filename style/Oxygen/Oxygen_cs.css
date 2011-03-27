@@ -229,7 +229,9 @@ label,
 	color: #357;
 }
 
-.paging * {
+.paging span,
+.paging a,
+.paging strong {
 	border-color: #dedfdf;
 }
 

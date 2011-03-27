@@ -678,8 +678,7 @@ D - COMMON INTERFACE ELEMENTS
 	float: right;
 }
 
-.paging,
-.paging * {
+.paging {
 	white-space:nowrap;
 }
 
@@ -690,6 +689,7 @@ D - COMMON INTERFACE ELEMENTS
 	border-left-style: solid;
 	border-left-width: 1px;
 	float: left;
+	white-space:nowrap;
 }
 
 .paging .first-item,
