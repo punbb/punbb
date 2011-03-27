@@ -85,7 +85,7 @@ $lang_common = array(
 'Item info single'			=>	'%s [ %s ]',
 'Item info plural'			=>	'%s [ %s to %s of %s ]', // e.g. Topics [ 10 to 20 of 30 ]
 'Info separator'			=>	' ', // e.g. 1 Page | 10 Topics
-'Powered by'				=>	'Powered by <strong>%s</strong>, supported by <strong>%s</strong>.',
+'Powered by'				=>	'Powered by %s, supported by %s.',
 'Maintenance'				=>	'Maintenance',
 'Installed extension'		=>	'The %s official extension is installed. Copyright &copy; 2003&ndash;2011 <a href="http://punbb.informer.com/">PunBB</a>.',
 'Installed extensions'		=>	'Currently installed <span id="extensions-used" title="%s">%s official extensions</span>. Copyright &copy; 2003&ndash;2011 <a href="http://punbb.informer.com/">PunBB</a>.',
