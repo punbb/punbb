@@ -449,3 +449,25 @@ th {
 .checklist .checklist-item label:hover {
 	background: #EDF1F5;
 }
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+textarea {
+	border-color: #DFE6ED;
+}
+
+input[type=text]:active,
+input[type=text]:focus,
+input[type=password]:active,
+input[type=password]:focus,
+input[type=email]:active,
+input[type=email]:focus,
+textarea:active,
+textarea:focus {
+	border-color: #C8D3DC #DFE6ED #DFE6ED #C8D3DC;
+	background: #FFFFF3;
+	background: -moz-linear-gradient(top, #FFFEE8, #fff) repeat scroll 0 0 #FFFFF3;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFEE8), to(#fff));
+}

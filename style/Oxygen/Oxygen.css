@@ -1119,7 +1119,7 @@ F - MAIN CONTENT - FORMS
 .mf-box,
 .txt-box {
 	margin: 1.417em;
-	padding: 0.3em 0;
+	padding: 0.5em 0;		/* CHECK 0.3 - 0.5 */
 	position: relative;
 }
 
@@ -1454,6 +1454,16 @@ select {
 .txt-set textarea {
 	width: 95%;
 }
+
+input[type=text],
+input[type=password],
+input[type=email],
+textarea {
+	border-width: 1px;
+	border-style: solid;
+	padding: .3em;
+}
+
 
 /* Error handling
 -------------------------------------------------------------*/
