@@ -1877,20 +1877,20 @@ if ($forum_page['has_required']): ?>
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[location]" value="<?php echo((isset($form['location']) ? forum_htmlencode($form['location']) : forum_htmlencode($user['location']))) ?>" size="35" maxlength="30" /></span>
 					</div>
 				</div>
-<?php ($hook = get_hook('pf_change_details_identity_pre_num_posts')) ? eval($hook) : null; ?>
-<?php if ($forum_user['g_id'] == FORUM_ADMIN): ?>
-				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Edit count'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="num_posts" value="<?php echo $user['num_posts'] ?>" size="8" maxlength="8" /></span>
-					</div>
-				</div>
-<?php endif; ($hook = get_hook('pf_change_details_identity_pre_admin_note')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('pf_change_details_identity_pre_admin_note')) ? eval($hook) : null; ?>
 <?php if ($forum_user['is_admmod']): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Admin note'] ?></span></label><br />
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="admin_note" value="<?php echo(isset($_POST['admin_note']) ? forum_htmlencode($_POST['admin_note']) : forum_htmlencode($user['admin_note'])) ?>" size="35" maxlength="30" /></span>
+					</div>
+				</div>
+<?php endif; ($hook = get_hook('pf_change_details_identity_pre_num_posts')) ? eval($hook) : null; ?>
+<?php if ($forum_user['g_id'] == FORUM_ADMIN): ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Edit count'] ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="num_posts" value="<?php echo $user['num_posts'] ?>" size="8" maxlength="8" /></span>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('pf_change_details_identity_pre_personal_fieldset_end')) ? eval($hook) : null; ?>
@@ -1943,18 +1943,18 @@ if ($forum_page['has_required']): ?>
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[skype]" value="<?php echo(isset($form['skype']) ? forum_htmlencode($form['skype']) : forum_htmlencode($user['skype'])) ?>" size="35" maxlength="80" /></span>
 					</div>
 				</div>
-<?php ($hook = get_hook('pf_change_details_identity_pre_icq')) ? eval($hook) : null; ?>
-				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['ICQ'] ?></span></label><br />
-						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[icq]" value="<?php echo(isset($form['icq']) ? forum_htmlencode($form['icq']) : $user['icq']) ?>" size="12" maxlength="12" /></span>
-					</div>
-				</div>
 <?php ($hook = get_hook('pf_change_details_identity_pre_msn')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['MSN'] ?></span></label><br />
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[msn]" value="<?php echo(isset($form['msn']) ? forum_htmlencode($form['msn']) : forum_htmlencode($user['msn'])) ?>" size="35" maxlength="80" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('pf_change_details_identity_pre_icq')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['ICQ'] ?></span></label><br />
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[icq]" value="<?php echo(isset($form['icq']) ? forum_htmlencode($form['icq']) : $user['icq']) ?>" size="20" maxlength="12" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_details_identity_pre_aim')) ? eval($hook) : null; ?>
