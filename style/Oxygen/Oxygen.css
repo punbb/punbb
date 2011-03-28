@@ -1675,7 +1675,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 
 .postfoot {
 	padding-left: 18em;
-	border-top-style: dashed;
+	border-top-style: none;
 	border-top-width: 1px;
 	position: relative;
 }
