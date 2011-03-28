@@ -517,7 +517,6 @@ if (!empty($forum_page['checkboxes']))
 
 ?>
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<legend><span><?php echo $lang_post['Post settings'] ?></span></legend>
 					<div class="mf-box checkbox">
 						<?php echo implode("\n\t\t\t\t\t", $forum_page['checkboxes'])."\n"; ?>
 					</div>
