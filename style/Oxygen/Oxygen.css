@@ -1196,18 +1196,11 @@ button {
 	text-align: center;
 	text-decoration: none;
 	padding: .32em .5em .33em;
-	background: #f6f6f6;
-	background: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE) repeat scroll 0 0 #F6F6F6;
-	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), to(#EEEEEE));
 	text-shadow: 0 1px 1px rgba(0,0,0,.1);
 	-webkit-border-radius: .2em;
 	-moz-border-radius: .2em;
 	border-radius: .2em;
-	-moz-transition: color .1s linear;
-	-webkit-transition: color .1s linear;
-	-o-transition: color .1s linear;
 	border: 1px solid #CCCCCC;
-	color: #404040;
 }
 
 input[type=submit]:hover,
@@ -1216,13 +1209,9 @@ input[type=button]:hover,
 input[type=button]:focus,
 button:hover,
 button:focus {
-	background: #f3f3f3;
-	background: -moz-linear-gradient(center top , #FFFFFF, #EBEBEB) repeat scroll 0 0 #F6F6F6;
-	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), to(#EBEBEB));
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border: 1px solid #84BCE4;
-	color: #111;
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);

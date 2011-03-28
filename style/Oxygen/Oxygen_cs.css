@@ -488,3 +488,25 @@ textarea:focus {
 	background: -moz-linear-gradient(top, #FFFEE8, #fff) repeat scroll 0 0 #FFFFF3;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFEE8), to(#fff));
 }
+
+
+input[type=submit],
+input[type=button],
+button {
+	background: #f6f6f6;
+	background: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE) repeat scroll 0 0 #F6F6F6;
+	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), to(#EEEEEE));
+	color: #404040;
+}
+
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=button]:hover,
+input[type=button]:focus,
+button:hover,
+button:focus {
+	background: #f3f3f3;
+	background: -moz-linear-gradient(center top , #FFFFFF, #EBEBEB) repeat scroll 0 0 #F6F6F6;
+	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), to(#EBEBEB));
+	color: #111;
+}
