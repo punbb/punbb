@@ -1,4 +1,4 @@
-num_forums<?php
+<?php
 /**
  * Category management page.
  *
