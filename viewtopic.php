@@ -295,6 +295,9 @@ while ($row = $forum_db->fetch_row($result)) {
 	$posts_id[] = $row[0];
 }
 
+ksort($posts_id, SORT_NUMERIC);
+$posts_id = array_reverse($posts_id);
+
 if (!empty($posts_id))
 {
 	// 2. Retrieve the posts (and their respective poster/online status) by known id`s
