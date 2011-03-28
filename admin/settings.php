@@ -247,6 +247,17 @@ if (isset($_POST['form_sent']))
 
 	generate_config_cache();
 
+
+	// If changed sef - remove quick-jump cache
+	if (!empty($forum_config['o_sef']) && !empty($form['sef']))
+	{
+		if ($forum_config['o_sef'] != $form['sef'])
+		{
+			clean_quickjump_cache();
+		}
+	}
+
+
 	($hook = get_hook('aop_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['admin_settings_'.$section]), $lang_admin_settings['Settings updated'].' '.$lang_admin_common['Redirect']);
