@@ -1294,15 +1294,16 @@ button:active {
 	padding: 0.3em 1em;
 }
 
+/*
 input[type=checkbox] {
   vertical-align: bottom;
   *vertical-align: baseline;
 }
-
+*/
 .sf-set .checkbox input {
-	margin: 5px 0 2px -0.2em;
-	height: 1.55em;
-	width: 1.55em;
+	margin: 4px 0 2px -0.2em;
+	/*height: 1.55em;
+	width: 1.55em;*/
 }
 
  /* Fixes alignment issue in Safari */
@@ -1373,8 +1374,8 @@ input[type=radio] {
 
 .mf-item input {
 	margin: 0 0 0 -0.25em;
-	height: 1.55em;
-	width: 1.55em;
+	/*height: 1.55em;
+	width: 1.55em;*/
 }
 
 .mf-item label {
@@ -1478,8 +1479,8 @@ input[type=radio] {
 
 .checklist .checklist-item input {
 	margin: 0;
-	height: 1.55em;
-	width: 1.55em;
+	/*height: 1.55em;
+	width: 1.55em;*/
 }
 
 
