@@ -93,7 +93,7 @@ if (isset($_GET['ip_stats']))
 		<h2 class="hn"><span><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 	<div class="main-content main-forum">
-		<table cellspacing="0">
+		<table>
 			<thead>
 				<tr>
 					<?php echo implode("\n\t\t\t\t", $forum_page['table_header'])."\n" ?>
@@ -257,7 +257,7 @@ else if (isset($_GET['show_users']))
 		<div class="hidden">
 			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_users']).'?action=modify_users') ?>" />
 		</div>
-		<table cellspacing="0">
+		<table>
 			<thead>
 				<tr>
 					<?php echo implode("\n\t\t\t\t", $forum_page['table_header'])."\n" ?>
@@ -1007,7 +1007,7 @@ else if (isset($_GET['find_user']))
 		<div class="hidden">
 			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_users']).'?action=modify_users') ?>" />
 		</div>
-		<table cellspacing="0">
+		<table>
 			<thead>
 				<tr>
 					<?php echo implode("\n\t\t\t\t", $forum_page['table_header'])."\n" ?>

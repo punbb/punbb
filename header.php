@@ -66,7 +66,7 @@ while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_main, $cur_i
 
 
 // START SUBST - <!-- forum_local -->
-$tpl_main = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"', $tpl_main);
+$tpl_main = str_replace('<!-- forum_local -->', 'lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"', $tpl_main);
 // END SUBST - <!-- forum_local -->
 
 

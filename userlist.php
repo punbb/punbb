@@ -259,7 +259,8 @@ if (!empty($founded_user_datas))
 
 ?>
 		<div class="ct-group">
-			<table cellspacing="0" summary="<?php echo $lang_ul['Table summary'] ?>">
+			<table>
+				<caption><?php echo $lang_ul['Table summary'] ?></caption>
 				<thead>
 					<tr>
 						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['table_header'])."\n" ?>

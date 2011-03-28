@@ -680,7 +680,8 @@ function get_saved_queries()
 	</div>
 
 	<div class="main-content debug">
-		<table cellspacing="0" summary="<?php echo $lang_common['Debug summary'] ?>">
+		<table>
+			<caption><?php echo $lang_common['Debug summary'] ?></caption>
 			<thead>
 				<tr>
 					<th class="tcl" scope="col"><?php echo $lang_common['Query times'] ?></th>
