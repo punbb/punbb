@@ -92,7 +92,8 @@ td {
 }
 
 .post div,
-h3.post-ident {
+h3.post-ident,
+.posthead h3 {
 	border-color: #DDE4EB;
 }
 
