@@ -99,7 +99,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 			($hook = get_hook('aba_add_ban_qr_get_last_known_ip')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$ban_ip_from_db = $forum_db->result($result)
+			$ban_ip_from_db = $forum_db->result($result);
 
 			if ($ban_ip_from_db)
 			{
