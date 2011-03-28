@@ -86,12 +86,10 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 	);
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<!DOCTYPE html>
 <html lang="<?php $lang_common['lang_identifier'] ?>" dir="<?php echo $lang_common['lang_direction'] ?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 <title><?php echo generate_crumbs(true) ?></title>
 <style type="text/css">
 body {

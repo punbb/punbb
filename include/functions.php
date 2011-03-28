@@ -3144,14 +3144,12 @@ function error()
 		ob_start('ob_gzhandler');
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
 <title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
 </head>
 <body style="margin: 40px; font: 85%/130% verdana, arial, sans-serif; color: #333;">
-
 <h1>An error was encountered</h1>
 <hr />
 <?php

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html <!-- forum_local -->>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
