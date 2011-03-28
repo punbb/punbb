@@ -1893,6 +1893,10 @@ td {
 	vertical-align: middle;
 }
 
+table caption {
+	display: none;
+}
+
 #brd-userlist table .tc0 {
 	width: 30%
 }
