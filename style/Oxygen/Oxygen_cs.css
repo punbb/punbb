@@ -486,8 +486,11 @@ textarea:active,
 textarea:focus {
 	border-color: #C8D3DC #DFE6ED #DFE6ED #C8D3DC;
 	background: #FFFFF3;
-	background: -moz-linear-gradient(top, #FFFEE8, #fff) repeat scroll 0 0 #FFFFF3;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFEE8), to(#fff));
+	background: -moz-linear-gradient(top, #fffee8, #fff);
+	background: -o-linear-gradient(top, #fffee8, #fff);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fffee8), to(#fff));
+	background: -webkit-linear-gradient(top, #fffee8, #fff);
+	background: linear-gradient(top, #fffee8, #fff);
 }
 
 
@@ -495,8 +498,11 @@ input[type="submit"],
 input[type="button"],
 button {
 	background: #f6f6f6;
-	background: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE) repeat scroll 0 0 #F6F6F6;
-	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), to(#EEEEEE));
+	background: -moz-linear-gradient(top, #fff, #eee);
+	background: -o-linear-gradient(top, #fff, #eee);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));
+	background: -webkit-linear-gradient(top, #fff, #eee);
+	background: linear-gradient(top, #fff, #eee);
 	color: #404040;
 }
 
@@ -507,7 +513,10 @@ input[type="button"]:focus,
 button:hover,
 button:focus {
 	background: #f3f3f3;
-	background: -moz-linear-gradient(center top , #FFFFFF, #EBEBEB) repeat scroll 0 0 #F6F6F6;
-	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), to(#EBEBEB));
+	background: -moz-linear-gradient(top, #fff, #ebebeb);
+	background: -o-linear-gradient(top, #fff, #ebebeb);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ebebeb));
+	background: -webkit-linear-gradient(top, #fff, #ebebeb);
+	background: linear-gradient(top, #fff, #ebebeb);
 	color: #111;
 }

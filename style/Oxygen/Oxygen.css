@@ -1196,15 +1196,12 @@ input[type="button"],
 button {
 	display: inline-block;
 	vertical-align: baseline;
-	outline: none;
 	text-align: center;
 	text-decoration: none;
-	padding: .32em .5em .33em;
-	text-shadow: 0 1px 1px rgba(0,0,0,.1);
-	-webkit-border-radius: .2em;
-	-moz-border-radius: .2em;
-	border-radius: .2em;
+	padding: .32em .5em;
+	border-radius: .25em;
 	border: 1px solid #CCCCCC;
+	text-shadow: 0px 1px 1px #ddd;
 }
 
 input[type="submit"]:hover,
@@ -1213,12 +1210,10 @@ input[type="button"]:hover,
 input[type="button"]:focus,
 button:hover,
 button:focus {
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border: 1px solid #84BCE4;
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
-	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
+	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 }
 
 input[type="submit"]:active,
