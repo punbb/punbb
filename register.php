@@ -131,8 +131,6 @@ else if (isset($_POST['form_sent']))
 
 		if ($forum_config['o_regs_verify'] == '1')
 		{
-			$email2 = strtolower(forum_trim($_POST['req_email2']));
-
 			$password1 = random_key(8, true);
 			$password2 = $password1;
 		}
@@ -157,8 +155,6 @@ else if (isset($_POST['form_sent']))
 
 		if (!is_valid_email($email1))
 			$errors[] = $lang_profile['Invalid e-mail'];
-		else if ($forum_config['o_regs_verify'] == '1' && $email1 != $email2)
-			$errors[] = $lang_profile['E-mail not match'];
 
 		// Check if it's a banned e-mail address
 		$banned_email = is_banned_email($email1);
@@ -373,14 +369,7 @@ ob_start();
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_email1" value="<?php echo(isset($_POST['req_email1']) ? forum_htmlencode($_POST['req_email1']) : '') ?>" size="35" maxlength="80" /></span>
 					</div>
 				</div>
-<?php ($hook = get_hook('rg_register_pre_email_confirm')) ? eval($hook) : null; ?>
-<?php if ($forum_config['o_regs_verify'] == '1'): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="sf-box text required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Confirm e-mail'] ?></span> <small><?php echo $lang_profile['Confirm e-mail help'] ?></small></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_email2" value="<?php echo(isset($_POST['req_email2']) ? forum_htmlencode($_POST['req_email2']) : '') ?>" size="35" maxlength="80" /></span>
-					</div>
-				</div>
-<?php endif;
+<?php ($hook = get_hook('rg_register_pre_email_confirm')) ? eval($hook) : null;
 
 		$languages = array();
 		$d = dir(FORUM_ROOT.'lang');
