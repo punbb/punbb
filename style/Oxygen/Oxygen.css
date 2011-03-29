@@ -121,7 +121,7 @@ span.fld-input:after,
 .posthead:after,
 .postbody:after,
 .postfoot .post-options:after {
-	content: "";
+	content: "\0020";
 	display: block;
 	font-size: 0;
 	height: 0;
@@ -1184,15 +1184,15 @@ button {
 }
 
 label,
-input[type=button],
-input[type=submit],
+input[type="button"],
+input[type="submit"],
 button,
 select {
 	cursor: pointer;
 }
 
-input[type=submit],
-input[type=button],
+input[type="submit"],
+input[type="button"],
 button {
 	display: inline-block;
 	vertical-align: baseline;
@@ -1207,10 +1207,10 @@ button {
 	border: 1px solid #CCCCCC;
 }
 
-input[type=submit]:hover,
-input[type=submit]:focus,
-input[type=button]:hover,
-input[type=button]:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+input[type="button"]:hover,
+input[type="button"]:focus,
 button:hover,
 button:focus {
 	-moz-border-radius: 3px;
@@ -1221,8 +1221,8 @@ button:focus {
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 }
 
-input[type=submit]:active,
-input[type=button]:active
+input[type="submit"]:active,
+input[type="button"]:active
 button:active {
 	position: relative;
 	top: 1px;
@@ -1316,7 +1316,7 @@ input[type=checkbox] {
 
 /* vertical alignment of radio buttons
  */
-input[type=radio] {
+input[type="radio"] {
 	vertical-align: text-bottom;
 }
 
@@ -1519,9 +1519,9 @@ input[type=radio] {
 	width: 95%;
 }
 
-input[type=text],
-input[type=password],
-input[type=email],
+input[type="text"],
+input[type="password"],
+input[type="email"],
 textarea {
 	border-width: 1px;
 	border-style: solid;
