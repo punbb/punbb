@@ -460,11 +460,11 @@ th {
 /* Multi Checkbox Widget
 -------------------------------------------------------------*/
 
-.checklist .checklist-item label {
+.checklist-item label {
 	background: #fff;
 }
 
-.checklist .checklist-item label:hover {
+.checklist-item label:hover {
 	background: #EDF1F5;
 }
 

@@ -937,7 +937,7 @@ p.forum-noview .info-replies {
 	font-style: normal;
 }
 
-.main-content .main-item .item-subject,
+/*.main-content*/ .main-item .item-subject,
 .main-content .main-item li {
 	float: left;
 	border-left-style: solid;
@@ -948,29 +948,30 @@ p.forum-noview .info-replies {
 	padding-bottom: 10.4em;
 }
 
-.main-content .main-item .item-subject {
+/*.main-content*/ .main-item .item-subject {
 	overflow: hidden;
 	width: 100%;
 }
 
-.main-content .main-item li.info-topics,
-.main-content .main-item li.info-forum,
-.main-content .main-item li.info-posts,
-.main-content .main-item li.info-views,
-.main-content .main-item li.info-replies {
+/*.main-content .main-item */li.info-topics,
+/*.main-content .main-item li.info-forum,
+/*.main-content .main-item*/ li.info-posts,
+/*.main-content .main-item*/ li.info-views,
+/*.main-content .main-item*/ li.info-replies {
 	width: 7em;
 	text-align: center;
 }
 
-.main-content .main-item li.info-forum {
+/*.main-content .main-item*/ li.info-forum {
+	width: 20em;
+	text-align: center;
+}
+
+/*.main-content .main-item */li.info-lastpost {
 	width: 20em;
 }
 
-.main-content .main-item li.info-lastpost {
-	width: 20em;
-}
-
-.main-content .main-item li.info-lastpost cite {
+/*.main-content .main-item */li.info-lastpost cite {
 	overflow: hidden;
 	width: 18em;
 }
