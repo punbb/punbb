@@ -91,3 +91,8 @@ IE6 - FIXES
 #brd-about p#extensions-used {
 	clear: left;
 	}
+
+/* Remove scrollbar from empty textarea */
+textarea {
+	overflow: auto;
+}

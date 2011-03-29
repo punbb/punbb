@@ -3,6 +3,11 @@ IE8 - FIXES
 **************************************************************/
 /* Forms
 -------------------------------------------------------------*/
-.brd .txt-set .required label span em {
+.txt-set .required label span em {
 	margin-bottom: 0;
-	}
+}
+
+/* Remove scrollbar from empty textarea */
+textarea {
+	overflow: auto;
+}
