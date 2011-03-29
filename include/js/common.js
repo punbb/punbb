@@ -196,7 +196,7 @@ var Forum = {
 		if (!nodes || window.location.hash.replace(/#/g,'')) return;
 		nodes = nodes.all ? nodes.all : nodes.getElementsByTagName('*');
 		// TODO: make sure line above gets nodes in display-order across browsers
-		var fn = function(x) { return x.tagName.toUpperCase()=='TEXTAREA' || (x.tagName.toUpperCase()=='INPUT' && (x.type=='text') || (x.type=='password')) };
+		var fn = function(x) { return x.tagName.toUpperCase()=='TEXTAREA' || (x.tagName.toUpperCase()=='INPUT' && (x.type=='text') || (x.type=='password') || (x.type=='email')) };
 		var n = Forum.find(fn, nodes);
 		if (n > -1) nodes[n].focus();
 	}
