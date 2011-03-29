@@ -28,7 +28,9 @@ legend,
 blockquote,
 table,
 th,
-td {
+td,
+input,
+textarea {
 	margin:0;
 	padding:0;
 	text-align: left;
@@ -1271,7 +1273,7 @@ button:active {
 	display: block;
 	text-align: left;
 	position: relative;
-	margin: 2.1em 1em 0 1.1em;
+	margin: 2.1em 1em 0 1em;
 	font-size: 0.917em;
 }
 
