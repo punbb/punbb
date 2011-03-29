@@ -469,19 +469,19 @@ th {
 }
 
 
-input[type=text],
-input[type=password],
-input[type=email],
+input[type="text"],
+input[type="password"],
+input[type="email"],
 textarea {
 	border-color: #DFE6ED;
 }
 
-input[type=text]:active,
-input[type=text]:focus,
-input[type=password]:active,
-input[type=password]:focus,
-input[type=email]:active,
-input[type=email]:focus,
+input[type="text"]:active,
+input[type="text"]:focus,
+input[type="password"]:active,
+input[type="password"]:focus,
+input[type="email"]:active,
+input[type="email"]:focus,
 textarea:active,
 textarea:focus {
 	border-color: #C8D3DC #DFE6ED #DFE6ED #C8D3DC;
@@ -491,8 +491,8 @@ textarea:focus {
 }
 
 
-input[type=submit],
-input[type=button],
+input[type="submit"],
+input[type="button"],
 button {
 	background: #f6f6f6;
 	background: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE) repeat scroll 0 0 #F6F6F6;
@@ -500,10 +500,10 @@ button {
 	color: #404040;
 }
 
-input[type=submit]:hover,
-input[type=submit]:focus,
-input[type=button]:hover,
-input[type=button]:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+input[type="button"]:hover,
+input[type="button"]:focus,
 button:hover,
 button:focus {
 	background: #f3f3f3;
