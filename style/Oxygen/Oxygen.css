@@ -929,11 +929,11 @@ p.forum-noview .info-replies {
 	padding: 0;
 }
 
-.main-content .main-item .hn .item-status {
+/*.main-content .main-item*/ .hn .item-status {
 	font-weight: normal;
 }
 
-.main-content .main-item .hn .item-status em {
+/*.main-content .main-item*/ .hn .item-status em {
 	font-style: normal;
 }
 
@@ -1019,28 +1019,28 @@ p.forum-noview .info-replies {
 	margin-left: -47em;
 }
 
-.main-content .main-item .item-subject span.modlist {
+/*.main-content .main-item*/ .item-subject span.modlist {
 	display: block;
 }
 
-.main-content .main-item .hn strong {
+/*.main-content*/ .main-item .hn strong {
 	font-size: 1em;
 }
 
-.main-content .main-item .hn strong span {
+/*.main-content*/ .main-item .hn strong span {
 	font-weight: normal;
 }
 
-#brd-index .main-content .main-item .hn span {
+#brd-index /*.main-content*/ .main-item .hn span {
 	font-size: 1.084em;
 	font-weight: bold;
 }
 
-#brd-index .main-content .main-item .hn small {
+#brd-index /*.main-content*/ .main-item .hn small {
 	font-size: 1em;
 }
 
-.main-content .main-item .item-status {
+/*.main-content .main-item*/ .item-status {
 	font-weight: bold;
 }
 
@@ -1048,8 +1048,9 @@ p.forum-noview .info-replies {
 	font-style: normal;
 }
 
-.main-content .main-item span.item-nav,
-.main-content .main-item span.item-nav * {
+/*.main-content .main-item span*/ .item-nav,
+/*.main-content .main-item span*/ .item-nav a,
+.item-nav span  {
 	white-space: nowrap;
 	font-style: normal;
 }
@@ -1059,22 +1060,22 @@ p.forum-noview .info-replies {
 	margin: 0 0 0 1.5em;
 }
 
-.main-content .main-item li.info-lastpost cite,
-.main-content .main-item li.info-lastpost span,
-.main-content .main-item li.info-forum a {
+/*.main-content .main-item*/ li.info-lastpost cite,
+/*.main-content .main-item*/ li.info-lastpost span,
+/*.main-content .main-item*/ li.info-forum a {
 	display: block;
 	padding: 0 1em;
 	font-style: normal;
 	font-weight: normal;
 }
 
-.main-content .main-item li.info-lastpost strong {
+/*.main-content .main-item*/ li.info-lastpost strong {
 	padding: 0 0 0 1em;
 	font-style: normal;
 	font-weight: normal;
 }
 
-.main-content .main-item li.info-select {
+/*.main-content .main-item*/ li.info-select {
 	position: absolute;
 	right: 0;
 	top: 0;
