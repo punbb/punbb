@@ -415,7 +415,7 @@ else
 		error($lang_install['Username too short']);
 	if (utf8_strlen($username) > 25)
 		error($lang_install['Username too long']);
-	if (utf8_strlen($password1) < 4)
+	if (utf8_strlen($password1) < 8)
 		error($lang_install['Pass too short']);
 	if ($password1 != $password2)
 		error($lang_install['Pass not match']);
