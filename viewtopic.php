@@ -360,7 +360,7 @@ if (!empty($posts_id))
 			{
 				if ($forum_config['o_avatars'] == '1' && $forum_user['show_avatars'] != '0')
 				{
-					$forum_page['avatar_markup'] = generate_avatar_markup($cur_post['poster_id'], $cur_post['avatar'], $cur_post['avatar_width'], $cur_post['avatar_height']);
+					$forum_page['avatar_markup'] = generate_avatar_markup($cur_post['poster_id'], $cur_post['avatar'], $cur_post['avatar_width'], $cur_post['avatar_height'], $cur_post['username']);
 
 					if (!empty($forum_page['avatar_markup']))
 						$forum_page['author_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';

@@ -1348,7 +1348,7 @@ if ($forum_user['id'] != $id &&
 
 	if ($forum_config['o_avatars'] == '1')
 	{
-		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], TRUE);
+		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], $user['username'], TRUE);
 
 		if (!empty($forum_page['avatar_markup']))
 			$forum_page['user_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
@@ -1543,7 +1543,7 @@ else
 
 		if ($forum_config['o_avatars'] == '1')
 		{
-			$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], TRUE);
+			$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], $user['username'], TRUE);
 
 			if (!empty($forum_page['avatar_markup']))
 				$forum_page['user_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
@@ -2467,7 +2467,7 @@ if ($forum_page['has_required']): ?>
 
 	else if ($section == 'avatar' && $forum_config['o_avatars'] == '1')
 	{
-		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], TRUE);
+		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], $user['username'], TRUE);
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(

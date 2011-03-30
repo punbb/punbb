@@ -484,7 +484,7 @@ function generate_navlinks()
 
 
 // Outputs markup to display a user's avatar
-function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_height, $drop_cache = FALSE)
+function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_height, $username = NULL, $drop_cache = FALSE)
 {
 	global $forum_config, $base_url;
 
@@ -526,7 +526,12 @@ function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_h
 			$path .= '?no_cache='.random_key(8, TRUE);
 		}
 
-		$avatar_markup = '<img src="'.$base_url.'/'.$path.'" width="'.$avatar_width.'" height="'.$avatar_height.'" alt="" />';
+		$alt_attr = '';
+		if (is_string($username) && utf8_strlen($username) > 0) {
+			$alt_attr = forum_htmlencode($username);
+		}
+
+		$avatar_markup = '<img src="'.$base_url.'/'.$path.'" width="'.$avatar_width.'" height="'.$avatar_height.'" alt="'.$alt_attr.'" />';
 	}
 
 	($hook = get_hook('fn_generate_avatar_markup_end')) ? eval($hook) : null;
