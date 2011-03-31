@@ -12,6 +12,10 @@
 if (!defined('FORUM'))
 	exit;
 
+// Load the IDNA class for international url handling
+require FORUM_ROOT.'include/idna_convert.class.php';
+
+
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
 $smilies = array(':)' => 'smile.png', '=)' => 'smile.png', ':|' => 'neutral.png', '=|' => 'neutral.png', ':(' => 'sad.png', '=(' => 'sad.png', ':D' => 'big_smile.png', '=D' => 'big_smile.png', ':o' => 'yikes.png', ':O' => 'yikes.png', ';)' => 'wink.png', ':/' => 'hmm.png', ':P' => 'tongue.png', ':p' => 'tongue.png', ':lol:' => 'lol.png', ':mad:' => 'mad.png', ':rolleyes:' => 'roll.png', ':cool:' => 'cool.png');
@@ -55,7 +59,16 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 		$text = str_replace('*'."\0".']', '*]', $text);
 
 		if ($forum_config['o_make_links'] == '1')
-			$text = do_clickable($text);
+		{
+			// Check Unicode support
+			$unicode = false;
+			if ((version_compare(PHP_VERSION, '5.1.0', '>=') || (version_compare(PHP_VERSION, '5.0.0-dev', '<=') && version_compare(PHP_VERSION, '4.4.0', '>='))) && @preg_match('/\p{L}/u', 'a') !== false)
+			{
+				$unicode = true;
+			}
+
+			$text = do_clickable($text, $unicode);
+		}
 
 		// If we split up the message before we have to concatenate it together again (code tags)
 		if (isset($inside))
@@ -590,9 +603,22 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	else if (!preg_match('#^([a-z0-9]{3,6})://#', $url)) 	// Else if it doesn't start with abcdef://, we add http://
 		$full_url = 'http://'.$full_url;
 
+	$idn = new idna_convert();
+	$full_url = $idn->encode($full_url);
+
 	// Ok, not very pretty :-)
 	if (!$bbcode)
+	{
+		if ($link == '' || $link == $url)
+		{
+			if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $url))
+			{
+				$link = $idn->decode($url);
+			}
+		}
+
 		$link = ($link == '' || $link == $url) ? ((utf8_strlen($url) > 55) ? utf8_substr($url, 0 , 39).' … '.utf8_substr($url, -10) : $url) : stripslashes($link);
+	}
 
 	$return = ($hook = get_hook('ps_handle_url_tag_end')) ? eval($hook) : null;
 	if ($return != null)
@@ -600,6 +626,11 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 
 	if ($bbcode)
 	{
+		if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $link))
+		{
+			$link = $idn->decode($link);
+		}
+
 		if ($full_url == $link)
 			return '[url]'.$link.'[/url]';
 		else
@@ -748,12 +779,20 @@ function do_bbcode($text, $is_signature = false)
 //
 // Make hyperlinks clickable
 //
-function do_clickable($text)
+function do_clickable($text, $unicode = FALSE)
 {
 	$text = ' '.$text;
 
-	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
-	$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+	if ($unicode)
+	{
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\p{Nd}\p{L}\-]+\.([\p{Nd}\p{L}\-]+\.)*[\p{Nd}\p{L}\-]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ieu', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\p{Nd}\p{L}\-]+\.)*[\p{Nd}\p{L}\-]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ieu', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+	}
+	else
+	{
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-]?)?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+	}
 
 	return substr($text, 1);
 }

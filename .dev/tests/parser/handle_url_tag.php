@@ -26,10 +26,16 @@ class handle_url_tag_Test extends PHPUnit_TestCase {
 	}
 
 	public function test_handle_url_tag_international() {
-		$this->assertEquals('<a href="http://xn--l1adgmc.xn--p1ai">http://форум.рф</a>', handle_url_tag('http://форум.рф'));
+		$this->assertEquals('<a href="http://xn--l1adgmc.xn--p1ai?viewtopic=1234#p4">http://форум.рф?viewtopic=1234#p4</a>', handle_url_tag('http://форум.рф?viewtopic=1234#p4'));
 		$this->assertEquals('<a href="http://xn--caf-dma.com">http://café.com</a>', handle_url_tag('http://café.com'));
 		$this->assertEquals('<a href="http://xn--caf-dma.com">http://café.com</a>', handle_url_tag('http://xn--caf-dma.com'));
 	}
+
+	public function test_do_clickable() {
+		$this->assertEquals('[url=http://xn--caf-dma.com]http://café.com[/url]', do_clickable('http://xn--caf-dma.com', TRUE));
+		$this->assertEquals('[url=http://xn--d1acpjx3f.xn--p1ai]http://яндекс.рф[/url]', do_clickable('http://яндекс.рф', TRUE));
+	}
+
 }
 
 
