@@ -61,12 +61,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 		if ($forum_config['o_make_links'] == '1')
 		{
 			// Check Unicode support
-			$unicode = false;
-			if ((version_compare(PHP_VERSION, '5.1.0', '>=') || (version_compare(PHP_VERSION, '5.0.0-dev', '<=') && version_compare(PHP_VERSION, '4.4.0', '>='))) && @preg_match('/\p{L}/u', 'a') !== false)
-			{
-				$unicode = true;
-			}
-
+			$unicode = defined('FORUM_SUPPORT_PCRE_UNICODE');
 			$text = do_clickable($text, $unicode);
 		}
 

@@ -68,6 +68,12 @@ if (defined('FORUM_DEBUG'))
 else
 	error_reporting(E_ALL ^ E_NOTICE);
 
+// Detect UTF-8 support in PCRE
+if ((version_compare(PHP_VERSION, '5.1.0', '>=') || (version_compare(PHP_VERSION, '5.0.0-dev', '<=') && version_compare(PHP_VERSION, '4.4.0', '>='))) && @/**/preg_match('/\p{L}/u', 'a') !== FALSE)
+{
+	define('FORUM_SUPPORT_PCRE_UNICODE', 1);
+}
+
 // Force POSIX locale (to prevent functions such as strtolower() from messing up UTF-8 strings)
 setlocale(LC_CTYPE, 'C');
 
