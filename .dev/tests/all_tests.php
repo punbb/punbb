@@ -15,6 +15,7 @@
 
 	// We need some stuff from functions.php
 	require FORUM_ROOT.'include/essentials.php';
+	require_once FORUM_ROOT.'include/parser.php';
 
 	if (!defined('FORUM_DEBUG')) {
 		define('FORUM_DEBUG', 1);
@@ -27,6 +28,8 @@
 	require_once('functions/array_insert_test.php');
 	require_once('functions/tools_test.php');
 	require_once('censor_words/censor_words_test.php');
+
+	require_once('parser/parser.php');
 
 
 	// Strip out "bad" UTF-8 characters
@@ -93,6 +96,8 @@
 	$suite->addTestSuite('array_insert_Test');
 	$suite->addTestSuite('tools_Test');
 	$suite->addTestSuite('censor_words_do_Test');
+	$suite->addTestSuite('handle_url_tag_Test');
+
 
 
 	$result = PHPUnit::run($suite);
