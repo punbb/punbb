@@ -598,17 +598,24 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	else if (!preg_match('#^([a-z0-9]{3,6})://#', $url)) 	// Else if it doesn't start with abcdef://, we add http://
 		$full_url = 'http://'.$full_url;
 
-	$idn = new idna_convert();
-	$full_url = $idn->encode($full_url);
+	if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+	{
+		$idn = new idna_convert();
+		$idn->set_parameter('encoding', 'utf8');
+		$idn->set_parameter('strict', false);
+
+		$full_url = $idn->encode($full_url);
+	}
 
 	// Ok, not very pretty :-)
 	if (!$bbcode)
 	{
-		if ($link == '' || $link == $url)
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
 		{
-			if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $url))
+			$link_name = ($link == '' || $link == $url) ? $url : $link;
+			if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $link_name))
 			{
-				$link = $idn->decode($url);
+				$link = $idn->decode($link_name);
 			}
 		}
 
@@ -621,9 +628,12 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 
 	if ($bbcode)
 	{
-		if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $link))
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
 		{
-			$link = $idn->decode($link);
+			if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $link))
+			{
+				$link = $idn->decode($link);
+			}
 		}
 
 		if ($full_url == $link)
