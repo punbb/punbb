@@ -13,8 +13,7 @@ if (!defined('FORUM'))
 	exit;
 
 // Load the IDNA class for international url handling
-require FORUM_ROOT.'include/idna_convert.class.php';
-
+require FORUM_ROOT.'include/idna/idna_convert.class.php';
 
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
