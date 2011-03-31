@@ -1382,11 +1382,33 @@ if ($forum_user['id'] != $id &&
 
 	if ($user['url'] != '')
 	{
+		$url_source = $user['url'];
+
+		// IDNA?
+		// Load the IDNA class for international url handling
+		require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+		{
+			$idn = new idna_convert();
+			$idn->set_parameter('encoding', 'utf8');
+			$idn->set_parameter('strict', false);
+
+			if (preg_match('!^(https?|ftp|news){1}'.preg_quote('://xn--', '!').'!', $url_source))
+			{
+				$user['url'] = $idn->decode($url_source);
+			}
+			else
+			{
+				$url_source = $idn->encode($url_source);
+			}
+		}
+
 		if ($forum_config['o_censoring'] == '1')
 			$user['url'] = censor_words($user['url']);
 
+		$url_source = forum_htmlencode($url_source);
 		$user['url'] = forum_htmlencode($user['url']);
-		$forum_page['url'] = '<a href="'.$user['url'].'" class="external url" rel="me">'.$user['url'].'</a>';
+		$forum_page['url'] = '<a href="'.$url_source.'" class="external url" rel="me">'.$user['url'].'</a>';
 
 		$forum_page['user_contact']['website'] = '<li><span>'.$lang_profile['Website'].': '.$forum_page['url'].'</span></li>';
 	}
@@ -1591,12 +1613,34 @@ else
 		// Website
 		if ($user['url'] != '')
 		{
-			$user['url'] = forum_htmlencode($user['url']);
+			$url_source = $user['url'];
+
+			// IDNA?
+			// Load the IDNA class for international url handling
+			require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
+			if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+			{
+				$idn = new idna_convert();
+				$idn->set_parameter('encoding', 'utf8');
+				$idn->set_parameter('strict', false);
+
+				if (preg_match('!^(https?|ftp|news){1}'.preg_quote('://xn--', '!').'!', $url_source))
+				{
+					$user['url'] = $idn->decode($url_source);
+				}
+				else
+				{
+					$url_source = $idn->encode($url_source);
+				}
+			}
 
 			if ($forum_config['o_censoring'] == '1')
 				$user['url'] = censor_words($user['url']);
 
-			$forum_page['url'] = '<a href="'.$user['url'].'" class="external url" rel="me">'.$user['url'].'</a>';
+			$url_source = forum_htmlencode($url_source);
+			$user['url'] = forum_htmlencode($user['url']);
+			$forum_page['url'] = '<a href="'.$url_source.'" class="external url" rel="me">'.$user['url'].'</a>';
+
 			$forum_page['user_contact']['website'] = '<li><span>'.$lang_profile['Website'].': '.$forum_page['url'].'</span></li>';
 		}
 

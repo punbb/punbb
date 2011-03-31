@@ -612,7 +612,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
 		{
 			$link_name = ($link == '' || $link == $url) ? $url : $link;
-			if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $link_name))
+			if (preg_match('!^(https?|ftp|news){1}'.preg_quote('://xn--', '!').'!', $link_name))
 			{
 				$link = $idn->decode($link_name);
 			}
@@ -629,7 +629,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	{
 		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
 		{
-			if (!preg_match('!^'.preg_quote('(https?|ftp|news){1}://xn--', '!').'!', $link))
+			if (preg_match('!^(https?|ftp|news){1}'.preg_quote('://xn--', '!').'!', $link))
 			{
 				$link = $idn->decode($link);
 			}
