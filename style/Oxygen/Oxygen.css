@@ -1225,6 +1225,10 @@ button:active {
 	top: 1px;
 }
 
+input[type="submit"]:default,
+input[type="button"]:default {
+	font-weight: bold;
+}
 
 
 /* Single Field Items (Text, Select, Checkbox)
