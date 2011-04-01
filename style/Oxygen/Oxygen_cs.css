@@ -36,6 +36,12 @@ a:focus {
 	border-color: #fff;
 }
 
+#brd-crumbs-top .crumblast a,
+#brd-crumbs-top .crumblast a:hover {
+	color: #111;
+	text-decoration: none;
+}
+
 
 .main-item,
 .main-item li,
