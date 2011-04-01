@@ -339,7 +339,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 <?php ($hook = get_hook('li_forgot_pass_group_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit"><input type="submit" name="request_pass" value="<?php echo $lang_login['Submit password request'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

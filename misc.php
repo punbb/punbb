@@ -338,7 +338,7 @@ else if (isset($_GET['email']))
 <?php ($hook = get_hook('mi_email_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>
@@ -542,7 +542,7 @@ else if (isset($_GET['report']))
 <?php ($hook = get_hook('mi_report_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

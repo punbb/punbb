@@ -89,7 +89,7 @@ else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_P
 <?php ($hook = get_hook('rg_rules_group_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit"><input type="submit" name="agree" value="<?php echo $lang_profile['Agree'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>
