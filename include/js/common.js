@@ -150,6 +150,22 @@ var Forum = {
 		document.location = url;
 		return false;
 	},
+	attachQuickjumpRedirect: function() {
+		var qj_sel = document.getElementById('qjump-select'),
+			qj_submit = document.getElementById('qjump-submit');
+
+		if (qj_sel) {
+			qj_sel.onchange = function () {
+				return Forum.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
+			};
+		}
+
+		if (qj_submit) {
+			qj_submit.onclick = function () {
+				return Forum.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
+			};
+		}
+	},
 	/* toggle all checkboxes in the given form */
 	toggleCheckboxes: function(curForm)
 	{
@@ -210,6 +226,7 @@ if (!Modernizr.input.required) {
 
 Forum.addLoadEvent(Forum.attachWindowOpen);
 Forum.addLoadEvent(Forum.autoFocus);
+Forum.addLoadEvent(Forum.attachQuickjumpRedirect);
 
 /* A handful of functions in this script have been released into the Public
    Domain by Shawn Brown or other authors. Although I, Shawn Brown, do not
