@@ -252,6 +252,12 @@ label,
 	color: #99C;
 }
 
+.lastedit em {
+	font-size: .95em;
+	font-style: normal;
+	color: #999;
+}
+
 /* Menus
 ----------------------------------------------------------------*/
 
