@@ -1,0 +1,57 @@
+PunBB 1.3.5
+2011-03-21 15:30:27
+====================
+
+ * a lot of bugs fixed (CSS & markup, correct path and alerts on install, fixed typos and more)
+ * added missing lang entries on language files
+ * hidden guest email
+ * increased visit timeout
+ * deleting non-activated users on registering
+ * correct deprecated function calls
+ * added paginal navigation on pages admin users and bans
+ * added validation timezone and report length
+ * added hooks
+
+
+PunBB 1.3.4
+====================
+2009-05-20 13:29:29
+
+The main change since 1.3.3 is the fix of the possible XSS vulnerability in profile.php
+on password and e-mail change (reported by Richard Sammet).
+As usual, the hotfix for older versions is released as well, which resolves the same security issue.
+If, for the reason of possible incompatibility of styles and extensions, you have not upgraded
+to 1.3.3 yet, you may also get along without upgrading to 1.3.4
+
+
+PunBB 1.3.3
+====================
+2009-04-17 16:34:41
+
+ * a lot of bugs fixed (CSS & markup, defects in language files, hook rearrangements, parsing posts in feeds)
+ * correct response header placement upon errors
+ * correct language pack detection during the final stage of the install process
+ * contains fixes of security flaws (which were fixed by hotfixes in previous versions)
+ * it is now possible to limit searches to topic subjects or message bodies
+ * users are not allowed to change their e-mails without entering their passwords first
+
+
+PunBB 1.3.2
+====================
+2008-12-08 18:31:21
+
+Apart from minor bugs, the following security flaws have been resolved (reported by Stefan Esser):
+ * an XSS vulnerability in login.php
+ * a possible SQL-injection in the the admin settings page with permission config values
+ * a possible SQL-injection in the the admin users page
+
+
+PunBB 1.3.1
+====================
+2008-11-26 19:18:02
+
+ * XSS vulnerability via topic subjects in moderate.php is fixed (reported by PHPLizardo)
+ * Markup issues are fixed, language files are reviewed (thanks to PunBB translators)
+ * Both outdated and obscure notifications are modified
+
+
