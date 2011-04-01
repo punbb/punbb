@@ -129,6 +129,70 @@ function generate_ranks_cache()
 
 
 //
+// Generate the forum stats cache PHP script
+//
+function generate_stats_cache()
+{
+	global $forum_db;
+
+	$stats = array();
+
+	$return = ($hook = get_hook('ch_fn_generate_stats_cache_start')) ? eval($hook) : null;
+	if ($return != null)
+		return;
+
+	// Collect some statistics from the database
+	$query = array(
+		'SELECT'	=> 'COUNT(u.id) - 1',
+		'FROM'		=> 'users AS u',
+		'WHERE'		=> 'u.group_id != '.FORUM_UNVERIFIED
+	);
+
+	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_user_count')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$stats['total_users'] = $forum_db->result($result);
+
+
+	// Get last registered user info
+	$query = array(
+		'SELECT'	=> 'u.id, u.username',
+		'FROM'		=> 'users AS u',
+		'WHERE'		=> 'u.group_id != '.FORUM_UNVERIFIED,
+		'ORDER BY'	=> 'u.registered DESC',
+		'LIMIT'		=> '1'
+	);
+
+	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_newest_user')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$stats['last_user'] = $forum_db->fetch_assoc($result);
+
+
+	// Get num topics and posts
+	$query = array(
+		'SELECT'	=> 'SUM(f.num_topics), SUM(f.num_posts)',
+		'FROM'		=> 'forums AS f'
+	);
+
+	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_post_stats')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	list($stats['total_topics'], $stats['total_posts']) = $forum_db->fetch_row($result);
+
+	$stats['cached'] = time();
+
+	// Output ranks list as PHP code
+	$fh = @/**/fopen(FORUM_CACHE_DIR.'cache_stats.php', 'wb');
+	if (!$fh)
+		error('Unable to write stats cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'define(\'FORUM_STATS_LOADED\', 1);'."\n\n".'$forum_stats = '.var_export($stats, true).';'."\n\n".'?>');
+
+	fclose($fh);
+	unset($stats);
+}
+
+
+
+//
 // Generate the censor cache PHP script
 //
 function generate_censors_cache()

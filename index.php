@@ -260,42 +260,23 @@ ob_start();
 
 ($hook = get_hook('in_info_output_start')) ? eval($hook) : null;
 
-// Collect some statistics from the database
-$query = array(
-	'SELECT'	=> 'COUNT(u.id) - 1',
-	'FROM'		=> 'users AS u',
-	'WHERE'		=> 'u.group_id != '.FORUM_UNVERIFIED
-);
+if (file_exists(FORUM_CACHE_DIR.'cache_stats.php'))
+	include FORUM_CACHE_DIR.'cache_stats.php';
 
-($hook = get_hook('in_stats_qr_get_user_count')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$stats['total_users'] = $forum_db->result($result);
+// Regenerate cache only if the cache is more than 30 minutes old
+if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800))
+{
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require FORUM_ROOT.'include/cache.php';
 
-$query = array(
-	'SELECT'	=> 'u.id, u.username',
-	'FROM'		=> 'users AS u',
-	'WHERE'		=> 'u.group_id != '.FORUM_UNVERIFIED,
-	'ORDER BY'	=> 'u.registered DESC',
-	'LIMIT'		=> '1'
-);
+	generate_stats_cache();
+	require FORUM_CACHE_DIR.'cache_updates.php';
+}
 
-($hook = get_hook('in_stats_qr_get_newest_user')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$stats['last_user'] = $forum_db->fetch_assoc($result);
-
-$query = array(
-	'SELECT'	=> 'SUM(f.num_topics), SUM(f.num_posts)',
-	'FROM'		=> 'forums AS f'
-);
-
-($hook = get_hook('in_stats_qr_get_post_stats')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-list($stats['total_topics'], $stats['total_posts']) = $forum_db->fetch_row($result);
-
-$stats_list['no_of_users'] = '<li class="st-users"><span>'.sprintf($lang_index['No of users'], '<strong>'.forum_number_format($stats['total_users']).'</strong>').'</span></li>';
-$stats_list['newest_user'] = '<li class="st-users"><span>'.sprintf($lang_index['Newest user'], '<strong>'.($forum_user['g_view_users'] == '1' ? '<a href="'.forum_link($forum_url['user'], $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>' : forum_htmlencode($stats['last_user']['username'])).'</strong>').'</span></li>';
-$stats_list['no_of_topics'] = '<li class="st-activity"><span>'.sprintf($lang_index['No of topics'], '<strong>'.forum_number_format($stats['total_topics']).'</strong>').'</span></li>';
-$stats_list['no_of_posts'] = '<li class="st-activity"><span>'.sprintf($lang_index['No of posts'], '<strong>'.forum_number_format($stats['total_posts']).'</strong>').'</span></li>';
+$stats_list['no_of_users'] = '<li class="st-users"><span>'.sprintf($lang_index['No of users'], '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
+$stats_list['newest_user'] = '<li class="st-users"><span>'.sprintf($lang_index['Newest user'], '<strong>'.($forum_user['g_view_users'] == '1' ? '<a href="'.forum_link($forum_url['user'], $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
+$stats_list['no_of_topics'] = '<li class="st-activity"><span>'.sprintf($lang_index['No of topics'], '<strong>'.forum_number_format($forum_stats['total_topics']).'</strong>').'</span></li>';
+$stats_list['no_of_posts'] = '<li class="st-activity"><span>'.sprintf($lang_index['No of posts'], '<strong>'.forum_number_format($forum_stats['total_posts']).'</strong>').'</span></li>';
 
 ($hook = get_hook('in_stats_pre_info_output')) ? eval($hook) : null;
 
