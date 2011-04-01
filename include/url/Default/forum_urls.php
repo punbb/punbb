@@ -49,6 +49,7 @@ $forum_url = array(
 	'request_password'				=>	'login.php?action=forget',
 	'rules'							=>	'misc.php?action=rules',
 	'search'						=>	'search.php',
+	'search_advanced'				=>	'search.php?advanced=1',
 	'search_resultft'				=>	'search.php?action=search&amp;keywords=$1&amp;author=$3&amp;forum=$2&amp;search_in=$4&amp;sort_by=$5&amp;sort_dir=$6&amp;show_as=$7',
 	'search_results'				=>	'search.php?search_id=$1',
 	'search_new'					=>	'search.php?action=show_new',

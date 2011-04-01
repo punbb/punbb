@@ -50,6 +50,7 @@ $forum_url = array(
 	'request_password'				=>	'request/password/',
 	'rules'							=>	'rules/',
 	'search'						=>	'search/',
+	'search_advanced'				=>	'search/advanced/',
 	'search_resultft'				=>	'search/k$1/$2/a$3/$4/$5/$6/$7/',
 	'search_results'				=>	'search/$1/',
 	'search_new'					=>	'search/new/',

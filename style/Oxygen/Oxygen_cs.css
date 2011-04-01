@@ -447,6 +447,7 @@ input[type="password"],
 input[type="email"],
 input[type="url"],
 input[type="number"],
+input[type="search"],
 textarea {
 	border-color: #DFE6ED;
 }
@@ -459,6 +460,8 @@ input[type="email"]:active,
 input[type="email"]:focus,
 input[type="url"]:active,
 input[type="url"]:focus,
+input[type="search"]:active,
+input[type="search"]:focus,
 input[type="number"]:active,
 input[type="number"]:focus,
 textarea:active,

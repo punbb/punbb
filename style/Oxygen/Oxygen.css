@@ -1512,13 +1512,17 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="url"],
+input[type="search"],
 input[type="number"],
 textarea {
 	border-width: 1px;
 	border-style: solid;
-	padding: .3em;
+	padding: .25em;
 }
 
+#quick-search {
+	padding: .1em .2em;
+}
 
 /* Error handling
 -------------------------------------------------------------*/
