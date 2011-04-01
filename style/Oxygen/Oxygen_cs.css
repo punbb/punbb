@@ -12,41 +12,12 @@ a:visited {
 	text-decoration: none;
 }
 
-/*
-p.feed a:link,
-p.feed a:visited {
-	color: #DDDDDD;
-}*/
-
 a:hover,
 a:active,
-a:focus
-/*p.feed a:hover,
-p.feed a:active,
-p.feed a:focus*/ {
+a:focus {
 	color: #CD0021;
 	text-decoration: underline;
 }
-
-/*
-.main-pagepost a:link,
-.crumbs a:link,
-.main-pagepost a:visited,
-.crumbs a:visited {
-	text-decoration: none;
-}
-*/
-
-/*
-.main-pagepost a:hover,
-.crumbs a:hover,
-.main-pagepost a:active,
-.crumbs a:active,
-.main-pagepost a:focus,
-.crumbs a:focus {
-	text-decoration: underline;
-}
-*/
 
 .gen-content,
 .main-content {

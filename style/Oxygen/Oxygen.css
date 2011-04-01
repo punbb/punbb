@@ -933,15 +933,15 @@ p.forum-noview .info-replies {
 	padding: 0;
 }
 
-/*.main-content .main-item*/ .hn .item-status {
+.hn .item-status {
 	font-weight: normal;
 }
 
-/*.main-content .main-item*/ .hn .item-status em {
+.hn .item-status em {
 	font-style: normal;
 }
 
-/*.main-content*/ .main-item .item-subject,
+.main-item .item-subject,
 .main-content .main-item li {
 	float: left;
 	border-left-style: solid;
@@ -952,30 +952,29 @@ p.forum-noview .info-replies {
 	padding-bottom: 10.4em;
 }
 
-/*.main-content*/ .main-item .item-subject {
+.main-item .item-subject {
 	overflow: hidden;
 	width: 100%;
 }
 
-/*.main-content .main-item */li.info-topics,
-/*.main-content .main-item li.info-forum,
-/*.main-content .main-item*/ li.info-posts,
-/*.main-content .main-item*/ li.info-views,
-/*.main-content .main-item*/ li.info-replies {
+li.info-topics,
+li.info-posts,
+li.info-views,
+li.info-replies {
 	width: 7em;
 	text-align: center;
 }
 
-/*.main-content .main-item*/ li.info-forum {
+li.info-forum {
 	width: 20em;
 	text-align: center;
 }
 
-/*.main-content .main-item */li.info-lastpost {
+li.info-lastpost {
 	width: 20em;
 }
 
-/*.main-content .main-item */li.info-lastpost cite {
+li.info-lastpost cite {
 	overflow: hidden;
 	width: 18em;
 }
@@ -1023,28 +1022,28 @@ p.forum-noview .info-replies {
 	margin-left: -47em;
 }
 
-/*.main-content .main-item*/ .item-subject span.modlist {
+.item-subject span.modlist {
 	display: block;
 }
 
-/*.main-content*/ .main-item .hn strong {
+.main-item .hn strong {
 	font-size: 1em;
 }
 
-/*.main-content*/ .main-item .hn strong span {
+.main-item .hn strong span {
 	font-weight: normal;
 }
 
-#brd-index /*.main-content*/ .main-item .hn span {
+#brd-index .main-item .hn span {
 	font-size: 1.084em;
 	font-weight: bold;
 }
 
-#brd-index /*.main-content*/ .main-item .hn small {
+#brd-index .main-item .hn small {
 	font-size: 1em;
 }
 
-/*.main-content .main-item*/ .item-status {
+.item-status {
 	font-weight: bold;
 }
 
@@ -1052,8 +1051,8 @@ p.forum-noview .info-replies {
 	font-style: normal;
 }
 
-/*.main-content .main-item span*/ .item-nav,
-/*.main-content .main-item span*/ .item-nav a,
+.item-nav,
+.item-nav a,
 .item-nav span  {
 	white-space: nowrap;
 	font-style: normal;
@@ -1064,22 +1063,22 @@ p.forum-noview .info-replies {
 	margin: 0 0 0 1.5em;
 }
 
-/*.main-content .main-item*/ li.info-lastpost cite,
-/*.main-content .main-item*/ li.info-lastpost span,
-/*.main-content .main-item*/ li.info-forum a {
+li.info-lastpost cite,
+li.info-lastpost span,
+li.info-forum a {
 	display: block;
 	padding: 0 1em;
 	font-style: normal;
 	font-weight: normal;
 }
 
-/*.main-content .main-item*/ li.info-lastpost strong {
+li.info-lastpost strong {
 	padding: 0 0 0 1em;
 	font-style: normal;
 	font-weight: normal;
 }
 
-/*.main-content .main-item*/ li.info-select {
+li.info-select {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -1229,11 +1228,6 @@ button:active {
 	top: 1px;
 }
 
-input[type="submit"]:default,
-input[type="button"]:default {
-	font-weight: bold;
-}
-
 
 /* Single Field Items (Text, Select, Checkbox)
 -------------------------------------------------------------*/
@@ -1258,9 +1252,6 @@ input[type="button"]:default {
 	padding: 2px 0 2px 1em;
 	width: 16em;
 	text-align:right;
-/*
-	font-weight:bold;
-*/
 }
 
 .sf-set .checkbox label span {
@@ -1292,16 +1283,9 @@ input[type="button"]:default {
 	padding: 0.3em 1em;
 }
 
-/*
-input[type=checkbox] {
-  vertical-align: bottom;
-  *vertical-align: baseline;
-}
-*/
+
 .sf-set .checkbox input {
 	margin: 4px 0 2px -0.2em;
-	/*height: 1.55em;
-	width: 1.55em;*/
 }
 
  /* Fixes alignment issue in Safari */
@@ -1714,28 +1698,28 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	list-style: none;
 }
 
-/*.post */.author-ident .useravatar img {
+.author-ident .useravatar img {
 	display: block;
 	padding: 0.5em 0;
 }
 
-/*.post */.author-ident .username {
+.author-ident .username {
 	display: none;
 }
 
-/*.postbody */.author-ident .usertitle {
+.author-ident .usertitle {
 	font-weight: bold;
 	line-height: normal;
 }
 
-/*.postbody */.author-ident .userstatus {
+.author-ident .userstatus {
 	padding: 0.75em 0 0.25em 0;
 	margin: 0;
 	line-height: 0.75em;
 	width: 100%;
 }
 
-/*.postbody */.author-ident .userstatus span {
+.author-ident .userstatus span {
 	font-size: 0.917em;
 	display: block;
 	border-left-style: solid;
@@ -1743,7 +1727,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	text-indent: 0.5em;
 }
 
-/*.postbody */.author-info li span strong {
+.author-info li span strong {
 	font-weight: normal;
 }
 
