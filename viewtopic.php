@@ -670,7 +670,7 @@ if ($forum_config['o_smilies'] == '1')
 <?php ($hook = get_hook('vt_quickpost_fieldset_end')) ? eval($hook) : null; ?>
 		<div class="frm-buttons">
 			<span class="submit"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" /></span>
-			<span class="submit"><input type="submit" name="preview" value="<?php echo $lang_common['Preview'] ?>" formnovalidate /></span>
+			<span class="submit"><input type="submit" name="preview" value="<?php echo $lang_common['Preview'] ?>" /></span>
 		</div>
 	</form>
 </div>

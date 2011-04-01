@@ -352,7 +352,7 @@ if (!empty($forum_page['checkboxes']))
 ?>
 			<div class="frm-buttons">
 				<span class="submit"><input type="submit" name="submit" value="<?php echo ($id != $cur_post['first_post_id']) ? $lang_post['Submit reply'] : $lang_post['Submit topic'] ?>" /></span>
-				<span class="submit"><input type="submit" name="preview" value="<?php echo ($id != $cur_post['first_post_id']) ? $lang_post['Preview reply'] : $lang_post['Preview topic'] ?>" formnovalidate /></span>
+				<span class="submit"><input type="submit" name="preview" value="<?php echo ($id != $cur_post['first_post_id']) ? $lang_post['Preview reply'] : $lang_post['Preview topic'] ?>" /></span>
 			</div>
 		</form>
 	</div>
