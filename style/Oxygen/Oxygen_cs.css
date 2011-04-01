@@ -64,6 +64,7 @@ td {
 
 .post div,
 h3.post-ident,
+h4.post-title,
 .posthead h3,
 .userstatus span {
 	border-color: #DDE4EB;
@@ -92,7 +93,7 @@ h3.post-ident,
 	background: #F1F1F1;
 }
 
-.posthead .post-title small {
+.post-title small {
 	color: #999;
 }
 

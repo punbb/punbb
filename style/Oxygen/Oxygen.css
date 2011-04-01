@@ -140,8 +140,8 @@ span.fld-input:after,
 
 #brd-stats .hn,
 #qjump label,
-.post .post-byline span,
-.post .posthead .post-link span,
+.post-byline span,
+.posthead .post-link span,
 .admin .main-subhead,
 .main-item .item-info li span.label,
 .main-item .item-info li label,
@@ -253,7 +253,7 @@ ul.spaced {
 	padding: 0.25em 0 0.25em 2em;
 }
 
-ul.spaced li {
+.spaced li {
 	padding: 0.25em 0;
 }
 
@@ -1627,26 +1627,26 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	padding-right: 2.7em;
 }
 
-.posthead .post-title {
+.post-title {
 	padding: 0 1.5em 0.5em 1em;
 	margin-top: -1px;
 	position: relative;
 }
 
-.posthead .post-title span {
+.post-title span {
 	display: block;
 	width: 100%;
 	overflow: hidden
 }
 
-.posthead .post-title a {
+.post-title a {
 	font-size: 1em;
 	text-decoration: none;
 	font-weight: bold;
 }
 
-.posthead .post-title small,
-.posthead .post-title small a {
+.post-title small,
+.post-title small a {
 	font-size: 1em;
 	font-weight: normal;
 	white-space: nowrap;
