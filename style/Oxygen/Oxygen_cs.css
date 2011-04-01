@@ -3,7 +3,7 @@
 
 body {
 	background: #fff;
-	color: #333;
+	color: #222;
 }
 
 a:link,
@@ -173,7 +173,7 @@ h4.post-title,
 }
 
 ul li strong {
-	color: #333;
+	color: #222;
 }
 
 .user-box {
@@ -187,7 +187,7 @@ ul li strong {
 }
 
 .error-box .hn {
-	color: #333;
+	color: #222;
 }
 
 .help-box {
