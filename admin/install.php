@@ -1701,7 +1701,7 @@ else
 		'o_avatars_dir'				=> "'img/avatars'",
 		'o_avatars_width'			=> "'60'",
 		'o_avatars_height'			=> "'60'",
-		'o_avatars_size'			=> "'10240'",
+		'o_avatars_size'			=> "'15360'",
 		'o_search_all_forums'		=> "'1'",
 		'o_sef'						=> "'Default'",
 		'o_admin_email'				=> "'".$forum_db->escape($email)."'",
