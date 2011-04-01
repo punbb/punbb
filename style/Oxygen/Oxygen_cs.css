@@ -473,6 +473,8 @@ th {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="url"],
+input[type="number"],
 textarea {
 	border-color: #DFE6ED;
 }
@@ -483,6 +485,10 @@ input[type="password"]:active,
 input[type="password"]:focus,
 input[type="email"]:active,
 input[type="email"]:focus,
+input[type="url"]:active,
+input[type="url"]:focus,
+input[type="number"]:active,
+input[type="number"]:focus,
 textarea:active,
 textarea:focus {
 	border-color: #C8D3DC #DFE6ED #DFE6ED #C8D3DC;
