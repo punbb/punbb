@@ -509,3 +509,16 @@ button:focus {
 	color: #111;
 }
 
+#querytime {
+	color: #999;
+}
+
+/* Misc classes
+-------------------------------------------------------------*/
+.quiet {
+	color: #999;
+}
+
+.loud {
+	color: #000;
+}
