@@ -27,10 +27,19 @@ function write_cache_file($file, $content)
 	}
 
 	// Lock file
-	flock($fh, LOCK_EX);
-	fwrite($fh, $content);
+	if (flock($fh, LOCK_EX))
+	{
+		fwrite($fh, $content);
 
-	// Unlock and close
+		// Unlock and close
+		flock($fh, LOCK_UN);
+	}
+	else
+	{
+		fclose($fh);
+		return false;
+	}
+
 	fclose($fh);
 
 	return true;
