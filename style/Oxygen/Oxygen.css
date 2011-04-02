@@ -761,10 +761,6 @@ D - COMMON INTERFACE ELEMENTS
 /* Statistics
 -------------------------------------------------------------*/
 
-#brd-stats {
-	border-bottom: 0;
-}
-
 #brd-stats ul {
 	list-style: none;
 	padding-left: 0;
@@ -782,6 +778,7 @@ D - COMMON INTERFACE ELEMENTS
 	white-space: nowrap;
 }
 
+
 #brd-stats li strong {
 	font-weight: bold;
 }
@@ -789,6 +786,7 @@ D - COMMON INTERFACE ELEMENTS
 #brd-online {
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
+	border-top: 0;
 }
 
 #brd-online .hn,
@@ -797,7 +795,7 @@ D - COMMON INTERFACE ELEMENTS
 	padding-top: 0;
 }
 
- #brd-online .hn {
+#brd-online .hn {
 	float: left;
 	margin-right: 0.5em;
 }
