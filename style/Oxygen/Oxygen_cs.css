@@ -6,6 +6,10 @@ body {
 	color: #222;
 }
 
+a:focus {
+	outline: none;
+}
+
 a:link,
 a:visited {
 	color: #00579C;
@@ -17,6 +21,14 @@ a:active,
 a:focus {
 	color: #CD0021;
 	text-decoration: underline;
+}
+
+.entry-content a:visited {
+	color: #990099;
+}
+
+.entry-content a:visited:hover {
+	color: #CD0021;
 }
 
 .gen-content,
