@@ -1810,9 +1810,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	padding: 1em 0.75em;
 }
 
-.entry-content .codebox code,
-#brd-debug table .tcl,
-#brd-debug table .tcr {
+.entry-content .codebox code {
 	font-family: monospace;
 }
 
@@ -1903,15 +1901,21 @@ table caption {
 	text-align: center;
 }
 
-#brd-debug  table .tc1 {
-	white-space: normal;
+#brd-debug table {
+	border: none;
+	font-size: .95em;
+}
+
+#brd-debug .tcl {
+	white-space: nowrap;
 	width: 10%;
 }
 
-#brd-debug table .tcr {
+#brd-debug .tcr {
 	white-space: normal;
 	width: 90%;
 }
+
 
 
 /* Table Cell Styling

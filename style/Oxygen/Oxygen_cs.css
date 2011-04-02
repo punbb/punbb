@@ -528,3 +528,21 @@ button:focus {
 .loud {
 	color: #000;
 }
+
+#brd-debug th {
+	background: #fff;
+	border: none;
+	border-bottom: 2px solid #DDE4EB;
+	color: #111;
+}
+
+#brd-debug td {
+	background: #fff;
+	border: none;
+	border-bottom: solid 1px #eee;
+	color: #666;
+}
+
+#brd-debug .totals td {
+	border: none;
+}

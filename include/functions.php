@@ -679,12 +679,7 @@ function get_saved_queries()
 
 ?>
 <div id="brd-debug" class="main">
-
-	<div class="main-head">
-		<h2 class="hn"><span><?php echo $lang_common['Debug table'] ?></span></h2>
-	</div>
-
-	<div class="main-content debug">
+	<div class="debug">
 		<table>
 			<caption><?php echo $lang_common['Debug summary'] ?></caption>
 			<thead>
@@ -712,8 +707,8 @@ function get_saved_queries()
 
 ?>
 				<tr class="totals">
-					<td class="tcl"><em><?php echo forum_number_format($query_time_total, 5) ?></em></td>
-					<td class="tcr"><em><?php echo $lang_common['Total query time'] ?></em></td>
+					<td class="tcl"><?php echo forum_number_format($query_time_total, 5) ?></td>
+					<td class="tcr"><?php echo $lang_common['Total query time'] ?></td>
 				</tr>
 			</tbody>
 		</table>
