@@ -1162,6 +1162,10 @@ F - MAIN CONTENT - FORMS
 	font-size: 1.084em;
 }
 
+optgroup {
+	font-weight: bold;
+}
+
 .frm-buttons {
 	margin: 0.75em 1.417em .8em 1.417em;
 	position: relative;
