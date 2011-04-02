@@ -19,28 +19,39 @@ if (!defined('FORUM'))
 // Use LOCK
 function write_cache_file($file, $content)
 {
-	fclose(@/**/fopen($file, 'a+b'));
-	$fh = @/**/fopen($file, 'wb');
+	$tmp_file = tempnam(FORUM_CACHE_DIR, md5($file.time().uniqid()));
+	if (!$tmp_file)
+	{
+		return false;
+	}
+
+	$fh = @/**/fopen($tmp_file, 'wb');
 	if (!$fh)
 	{
+		// Unlink TMP
+		if (file_exists($tmp_file))
+		{
+			unlink($tmp_file);
+		}
 		return false;
 	}
 
-	// Lock file
-	if (flock($fh, LOCK_EX))
-	{
-		fwrite($fh, $content);
-
-		// Unlock and close
-		flock($fh, LOCK_UN);
-	}
-	else
-	{
-		fclose($fh);
-		return false;
-	}
-
+	// Write
+	fwrite($fh, $content);
 	fclose($fh);
+
+	sleep(10);
+
+	// Rename TMP to file
+	if (!rename($tmp_file, $file))
+	{
+		// Unlink TMP
+		if (file_exists($tmp_file))
+		{
+			unlink($tmp_file);
+		}
+		return false;
+	}
 
 	return true;
 }

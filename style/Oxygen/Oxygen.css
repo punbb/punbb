@@ -55,12 +55,6 @@ hr,
 	display: none;
 }
 
-table {
-	width: 100%;
-	table-layout: fixed;
-	empty-cells: show;
-}
-
 /* Text Setup (Equalise everything before styling)
 -------------------------------------------------------------*/
 html {
@@ -1883,6 +1877,7 @@ table {
 	empty-cells: show;
 	border-spacing: 0;
 	line-height: 1.3333em;
+	border-collapse: collapse;
 }
 
 td {
