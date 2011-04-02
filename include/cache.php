@@ -40,8 +40,6 @@ function write_cache_file($file, $content)
 	fwrite($fh, $content);
 	fclose($fh);
 
-	sleep(10);
-
 	// Rename TMP to file
 	if (!rename($tmp_file, $file))
 	{
@@ -292,11 +290,6 @@ function generate_quickjump_cache($group_id = false)
 	// Loop through the groups in $groups and output the cache for each of them
 	foreach ($groups as $group_id)
 	{
-		// Output quickjump as PHP code
-		$fh = @fopen(FORUM_CACHE_DIR.'cache_quickjump_'.$group_id.'.php', 'wb');
-		if (!$fh)
-			error('Unable to write quickjump cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
-
 		$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);'."\n".'$forum_id = isset($forum_id) ? $forum_id : 0;'."\n\n".'?>';
 		$output .= '<form id="qjump" method="get" accept-charset="utf-8" action="'.$base_url.'/viewforum.php">'."\n\t".'<div class="frm-fld frm-select">'."\n\t\t".'<label for="qjump-select"><span><?php echo $lang_common[\'Jump to\'] ?>'.'</span></label><br />'."\n\t\t".'<span class="frm-input"><select id="qjump-select" name="id">'."\n";
 
@@ -360,9 +353,11 @@ function generate_quickjump_cache($group_id = false)
 		if ($forum_count < 2)
 			$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);';
 
-		fwrite($fh, $output);
-
-		fclose($fh);
+		// Output quickjump as PHP code
+		if (!write_cache_file(FORUM_CACHE_DIR.'cache_quickjump_'.$group_id.'.php', $output))
+		{
+			error('Unable to write quickjump cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		}
 	}
 }
 
