@@ -260,6 +260,7 @@ ob_start();
 
 ($hook = get_hook('in_info_output_start')) ? eval($hook) : null;
 
+
 if (file_exists(FORUM_CACHE_DIR.'cache_stats.php'))
 	include FORUM_CACHE_DIR.'cache_stats.php';
 
@@ -270,7 +271,7 @@ if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800))
 		require FORUM_ROOT.'include/cache.php';
 
 	generate_stats_cache();
-	require FORUM_CACHE_DIR.'cache_updates.php';
+	require FORUM_CACHE_DIR.'cache_stats.php';
 }
 
 $stats_list['no_of_users'] = '<li class="st-users"><span>'.sprintf($lang_index['No of users'], '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
