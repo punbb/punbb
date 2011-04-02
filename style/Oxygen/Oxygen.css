@@ -96,6 +96,14 @@ th {
 	font-weight: normal;
 }
 
+/* Normalize monospace sizing:
+   en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome */
+samp,
+code,
+pre {
+	font-family: monospace, sans-serif;
+}
+
 /* Float Clearing
 -------------------------------------------------------------*/
 
@@ -128,6 +136,24 @@ span.fld-input:after,
 	visibility: hidden;
 	clear: both;
 }
+
+.clearfix:before,
+.clearfix:after {
+	content: "\0020";
+	display: block;
+	height: 0;
+	overflow: hidden;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+/* Fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
+.clearfix {
+	zoom: 1;
+}
+
 
 /* Hidden items
 -------------------------------------------------------------*/
@@ -1808,10 +1834,6 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	border-width: 1px;
 	margin: 0.75em 1em;
 	padding: 1em 0.75em;
-}
-
-.entry-content .codebox code {
-	font-family: monospace;
 }
 
 .entry-content blockquote {
