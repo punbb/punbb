@@ -336,7 +336,7 @@ label,
 }
 
 .admin-submenu .active a {
-	color: #CD0021;
+	text-decoration: underline;
 }
 
 .main-menu .active a {
