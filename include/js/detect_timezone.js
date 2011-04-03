@@ -1,9 +1,9 @@
-/* 
+/*
  * Original script by Josh Fraser (http://www.onlineaspect.com)
  * Continued by Jon Nylander, (jon at pageloom dot com)
- * According to both of us, you are absolutely free to do whatever 
+ * According to both of us, you are absolutely free to do whatever
  * you want with this code.
- * 
+ *
  * This code is  maintained at bitbucket.org as jsTimezoneDetect.
  */
 
@@ -18,9 +18,9 @@ jzTimezoneDetector.HEMISPHERE_UNKNOWN = 'N/A';
 jzTimezoneDetector.olson = {};
 
 /**
- * A simple object containing information of utc_offset, which olson timezone key to use, 
+ * A simple object containing information of utc_offset, which olson timezone key to use,
  * and if the timezone cares about daylight savings or not.
- * 
+ *
  * @constructor
  * @param {string} offset - for example '-11:00'
  * @param {string} olson_tz - the olson Identifier, such as "America/Denver"
@@ -41,58 +41,58 @@ jzTimezoneDetector.TimeZone.prototype.display = function() {
 	var response_text = '<b>UTC-offset</b>: ' + this.utc_offset + '<br/>';
 	response_text += '<b>Zoneinfo key</b>: ' + this.olson_tz + '<br/>';
 	response_text += '<b>Zone uses DST</b>: ' + (this.uses_dst ? 'yes' : 'no') + '<br/>';
-	
+
 	return response_text;
 }
 
 /**
  * Checks if a timezone has possible ambiguities. I.e timezones that are similar.
- * 
+ *
  * If the preliminary scan determines that we're in America/Denver. We double check
  * here that we're really there and not in America/Mazatlan.
- * 
+ *
  * This is done by checking known dates for when daylight savings start for different
  * timezones.
  */
 jzTimezoneDetector.TimeZone.prototype.ambiguity_check = function() {
 	var local_ambiguity_list = jzTimezoneDetector.olson.ambiguity_list[this.olson_tz];
-	
+
 	if (typeof(local_ambiguity_list) == 'undefined') {
 		return;
 	}
-	
+
 	var length = local_ambiguity_list.length;
-	
+
 	for (var i = 0; i < length; i++) {
 		var tz = local_ambiguity_list[i]
 
 		if (jzTimezoneDetector.date_is_dst(jzTimezoneDetector.olson.dst_start_dates[tz])) {
 			this.olson_tz = tz;
 			return;
-		}	
+		}
 	}
 }
 
 /**
  * Checks whether a given date is in daylight savings time.
- * 
+ *
  * If the date supplied is after june, we assume that we're checking
  * for southern hemisphere DST.
- * 
+ *
  * @param {Date} date
  * @returns {boolean}
  */
 jzTimezoneDetector.date_is_dst = function (date) {
 	var base_offset = ( (date.getMonth() > 5 ? jzTimezoneDetector.get_june_offset() : jzTimezoneDetector.get_january_offset()) )
-	
+
 	var date_offset = jzTimezoneDetector.get_date_offset(date);
-	
+
 	return (base_offset - date_offset) != 0;
 }
 
-/** 
+/**
  * Gets the offset in minutes from UTC for a certain date.
- * 
+ *
  * @param date
  * @returns {number}
  */
@@ -101,20 +101,20 @@ jzTimezoneDetector.get_date_offset = function (date) {
 }
 
 /**
- * This function does some basic calculations to create information about 
+ * This function does some basic calculations to create information about
  * the user's timezone.
- * 
+ *
  * Returns a primitive object on the format
  * {'utc_offset' : -9, 'dst': 1, hemisphere' : 'north'}
  * where dst is 1 if the region uses daylight savings.
- * 
- * @returns {Object}  
+ *
+ * @returns {Object}
  */
 jzTimezoneDetector.get_timezone_info = function () {
 	var january_offset = jzTimezoneDetector.get_january_offset();
-	
+
 	var june_offset = jzTimezoneDetector.get_june_offset();
-	
+
 	var diff = january_offset - june_offset;
 
 	if (diff < 0) {
@@ -128,8 +128,8 @@ jzTimezoneDetector.get_timezone_info = function () {
         		'hemisphere' : jzTimezoneDetector.HEMISPHERE_SOUTH}
 	}
 
-    return {'utc_offset' : january_offset, 
-    		'dst': 0, 
+    return {'utc_offset' : january_offset,
+    		'dst': 0,
     		'hemisphere' : jzTimezoneDetector.HEMISPHERE_UNKNOWN}
 }
 
@@ -143,35 +143,35 @@ jzTimezoneDetector.get_june_offset = function () {
 
 /**
  * Uses get_timezone_info() to formulate a key to use in the olson.timezones dictionary.
- * 
+ *
  * Returns a primitive object on the format:
  * {'timezone': TimeZone, 'key' : 'the key used to find the TimeZone object'}
- * 
- * @returns Object 
+ *
+ * @returns Object
  */
 jzTimezoneDetector.determine_timezone = function () {
 	var timezone_key_info = jzTimezoneDetector.get_timezone_info();
-	
+
 	var hemisphere_suffix = ''
-		
+
 	if (timezone_key_info.hemisphere == jzTimezoneDetector.HEMISPHERE_SOUTH) {
 		hemisphere_suffix = ',s';
 	}
-	
+
 	var tz_key = timezone_key_info.utc_offset + ',' + timezone_key_info.dst + hemisphere_suffix
-	
+
 	return {'timezone' : jzTimezoneDetector.olson.timezones[tz_key], 'key' : tz_key}
 }
 
 /**
  * The keys in this dictionary are comma separated as such:
- * 
+ *
  * First the offset compared to UTC time in minutes.
- *  
+ *
  * Then a flag which is 0 if the timezone does not take daylight savings into account and 1 if it does.
- * 
+ *
  * Thirdly an optional 's' signifies that the timezone is in the southern hemisphere, only interesting for timezones with DST.
- * 
+ *
  * The values of the dictionary are TimeZone objects.
  */
 jzTimezoneDetector.olson.timezones = {
@@ -251,11 +251,11 @@ jzTimezoneDetector.olson.timezones = {
 /**
  * This object contains information on when daylight savings starts for
  * different timezones.
- * 
+ *
  * The list is short for a reason. Often we do not have to be very specific
  * to single out the correct timezone. But when we do, this list comes in
  * handy.
- * 
+ *
  * Each value is a date denoting when daylight savings starts for that timezone.
  */
 jzTimezoneDetector.olson.dst_start_dates = {
@@ -293,7 +293,7 @@ jzTimezoneDetector.olson.dst_start_dates = {
 /**
  * The keys in this object are timezones that we know may be ambiguous after
  * a preliminary scan through the olson_tz object.
- * 
+ *
  * The array of timezones to compare must be in the order that daylight savings
  * starts for the regions.
  */
@@ -310,3 +310,6 @@ jzTimezoneDetector.olson.ambiguity_list = {
     'America/Halifax' : ['America/Goose_Bay','America/Halifax'],
     'America/Godthab' : ['America/Miquelon', 'America/Godthab']
 }
+
+
+

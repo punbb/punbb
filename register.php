@@ -211,6 +211,18 @@ else if (isset($_POST['form_sent']))
 			$salt = random_key(12);
 			$password_hash = forum_hash($password1, $salt);
 
+			// Validate timezone and DST
+			$timezone = (isset($_POST['timezone'])) ? floatval($_POST['timezone']) : $forum_config['o_default_timezone'];
+
+			// Validate timezone — on error use default value
+			if (($timezone > 14.0) || ($timezone < -12.0)) {
+				$timezone = $forum_config['o_default_timezone'];
+			}
+
+			// DST
+			$dst = (isset($_POST['dst']) && intval($_POST['dst']) === 1) ? 1 : $forum_config['o_default_dst'];
+
+
 			// Insert the new user into the database. We do this now to get the last inserted id for later use.
 			$user_info = array(
 				'username'				=>	$username,
@@ -220,8 +232,8 @@ else if (isset($_POST['form_sent']))
 				'password_hash'			=>	$password_hash,
 				'email'					=>	$email1,
 				'email_setting'			=>	$forum_config['o_default_email_setting'],
-				'timezone'				=>	$forum_config['o_default_timezone'],
-				'dst'					=>	$forum_config['o_default_dst'],
+				'timezone'				=>	$timezone,
+				'dst'					=>	$dst,
 				'language'				=>	$language,
 				'style'					=>	$forum_config['o_default_style'],
 				'registered'			=>	time(),
@@ -339,6 +351,8 @@ ob_start();
 			<div class="hidden">
 				<input type="hidden" name="form_sent" value="1" />
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
+				<input type="hidden" name="timezone" id="register_timezone" value="<?php echo forum_htmlencode($forum_config['o_default_timezone']) ?>" />
+				<input type="hidden" name="dst" id="register_dst" value="<?php echo forum_htmlencode($forum_config['o_default_dst']) ?>" />
 			</div>
 <?php ($hook = get_hook('rg_register_pre_group')) ? eval($hook) : null; ?>
 			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

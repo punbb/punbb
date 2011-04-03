@@ -93,7 +93,8 @@ $forum_javascript['commonjs_urls'] = '<script>
 	};
 	</script>';
 
-$forum_javascript['commonjs'] = '<script async src="'.$base_url.'/include/js/min/common.min.js"></script>';
+// $forum_javascript['commonjs'] = '<script async src="'.$base_url.'/include/js/min/common.min.js"></script>';
+$forum_javascript['commonjs'] = '<script async src="'.$base_url.'/include/js/common.js"></script>';
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
 
