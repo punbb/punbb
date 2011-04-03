@@ -51,9 +51,18 @@ function check_is_all_caps($text)
 
 
 // Add JS url to load
-function forum_add_js($data, $options)
+function forum_add_js($data = NULL, $options = NULL)
 {
 	global $forum_libs;
+
+	$return = ($hook = get_hook('fn_forum_add_js_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+	if (is_null($options) || !is_array($options))
+	{
+		$options = array();
+	}
 
 	// Default options
 	$default_options = array(
@@ -73,22 +82,29 @@ function forum_add_js($data, $options)
 
 		//
 		'async'			=> array(
-			'default'	=> false,
+			'default'	=> true,
 		),
 
 		//
 		'weight'		=> array(
 			'default'	=> 100,
 		),
+
+		//
+		'group'		=> array(
+			'default'	=> 'FORUM_JS_GROUP_DEFAULT'
+		)
 	);
 
 	$length = count($default_options);
 	$keys = array_keys($default_options);
 
-	for ($i = 0; $i < $length; $i++) {
+	for ($i = 0; $i < $length; $i++)
+	{
 		$key = $keys[$i];
 
-		if (!isset($options[$key])) {
+		if (!isset($options[$key]))
+		{
 			$default_options[$keys[$i]] = $default_options[$keys[$i]]['default'];
 			continue;
 		}
@@ -97,18 +113,23 @@ function forum_add_js($data, $options)
 	}
 
 	$default_options['data'] = forum_trim($data);
-	$default_options['type'] = 'js';
 
 	// Tweak weight
-	$default_options['weight'] += count($forum_libs) / 1000;
+	$default_options['weight'] += count($forum_libs['js']) / 1000;
 
+	($hook = get_hook('fn_forum_add_js_pre_merge')) ? eval($hook) : null;
 
 	// Add to libs
-	if ($default_options['inline'] === false) {
+	if ($default_options['inline'] === false)
+	{
 		$forum_libs['js'][$default_options['data']] = $default_options;
-	} else {
+	}
+	else
+	{
 		$forum_libs['js'][] = $default_options;
 	}
+
+	($hook = get_hook('fn_forum_add_js_end')) ? eval($hook) : null;
 }
 
 
@@ -117,33 +138,73 @@ function forum_output_lib_js()
 {
 	global $forum_libs;
 
-	$output ='';
+	$output = '';
+
+	$return = ($hook = get_hook('fn_forum_output_lib_js_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
 
 	if (empty($forum_libs['js']))
 		return $output;
 
 	// Sorts the scripts into correct order
-	uasort($forum_libs['js'], 'forum_sort_js_libs');
+	uasort($forum_libs['js'], 'forum_sort_libs');
 
-	foreach ($forum_libs['js'] as $key => $lib)
+	return forum_output_lib_js_labjs($forum_libs['js']);
+}
+
+
+//
+function forum_sort_libs($a, $b)
+{
+	// 1. Sort by group — system first
+	if ($a['group'] < $b['group'])
 	{
-		if ($lib['type'] != 'js')
-			continue;
+		return -1;
+	}
+	elseif ($a['group'] > $b['group'])
+	{
+		return 1;
+	}
 
-		if ($lib['inline'] === true)
+	// 2. Sort by weight
+	if ($a['weight'] < $b['weight'])
+	{
+		return -1;
+	}
+	elseif ($a['weight'] > $b['weight'])
+	{
+	    return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
+//
+function forum_output_lib_js_simple(&$libs)
+{
+	$output = '';
+
+	foreach ($libs as $key => $lib)
+	{
+		if ($lib['inline'])
 		{
 			$output .= '<script>'.$lib['data'].'</script>'."\n";
-			unset($forum_libs['js'][$key]);
+			unset($libs[$key]);
 			continue;
 		}
-
-		if ($lib['external'] === true)
+		else
 		{
-			$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" src="'.$lib['data'].'"></script>'."\n";
-			unset($forum_libs['js'][$key]);
-			continue;
+			if ($lib['external'])
+			{
+				$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" src="'.$lib['data'].'"></script>'."\n";
+				unset($libs[$key]);
+				continue;
+			}
 		}
-
 	}
 
 	return $output;
@@ -151,17 +212,51 @@ function forum_output_lib_js()
 
 
 //
-function forum_sort_js_libs($a, $b)
+function forum_output_lib_js_labjs(&$libs)
 {
-	if ($a['weight'] < $b['weight']) {
-		return -1;
+	$output_system = $output = '';
+
+	foreach ($libs as $key => $lib)
+	{
+		if ($lib['inline'])
+		{
+			if ($lib['group'] == FORUM_JS_GROUP_SYSTEM)
+			{
+				$output_system .= '<script>'.$lib['data'].'</script>'."\n";
+			}
+			else
+			{
+				$output .= "\n".'.wait(function () { '.$lib['data'].' })';
+			}
+
+			unset($libs[$key]);
+			continue;
+		}
+		else
+		{
+			if ($lib['external'])
+			{
+				if ($lib['group'] == FORUM_JS_GROUP_SYSTEM) {
+					$output_system .= '<script src="'.$lib['data'].'"></script>'."\n";
+				} else {
+					$output .= "\n".'.script("'.$lib['data'].'")';
+					/*if ($lib['async'] === false) {
+						$output .= '.wait()';
+					}*/
+				}
+
+				unset($libs[$key]);
+				continue;
+			}
+		}
 	}
-	elseif ($a['weight'] > $b['weight']) {
-	    return 1;
+
+	if ($output != '')
+	{
+		$output_system .= '<script>$LAB.setGlobalDefaults({ AlwaysPreserveOrder: true }); $LAB'.$output.';</script>';
 	}
-	else {
-		return 0;
-	}
+
+	return $output_system;
 }
 
 
