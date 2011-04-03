@@ -50,6 +50,121 @@ function check_is_all_caps($text)
 }
 
 
+// Add JS url to load
+function forum_add_js($data, $options)
+{
+	global $forum_libs;
+
+	// Default options
+	$default_options = array(
+		//
+		'external'		=> array(
+			'default'	=> true,
+		),
+
+		'inline'		=> array(
+			'default'	=> false,
+		),
+
+		//
+		'name'			=> array(
+			'default'	=> '',
+		),
+
+		//
+		'async'			=> array(
+			'default'	=> false,
+		),
+
+		//
+		'weight'		=> array(
+			'default'	=> 100,
+		),
+	);
+
+	$length = count($default_options);
+	$keys = array_keys($default_options);
+
+	for ($i = 0; $i < $length; $i++) {
+		$key = $keys[$i];
+
+		if (!isset($options[$key])) {
+			$default_options[$keys[$i]] = $default_options[$keys[$i]]['default'];
+			continue;
+		}
+
+		$default_options[$keys[$i]] = $options[$key];
+	}
+
+	$default_options['data'] = forum_trim($data);
+	$default_options['type'] = 'js';
+
+	// Tweak weight
+	$default_options['weight'] += count($forum_libs) / 1000;
+
+
+	// Add to libs
+	if ($default_options['inline'] === false) {
+		$forum_libs['js'][$default_options['data']] = $default_options;
+	} else {
+		$forum_libs['js'][] = $default_options;
+	}
+}
+
+
+//
+function forum_output_lib_js()
+{
+	global $forum_libs;
+
+	$output ='';
+
+	if (empty($forum_libs['js']))
+		return $output;
+
+	// Sorts the scripts into correct order
+	uasort($forum_libs['js'], 'forum_sort_js_libs');
+
+	foreach ($forum_libs['js'] as $key => $lib)
+	{
+		if ($lib['type'] != 'js')
+			continue;
+
+		if ($lib['inline'] === true)
+		{
+			$output .= '<script>'.$lib['data'].'</script>'."\n";
+			unset($forum_libs['js'][$key]);
+			continue;
+		}
+
+		if ($lib['external'] === true)
+		{
+			$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" src="'.$lib['data'].'"></script>'."\n";
+			unset($forum_libs['js'][$key]);
+			continue;
+		}
+
+	}
+
+	return $output;
+}
+
+
+//
+function forum_sort_js_libs($a, $b)
+{
+	if ($a['weight'] < $b['weight']) {
+		return -1;
+	}
+	elseif ($a['weight'] > $b['weight']) {
+	    return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+
 // Inserts $element into $input at $offset
 // $offset can be either a numerical offset to insert at (eg: 0 inserts at the beginning of the array)
 // or a string, which is the key that the new element should be inserted before

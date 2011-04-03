@@ -22,6 +22,11 @@ define('FORUM_DB_REVISION', 4);
 list($usec, $sec) = explode(' ', microtime());
 $forum_start = ((float)$usec + (float)$sec);
 
+//
+$forum_libs = array();
+$forum_libs['js'] = array();
+$forum_libs['css'] = array();
+
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
 

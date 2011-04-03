@@ -78,7 +78,7 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 
 
 // START SUBST - <!-- forum_javascript -->
-$forum_javascript['commonjs_urls'] = '<script>
+$forum_javascript_commonjs_urls = '
 	if (typeof FORUM === "undefined" || !FORUM) {
 		var FORUM = {};
 	}
@@ -90,15 +90,15 @@ $forum_javascript['commonjs_urls'] = '<script>
 		user_style: "'.forum_htmlencode($forum_user['style']).'",
 		user_is_guest: "'.forum_htmlencode(($forum_user['is_guest'] == 1) ? "1" : "0").'",
 		page: "'.forum_htmlencode((defined("FORUM_PAGE")) ? FORUM_PAGE : "unknown" ).'",
-	};
-	</script>';
+	};';
 
-// $forum_javascript['commonjs'] = '<script src="'.$base_url.'/include/js/min/common.min.js"></script>';
-$forum_javascript['commonjs'] = '<script src="'.$base_url.'/include/js/common.js"></script>';
+
+forum_add_js($forum_javascript_commonjs_urls, array('external' => true, 'inline' => true, 'weight' => 50));
+forum_add_js($base_url.'/include/js/common.js', array('external' => true, 'weight' => 55));
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
 
-$tpl_main = str_replace('<!-- forum_javascript -->', implode("\n", $forum_javascript), $tpl_main);
+$tpl_main = str_replace('<!-- forum_javascript -->', forum_output_lib_js(), $tpl_main);
 unset($forum_javascript);
 // END SUBST - <!-- forum_javascript -->
 
