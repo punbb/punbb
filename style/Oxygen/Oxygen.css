@@ -229,15 +229,15 @@ B - GLOBAL STYLES
 	padding: 0 1.5em;
 }
 
-#brd-index #brd-about,
-#brd-index #brd-stats {
+#brd-about,
+#brd-stats {
 	margin-top: 1em;
 }
 
 .main-content,
-#brd-index #brd-visit,
+#brd-visit,
 #brd-qpost,
-#brd-index #brd-announcement {
+/*#brd-index*/ #brd-announcement {
 	margin-bottom: 1em;
 }
 
@@ -803,18 +803,18 @@ D - COMMON INTERFACE ELEMENTS
 /* Footer
 -------------------------------------------------------------*/
 
-#brd-about #qjump {
+#qjump {
 	float: left;
 	padding: 0.5em 0;
 }
 
-#brd-about #qjump div,
+#qjump div,
 #qjump label {
 	padding: 0;
 	border: none;
 }
 
-#brd-about #copyright {
+#copyright {
 	text-align: right;
 	margin: 0;
 }
