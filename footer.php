@@ -85,6 +85,10 @@ $forum_javascript['commonjs_urls'] = '<script>
 
 	FORUM.env = {
 		base_url: "'.forum_htmlencode($base_url).'/",
+		base_js_url: "'.forum_htmlencode($base_url).'/include/js/",
+		user_lang: "'.forum_htmlencode($forum_user['language']).'",
+		user_style: "'.forum_htmlencode($forum_user['style']).'",
+		user_is_guest: "'.forum_htmlencode($forum_user['is_guest']).'",
 	};
 	</script>';
 
