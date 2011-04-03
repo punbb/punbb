@@ -236,13 +236,10 @@ function forum_output_lib_js_labjs(&$libs)
 		{
 			if ($lib['external'])
 			{
-				if ($lib['group'] == FORUM_JS_GROUP_SYSTEM) {
+				if ($lib['group'] == FORUM_JS_GROUP_SYSTEM || $lib['async']) {
 					$output_system .= '<script src="'.$lib['data'].'"></script>'."\n";
 				} else {
 					$output .= "\n".'.script("'.$lib['data'].'")';
-					/*if ($lib['async'] === false) {
-						$output .= '.wait()';
-					}*/
 				}
 
 				unset($libs[$key]);
@@ -253,7 +250,7 @@ function forum_output_lib_js_labjs(&$libs)
 
 	if ($output != '')
 	{
-		$output_system .= '<script>$LAB.setGlobalDefaults({ AlwaysPreserveOrder: true }); $LAB'.$output.';</script>';
+		$output_system .= '<script>$LAB.setGlobalDefaults({ AlwaysPreserveOrder: true });'."\n".'$LAB'.$output.';</script>';
 	}
 
 	return $output_system;
