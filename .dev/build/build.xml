@@ -17,9 +17,14 @@
 
 	<!-- BUILD JS -->
 	<target name="make-js">
-		<compress-js-lib tofile="${js-src}/common.min.js" force="true">
+		<compress-js-lib tofile="${js-src}/min/common.min.js" force="true">
 			<filelist dir="${js-src}">
 				<file name="common.js" />
+			</filelist>
+		</compress-js-lib>
+		<compress-js-lib tofile="${js-src}/min/detect_timezone.min.js" force="true">
+			<filelist dir="${js-src}">
+				<file name="detect_timezone.js" />
 			</filelist>
 		</compress-js-lib>
 	</target>
