@@ -78,6 +78,16 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 
 
 // START SUBST - <!-- forum_javascript -->
+$forum_javascript['commonjs_urls'] = '<script>
+	if (typeof FORUM === "undefined" || !FORUM) {
+		var FORUM = {};
+	}
+
+	FORUM.env = {
+		base_url: "'.forum_htmlencode($base_url).'/",
+	};
+	</script>';
+
 $forum_javascript['commonjs'] = '<script async src="'.$base_url.'/include/js/common.min.js"></script>';
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
