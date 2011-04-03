@@ -94,7 +94,7 @@ $forum_javascript_commonjs_urls = '
 
 
 forum_add_js($forum_javascript_commonjs_urls, array('inline' => true, 'weight' => 50, 'group' => FORUM_JS_GROUP_SYSTEM));
-forum_add_js($base_url.'/include/js/common.js', array('weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+forum_add_js($base_url.'/include/js/min/common.min.js', array('weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
 

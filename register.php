@@ -299,6 +299,11 @@ $forum_page['crumbs'] = array(
 
 );
 
+// Load JS for timezone detection
+forum_add_js($base_url.'/include/js/min/detect_timezone.min.js');
+forum_add_js('FORUM.detect_timezone.detect_on_register_form();', array('inline' => true));
+
+
 ($hook = get_hook('rg_register_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'register');

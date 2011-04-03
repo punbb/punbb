@@ -248,24 +248,6 @@ FORUM.punbb = function () {
 			var fn = function(x) { return x.tagName.toUpperCase()=='TEXTAREA' || (x.tagName.toUpperCase()=='INPUT' && (x.type=='text') || (x.type=='password') || (x.type=='email') || (x.type=='url') || (x.type=='number')) };
 			var n = FORUM.punbb.find(fn, nodes);
 			if (n > -1) nodes[n].focus();
-		},
-
-		// Load detecte timezone helper
-		registerFormDetectTimezone: function () {
-			if (FORUM.env.page == 'register') {
-				$LAB
-					.script(FORUM.env.base_js_url+'min/detect_timezone.min.js')
-					.wait(function () {
-						var timezone = jzTimezoneDetector.determine_timezone().timezone,
-							timezone_el = document.getElementById('register_timezone'),
-							dst_el = document.getElementById('register_dst');
-
-						if (timezone_el && dst_el) {
-							timezone_el.value = timezone.utc_offset;
-							dst_el.value = (timezone.uses_dst) ? '1' : '0';
-						}
-					});
-			}
 		}
 
 	};
@@ -278,8 +260,6 @@ if (!Modernizr.input.required) {
 FORUM.punbb.addLoadEvent(FORUM.punbb.attachWindowOpen);
 FORUM.punbb.addLoadEvent(FORUM.punbb.autoFocus);
 FORUM.punbb.addLoadEvent(FORUM.punbb.attachQuickjumpRedirect);
-FORUM.punbb.addLoadEvent(FORUM.punbb.registerFormDetectTimezone);
-
 
 
 /* A handful of functions in this script have been released into the Public

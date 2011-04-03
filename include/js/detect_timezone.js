@@ -312,4 +312,27 @@ jzTimezoneDetector.olson.ambiguity_list = {
 }
 
 
+/* FORUM */
+if (typeof FORUM === "undefined" || !FORUM) {
+	var FORUM = {};
+}
+
+FORUM.detect_timezone = function () {
+	return {
+		detect_on_register_form: function () {
+			FORUM.punbb.addLoadEvent(function () {
+				var timezone = jzTimezoneDetector.determine_timezone().timezone,
+					timezone_el = document.getElementById("register_timezone"),
+					dst_el = document.getElementById("register_dst");
+
+				if (timezone_el && dst_el) {
+					timezone_el.value = timezone.utc_offset;
+					dst_el.value = (timezone.uses_dst) ? "1" : "0";
+				}
+			});
+		}
+	};
+}();
+
+
 
