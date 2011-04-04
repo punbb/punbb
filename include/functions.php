@@ -178,8 +178,21 @@ function forum_sort_libs($a, $b)
 		return 1;
 	}
 
-	// 2. Sort by weight
-	if ($a['weight'] < $b['weight'])
+	// 2. Within a group, order all infrequently needed, page-specific files after
+	// common files needed throughout the website. Separating this way allows for
+	// the aggregate file generated for all of the common files to be reused
+	// across a site visit without being cut by a page using a less common file.
+	elseif ($a['every_page'] && !$b['every_page'])
+	{
+		return -1;
+	}
+	elseif (!$a['every_page'] && $b['every_page'])
+	{
+		return 1;
+	}
+
+	// 3. Sort by weight
+	elseif ($a['weight'] < $b['weight'])
 	{
 		return -1;
 	}
