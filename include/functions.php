@@ -266,11 +266,11 @@ function forum_output_lib_js_labjs(&$libs)
 		{
 			if ($lib['group'] == FORUM_JS_GROUP_SYSTEM)
 			{
-				$output_system .= '<script src="'.$lib['data'].'" async="'.(($lib['async']) ? "true" : "false").'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
+				$output_system .= '<script src="'.$lib['data'].'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
 			}
 			else if ($lib['group'] == FORUM_JS_GROUP_COUNTER)
 			{
-				$output_counter .= '<script src="'.$lib['data'].'" async="'.(($lib['async']) ? "true" : "false").'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
+				$output_counter .= '<script src="'.$lib['data'].'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
 			}
 			else
 			{
@@ -285,7 +285,7 @@ function forum_output_lib_js_labjs(&$libs)
 	// Wrap default to LABjs parameters
 	if ($output_default != '')
 	{
-		$output_default = '<script>'."\n".'$LAB.setOptions({AlwaysPreserveOrder:true})'.$output_default.';'."\n".'</script>';
+		$output_default = '<script>'."\n".'$LAB.setOptions({AlwaysPreserveOrder:true})'."\n".$output_default.';'."\n".'</script>';
 	}
 
 	return $output_system.$output_default.$output_counter;
@@ -3505,8 +3505,10 @@ function redirect($destination_url, $message)
 
 	($hook = get_hook('fn_redirect_head')) ? eval($hook) : null;
 
-	$tpl_redir = str_replace('<!-- forum_head -->', implode("\n",$forum_head), $tpl_redir);
-	unset($forum_head);
+	$tmp_head = implode("\n", $forum_head).forum_output_lib_css();
+
+	$tpl_redir = str_replace('<!-- forum_head -->', $tmp_head, $tpl_redir);
+	unset($forum_head,$tmp_head);
 
 	// END SUBST - <!-- forum_head -->
 
