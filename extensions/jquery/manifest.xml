@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension SYSTEM "ext-1.0.dtd">
+
+
+<extension engine="1.0">
+	<id>jquery</id>
+	<title>Fancy jQuery</title>
+	<version>1.8.3</version>
+	<description>Provide jQuery 1.5.2 library with addon plugins</description>
+	<author>dimka.linux@gmail.com</author>
+
+	<minversion>1.3dev</minversion>
+	<maxtestedon>1.4.0</maxtestedon>
+
+	<hooks>
+		<hook id="hd_head" priority="3"><![CDATA[
+			if (isset($forum_head['commonjs'])) {
+				unset($forum_head['commonjs']);
+			}
+
+			if (file_exists($ext_info['path'].'/c/'.$forum_user['style'].'/style.css')) {
+				$forum_head['fancy_jquery_css'] = '<link rel="stylesheet" type="text/css" media="screen" href="'.$ext_info['url'].'/c/'.$forum_user['style'].'/style.css" />';
+			} else {
+				$forum_head['fancy_jquery_css'] = '<link rel="stylesheet" type="text/css" media="screen" href="'.$ext_info['url'].'/c/Oxygen/style.css" />';
+			}
+
+
+		]]></hook>
+
+		<hook id="ft_js_include"><![CDATA[
+			forum_add_js($ext_info['path'].'/j/lib.min.js', array('type' => 'file'));
+		]]></hook>
+
+	</hooks>
+</extension>

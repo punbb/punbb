@@ -1,0 +1,25 @@
+#fancy_forum_message {
+	height:50px;
+	width:100%;
+	background-color: #fff;
+	color: #1E90FF;
+	position:fixed;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=95);
+	opacity: 0.95;
+	-moz-opacity: 0.95;
+	-webkit-opacity: 0.95;
+	text-align:center;
+	left:0px;
+	z-index:9999999;
+	margin:0px;
+	padding:0px;
+	top: 0px;
+	border-top: 2px solid #fff;
+	border-bottom: 1px solid #ebebeb;
+}
+
+#fancy_forum_message_content {
+	line-height: 1.5em;
+	font-size: 1.5em;
+	font-family: 'Lucida Grande', sans-serif;
+}

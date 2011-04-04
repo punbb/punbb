@@ -67,17 +67,8 @@ function forum_add_js($data = NULL, $options = NULL)
 	// Default options
 	$default_options = array(
 		//
-		'external'		=> array(
-			'default'	=> true,
-		),
-
-		'inline'		=> array(
-			'default'	=> false,
-		),
-
-		//
-		'name'			=> array(
-			'default'	=> '',
+		'type'		=> array(
+			'default'	=> 'external',
 		),
 
 		//
@@ -91,9 +82,25 @@ function forum_add_js($data = NULL, $options = NULL)
 		),
 
 		//
-		'group'		=> array(
-			'default'	=> 'FORUM_JS_GROUP_DEFAULT'
+		'group'			=> array(
+			'default'	=> 'FORUM_JS_GROUP_DEFAULT',
+		),
+
+		//
+		'every_page'	=> array(
+			'default'	=> false,
+		),
+
+		//
+		'defer'			=> array(
+			'default'	=> false,
+		),
+
+		//
+		'preprocess'	=> array(
+			'default'	=> true,
 		)
+
 	);
 
 	$length = count($default_options);
@@ -113,6 +120,10 @@ function forum_add_js($data = NULL, $options = NULL)
 	}
 
 	$default_options['data'] = forum_trim($data);
+	if ($default_options['type'] == 'external')
+	{
+		$default_options['data'] = file_create_url(forum_trim($data));
+	}
 
 	// Tweak weight
 	$default_options['weight'] += count($forum_libs['js']) / 1000;
@@ -120,7 +131,7 @@ function forum_add_js($data = NULL, $options = NULL)
 	($hook = get_hook('fn_forum_add_js_pre_merge')) ? eval($hook) : null;
 
 	// Add to libs
-	if ($default_options['inline'] === false)
+	if ($default_options['type'] != 'inline')
 	{
 		$forum_libs['js'][$default_options['data']] = $default_options;
 	}
@@ -190,20 +201,17 @@ function forum_output_lib_js_simple(&$libs)
 
 	foreach ($libs as $key => $lib)
 	{
-		if ($lib['inline'])
+		if ($lib['type'] == 'inline')
 		{
 			$output .= '<script>'.$lib['data'].'</script>'."\n";
 			unset($libs[$key]);
 			continue;
 		}
-		else
+		else if ($lib['type'] == 'external')
 		{
-			if ($lib['external'])
-			{
-				$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" src="'.$lib['data'].'"></script>'."\n";
-				unset($libs[$key]);
-				continue;
-			}
+			$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" '.(($lib['defer']) ? "defer=\"true\"" : "").' src="'.$lib['data'].'"></script>'."\n";
+			unset($libs[$key]);
+			continue;
 		}
 	}
 
@@ -214,46 +222,115 @@ function forum_output_lib_js_simple(&$libs)
 //
 function forum_output_lib_js_labjs(&$libs)
 {
-	$output_system = $output = '';
+	$output_system = $output_counter = $output_default = '';
 
 	foreach ($libs as $key => $lib)
 	{
-		if ($lib['inline'])
+		if ($lib['data'] === false)
+		{
+			continue;
+		}
+
+		if ($lib['type'] == 'inline')
 		{
 			if ($lib['group'] == FORUM_JS_GROUP_SYSTEM)
 			{
 				$output_system .= '<script>'.$lib['data'].'</script>'."\n";
 			}
+			else if ($lib['group'] == FORUM_JS_GROUP_COUNTER)
+			{
+				$output_counter .= '<script>'.$lib['data'].'</script>'."\n";
+			}
 			else
 			{
-				$output .= "\n".'.wait(function () { '.$lib['data'].' })';
+				$output_default .= "\n\t".'.wait(function () { '.$lib['data'].' })';
 			}
 
 			unset($libs[$key]);
 			continue;
 		}
-		else
+		else if ($lib['type'] == 'external' || $lib['type'] == 'file')
 		{
-			if ($lib['external'])
+			if ($lib['group'] == FORUM_JS_GROUP_SYSTEM)
 			{
-				if ($lib['group'] == FORUM_JS_GROUP_SYSTEM || $lib['async']) {
-					$output_system .= '<script src="'.$lib['data'].'"></script>'."\n";
-				} else {
-					$output .= "\n".'.script("'.$lib['data'].'")';
-				}
-
-				unset($libs[$key]);
-				continue;
+				$output_system .= '<script src="'.$lib['data'].'" async="'.(($lib['async']) ? "true" : "false").'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
 			}
+			else if ($lib['group'] == FORUM_JS_GROUP_COUNTER)
+			{
+				$output_counter .= '<script src="'.$lib['data'].'" async="'.(($lib['async']) ? "true" : "false").'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
+			}
+			else
+			{
+				$output_default .= "\n\t".'.script("'.$lib['data'].'")';
+			}
+
+			unset($libs[$key]);
+			continue;
 		}
 	}
 
-	if ($output != '')
+	// Wrap default to LABjs parameters
+	if ($output_default != '')
 	{
-		$output_system .= '<script>$LAB.setGlobalDefaults({ AlwaysPreserveOrder: true });'."\n".'$LAB'.$output.';</script>';
+		$output_default = '<script>'."\n".'$LAB.setGlobalDefaults({ AlwaysPreserveOrder: true });'."\n".'$LAB'.$output_default.';'."\n".'</script>';
 	}
 
-	return $output_system;
+	return $output_system.$output_default.$output_counter;
+}
+
+
+// Try a get uri scheme (based on Drupal)
+function file_uri_scheme($uri)
+{
+	$position = strpos($uri, '://');
+	return $position ? substr($uri, 0, $position) : FALSE;
+}
+
+
+//
+function forum_encode_path($path)
+{
+	return str_replace('%2F', '/', rawurlencode($path));
+}
+
+
+// Creates a web-accessible URL for local file. (based on Drupal)
+function file_create_url($uri)
+{
+	global $base_url;
+
+	$scheme = file_uri_scheme($uri);
+
+	if (!$scheme)
+	{
+	    // Allow for:
+	    // - root-relative URIs (e.g. /foo.jpg in http://example.com/foo.jpg)
+	    // - protocol-relative URIs (e.g. //bar.jpg, which is expanded to
+	    //   http://example.com/bar.jpg by the browser when viewing a page over
+	    //   HTTP and to https://example.com/bar.jpg when viewing a HTTPS page)
+	    // Both types of relative URIs are characterized by a leading slash, hence
+	    // we can use a single check.
+	    if (utf8_substr($uri, 0, 1) == '/')
+	    {
+			return $uri;
+	    }
+	    else
+	    {
+			// If this is not a properly formatted stream, then it is a shipped file.
+			// Therefore, return the urlencoded URI with the base URL prepended.
+			return $base_url.'/'.forum_encode_path($uri);
+	    }
+	}
+	else if ($scheme == 'http' || $scheme == 'https')
+	{
+		// Check for http so that we don't have to implement getExternalUrl() for
+		// the http wrapper.
+		return $uri;
+	}
+	else
+	{
+		return FALSE;
+	}
 }
 
 
