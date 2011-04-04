@@ -73,7 +73,7 @@ function forum_add_js($data = NULL, $options = NULL)
 
 		//
 		'async'			=> array(
-			'default'	=> true,
+			'default'	=> false,
 		),
 
 		//
@@ -222,7 +222,7 @@ function forum_output_lib_js_simple(&$libs)
 		}
 		else if ($lib['type'] == 'external' || $lib['type'] == 'file')
 		{
-			$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" '.(($lib['defer']) ? "defer=\"true\"" : "").' src="'.$lib['data'].'"></script>'."\n";
+			$output .= '<script'.(($lib['async']) ? " async" : "").(($lib['defer']) ? " defer=\"true\"" : "").' src="'.$lib['data'].'"></script>'."\n";
 			unset($libs[$key]);
 			continue;
 		}
@@ -266,11 +266,11 @@ function forum_output_lib_js_labjs(&$libs)
 		{
 			if ($lib['group'] == FORUM_JS_GROUP_SYSTEM)
 			{
-				$output_system .= '<script src="'.$lib['data'].'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
+				$output_system .= '<script src="'.$lib['data'].'"'.(($lib['async']) ? " async" : "").(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
 			}
 			else if ($lib['group'] == FORUM_JS_GROUP_COUNTER)
 			{
-				$output_counter .= '<script src="'.$lib['data'].'"'.(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
+				$output_counter .= '<script src="'.$lib['data'].'"'.(($lib['async']) ? " async" : "").(($lib['defer']) ? " defer=\"true\"" : "").'></script>'."\n";
 			}
 			else
 			{
