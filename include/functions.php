@@ -50,7 +50,7 @@ function check_is_all_caps($text)
 }
 
 
-// Add JS url to load
+// Add JS url or file to load
 function forum_add_js($data = NULL, $options = NULL)
 {
 	global $forum_libs;
@@ -83,7 +83,7 @@ function forum_add_js($data = NULL, $options = NULL)
 
 		//
 		'group'			=> array(
-			'default'	=> 'FORUM_JS_GROUP_DEFAULT',
+			'default'	=> FORUM_JS_GROUP_DEFAULT,
 		),
 
 		//
@@ -207,7 +207,7 @@ function forum_sort_libs($a, $b)
 }
 
 
-//
+// Render for JS — use default script tags
 function forum_output_lib_js_simple(&$libs)
 {
 	$output = '';
@@ -220,7 +220,7 @@ function forum_output_lib_js_simple(&$libs)
 			unset($libs[$key]);
 			continue;
 		}
-		else if ($lib['type'] == 'external')
+		else if ($lib['type'] == 'external' || $lib['type'] == 'file')
 		{
 			$output .= '<script async="'.(($lib['async']) ? "true" : "false").'" '.(($lib['defer']) ? "defer=\"true\"" : "").' src="'.$lib['data'].'"></script>'."\n";
 			unset($libs[$key]);
@@ -232,7 +232,7 @@ function forum_output_lib_js_simple(&$libs)
 }
 
 
-//
+// Render for JS — use LABjs
 function forum_output_lib_js_labjs(&$libs)
 {
 	$output_system = $output_counter = $output_default = '';
@@ -285,12 +285,189 @@ function forum_output_lib_js_labjs(&$libs)
 	// Wrap default to LABjs parameters
 	if ($output_default != '')
 	{
-		$output_default = '<script>'."\n".'$LAB.setGlobalDefaults({ AlwaysPreserveOrder: true });'."\n".'$LAB'.$output_default.';'."\n".'</script>';
+		$output_default = '<script>'."\n".'$LAB.setOptions({AlwaysPreserveOrder:true})'.$output_default.';'."\n".'</script>';
 	}
 
 	return $output_system.$output_default.$output_counter;
 }
 
+
+// Add CSS url or file to load
+function forum_add_css($data = NULL, $options = NULL)
+{
+	global $forum_libs;
+
+	$return = ($hook = get_hook('fn_forum_add_css_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+	if (is_null($options) || !is_array($options))
+	{
+		$options = array();
+	}
+
+	// Default options
+	$default_options = array(
+		//
+		'type'		=> array(
+			'default'	=> 'external',
+		),
+
+		//
+		'weight'		=> array(
+			'default'	=> 100,
+		),
+
+		//
+		'group'			=> array(
+			'default'	=> FORUM_CSS_GROUP_DEFAULT,
+		),
+
+		'media'			=> array(
+			'default'	=> 'all',
+		),
+
+		//
+		'every_page'	=> array(
+			'default'	=> false,
+		),
+
+		//
+		'preprocess'	=> array(
+			'default'	=> true,
+		),
+
+		'browsers'		=> array(
+			'default'	=> array(),
+		),
+
+	);
+
+	$length = count($default_options);
+	$keys = array_keys($default_options);
+
+	for ($i = 0; $i < $length; $i++)
+	{
+		$key = $keys[$i];
+
+		if (!isset($options[$key]))
+		{
+			$default_options[$keys[$i]] = $default_options[$keys[$i]]['default'];
+			continue;
+		}
+
+		$default_options[$keys[$i]] = $options[$key];
+	}
+
+	$default_options['data'] = forum_trim($data);
+	if ($default_options['type'] == 'external')
+	{
+		$default_options['data'] = file_create_url(forum_trim($data));
+	}
+
+	// Tweak weight
+	$default_options['weight'] += count($forum_libs['css']) / 1000;
+
+	($hook = get_hook('fn_forum_add_css_pre_merge')) ? eval($hook) : null;
+
+	// Add to libs
+	if ($default_options['type'] != 'inline')
+	{
+		$forum_libs['css'][$default_options['data']] = $default_options;
+	}
+	else
+	{
+		$forum_libs['css'][] = $default_options;
+	}
+
+	($hook = get_hook('fn_forum_add_css_end')) ? eval($hook) : null;
+}
+
+
+//
+function forum_output_lib_css()
+{
+	global $forum_libs;
+
+	$output = '';
+
+	$return = ($hook = get_hook('fn_forum_output_lib_css_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+	if (empty($forum_libs['css']))
+		return $output;
+
+	// Sorts the scripts into correct order
+	uasort($forum_libs['css'], 'forum_sort_libs');
+
+	return forum_output_lib_css_simple($forum_libs['css']);
+}
+
+
+// Render for CSS — use link tags
+function forum_output_lib_css_simple(&$libs)
+{
+	$output = '';
+
+	foreach ($libs as $key => $lib)
+	{
+		if ($lib['type'] == 'inline')
+		{
+			$output .= forum_trim(forum_check_conditional_comments($lib, '<style>'.$lib['data'].'</style>'))."\n";
+			unset($libs[$key]);
+			continue;
+		}
+		else if ($lib['type'] == 'external' || $lib['type'] == 'file')
+		{
+			$output .= forum_trim(forum_check_conditional_comments($lib, '<link rel="stylesheet" type="text/css" media="'.$lib['media'].'" href="'.$lib['data'].'" />'))."\n";
+			unset($libs[$key]);
+			continue;
+		}
+	}
+
+	return $output;
+}
+
+
+function forum_check_conditional_comments($element, $data)
+{
+	$browsers = (isset($element['browsers']) && is_array($element['browsers'])) ? $element['browsers'] : array();
+	$browsers += array('IE' => TRUE, '!IE' => TRUE);
+
+	// If rendering in all browsers, no need for conditional comments.
+	if ($browsers['IE'] === true && $browsers['!IE'])
+	{
+		return $data;
+	}
+
+	// Determine the conditional comment expression for Internet Explorer to evaluate.
+	if ($browsers['IE'] === TRUE)
+	{
+		$expression = 'IE';
+	}
+	elseif ($browsers['IE'] === FALSE)
+	{
+		$expression = '!IE';
+	}
+	else
+	{
+		$expression = $browsers['IE'];
+	}
+
+	if (!$browsers['!IE'])
+	{
+		// "downlevel-hidden".
+		$data = "\n<!--[if $expression]>".$data."<![endif]-->";
+	}
+	else
+	{
+	    // "downlevel-revealed".
+	    $data = "\n<!--[if $expression]><!-->".$data."<!--<![endif]-->";
+	}
+
+	return $data;
+}
 
 // Try a get uri scheme (based on Drupal)
 function file_uri_scheme($uri)

@@ -27,9 +27,14 @@ $forum_libs = array();
 $forum_libs['js'] = array();
 $forum_libs['css'] = array();
 
+// JS groups
 define('FORUM_JS_GROUP_SYSTEM', -100);
 define('FORUM_JS_GROUP_DEFAULT', 0);
 define('FORUM_JS_GROUP_COUNTER', 100);
+
+// CSS groups
+define('FORUM_CSS_GROUP_SYSTEM', -100);
+define('FORUM_CSS_GROUP_DEFAULT', 0);
 
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';

@@ -128,10 +128,14 @@ foreach (explode("\n", $head_temp) as $style_temp)
 
 ob_end_clean();
 
+// print_r($forum_libs['css']);
+
+$tmp_head = implode("\n", $forum_head).forum_output_lib_css();
+
 ($hook = get_hook('hd_head')) ? eval($hook) : null;
 
-$tpl_main = str_replace('<!-- forum_head -->', implode("\n", $forum_head), $tpl_main);
-unset($forum_head);
+$tpl_main = str_replace('<!-- forum_head -->', $tmp_head, $tpl_main);
+unset($forum_head, $tmp_head);
 
 // END SUBST - <!-- forum_head -->
 
