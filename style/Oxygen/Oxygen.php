@@ -1,5 +1,10 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url.'/style/'.$forum_user['style'] ?>/Oxygen.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url.'/style/'.$forum_user['style'] ?>/Oxygen_cs.css" />
-<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url.'/style/'.$forum_user['style'] ?>/Oxygen_ie6.css" /><![endif]-->
-<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url.'/style/'.$forum_user['style'] ?>/Oxygen_ie7.css" /><![endif]-->
-<!--[if IE 8]><link rel="stylesheet" type="text/css" href="<?php echo $base_url.'/style/'.$forum_user['style'] ?>/Oxygen_ie8.css" /><![endif]-->
+<?php
+
+forum_add_css(FORUM_ROOT.'style/Oxygen/min/Oxygen.min.css', array('type' => 'file', 'group' => FORUM_CSS_GROUP_SYSTEM, 'media' => 'screen'));
+
+// IE
+forum_add_css(FORUM_ROOT.'style/Oxygen/min/Oxygen_ie6.min.css', array('type' => 'file', 'group' => FORUM_CSS_GROUP_SYSTEM, 'media' => 'screen', 'browsers' => array('IE' => 'lte IE 6', '!IE' => false)));
+forum_add_css(FORUM_ROOT.'style/Oxygen/min/Oxygen_ie7.min.css', array('type' => 'file', 'group' => FORUM_CSS_GROUP_SYSTEM, 'media' => 'screen', 'browsers' => array('IE' => 'IE 7', '!IE' => false)));
+forum_add_css(FORUM_ROOT.'style/Oxygen/min/Oxygen_ie8.min.css', array('type' => 'file', 'group' => FORUM_CSS_GROUP_SYSTEM, 'media' => 'screen', 'browsers' => array('IE' => 'IE 8', '!IE' => false)));
+
+?>
