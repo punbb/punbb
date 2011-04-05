@@ -66,7 +66,7 @@ function forum_add_js($data = NULL, $options = NULL)
 
 	// Default options
 	$default_options = array(
-		//
+		// external, inline, file
 		'type'		=> array(
 			'default'	=> 'external',
 		),
@@ -119,10 +119,17 @@ function forum_add_js($data = NULL, $options = NULL)
 		$default_options[$keys[$i]] = $options[$key];
 	}
 
+	// Check data — url or inline code
 	$default_options['data'] = forum_trim($data);
+	if (empty($default_options['data']) || utf8_strlen($default_options['data']) < 1)
+	{
+		return FALSE;
+	}
+
+	// Check type
 	if ($default_options['type'] == 'external')
 	{
-		$default_options['data'] = file_create_url(forum_trim($data));
+		$default_options['data'] = forum_create_url_from_file(forum_trim($data));
 	}
 
 	// Tweak weight
@@ -141,17 +148,19 @@ function forum_add_js($data = NULL, $options = NULL)
 	}
 
 	($hook = get_hook('fn_forum_add_js_end')) ? eval($hook) : null;
+
+	return $forum_libs['js'];
 }
 
 
 //
-function forum_output_lib_js()
+function forum_render_lib_js()
 {
 	global $forum_libs;
 
 	$output = '';
 
-	$return = ($hook = get_hook('fn_forum_output_lib_js_start')) ? eval($hook) : null;
+	$return = ($hook = get_hook('fn_forum_render_lib_js_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
@@ -161,13 +170,18 @@ function forum_output_lib_js()
 	// Sorts the scripts into correct order
 	uasort($forum_libs['js'], 'forum_sort_libs');
 
-	return forum_output_lib_js_labjs($forum_libs['js']);
+	return forum_render_lib_js_labjs($forum_libs['js']);
 }
 
 
 //
 function forum_sort_libs($a, $b)
 {
+	$return = ($hook = get_hook('fn_forum_sort_libs_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+
 	// 1. Sort by group — system first
 	if ($a['group'] < $b['group'])
 	{
@@ -208,9 +222,13 @@ function forum_sort_libs($a, $b)
 
 
 // Render for JS — use default script tags
-function forum_output_lib_js_simple(&$libs)
+function forum_render_lib_js_simple(&$libs)
 {
 	$output = '';
+
+	$return = ($hook = get_hook('fn_forum_render_lib_js_simple_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
 
 	foreach ($libs as $key => $lib)
 	{
@@ -228,18 +246,25 @@ function forum_output_lib_js_simple(&$libs)
 		}
 	}
 
+	($hook = get_hook('fn_forum_render_lib_js_simple_end')) ? eval($hook) : null;
+
 	return $output;
 }
 
 
 // Render for JS — use LABjs
-function forum_output_lib_js_labjs(&$libs)
+function forum_render_lib_js_labjs(&$libs)
 {
 	$output_system = $output_counter = $output_default = '';
 
+	$return = ($hook = get_hook('fn_forum_render_lib_js_labjs_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
+
 	foreach ($libs as $key => $lib)
 	{
-		if ($lib['data'] === false)
+		if ($lib['data'] === FALSE)
 		{
 			continue;
 		}
@@ -288,6 +313,8 @@ function forum_output_lib_js_labjs(&$libs)
 		$output_default = '<script>'."\n".'$LAB.setOptions({AlwaysPreserveOrder:true})'."\n".$output_default.';'."\n".'</script>';
 	}
 
+	($hook = get_hook('fn_forum_render_lib_js_labjs_end')) ? eval($hook) : null;
+
 	return $output_system.$output_default.$output_counter;
 }
 
@@ -323,6 +350,7 @@ function forum_add_css($data = NULL, $options = NULL)
 			'default'	=> FORUM_CSS_GROUP_DEFAULT,
 		),
 
+		// screen, all, print
 		'media'			=> array(
 			'default'	=> 'all',
 		),
@@ -359,10 +387,17 @@ function forum_add_css($data = NULL, $options = NULL)
 		$default_options[$keys[$i]] = $options[$key];
 	}
 
+	// Check data — url or inline code
 	$default_options['data'] = forum_trim($data);
+	if (empty($default_options['data']) || utf8_strlen($default_options['data']) < 1)
+	{
+		return FALSE;
+	}
+
+	// Check type
 	if ($default_options['type'] == 'external')
 	{
-		$default_options['data'] = file_create_url(forum_trim($data));
+		$default_options['data'] = forum_create_url_from_file(forum_trim($data));
 	}
 
 	// Tweak weight
@@ -381,17 +416,19 @@ function forum_add_css($data = NULL, $options = NULL)
 	}
 
 	($hook = get_hook('fn_forum_add_css_end')) ? eval($hook) : null;
+
+	return $forum_libs['css'];
 }
 
 
 //
-function forum_output_lib_css()
+function forum_render_lib_css()
 {
 	global $forum_libs;
 
 	$output = '';
 
-	$return = ($hook = get_hook('fn_forum_output_lib_css_start')) ? eval($hook) : null;
+	$return = ($hook = get_hook('fn_forum_render_lib_css_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
@@ -401,14 +438,19 @@ function forum_output_lib_css()
 	// Sorts the scripts into correct order
 	uasort($forum_libs['css'], 'forum_sort_libs');
 
-	return forum_output_lib_css_simple($forum_libs['css']);
+	return forum_render_lib_css_simple($forum_libs['css']);
 }
 
 
 // Render for CSS — use link tags
-function forum_output_lib_css_simple(&$libs)
+function forum_render_lib_css_simple(&$libs)
 {
 	$output = '';
+
+	$return = ($hook = get_hook('fn_forum_render_lib_css_simple_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
 
 	foreach ($libs as $key => $lib)
 	{
@@ -426,12 +468,19 @@ function forum_output_lib_css_simple(&$libs)
 		}
 	}
 
+	($hook = get_hook('fn_forum_render_lib_css_simple_end')) ? eval($hook) : null;
+
 	return $output;
 }
 
 
+// Helper func for forum_render_* — wrap lib in IE-conditional comments
 function forum_check_conditional_comments($element, $data)
 {
+	$return = ($hook = get_hook('fn_forum_check_conditional_comments_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
 	$browsers = (isset($element['browsers']) && is_array($element['browsers'])) ? $element['browsers'] : array();
 	$browsers += array('IE' => TRUE, '!IE' => TRUE);
 
@@ -469,8 +518,9 @@ function forum_check_conditional_comments($element, $data)
 	return $data;
 }
 
+
 // Try a get uri scheme (based on Drupal)
-function file_uri_scheme($uri)
+function forum_get_file_uri_scheme($uri)
 {
 	$position = strpos($uri, '://');
 	return $position ? substr($uri, 0, $position) : FALSE;
@@ -485,11 +535,11 @@ function forum_encode_path($path)
 
 
 // Creates a web-accessible URL for local file. (based on Drupal)
-function file_create_url($uri)
+function forum_create_url_from_file($uri)
 {
 	global $base_url;
 
-	$scheme = file_uri_scheme($uri);
+	$scheme = forum_get_file_uri_scheme($uri);
 
 	if (!$scheme)
 	{
@@ -3505,7 +3555,7 @@ function redirect($destination_url, $message)
 
 	($hook = get_hook('fn_redirect_head')) ? eval($hook) : null;
 
-	$tmp_head = implode("\n", $forum_head).forum_output_lib_css();
+	$tmp_head = implode("\n", $forum_head).forum_render_lib_css();
 
 	$tpl_redir = str_replace('<!-- forum_head -->', $tmp_head, $tpl_redir);
 	unset($forum_head,$tmp_head);

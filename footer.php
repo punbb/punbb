@@ -98,7 +98,7 @@ forum_add_js(FORUM_ROOT.'include/js/min/common.min.js', array('type' => 'file', 
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
 
-$tpl_main = str_replace('<!-- forum_javascript -->', forum_output_lib_js(), $tpl_main);
+$tpl_main = str_replace('<!-- forum_javascript -->', forum_render_lib_js(), $tpl_main);
 // END SUBST - <!-- forum_javascript -->
 
 // Last call!
