@@ -211,7 +211,7 @@ function generate_stats_cache()
 	$stats['cached'] = time();
 
 	// Output ranks list as PHP code
-	if (!write_cache_file(FORUM_CACHE_DIR.'cache_stats.php', '<?php'."\n\n".'define(\'FORUM_STATS_LOADED\', 1);'."\n\n".'$forum_stats = '.var_export($stats, true).';'."\n\n".'?>'))
+	if (!write_cache_file(FORUM_CACHE_DIR.'cache_stats.php', '<?php'."\n\n".'if (!defined(\'FORUM_STATS_LOADED\')) define(\'FORUM_STATS_LOADED\', 1);'."\n\n".'$forum_stats = '.var_export($stats, true).';'."\n\n".'?>'))
 	{
 		error('Unable to write stats cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
