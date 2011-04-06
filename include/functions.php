@@ -127,7 +127,7 @@ function forum_add_js($data = NULL, $options = NULL)
 	}
 
 	// Check type
-	if ($default_options['type'] == 'external')
+	if ($default_options['type'] == 'external' || $default_options['type'] == 'file')
 	{
 		$default_options['data'] = forum_create_url_from_file(forum_trim($data));
 	}
@@ -395,7 +395,7 @@ function forum_add_css($data = NULL, $options = NULL)
 	}
 
 	// Check type
-	if ($default_options['type'] == 'external')
+	if ($default_options['type'] == 'external' || $default_options['type'] == 'file')
 	{
 		$default_options['data'] = forum_create_url_from_file(forum_trim($data));
 	}
