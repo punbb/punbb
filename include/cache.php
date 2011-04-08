@@ -41,7 +41,7 @@ function write_cache_file($file, $content)
 	fclose($fh);
 
 	// Rename TMP to file
-	if (!rename($tmp_file, $file))
+	if (!@/**/rename($tmp_file, $file))
 	{
 		// Unlink TMP
 		if (file_exists($tmp_file))

@@ -10,8 +10,8 @@
  */
 
 
-define('UPDATE_TO', '1.3.5');
-define('UPDATE_TO_DB_REVISION', 4);
+define('UPDATE_TO', '1.4dev');
+define('UPDATE_TO_DB_REVISION', 5);
 
 // The number of items to process per pageview (lower this if the update script times out during UTF-8 conversion)
 define('PER_PAGE', 300);

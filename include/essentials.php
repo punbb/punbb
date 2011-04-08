@@ -15,8 +15,8 @@ if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
 
 // Define the version and database revision that this code was written for
-define('FORUM_VERSION', '1.3.5');
-define('FORUM_DB_REVISION', 4);
+define('FORUM_VERSION', '1.4dev');
+define('FORUM_DB_REVISION', 5);
 
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
