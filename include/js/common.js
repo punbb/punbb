@@ -1,6 +1,3 @@
-/* Modernizr custom build of 1.7: input */
-window.Modernizr=function(a,b,c){function G(){e.input=function(a){for(var b=0,c=a.length;b<c;b++)t[a[b]]=!!(a[b]in l);return t}("autocomplete autofocus list placeholder max min multiple pattern required step".split(" "))}function F(a,b){var c=a.charAt(0).toUpperCase()+a.substr(1),d=(a+" "+p.join(c+" ")+c).split(" ");return!!E(d,b)}function E(a,b){for(var d in a)if(k[a[d]]!==c&&(!b||b(a[d],j)))return!0}function D(a,b){return(""+a).indexOf(b)!==-1}function C(a,b){return typeof a===b}function B(a,b){return A(o.join(a+";")+(b||""))}function A(a){k.cssText=a}var d="1.7",e={},f=!0,g=b.documentElement,h=b.head||b.getElementsByTagName("head")[0],i="modernizr",j=b.createElement(i),k=j.style,l=b.createElement("input"),m=":)",n=Object.prototype.toString,o=" -webkit- -moz- -o- -ms- -khtml- ".split(" "),p="Webkit Moz O ms Khtml".split(" "),q={svg:"http://www.w3.org/2000/svg"},r={},s={},t={},u=[],v,w=function(a){var c=b.createElement("style"),d=b.createElement("div"),e;c.textContent=a+"{#modernizr{height:3px}}",h.appendChild(c),d.id="modernizr",g.appendChild(d),e=d.offsetHeight===3,c.parentNode.removeChild(c),d.parentNode.removeChild(d);return!!e},x=function(){function d(d,e){e=e||b.createElement(a[d]||"div");var f=(d="on"+d)in e;f||(e.setAttribute||(e=b.createElement("div")),e.setAttribute&&e.removeAttribute&&(e.setAttribute(d,""),f=C(e[d],"function"),C(e[d],c)||(e[d]=c),e.removeAttribute(d))),e=null;return f}var a={select:"input",change:"input",submit:"form",reset:"form",error:"img",load:"img",abort:"img"};return d}(),y=({}).hasOwnProperty,z;C(y,c)||C(y.call,c)?z=function(a,b){return b in a&&C(a.constructor.prototype[b],c)}:z=function(a,b){return y.call(a,b)};for(var H in r)z(r,H)&&(v=H.toLowerCase(),e[v]=r[H](),u.push((e[v]?"":"no-")+v));e.input||G(),e.crosswindowmessaging=e.postmessage,e.historymanagement=e.history,e.addTest=function(a,b){a=a.toLowerCase();if(!e[a]){b=!!b(),g.className+=" "+(b?"":"no-")+a,e[a]=b;return e}},A(""),j=l=null,e._enableHTML5=f,e._version=d,g.className=g.className.replace(/\bno-js\b/,"")+" js "+u.join(" ");return e}(this,this.document);
-
 /* LAB.js v1.2.0 */
 (function(p){var q="string",w="head",L="body",M="script",u="readyState",j="preloaddone",x="loadtrigger",N="srcuri",E="preload",Z="complete",y="done",z="which",O="preserve",F="onreadystatechange",ba="onload",P="hasOwnProperty",bb="script/cache",Q="[object ",bw=Q+"Function]",bx=Q+"Array]",e=null,h=true,i=false,k=p.document,bc=p.location,bd=p.ActiveXObject,A=p.setTimeout,be=p.clearTimeout,R=function(a){return k.getElementsByTagName(a)},S=Object.prototype.toString,G=function(){},r={},T={},bf=/^[^?#]*\//.exec(bc.href)[0],bg=/^\w+\:\/\/\/?[^\/]+/.exec(bf)[0],by=R(M),bh=p.opera&&S.call(p.opera)==Q+"Opera]",bi=("MozAppearance"in k.documentElement.style),bj=(k.createElement(M).async===true),v={cache:!(bi||bh),order:bi||bh||bj,xhr:h,dupe:h,base:"",which:w};v[O]=i;v[E]=h;r[w]=k.head||R(w);r[L]=R(L);function B(a){return S.call(a)===bw}function U(a,b){var c=/^\w+\:\/\//,d;if(typeof a!=q)a="";if(typeof b!=q)b="";d=((/^\/\//.test(a))?bc.protocol:"")+a;d=(c.test(d)?"":b)+d;return((c.test(d)?"":(d.charAt(0)==="/"?bg:bf))+d)}function bz(a){return(U(a).indexOf(bg)===0)}function bA(a){var b,c=-1;while(b=by[++c]){if(typeof b.src==q&&a===U(b.src)&&b.type!==bb)return h}return i}function H(t,l){t=!(!t);if(l==e)l=v;var bk=i,C=t&&l[E],bl=C&&l.cache,I=C&&l.order,bm=C&&l.xhr,bB=l[O],bC=l.which,bD=l.base,bn=G,J=i,D,s=h,m={},K=[],V=e;C=bl||bm||I;function bo(a,b){if((a[u]&&a[u]!==Z&&a[u]!=="loaded")||b[y]){return i}a[ba]=a[F]=e;return h}function W(a,b,c){c=!(!c);if(!c&&!(bo(a,b)))return;b[y]=h;for(var d in m){if(m[P](d)&&!(m[d][y]))return}bk=h;bn()}function bp(a){if(B(a[x])){a[x]();a[x]=e}}function bE(a,b){if(!bo(a,b))return;b[j]=h;A(function(){r[b[z]].removeChild(a);bp(b)},0)}function bF(a,b){if(a[u]===4){a[F]=G;b[j]=h;A(function(){bp(b)},0)}}function X(b,c,d,g,f,n){var o=b[z];A(function(){if("item"in r[o]){if(!r[o][0]){A(arguments.callee,25);return}r[o]=r[o][0]}var a=k.createElement(M);if(typeof d==q)a.type=d;if(typeof g==q)a.charset=g;if(B(f)){a[ba]=a[F]=function(){f(a,b)};a.src=c;if(bj){a.async=i}}r[o].insertBefore(a,(o===w?r[o].firstChild:e));if(typeof n==q){a.text=n;W(a,b,h)}},0)}function bq(a,b,c,d){T[a[N]]=h;X(a,b,c,d,W)}function br(a,b,c,d){var g=arguments;if(s&&a[j]==e){a[j]=i;X(a,b,bb,d,bE)}else if(!s&&a[j]!=e&&!a[j]){a[x]=function(){br.apply(e,g)}}else if(!s){bq.apply(e,g)}}function bs(a,b,c,d){var g=arguments,f;if(s&&a[j]==e){a[j]=i;f=a.xhr=(bd?new bd("Microsoft.XMLHTTP"):new p.XMLHttpRequest());f[F]=function(){bF(f,a)};f.open("GET",b);f.send("")}else if(!s&&a[j]!=e&&!a[j]){a[x]=function(){bs.apply(e,g)}}else if(!s){T[a[N]]=h;X(a,b,c,d,e,a.xhr.responseText);a.xhr=e}}function bt(a){if(typeof a=="undefined"||!a)return;if(a.allowDup==e)a.allowDup=l.dupe;var b=a.src,c=a.type,d=a.charset,g=a.allowDup,f=U(b,bD),n,o=bz(f);if(typeof d!=q)d=e;g=!(!g);if(!g&&((T[f]!=e)||(s&&m[f])||bA(f))){if(m[f]!=e&&m[f][j]&&!m[f][y]&&o){W(e,m[f],h)}return}if(m[f]==e)m[f]={};n=m[f];if(n[z]==e)n[z]=bC;n[y]=i;n[N]=f;J=h;if(!I&&bm&&o)bs(n,f,c,d);else if(!I&&bl)br(n,f,c,d);else bq(n,f,c,d)}function Y(a){if(t&&!I)K.push(a);if(!t||C)a()}function bu(a){var b=[],c;for(c=-1;++c<a.length;){if(S.call(a[c])===bx)b=b.concat(bu(a[c]));else b[b.length]=a[c]}return b}D={script:function(){be(V);var a=bu(arguments),b=D,c;if(bB){for(c=-1;++c<a.length;){if(B(a[c]))a[c]=a[c]();if(c===0){Y(function(){bt((typeof a[0]==q)?{src:a[0]}:a[0])})}else b=b.script(a[c]);b=b.wait()}}else{for(c=-1;++c<a.length;){if(B(a[c]))a[c]=a[c]()}Y(function(){for(c=-1;++c<a.length;){bt((typeof a[c]==q)?{src:a[c]}:a[c])}})}V=A(function(){s=i},5);return b},wait:function(a){be(V);s=i;if(!B(a))a=G;var b=H(t||J,l),c=b.trigger,d=function(){try{a()}catch(err){}c()};delete b.trigger;var g=function(){if(J&&!bk)bn=d;else d()};if(t&&!J)K.push(g);else Y(g);return b}};if(t){D.trigger=function(){var a,b=-1;while(a=K[++b])a();K=[]}}else D.trigger=G;return D}function bv(a){var b,c={},d={"UseCachePreload":"cache","UseLocalXHR":"xhr","UsePreloading":E,"AlwaysPreserveOrder":O,"AllowDuplicates":"dupe"},g={"AppendTo":z,"BasePath":"base"};for(b in d)g[b]=d[b];c.order=!(!v.order);for(b in g){if(g[P](b)&&v[g[b]]!=e)c[g[b]]=(a[b]!=e)?a[b]:v[g[b]]}for(b in d){if(d[P](b))c[d[b]]=!(!c[d[b]])}if(!c[E])c.cache=c.order=c.xhr=i;c.which=(c.which===w||c.which===L)?c.which:w;return c}p.$LAB={setGlobalDefaults:function(a){v=bv(a)},setOptions:function(a){return H(i,bv(a))},script:function(){return H().script.apply(e,arguments)},wait:function(){return H().wait.apply(e,arguments)}};(function(a,b,c){if(k[u]==e&&k[a]){k[u]="loading";k[a](b,c=function(){k.removeEventListener(b,c,i);k[u]=Z},i)}})("addEventListener","DOMContentLoaded")})(window);
 
@@ -11,25 +8,36 @@ if (typeof FORUM === "undefined" || !FORUM) {
 
 FORUM.punbb = function () {
 	return {
+		init: function() {
+    		FORUM.punbb.addClass(document.documentElement, "js");
+
+    		// Hide Flash Messages
+			var msgEl = document.getElementById("brd-messages");
+			if (msgEl) {
+    			setTimeout(function () {
+					msgEl.style.visibility = "hidden";
+				}, 3000);
+			}
+		},
 
 		// attach FN to WINDOW.ONLOAD handler
 		addLoadEvent: function(fn)
 		{
 			var x = window.onload;
-			window.onload = (x && typeof x=='function') ? function(){x();fn()} : fn;
+			window.onload = (x && typeof x=="function") ? function(){x();fn()} : fn;
 		},
 
 		// return TRUE if node N has class X, else FALSE
 		hasClass: function(n, x)
 		{
-			return (new RegExp('\\b' + x + '\\b')).test(n.className)
+			return (new RegExp("\\b" + x + "\\b")).test(n.className)
 		},
 
 		// add X class to N node, return TRUE if added, FALSE if already exists
 		addClass: function(n, x)
 		{
 			if (FORUM.punbb.hasClass(n, x)) return false;
-			else n.className += ' ' + x;
+			else n.className += " " + x;
 			return true;
 		},
 
@@ -37,19 +45,19 @@ FORUM.punbb = function () {
 		removeClass: function(n, x)
 		{
 			if (!FORUM.punbb.hasClass(n, x)) return false;
-			x = new RegExp('\\s*\\b' + x + '\\b', 'g');
-			n.className = n.className.replace(x, '');
+			x = new RegExp("\\s*\\b" + x + "\\b", "g");
+			n.className = n.className.replace(x, "");
 			return true;
 		},
 
 		// blink node N twice
 		blink: function(n, i)
 		{
-			if (typeof i == 'undefined') i = 2;
+			if (typeof i == "undefined") i = 2;
 			var x = n.style.visibility;
-			if (i && x!='hidden')
+			if (i && x!="hidden")
 			{
-				n.style.visibility = 'hidden';
+				n.style.visibility = "hidden";
 				setTimeout(function(){n.style.visibility=x}, 200);
 				setTimeout(function(){FORUM.punbb.blink(n,i-1)}, 400);
 			}
@@ -126,31 +134,29 @@ FORUM.punbb = function () {
 			flt = [];
 			for (var i=0,len=arr.length; i<len; i++)
 			{
-				if (typeof arr[i] == 'object' && arr.length)
+				if (typeof arr[i] == "object" && arr.length)
 				{
 					flt.concat(FORUM.punbb.flatten(arr[i]))
-					alert('length1!!'+ arr.length);
-					//x.hasChildNodes()
 				}
 				else flt.push(arr[i])
 			}
 			return flt
 		},
 
-		// check FORM's required (REQ_) fields
+		// check FORMs required (REQ_) fields
 		validateForm: function(form)
 		{
 			var elements = form.elements;
-			var fn = function(x) { return x.name && x.name.indexOf('req_')==0 };
+			var fn = function(x) { return x.name && x.name.indexOf("req_")==0 };
 			var nodes = FORUM.punbb.arrayOfMatched(fn, elements);
 			fn = function(x) { return /^\s*$/.test(x.value) };
 			var empty = FORUM.punbb.find(fn, nodes);
 			if (empty > -1)
 			if (FORUM.punbb.find(fn, nodes) > -1)
 			{
-				var n = document.getElementById('req-msg');
-				FORUM.punbb.removeClass(n, 'req-warn');
-				var newlyAdded = FORUM.punbb.addClass(n, 'req-error');
+				var n = document.getElementById("req-msg");
+				FORUM.punbb.removeClass(n, "req-warn");
+				var newlyAdded = FORUM.punbb.addClass(n, "req-error");
 				if (!FORUM.punbb.onScreen(n))
 				{
 					n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
@@ -164,20 +170,20 @@ FORUM.punbb = function () {
 		},
 
 
-		// create a proper redirect URL (if we're using SEF friendly URLs) and go there
+		// create a proper redirect URL (if were using SEF friendly URLs) and go there
 		doQuickjumpRedirect: function(url, forum_names)
 		{
-			var selected_forum_id = document.getElementById('qjump-select')[document.getElementById('qjump-select').selectedIndex].value;
-			url = url.replace('$1', selected_forum_id);
-			url = url.replace('$2', forum_names[selected_forum_id]);
+			var selected_forum_id = document.getElementById("qjump-select")[document.getElementById("qjump-select").selectedIndex].value;
+			url = url.replace("$1", selected_forum_id);
+			url = url.replace("$2", forum_names[selected_forum_id]);
 			document.location = url;
 			return false;
 		},
 
 		//
 		attachQuickjumpRedirect: function() {
-			var qj_sel = document.getElementById('qjump-select'),
-				qj_submit = document.getElementById('qjump-submit');
+			var qj_sel = document.getElementById("qjump-select"),
+				qj_submit = document.getElementById("qjump-submit");
 
 			if (qj_sel) {
 				qj_sel.onchange = function () {
@@ -198,7 +204,7 @@ FORUM.punbb = function () {
 			var inputlist = curForm.getElementsByTagName("input");
 			for (i = 0; i < inputlist.length; i++)
 			{
-				if (inputlist[i].getAttribute("type") == 'checkbox' && inputlist[i].disabled == false)
+				if (inputlist[i].getAttribute("type") == "checkbox" && inputlist[i].disabled == false)
 					inputlist[i].checked = !inputlist[i].checked;
 			}
 
@@ -212,10 +218,10 @@ FORUM.punbb = function () {
 			for (var i=0,len=forms.length; i<len; i++)
 			{
 				var elements = forms[i].elements;
-				var fn = function(x) { return x.name && x.name.indexOf('req_')==0 };
+				var fn = function(x) { return x.name && x.name.indexOf("req_")==0 };
 				if (FORUM.punbb.find(fn, elements) > -1)
 				{
-					fn = function(x) { return x.type && (x.type=='submit' && x.name!='cancel') };
+					fn = function(x) { return x.type && (x.type=="submit" && x.name!="cancel") };
 					var nodes = FORUM.punbb.arrayOfMatched(fn, elements)
 					var formRef = forms[i];
 					fn = function() { return FORUM.punbb.validateForm(formRef) };
@@ -230,10 +236,10 @@ FORUM.punbb = function () {
 		attachWindowOpen: function()
 		{
 			if (!document.getElementsByTagName) return;
-			var nodes = document.getElementsByTagName('a');
+			var nodes = document.getElementsByTagName("a");
 			for (var i=0; i<nodes.length; i++)
 			{
-				if (FORUM.punbb.hasClass(nodes[i], 'exthelp'))
+				if (FORUM.punbb.hasClass(nodes[i], "exthelp"))
 					nodes[i].onclick = function() { window.open(this.href); return false; };
 			}
 		},
@@ -241,22 +247,33 @@ FORUM.punbb = function () {
 		//
 		autoFocus: function()
 		{
-			var nodes = document.getElementById('afocus');
-			if (!nodes || window.location.hash.replace(/#/g,'')) return;
-			nodes = nodes.all ? nodes.all : nodes.getElementsByTagName('*');
+			var nodes = document.getElementById("afocus");
+			if (!nodes || window.location.hash.replace(/#/g,"")) return;
+			nodes = nodes.all ? nodes.all : nodes.getElementsByTagName("*");
 			// TODO: make sure line above gets nodes in display-order across browsers
-			var fn = function(x) { return x.tagName.toUpperCase()=='TEXTAREA' || (x.tagName.toUpperCase()=='INPUT' && (x.type=='text') || (x.type=='password') || (x.type=='email') || (x.type=='url') || (x.type=='number')) };
+			var fn = function(x) { return x.tagName.toUpperCase()=="TEXTAREA" || (x.tagName.toUpperCase()=="INPUT" && (x.type=="text") || (x.type=="password") || (x.type=="email") || (x.type=="url") || (x.type=="number")) };
 			var n = FORUM.punbb.find(fn, nodes);
 			if (n > -1) nodes[n].focus();
+		},
+
+		input_support_attr: function(attr) {
+			var inputElem = document.createElement("input");
+
+			if (!attr) {
+				return false;
+			}
+
+			return !!(attr in inputElem);
 		}
 
 	};
 }();
 
-if (!Modernizr.input.required) {
+if (!FORUM.punbb.input_support_attr("required")) {
 	FORUM.punbb.addLoadEvent(FORUM.punbb.attachValidateForm);
 }
 
+FORUM.punbb.addLoadEvent(FORUM.punbb.init);
 FORUM.punbb.addLoadEvent(FORUM.punbb.attachWindowOpen);
 FORUM.punbb.addLoadEvent(FORUM.punbb.autoFocus);
 FORUM.punbb.addLoadEvent(FORUM.punbb.attachQuickjumpRedirect);
@@ -269,11 +286,11 @@ FORUM.punbb.addLoadEvent(FORUM.punbb.attachQuickjumpRedirect);
    code (functions and methods) contained in this file is included below:
 
    * addLoadEvent: Released into the Public Domain by Shawn Brown and
-        based on Simon Willison's Public Domain function of the same name.
+        based on Simon Willisons Public Domain function of the same name.
    * hasClass, addClass & removeClass: Released into the Public Domain
         by Shawn Brown.
    * onScreen: Released into the Public Domain by Shawn Brown and based,
-        in-part, on Peter Paul-Koch's Public Domain node-position functions.
+        in-part, on Peter Paul-Kochs Public Domain node-position functions.
    * map, find, arrayOfMatched & flatten: These basic functional methods
         have been released into the Public Domain by Shawn Brown.
 

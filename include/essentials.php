@@ -38,6 +38,8 @@ define('FORUM_CSS_GROUP_DEFAULT', 0);
 
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
+// Flash messenger
+require FORUM_ROOT.'include/flash_messenger.php';
 
 // Load UTF-8 functions
 require FORUM_ROOT.'include/utf8/utf8.php';

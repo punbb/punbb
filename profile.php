@@ -103,6 +103,9 @@ if ($action == 'change_pass')
 					($hook = get_hook('pf_change_pass_key_qr_update_password')) ? eval($hook) : null;
 					$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+					// Add flash message
+					$forum_flash_messenger->add_info($lang_profile['Pass updated']);
+
 					($hook = get_hook('pf_change_pass_key_pre_redirect')) ? eval($hook) : null;
 
 					redirect(forum_link($forum_url['index']), $lang_profile['Pass updated']);
@@ -261,6 +264,9 @@ if ($action == 'change_pass')
 				$expire = ($cookie_data[2] > time() + $forum_config['o_timeout_visit']) ? time() + 1209600 : time() + $forum_config['o_timeout_visit'];
 				forum_setcookie($cookie_name, base64_encode($forum_user['id'].'|'.$new_password_hash.'|'.$expire.'|'.sha1($user['salt'].$new_password_hash.forum_hash($expire, $user['salt']))), $expire);
 			}
+
+			// Add flash message
+			$forum_flash_messenger->add_info($lang_profile['Pass updated redirect']);
 
 			($hook = get_hook('pf_change_pass_normal_pre_redirect')) ? eval($hook) : null;
 
@@ -1316,6 +1322,9 @@ else if (isset($_POST['form_sent']))
 			}
 		}
 
+		// Add flash message
+		$forum_flash_messenger->add_info($lang_profile['Profile redirect']);
+
 		($hook = get_hook('pf_change_details_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['profile_'.$section], $id), $lang_profile['Profile redirect']);
@@ -2019,7 +2028,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_identity_contact_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /> <?php echo $lang_profile['Instructions'] ?></span>
+				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2378,7 +2387,7 @@ if ($forum_page['has_required']): ?>
 <?php $forum_page['item_count'] = 0; ?>
 <?php ($hook = get_hook('pf_change_details_settings_email_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /> <?php echo $lang_profile['Instructions'] ?></span>
+				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2493,7 +2502,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_signature_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /> <?php echo $lang_profile['Instructions'] ?></span>
+				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2621,7 +2630,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_avatar_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /> <?php echo $lang_profile['Instructions'] ?></span>
+				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
