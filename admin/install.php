@@ -439,7 +439,7 @@ else
 	if ($board_title == '')
 		$board_title = 'My PunBB forum';
 	if ($board_descrip == '')
-		$board_descrip = 'Unfortunately no one can be told what PunBB is - you have to see it for yourself.';
+		$board_descrip = 'Unfortunately no one can be told what PunBB is — you have to see it for yourself.';
 
 	if (utf8_strlen($base_url) == 0)
 		error($lang_install['Missing base url']);

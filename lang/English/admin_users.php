@@ -84,8 +84,8 @@ $lang_admin_users = array(
 'Move users to label'			=>	'Move users to group',
 
 // admin_users tables
-'Username column'				=>	'Username - E-mail - Admin notes',
-'Title column'					=>	'Title - Status',
+'Username column'				=>	'Username — E-mail — Admin notes',
+'Title column'					=>	'Title — Status',
 'Posts'							=>	'Posts',
 'Actions'						=>	'Action(s)',
 'View IP stats'					=>	'View IP stats',

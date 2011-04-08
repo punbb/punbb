@@ -6,6 +6,7 @@ if (typeof FORUM === "undefined" || !FORUM) {
 	var FORUM = {};
 }
 
+
 FORUM.punbb = function () {
 	return {
 		init: function() {
@@ -265,9 +266,9 @@ FORUM.punbb = function () {
 
 			return !!(attr in inputElem);
 		}
-
 	};
 }();
+
 
 if (!FORUM.punbb.input_support_attr("required")) {
 	FORUM.punbb.addLoadEvent(FORUM.punbb.attachValidateForm);
