@@ -576,14 +576,14 @@ button:focus {
 }
 
 #brd-messages .message_error {
-	border: solid 1px #FFCD0E;
-	background: #FFEEAC;
+	border: solid 1px #FF1A0E;
+	background: #FFBDAC;
 	color: #333;
 }
 
 #brd-messages .message_warning {
-	border: solid 1px #FFCD0E;
-	background: #FFEEAC;
+	border: solid 1px #FF620E;
+	background: #FFD0AC;
 	color: #333;
 }
 
