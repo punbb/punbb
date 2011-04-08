@@ -11,7 +11,7 @@ $lang_post = array(
 'Too long message'		=>	'Your post length is %s bytes. This exceeds the %s bytes limit.',
 'All caps message'		=>	'Posts cannot contain only capital letters.',
 'CSRF token mismatch'	=>	'Unable to confirm security token. A likely cause for this is that some time passed between when you first entered the page and when you posted the form. Clicking "Submit" again should solve the problem.',
-'Invalid e-mail'		=>	'The e-mail address you entered is invalid.',
+'Invalid e-mail'		=>	'The email address you entered is invalid.',
 
 // Posting
 'Compose your reply'	=>	'Compose and post your new reply',
@@ -21,7 +21,7 @@ $lang_post = array(
 'Guest post legend'		=>	'Required information for guests',
 'Post errors'			=>	'<strong>Warning!</strong> The following errors must be corrected before your message can be posted:',
 'Guest name'			=>	'Guest name',	// For guests (instead of Username)
-'Guest e-mail'			=>	'Guest e-mail',
+'Guest e-mail'			=>	'Guest email',
 'Post redirect'			=>	'Post entered. Redirecting…',
 'Post reply'			=>	'Post new reply',
 'Post new topic'		=>	'Post new topic',

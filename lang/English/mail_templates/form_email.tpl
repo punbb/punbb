@@ -1,6 +1,6 @@
 Subject: <mail_subject>
 
-<sender> from <board_title> has sent you a message. You can reply to <sender> by replying to this e-mail.
+<sender> from <board_title> has sent you a message. You can reply to <sender> by replying to this email.
 
 The message reads as follows:
 -----------------------------------------------------------------------
@@ -9,5 +9,5 @@ The message reads as follows:
 
 -----------------------------------------------------------------------
 
--- 
+--
 <board_mailer>

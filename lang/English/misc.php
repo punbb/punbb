@@ -7,18 +7,18 @@ $lang_misc = array(
 'Mark forum read redirect'	=>	'All topics in the specified forum have been marked as read. Redirecting…',
 
 // Send e-mail
-'Form e-mail disabled'		=>	'The user you are trying to send an e-mail to has disabled form e-mail.',
+'Form e-mail disabled'		=>	'The user you are trying to send an email to has disabled form email.',
 'Form e-mail errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your message can be sent:',
 'No e-mail subject'			=>	'You must enter a subject.',
 'No e-mail message'			=>	'You must enter a message.',
 'Too long e-mail message'	=>	'Your message length is %s bytes. This exceeds the %s bytes limit.',
 'Email flood'				=>	'At least %s seconds have to pass between sent emails. Please wait a while and try sending again.',
-'E-mail sent redirect'		=>	'E-mail sent. Redirecting…',
+'E-mail sent redirect'		=>	'Email sent. Redirecting…',
 'E-mail subject'			=>	'Subject',
 'E-mail message'			=>	'Message',
-'E-mail disclosure note'	=>	'<strong>Important!</strong> When you send an e-mail using this form your e-mail address will be disclosed to the recipient.',
-'Write e-mail'				=>	'Compose e-mail',
-'Send forum e-mail'			=>	'Send e-mail to %s via the forum',
+'E-mail disclosure note'	=>	'<strong>Important!</strong> When you send an email using this form your email address will be disclosed to the recipient.',
+'Write e-mail'				=>	'Compose email',
+'Send forum e-mail'			=>	'Send email to %s via the forum',
 
 // Report
 'No reason'					=>	'You must enter a reason.',

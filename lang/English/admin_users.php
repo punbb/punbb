@@ -14,7 +14,7 @@ $lang_admin_users = array(
 'Signature label'				=>	'Signature',
 'Admin note label'				=>	'Admin note',
 'Searches contact legend'		=>	'Contact details',
-'E-mail address label'			=>	'E-mail address',
+'E-mail address label'			=>	'Email address',
 'Website label'					=>	'Website',
 'Searches activity legend'		=>	'User activity',
 'More posts label'				=>	'More posts than',
@@ -41,7 +41,7 @@ $lang_admin_users = array(
 'User information'				=>	'User information',
 'IP address'					=>	'IP address',
 'Username'						=>	'Username',
-'E-mail'						=>	'E-mail',
+'E-mail'						=>	'Email',
 'Admin note'					=>	'Admin note',
 
 'Invalid IP address'			=>	'The IP address you entered is not correctly formatted.',
@@ -84,7 +84,7 @@ $lang_admin_users = array(
 'Move users to label'			=>	'Move users to group',
 
 // admin_users tables
-'Username column'				=>	'Username — E-mail — Admin notes',
+'Username column'				=>	'Username — Email — Admin notes',
 'Title column'					=>	'Title — Status',
 'Posts'							=>	'Posts',
 'Actions'						=>	'Action(s)',

@@ -17,7 +17,7 @@ $lang_admin_common = array(
 'No'							=>	'No',
 'Save changes'					=>	'Save changes',
 'Save'							=>	'Save',
-'E-mail'						=>	'E-mail',
+'E-mail'						=>	'Email',
 'Cancel'						=>	'Cancel',
 'Cancel redirect'				=>	'Operation cancelled. Redirecting…',
 'Unknown'						=>	'Unknown',
@@ -46,7 +46,6 @@ $lang_admin_common = array(
 'Features'						=>	'Features',
 'Announcements'					=>	'Announcements',
 'Registration'					=>	'Registration',
-'E-mail'						=>	'E-mail',
 'Censoring'						=>	'Censoring',
 
 // Users Submenu

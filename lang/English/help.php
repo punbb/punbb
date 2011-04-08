@@ -17,8 +17,8 @@ $lang_help = array(
 'Blue text'				=>	'Blue text',
 'Heading text'			=>	'Heading text',
 
-'Links info'			=>	'You can create links to other documents or to e-mail addresses using the following tags:',
-'My e-mail address'		=>	'My e-mail address',
+'Links info'			=>	'You can create links to other documents or to email addresses using the following tags:',
+'My e-mail address'		=>	'My email address',
 
 'Quotes info'			=>	'To quote someone use the quote tag. You can use the quote tag without specifying a name.',
 'Quote text'			=>	'This is the text I want to quote.',
