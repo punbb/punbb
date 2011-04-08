@@ -558,3 +558,37 @@ button:focus {
 #brd-debug .totals td {
 	border: none;
 }
+
+/* Flash Messages
+-------------------------------------------------------------*/
+
+#brd-messages span {
+	color: #fff;
+	-webkit-border-bottom-right-radius: .4em;
+	-webkit-border-bottom-left-radius: .4em;
+	-moz-border-radius-bottomright: .4em;
+	-moz-border-radius-bottomleft: .4em;
+	border-bottom-right-radius: .4em;
+	border-bottom-left-radius: .4em;
+	-moz-box-shadow: 0 2px 3px rgba(0,0,0, .2);
+	-webkit-box-shadow: 0 2px 3px rgba(0,0,0, .2);
+	box-shadow: 0 2px 3px rgba(0,0,0, .2);
+}
+
+#brd-messages .message_error {
+	border: solid 1px #FFCD0E;
+	background: #FFEEAC;
+	color: #333;
+}
+
+#brd-messages .message_warning {
+	border: solid 1px #FFCD0E;
+	background: #FFEEAC;
+	color: #333;
+}
+
+#brd-messages .message_info {
+	border: solid 1px #FFCD0E;
+	background: #FFF3BF;
+	color: #333;
+}

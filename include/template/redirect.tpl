@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<!-- forum_messages -->
+
 <div id="brd-wrap" class="brd-page">
 <div id="brd-redirect" class="brd">
 

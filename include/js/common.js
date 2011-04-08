@@ -10,6 +10,14 @@ FORUM.punbb = function () {
 	return {
 		init: function() {
     		FORUM.punbb.addClass(document.documentElement, "js");
+
+    		// Hide Flash Messages
+			var msgEl = document.getElementById("brd-messages");
+			if (msgEl) {
+    			setTimeout(function () {
+					msgEl.style.visibility = "hidden";
+				}, 3000);
+			}
 		},
 
 		// attach FN to WINDOW.ONLOAD handler

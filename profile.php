@@ -2034,7 +2034,6 @@ if ($forum_page['has_required']): ?>
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
-		$forum_flash_messenger->show();
 
 		require FORUM_ROOT.'footer.php';
 	}

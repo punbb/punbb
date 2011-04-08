@@ -10,13 +10,13 @@
 
 class FlashMessenger
 {
-	const TEMPLATE_MSG_BLOCK = '<span id="flash_messages">%s</span>';
+	const TEMPLATE_MSG_BLOCK = '%s';
 	const TEMPLATE_MSG = '<span class="%s">%s</span>';
 
 	//
-	const MSG_TYPE_ERROR = 0;
-	const MSG_TYPE_WARNING = 1;
-	const MSG_TYPE_INFO = 2;
+	const MSG_TYPE_ERROR = 'message_error';
+	const MSG_TYPE_WARNING = 'message_warning';
+	const MSG_TYPE_INFO = 'message_info';
 
 	//
 	private $messages;
@@ -51,15 +51,26 @@ class FlashMessenger
 
 
 	//
-	public function show()
+	public function show($just_return = false)
 	{
 		if (empty($this->messages))
 			return;
 
+		$messages_list = array();
 		foreach ($this->messages as $msg)
 		{
+			$messages_list[] = sprintf(self::TEMPLATE_MSG, $msg[1], $msg[0]);
+		}
 
+		if (!empty($messages_list))
+		{
+			$m = sprintf(self::TEMPLATE_MSG_BLOCK, implode('', $messages_list));
+			if ($just_return) {
+				$this->clear();
+				return $m;
+			}
 
+			echo $m;
 		}
 
 		$this->clear();

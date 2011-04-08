@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<!-- forum_messages -->
+
 <div id="brd-wrap" class="brd">
 <div <!-- forum_page -->>
 

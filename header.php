@@ -175,6 +175,10 @@ $gen_elements['<!-- forum_navlinks -->'] = '<ul>'."\n\t\t".generate_navlinks()."
 // Announcement
 $gen_elements['<!-- forum_announcement -->'] = ($forum_config['o_announcement'] == '1' && $forum_user['g_read_board'] == '1') ? '<div id="brd-announcement" class="gen-content">'.($forum_config['o_announcement_heading'] != '' ? "\n\t".'<h1 class="hn"><span>'.$forum_config['o_announcement_heading'].'</span></h1>' : '')."\n\t".'<div class="content">'.$forum_config['o_announcement_message'].'</div>'."\n".'</div>'."\n" : '';
 
+// Flash messages
+$gen_elements['<!-- forum_messages -->'] = '<div id="brd-messages" class="brd">'.$forum_flash_messenger->show(true).'</div>'."\n";
+
+
 // Maintenance Warning
 $gen_elements['<!-- forum_maint -->'] = ($forum_user['g_id'] == FORUM_ADMIN && $forum_config['o_maintenance'] == '1') ? '<p id="maint-alert" class="warn">'.sprintf($lang_common['Maintenance warning'], '<a href="'.forum_link($forum_url['admin_settings_maintenance']).'">'.$lang_common['Maintenance mode'].'</a>').'</p>' : '';
 
