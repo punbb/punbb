@@ -84,7 +84,8 @@ td {
 h3.post-ident,
 h4.post-title,
 .posthead h3,
-.userstatus span {
+.userstatus span,
+.sig-line {
 	border-color: #DDE4EB;
 }
 
