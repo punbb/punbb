@@ -3342,7 +3342,7 @@ function csrf_confirm_form()
 // Display a message
 function message($message, $link = '', $heading = '')
 {
-	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates;
+	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_flash_messenger;
 
 	($hook = get_hook('fn_message_start')) ? eval($hook) : null;
 
