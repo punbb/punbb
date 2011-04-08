@@ -463,12 +463,11 @@ switch ($stage)
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PunBB Database Update</title>
-<?php
-
-// Include the stylesheets
-require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
-
-?>
+<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_cs.css" />
+<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie7.css" /><![endif]-->
+<script type="text/javascript" src="<?php echo $base_url ?>/include/js/common.js"></script>
 <script type="text/javascript" src="<?php echo $base_url ?>/include/js/common.js"></script>
 </head>
 <body>
@@ -2101,12 +2100,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PunBB Database Update</title>
-<?php
-
-// Include the stylesheets
-require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
-
-?>
+<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_cs.css" />
+<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie7.css" /><![endif]-->
+<script type="text/javascript" src="<?php echo $base_url ?>/include/js/common.js"></script>
 <script type="text/javascript" src="<?php echo $base_url ?>/include/js/common.js"></script>
 </head>
 <body>
