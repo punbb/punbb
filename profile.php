@@ -1316,6 +1316,9 @@ else if (isset($_POST['form_sent']))
 			}
 		}
 
+		// Add flash message
+		$forum_flash_messenger->add_info('Profile updated');
+
 		($hook = get_hook('pf_change_details_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['profile_'.$section], $id), $lang_profile['Profile redirect']);
@@ -2031,6 +2034,7 @@ if ($forum_page['has_required']): ?>
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
+		$forum_flash_messenger->show();
 
 		require FORUM_ROOT.'footer.php';
 	}
