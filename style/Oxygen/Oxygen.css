@@ -1197,6 +1197,10 @@ optgroup {
 	margin-right: 0.75em;
 }
 
+.frm-buttons span.default {
+	margin-right: 2em;
+}
+
 span.submit input,
 span.cancel input {
 	overflow: visible;

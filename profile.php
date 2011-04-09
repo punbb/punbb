@@ -193,7 +193,7 @@ if ($action == 'change_pass')
 			</fieldset>
 <?php ($hook = get_hook('pf_change_pass_key_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /></span>
+				<span class="submit default"><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -367,7 +367,7 @@ if ($action == 'change_pass')
 			</fieldset>
 <?php ($hook = get_hook('pf_change_pass_normal_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /></span>
+				<span class="submit default"><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -627,7 +627,7 @@ else if ($action == 'change_email')
 			</fieldset>
 <?php ($hook = get_hook('pf_change_email_normal_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /></span>
+				<span class="submit default"><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -724,7 +724,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 			</fieldset>
 <?php ($hook = get_hook('pf_delete_user_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="delete_user_comply" value="<?php echo $lang_common['Submit'] ?>" /></span>
+				<span class="submit default"><input type="submit" name="delete_user_comply" value="<?php echo $lang_common['Submit'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>

@@ -341,7 +341,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	}
 
 ?>			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="install_comply" value="<?php echo ((strpos($id, 'hotfix_') !== 0) ? $lang_admin_ext['Install extension'] : $lang_admin_ext['Install hotfix']) ?>" /></span>
+				<span class="submit default"><input type="submit" name="install_comply" value="<?php echo ((strpos($id, 'hotfix_') !== 0) ? $lang_admin_ext['Install extension'] : $lang_admin_ext['Install hotfix']) ?>" /></span>
 				<span class="cancel"><input type="submit" name="install_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
@@ -550,7 +550,7 @@ else if (isset($_GET['uninstall']))
 				<p class="warn"><?php echo $lang_admin_ext['Installed extensions warn'] ?></p>
 			</div>
 <?php endif; ?>				<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="uninstall_comply" value="<?php echo $lang_admin_ext['Uninstall'] ?>" /></span>
+				<span class="submit default"><input type="submit" name="uninstall_comply" value="<?php echo $lang_admin_ext['Uninstall'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="uninstall_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
