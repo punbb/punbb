@@ -30,9 +30,7 @@ a:focus {
 	border-color: #00579C;
 }
 
-.js_link:hover,
-.js_link:active,
-.js_link:focus {
+.js_link:hover {
 	color: #CD0021;
 	border-color: #CD0021;
 }
@@ -423,17 +421,31 @@ label,
 .main-head a:link,
 .main-head a:visited,
 .main-foot .options a:link,
-.main-foot .options a:visited {
+.main-foot .options a:visited,
+.main-head .js_link,
+.main-foot .options .js_link {
 	color: #ccc;
+}
+
+.main-head .js_link,
+.main-foot .options .js_link {
+	border-color: #ccc;
 }
 
 .main-head a:hover,
 .main-head a:active,
 .main-head a:focus,
+.main-head .js_link:hover,
 .main-foot .options a:hover,
 .main-foot .options a:active,
-.main-foot .options a:focus {
+.main-foot .options a:focus,
+.main-foot .options .js_link:hover {
 	color: #fff;
+}
+
+.main-head .js_link:hover,
+.main-foot .options .js_link:hover {
+	border-color: #fff;
 }
 
 th {

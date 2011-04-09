@@ -371,6 +371,12 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	margin: 0 0 0 0.25em;
 }
 
+.options .js_link {
+	padding: 0;
+	margin: 0 0 0 0.55em;
+}
+
+
 .options span.first-item {
 	border-left: 0;
 	padding-left: 0;
@@ -853,11 +859,6 @@ a.feed {
 	position: relative;
 }
 
-.select-all {
-	float: right;
-	/*padding-left: 1em;*/
-}
-
 /*************************************************************
 E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 **************************************************************/
@@ -1101,7 +1102,7 @@ li.info-lastpost strong {
 	font-weight: normal;
 }
 
-li.info-select {
+.main-item li.info-select {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -2020,6 +2021,10 @@ H - MAIN CONTENT - ODDMENTS
 #brd-admin-reports .frm-buttons {
 	margin-left: 4em;
 	margin-top: 0;
+}
+
+#brd-admin-reports .select-all {
+	float: right;
 }
 
 .report .item-select {

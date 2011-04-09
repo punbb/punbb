@@ -454,8 +454,8 @@ if (isset($_GET['tid']))
 	// Setup main heading
 	$forum_page['main_title'] = sprintf($lang_misc['Moderate topic head'], forum_htmlencode($cur_topic['subject']));
 
-	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-post-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
-	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-post-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
+	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.$lang_misc['Select all'].'</span></span>';
+	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.$lang_misc['Select all'].'</span></span>';
 
 	if ($forum_page['num_pages'] > 1)
 		$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
@@ -636,6 +636,9 @@ $forum_page['mod_options'] = array(
 <?php
 
 	$forum_id = $fid;
+
+	// Init JS helper for select-all
+	forum_add_js('FORUM.punbb.addLoadEvent(FORUM.punbb.initToggleCheckboxes);', array('type' => 'inline'));
 
 	($hook = get_hook('mr_post_actions_end')) ? eval($hook) : null;
 
@@ -1496,8 +1499,8 @@ $forum_page['crumbs'] = array(
 if ($forum_page['num_pages'] > 1)
 	$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
 
-$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-topic-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
-$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-topic-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
+$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.$lang_misc['Select all'].'</span></span>';
+$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.$lang_misc['Select all'].'</span></span>';
 
 ($hook = get_hook('mr_topic_actions_pre_header_load')) ? eval($hook) : null;
 
@@ -1700,6 +1703,9 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 <?php
 
 $forum_id = $fid;
+
+// Init JS helper for select-all
+forum_add_js('FORUM.punbb.addLoadEvent(FORUM.punbb.initToggleCheckboxes);', array('type' => 'inline'));
 
 ($hook = get_hook('mr_end')) ? eval($hook) : null;
 
