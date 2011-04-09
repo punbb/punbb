@@ -230,7 +230,7 @@ if (!empty($zapped_reports))
 			<div class="ct-set report data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
 					<h3 class="ct-legend hn"><strong><?php echo ++$forum_page['item_num'] ?></strong> <cite class="username"><?php printf($lang_admin_reports['Reported by'], $reporter) ?></cite> <span><?php echo format_time($cur_report['created']) ?></span></h3>
-					<h4 class="hn"><?php echo $forum ?> : <?php echo $topic ?> : <?php echo $post_id ?></h4>
+					<h4 class="hn"><?php echo $forum ?> &rarr; <?php echo $topic ?> &rarr; <?php echo $post_id ?></h4>
 					<p><?php echo $message ?> <strong><?php printf($lang_admin_reports['Marked read by'], format_time($cur_report['zapped']), $zapped_by) ?></strong></p>
 <?php ($hook = get_hook('arp_report_new_block')) ? eval($hook) : null; ?>
 				</div>
