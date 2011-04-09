@@ -853,9 +853,9 @@ a.feed {
 	position: relative;
 }
 
-#select-all {
+.select-all {
 	float: right;
-	padding-left: 1em;
+	/*padding-left: 1em;*/
 }
 
 /*************************************************************
@@ -1255,7 +1255,10 @@ button:active {
 	top: 1px;
 }
 
-
+.js_link {
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+}
 /* Single Field Items (Text, Select, Checkbox)
 -------------------------------------------------------------*/
 

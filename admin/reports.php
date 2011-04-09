@@ -151,7 +151,7 @@ if (!empty($unread_reports))
 
 ?>
 			<div class="frm-buttons">
-				<span id="select-all"><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById('arp-new-report-form'))"><?php echo $lang_admin_common['Select all'] ?></a></span>
+				<span class="select-all js_link" data-check-form="arp-new-report-form"><?php echo $lang_admin_common['Select all'] ?></span>
 				<span class="submit"><input type="submit" name="mark_as_read" value="<?php echo $lang_admin_reports['Mark read'] ?>" /></span>
 			</div>
 		</form>
@@ -260,6 +260,9 @@ if (!$forum_page['new_reports'] && !$forum_page['old_reports'])
 <?php
 
 }
+
+// Init JS helper for select-all
+forum_add_js('FORUM.punbb.addLoadEvent(FORUM.punbb.initToggleCheckboxes);', array('type' => 'inline'));
 
 ($hook = get_hook('arp_end')) ? eval($hook) : null;
 

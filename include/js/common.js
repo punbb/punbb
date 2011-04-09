@@ -8,12 +8,26 @@ if (typeof FORUM === "undefined" || !FORUM) {
 
 
 FORUM.punbb = function () {
+	var docEl = document.documentElement;
+
+	function get(el) {
+		return document.getElementById(el);
+	}
+
 	return {
 		init: function() {
-    		FORUM.punbb.addClass(document.documentElement, "js");
+    		FORUM.punbb.addClass(docEl, "js");
+
+    		FORUM.punbb.attachWindowOpen();
+    		FORUM.punbb.autoFocus();
+    		FORUM.punbb.attachQuickjumpRedirect();
+
+    		if (!FORUM.punbb.input_support_attr("required")) {
+				FORUM.punbb.attachValidateForm();
+			}
 
     		// Hide Flash Messages
-			var msgEl = document.getElementById("brd-messages");
+			var msgEl = get("brd-messages");
 			if (msgEl) {
     			setTimeout(function () {
 					msgEl.style.visibility = "hidden";
@@ -71,8 +85,8 @@ FORUM.punbb = function () {
 			{
 				var y = -1;
 				if (self.pageYOffset) y = self.pageYOffset; // all except IE
-				else if (document.documentElement && document.documentElement.scrollTop)
-					y = document.documentElement.scrollTop; // IE 6 Strict
+				else if (docEl && docEl.scrollTop)
+					y = docEl.scrollTop; // IE 6 Strict
 				else if (document.body) y = document.body.scrollTop; // all other IE ver
 				return y;
 			}
@@ -80,8 +94,8 @@ FORUM.punbb = function () {
 			{
 				var y = -1;
 				if (self.innerHeight) y = self.innerHeight; // all except IE
-				else if (document.documentElement && document.documentElement.clientHeight)
-					y = document.documentElement.clientHeight; // IE 6 Strict Mode
+				else if (docEl && docEl.clientHeight)
+					y = docEl.clientHeight; // IE 6 Strict Mode
 				else if (document.body) y = document.body.clientHeight; // all other IE ver
 				return y;
 			}
@@ -155,7 +169,7 @@ FORUM.punbb = function () {
 			if (empty > -1)
 			if (FORUM.punbb.find(fn, nodes) > -1)
 			{
-				var n = document.getElementById("req-msg");
+				var n = get("req-msg");
 				FORUM.punbb.removeClass(n, "req-warn");
 				var newlyAdded = FORUM.punbb.addClass(n, "req-error");
 				if (!FORUM.punbb.onScreen(n))
@@ -174,7 +188,7 @@ FORUM.punbb = function () {
 		// create a proper redirect URL (if were using SEF friendly URLs) and go there
 		doQuickjumpRedirect: function(url, forum_names)
 		{
-			var selected_forum_id = document.getElementById("qjump-select")[document.getElementById("qjump-select").selectedIndex].value;
+			var selected_forum_id = get("qjump-select")[get("qjump-select").selectedIndex].value;
 			url = url.replace("$1", selected_forum_id);
 			url = url.replace("$2", forum_names[selected_forum_id]);
 			document.location = url;
@@ -183,8 +197,8 @@ FORUM.punbb = function () {
 
 		//
 		attachQuickjumpRedirect: function() {
-			var qj_sel = document.getElementById("qjump-select"),
-				qj_submit = document.getElementById("qjump-submit");
+			var qj_sel = get("qjump-select"),
+				qj_submit = get("qjump-submit");
 
 			if (qj_sel) {
 				qj_sel.onchange = function () {
@@ -199,14 +213,36 @@ FORUM.punbb = function () {
 			}
 		},
 
+		initToggleCheckboxes: function()
+		{
+			var inputlist = document.getElementsByTagName("span");
+			for (i = 0, cl = inputlist.length; i < cl; i++)
+			{
+				var el = inputlist[i];
+				if (FORUM.punbb.hasClass(el, "select-all") && el.getAttribute("data-check-form"))
+				{
+					var frm = get(el.getAttribute("data-check-form"));
+					if (frm)
+						el.onclick = function() { return FORUM.punbb.toggleCheckboxes(frm); };
+				}
+			}
+		},
+
 		// toggle all checkboxes in the given form
 		toggleCheckboxes: function(curForm)
 		{
+			if (!curForm)
+				return false;
+
 			var inputlist = curForm.getElementsByTagName("input");
-			for (i = 0; i < inputlist.length; i++)
+			for (i = 0, cl = inputlist.length; i < cl; i++)
 			{
-				if (inputlist[i].getAttribute("type") == "checkbox" && inputlist[i].disabled == false)
-					inputlist[i].checked = !inputlist[i].checked;
+				var el = inputlist[i];
+				if (el.getAttribute("data-no-select-all"))
+					continue;
+
+				if (el.getAttribute("type") == "checkbox" && el.disabled == false)
+					el.checked = !el.checked;
 			}
 
 			return false;
@@ -218,13 +254,17 @@ FORUM.punbb = function () {
 			var forms = document.forms;
 			for (var i=0,len=forms.length; i<len; i++)
 			{
-				var elements = forms[i].elements;
-				var fn = function(x) { return x.name && x.name.indexOf("req_")==0 };
+				var elements = forms[i].elements,
+					fn = function(x) {
+						return x.name && x.name.indexOf("req_") == 0;
+					};
+
 				if (FORUM.punbb.find(fn, elements) > -1)
 				{
 					fn = function(x) { return x.type && (x.type=="submit" && x.name!="cancel") };
-					var nodes = FORUM.punbb.arrayOfMatched(fn, elements)
-					var formRef = forms[i];
+					var nodes = FORUM.punbb.arrayOfMatched(fn, elements),
+						formRef = forms[i];
+
 					fn = function() { return FORUM.punbb.validateForm(formRef) };
 					//TODO: look at passing array of node refs instead of forum ref
 					//fn = function() { return Forum.checkReq(required.slice(0)) };
@@ -248,7 +288,7 @@ FORUM.punbb = function () {
 		//
 		autoFocus: function()
 		{
-			var nodes = document.getElementById("afocus");
+			var nodes = get("afocus");
 			if (!nodes || window.location.hash.replace(/#/g,"")) return;
 			nodes = nodes.all ? nodes.all : nodes.getElementsByTagName("*");
 			// TODO: make sure line above gets nodes in display-order across browsers
@@ -270,14 +310,8 @@ FORUM.punbb = function () {
 }();
 
 
-if (!FORUM.punbb.input_support_attr("required")) {
-	FORUM.punbb.addLoadEvent(FORUM.punbb.attachValidateForm);
-}
-
+// One onload handler
 FORUM.punbb.addLoadEvent(FORUM.punbb.init);
-FORUM.punbb.addLoadEvent(FORUM.punbb.attachWindowOpen);
-FORUM.punbb.addLoadEvent(FORUM.punbb.autoFocus);
-FORUM.punbb.addLoadEvent(FORUM.punbb.attachQuickjumpRedirect);
 
 
 /* A handful of functions in this script have been released into the Public
