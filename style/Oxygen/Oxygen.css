@@ -55,6 +55,14 @@ hr,
 	display: none;
 }
 
+.border-less {
+	border: none !important;
+}
+
+.small-font {
+	font-size: .917em;
+}
+
 /* Text Setup (Equalise everything before styling)
 -------------------------------------------------------------*/
 html {
@@ -1580,9 +1588,9 @@ textarea {
 	position: relative;
 }
 
-.txt-set .required label span em {
+/*.txt-set .required label span em {
 	margin-bottom: -1.2em;
-}
+}*/
 
 .req-error {
 	display: block;
@@ -1823,8 +1831,8 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	list-style-type: upper-alpha;
 }
 
-.entry-content h5,
-.entry-content h5 * {
+.entry-content h5
+/*.entry-content h5 * */ {
 	font-weight: bold;
 	font-size: 1.084em;
 	padding: 0.5em 0;

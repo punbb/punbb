@@ -1230,9 +1230,9 @@ function get_saved_queries()
 	}
 
 ?>
-				<tr class="totals">
-					<td class="tcl"><?php echo forum_number_format($query_time_total, 5) ?></td>
-					<td class="tcr"><?php echo $lang_common['Total query time'] ?></td>
+				<tr>
+					<td class="tcl border-less"><?php echo forum_number_format($query_time_total, 5) ?></td>
+					<td class="tcr border-less"><?php echo $lang_common['Total query time'] ?></td>
 				</tr>
 			</tbody>
 		</table>

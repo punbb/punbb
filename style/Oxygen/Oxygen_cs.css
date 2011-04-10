@@ -590,10 +590,6 @@ button:focus {
 	color: #666;
 }
 
-#brd-debug .totals td {
-	border: none;
-}
-
 /* Flash Messages
 -------------------------------------------------------------*/
 
