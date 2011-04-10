@@ -759,6 +759,9 @@ else if ($action == 'delete_avatar')
 
 	delete_avatar($id);
 
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_profile['Avatar deleted redirect']);
+
 	($hook = get_hook('pf_delete_avatar_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['profile_avatar'], $id), $lang_profile['Avatar deleted redirect']);
@@ -796,6 +799,9 @@ else if (isset($_POST['update_group_membership']))
 	// If the user was a moderator or an administrator (and no longer is), we remove him/her from the moderator list in all forums
 	if (($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1') && $new_group_id != FORUM_ADMIN && $new_group_mod != '1')
 		clean_forum_moderators();
+
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_profile['Group membership redirect']);
 
 	($hook = get_hook('pf_change_group_pre_redirect')) ? eval($hook) : null;
 
@@ -843,6 +849,9 @@ else if (isset($_POST['update_forums']))
 		($hook = get_hook('pf_forum_moderators_qr_update_forum_moderators')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
+
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_profile['Moderate forums redirect']);
 
 	($hook = get_hook('pf_forum_moderators_pre_redirect')) ? eval($hook) : null;
 

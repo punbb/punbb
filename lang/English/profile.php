@@ -3,20 +3,20 @@
 $lang_profile = array(
 
 // Navigation and sections
-'Profile redirect'			=>	'Profile updated. Redirecting…',
+'Profile redirect'			=>	'Profile updated.',
 'Instructions'				=>	'You will be redirected back to this page',
 'Update profile'			=>	'Update profile',
 
 // Administration stuff
-'User delete redirect'		=>	'User deleted. Redirecting…',
+'User delete redirect'		=>	'User deleted.',
 'Section admin'				=>	'Administration',
 'Delete user'				=>	'Delete user',
 'Delete warning'			=>	'<strong>Warning!</strong> Once deleted a user and/or their posts cannot be restored.',
 'Delete posts info'			=>	'<strong>Warning!</strong> If you choose not to delete this user\'s posts they can only be deleted manually at a later time.',
 'Delete posts'				=>	'Delete posts',
 'Delete posts label'		=>	'Delete any posts and topics %s has made.',
-'Group membership redirect'	=>	'Group membership updated. Redirecting…',
-'Moderate forums redirect'	=>	'Forum moderator rights updated. Redirecting…',
+'Group membership redirect'	=>	'Group membership updated.',
+'Moderate forums redirect'	=>	'Forum moderator rights updated.',
 'Ban redirect'				=>	'Redirecting…',
 'Ban user'					=>	'Ban user',
 'Ban user info'				=>	'Ban this user via the administration console.',
@@ -32,7 +32,7 @@ $lang_profile = array(
 // Avatar stuff
 'Avatar welcome'			=>	'Set an avatar image to enhance your forum identity',
 'Avatar welcome user'		=>	'Set an avatar image to enhance  %s\'s forum identity',
-'Avatar deleted redirect'	=>	'Avatar deleted. Redirecting…',
+'Avatar deleted redirect'	=>	'Avatar deleted.',
 'Avatars disabled'			=>	'The administrator has disabled avatar support.',
 'No file'					=>	'You did not select a file for upload.',
 'Too large ini'				=>	'The selected file was too large to upload. The server didn\'t allow the upload.',
@@ -174,7 +174,7 @@ $lang_profile = array(
 'Change pass errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your password can be updated:',
 'Pass logout'				=>	'A user is currently logged in. Please logout and try again.',
 'Pass key bad'				=>	'The specified password activation key was incorrect or has expired. Please re-request a new password. If that fails, contact the forum administrator at %s.',
-'Pass updated'				=>	'Password updated. Login with your new password. Redirecting…',
+'Pass updated'				=>	'Password updated. Login with your new password.',
 'Change your password'		=>	'Change your password',
 'Change user password'		=>	'Change %s\'s password',
 'Old password'				=>	'Old password',
@@ -182,13 +182,13 @@ $lang_profile = array(
 'New password'				=>	'New password',
 'Confirm new password'		=>	'Confirm new password',
 'Wrong old password'		=>	'The old password you entered was incorrect.',
-'Pass updated redirect'		=>	'Password updated. Redirecting…',
+'Pass updated redirect'		=>	'Password updated.',
 
 // Change E-mail stuff
 'Change e-mail errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your email address can be updated:',
 'E-mail key bad'			=>	'The specified email activation key was incorrect or has expired. Please re-request change of email address. If that fails, contact the forum administrator at %s.',
 'E-mail updated'			=>	'Your email address has been updated.',
-'E-mail updated redirect'	=>	'Your email address has been updated. Redirecting…',
+'E-mail updated redirect'	=>	'Your email address has been updated.',
 'Wrong password'			=>	'The password you entered was incorrect.',
 'Activate e-mail sent'		=>	'An email has been sent to the specified address with instructions on how to activate the new email address. If it doesn\'t arrive you can contact the forum administrator at %s.',
 'Change your e-mail'		=>	'Change your email address',
@@ -207,7 +207,7 @@ $lang_profile = array(
 
 // Registration stuff (some of these also used by profile)
 'No new regs'				=>	'This forum is not accepting new registrations.',
-'Reg cancel redirect'		=>	'Registration cancelled. Redirecting…',
+'Reg cancel redirect'		=>	'Registration cancelled.',
 'Agreement'					=>	'Agreement',
 'Agreement label'			=>	'I agree to the rules set out above and wish to register.',
 'Agree'						=>	'Agree',
