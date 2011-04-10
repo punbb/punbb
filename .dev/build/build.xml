@@ -19,6 +19,7 @@
 	<target name="make-js">
 		<compress-js-lib tofile="${js-src}/min/common.min.js" force="true">
 			<filelist dir="${js-src}">
+				<file name="LAB.src.js" />
 				<file name="common.js" />
 			</filelist>
 		</compress-js-lib>
