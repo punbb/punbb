@@ -232,7 +232,7 @@ if (isset($_GET['tid']))
 			</fieldset>
 <?php ($hook = get_hook('mr_confirm_delete_posts_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="delete_posts_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="delete_posts_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -386,7 +386,7 @@ if (isset($_GET['tid']))
 			</fieldset>
 <?php ($hook = get_hook('mr_confirm_split_posts_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="split_posts_comply" value="<?php echo $lang_common['Split'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="split_posts_comply" value="<?php echo $lang_common['Split'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -900,14 +900,14 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo (++$forum_page['fld_count']) ?>" name="with_redirect" value="1"<?php if ($action == 'single') echo ' checked="checked"' ?> /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_misc['Redirect topic'] ?></span> <?php echo ($action == 'single') ? $lang_misc['Leave redirect'] : $lang_misc['Leave redirects'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo ($action == 'single') ? $lang_misc['Leave redirect'] : $lang_misc['Leave redirects'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('mr_move_topics_pre_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('mr_move_topics_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="move_topics_to" value="<?php echo $lang_misc['Move'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="move_topics_to" value="<?php echo $lang_misc['Move'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -1060,7 +1060,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 			</fieldset>
 <?php ($hook = get_hook('mr_merge_topics_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="merge_topics_comply" value="<?php echo $lang_misc['Merge'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="merge_topics_comply" value="<?php echo $lang_misc['Merge'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -1231,7 +1231,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 			</fieldset>
 <?php ($hook = get_hook('mr_delete_topics_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="delete_topics_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="delete_topics_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>

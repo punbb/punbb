@@ -60,7 +60,6 @@ $lang_misc = array(
 'Delete topic'				=>	'Delete topic',
 'To new forum'				=>	'to a new forum',
 'Move to'					=>	'Destination forum',
-'Redirect topic'			=>	'Redirect setting',
 'Nowhere to move'			=>	'There are no forums into which you can move topics.',
 'Leave redirect'			=>	'Leave a redirect topic in the forum from which the topic was moved.',
 'Leave redirects'			=>	'Leave redirect topics in the forum from which topics were moved.',
