@@ -28,7 +28,7 @@ $lang_misc = array(
 'Reason'					=>	'Reason',
 'Reason help'				=>	'Enter a short reason why you are reporting this post.',
 'Too long reason'			=>	'Your report length is %s bytes. This exceeds the %s bytes limit.',
-'Report errors'				=>	'<strong>Warning!</strong> The following errors must be corrected before your report can be sending:',
+'Report errors'				=>	'<strong>Warning!</strong> The following errors must be corrected before your report can be sent:',
 
 // Subscriptions
 'Already subscribed'		=>	'You are already subscribed to this topic.',
