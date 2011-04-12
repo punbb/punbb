@@ -2795,6 +2795,8 @@ if ($forum_page['has_required']): ?>
 			$cur_category = 0;
 			while ($cur_forum = $forum_db->fetch_assoc($result))
 			{
+				($hook = get_hook('pf_change_details_admin_forum_loop_start')) ? eval($hook) : null;
+
 				if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
 				{
 					if ($cur_category)
