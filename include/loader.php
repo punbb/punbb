@@ -1,4 +1,4 @@
-fo<?php
+<?php
 /**
  * Loader class for inject CSS and JS files.
  *
