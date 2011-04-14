@@ -70,7 +70,7 @@ class DBLayer
 			exit('Insane query. Aborting.');
 
 		if (defined('FORUM_SHOW_QUERIES'))
-			$q_start = get_microtime();
+			$q_start = forum_microtime();
 
 		if ($unbuffered)
 			$this->query_result = @mysql_unbuffered_query($sql, $this->link_id);
@@ -80,7 +80,7 @@ class DBLayer
 		if ($this->query_result)
 		{
 			if (defined('FORUM_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', get_microtime() - $q_start));
+				$this->saved_queries[] = array($sql, sprintf('%.5f', forum_microtime() - $q_start));
 
 			++$this->num_queries;
 
