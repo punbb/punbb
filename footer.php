@@ -60,8 +60,7 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 	if (defined('FORUM_DEBUG'))
 	{
 		// Calculate script generation time
-		list($usec, $sec) = explode(' ', microtime());
-		$time_diff = forum_number_format(((float)$usec + (float)$sec) - $forum_start, 3);
+		$time_diff = forum_number_format(forum_microtime() - $forum_start, 3);
 		echo '<p id="querytime" class="quiet">'.sprintf($lang_common['Querytime'], $time_diff, forum_number_format($forum_db->get_num_queries())).'</p>'."\n";
 	}
 
@@ -93,13 +92,13 @@ $forum_javascript_commonjs_urls = '
 	};';
 
 
-forum_add_js($forum_javascript_commonjs_urls, array('type' => 'inline', 'weight' => 50, 'group' => FORUM_JS_GROUP_SYSTEM));
-//forum_add_js('include/js/min/common.min.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
-forum_add_js('include/js/common.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+$forum_loader->add_js($forum_javascript_commonjs_urls, array('type' => 'inline', 'weight' => 50, 'group' => FORUM_JS_GROUP_SYSTEM));
+//forum_loader->add_js('include/js/min/common.min.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+$forum_loader->add_js('include/js/common.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
 
-$tpl_main = str_replace('<!-- forum_javascript -->', forum_render_lib_js(), $tpl_main);
+$tpl_main = str_replace('<!-- forum_javascript -->', $forum_loader->render_js(), $tpl_main);
 // END SUBST - <!-- forum_javascript -->
 
 // Last call!

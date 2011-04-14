@@ -22,23 +22,11 @@ define('FORUM_DB_REVISION', 5);
 list($usec, $sec) = explode(' ', microtime());
 $forum_start = ((float)$usec + (float)$sec);
 
-// Resource loader
-$forum_libs = array();
-$forum_libs['js'] = array();
-$forum_libs['css'] = array();
-
-// JS groups
-define('FORUM_JS_GROUP_SYSTEM', -100);
-define('FORUM_JS_GROUP_DEFAULT', 0);
-define('FORUM_JS_GROUP_COUNTER', 100);
-
-// CSS groups
-define('FORUM_CSS_GROUP_SYSTEM', -100);
-define('FORUM_CSS_GROUP_DEFAULT', 0);
-
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
-// Flash messenger
+// Load the Loader class
+require FORUM_ROOT.'include/loader.php';
+// Load the Flash messenger class
 require FORUM_ROOT.'include/flash_messenger.php';
 
 // Load UTF-8 functions

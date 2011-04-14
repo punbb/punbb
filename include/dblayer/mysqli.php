@@ -69,14 +69,14 @@ class DBLayer
 			exit('Insane query. Aborting.');
 
 		if (defined('FORUM_SHOW_QUERIES'))
-			$q_start = get_microtime();
+			$q_start = forum_microtime();
 
 		$this->query_result = @mysqli_query($this->link_id, $sql);
 
 		if ($this->query_result)
 		{
 			if (defined('FORUM_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', get_microtime() - $q_start));
+				$this->saved_queries[] = array($sql, sprintf('%.5f', forum_microtime() - $q_start));
 
 			++$this->num_queries;
 

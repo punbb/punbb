@@ -128,7 +128,7 @@ foreach (explode("\n", $head_temp) as $style_temp)
 
 ob_end_clean();
 
-$tmp_head = implode("\n", $forum_head).forum_render_lib_css();
+$tmp_head = implode("\n", $forum_head).$forum_loader->render_css();
 
 ($hook = get_hook('hd_head')) ? eval($hook) : null;
 
