@@ -1058,14 +1058,6 @@ li.info-lastpost cite {
 	display: block;
 }
 
-.main-item .hn strong {
-	font-size: 1em;
-}
-
-.main-item .hn strong span {
-	font-weight: normal;
-}
-
 #brd-index .main-item .hn span {
 	font-size: 1.084em;
 	font-weight: bold;
@@ -1090,8 +1082,8 @@ li.info-lastpost cite {
 	font-style: normal;
 }
 
-.main-content .main-item .item-subject .hn,
-.main-content .main-item .item-subject p {
+.item-subject .hn,
+.item-subject p {
 	margin: 0 0 0 1.5em;
 }
 
@@ -1201,23 +1193,23 @@ optgroup {
 	padding: 1.1em 0pt 0.3em 18em;
 }
 
-.frm-buttons span.submit {
+.frm-buttons .submit {
 	margin-right: 0.75em;
 }
 
-.frm-buttons span.primary {
+.frm-buttons .primary {
 	margin-right: 2em;
 }
 
-span.submit input,
-span.cancel input {
+.submit input,
+.cancel input {
 	overflow: visible;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	font-size: 1.084em;
 }
 
-.button-set span.submit {
+.button-set .submit {
 	padding-left: 1em;
 }
 
@@ -1646,15 +1638,15 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	border-width: 1px;
 }
 
-.post .posthead .post-byline a,
-.post .posthead .post-byline strong {
+.posthead .post-byline a,
+.posthead .post-byline strong {
 	font-size: 1.167em;
 	font-weight: bold;
 	text-decoration: none;
 	font-style: normal;
 }
 
-.post .posthead .post-byline {
+.posthead .post-byline {
 	float: left;
 	width: 15.5em;
 	padding: 0.5em 1em 0.5em 1.5em;
