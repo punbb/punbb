@@ -1691,7 +1691,14 @@ else
 		// LinkedIn
 		if ($user['linkedin'] != '')
 		{
-			$forum_page['user_contact']['linkedin'] = '<li><span>'.$lang_profile['LinkedIn'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['linkedin']) : $user['linkedin']).'</strong></span></li>';
+			if ($forum_config['o_censoring'] == '1')
+			{
+				$user['linkedin'] = censor_words($user['linkedin']);
+			}
+
+			$linkedin_url = forum_htmlencode($user['linkedin']);
+			$forum_page['linkedin'] = '<a href="'.$linkedin_url.'" class="external url" rel="me">'.$linkedin_url.'</a>';
+			$forum_page['user_contact']['linkedin'] = '<li><span>'.$lang_profile['LinkedIn'].': '.$forum_page['linkedin'].'</span></li>';
 		}
 
 
@@ -1984,8 +1991,8 @@ if ($forum_page['has_required']): ?>
 <?php ($hook = get_hook('pf_change_details_identity_pre_linkedin')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Linkedin'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[linkedin]" value="<?php echo(isset($form['linkedin']) ? forum_htmlencode($form['linkedin']) : forum_htmlencode($user['linkedin'])) ?>" size="35" maxlength="80" /></span>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['LinkedIn'] ?></span></label><br />
+						<span class="fld-input"><input type="url" id="fld<?php echo $forum_page['fld_count'] ?>" name="form[linkedin]" value="<?php echo(isset($form['linkedin']) ? forum_htmlencode($form['linkedin']) : forum_htmlencode($user['linkedin'])) ?>" size="35" maxlength="80" /></span>
 					</div>
 				</div>
 			</fieldset>
