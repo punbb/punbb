@@ -9,6 +9,10 @@ $lang_admin_index = array(
 'Check for updates manual'		=>	'Check for updates',	// Link text
 'Copyright message'				=>	'&copy; 2008-2011 <a href="http://punbb.informer.com/">PunBB</a>, partially based on code &copy; 2008-2009 <a href="http://fluxbb.org/">FluxBB</a>',
 'PunBB version'					=>	'PunBB version',
+'PunBB community'				=>	'Community',
+'Forums'						=>	'Forums',
+'Twitter'						=>	'Twitter',
+'Development'					=>	'Development',
 'Not available'					=>	'Not available',
 'Not applicable'				=>	'N/A',
 'Server load'					=>	'Server load',

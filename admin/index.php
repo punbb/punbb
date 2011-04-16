@@ -194,6 +194,17 @@ ob_start();
 					</ul>
 				</div>
 			</div>
+<?php ($hook = get_hook('ain_pre_community')) ? eval($hook) : null; ?>
+			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
+				<div class="ct-box">
+					<h3 class="ct-legend hn"><span><?php echo $lang_admin_index['PunBB community'] ?></span></h3>
+					<ul class="data-list">
+						<li><span><?php echo $lang_admin_index['Forums'] ?>: <a href="http://punbb.informer.com/forums/">Forums</a></span></li>
+						<li><span><?php echo $lang_admin_index['Twitter'] ?>: <a href="https://twitter.com/punbb_forum">@punbb_forum</a></span></li>
+						<li><span><?php echo $lang_admin_index['Development'] ?>: <a href="https://github.com/punbb/punbb">https://github.com/punbb</a></span></li>
+					</ul>
+				</div>
+			</div>
 <?php ($hook = get_hook('ain_pre_server_load')) ? eval($hook) : null; ?>
 			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box">
