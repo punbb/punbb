@@ -105,6 +105,7 @@ $lang_profile = array(
 'Admin note'				=>	'Admin note',
 'Contact legend'			=>	'Contact details',
 'Contact messengers legend'	=>	'Contact messengers details',
+'Name or Url'				=>	'Enter the url or username',
 
 // Settings section
 'Local settings'			=>	'Local settings',
