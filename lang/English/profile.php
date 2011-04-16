@@ -81,6 +81,7 @@ $lang_profile = array(
 'Note'						=>	'Note',
 'Posts'						=>	'Posts',
 'Last post'					=>	'Last post',
+'Last visit'				=> 	'Last visit',
 'Send forum e-mail'			=>	'Send forum email',
 'Contact info'				=>	'Contact information',
 'Jabber'					=>	'Jabber',
