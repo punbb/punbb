@@ -2314,7 +2314,7 @@ if ($forum_page['has_required']): ?>
 
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h3>
+			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
