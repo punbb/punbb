@@ -2995,7 +2995,7 @@ function maintenance_message()
 // Display $message and redirect user to $destination_url
 function redirect($destination_url, $message)
 {
-	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url;
+	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url, $forum_loader;
 
 	define('FORUM_PAGE', 'redirect');
 
@@ -3057,7 +3057,7 @@ function redirect($destination_url, $message)
 
 	($hook = get_hook('fn_redirect_head')) ? eval($hook) : null;
 
-	$tmp_head = implode("\n", $forum_head).forum_render_lib_css();
+	$tmp_head = implode("\n", $forum_head).$forum_loader->render_css();
 
 	$tpl_redir = str_replace('<!-- forum_head -->', $tmp_head, $tpl_redir);
 	unset($forum_head,$tmp_head);
