@@ -59,17 +59,11 @@ a:focus {
 	border-color: #DDE4EB;
 }
 
-.crumbs {
-	background: #fff;
-	border-color: #fff;
-}
-
 #brd-crumbs-top .crumblast a,
 #brd-crumbs-top .crumblast a:hover {
 	color: #111;
 	text-decoration: none;
 }
-
 
 .main-item,
 .main-item li,
