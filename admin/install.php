@@ -222,13 +222,13 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set1">
 				<div class="sf-box text required">
 					<label for="fld2"><span><?php echo $lang_install['Database server'] ?></span> <small><?php echo $lang_install['Database server help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" /></span>
+					<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text required">
 					<label for="fld3"><span><?php echo $lang_install['Database name'] ?></span> <small><?php echo $lang_install['Database name help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld3" type="text" name="req_db_name" size="35" maxlength="50" /></span>
+					<span class="fld-input"><input id="fld3" type="text" name="req_db_name" size="35" maxlength="50" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set3">
@@ -246,7 +246,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set5">
 				<div class="sf-box text">
 					<label for="fld6"><span><?php echo $lang_install['Table prefix'] ?></span> <small><?php echo $lang_install['Table prefix help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="20" maxlength="30" /></span>
+					<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="35" maxlength="30" /></span>
 				</div>
 			</div>
 		</fieldset>
@@ -264,25 +264,25 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set1">
 				<div class="sf-box text required">
 					<label for="fld7"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld7" type="text" name="req_username" size="35" maxlength="25" /></span>
+					<span class="fld-input"><input id="fld7" type="text" name="req_username" size="35" maxlength="25" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text required">
 					<label for="fld8"><span><?php echo $lang_install['Admin password'] ?></span> <small><?php echo $lang_install['Password help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld8" type="password" name="req_password1" size="35" /></span>
+					<span class="fld-input"><input id="fld8" type="password" name="req_password1" size="35" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set3">
 				<div class="sf-box text required">
 					<label for="fld9"><span><?php echo $lang_install['Admin confirm password'] ?></span> <small><?php echo $lang_install['Confirm password help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld9" type="password" name="req_password2" size="35" /></span>
+					<span class="fld-input"><input id="fld9" type="password" name="req_password2" size="35" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set4">
 				<div class="sf-box text required">
 					<label for="fld10"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld10" type="text" name="req_email" size="35" maxlength="80" /></span>
+					<span class="fld-input"><input id="fld10" type="email" name="req_email" size="35" maxlength="80" required /></span>
 				</div>
 			</div>
 		</fieldset>
@@ -315,7 +315,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set3">
 				<div class="sf-box text required">
 					<label for="fld13"><span><?php echo $lang_install['Base URL'] ?></span> <small><?php echo $lang_install['Base URL help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld13" type="text" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" /></span>
+					<span class="fld-input"><input id="fld13" type="url" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 <?php
@@ -363,7 +363,7 @@ if (!isset($_POST['form_sent']))
 ?>
 		</fieldset>
 		<div class="frm-buttons">
-			<span class="submit"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
+			<span class="submit primary"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
 		</div>
 	</div>
 	</form>
