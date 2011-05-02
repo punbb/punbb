@@ -210,7 +210,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set1">
 				<div class="sf-box select required">
 					<label for="fld1"><span><?php echo $lang_install['Database type'] ?></span> <small><?php echo $lang_install['Database type help'] ?></small></label><br />
-					<span class="fld-input"><select id="fld1" name="req_db_type">
+					<span class="fld-input"><select id="req_db_type" name="req_db_type">
 <?php
 
 	foreach ($db_extensions as $db_type)
@@ -231,16 +231,16 @@ if (!isset($_POST['form_sent']))
 					<span class="fld-input"><input id="fld3" type="text" name="req_db_name" size="35" maxlength="50" required /></span>
 				</div>
 			</div>
-			<div class="sf-set set3">
+			<div class="sf-set set3" id="db_username_block">
 				<div class="sf-box text">
 					<label for="fld4"><span><?php echo $lang_install['Database username'] ?></span> <small><?php echo $lang_install['Database username help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld4" type="text" name="db_username" size="35" maxlength="50" /></span>
+					<span class="fld-input"><input id="db_username" type="text" name="db_username" size="35" maxlength="50" /></span>
 				</div>
 			</div>
-			<div class="sf-set set4">
+			<div class="sf-set set4" id="db_password_block">
 				<div class="sf-box text">
 					<label for="fld5"><span><?php echo $lang_install['Database password'] ?></span> <small><?php echo $lang_install['Database password help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld5" type="password" name="db_password" size="35" /></span>
+					<span class="fld-input"><input id="db_password" type="password" name="db_password" size="35" /></span>
 				</div>
 			</div>
 			<div class="sf-set set5">
