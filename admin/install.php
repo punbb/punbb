@@ -194,7 +194,7 @@ if (!isset($_POST['form_sent']))
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part1 intro'] ?></p>
-			<ul class="spaced">
+			<ul class="spaced list-clean">
 				<li><span><strong><?php echo $lang_install['Database type'] ?></strong> <?php echo $lang_install['Database type info']; if (count($db_extensions) > 1) echo ' '.$lang_install['Mysql type info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Database server'] ?></strong> <?php echo $lang_install['Database server info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Database name'] ?></strong> <?php echo $lang_install['Database name info'] ?></span></li>
@@ -293,7 +293,7 @@ if (!isset($_POST['form_sent']))
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part3 intro'] ?></p>
-			<ul class="spaced">
+			<ul class="spaced list-clean">
 				<li><span><strong><?php echo $lang_install['Board title and desc'] ?></strong> <?php echo $lang_install['Board title info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Base URL'] ?></strong> <?php echo $lang_install['Base URL info'] ?></span></li>
 			</ul>

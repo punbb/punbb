@@ -63,6 +63,10 @@ hr,
 	font-size: .917em;
 }
 
+.list-clean {
+	list-style-type: none;
+}
+
 /* Text Setup (Equalise everything before styling)
 -------------------------------------------------------------*/
 html {
