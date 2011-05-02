@@ -83,6 +83,7 @@ if (isset($_POST['form_sent']))
 			if (!isset($form['censoring']) || $form['censoring'] != '1') $form['censoring'] = '0';
 			if (!isset($form['quickjump']) || $form['quickjump'] != '1') $form['quickjump'] = '0';
 			if (!isset($form['show_version']) || $form['show_version'] != '1') $form['show_version'] = '0';
+			if (!isset($form['show_moderators']) || $form['show_moderators'] != '1') $form['show_moderators'] = '0';
 			if (!isset($form['users_online']) || $form['users_online'] != '1') $form['users_online'] = '0';
 
 			if (!isset($form['quickpost']) || $form['quickpost'] != '1') $form['quickpost'] = '0';
@@ -704,6 +705,13 @@ else if ($section == 'features')
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_version]" value="1"<?php if ($forum_config['o_show_version'] == '1') echo ' checked="checked"' ?> /></span>
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Show version'] ?></span> <?php echo $lang_admin_settings['Show version label'] ?></label>
+					</div>
+				</div>
+<?php ($hook = get_hook('aop_features_pre_show_moderators_checkbox')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box checkbox">
+						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_moderators]" value="1"<?php if ($forum_config['o_show_moderators'] == '1') echo ' checked="checked"' ?> /></span>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Show moderators'] ?></span> <?php echo $lang_admin_settings['Show moderators label'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('aop_features_pre_users_online_checkbox')) ? eval($hook) : null; ?>

@@ -2089,3 +2089,7 @@ H - MAIN CONTENT - ODDMENTS
 	padding: .35em 1.3em .2em;
 	margin: 0 1em;
 }
+
+.js #qjump-submit {
+	visibility: hidden;
+}
