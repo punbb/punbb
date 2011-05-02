@@ -78,11 +78,11 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 
 // START SUBST - <!-- forum_javascript -->
 $forum_javascript_commonjs_urls = '
-	if (typeof FORUM === "undefined" || !FORUM) {
-		var FORUM = {};
+	if (typeof PUNBB === "undefined" || !PUNBB) {
+		var PUNBB = {};
 	}
 
-	FORUM.env = {
+	PUNBB.env = {
 		base_url: "'.forum_htmlencode($base_url).'/",
 		base_js_url: "'.forum_htmlencode($base_url).'/include/js/",
 		user_lang: "'.forum_htmlencode($forum_user['language']).'",
@@ -93,8 +93,8 @@ $forum_javascript_commonjs_urls = '
 
 
 $forum_loader->add_js($forum_javascript_commonjs_urls, array('type' => 'inline', 'weight' => 50, 'group' => FORUM_JS_GROUP_SYSTEM));
-//$forum_loader->add_js('include/js/common.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
-$forum_loader->add_js('include/js/min/common.min.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+//$forum_loader->add_js('include/js/punbb.common.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+$forum_loader->add_js('include/js/min/punbb.common.min.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
 //$forum_loader->add_js('include/js/min/jquery-1.5.2.min.js', array('type' => 'file', 'weight' => 10, 'async' => false, 'group' => FORUM_JS_GROUP_DEFAULT));
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;

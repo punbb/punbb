@@ -371,8 +371,8 @@ if (!isset($_POST['form_sent']))
 
 </div>
 </div>
-	<script src="<?php echo FORUM_ROOT ?>include/js/common.js"></script>
-	<script src="<?php echo FORUM_ROOT ?>include/js/install.js"></script>
+	<script src="<?php echo FORUM_ROOT ?>include/js/punbb.common.js"></script>
+	<script src="<?php echo FORUM_ROOT ?>include/js/punbb.install.js"></script>
 </body>
 </html>
 <?php

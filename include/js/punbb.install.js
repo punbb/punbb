@@ -1,10 +1,10 @@
 // FORUM
-if (typeof FORUM === 'undefined' || !FORUM) {
-	var FORUM = {};
+if (typeof PUNBB === 'undefined' || !PUNBB) {
+	var PUNBB = {};
 }
 
 // INSTALL
-FORUM.install = function () {
+PUNBB.install = function () {
 	var docEl = document.documentElement;
 
 	function get(el) {
@@ -13,7 +13,7 @@ FORUM.install = function () {
 
 	return {
 		init: function () {
-			FORUM.install.selectDB_attach_event();
+			PUNBB.install.selectDB_attach_event();
 		},
 
 
@@ -22,11 +22,11 @@ FORUM.install = function () {
 			var selected_db = get('req_db_type')[get('req_db_type').selectedIndex].value;
 
 			if (selected_db === 'sqlite' || selected_db === 'sqlite3') {
-				FORUM.punbb.addClass(get('db_username_block'), 'hidden');
-				FORUM.punbb.addClass(get('db_password_block'), 'hidden');
+				PUNBB.common.addClass(get('db_username_block'), 'hidden');
+				PUNBB.common.addClass(get('db_password_block'), 'hidden');
 			} else {
-				FORUM.punbb.removeClass(get('db_username_block'), 'hidden');
-				FORUM.punbb.removeClass(get('db_password_block'), 'hidden');
+				PUNBB.common.removeClass(get('db_username_block'), 'hidden');
+				PUNBB.common.removeClass(get('db_password_block'), 'hidden');
 			}
 			return false;
 		},
@@ -38,11 +38,11 @@ FORUM.install = function () {
 
 			if (db_sel) {
 				db_sel.onchange = function () {
-					return FORUM.install.selectDB_update();
+					return PUNBB.install.selectDB_update();
 				};
 
 				// Run first for update on page load
-				FORUM.install.selectDB_update();
+				PUNBB.install.selectDB_update();
 			}
 		},
 	};
@@ -50,5 +50,5 @@ FORUM.install = function () {
 
 
 // One onload handler
-FORUM.punbb.addLoadEvent(FORUM.install.init);
+PUNBB.common.addLoadEvent(PUNBB.install.init);
 

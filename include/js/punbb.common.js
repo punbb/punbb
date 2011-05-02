@@ -1,10 +1,10 @@
 /* FORUM */
-if (typeof FORUM === "undefined" || !FORUM) {
-	var FORUM = {};
+if (typeof PUNBB === "undefined" || !PUNBB) {
+	var PUNBB = {};
 }
 
 
-FORUM.punbb = function () {
+PUNBB.common = function () {
 	var docEl = document.documentElement;
 
 	function get(el) {
@@ -13,14 +13,14 @@ FORUM.punbb = function () {
 
 	return {
 		init: function() {
-    		FORUM.punbb.addClass(docEl, "js");
+    		PUNBB.common.addClass(docEl, "js");
 
-    		FORUM.punbb.attachWindowOpen();
-    		FORUM.punbb.autoFocus();
-    		FORUM.punbb.attachQuickjumpRedirect();
+    		PUNBB.common.attachWindowOpen();
+    		PUNBB.common.autoFocus();
+    		PUNBB.common.attachQuickjumpRedirect();
 
-    		if (!FORUM.punbb.input_support_attr("required")) {
-				FORUM.punbb.attachValidateForm();
+    		if (!PUNBB.common.input_support_attr("required")) {
+				PUNBB.common.attachValidateForm();
 			}
 
     		// Hide Flash Messages
@@ -48,7 +48,7 @@ FORUM.punbb = function () {
 		// add X class to N node, return TRUE if added, FALSE if already exists
 		addClass: function(n, x)
 		{
-			if (FORUM.punbb.hasClass(n, x)) return false;
+			if (PUNBB.common.hasClass(n, x)) return false;
 			else n.className += " " + x;
 			return true;
 		},
@@ -56,7 +56,7 @@ FORUM.punbb = function () {
 		// remove X class from N node, return TRUE if removed, FALSE if not present
 		removeClass: function(n, x)
 		{
-			if (!FORUM.punbb.hasClass(n, x)) return false;
+			if (!PUNBB.common.hasClass(n, x)) return false;
 			x = new RegExp("\\s*\\b" + x + "\\b", "g");
 			n.className = n.className.replace(x, "");
 			return true;
@@ -71,7 +71,7 @@ FORUM.punbb = function () {
 			{
 				n.style.visibility = "hidden";
 				setTimeout(function(){n.style.visibility=x}, 200);
-				setTimeout(function(){FORUM.punbb.blink(n,i-1)}, 400);
+				setTimeout(function(){PUNBB.common.blink(n,i-1)}, 400);
 			}
 		},
 
@@ -148,7 +148,7 @@ FORUM.punbb = function () {
 			{
 				if (typeof arr[i] == "object" && arr.length)
 				{
-					flt.concat(FORUM.punbb.flatten(arr[i]))
+					flt.concat(PUNBB.common.flatten(arr[i]))
 				}
 				else flt.push(arr[i])
 			}
@@ -160,22 +160,22 @@ FORUM.punbb = function () {
 		{
 			var elements = form.elements;
 			var fn = function(x) { return x.name && x.name.indexOf("req_")==0 };
-			var nodes = FORUM.punbb.arrayOfMatched(fn, elements);
+			var nodes = PUNBB.common.arrayOfMatched(fn, elements);
 			fn = function(x) { return /^\s*$/.test(x.value) };
-			var empty = FORUM.punbb.find(fn, nodes);
+			var empty = PUNBB.common.find(fn, nodes);
 			if (empty > -1)
-			if (FORUM.punbb.find(fn, nodes) > -1)
+			if (PUNBB.common.find(fn, nodes) > -1)
 			{
 				var n = get("req-msg");
-				FORUM.punbb.removeClass(n, "req-warn");
-				var newlyAdded = FORUM.punbb.addClass(n, "req-error");
-				if (!FORUM.punbb.onScreen(n))
+				PUNBB.common.removeClass(n, "req-warn");
+				var newlyAdded = PUNBB.common.addClass(n, "req-error");
+				if (!PUNBB.common.onScreen(n))
 				{
 					n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
-					setTimeout(function(){FORUM.punbb.blink(n)}, 500);
+					setTimeout(function(){PUNBB.common.blink(n)}, 500);
 				}
-				else if (!newlyAdded) FORUM.punbb.blink(n);
-				if (FORUM.punbb.onScreen(nodes[empty])) nodes[empty].focus();
+				else if (!newlyAdded) PUNBB.common.blink(n);
+				if (PUNBB.common.onScreen(nodes[empty])) nodes[empty].focus();
 				return false;
 			}
 			return true;
@@ -199,13 +199,13 @@ FORUM.punbb = function () {
 
 			if (qj_sel) {
 				qj_sel.onchange = function () {
-					return FORUM.punbb.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
+					return PUNBB.common.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
 				};
 			}
 
 			if (qj_submit) {
 				qj_submit.onclick = function () {
-					return FORUM.punbb.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
+					return PUNBB.common.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
 				};
 			}
 		},
@@ -216,11 +216,11 @@ FORUM.punbb = function () {
 			for (i = 0, cl = inputlist.length; i < cl; i++)
 			{
 				var el = inputlist[i];
-				if (FORUM.punbb.hasClass(el, "select-all") && el.getAttribute("data-check-form"))
+				if (PUNBB.common.hasClass(el, "select-all") && el.getAttribute("data-check-form"))
 				{
 					var frm = get(el.getAttribute("data-check-form"));
 					if (frm)
-						el.onclick = function() { return FORUM.punbb.toggleCheckboxes(frm); };
+						el.onclick = function() { return PUNBB.common.toggleCheckboxes(frm); };
 				}
 			}
 		},
@@ -256,16 +256,16 @@ FORUM.punbb = function () {
 						return x.name && x.name.indexOf("req_") == 0;
 					};
 
-				if (FORUM.punbb.find(fn, elements) > -1)
+				if (PUNBB.common.find(fn, elements) > -1)
 				{
 					fn = function(x) { return x.type && (x.type=="submit" && x.name!="cancel") };
-					var nodes = FORUM.punbb.arrayOfMatched(fn, elements),
+					var nodes = PUNBB.common.arrayOfMatched(fn, elements),
 						formRef = forms[i];
 
-					fn = function() { return FORUM.punbb.validateForm(formRef) };
+					fn = function() { return PUNBB.common.validateForm(formRef) };
 					//TODO: look at passing array of node refs instead of forum ref
 					//fn = function() { return Forum.checkReq(required.slice(0)) };
-					nodes = FORUM.punbb.map(function(x){x.onclick=fn}, nodes);
+					nodes = PUNBB.common.map(function(x){x.onclick=fn}, nodes);
 				}
 			}
 		},
@@ -277,7 +277,7 @@ FORUM.punbb = function () {
 			var nodes = document.getElementsByTagName("a");
 			for (var i=0; i<nodes.length; i++)
 			{
-				if (FORUM.punbb.hasClass(nodes[i], "exthelp"))
+				if (PUNBB.common.hasClass(nodes[i], "exthelp"))
 					nodes[i].onclick = function() { window.open(this.href); return false; };
 			}
 		},
@@ -290,7 +290,7 @@ FORUM.punbb = function () {
 			nodes = nodes.all ? nodes.all : nodes.getElementsByTagName("*");
 			// TODO: make sure line above gets nodes in display-order across browsers
 			var fn = function(x) { return x.tagName.toUpperCase()=="TEXTAREA" || (x.tagName.toUpperCase()=="INPUT" && (x.type=="text") || (x.type=="password") || (x.type=="email") || (x.type=="url") || (x.type=="number")) };
-			var n = FORUM.punbb.find(fn, nodes);
+			var n = PUNBB.common.find(fn, nodes);
 			if (n > -1) nodes[n].focus();
 		},
 
@@ -308,7 +308,7 @@ FORUM.punbb = function () {
 
 
 // One onload handler
-FORUM.punbb.addLoadEvent(FORUM.punbb.init);
+PUNBB.common.addLoadEvent(PUNBB.common.init);
 
 
 /* A handful of functions in this script have been released into the Public
