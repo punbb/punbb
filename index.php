@@ -188,7 +188,7 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 			($hook = get_hook('in_row_modify_modlist')) ? eval($hook) : null;
 
-			$forum_page['item_subject']['modlist'] = '<span class="modlist">('.sprintf($lang_index['Moderated by'], implode(', ', $forum_page['item_mods'])).')</span>';
+			$forum_page['item_subject']['modlist'] = '<span class="modlist">'.sprintf($lang_index['Moderated by'], implode(', ', $forum_page['item_mods'])).'</span>';
 		}
 
 		($hook = get_hook('in_normal_row_pre_item_subject_merge')) ? eval($hook) : null;
