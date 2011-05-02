@@ -46,7 +46,7 @@
 
 <div class="hr"><hr /></div>
 
-<div id="brd-about" class="gen-content">
+<div id="brd-about">
 	<!-- forum_about -->
 </div>
 
