@@ -264,9 +264,10 @@ PUNBB.common = function () {
 
 				var nodes = PUNBB.common.arrayOfMatched(fn, elements);
 				for (var j=0, j_len=nodes.length; j<j_len; j++) {
-					nodes[j].onkeypress = function () {
-						f.submit();
-						return false;
+					nodes[j].onkeypress = function (e) {
+						if (((e.keyCode == 13) || (e.keyCode == 10)) && (e.ctrlKey == true)) {
+							return f.submit();
+						}
 					};
 				}
 			}
