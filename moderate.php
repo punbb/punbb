@@ -638,7 +638,7 @@ $forum_page['mod_options'] = array(
 	$forum_id = $fid;
 
 	// Init JS helper for select-all
-	$forum_loader->add_js('FORUM.punbb.addLoadEvent(FORUM.punbb.initToggleCheckboxes);', array('type' => 'inline'));
+	$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 	($hook = get_hook('mr_post_actions_end')) ? eval($hook) : null;
 
@@ -1705,7 +1705,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 $forum_id = $fid;
 
 // Init JS helper for select-all
-$forum_loader->add_js('FORUM.punbb.addLoadEvent(FORUM.punbb.initToggleCheckboxes);', array('type' => 'inline'));
+$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 ($hook = get_hook('mr_end')) ? eval($hook) : null;
 
