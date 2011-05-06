@@ -600,6 +600,11 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	margin-right: 0.75em;
 }
 
+.admin-submenu .active a {
+	font-weight: bold;
+}
+
+
 /*************************************************************
 D - COMMON INTERFACE ELEMENTS
 **************************************************************/

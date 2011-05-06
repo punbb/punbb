@@ -350,10 +350,6 @@ label,
 	text-decoration: none;
 }
 
-.admin-submenu .active a {
-	text-decoration: underline;
-}
-
 .main-menu .active a {
 	color: #fff;
 }
