@@ -261,7 +261,8 @@ label,
 }
 
 .sf-set .text label small,
-.sf-set .select label small {
+.sf-set .select label small,
+.txt-set .textarea label small {
 	color: #999;
 }
 
