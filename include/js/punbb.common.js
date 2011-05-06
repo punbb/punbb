@@ -18,6 +18,7 @@ PUNBB.common = function () {
     		PUNBB.common.attachWindowOpen();
     		PUNBB.common.autoFocus();
     		PUNBB.common.attachQuickjumpRedirect();
+    		PUNBB.common.attachCtrlEnterForm();
 
     		if (!PUNBB.common.input_support_attr("required")) {
 				PUNBB.common.attachValidateForm();
@@ -244,6 +245,33 @@ PUNBB.common = function () {
 
 			return false;
 		},
+
+
+		// attach form submit by ctrl + enter
+		attachCtrlEnterForm: function () {
+			var forms = document.forms;
+			for (var i=0,len=forms.length; i<len; i++)
+			{
+				var f = forms[i];
+				if (!PUNBB.common.hasClass(f, 'frm-ctrl-submit')) {
+					continue;
+				}
+
+				var elements = f.elements,
+					fn = function (x) {
+						return x.tagName.toUpperCase() == 'TEXTAREA';
+					};
+
+				var nodes = PUNBB.common.arrayOfMatched(fn, elements);
+				for (var j=0, j_len=nodes.length; j<j_len; j++) {
+					nodes[j].onkeypress = function () {
+						f.submit();
+						return false;
+					};
+				}
+			}
+		},
+
 
 		// attach form validation function to submit-type inputs
 		attachValidateForm: function()
