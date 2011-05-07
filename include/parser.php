@@ -716,7 +716,7 @@ function do_bbcode($text, $is_signature = false)
 
 	if (strpos($text, '[quote') !== false)
 	{
-		$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*?)\\1\]#e', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</cite><blockquote><p>"', $text);
+		$text = preg_replace('#\[quote=(&\#039;|&quot;|"|\'|)(.*?)\\1\]#e', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</cite><blockquote><p>"', $text);
 		$text = preg_replace('#\[quote\]\s*#', '</p><div class="quotebox"><blockquote><p>', $text);
 		$text = preg_replace('#\s*\[\/quote\]#S', '</p></blockquote></div><p>', $text);
 	}
