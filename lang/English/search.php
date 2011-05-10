@@ -41,6 +41,7 @@ $lang_search = array(
 // Results
 'Search results'			=>	'Search results',
 'Topics with new'			=>	'Topics with new posts',
+'All Topics'				=>	'Show all topics',
 'Recently active topics'	=>	'Recently active topics',
 'Unanswered topics'			=>	'Unanswered topics',
 'Subscriptions'				=>	'Subscriptions',
