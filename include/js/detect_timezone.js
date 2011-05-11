@@ -313,14 +313,14 @@ jzTimezoneDetector.olson.ambiguity_list = {
 
 
 /* FORUM */
-if (typeof FORUM === "undefined" || !FORUM) {
-	var FORUM = {};
+if (typeof PUNBB === "undefined" || !PUNBB) {
+	var PUNBB = {};
 }
 
-FORUM.detect_timezone = function () {
+PUNBB.detect_timezone = function () {
 	return {
 		detect_on_register_form: function () {
-			FORUM.punbb.addLoadEvent(function () {
+			PUNBB.common.addLoadEvent(function () {
 				var timezone = jzTimezoneDetector.determine_timezone().timezone,
 					timezone_el = document.getElementById("register_timezone"),
 					dst_el = document.getElementById("register_dst");
