@@ -1,0 +1,44 @@
+/* Mobile section
+----------------------------------------------------------------*/
+
+/* Prevent mobile zooming while remain desktop zooming: github.com/shichuan/mobile-html5-boilerplate/issues/closed#issue/14 */
+html {
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+/* j.mp/webkit-tap-highlight-color */
+a:link {
+	-webkit-tap-highlight-color: #FF5E99;
+}
+
+/* prevent callout */
+.nocallout {
+	-webkit-touch-callout: none;
+}
+
+/* Text overflow with ellipsis */
+.ellipsis {
+  	text-overflow: ellipsis;
+  	overflow: hidden;
+  	white-space: nowrap;
+}
+
+/* A hack for HTML5 contenteditable attribute on mobile */
+textarea.contenteditable {
+	-webkit-appearance: none;
+}
+
+/* iPhone */
+@media screen and (max-device-width: 480px) {
+	html {
+		-webkit-text-size-adjust: none;
+	}
+
+	.brd {
+		padding: 0;
+		width: 99%;
+	}
+
+
+}

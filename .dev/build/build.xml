@@ -43,6 +43,7 @@
 		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen.min.css" force="true">
 			<filelist dir="${css-src}">
 				<file name="Oxygen/Oxygen.css" />
+				<file name="Oxygen/Oxygen_mobile.css" />
 				<file name="Oxygen/Oxygen_cs.css" />
 			</filelist>
 		</compress-css-lib>
