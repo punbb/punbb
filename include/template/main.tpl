@@ -2,6 +2,11 @@
 <html <!-- forum_local -->>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <!-- forum_head -->
 </head>
 <body>
