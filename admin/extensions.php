@@ -1012,13 +1012,6 @@ else
 
 	if ($installed_count > 0)
 	{
-
-?>
-		<div class="ct-box warn-box">
-			<p class="warn"><?php echo $lang_admin_ext['Installed extensions warn'] ?></p>
-		</div>
-<?php
-
 		echo "\t".implode("\n\t", $forum_page['ext_item'])."\n";
 	}
 	else
