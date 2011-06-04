@@ -128,9 +128,10 @@ foreach (explode("\n", $head_temp) as $style_temp)
 
 ob_end_clean();
 
-$tmp_head = implode("\n", $forum_head).$forum_loader->render_css();
-
 ($hook = get_hook('hd_head')) ? eval($hook) : null;
+
+// Render CSS from forum_loader
+$tmp_head = implode("\n", $forum_head).$forum_loader->render_css();
 
 $tpl_main = str_replace('<!-- forum_head -->', $tmp_head, $tpl_main);
 unset($forum_head, $tmp_head);
