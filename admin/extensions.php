@@ -614,7 +614,7 @@ else if (isset($_GET['flip']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$dependency = $forum_db->fetch_assoc($result);
 
-		if ($dependency !== false)
+		if (!is_null($dependency) && $dependency !== false)
 		{
 			message(sprintf($lang_admin_ext['Disable dependency'], $dependency['id']));
 		}
