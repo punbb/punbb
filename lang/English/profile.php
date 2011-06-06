@@ -239,7 +239,6 @@ $lang_profile = array(
 'Optional legend'			=>	'Optional settings',
 'Language'					=>	'Language',
 'Timezone'					=>	'Your timezone',
-'Adjust for DST'			=>	'Adjust for DST',
 'DST label'					=>	'Daylight saving time (advance times by 1 hour).',
 'E-mail settings'			=>	'Email settings',
 'E-mail setting 1'			=>	'Display your email address to other users.',

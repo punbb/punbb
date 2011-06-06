@@ -13,7 +13,6 @@ $lang_admin_settings = array(
 'Setup local'					=>	'Configure PunBB for your location',
 'Setup local legend'			=>	'Local settings',
 'Default timezone label'		=>	'Default timezone',
-'Adjust for DST'				=>	'Adjust for DST',
 'DST label'						=>	'Daylight saving time (advance times by 1 hour).',
 'Default language label'		=>	'Default language',
 'Default language help'			=>	'(If you remove a language pack you must update this setting)',
