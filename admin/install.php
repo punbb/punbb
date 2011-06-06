@@ -60,7 +60,10 @@ function generate_config_file()
 	$config_body .= "\n\n// Enable DEBUG mode by removing // from the following line\n//define('FORUM_DEBUG', 1);";
 	$config_body .= "\n\n// Enable show DB Queries mode by removing // from the following line\n//define('FORUM_SHOW_QUERIES', 1);";
 	$config_body .= "\n\n// Disable forum CSRF checking by removing // from the following line\n//define('FORUM_DISABLE_CSRF_CONFIRM', 1);";
+	$config_body .= "\n\n// Disable forum hooks (extensions) by removing // from the following line\n//define('FORUM_DISABLE_HOOKS', 1);";
 	$config_body .= "\n\n// Disable forum output buffering by removing // from the following line\n//define('FORUM_DISABLE_BUFFERING', 1);";
+
+
 
 	return $config_body;
 }
