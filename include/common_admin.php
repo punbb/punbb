@@ -212,7 +212,7 @@ function forum_config_remove($name)
 	{
 		$query = array(
 			'DELETE'	=> 'config',
-			'WHERE'		=> 'conf_name=\''.$config_name.'\''
+			'WHERE'		=> 'conf_name=\''.$name.'\''
 		);
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
