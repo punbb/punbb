@@ -185,4 +185,38 @@ function prune($forum_id, $prune_sticky, $prune_date)
 	}
 }
 
+
+// Add config value to forum config table
+function forum_config_add($name, $value)
+{
+	global $forum_db, $forum_config;
+
+	if (!empty($name) && !isset($forum_config[$name]))
+	{
+		$query = array(
+			'INSERT'	=> 'conf_name, conf_value',
+			'INTO'		=> 'config',
+			'VALUES'	=> '\''.$name.'\', \''.$value.'\''
+		);
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	}
+}
+
+
+// Remove config value from forum config table
+function forum_config_remove($name)
+{
+	global $forum_db;
+
+	if (!empty($name))
+	{
+		$query = array(
+			'DELETE'	=> 'config',
+			'WHERE'		=> 'conf_name=\''.$config_name.'\''
+		);
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	}
+}
+
+
 ($hook = get_hook('ca_new_function')) ? eval($hook) : null;
