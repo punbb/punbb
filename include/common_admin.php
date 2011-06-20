@@ -187,6 +187,9 @@ function prune($forum_id, $prune_sticky, $prune_date)
 
 
 // Add config value to forum config table
+// Warning!
+// This function dont refresh config cache - use "forum_clear_cache()" if
+// call this function outside install/uninstall extension manifest section
 function forum_config_add($name, $value)
 {
 	global $forum_db, $forum_config;
@@ -204,6 +207,9 @@ function forum_config_add($name, $value)
 
 
 // Remove config value from forum config table
+// Warning!
+// This function dont refresh config cache - use "forum_clear_cache()" if
+// call this function outside install/uninstall extension manifest section
 function forum_config_remove($name)
 {
 	global $forum_db;
