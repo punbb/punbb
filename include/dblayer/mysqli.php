@@ -41,7 +41,7 @@ class DBLayer
 			$this->link_id = @mysqli_connect($db_host, $db_username, $db_password, $db_name);
 
 		if (!$this->link_id)
-			error('Unable to connect to MySQL and select database. MySQL reported: '.mysqli_connect_error(), __FILE__, __LINE__);
+			error('Unable to connect to MySQL and select database.<br/>MySQL reported: '.mysqli_connect_error(), __FILE__, __LINE__);
 
 		// Setup the client-server character set (UTF-8)
 		if (!defined('FORUM_NO_SET_NAMES'))

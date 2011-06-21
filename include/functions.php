@@ -3173,7 +3173,7 @@ function error()
 <head>
 <title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
 </head>
-<body style="margin: 40px; font: 85%/130% verdana, arial, sans-serif; color: #333;">
+<body style="margin: 40px; font: 85%/150% verdana, arial, sans-serif; color: #333;">
 <h1>An error was encountered</h1>
 <hr />
 <?php
