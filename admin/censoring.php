@@ -51,6 +51,9 @@ if (isset($_POST['add_word']))
 
 	generate_censors_cache();
 
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_admin_censoring['Censor word added']);
+
 	($hook = get_hook('acs_add_word_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word added'].' '.$lang_admin_common['Redirect']);
@@ -85,6 +88,9 @@ else if (isset($_POST['update']))
 
 	generate_censors_cache();
 
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_admin_censoring['Censor word updated']);
+
 	($hook = get_hook('acs_update_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word updated'].' '.$lang_admin_common['Redirect']);
@@ -111,6 +117,9 @@ else if (isset($_POST['remove']))
 		require FORUM_ROOT.'include/cache.php';
 
 	generate_censors_cache();
+
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_admin_censoring['Censor word removed']);
 
 	($hook = get_hook('acs_remove_pre_redirect')) ? eval($hook) : null;
 

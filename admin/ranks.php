@@ -68,6 +68,9 @@ if (isset($_POST['add_rank']))
 
 	generate_ranks_cache();
 
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_admin_ranks['Rank added']);
+
 	($hook = get_hook('ark_add_rank_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['admin_ranks']), $lang_admin_ranks['Rank added'].' '.$lang_admin_common['Redirect']);
@@ -119,6 +122,9 @@ else if (isset($_POST['update']))
 
 	generate_ranks_cache();
 
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_admin_ranks['Rank updated']);
+
 	($hook = get_hook('ark_update_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['admin_ranks']), $lang_admin_ranks['Rank updated'].' '.$lang_admin_common['Redirect']);
@@ -145,6 +151,9 @@ else if (isset($_POST['remove']))
 		require FORUM_ROOT.'include/cache.php';
 
 	generate_ranks_cache();
+
+	// Add flash message
+	$forum_flash_messenger->add_info($lang_admin_ranks['Rank removed']);
 
 	($hook = get_hook('ark_remove_pre_redirect')) ? eval($hook) : null;
 
