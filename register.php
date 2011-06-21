@@ -300,7 +300,7 @@ $forum_page['crumbs'] = array(
 );
 
 // Load JS for timezone detection
-$forum_loader->add_js(FORUM_ROOT.'include/js/min/detect_timezone.min.js', array('type' => 'file'));
+$forum_loader->add_js('include/js/min/detect_timezone.min.js', array('type' => 'file'));
 $forum_loader->add_js('FORUM.detect_timezone.detect_on_register_form();', array('type' => 'inline'));
 
 

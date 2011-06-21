@@ -3,8 +3,8 @@
 // Language definitions used in various scripts
 $lang_misc = array(
 
-'Mark read redirect'		=>	'All topics and forums have been marked as read. Redirecting…',
-'Mark forum read redirect'	=>	'All topics in the specified forum have been marked as read. Redirecting…',
+'Mark read redirect'		=>	'All topics and forums have been marked as read.',
+'Mark forum read redirect'	=>	'All topics in the specified forum have been marked as read.',
 
 // Send e-mail
 'Form e-mail disabled'		=>	'The user you are trying to send an email to has disabled form email.',

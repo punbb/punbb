@@ -94,6 +94,8 @@ else if ($action == 'markread')
 	// Reset tracked topics
 	set_tracked_topics(null);
 
+	$forum_flash_messenger->add_info($lang_misc['Mark read redirect']);
+
 	($hook = get_hook('mi_markread_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['index']), $lang_misc['Mark read redirect']);
@@ -142,6 +144,8 @@ else if ($action == 'markforumread')
 	$tracked_topics = get_tracked_topics();
 	$tracked_topics['forums'][$fid] = time();
 	set_tracked_topics($tracked_topics);
+
+	$forum_flash_messenger->add_info($lang_misc['Mark forum read redirect']);
 
 	($hook = get_hook('mi_markforumread_pre_redirect')) ? eval($hook) : null;
 
