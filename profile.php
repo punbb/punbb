@@ -1099,11 +1099,13 @@ else if (isset($_POST['form_sent']))
 
 			if (is_uploaded_file($uploaded_file['tmp_name']) && empty($errors))
 			{
-				$allowed_types = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+				$allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
 
 				($hook = get_hook('pf_change_details_avatar_allowed_types')) ? eval($hook) : null;
 
-				if (!in_array($uploaded_file['type'], $allowed_types))
+				list($width, $height, $type,) = @/**/getimagesize($uploaded_file['tmp_name']);
+
+				if (!in_array($type, $allowed_types))
 					$errors[] = $lang_profile['Bad type'];
 				else
 				{
@@ -1117,17 +1119,17 @@ else if (isset($_POST['form_sent']))
 					// Determine type
 					$extension = null;
 					$avatar_type = FORUM_AVATAR_NONE;
-					if ($uploaded_file['type'] == 'image/gif')
+					if ($type == IMAGETYPE_GIF)
 					{
 						$extension = '.gif';
 						$avatar_type = FORUM_AVATAR_GIF;
 					}
-					else if ($uploaded_file['type'] == 'image/jpeg' || $uploaded_file['type'] == 'image/pjpeg')
+					else if ($type == IMAGETYPE_JPEG)
 					{
 						$extension = '.jpg';
 						$avatar_type = FORUM_AVATAR_JPG;
 					}
-					else
+					else if ($type == IMAGETYPE_PNG)
 					{
 						$extension = '.png';
 						$avatar_type = FORUM_AVATAR_PNG;
@@ -1144,7 +1146,6 @@ else if (isset($_POST['form_sent']))
 						($hook = get_hook('pf_change_details_avatar_modify_size')) ? eval($hook) : null;
 
 						// Now check the width/height
-						list($width, $height, $type,) = getimagesize($forum_config['o_avatars_dir'].'/'.$id.'.tmp');
 						if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
 						{
 							@unlink($forum_config['o_avatars_dir'].'/'.$id.'.tmp');
