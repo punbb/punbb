@@ -421,7 +421,7 @@ class Loader
 		// Wrap default to LABjs parameters
 		if ($output_default != '')
 		{
-			$output_default = '<script>'."\n".'$LAB.setOptions({AlwaysPreserveOrder:true})'."\n".$output_default.';'."\n".'</script>';
+			$output_default = '<script>'."\n\t".'$LAB.setOptions({AlwaysPreserveOrder:true})'.$output_default.';'."\n".'</script>';
 		}
 
 		($hook = get_hook('ld_fn_render_js_labjs_end')) ? eval($hook) : null;
