@@ -7,7 +7,7 @@ body {
 }
 
 a:focus {
-	outline: none;
+	outline: 0;
 }
 
 a:link,
