@@ -1,4 +1,6 @@
-/* FORUM */
+/* FORUM
+ * version 0.1
+ * */
 if (typeof PUNBB === "undefined" || !PUNBB) {
 	var PUNBB = {};
 }

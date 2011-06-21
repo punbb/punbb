@@ -35,6 +35,12 @@
 				<file name="punbb.install.js" />
 			</filelist>
 		</compress-js-lib>
+
+		<compress-js-lib tofile="${js-src}/min/punbb.mobile.min.js" force="true">
+			<filelist dir="${js-src}">
+				<file name="punbb.mobile.js" />
+			</filelist>
+		</compress-js-lib>
 	</target>
 
 

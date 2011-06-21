@@ -111,11 +111,10 @@ MBP.coords = [];
 
 // iOS Startup Image
 // https://github.com/shichuan/mobile-html5-boilerplate/issues#issue/2
-
-MBP.splash = function () {
+/*MBP.splash = function () {
     var filename = navigator.platform === 'iPad' ? 'h/' : 'l/';
     document.write('<link rel="apple-touch-startup-image" href="/img/' + filename + 'splash.png" />' );
-};
+};*/
 
 
 // Autogrow
@@ -145,4 +144,3 @@ MBP.autogrow = function (element, lh) {
 
 })(document);
 
-MBP.scaleFix();
