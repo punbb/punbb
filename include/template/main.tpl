@@ -6,13 +6,10 @@
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <!-- forum_head -->
 </head>
 <body>
-
 <!-- forum_messages -->
-
 <div id="brd-wrap" class="brd">
 <div <!-- forum_page -->>
 
@@ -52,13 +49,13 @@
 <div class="hr"><hr /></div>
 
 <div id="brd-about">
-	<!-- forum_about -->
+<!-- forum_about -->
 </div>
 
 <!-- forum_debug -->
 
 </div>
 </div>
-	<!-- forum_javascript -->
+<!-- forum_javascript -->
 </body>
 </html>
