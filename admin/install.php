@@ -1684,7 +1684,7 @@ else
 		'o_check_for_versions'		=> "'$check_for_updates'",
 		'o_timeout_visit'			=> "'5400'",
 		'o_timeout_online'			=> "'300'",
-		'o_redirect_delay'			=> "'1'",
+		'o_redirect_delay'			=> "'0'",
 		'o_show_version'			=> "'0'",
 		'o_show_user_info'			=> "'1'",
 		'o_show_post_count'			=> "'1'",
