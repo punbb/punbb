@@ -91,6 +91,8 @@ else if (isset($_POST['delete']))
 		// Delete the topic and all of it's posts
 		delete_topic($cur_post['tid'], $cur_post['fid']);
 
+		$forum_flash->add_info($lang_delete['Topic del redirect']);
+
 		($hook = get_hook('dl_topic_deleted_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name']))), $lang_delete['Topic del redirect']);
@@ -99,6 +101,8 @@ else if (isset($_POST['delete']))
 	{
 		// Delete just this one post
 		delete_post($id, $cur_post['tid'], $cur_post['fid']);
+
+		$forum_flash->add_info($lang_delete['Post del redirect']);
 
 		($hook = get_hook('dl_post_deleted_pre_redirect')) ? eval($hook) : null;
 
