@@ -61,6 +61,8 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 		delete_orphans();
 
+		$forum_flash->add_info($lang_admin_prune['Prune done']);
+
 		($hook = get_hook('apr_prune_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['admin_prune']), $lang_admin_prune['Prune done']);
