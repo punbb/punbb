@@ -35,10 +35,171 @@ textarea.contenteditable {
 		-webkit-text-size-adjust: none;
 	}
 
+	body {
+		width: 480px;
+	}
+
+	#brd-wrap {
+		min-width: 480px;
+		max-width: 480px;
+	}
+
 	.brd {
 		padding: 0;
-		width: 99%;
+		width: 100%;
+	}
+
+	#brd-head,
+	.main-message {
+		padding: .4em;
+	}
+
+	#brd-title a,
+	#brd-title strong {
+		font-size: 1em;
+	}
+
+	#brd-desc,
+	#querytime {
+		display: none;
+	}
+
+	#brd-navlinks li {
+		margin-right: .3em;
+	}
+
+	#brd-navlinks li a {
+		font-size: 1em;
+	}
+
+	.gen-content,
+	.crumbs,
+	.main-head,
+	.main-foot {
+		padding: 0 .2em;
+	}
+
+	.content-head {
+		margin: 0 .2em;
+	}
+
+	.frm-group {
+		margin: .2em;
+	}
+
+	#visit-links,
+	#welcome {
+		float: none !important;
+		text-align: left !important;
+		display: block !important;
+	}
+
+	/*p.options {
+		float: none !important;
+	}*/
+
+	p,
+	.hn,
+	#brd-navlinks ul {
+		padding: .25em 0;
+	}
+
+	.options .feed {
+		display: none;
+	}
+
+	.author-info {
+		display: none;
 	}
 
 
+	.posthead .post-byline,
+	.postbody .post-author,
+	.post-contacts {
+		margin-left: -12em;
+		width: 9.5em;
+		padding: .5em;
+	}
+
+	.posthead,
+	.postbody,
+	.postfoot {
+		margin-left: 11em;
+	}
+
+	#brd-searchtopics .main-subhead,
+	#brd-index .main-subhead,
+	#brd-viewforum .main-subhead,
+	#brd-index .item-info .info-topics,
+	#brd-viewforum .item-info .info-replies,
+	#brd-index .item-info .info-posts,
+	#brd-viewforum .item-info .info-views,
+	#copyright,
+	#brd-searchtopics .info-forum,
+	#brd-searchtopics .info-replies {
+		display: none;
+	}
+
+	.forum-forums .main-item ul {
+		right: -39em;
+	}
+
+	.forum-forums .main-item {
+		padding-right: 39em;
+	}
+
+	.main-item .item-subject {
+		min-width: 18em;
+		outline: solid 1px red;
+	}
+
+	.main-content .main-item ul {
+		width: 12em;
+		outline: solid 1px green;
+	}
+
+	.main-content .main-item {
+		padding-left: 0;
+	}
+
+	.item-subject .hn,
+	.item-subject p {
+		margin-left: .3em;
+	}
+
+	.sf-set,
+	.mf-set,
+	.txt-set {
+		padding-left: 1em;
+	}
+
+	.sf-box label,
+	.sf-box .aslabel {
+		float: none;
+		display: block;
+	}
+
+	.sf-set .text label span,
+	.sf-set .select label span,
+	.sf-set .aslabel span {
+		margin-left: 0;
+		padding: 0 1em 0 0;
+		text-align: left;
+		width: auto;
+	}
+
+	.sf-set .text label small,
+	.sf-set .select label small {
+		margin: 0;
+	}
+
+	.sf-set .fld-input {
+		padding: 0;
+		position: relative;
+	}
+
+	.frm-buttons {
+		padding-left: 0;
+	}
 }
+
