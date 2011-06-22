@@ -10,7 +10,7 @@
  */
 
 
-define('UPDATE_TO', '1.4dev');
+define('UPDATE_TO', '1.4b1');
 define('UPDATE_TO_DB_REVISION', 5);
 
 // The number of items to process per pageview (lower this if the update script times out during UTF-8 conversion)
@@ -19,9 +19,9 @@ define('PER_PAGE', 300);
 define('MIN_MYSQL_VERSION', '4.1.2');
 
 
-// Make sure we are running at least PHP 4.3.0
-if (!function_exists('version_compare') || version_compare(PHP_VERSION, '4.3.0', '<'))
-	exit('You are running PHP version '.PHP_VERSION.'. '.UPDATE_TO.' requires at least PHP 4.3.0 to run properly. You must upgrade your PHP installation before you can continue.');
+// Make sure we are running at least PHP 5.0.0
+if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.0.0', '<'))
+	exit('You are running PHP version '.PHP_VERSION.'. '.UPDATE_TO.' requires at least PHP 5.0.0 to run properly. You must upgrade your PHP installation before you can continue.');
 
 
 define('FORUM_ROOT', '../');

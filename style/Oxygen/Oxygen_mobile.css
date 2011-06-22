@@ -150,12 +150,12 @@ textarea.contenteditable {
 
 	.main-item .item-subject {
 		min-width: 18em;
-		outline: solid 1px red;
+		/*outline: solid 1px red;*/
 	}
 
 	.main-content .main-item ul {
 		width: 12em;
-		outline: solid 1px green;
+		/*outline: solid 1px green;*/
 	}
 
 	.main-content .main-item {
