@@ -70,7 +70,7 @@ if (isset($_POST['add_forum']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_forums['Forum added']);
+	$forum_flash->add_info($lang_admin_forums['Forum added']);
 
 	($hook = get_hook('afo_add_forum_pre_redirect')) ? eval($hook) : null;
 
@@ -124,7 +124,7 @@ else if (isset($_GET['del_forum']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash_messenger->add_info($lang_admin_forums['Forum deleted']);
+		$forum_flash->add_info($lang_admin_forums['Forum deleted']);
 
 		($hook = get_hook('afo_del_forum_pre_redirect')) ? eval($hook) : null;
 
@@ -251,7 +251,7 @@ else if (isset($_POST['update_positions']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_forums['Forums updated']);
+	$forum_flash->add_info($lang_admin_forums['Forums updated']);
 
 	($hook = get_hook('afo_update_positions_pre_redirect')) ? eval($hook) : null;
 
@@ -409,7 +409,7 @@ else if (isset($_GET['edit_forum']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash_messenger->add_info($lang_admin_forums['Forum updated']);
+		$forum_flash->add_info($lang_admin_forums['Forum updated']);
 
 		($hook = get_hook('afo_save_forum_pre_redirect')) ? eval($hook) : null;
 

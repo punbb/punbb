@@ -267,9 +267,9 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		{
 			// Add flash message
 			if (strpos($id, 'hotfix_') === 0)
-				$forum_flash_messenger->add_info($lang_admin_ext['Hotfix installed']);
+				$forum_flash->add_info($lang_admin_ext['Hotfix installed']);
 			else
-				$forum_flash_messenger->add_info($lang_admin_ext['Extension installed']);
+				$forum_flash->add_info($lang_admin_ext['Extension installed']);
 
 			($hook = get_hook('aex_install_comply_pre_redirect')) ? eval($hook) : null;
 
@@ -506,9 +506,9 @@ else if (isset($_GET['uninstall']))
 		{
 			// Add flash message
 			if (strpos($id, 'hotfix_') === 0)
-				$forum_flash_messenger->add_info($lang_admin_ext['Hotfix uninstalled']);
+				$forum_flash->add_info($lang_admin_ext['Hotfix uninstalled']);
 			else
-				$forum_flash_messenger->add_info($lang_admin_ext['Extension uninstalled']);
+				$forum_flash->add_info($lang_admin_ext['Extension uninstalled']);
 
 			($hook = get_hook('aex_uninstall_comply_pre_redirect')) ? eval($hook) : null;
 
@@ -682,9 +682,9 @@ else if (isset($_GET['flip']))
 
 	// Add flash message
 	if ($section == 'hotfixes')
-		$forum_flash_messenger->add_info(($disable ? $lang_admin_ext['Hotfix disabled'] : $lang_admin_ext['Hotfix enabled']));
+		$forum_flash->add_info(($disable ? $lang_admin_ext['Hotfix disabled'] : $lang_admin_ext['Hotfix enabled']));
 	else
-		$forum_flash_messenger->add_info(($disable ? $lang_admin_ext['Extension disabled'] : $lang_admin_ext['Extension enabled']));
+		$forum_flash->add_info(($disable ? $lang_admin_ext['Extension disabled'] : $lang_admin_ext['Extension enabled']));
 
 	($hook = get_hook('aex_flip_pre_redirect')) ? eval($hook) : null;
 

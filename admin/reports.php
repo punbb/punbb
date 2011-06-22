@@ -45,7 +45,7 @@ if (isset($_POST['mark_as_read']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_reports['Reports marked read']);
+	$forum_flash->add_info($lang_admin_reports['Reports marked read']);
 
 	($hook = get_hook('arp_mark_as_read_pre_redirect')) ? eval($hook) : null;
 

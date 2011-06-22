@@ -104,7 +104,7 @@ if ($action == 'change_pass')
 					$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 					// Add flash message
-					$forum_flash_messenger->add_info($lang_profile['Pass updated']);
+					$forum_flash->add_info($lang_profile['Pass updated']);
 
 					($hook = get_hook('pf_change_pass_key_pre_redirect')) ? eval($hook) : null;
 
@@ -266,7 +266,7 @@ if ($action == 'change_pass')
 			}
 
 			// Add flash message
-			$forum_flash_messenger->add_info($lang_profile['Pass updated redirect']);
+			$forum_flash->add_info($lang_profile['Pass updated redirect']);
 
 			($hook = get_hook('pf_change_pass_normal_pre_redirect')) ? eval($hook) : null;
 
@@ -760,7 +760,7 @@ else if ($action == 'delete_avatar')
 	delete_avatar($id);
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_profile['Avatar deleted redirect']);
+	$forum_flash->add_info($lang_profile['Avatar deleted redirect']);
 
 	($hook = get_hook('pf_delete_avatar_pre_redirect')) ? eval($hook) : null;
 
@@ -801,7 +801,7 @@ else if (isset($_POST['update_group_membership']))
 		clean_forum_moderators();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_profile['Group membership redirect']);
+	$forum_flash->add_info($lang_profile['Group membership redirect']);
 
 	($hook = get_hook('pf_change_group_pre_redirect')) ? eval($hook) : null;
 
@@ -851,7 +851,7 @@ else if (isset($_POST['update_forums']))
 	}
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_profile['Moderate forums redirect']);
+	$forum_flash->add_info($lang_profile['Moderate forums redirect']);
 
 	($hook = get_hook('pf_forum_moderators_pre_redirect')) ? eval($hook) : null;
 
@@ -1333,7 +1333,7 @@ else if (isset($_POST['form_sent']))
 		}
 
 		// Add flash message
-		$forum_flash_messenger->add_info($lang_profile['Profile redirect']);
+		$forum_flash->add_info($lang_profile['Profile redirect']);
 
 		($hook = get_hook('pf_change_details_pre_redirect')) ? eval($hook) : null;
 

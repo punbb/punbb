@@ -97,7 +97,7 @@ class FlashMessenger
 
 	private function save_messages()
 	{
-		 $_SESSION['forum_flash_messages'] = serialize($this->messages);
+		 $_SESSION['forum_flash'] = serialize($this->messages);
 	}
 
 
@@ -105,8 +105,8 @@ class FlashMessenger
 	{
 		$messages = array();
 
-		if (isset($_SESSION['forum_flash_messages'])) {
-			$tmp_messages = unserialize($_SESSION['forum_flash_messages']);
+		if (isset($_SESSION['forum_flash'])) {
+			$tmp_messages = unserialize($_SESSION['forum_flash']);
 
 			if (is_array($tmp_messages))
 				$messages = $tmp_messages;
@@ -118,4 +118,4 @@ class FlashMessenger
 
 
 // Create the flash messenger adapter object
-$forum_flash_messenger = new FlashMessenger();
+$forum_flash = new FlashMessenger();

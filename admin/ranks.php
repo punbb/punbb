@@ -69,7 +69,7 @@ if (isset($_POST['add_rank']))
 	generate_ranks_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_ranks['Rank added']);
+	$forum_flash->add_info($lang_admin_ranks['Rank added']);
 
 	($hook = get_hook('ark_add_rank_pre_redirect')) ? eval($hook) : null;
 
@@ -123,7 +123,7 @@ else if (isset($_POST['update']))
 	generate_ranks_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_ranks['Rank updated']);
+	$forum_flash->add_info($lang_admin_ranks['Rank updated']);
 
 	($hook = get_hook('ark_update_pre_redirect')) ? eval($hook) : null;
 
@@ -153,7 +153,7 @@ else if (isset($_POST['remove']))
 	generate_ranks_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_ranks['Rank removed']);
+	$forum_flash->add_info($lang_admin_ranks['Rank removed']);
 
 	($hook = get_hook('ark_remove_pre_redirect')) ? eval($hook) : null;
 

@@ -52,7 +52,7 @@ if (isset($_POST['add_word']))
 	generate_censors_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_censoring['Censor word added']);
+	$forum_flash->add_info($lang_admin_censoring['Censor word added']);
 
 	($hook = get_hook('acs_add_word_pre_redirect')) ? eval($hook) : null;
 
@@ -89,7 +89,7 @@ else if (isset($_POST['update']))
 	generate_censors_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_censoring['Censor word updated']);
+	$forum_flash->add_info($lang_admin_censoring['Censor word updated']);
 
 	($hook = get_hook('acs_update_pre_redirect')) ? eval($hook) : null;
 
@@ -119,7 +119,7 @@ else if (isset($_POST['remove']))
 	generate_censors_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_censoring['Censor word removed']);
+	$forum_flash->add_info($lang_admin_censoring['Censor word removed']);
 
 	($hook = get_hook('acs_remove_pre_redirect')) ? eval($hook) : null;
 

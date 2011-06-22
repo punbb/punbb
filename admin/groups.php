@@ -453,7 +453,7 @@ else if (isset($_POST['add_edit_group']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info((($_POST['mode'] == 'edit') ? $lang_admin_groups['Group edited'] : $lang_admin_groups['Group added']));
+	$forum_flash->add_info((($_POST['mode'] == 'edit') ? $lang_admin_groups['Group edited'] : $lang_admin_groups['Group added']));
 
 	($hook = get_hook('agr_add_edit_pre_redirect')) ? eval($hook) : null;
 
@@ -502,7 +502,7 @@ else if (isset($_POST['set_default_group']))
 	generate_config_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_groups['Default group set']);
+	$forum_flash->add_info($lang_admin_groups['Default group set']);
 
 	($hook = get_hook('agr_set_default_group_pre_redirect')) ? eval($hook) : null;
 
@@ -589,7 +589,7 @@ else if (isset($_GET['del_group']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash_messenger->add_info($lang_admin_groups['Group removed']);
+		$forum_flash->add_info($lang_admin_groups['Group removed']);
 
 		($hook = get_hook('agr_del_group_pre_redirect')) ? eval($hook) : null;
 

@@ -613,7 +613,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		generate_bans_cache();
 
 		// Add flash message
-		$forum_flash_messenger->add_info($lang_admin_users['Users banned']);
+		$forum_flash->add_info($lang_admin_users['Users banned']);
 
 		($hook = get_hook('aus_ban_users_pre_redirect')) ? eval($hook) : null;
 

@@ -259,7 +259,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_settings['Settings updated']);
+	$forum_flash->add_info($lang_admin_settings['Settings updated']);
 
 	($hook = get_hook('aop_pre_redirect')) ? eval($hook) : null;
 

@@ -46,7 +46,7 @@ if (isset($_POST['add_cat']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_categories['Category added']);
+	$forum_flash->add_info($lang_admin_categories['Category added']);
 
 	($hook = get_hook('acg_add_cat_pre_redirect')) ? eval($hook) : null;
 
@@ -121,7 +121,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash_messenger->add_info($lang_admin_categories['Category deleted']);
+		$forum_flash->add_info($lang_admin_categories['Category deleted']);
 
 		($hook = get_hook('acg_del_cat_pre_redirect')) ? eval($hook) : null;
 
@@ -252,7 +252,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash_messenger->add_info($lang_admin_categories['Categories updated']);
+	$forum_flash->add_info($lang_admin_categories['Categories updated']);
 
 	($hook = get_hook('acg_update_cats_pre_redirect')) ? eval($hook) : null;
 
