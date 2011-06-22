@@ -177,6 +177,8 @@ if (isset($_GET['tid']))
 			sync_topic($tid);
 			sync_forum($fid);
 
+			$forum_flash->add_info($lang_misc['Delete posts redirect']);
+
 			($hook = get_hook('mr_confirm_delete_posts_pre_redirect')) ? eval($hook) : null;
 
 			redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))), $lang_misc['Delete posts redirect']);
@@ -325,6 +327,8 @@ if (isset($_GET['tid']))
 			sync_topic($new_tid);
 			sync_topic($tid);
 			sync_forum($fid);
+
+			$forum_flash->add_info($lang_misc['Split posts redirect']);
 
 			($hook = get_hook('mr_confirm_split_posts_pre_redirect')) ? eval($hook) : null;
 
@@ -744,6 +748,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		$forum_page['redirect_msg'] = (count($topics) > 1) ? $lang_misc['Move topics redirect'] : $lang_misc['Move topic redirect'];
 
+		$forum_flash->add_info($forum_page['redirect_msg']);
+
 		($hook = get_hook('mr_confirm_move_topics_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['forum'], array($move_to_forum, sef_friendly($move_to_forum_name))), $forum_page['redirect_msg']);
@@ -1005,6 +1011,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		sync_topic($merge_to_tid);
 		sync_forum($fid);
 
+		$forum_flash->add_info($lang_misc['Merge topics redirect']);
+
 		($hook = get_hook('mr_confirm_merge_topics_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_misc['Merge topics redirect']);
@@ -1175,6 +1183,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		foreach ($forum_ids as $cur_forum_id)
 			sync_forum($cur_forum_id);
 
+		$forum_flash->add_info($multi ? $lang_misc['Delete topics redirect'] : $lang_misc['Delete topic redirect']);
+
 		($hook = get_hook('mr_confirm_delete_topics_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $multi ? $lang_misc['Delete topics redirect'] : $lang_misc['Delete topic redirect']);
@@ -1281,6 +1291,8 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		else
 			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
 
+		$forum_flash->add_info($forum_page['redirect_msg']);
+
 		($hook = get_hook('mr_open_close_multi_topics_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['moderate_forum'], $fid), $forum_page['redirect_msg']);
@@ -1324,6 +1336,8 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
+
+		$forum_flash->add_info($forum_page['redirect_msg']);
 
 		($hook = get_hook('mr_open_close_single_topic_pre_redirect')) ? eval($hook) : null;
 
@@ -1371,6 +1385,8 @@ else if (isset($_GET['stick']))
 	($hook = get_hook('mr_stick_topic_qr_stick_topic')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+	$forum_flash->add_info($lang_misc['Stick topic redirect']);
+
 	($hook = get_hook('mr_stick_topic_pre_redirect')) ? eval($hook) : null;
 
 	redirect(forum_link($forum_url['topic'], array($stick, sef_friendly($subject))), $lang_misc['Stick topic redirect']);
@@ -1415,6 +1431,8 @@ else if (isset($_GET['unstick']))
 
 	($hook = get_hook('mr_unstick_topic_qr_unstick_topic')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	$forum_flash->add_info($lang_misc['Unstick topic redirect']);
 
 	($hook = get_hook('mr_unstick_topic_pre_redirect')) ? eval($hook) : null;
 
