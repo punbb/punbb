@@ -358,7 +358,7 @@ else if (isset($_POST['add_edit_ban']))
 
 	($hook = get_hook('aba_add_edit_ban_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_bans']), (($_POST['mode'] == 'edit') ? $lang_admin_bans['Ban edited'] : $lang_admin_bans['Ban added']).' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_bans']), (($_POST['mode'] == 'edit') ? $lang_admin_bans['Ban edited'] : $lang_admin_bans['Ban added']));
 }
 
 

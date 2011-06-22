@@ -3037,9 +3037,7 @@ function redirect($destination_url, $message)
 	$tpl_redir = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"', $tpl_redir);
 	// END SUBST - <!-- forum_local -->
 
-
 	// START SUBST - <!-- forum_head -->
-
 	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.$forum_config['o_redirect_delay'].';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';
 	$forum_head['title'] = '<title>'.$lang_common['Redirecting'].$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_title']).'</title>';
 
@@ -3061,18 +3059,15 @@ function redirect($destination_url, $message)
 
 	$tpl_redir = str_replace('<!-- forum_head -->', $tmp_head, $tpl_redir);
 	unset($forum_head,$tmp_head);
-
 	// END SUBST - <!-- forum_head -->
-
 
 	// START SUBST - <!-- forum_redir_main -->
 	ob_start();
-
 ?>
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
-		<h1 class="hn"><span><?php echo $message ?></span></h1>
+		<h1 class="hn"><span><?php echo $message.$lang_common['Redirecting'] ?></span></h1>
 	</div>
 
 	<div class="main-content main-message">

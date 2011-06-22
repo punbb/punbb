@@ -5,7 +5,6 @@ $lang_admin_common = array(
 
 // Common items
 'Save changes'					=>	'Save changes',
-'Redirect'						=>	'Redirecting…',
 'Add'							=>	'Add',
 'Add new'						=>	'Add new',
 'Delete'						=>	'Delete',

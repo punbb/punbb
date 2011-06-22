@@ -56,7 +56,7 @@ if (isset($_POST['add_word']))
 
 	($hook = get_hook('acs_add_word_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word added'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word added']);
 }
 
 
@@ -93,7 +93,7 @@ else if (isset($_POST['update']))
 
 	($hook = get_hook('acs_update_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word updated'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word updated']);
 }
 
 
@@ -123,7 +123,7 @@ else if (isset($_POST['remove']))
 
 	($hook = get_hook('acs_remove_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word removed'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word removed']);
 }
 
 

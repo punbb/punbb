@@ -452,7 +452,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users deleted'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users deleted']);
 	}
 
 	// Setup form
@@ -617,7 +617,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 		($hook = get_hook('aus_ban_users_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users banned'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users banned']);
 	}
 
 	// Setup form
@@ -746,7 +746,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 		($hook = get_hook('aus_change_group_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['User groups updated'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['User groups updated']);
 	}
 
 	// Setup form

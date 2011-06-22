@@ -274,9 +274,9 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 			($hook = get_hook('aex_install_comply_pre_redirect')) ? eval($hook) : null;
 
 			if (strpos($id, 'hotfix_') === 0)
-				redirect(forum_link($forum_url['admin_extensions_hotfixes']), $lang_admin_ext['Hotfix installed'].' '.$lang_admin_common['Redirect']);
+				redirect(forum_link($forum_url['admin_extensions_hotfixes']), $lang_admin_ext['Hotfix installed']);
 			else
-				redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_ext['Extension installed'].' '.$lang_admin_common['Redirect']);
+				redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_ext['Extension installed']);
 		}
 	}
 
@@ -513,9 +513,9 @@ else if (isset($_GET['uninstall']))
 			($hook = get_hook('aex_uninstall_comply_pre_redirect')) ? eval($hook) : null;
 
 			if (strpos($id, 'hotfix_') === 0)
-				redirect(forum_link($forum_url['admin_extensions_hotfixes']), $lang_admin_ext['Hotfix uninstalled'].' '.$lang_admin_common['Redirect']);
+				redirect(forum_link($forum_url['admin_extensions_hotfixes']), $lang_admin_ext['Hotfix uninstalled']);
 			else
-				redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_ext['Extension uninstalled'].' '.$lang_admin_common['Redirect']);
+				redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_ext['Extension uninstalled']);
 		}
 	}
 	else	// If the user hasn't confirmed the uninstall
@@ -689,9 +689,9 @@ else if (isset($_GET['flip']))
 	($hook = get_hook('aex_flip_pre_redirect')) ? eval($hook) : null;
 
 	if ($section == 'hotfixes')
-		redirect(forum_link($forum_url['admin_extensions_hotfixes']), ($disable ? $lang_admin_ext['Hotfix disabled'] : $lang_admin_ext['Hotfix enabled']).' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_extensions_hotfixes']), ($disable ? $lang_admin_ext['Hotfix disabled'] : $lang_admin_ext['Hotfix enabled']));
 	else
-		redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? $lang_admin_ext['Extension disabled'] : $lang_admin_ext['Extension enabled']).' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? $lang_admin_ext['Extension disabled'] : $lang_admin_ext['Extension enabled']));
 }
 
 ($hook = get_hook('aex_new_action')) ? eval($hook) : null;

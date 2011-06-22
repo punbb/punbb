@@ -263,7 +263,7 @@ if (isset($_POST['form_sent']))
 
 	($hook = get_hook('aop_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_settings_'.$section]), $lang_admin_settings['Settings updated'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_settings_'.$section]), $lang_admin_settings['Settings updated']);
 }
 
 

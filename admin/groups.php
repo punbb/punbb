@@ -457,7 +457,7 @@ else if (isset($_POST['add_edit_group']))
 
 	($hook = get_hook('agr_add_edit_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_groups']), (($_POST['mode'] == 'edit') ? $lang_admin_groups['Group edited'] : $lang_admin_groups['Group added']).' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_groups']), (($_POST['mode'] == 'edit') ? $lang_admin_groups['Group edited'] : $lang_admin_groups['Group added']));
 }
 
 
@@ -506,7 +506,7 @@ else if (isset($_POST['set_default_group']))
 
 	($hook = get_hook('agr_set_default_group_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Default group set'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Default group set']);
 }
 
 
@@ -593,7 +593,7 @@ else if (isset($_GET['del_group']))
 
 		($hook = get_hook('agr_del_group_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Group removed'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Group removed']);
 	}
 
 	list($group_title, $num_members) = $group_info;

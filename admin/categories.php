@@ -50,7 +50,7 @@ if (isset($_POST['add_cat']))
 
 	($hook = get_hook('acg_add_cat_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category added'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category added']);
 }
 
 
@@ -125,7 +125,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		($hook = get_hook('acg_del_cat_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category deleted'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category deleted']);
 	}
 	else	// If the user hasn't comfirmed the delete
 	{
@@ -256,7 +256,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 
 	($hook = get_hook('acg_update_cats_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Categories updated'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Categories updated']);
 }
 
 

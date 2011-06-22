@@ -74,7 +74,7 @@ if (isset($_POST['add_forum']))
 
 	($hook = get_hook('afo_add_forum_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum added'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum added']);
 }
 
 
@@ -128,7 +128,7 @@ else if (isset($_GET['del_forum']))
 
 		($hook = get_hook('afo_del_forum_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum deleted'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum deleted']);
 	}
 	else	// If the user hasn't confirmed the delete
 	{
@@ -255,7 +255,7 @@ else if (isset($_POST['update_positions']))
 
 	($hook = get_hook('afo_update_positions_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forums updated'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forums updated']);
 }
 
 
@@ -413,7 +413,7 @@ else if (isset($_GET['edit_forum']))
 
 		($hook = get_hook('afo_save_forum_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum updated'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum updated']);
 	}
 	else if (isset($_POST['revert_perms']))
 	{
@@ -435,7 +435,7 @@ else if (isset($_GET['edit_forum']))
 
 		($hook = get_hook('afo_revert_perms_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']).'?edit_forum='.$forum_id, $lang_admin_forums['Permissions reverted'].' '.$lang_admin_common['Redirect']);
+		redirect(forum_link($forum_url['admin_forums']).'?edit_forum='.$forum_id, $lang_admin_forums['Permissions reverted']);
 	}
 
 	$forum_page['form_info'] = array();

@@ -49,7 +49,7 @@ if (isset($_POST['mark_as_read']))
 
 	($hook = get_hook('arp_mark_as_read_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_reports']), $lang_admin_reports['Reports marked read'].' '.$lang_admin_common['Redirect']);
+	redirect(forum_link($forum_url['admin_reports']), $lang_admin_reports['Reports marked read']);
 }
 
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
