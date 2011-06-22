@@ -26,9 +26,9 @@ $section = isset($_GET['section']) ? $_GET['section'] : null;
 if (!$section)
 	message($lang_common['Bad request']);
 
-$forum_page['crumbs'] = array( 
-	array($forum_config['o_board_title'], forum_link($forum_url['help'])), 
-	$lang_help['Help'] 
+$forum_page['crumbs'] = array(
+	array($forum_config['o_board_title'], forum_link($forum_url['help'])),
+	$lang_help['Help']
 );
 
 define('FORUM_PAGE', 'help');
@@ -184,6 +184,8 @@ else if ($section == 'smilies')
 		require FORUM_ROOT.'include/parser.php';
 
 	$smiley_groups = array();
+
+	($hook = get_hook('he_pre_smile_display')) ? eval($hook) : null;
 
 	foreach ($smilies as $smiley_text => $smiley_img)
 		$smiley_groups[$smiley_img][] = $smiley_text;
