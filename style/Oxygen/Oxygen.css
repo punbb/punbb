@@ -2085,16 +2085,15 @@ H - MAIN CONTENT - ODDMENTS
 	text-align: center;
 	position: fixed;
 	top: 0;
-	left: 0;
 	z-index: 999;
 	padding: 0;
-	font: 70%/1.5em Verdana, Helvetica, Arial, sans-serif;
 }
 
 #brd-messages span {
 	text-align: center;
 	padding: .35em 1.3em .2em;
 	margin: 0 1em;
+	font: 90%/1.5em Verdana, Helvetica, Arial, sans-serif;
 }
 
 .js #qjump-submit {
