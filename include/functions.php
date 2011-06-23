@@ -1039,11 +1039,11 @@ function get_scheme_packs()
 {
   	$schemes = array();
 
-	if($handle = opendir(FORUM_ROOT.'include/url'))
+	if ($handle = opendir(FORUM_ROOT.'include/url'))
 	{
 		while (false !== ($dirname = readdir($handle)))
 		{
-			$dirname =  FORUM_ROOT.'include/url/'.$dirname;
+			$dirname = FORUM_ROOT.'include/url/'.$dirname;
 			if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
 				$schemes[] = basename($dirname);
 		}
@@ -1061,11 +1061,11 @@ function get_style_packs()
 {
 	$styles = array();
 
-	if($handle = opendir(FORUM_ROOT.'style'))
+	if ($handle = opendir(FORUM_ROOT.'style'))
 	{
 		while (false !== ($dirname = readdir($handle)))
 		{
-			$dirname =  FORUM_ROOT.'style/'.$dirname;
+			$dirname = FORUM_ROOT.'style/'.$dirname;
 			$tempname = basename($dirname);
 			if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
 				$styles[] = $tempname;
@@ -1084,11 +1084,11 @@ function get_language_packs()
 {
 	$languages = array();
 
-	if($handle = opendir(FORUM_ROOT.'lang'))
+	if ($handle = opendir(FORUM_ROOT.'lang'))
 	{
 		while (false !== ($dirname = readdir($handle)))
 		{
-			$dirname =  FORUM_ROOT.'lang/'.$dirname;
+			$dirname = FORUM_ROOT.'lang/'.$dirname;
 			if (is_dir($dirname) && file_exists($dirname.'/common.php'))
 				$languages[] = basename($dirname);
 		}
@@ -1229,12 +1229,15 @@ function forum_clear_cache()
 		return;
 
 	$d = dir(FORUM_CACHE_DIR);
-	while (($entry = $d->read()) !== false)
+	if ($d)
 	{
-		if (substr($entry, strlen($entry)-4) == '.php')
-			@unlink(FORUM_CACHE_DIR.$entry);
+		while (($entry = $d->read()) !== false)
+		{
+			if (substr($entry, strlen($entry)-4) == '.php')
+				@unlink(FORUM_CACHE_DIR.$entry);
+		}
+		$d->close();
 	}
-	$d->close();
 }
 
 
