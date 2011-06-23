@@ -101,13 +101,6 @@ else if (FORUM_PAGE == 'viewtopic')
 	$forum_head['atom'] =  '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['topic_atom'], $id).'" title="ATOM" />';
 }
 
-
-$forum_head['top'] = '<link rel="top" href="'.$base_url.'" title="'.$lang_common['Forum index'].'" />';
-
-// If there are more than two breadcrumbs, add the "up" link (second last)
-if (count($forum_page['crumbs']) > 2)
-	$forum_head['up'] = '<link rel="up" href="'.$forum_page['crumbs'][count($forum_page['crumbs']) - 2][1].'" title="'.forum_htmlencode($forum_page['crumbs'][count($forum_page['crumbs']) - 2][0]).'" />';
-
 // If there are other page navigation links (first, next, prev and last)
 if (!empty($forum_page['nav']))
 	$forum_head['nav'] = implode("\n", $forum_page['nav']);
