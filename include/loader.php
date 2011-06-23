@@ -173,6 +173,11 @@ class Loader
 		// Sorts the scripts into correct order
 		uasort($this->libs['js'], array('Loader', 'sort_libs'));
 
+		if (defined('FORUM_DISABLE_ASYNC_JS_LOADER'))
+		{
+			return $this->render_js_simple();
+		}
+
 		return $this->render_js_labjs();
 	}
 
