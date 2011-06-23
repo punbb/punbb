@@ -1827,9 +1827,24 @@ else
 
 	$alerts = array();
 
-	// Check if the cache directory is writable
-	if (!is_writable(FORUM_ROOT.'cache/'))
+	// Check if the cache directory is writable and clear cache dir
+	if (is_writable(FORUM_ROOT.'cache/'))
+	{
+		$cache_dir = dir(FORUM_ROOT.'cache/');
+		if ($cache_dir)
+		{
+			while (($entry = $cache_dir->read()) !== false)
+			{
+				if (substr($entry, strlen($entry)-4) == '.php')
+					@unlink(FORUM_ROOT.'cache/'.$entry);
+			}
+			$cache_dir->close();
+		}
+	}
+	else
+	{
 		$alerts[] = '<li><span>'.$lang_install['No cache write'].'</span></li>';
+	}
 
 	// Check if default avatar directory is writable
 	if (!is_writable(FORUM_ROOT.'img/avatars/'))
