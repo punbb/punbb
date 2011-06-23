@@ -1472,14 +1472,14 @@ $query = array(
 // With "has posted" indication
 if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
 {
-	$query['SELECT'] .= ', COALESCE(p.id, 0) AS has_posted';
+	$query['SELECT'] .= ', p.poster_id AS has_posted';
 	$query['JOINS'][]	= array(
 		'LEFT JOIN'		=> 'posts AS p',
 		'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
 	);
 
 	// Must have same columns as in prev SELECT
-	$query['GROUP BY'] = 'p.id, t.id, t.poster, t.subject, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to';
+	$query['GROUP BY'] = 't.id, t.poster, t.subject, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, p.poster_id';
 
 	($hook = get_hook('mr_qr_get_has_posted')) ? eval($hook) : null;
 }
@@ -1601,7 +1601,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			// First assemble the Topic heading
 
 			// Should we display the dot or not? :)
-			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1' && $cur_topic['has_posted'] > 0)
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1' && $cur_topic['has_posted'] == $forum_user['id'])
 			{
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">'.$lang_forum['You posted indicator'].'</span>';
 				$forum_page['item_status']['posted'] = 'posted';

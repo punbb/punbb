@@ -309,7 +309,7 @@ if (isset($query))
 			// Assemble the Topic heading
 
 			// Should we display the dot or not? :)
-			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1' && $cur_set['has_posted'] > 0)
+			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1' && $cur_set['has_posted'] == $forum_user['id'])
 			{
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">'.$lang_forum['You posted indicator'].'</span>';
 				$forum_page['item_status']['posted'] = 'posted';
