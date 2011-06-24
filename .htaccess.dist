@@ -1,17 +1,55 @@
 # BEGIN PunBB
 
+# ----------------------------------------------------------------------
+# Better website experience for IE users
+# ----------------------------------------------------------------------
+
+# Force the latest IE version, in various cases when it may fall back to IE7 mode
+# github.com/rails/rails/commit/123eb25#commitcomment-118920
+# Use ChromeFrame if it's installed for a better experience for the poor IE folk
+
+<IfModule mod_setenvif.c>
+ 	<IfModule mod_headers.c>
+    	BrowserMatch MSIE ie
+    	Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
+  	</IfModule>
+</IfModule>
+
+<IfModule mod_headers.c>
+	# Because X-UA-Compatible isn't sent to non-IE (to save header bytes),
+	# We need to inform proxies that content changes based on UA
+  	Header append Vary User-Agent
+	# Cache control is set only if mod_headers is enabled, so that's unncessary to declare
+</IfModule>
+
+
+# ----------------------------------------------------------------------
+# UTF-8 encoding
+# ----------------------------------------------------------------------
+
+# Use UTF-8 encoding for anything served text/plain or text/html
+AddDefaultCharset utf-8
+
+# Force UTF-8 for a number of file formats
+AddCharset utf-8 .html .css .js .xml .json .rss
+
+
+# ----------------------------------------------------------------------
+# Start rewrite engine
+# ----------------------------------------------------------------------
+
 <IfModule mod_rewrite.c>
-# MultiViews interfers with proper rewriting
-Options -MultiViews
+	# MultiViews interfers with proper rewriting
+	Options -MultiViews
 
-RewriteEngine On
+	RewriteEngine On
 
-# Uncomment and properly set the RewriteBase if the rewrite rules are not working properly
-#RewriteBase /
+	# Uncomment and properly set the RewriteBase if the rewrite rules are not working properly
+	#RewriteBase /
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . rewrite.php [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . rewrite.php [L]
 </IfModule>
 
 # END PunBB
