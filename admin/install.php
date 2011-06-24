@@ -307,24 +307,11 @@ if (!isset($_POST['form_sent']))
 		<div class="ct-box info-box">
 			<p><?php echo $lang_install['Part3 intro'] ?></p>
 			<ul class="spaced list-clean">
-				<li><span><strong><?php echo $lang_install['Board title and desc'] ?></strong> <?php echo $lang_install['Board title info'] ?></span></li>
 				<li><span><strong><?php echo $lang_install['Base URL'] ?></strong> <?php echo $lang_install['Base URL info'] ?></span></li>
 			</ul>
 		</div>
 		<fieldset class="frm-group group1">
 			<legend class="group-legend"><strong><?php echo $lang_install['Part3 legend'] ?></strong></legend>
-			<div class="sf-set set1">
-				<div class="sf-box text">
-					<label for="fld11"><span><?php echo $lang_install['Board title'] ?></span></label><br />
-					<span class="fld-input"><input id="fld11" type="text" name="board_title" size="35" maxlength="255" /></span>
-				</div>
-			</div>
-			<div class="sf-set set2">
-				<div class="sf-box text">
-					<label for="fld12"><span><?php echo $lang_install['Board description'] ?></span></label><br />
-					<span class="fld-input"><input id="fld12" type="text" name="board_descrip" size="35" maxlength="255" /></span>
-				</div>
-			</div>
 			<div class="sf-set set3">
 				<div class="sf-box text required">
 					<label for="fld13"><span><?php echo $lang_install['Base URL'] ?></span> <small><?php echo $lang_install['Base URL help'] ?></small></label><br />
@@ -412,8 +399,6 @@ else
 	$email = unescape(strtolower(forum_trim($_POST['req_email'])));
 	$password1 = unescape(forum_trim($_POST['req_password1']));
 	$password2 = unescape(forum_trim($_POST['req_password2']));
-	$board_title = unescape(forum_trim($_POST['board_title']));
-	$board_descrip = unescape(forum_trim($_POST['board_descrip']));
 	$default_lang = preg_replace('#[\.\\\/]#', '', unescape(forum_trim($_POST['req_language'])));
 	$install_pun_repository = !empty($_POST['install_pun_repository']);
 
@@ -451,10 +436,8 @@ else
 		error($lang_install['Invalid email']);
 
 	// Make sure board title and description aren't left blank
-	if ($board_title == '')
-		$board_title = 'My PunBB forum';
-	if ($board_descrip == '')
-		$board_descrip = 'Unfortunately no one can be told what PunBB is — you have to see it for yourself';
+	$board_title = 'My PunBB forum';
+	$board_descrip = 'Unfortunately no one can be told what PunBB is — you have to see it for yourself';
 
 	if (utf8_strlen($base_url) == 0)
 		error($lang_install['Missing base url']);
