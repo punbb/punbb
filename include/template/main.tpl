@@ -6,7 +6,6 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="" <!-- forum_local -->> <!--<![endif]-->
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
 	<!-- forum_head -->
 </head>
 <body>
