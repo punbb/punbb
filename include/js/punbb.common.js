@@ -1,5 +1,5 @@
 /* FORUM
- * version 0.2
+ * version 0.3
  */
 
 /*global PUNBB: true */
@@ -208,23 +208,25 @@ PUNBB.common = function () {
 			return false;
 		},
 
+
 		//
-		attachQuickjumpRedirect: function () {
+		attachQuickjumpRedirect: function (qj_url, sf_url_array) {
 			var qj_sel = get("qjump-select"),
 				qj_submit = get("qjump-submit");
 
 			if (qj_sel) {
 				qj_sel.onchange = function () {
-					return PUNBB.common.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
+					return PUNBB.common.doQuickjumpRedirect(qj_url, sf_url_array);
 				};
 			}
 
 			if (qj_submit) {
 				qj_submit.onclick = function () {
-					return PUNBB.common.doQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array);
+					return PUNBB.common.doQuickjumpRedirect(qj_url, sf_url_array);
 				};
 			}
 		},
+
 
 		initToggleCheckboxes: function ()
 		{

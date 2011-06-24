@@ -343,15 +343,18 @@ function generate_quickjump_cache($group_id = false)
 		}
 
 		$output .= "\t\t\t".'</optgroup>'."\n\t\t".'</select>'."\n\t\t".'<input type="submit" id="qjump-submit" value="<?php echo $lang_common[\'Go\'] ?>" /></span>'."\n\t".'</div>'."\n".'</form>'."\n";
-		$output .= '<script type="text/javascript">'."\n\t\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t\t".'var sef_friendly_url_array = new Array('.count($forums).');';
+		$output_js = "\n".'(function () {'."\n\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t".'var sef_friendly_url_array = new Array('.count($forums).');';
 
 		foreach ($sef_friendly_names as $forum_id => $forum_name)
-			$output .= "\n\t".'sef_friendly_url_array['.$forum_id.'] = "'.forum_htmlencode($forum_name).'";';
+			$output_js .= "\n\t".'sef_friendly_url_array['.$forum_id.'] = "'.forum_htmlencode($forum_name).'";';
 
-		$output .= "\n".'</script>'."\n";
+		// Add Load Event
+		$output_js .= "\n\n\t".'PUNBB.common.addLoadEvent(function () { PUNBB.common.attachQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array); });'."\n".'}());';
 
 		if ($forum_count < 2)
 			$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);';
+		else
+			$output .= '<?php'."\n\n".'$forum_javascript_quickjump_code = <<<EOL'.$output_js."\nEOL;\n\n".'$forum_loader->add_js($forum_javascript_quickjump_code, array(\'type\' => \'inline\', \'weight\' => 60, \'group\' => FORUM_JS_GROUP_SYSTEM));'."\n".'?>'."\n";
 
 		// Output quickjump as PHP code
 		if (!write_cache_file(FORUM_CACHE_DIR.'cache_quickjump_'.$group_id.'.php', $output))
