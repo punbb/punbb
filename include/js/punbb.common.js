@@ -1,10 +1,12 @@
 /* FORUM
- * version 0.1
- * */
+ * version 0.2
+ */
+
+/*global PUNBB: true */
+
 if (typeof PUNBB === "undefined" || !PUNBB) {
 	var PUNBB = {};
 }
-
 
 PUNBB.common = function () {
 	var docEl = document.documentElement;
@@ -15,41 +17,40 @@ PUNBB.common = function () {
 
 	return {
 		init: function() {
-    		PUNBB.common.addClass(docEl, "js");
+			PUNBB.common.addClass(docEl, "js");
 
-    		PUNBB.common.attachWindowOpen();
-    		PUNBB.common.autoFocus();
-    		PUNBB.common.attachQuickjumpRedirect();
-    		PUNBB.common.attachCtrlEnterForm();
+			PUNBB.common.attachWindowOpen();
+			PUNBB.common.autoFocus();
+			PUNBB.common.attachQuickjumpRedirect();
+			PUNBB.common.attachCtrlEnterForm();
 
-    		if (!PUNBB.common.input_support_attr("required")) {
+			if (!PUNBB.common.input_support_attr("required")) {
 				PUNBB.common.attachValidateForm();
 			}
-
-    		// Hide Flash Messages
+			// Hide Flash Messages
 			var msgEl = get("brd-messages");
 			if (msgEl) {
-    			setTimeout(function () {
+				setTimeout(function () {
 					msgEl.style.visibility = "hidden";
 				}, 3000);
 			}
 		},
 
 		// attach FN to WINDOW.ONLOAD handler
-		addLoadEvent: function(fn)
+		addLoadEvent: function (fn)
 		{
 			var x = window.onload;
-			window.onload = (x && typeof x=="function") ? function(){x();fn()} : fn;
+			window.onload = (x && typeof x == "function") ? function () { x(); fn(); } : fn;
 		},
 
 		// return TRUE if node N has class X, else FALSE
-		hasClass: function(n, x)
+		hasClass: function (n, x)
 		{
-			return (new RegExp("\\b" + x + "\\b")).test(n.className)
+			return (new RegExp("\\b" + x + "\\b")).test(n.className);
 		},
 
 		// add X class to N node, return TRUE if added, FALSE if already exists
-		addClass: function(n, x)
+		addClass: function (n, x)
 		{
 			if (PUNBB.common.hasClass(n, x)) return false;
 			else n.className += " " + x;
@@ -57,7 +58,7 @@ PUNBB.common = function () {
 		},
 
 		// remove X class from N node, return TRUE if removed, FALSE if not present
-		removeClass: function(n, x)
+		removeClass: function (n, x)
 		{
 			if (!PUNBB.common.hasClass(n, x)) return false;
 			x = new RegExp("\\s*\\b" + x + "\\b", "g");
@@ -66,64 +67,74 @@ PUNBB.common = function () {
 		},
 
 		// blink node N twice
-		blink: function(n, i)
+		blink: function (n, i)
 		{
 			if (typeof i == "undefined") i = 2;
 			var x = n.style.visibility;
 			if (i && x!="hidden")
 			{
 				n.style.visibility = "hidden";
-				setTimeout(function(){n.style.visibility=x}, 200);
-				setTimeout(function(){PUNBB.common.blink(n,i-1)}, 400);
+				setTimeout(function () { n.style.visibility=x; }, 200);
+				setTimeout(function () { PUNBB.common.blink(n,i-1); }, 400);
 			}
 		},
 
 		// return true if node N scrolled into view, else false (y axis only)
-		onScreen: function(n)
+		onScreen: function (n)
 		{
 			function pageYOffset() // return number of pixels page has scrolled
 			{
 				var y = -1;
-				if (self.pageYOffset) y = self.pageYOffset; // all except IE
+				if (window.pageYOffset)
+					y = window.pageYOffset; // all except IE
 				else if (docEl && docEl.scrollTop)
 					y = docEl.scrollTop; // IE 6 Strict
-				else if (document.body) y = document.body.scrollTop; // all other IE ver
+				else if (document.body)
+					y = document.body.scrollTop; // all other IE ver
+
 				return y;
 			}
+
 			function innerHeight() // return inner height of browser window
 			{
 				var y = -1;
-				if (self.innerHeight) y = self.innerHeight; // all except IE
+				if (window.innerHeight)
+					y = window.innerHeight; // all except IE
 				else if (docEl && docEl.clientHeight)
 					y = docEl.clientHeight; // IE 6 Strict Mode
-				else if (document.body) y = document.body.clientHeight; // all other IE ver
+				else if (document.body)
+					y = document.body.clientHeight; // all other IE ver
+
 				return y;
 			}
+
 			function nodeYOffset(n) // return y coordinate of node N
 			{
 				var y = n.offsetTop;
 				n = n.offsetParent;
 				return n ? y += nodeYOffset(n) : y;
 			}
+
 			var screenTop = pageYOffset();
 			var screenBottom = screenTop + innerHeight();
 			var nodeTop = nodeYOffset(n);
 			var nodeBottom = nodeTop + n.clientHeight;
+
 			return nodeTop >= screenTop && nodeBottom < screenBottom;
 		},
 
 		// apply FN to every ARR item, return array of results
-		map: function(fn, arr)
+		map: function (fn, arr)
 		{
 			for (var i=0,len=arr.length; i<len; i++)
 			{
-				arr[i] = fn(arr[i])
+				arr[i] = fn(arr[i]);
 			}
 			return arr;
 		},
 
 		// return first index where FN(ARR[i]) is true or -1 if none
-		find: function(fn, arr)
+		find: function (fn, arr)
 		{
 			for (var i=0,len=arr.length; i<len; i++)
 			{
@@ -133,38 +144,40 @@ PUNBB.common = function () {
 		},
 
 		// return array of elements for which FN(ARR[i]) is true
-		arrayOfMatched: function(fn, arr)
+		arrayOfMatched: function (fn, arr)
 		{
-			matched = [];
+			var matched = [];
 			for (var i=0,len=arr.length; i<len; i++)
 			{
-				if (fn(arr[i])) matched.push(arr[i])
+				if (fn(arr[i])) matched.push(arr[i]);
 			}
 			return matched;
 		},
 
 		// flattens multi-dimentional arrays into simple arrays
-		flatten: function(arr)
+		flatten: function (arr)
 		{
-			flt = [];
+			var flt = [];
 			for (var i=0,len=arr.length; i<len; i++)
 			{
 				if (typeof arr[i] == "object" && arr.length)
 				{
-					flt.concat(PUNBB.common.flatten(arr[i]))
+					flt.concat(PUNBB.common.flatten(arr[i]));
 				}
-				else flt.push(arr[i])
+				else
+					flt.push(arr[i]);
 			}
-			return flt
+
+			return flt;
 		},
 
 		// check FORMs required (REQ_) fields
-		validateForm: function(form)
+		validateForm: function (form)
 		{
 			var elements = form.elements;
-			var fn = function(x) { return x.name && x.name.indexOf("req_")==0 };
+			var fn = function (x) { return x.name && x.name.indexOf("req_") === 0; };
 			var nodes = PUNBB.common.arrayOfMatched(fn, elements);
-			fn = function(x) { return /^\s*$/.test(x.value) };
+			fn = function (x) { return (/^\s*$/).test(x.value); };
 			var empty = PUNBB.common.find(fn, nodes);
 			if (empty > -1)
 			if (PUNBB.common.find(fn, nodes) > -1)
@@ -175,7 +188,7 @@ PUNBB.common = function () {
 				if (!PUNBB.common.onScreen(n))
 				{
 					n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
-					setTimeout(function(){PUNBB.common.blink(n)}, 500);
+					setTimeout(function () { PUNBB.common.blink(n); }, 500);
 				}
 				else if (!newlyAdded) PUNBB.common.blink(n);
 				if (PUNBB.common.onScreen(nodes[empty])) nodes[empty].focus();
@@ -186,7 +199,7 @@ PUNBB.common = function () {
 
 
 		// create a proper redirect URL (if were using SEF friendly URLs) and go there
-		doQuickjumpRedirect: function(url, forum_names)
+		doQuickjumpRedirect: function (url, forum_names)
 		{
 			var selected_forum_id = get("qjump-select")[get("qjump-select").selectedIndex].value;
 			url = url.replace("$1", selected_forum_id);
@@ -196,7 +209,7 @@ PUNBB.common = function () {
 		},
 
 		//
-		attachQuickjumpRedirect: function() {
+		attachQuickjumpRedirect: function () {
 			var qj_sel = get("qjump-select"),
 				qj_submit = get("qjump-submit");
 
@@ -213,35 +226,39 @@ PUNBB.common = function () {
 			}
 		},
 
-		initToggleCheckboxes: function()
+		initToggleCheckboxes: function ()
 		{
+			var fn_click = function (frm) {
+				return PUNBB.common.toggleCheckboxes(frm);
+			};
+
 			var inputlist = document.getElementsByTagName("span");
-			for (i = 0, cl = inputlist.length; i < cl; i++)
+			for (var i = 0, cl = inputlist.length; i < cl; i++)
 			{
 				var el = inputlist[i];
 				if (PUNBB.common.hasClass(el, "select-all") && el.getAttribute("data-check-form"))
 				{
 					var frm = get(el.getAttribute("data-check-form"));
 					if (frm)
-						el.onclick = function() { return PUNBB.common.toggleCheckboxes(frm); };
+						el.onclick = fn_click(frm);
 				}
 			}
 		},
 
 		// toggle all checkboxes in the given form
-		toggleCheckboxes: function(curForm)
+		toggleCheckboxes: function (curForm)
 		{
 			if (!curForm)
 				return false;
 
 			var inputlist = curForm.getElementsByTagName("input");
-			for (i = 0, cl = inputlist.length; i < cl; i++)
+			for (var i = 0, cl = inputlist.length; i < cl; i++)
 			{
 				var el = inputlist[i];
 				if (el.getAttribute("data-no-select-all"))
 					continue;
 
-				if (el.getAttribute("type") == "checkbox" && el.disabled == false)
+				if (el.getAttribute("type") == "checkbox" && el.disabled === false)
 					el.checked = !el.checked;
 			}
 
@@ -251,8 +268,20 @@ PUNBB.common = function () {
 
 		// attach form submit by ctrl + enter
 		attachCtrlEnterForm: function () {
+			var fn_keypress = function (frm) {
+				return function (e) {
+					if (((e.keyCode == 13) || (e.keyCode == 10)) && (e.ctrlKey === true)) {
+						return frm.submit();
+					}
+				};
+			};
+
+			var fn_textarea = function (x) {
+				return x.tagName.toUpperCase() == 'TEXTAREA';
+			};
+
 			var forms = document.forms;
-			for (var i=0,len=forms.length; i<len; i++)
+			for (var i = 0, len = forms.length; i<len; i++)
 			{
 				var f = forms[i];
 				if (!PUNBB.common.hasClass(f, 'frm-ctrl-submit')) {
@@ -260,72 +289,87 @@ PUNBB.common = function () {
 				}
 
 				var elements = f.elements,
-					fn = function (x) {
-						return x.tagName.toUpperCase() == 'TEXTAREA';
-					};
+					nodes = PUNBB.common.arrayOfMatched(fn_textarea, elements);
 
-				var nodes = PUNBB.common.arrayOfMatched(fn, elements);
-				for (var j=0, j_len=nodes.length; j<j_len; j++) {
-					nodes[j].onkeypress = function (e) {
-						if (((e.keyCode == 13) || (e.keyCode == 10)) && (e.ctrlKey == true)) {
-							return f.submit();
-						}
-					};
+				for (var j = 0, j_len = nodes.length; j<j_len; j++) {
+					nodes[j].onkeypress = fn_keypress(f);
 				}
 			}
 		},
 
 
 		// attach form validation function to submit-type inputs
-		attachValidateForm: function()
+		attachValidateForm: function ()
 		{
-			var forms = document.forms;
-			for (var i=0,len=forms.length; i<len; i++)
-			{
-				var elements = forms[i].elements,
-					fn = function(x) {
-						return x.name && x.name.indexOf("req_") == 0;
-					};
+			var fn_req = function (x) {
+				return x.name && x.name.indexOf("req_") === 0;
+			};
 
-				if (PUNBB.common.find(fn, elements) > -1)
+			var fn_button = function (x) {
+				return x.type && (x.type == "submit" && x.name != "cancel");
+			};
+
+			var fn_validator = function (frm) {
+				return function () {
+					return PUNBB.common.validateForm(frm);
+				};
+			};
+
+			var forms = document.forms;
+			for (var i = 0, len = forms.length; i<len; i++)
+			{
+				var elements = forms[i].elements;
+				if (PUNBB.common.find(fn_req, elements) > -1)
 				{
-					fn = function(x) { return x.type && (x.type=="submit" && x.name!="cancel") };
-					var nodes = PUNBB.common.arrayOfMatched(fn, elements),
+					var nodes = PUNBB.common.arrayOfMatched(fn_button, elements),
 						formRef = forms[i];
 
-					fn = function() { return PUNBB.common.validateForm(formRef) };
 					//TODO: look at passing array of node refs instead of forum ref
 					//fn = function() { return Forum.checkReq(required.slice(0)) };
-					nodes = PUNBB.common.map(function(x){x.onclick=fn}, nodes);
+					nodes = PUNBB.common.map(function (x) {
+						x.onclick = fn_validator(formRef);
+					}, nodes);
 				}
 			}
 		},
 
 		//
-		attachWindowOpen: function()
+		attachWindowOpen: function ()
 		{
-			if (!document.getElementsByTagName) return;
+			if (!document.getElementsByTagName)
+				return;
+
+			var fn_open = function () {
+				return function () {
+					window.open(this.href);
+					return false;
+				};
+			};
+
 			var nodes = document.getElementsByTagName("a");
 			for (var i=0; i<nodes.length; i++)
 			{
 				if (PUNBB.common.hasClass(nodes[i], "exthelp"))
-					nodes[i].onclick = function() { window.open(this.href); return false; };
+					nodes[i].onclick = fn_open();
 			}
 		},
 
 		//
-		autoFocus: function()
+		autoFocus: function ()
 		{
+			var fn_input = function (x) {
+				return x.tagName.toUpperCase() == "TEXTAREA" || (x.tagName.toUpperCase() == "INPUT" && (x.type == "text") || (x.type == "password") || (x.type == "email") || (x.type == "url") || (x.type == "number"));
+			};
+
 			var nodes = get("afocus");
 			if (!nodes || window.location.hash.replace(/#/g,"")) return;
 			nodes = nodes.all ? nodes.all : nodes.getElementsByTagName("*");
 			// TODO: make sure line above gets nodes in display-order across browsers
-			var fn = function(x) { return x.tagName.toUpperCase()=="TEXTAREA" || (x.tagName.toUpperCase()=="INPUT" && (x.type=="text") || (x.type=="password") || (x.type=="email") || (x.type=="url") || (x.type=="number")) };
-			var n = PUNBB.common.find(fn, nodes);
+			var n = PUNBB.common.find(fn_input, nodes);
 			if (n > -1) nodes[n].focus();
 		},
 
-		input_support_attr: function(attr) {
+		input_support_attr: function (attr) {
 			var inputElem = document.createElement("input");
 
 			if (!attr) {

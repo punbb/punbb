@@ -44,7 +44,7 @@ PUNBB.install = function () {
 				// Run first for update on page load
 				PUNBB.install.selectDB_update();
 			}
-		},
+		}
 	};
 }();
 
