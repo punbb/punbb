@@ -1,6 +1,25 @@
 # BEGIN PunBB
 
 # ----------------------------------------------------------------------
+# Start rewrite engine
+# ----------------------------------------------------------------------
+
+<IfModule mod_rewrite.c>
+	# MultiViews interfers with proper rewriting
+	Options -MultiViews
+
+	RewriteEngine On
+
+	# Uncomment and properly set the RewriteBase if the rewrite rules are not working properly
+	#RewriteBase /
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . rewrite.php [L]
+</IfModule>
+
+
+# ----------------------------------------------------------------------
 # Better website experience for IE users
 # ----------------------------------------------------------------------
 
@@ -35,21 +54,19 @@ AddCharset utf-8 .html .css .js .xml .json .rss
 
 
 # ----------------------------------------------------------------------
-# Start rewrite engine
+# A little more security
 # ----------------------------------------------------------------------
 
-<IfModule mod_rewrite.c>
-	# MultiViews interfers with proper rewriting
-	Options -MultiViews
+# Do we want to advertise the exact version number of Apache we're running?
+# Probably not.
+## This can only be enabled if used in httpd.conf - It will not work in .htaccess
+# ServerTokens Prod
 
-	RewriteEngine On
 
-	# Uncomment and properly set the RewriteBase if the rewrite rules are not working properly
-	#RewriteBase /
+# "-Indexes" will have Apache block users from browsing folders without a default document
+# Usually you should leave this activated, because you shouldn't allow everybody to surf through
+# every folder on your server (which includes rather private places like CMS system folders).
+Options -Indexes
 
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . rewrite.php [L]
-</IfModule>
 
 # END PunBB
