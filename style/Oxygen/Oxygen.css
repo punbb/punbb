@@ -2109,40 +2109,40 @@ IE6 - FIXES
 -------------------------------------------------------------*/
 
 .ie6 .brd-page,
-.ie6 .brd .main,
+.ie6 .main,
 .ie6 #brd-index .main-subhead,
-.ie6 .brd .main-content .main-item,
-.ie6 .brd .main-content .main-item ul,
-.ie6 .brd .gen-content,
-.ie6 .brd .main-content,
-.ie6 .brd .ct-box,
-.ie6 .brd .ct-box *,
-.ie6 .brd .frm-group,
-.ie6 .brd .mf-set,
-.ie6 .brd .sf-set,
-.ie6 .brd .mf-box,
-.ie6 .brd .sf-box,
-.ie6 .brd .mf-item,
-.ie6 .brd .txt-set,
-.ie6 .brd .txt-box,
-.ie6 .brd .frm-form label,
-.ie6 .brd fieldset,
-.ie6 .brd span.fld-input,
-.ie6 .brd .main-subhead .hn,
-.ie6 .brd .post,
-.ie6 .brd .posthead,
-.ie6 .brd .postbody,
-.ie6 .brd .post-entry,
-.ie6 .brd .postfoot .post-options {
+.ie6 .main-content .main-item,
+.ie6 .main-content .main-item ul,
+.ie6 .gen-content,
+.ie6 .main-content,
+.ie6 .ct-box,
+.ie6 .ct-box *,
+.ie6 .frm-group,
+.ie6 .mf-set,
+.ie6 .sf-set,
+.ie6 .mf-box,
+.ie6 .sf-box,
+.ie6 .mf-item,
+.ie6 .txt-set,
+.ie6 .txt-box,
+.ie6 .frm-form label,
+.ie6 fieldset,
+.ie6 span.fld-input,
+.ie6 .main-subhead .hn,
+.ie6 .post,
+.ie6 .posthead,
+.ie6 .postbody,
+.ie6 .post-entry,
+.ie6 .postfoot .post-options {
 	zoom: 1;
 }
 
-.ie6 .brd .ct-box ol,
-.ie6 .brd .ct-box ol * {
+.ie6 .ct-box ol,
+.ie6 .ct-box ol * {
 	zoom: normal;
 }
 
-.ie6 .brd .postfoot .post-contacts {
+.ie6 .postfoot .post-contacts {
 	position: absolute;
 }
 
@@ -2154,7 +2154,7 @@ IE6 - FIXES
 	position: relative;
 }
 
-.ie6 .brd fieldset legend {
+.ie6 fieldset legend {
 	margin-left: -7px;
 }
 
@@ -2164,13 +2164,13 @@ IE6 - FIXES
 	overflow: auto;
 }
 
-.ie6 .brd .sf-set .checkbox label span {
+.ie6 .sf-set .checkbox label span {
 	padding-right: 0em;
 	padding-left: 5em;
 }
 
-.ie6 #brd-admin-censoring #info-censored-intro,
-.ie6 #brd-admin-ranks #info-ranks-intro {
+.ie6 #info-censored-intro,
+.ie6 #info-ranks-intro {
 	margin-bottom: 3em;
 }
 
@@ -2183,24 +2183,24 @@ IE6 - FIXES
 }
 
 /* Fixes for the forms in post.php and edit.php. */
-.ie6 .brd .txt-box label span {
+.ie6 .txt-box label span {
 	position: absolute;
 }
 
 /* Fix for index.php: no backgroud for the first main-head. */
-.ie6 .brd #brd-index .main-head {
+.ie6 #brd-index .main-head {
 	position: relative;
 }
 
 /* Footer
 -------------------------------------------------------------*/
 
-.ie6 #brd-about p#extensions-used {
+.ie6 p#extensions-used {
 	clear: left;
 }
 
 /* Remove scrollbar from empty textarea */
-.ie6 textarea {
+.oldie6 textarea {
 	overflow: auto;
 }
 
@@ -2213,30 +2213,30 @@ IE7 - FIXES
 -------------------------------------------------------------*/
 
 .ie7 .brd-page,
-.ie7 .brd .main,
+.ie7 .main,
 .ie7 #brd-index .main-subhead,
 .ie7 #brd-index .forum-item,
-.ie7 .brd .gen-content,
-.ie7 .brd .main-content,
-.ie7 .brd .ct-box,
-.ie7 .brd .ct-box *,
-.ie7 .brd .frm-group,
-.ie7 .brd .mf-set,
-.ie7 .brd .sf-set,
-.ie7 .brd .mf-box,
-.ie7 .brd .sf-box,
-.ie7 .brd .mf-item,
-.ie7 .brd .txt-set,
-.ie7 .brd .txt-box,
-.ie7 .brd .frm-group label,
-.ie7 .brd fieldset,
-.ie7 .brd span.fld-input,
-.ie7 .brd .main-subhead .hn,
-.ie7 .brd .post,
-.ie7 .brd .posthead,
-.ie7 .brd .postbody,
-.ie7 .brd .post-entry,
-.ie7 .brd .postfoot .post-options,
+.ie7 .gen-content,
+.ie7 .main-content,
+.ie7 .ct-box,
+.ie7 .ct-box *,
+.ie7 .frm-group,
+.ie7 .mf-set,
+.ie7 .sf-set,
+.ie7 .mf-box,
+.ie7 .sf-box,
+.ie7 .mf-item,
+.ie7 .txt-set,
+.ie7 .txt-box,
+.ie7 .frm-group label,
+.ie7 fieldset,
+.ie7 span.fld-input,
+.ie7 .main-subhead .hn,
+.ie7 .post,
+.ie7 .posthead,
+.ie7 .postbody,
+.ie7 .post-entry,
+.ie7 .postfoot .post-options,
 .ie7 #brd-stats ul {
 	max-height: 100%;
 	zoom: 1;
@@ -2250,7 +2250,7 @@ IE7 - FIXES
 	position: relative;
 }
 
-.ie7 .brd fieldset legend {
+.ie7 fieldset legend {
 	margin-left: -7px;
 }
 
@@ -2280,11 +2280,6 @@ IE7 - FIXES
 	left: -0.5em;
 }
 
-/* Remove scrollbar from empty textarea */
-.ie7 textarea {
-	overflow: auto;
-}
-
 
 /*************************************************************
 IE8 - FIXES
@@ -2295,7 +2290,3 @@ IE8 - FIXES
 	margin-bottom: 0;
 }
 
-/* Remove scrollbar from empty textarea */
-.ie8 textarea {
-	overflow: auto;
-}
