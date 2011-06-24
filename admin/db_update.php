@@ -459,18 +459,18 @@ switch ($stage)
 
 ?>
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!--[if lt IE 7 ]> <html class="oldie ie6" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7 ]>    <html class="oldie ie7" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8 ]>    <html class="oldie ie8" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" dir="ltr"> <!--<![endif]-->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>PunBB Database Update</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_cs.css" />
-<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie6.css" /><![endif]-->
-<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie7.css" /><![endif]-->
-<script type="text/javascript" src="<?php echo $base_url ?>/include/js/punbb.common.js"></script>
+	<meta charset="utf-8"/>
+	<title>PunBB Database Update</title>
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_cs.css" />
+	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/punbb.common.js"></script>
 </head>
 <body>
-
 <div id="brd-update" class="brd-page">
 <div id="brd-wrap" class="brd">
 
@@ -2099,18 +2099,18 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 ?>
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!--[if lt IE 7 ]> <html class="oldie ie6" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7 ]>    <html class="oldie ie7" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8 ]>    <html class="oldie ie8" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" dir="ltr"> <!--<![endif]-->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>PunBB Database Update</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_cs.css" />
-<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie6.css" /><![endif]-->
-<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_ie7.css" /><![endif]-->
-<script type="text/javascript" src="<?php echo $base_url ?>/include/js/punbb.common.js"></script>
+	<meta charset="utf-8"/>
+	<title>PunBB Database Update</title>
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen_cs.css" />
+	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/punbb.common.js"></script>
 </head>
 <body>
-
 <div id="brd-update" class="brd-page">
 <div id="brd-wrap" class="brd">
 
