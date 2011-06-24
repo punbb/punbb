@@ -24,7 +24,7 @@ class FlashMessenger
 
 	public function __construct()
 	{
-		session_cache_limiter('private_no_expire');
+		session_cache_limiter(FALSE);
 		$result = session_start();
 		$this->messages = $this->get_messages();
 	}
