@@ -253,7 +253,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set4" id="db_password_block">
 				<div class="sf-box text">
 					<label for="fld5"><span><?php echo $lang_install['Database password'] ?></span> <small><?php echo $lang_install['Database password help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld5" type="password" name="db_password" size="35" /></span>
+					<span class="fld-input"><input id="fld5" type="text" name="db_password" size="35" autocomplete="off" /></span>
 				</div>
 			</div>
 			<div class="sf-set set5">
@@ -283,13 +283,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set2">
 				<div class="sf-box text required">
 					<label for="fld8"><span><?php echo $lang_install['Admin password'] ?></span> <small><?php echo $lang_install['Password help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld8" type="password" name="req_password1" size="35" required /></span>
-				</div>
-			</div>
-			<div class="sf-set set3">
-				<div class="sf-box text required">
-					<label for="fld9"><span><?php echo $lang_install['Admin confirm password'] ?></span> <small><?php echo $lang_install['Confirm password help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld9" type="password" name="req_password2" size="35" required /></span>
+					<span class="fld-input"><input id="fld8" type="text" name="req_password1" size="35" required autocomplete="off" /></span>
 				</div>
 			</div>
 			<div class="sf-set set4">
@@ -398,7 +392,6 @@ else
 	$username = unescape(forum_trim($_POST['req_username']));
 	$email = unescape(strtolower(forum_trim($_POST['req_email'])));
 	$password1 = unescape(forum_trim($_POST['req_password1']));
-	$password2 = unescape(forum_trim($_POST['req_password2']));
 	$default_lang = preg_replace('#[\.\\\/]#', '', unescape(forum_trim($_POST['req_language'])));
 	$install_pun_repository = !empty($_POST['install_pun_repository']);
 
@@ -417,8 +410,6 @@ else
 		error($lang_install['Username too long']);
 	if (utf8_strlen($password1) < 8)
 		error($lang_install['Pass too short']);
-	if ($password1 != $password2)
-		error($lang_install['Pass not match']);
 	if (strtolower($username) == 'guest')
 		error($lang_install['Username guest']);
 	if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $username) || preg_match('/((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))/', $username))
