@@ -21,7 +21,6 @@ PUNBB.common = function () {
 
 			PUNBB.common.attachWindowOpen();
 			PUNBB.common.autoFocus();
-			PUNBB.common.attachQuickjumpRedirect();
 			PUNBB.common.attachCtrlEnterForm();
 
 			if (!PUNBB.common.input_support_attr("required")) {
