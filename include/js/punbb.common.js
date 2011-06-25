@@ -29,7 +29,8 @@ PUNBB.common = function () {
 
 			// Hide Flash Messages
 			var msgEl = get("brd-messages");
-			if (msgEl) {
+			if (msgEl)
+			{
 				setTimeout(function () {
 					msgEl.style.visibility = "hidden";
 				}, 3000);
@@ -52,15 +53,20 @@ PUNBB.common = function () {
 		// add X class to N node, return TRUE if added, FALSE if already exists
 		addClass: function (n, x)
 		{
-			if (PUNBB.common.hasClass(n, x)) return false;
-			else n.className += " " + x;
+			if (PUNBB.common.hasClass(n, x))
+				return false;
+			else
+				n.className += " " + x;
+
 			return true;
 		},
 
 		// remove X class from N node, return TRUE if removed, FALSE if not present
 		removeClass: function (n, x)
 		{
-			if (!PUNBB.common.hasClass(n, x)) return false;
+			if (!PUNBB.common.hasClass(n, x))
+				return false;
+
 			x = new RegExp("\\s*\\b" + x + "\\b", "g");
 			n.className = n.className.replace(x, "");
 			return true;
@@ -115,10 +121,10 @@ PUNBB.common = function () {
 				return n ? y += nodeYOffset(n) : y;
 			}
 
-			var screenTop = pageYOffset();
-			var screenBottom = screenTop + innerHeight();
-			var nodeTop = nodeYOffset(n);
-			var nodeBottom = nodeTop + n.clientHeight;
+			var screenTop = pageYOffset(),
+				screenBottom = screenTop + innerHeight(),
+				nodeTop = nodeYOffset(n),
+				nodeBottom = nodeTop + n.clientHeight;
 
 			return nodeTop >= screenTop && nodeBottom < screenBottom;
 		},
@@ -174,26 +180,41 @@ PUNBB.common = function () {
 		// check FORMs required (REQ_) fields
 		validateForm: function (form)
 		{
-			var elements = form.elements;
-			var fn = function (x) { return x.name && x.name.indexOf("req_") === 0; };
-			var nodes = PUNBB.common.arrayOfMatched(fn, elements);
-			fn = function (x) { return (/^\s*$/).test(x.value); };
+			var fn = function (x) {
+				return x.name && x.name.indexOf("req_") === 0;
+			};
+
+			var elements = form.elements,
+				nodes = PUNBB.common.arrayOfMatched(fn, elements);
+
+			fn = function (x) {
+				return (/^\s*$/).test(x.value);
+			};
+
 			var empty = PUNBB.common.find(fn, nodes);
 			if (empty > -1)
-			if (PUNBB.common.find(fn, nodes) > -1)
 			{
-				var n = get("req-msg");
-				PUNBB.common.removeClass(n, "req-warn");
-				var newlyAdded = PUNBB.common.addClass(n, "req-error");
-				if (!PUNBB.common.onScreen(n))
+				if (PUNBB.common.find(fn, nodes) > -1)
 				{
-					n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
-					setTimeout(function () { PUNBB.common.blink(n); }, 500);
+					var n = get("req-msg");
+					PUNBB.common.removeClass(n, "req-warn");
+					var newlyAdded = PUNBB.common.addClass(n, "req-error");
+
+					if (!PUNBB.common.onScreen(n))
+					{
+						n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
+						setTimeout(function () { PUNBB.common.blink(n); }, 500);
+					}
+					else if (!newlyAdded)
+						PUNBB.common.blink(n);
+
+					if (PUNBB.common.onScreen(nodes[empty]))
+						nodes[empty].focus();
+
+					return false;
 				}
-				else if (!newlyAdded) PUNBB.common.blink(n);
-				if (PUNBB.common.onScreen(nodes[empty])) nodes[empty].focus();
-				return false;
 			}
+
 			return true;
 		},
 
