@@ -131,6 +131,13 @@ $lang_admin_settings = array(
 'Update check label'			=>	'Enable automatic update checking.',
 'Check for versions'			=>	'Check for new versions',
 'Auto check for versions'		=>	'Enable check for new versions of extensions.',
+
+'Features mask passwords'			=>	'Mask passwords in forms',
+'Features mask passwords legend'	=>	'Mask passwords',
+'Features mask passwords info'		=>	'If enabled, PunBB will show password confirmation field and masking password. If masking disabled — password field is only one and open and user never register with invalid password. In login form password is always masked.',
+'Enable mask passwords'				=>	'Enable mask password',
+'Enable mask passwords label'		=>	'Enable mask password in forms.',
+
 'Features gzip'					=>	'Compress output using gzip',
 'Features gzip legend'			=>	'Output compression',
 'Features gzip info'			=>	'If enabled, PunBB will gzip the output sent to browsers. This will reduce bandwidth usage, but use a little more CPU. This feature requires that PHP is configured with zlib (--with-zlib). Note: If you already have one of the Apache modules mod_gzip or mod_deflate set up to compress PHP scripts, you should disable this feature.',

@@ -905,6 +905,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		if (!array_key_exists('o_show_moderators', $forum_config))
 			$new_config[] = '\'o_show_moderators\', \'0\'';
 
+		// Insert new config option o_show_moderators
+		if (!array_key_exists('o_mask_passwords', $forum_config))
+			$new_config[] = '\'o_mask_passwords\', \'1\'';
+
+
 		if (!empty($new_config))
 		{
 			$query = array(

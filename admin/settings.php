@@ -126,6 +126,7 @@ if (isset($_POST['form_sent']))
 			if (!isset($form['check_for_updates']) || $form['check_for_updates'] != '1') $form['check_for_updates'] = '0';
 			if (!isset($form['check_for_versions']) || $form['check_for_versions'] != '1') $form['check_for_versions'] = '0';
 
+			if (!isset($form['mask_passwords']) || $form['mask_passwords'] != '1') $form['mask_passwords'] = '0';
 			if (!isset($form['gzip']) || $form['gzip'] != '1') $form['gzip'] = '0';
 
 			break;
@@ -1016,7 +1017,30 @@ else if ($section == 'features')
 <?php ($hook = get_hook('aop_features_post_updates_disabled_box')) ? eval($hook) : null; ?>
 <?php endif; ?>
 <?php
+	// Reset counter
+	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
+?>
+			<div class="content-head">
+				<h2 class="hn"><span><?php echo $lang_admin_settings['Features mask passwords'] ?></span></h2>
+			</div>
+			<div class="ct-box">
+				<p><?php echo $lang_admin_settings['Features mask passwords info'] ?></p>
+			</div>
+<?php ($hook = get_hook('aop_features_pre_mask_passwords_fieldset')) ? eval($hook) : null; ?>
+			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+				<legend class="group-legend"><strong><?php echo $lang_admin_settings['Features mask passwords legend'] ?></strong></legend>
+<?php ($hook = get_hook('aop_features_pre_mask_passwords_checkbox')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box checkbox">
+						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[mask_passwords]" value="1"<?php if ($forum_config['o_mask_passwords'] == '1') echo ' checked="checked"' ?> /></span>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Enable mask passwords'] ?></span> <?php echo $lang_admin_settings['Enable mask passwords label'] ?></label>
+					</div>
+				</div>
+<?php ($hook = get_hook('aop_features_pre_mask_passwords_fieldset_end')) ? eval($hook) : null; ?>
+			</fieldset>
+<?php ($hook = get_hook('aop_features_mask_passwords_fieldset_end')) ? eval($hook) : null; ?>
+<?php
 	// Reset counter
 	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 

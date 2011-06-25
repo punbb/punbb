@@ -1722,7 +1722,8 @@ else
 		'p_allow_banned_email'		=> "'1'",
 		'p_allow_dupe_email'		=> "'0'",
 		'p_force_guest_email'		=> "'1'",
-		'o_show_moderators'			=> "'0'"
+		'o_show_moderators'			=> "'0'",
+		'o_mask_passwords'			=> "'1'"
 	);
 
 	foreach ($config as $conf_name => $conf_value)

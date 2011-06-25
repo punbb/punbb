@@ -132,10 +132,12 @@ else if (isset($_POST['form_sent']))
 		if ($forum_config['o_regs_verify'] == '1')
 		{
 			$password1 = random_key(8, true);
+			$password2 = $password1;
 		}
 		else
 		{
 			$password1 = forum_trim($_POST['req_password1']);
+			$password2 = ($forum_config['o_mask_passwords'] == '1') ? forum_trim($_POST['req_password2']) : $password1;
 		}
 
 		// Validate the username
@@ -144,6 +146,8 @@ else if (isset($_POST['form_sent']))
 		// ... and the password
 		if (utf8_strlen($password1) < 4)
 			$errors[] = $lang_profile['Pass too short'];
+		else if ($password1 != $password2)
+			$errors[] = $lang_profile['Pass not match'];
 
 		// ... and the e-mail address
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
@@ -368,9 +372,18 @@ ob_start();
 <?php if ($forum_config['o_regs_verify'] == '0'): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Password'] ?></span> <small><?php echo $lang_profile['Password help'] ?></small></label><br />
-						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" required /></span>
+						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '0' ? 'text' : 'password') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" required autocomplete="off" /></span>
 					</div>
 				</div>
+<?php ($hook = get_hook('rg_register_pre_confirm_password')) ? eval($hook) : null; ?>
+<?php if ($forum_config['o_mask_passwords'] == '1'): ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Confirm password'] ?></span> <small><?php echo $lang_profile['Confirm password help'] ?></small></label><br />
+						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password2" size="35" required autocomplete="off" /></span>
+					</div>
+				</div>
+<?php endif; ?>
 <?php endif; ($hook = get_hook('rg_register_pre_email')) ? eval($hook) : null; ?>				<div class="sf-set set<?php echo ++$forum_page['item_count']; if ($forum_config['o_regs_verify'] == '0') echo ' prepend-top'; ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['E-mail'] ?></span> <small><?php echo $lang_profile['E-mail help'] ?></small></label><br />
