@@ -4,8 +4,8 @@
 <!--[if IE 8 ]>    <html class="oldie ie8" <!-- forum_local -->> <![endif]-->
 <!--[if gt IE 8]><!--> <html <!-- forum_local -->> <!--<![endif]-->
 <head>
-	<meta charset="utf-8"/>
-	<!-- forum_head -->
+<meta charset="utf-8"/>
+<!-- forum_head -->
 </head>
 <body>
 <div id="brd-wrap" class="brd-page">

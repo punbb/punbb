@@ -5,8 +5,8 @@
 <!--[if gt IE 8]><!--> <html <!-- forum_local -->> <!--<![endif]-->
 <head>
 <head>
-	<meta charset="utf-8"/>
-	<!-- forum_head -->
+<meta charset="utf-8"/>
+<!-- forum_head -->
 </head>
 <body>
 <!-- forum_messages -->
