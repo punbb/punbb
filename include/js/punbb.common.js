@@ -26,6 +26,7 @@ PUNBB.common = function () {
 			if (!PUNBB.common.input_support_attr("required")) {
 				PUNBB.common.attachValidateForm();
 			}
+
 			// Hide Flash Messages
 			var msgEl = get("brd-messages");
 			if (msgEl) {
@@ -233,7 +234,9 @@ PUNBB.common = function () {
 		initToggleCheckboxes: function ()
 		{
 			var fn_click = function (frm) {
-				return PUNBB.common.toggleCheckboxes(frm);
+				return function () {
+					return PUNBB.common.toggleCheckboxes(frm);
+				};
 			};
 
 			var inputlist = document.getElementsByTagName("span");
