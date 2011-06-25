@@ -288,8 +288,8 @@ if (!isset($_POST['form_sent']))
 			</div>
 			<div class="sf-set set4">
 				<div class="sf-box text required">
-					<label for="fld10"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld10" type="email" name="req_email" size="35" maxlength="80" required /></span>
+					<label for="fld9"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
+					<span class="fld-input"><input id="fld9" type="email" name="req_email" size="35" maxlength="80" required /></span>
 				</div>
 			</div>
 		</fieldset>
@@ -308,8 +308,8 @@ if (!isset($_POST['form_sent']))
 			<legend class="group-legend"><strong><?php echo $lang_install['Part3 legend'] ?></strong></legend>
 			<div class="sf-set set3">
 				<div class="sf-box text required">
-					<label for="fld13"><span><?php echo $lang_install['Base URL'] ?></span> <small><?php echo $lang_install['Base URL help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld13" type="url" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" required /></span>
+					<label for="fld10"><span><?php echo $lang_install['Base URL'] ?></span> <small><?php echo $lang_install['Base URL help'] ?></small></label><br />
+					<span class="fld-input"><input id="fld10" type="url" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 <?php
@@ -319,8 +319,8 @@ if (!isset($_POST['form_sent']))
 
 ?>			<div class="sf-set set4">
 				<div class="sf-box text">
-					<label for="fld14"><span><?php echo $lang_install['Default language'] ?></span> <small><?php echo $lang_install['Default language help'] ?></small></label><br />
-					<span class="fld-input"><select id="fld14" name="req_language">
+					<label for="fld11"><span><?php echo $lang_install['Default language'] ?></span> <small><?php echo $lang_install['Default language help'] ?></small></label><br />
+					<span class="fld-input"><select id="fld11" name="req_language">
 <?php
 
 		foreach ($languages as $lang)
@@ -346,8 +346,8 @@ if (!isset($_POST['form_sent']))
 
 ?>			<div class="sf-set set5">
 				<div class="sf-box checkbox">
-					<span class="fld-input"><input id="fld15" type="checkbox" name="install_pun_repository" value="1" checked="checked" /></span>
-					<label for="fld15"><span><?php echo $lang_install['Pun repository'] ?></span> <?php echo $lang_install['Pun repository help'] ?></label><br />
+					<span class="fld-input"><input id="fld12" type="checkbox" name="install_pun_repository" value="1" checked="checked" /></span>
+					<label for="fld12"><span><?php echo $lang_install['Pun repository'] ?></span> <?php echo $lang_install['Pun repository help'] ?></label><br />
 				</div>
 			</div>
 <?php
