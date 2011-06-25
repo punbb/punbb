@@ -224,6 +224,9 @@ PUNBB.common = function () {
 				qj_submit.onclick = function () {
 					return PUNBB.common.doQuickjumpRedirect(qj_url, sf_url_array);
 				};
+
+				// Hide
+				PUNBB.common.addClass(qj_submit, "visual-hidden");
 			}
 		},
 
