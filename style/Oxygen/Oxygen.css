@@ -407,6 +407,10 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .ct-box {
 	border-style: solid;
 	border-width: 1px;
+	border-radius: .35em;
+	-moz-border-radius: .35em;
+	-webkit-border-radius: .35em;
+	-khtml-border-radius: .35em;
 	margin: 1.417em;
 	padding: 0.5em 1em;
 	position: relative;
