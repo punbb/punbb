@@ -53,7 +53,7 @@ $lang_install = array(
 'Pun repository help'		=>	'Install pun_repository extension (one-click extension downloader) after forum installation.',
 'Start install'				=>	'Start install', // Label for submit button
 'Required'					=>	'(Required)',
-'Required warn'				=>	'All fields labelled %s must be completed before this form is submitted.',
+'Required warn'				=>	'All fields with bold label must be completed before this form is submitted.',
 
 // Install errors
 'No database support'		=>	'This PHP environment does not have support for any of the databases that PunBB supports. PHP needs to have support for either MySQL, PostgreSQL or SQLite in order for PunBB to be installed.',

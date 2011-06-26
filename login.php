@@ -318,7 +318,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php printf($lang_common['Required warn'], '<em>'.$lang_common['Required'].'</em>') ?></p>
+			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -416,7 +416,7 @@ ob_start();
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php printf($lang_common['Required warn'], '<em>'.$lang_common['Required'].'</em>') ?></p>
+			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">

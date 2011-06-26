@@ -99,7 +99,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	</div>
 	<div class="main-content main-frm">
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php printf($lang_admin_common['Required warn'], '<em>'.$lang_admin_common['Required'].'</em>') ?></p>
+			<p class="important"><?php echo $lang_admin_common['Required warn']; ?></p>
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_groups']) ?>">
 			<div class="hidden">

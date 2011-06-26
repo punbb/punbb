@@ -23,7 +23,7 @@ $lang_admin_common = array(
 'Delete help'					=>	'Requires confirmation via separate form.',
 'Select all'					=>	'Select all',
 'Required'						=>	'(Required)',
-'Required warn'					=>	'All fields labelled %s must be completed before the form is submitted.',
+'Required warn'					=>	'All fields with bold label must be completed before the form is submitted.',
 
 // Main Admin Menu Items and Title
 'Forum administration'			=>	'Administration',

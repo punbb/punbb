@@ -216,7 +216,7 @@ if (!isset($_POST['form_sent']))
 			</ul>
 		</div>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php printf($lang_install['Required warn'], '<em>'.$lang_install['Required'].'</em>') ?></p>
+			<p class="important"><?php echo $lang_install['Required warn']; ?></p>
 		</div>
 		<fieldset class="frm-group group1">
 			<legend class="group-legend"><strong><?php echo $lang_install['Part1 legend'] ?></strong></legend>
