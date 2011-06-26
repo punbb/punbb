@@ -295,8 +295,6 @@ while ($row = $forum_db->fetch_row($result)) {
 	$posts_id[] = $row[0];
 }
 
-ksort($posts_id, SORT_NUMERIC);
-$posts_id = array_reverse($posts_id);
 
 if (!empty($posts_id))
 {
@@ -318,7 +316,8 @@ if (!empty($posts_id))
 				'ON'			=> '(o.user_id=u.id AND o.user_id!=1 AND o.idle=0)'
 			),
 		),
-		'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')'
+		'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')',
+		'ORDER BY'	=> 'p.id'
 	);
 
 	($hook = get_hook('vt_qr_get_posts')) ? eval($hook) : null;
