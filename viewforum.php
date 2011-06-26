@@ -91,41 +91,60 @@ if ($forum_page['page'] > 1)
 }
 
 
-/*
- * Fetch list of topics
- * EXT DEVELOPERS
- * If you modify SELECT of this query - than add same columns in next query (has posted) in GROUP BY
-*/
+// 1. Retrieve the topics id
 $query = array(
-	'SELECT'	=> 't.id, t.poster, t.subject, t.posted, t.first_post_id, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to',
+	'SELECT'	=> 't.id',
 	'FROM'		=> 'topics AS t',
 	'WHERE'		=> 't.forum_id='.$id,
 	'ORDER BY'	=> 't.sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 't.posted' : 't.last_post').' DESC',
 	'LIMIT'		=> $forum_page['start_from'].', '.$forum_user['disp_topics']
 );
 
-// With "has posted" indication
-if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
-{
-	$query['SELECT'] .= ', p.poster_id AS has_posted';
-	$query['JOINS'][]	= array(
-		'LEFT JOIN'		=> 'posts AS p',
-		'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
-	);
-
-	// Must have same columns as in prev SELECT
-	$query['GROUP BY'] = 't.id, t.poster, t.subject, t.posted, t.first_post_id, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, p.poster_id';
-
-	($hook = get_hook('vf_qr_get_has_posted')) ? eval($hook) : null;
-}
-
-($hook = get_hook('vf_qr_get_topics')) ? eval($hook) : null;
+($hook = get_hook('vt_qr_get_topics_id')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-$topics = array();
-while ($cur_topic = $forum_db->fetch_assoc($result))
+$topics_id = $topics = array();
+while ($row = $forum_db->fetch_row($result)) {
+	$topics_id[] = intval($row[0], 10);
+}
+
+// If there are topics id in this forum
+if (!empty($topics_id))
 {
-	$topics[] = $cur_topic;
+	/*
+	 * Fetch list of topics
+	 * EXT DEVELOPERS
+	 * If you modify SELECT of this query - than add same columns in next query (has posted) in GROUP BY
+	*/
+	$query = array(
+		'SELECT'	=> 't.id, t.poster, t.subject, t.posted, t.first_post_id, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to',
+		'FROM'		=> 'topics AS t',
+		'WHERE'		=> 't.id IN ('.implode(',', $topics_id).')',
+		'ORDER BY'	=> 't.sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 't.posted' : 't.last_post').' DESC',
+	);
+
+	// With "has posted" indication
+	if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
+	{
+		$query['SELECT'] .= ', p.poster_id AS has_posted';
+		$query['JOINS'][]	= array(
+			'LEFT JOIN'		=> 'posts AS p',
+			'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
+		);
+
+		// Must have same columns as in prev SELECT
+		$query['GROUP BY'] = 't.id, t.poster, t.subject, t.posted, t.first_post_id, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, p.poster_id';
+
+		($hook = get_hook('vf_qr_get_has_posted')) ? eval($hook) : null;
+	}
+
+	($hook = get_hook('vf_qr_get_topics')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	while ($cur_topic = $forum_db->fetch_assoc($result))
+	{
+		$topics[] = $cur_topic;
+	}
 }
 
 // Generate paging/posting links
