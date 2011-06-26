@@ -1409,8 +1409,6 @@ input[type="radio"] {
 
 .mf-item input {
 	margin: 0 0 0 -0.25em;
-	/*height: 1.55em;
-	width: 1.55em;*/
 }
 
 .mf-item label {
@@ -1514,8 +1512,6 @@ input[type="radio"] {
 
 .checklist-item input {
 	margin: 0;
-	/*height: 1.55em;
-	width: 1.55em;*/
 }
 
 
@@ -1534,9 +1530,6 @@ input[type="radio"] {
 	padding: 2px 1em;
 	width: 16em;
 	text-align:right;
-/*
-	font-weight:bold;
-*/
 }
 
 .txt-set label small {
@@ -1599,10 +1592,6 @@ textarea {
 	width: 100%;
 	position: relative;
 }
-
-/*.txt-set .required label span em {
-	margin-bottom: -1.2em;
-}*/
 
 .req-error {
 	display: block;
@@ -2281,15 +2270,5 @@ IE7 - FIXES
 .ie7 .item-starter {
 	position: relative;
 	left: -0.5em;
-}
-
-
-/*************************************************************
-IE8 - FIXES
-**************************************************************/
-/* Forms
--------------------------------------------------------------*/
-.ie8 .txt-set .required label span em {
-	margin-bottom: 0;
 }
 
