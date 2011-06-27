@@ -191,12 +191,12 @@ h4.post-title,
 
 .info-list li,
 .error-list li {
-	color: #4A1A0B;
+	color: #5D5636;
 }
 
 .info-list li span,
 .error-list li span {
-	color: #666;
+	color: #5D5636;
 }
 
 ul li strong {
@@ -610,7 +610,7 @@ button:focus {
 }
 
 #brd-messages .message_info {
-	border: solid 1px #FFCD0E;
-	background: #FFF3BF;
+	border: solid 1px #FFD945;
+	background: #FFFFCC;
 	color: #222;
 }
