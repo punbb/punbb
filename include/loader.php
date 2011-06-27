@@ -415,7 +415,7 @@ class Loader
 				}
 				else
 				{
-					$output_default .= "\n\t".'.script("'.$lib['data'].'")';
+					$output_default .= "\n\t".'.script("'.$lib['data'].'")'.(($lib['async']) ? "" : ".wait()");
 				}
 
 				unset($libs[$key]);
@@ -426,7 +426,7 @@ class Loader
 		// Wrap default to LABjs parameters
 		if ($output_default != '')
 		{
-			$output_default = '<script>'."\n\t".'$LAB.setOptions({AlwaysPreserveOrder:true})'.$output_default.';'."\n".'</script>';
+			$output_default = '<script>'."\n\t".'$LAB.setOptions({AlwaysPreserveOrder:false})'.$output_default.';'."\n".'</script>';
 		}
 
 		($hook = get_hook('ld_fn_render_js_labjs_end')) ? eval($hook) : null;
