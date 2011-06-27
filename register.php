@@ -372,7 +372,7 @@ ob_start();
 <?php if ($forum_config['o_regs_verify'] == '0'): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Password'] ?></span> <small><?php echo $lang_profile['Password help'] ?></small></label><br />
-						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '0' ? 'text' : 'password') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php echo(isset($_POST['req_password1']) ? forum_htmlencode($_POST['req_password1']) : ''); ?>" required autocomplete="off" /></span>
+						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php echo(isset($_POST['req_password1']) ? forum_htmlencode($_POST['req_password1']) : ''); ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('rg_register_pre_confirm_password')) ? eval($hook) : null; ?>
