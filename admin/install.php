@@ -1230,6 +1230,25 @@ else
 
 	$schema = array(
 		'FIELDS'		=> array(
+			'user_id'		=> array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> false,
+				'default'		=> '0'
+			),
+			'forum_id'		=> array(
+				'datatype'		=> 'INT(10) UNSIGNED',
+				'allow_null'	=> false,
+				'default'		=> '0'
+			)
+		),
+		'PRIMARY KEY'	=> array('user_id', 'forum_id')
+	);
+
+	$forum_db->create_table('forum_subscriptions', $schema);
+
+
+	$schema = array(
+		'FIELDS'		=> array(
 			'id'			=> array(
 				'datatype'		=> 'SERIAL',
 				'allow_null'	=> false

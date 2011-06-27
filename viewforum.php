@@ -39,6 +39,15 @@ $query = array(
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$id
 );
 
+if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
+{
+	$query['SELECT'] .= ', fs.user_id AS is_subscribed';
+	$query['JOINS'][] = array(
+		'LEFT JOIN'	=> 'forum_subscriptions AS fs',
+		'ON'		=> '(f.id=fs.forum_id AND fs.user_id='.$forum_user['id'].')'
+	);
+}
+
 ($hook = get_hook('vf_qr_get_forum_info')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $cur_forum = $forum_db->fetch_assoc($result);
@@ -161,6 +170,14 @@ else
 $forum_page['main_head_options'] = array(
 	'feed'	=> '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
 );
+
+if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
+{
+	if ($cur_forum['is_subscribed'])
+		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_unsubscribe'], array($id, generate_form_token('forum_unsubscribe'.$id.$forum_user['id']))).'"><em>'.$lang_forum['Unsubscribe'].'</em></a></span>';
+	else
+		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_subscribe'], array($id, generate_form_token('forum_subscribe'.$id.$forum_user['id']))).'" title="'.$lang_forum['Subscribe info'].'">'.$lang_forum['Subscribe'].'</a></span>';
+}
 
 $forum_page['main_foot_options'] = array();
 if (!$forum_user['is_guest'] && !empty($topics))

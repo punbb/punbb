@@ -26,6 +26,8 @@ $forum_url = array(
 	'forum'							=>	'viewforum.php?id=$1',
 	'forum_rss'						=>	'extern.php?action=feed&amp;fid=$1&amp;type=rss',
 	'forum_atom'					=>	'extern.php?action=feed&amp;fid=$1&amp;type=atom',
+	'forum_subscribe'				=>	'misc.php?forum_subscribe=$1&amp;csrf_token=$2',
+	'forum_unsubscribe'				=>	'misc.php?forum_unsubscribe=$1&amp;csrf_token=$2',
 	'help'							=>	'help.php?section=$1',
 	'index'							=>	'index.php',
 	'index_rss'						=>	'extern.php?action=feed&amp;type=rss',

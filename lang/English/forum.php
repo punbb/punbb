@@ -44,6 +44,9 @@ $lang_forum = array(
 'Moderate forum'			=>	'Moderate forum',
 'Mark forum read'			=>	'Mark forum as read',
 'RSS forum feed'			=>	'RSS forum feed',
-'New posts info'			=>	'Go to the first new post since your last visit.'
+'New posts info'			=>	'Go to the first new post since your last visit.',
+'Unsubscribe'				=>	'Unsubscribe',
+'Subscribe'					=>	'Subscribe',
+'Subscribe info'			=>	'Receive email notification of new topics.',
 
 );

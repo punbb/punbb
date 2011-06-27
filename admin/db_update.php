@@ -367,6 +367,7 @@ function convert_table_utf8($table)
 	}
 }
 
+
 // Move avatars to DB
 function convert_avatars()
 {
@@ -776,6 +777,29 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Extend id field in extension_hooks to 150
 		$forum_db->alter_field('extension_hooks', 'id', 'VARCHAR(150)', false, '');
+
+		// Add the subscriptions forum table if it doesn't already exist
+		if (!$forum_db->table_exists('forum_subscriptions'))
+		{
+			$schema = array(
+				'FIELDS'		=> array(
+					'user_id'		=> array(
+						'datatype'		=> 'INT(10) UNSIGNED',
+						'allow_null'	=> false,
+						'default'		=> '0'
+					),
+					'forum_id'		=> array(
+						'datatype'		=> 'INT(10) UNSIGNED',
+						'allow_null'	=> false,
+						'default'		=> '0'
+					)
+				),
+				'PRIMARY KEY'	=> array('user_id', 'forum_id')
+			);
+
+			$forum_db->create_table('forum_subscriptions', $schema);
+		}
+
 
 		// Make all e-mail fields VARCHAR(80)
 		$forum_db->alter_field('bans', 'email', 'VARCHAR(80)', true);

@@ -228,6 +228,7 @@ if (isset($_POST['form_sent']))
 				'posted'		=> $now,
 				'subscribe'		=> ($forum_config['o_subscriptions'] == '1' && (isset($_POST['subscribe']) && $_POST['subscribe'] == '1')),
 				'forum_id'		=> $fid,
+				'forum_name'	=> $cur_posting['forum_name'],
 				'update_user'	=> true,
 				'update_unread'	=> true
 			);

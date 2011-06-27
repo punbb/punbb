@@ -45,7 +45,7 @@ $forum_rewrite_rules = array(
 	'/^users(\.html?|\/)?$/i'																								=>	'userlist.php',
 	'/^users\/(.*)\/([0-9-]+)\/?([a-z_]+)[\/_-]([a-zA-Z]+)[\/_-]p(age)?[\/_-]?([0-9]+)(\.html?|\/)?$/i'						=>	'userlist.php?username=$1&show_group=$2&sort_by=$3&sort_dir=$4&p=$6',
 	'/^users\/(.*)\/([0-9-]+)\/?([a-z_]+)[\/_-]([a-zA-Z]+)(\.html?|\/)?$/i'													=>	'userlist.php?username=$1&show_group=$2&sort_by=$3&sort_dir=$4',
-	'/^(email|report|subscribe|unsubscribe)[\/_-]?([0-9]+)[\/_-]?([a-z0-9]+)?(\.html?|\/)?$/i'								=>	'misc.php?$1=$2&csrf_token=$3',
+	'/^(email|report|subscribe|unsubscribe|forum_subscribe|forum_unsubscribe)[\/_-]?([0-9]+)[\/_-]?([a-z0-9]+)?(\.html?|\/)?$/i'								=>	'misc.php?$1=$2&csrf_token=$3',
 	'/^(mark|rules)[\/_-]?(read)?[\/_-]?([a-z0-9]+)?(\.html?|\/)?$/i'														=>	'misc.php?action=$1$2&csrf_token=$3',
 	'/^mark[\/_-](forum)[\/_-]?([0-9]+)[\/_-](read)[\/_-]([a-z0-9]+)(\.html?|\/)?$/i'										=>	'misc.php?action=markforumread&fid=$2&csrf_token=$4',
 	'/^help[\/_-]([a-z]+)(\.html?|\/)?$/i'																					=>	'help.php?section=$1',

@@ -690,6 +690,130 @@ else if (isset($_GET['unsubscribe']))
 }
 
 
+// Subscribe to a forum?
+else if (isset($_GET['forum_subscribe']))
+{
+	if ($forum_user['is_guest'] || $forum_config['o_subscriptions'] != '1')
+		message($lang_common['No permission']);
+
+	$forum_id = intval($_GET['forum_subscribe']);
+	if ($forum_id < 1)
+		message($lang_common['Bad request']);
+
+	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
+	// If it's in GET, we need to make sure it's valid.
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('forum_subscribe'.$forum_id.$forum_user['id'])))
+		csrf_confirm_form();
+
+	($hook = get_hook('mi_forum_subscribe_selected')) ? eval($hook) : null;
+
+	// Make sure the user can view the forum
+	$query = array(
+		'SELECT'	=> 'f.forum_name',
+		'FROM'		=> 'forums AS f',
+		'JOINS'		=> array(
+			array(
+				'LEFT JOIN'		=> 'forum_perms AS fp',
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+			)
+		),
+		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$forum_id
+	);
+	($hook = get_hook('mi_forum_subscribe_qr_forum_exists')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$forum_name = $forum_db->result($result);
+
+	if (!$forum_name)
+	{
+		message($lang_common['Bad request']);
+	}
+
+	$query = array(
+		'SELECT'	=> 'COUNT(fs.user_id)',
+		'FROM'		=> 'forum_subscriptions AS fs',
+		'WHERE'		=> 'user_id='.$forum_user['id'].' AND forum_id='.$forum_id
+	);
+
+	($hook = get_hook('mi_forum_subscribe_qr_check_subscribed')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	if ($forum_db->result($result) > 0)
+	{
+		message($lang_misc['Already subscribed']);
+	}
+
+	$query = array(
+		'INSERT'	=> 'user_id, forum_id',
+		'INTO'		=> 'forum_subscriptions',
+		'VALUES'	=> $forum_user['id'].' ,'.$forum_id
+	);
+
+	($hook = get_hook('mi_forum_subscribe_add_subscription')) ? eval($hook) : null;
+	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	$forum_flash->add_info($lang_misc['Subscribe redirect']);
+
+	($hook = get_hook('mi_forum_subscribe_pre_redirect')) ? eval($hook) : null;
+
+	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))), $lang_misc['Subscribe redirect']);
+}
+
+
+// Unsubscribe from a topic?
+else if (isset($_GET['forum_unsubscribe']))
+{
+	if ($forum_user['is_guest'] || $forum_config['o_subscriptions'] != '1')
+		message($lang_common['No permission']);
+
+	$forum_id = intval($_GET['forum_unsubscribe']);
+	if ($forum_id < 1)
+		message($lang_common['Bad request']);
+
+	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
+	// If it's in GET, we need to make sure it's valid.
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('forum_unsubscribe'.$forum_id.$forum_user['id'])))
+		csrf_confirm_form();
+
+	($hook = get_hook('mi_forum_unsubscribe_selected')) ? eval($hook) : null;
+
+	// Make sure the user can view the forum
+	$query = array(
+		'SELECT'	=> 'f.forum_name',
+		'FROM'		=> 'forums AS f',
+		'JOINS'		=> array(
+			array(
+				'LEFT JOIN'		=> 'forum_perms AS fp',
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+			)
+		),
+		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$forum_id
+	);
+
+	($hook = get_hook('mi_forum_unsubscribe_qr_check_subscribed')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$forum_name = $forum_db->result($result);
+
+	if (!$forum_name)
+	{
+		message($lang_misc['Not subscribed']);
+	}
+
+	$query = array(
+		'DELETE'	=> 'forum_subscriptions',
+		'WHERE'		=> 'user_id='.$forum_user['id'].' AND forum_id='.$forum_id
+	);
+
+	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	$forum_flash->add_info($lang_misc['Unsubscribe redirect']);
+
+	($hook = get_hook('mi_forum_unsubscribe_pre_redirect')) ? eval($hook) : null;
+
+	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))), $lang_misc['Unsubscribe redirect']);
+}
+
+
 ($hook = get_hook('mi_new_action')) ? eval($hook) : null;
 
 message($lang_common['Bad request']);
