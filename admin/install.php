@@ -286,7 +286,7 @@ if (!isset($_POST['form_sent']))
 					<span class="fld-input"><input id="fld8" type="text" name="req_password1" size="35" required autocomplete="off" /></span>
 				</div>
 			</div>
-			<div class="sf-set set4">
+			<div class="sf-set set4 prepend-top">
 				<div class="sf-box text required">
 					<label for="fld9"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
 					<span class="fld-input"><input id="fld9" type="email" name="req_email" size="35" maxlength="80" required /></span>
