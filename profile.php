@@ -617,14 +617,14 @@ else if ($action == 'change_email')
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['New e-mail'] ?></span></label><br />
-						<span class="fld-input"><input type="email" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_new_email" size="50" maxlength="80" value="<?php echo(isset($_POST['req_new_email']) ? forum_htmlencode($_POST['req_new_email']) : ''); ?>" required /></span>
+						<span class="fld-input"><input type="email" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_new_email" size="35" maxlength="80" value="<?php echo(isset($_POST['req_new_email']) ? forum_htmlencode($_POST['req_new_email']) : ''); ?>" required /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_email_normal_pre_password')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Password'] ?> </span></label><br />
-						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password" size="25" value="<?php echo(isset($_POST['req_password']) ? forum_htmlencode($_POST['req_password']) : ''); ?>" required /></span>
+						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password" size="35" value="<?php echo(isset($_POST['req_password']) ? forum_htmlencode($_POST['req_password']) : ''); ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_email_normal_pre_fieldset_end')) ? eval($hook) : null; ?>
