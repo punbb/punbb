@@ -51,6 +51,10 @@
 
     show:   Any integer value between 1 and 50. The default is 15.
 
+    sort:	posted - sort topics by posted time (default)
+			last_post - sort topics by last post
+
+
 
 
 /***********************************************************************/
@@ -78,6 +82,7 @@ if ($forum_user['g_read_board'] == '0')
 }
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'feed';
+$sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'posted';
 
 //
 // Sends the proper headers for Basic HTTP Authentication
@@ -460,7 +465,7 @@ if ($action == 'feed')
 				)
 			),
 			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum = 1) AND t.moved_to IS NULL',
-			'ORDER BY'	=> 't.posted DESC',
+			'ORDER BY'	=> (($sort_by == 'last_post') ? 't.last_post' : 't.posted').' DESC',
 			'LIMIT'		=> $show
 		);
 
