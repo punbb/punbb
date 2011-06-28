@@ -60,6 +60,7 @@ $forum_url = array(
 	'search_recent_results'			=>	'search.php?action=show_recent&amp;value=$1',
 	'search_unanswered'				=>	'search.php?action=show_unanswered',
 	'search_subscriptions'			=>	'search.php?action=show_subscriptions&amp;user_id=$1',
+	'search_forum_subscriptions'	=>	'search.php?action=show_forum_subscriptions&amp;user_id=$1',
 	'search_user_posts'				=>	'search.php?action=show_user_posts&amp;user_id=$1',
 	'search_user_topics'			=>	'search.php?action=show_user_topics&amp;user_id=$1',
 	'subscribe'						=>	'misc.php?subscribe=$1&amp;csrf_token=$2',

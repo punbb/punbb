@@ -641,6 +641,42 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 
 			break;
 
+		case 'show_forum_subscriptions':
+			if ($forum_user['is_guest'])
+				message($lang_common['Bad request']);
+
+			// Check we're allowed to see the subscriptions we're trying to look at
+			if ($forum_user['g_id'] != FORUM_ADMIN && $forum_user['id'] != $value)
+				message($lang_common['Bad request']);
+
+			$query = array(
+				'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.forum_desc, f.redirect_url, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster',
+				'FROM'		=> 'categories AS c',
+				'JOINS'		=> array(
+					array(
+						'INNER JOIN'	=> 'forums AS f',
+						'ON'			=> 'c.id=f.cat_id'
+					),
+					array(
+						'INNER JOIN'	=> 'forum_subscriptions AS fs',
+						'ON'			=> '(f.id=fs.forum_id AND fs.user_id='.$value.')'
+					),
+					array(
+						'LEFT JOIN'		=> 'forum_perms AS fp',
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+					)
+				),
+				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1)',
+				'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
+			);
+
+			$url_type = $forum_url['search_forum_subscriptions'];
+			$search_id = $value;
+
+			($hook = get_hook('sf_fn_generate_action_search_query_qr_get_forum_subscriptions')) ? eval($hook) : null;
+
+			break;
+
 		case 'show_unanswered':
 			$query = array(
 				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
@@ -711,12 +747,12 @@ function get_search_results($query, &$search_set)
 		return 0;
 
 	// Work out the settings for pagination
-	$forum_page['num_pages'] = ceil($num_hits / $forum_page['per_page']);
+	$forum_page['num_pages'] = ($forum_page['per_page'] == 0) ? 1 : ceil($num_hits / $forum_page['per_page']);
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 
 	// Determine the topic or post offset (based on $forum_page['page'])
 	$forum_page['start_from'] = $forum_page['per_page'] * ($forum_page['page'] - 1);
-	$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_page['per_page']), $num_hits);
+	$forum_page['finish_at'] = ($forum_page['per_page'] == 0) ? $num_hits : min(($forum_page['start_from'] + $forum_page['per_page']), $num_hits);
 
 	// Fill $search_set with out search hits
 	$search_set = array();
@@ -772,6 +808,10 @@ function no_search_results($action = 'search')
 
 		case 'show_subscriptions':
 			message($lang_search['No subscriptions'], $forum_page['search_again'], $lang_search['Subscriptions']);
+			break;
+
+		case 'show_forum_subscriptions':
+			message($lang_search['No forum subscriptions'], $forum_page['search_again'], $lang_search['Forum subscriptions']);
 			break;
 
 		case 'show_unanswered':
@@ -839,6 +879,12 @@ function generate_search_crumbs($action = null)
 			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_search['User defined search'].'</a></span>';
 			break;
 
+		case 'show_forum_subscriptions':
+			$forum_page['crumbs'][] = $lang_search['Forum subscriptions'];
+			$forum_page['items_info'] = generate_items_info($lang_search['Forums found'], ($forum_page['start_from'] + 1), $num_hits);
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_search['User defined search'].'</a></span>';
+			break;
+
 		default:
 			$forum_page['crumbs'][] = $lang_search['Search results'];
 			$forum_page['items_info'] = generate_items_info((($show_as == 'topics') ? $lang_search['Topics found'] : $lang_search['Posts found']), ($forum_page['start_from'] + 1), $num_hits);
@@ -854,7 +900,7 @@ function generate_search_crumbs($action = null)
 function validate_search_action($action)
 {
 	// A list of valid actions (extensions can add their own actions to the array)
-	$valid_actions = array('search', 'show_new', 'show_recent', 'show_user_posts', 'show_user_topics', 'show_subscriptions', 'show_unanswered');
+	$valid_actions = array('search', 'show_new', 'show_recent', 'show_user_posts', 'show_user_topics', 'show_subscriptions', 'show_forum_subscriptions', 'show_unanswered');
 
 	$return = ($hook = get_hook('sf_fn_validate_actions_start')) ? eval($hook) : null;
 	if ($return != null)

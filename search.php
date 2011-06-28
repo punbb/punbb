@@ -76,7 +76,7 @@ else if (isset($_GET['action']))
 	{
 		$value = null;
 		// Get any additional variables for quicksearches
-		if ($action == 'show_user_posts' || $action == 'show_user_topics' || $action == 'show_subscriptions')
+		if ($action == 'show_user_posts' || $action == 'show_user_topics' || $action == 'show_subscriptions' || $action == 'show_forum_subscriptions')
 		{
 			$value = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 			if ($value < 2)
@@ -90,7 +90,12 @@ else if (isset($_GET['action']))
 		($hook = get_hook('se_additional_quicksearch_variables')) ? eval($hook) : null;
 
 		$search_id = '';
-		$show_as = 'topics';
+
+		// Show as
+		if ($action == 'show_forum_subscriptions')
+			$show_as = 'forums';
+		else
+			$show_as = 'topics';
 
 		// Generate the query for the search
 		$query = generate_action_search_query($action, $value, $search_id, $url_type, $show_as);
@@ -107,7 +112,12 @@ if (isset($query))
 		no_search_results();
 
 	// Work out the settings for pagination
-	$forum_page['per_page'] = ($show_as == 'posts') ? $forum_user['disp_posts'] : $forum_user['disp_topics'];
+	if ($show_as == 'posts')
+		$forum_page['per_page'] = $forum_user['disp_posts'];
+	else if ($show_as == 'topics')
+		$forum_page['per_page'] = $forum_user['disp_topics'];
+	else if ($show_as == 'forums')
+		$forum_page['per_page'] = 0;	// Show all
 
 	// We now have a query that will give us our results in $query, lets get the data!
 	$num_hits = get_search_results($query, $search_set);
@@ -128,27 +138,31 @@ if (isset($query))
 	generate_search_crumbs($action);
 
 	// Generate paging links
-	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $url_type, $lang_common['Paging separator'], $search_id).'</p>';
+	if ($show_as == 'posts' || $show_as == 'topics')
+		$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $url_type, $lang_common['Paging separator'], $search_id).'</p>';
 
 	// Get topic/forum tracking data
 	if (!$forum_user['is_guest'])
 		$tracked_topics = get_tracked_topics();
 
 	// Navigation links for header and page numbering for title/meta description
-	if ($forum_page['page'] < $forum_page['num_pages'])
+	if ($show_as == 'posts' || $show_as == 'topics')
 	{
-		$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
-		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] + 1), $search_id).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
-	}
-	if ($forum_page['page'] > 1)
-	{
-		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] - 1), $search_id).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
-		$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($url_type, $search_id).'" title="'.$lang_common['Page'].' 1" />';
-	}
+		if ($forum_page['page'] < $forum_page['num_pages'])
+		{
+			$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
+			$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] + 1), $search_id).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
+		}
+		if ($forum_page['page'] > 1)
+		{
+			$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] - 1), $search_id).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
+			$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($url_type, $search_id).'" title="'.$lang_common['Page'].' 1" />';
+		}
 
-	// Setup main heading
-	if ($forum_page['num_pages'] > 1)
-		$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
+		// Setup main heading
+		if ($forum_page['num_pages'] > 1)
+			$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
+	}
 
 	// Setup main options header
 	$forum_page['main_title'] = $lang_search['Search options'];
@@ -156,7 +170,14 @@ if (isset($query))
 
 	($hook = get_hook('se_results_pre_header_load')) ? eval($hook) : null;
 
-	define('FORUM_PAGE', $show_as == 'topics' ? 'searchtopics' : 'searchposts');
+	// Define page type
+	if ($show_as == 'posts')
+		define('FORUM_PAGE', 'searchposts');
+	else if ($show_as == 'topics')
+		define('FORUM_PAGE', 'searchtopics');
+	else
+		define('FORUM_PAGE', 'searchforums');
+
 	require FORUM_ROOT.'header.php';
 
 	// START SUBST - <!-- forum_main -->
@@ -195,11 +216,14 @@ if (isset($query))
 <?php
 
 	}
-	else
+	else if ($show_as == 'posts')
 	{
 		// Load the topic.php language file
 		require FORUM_ROOT.'lang/'.$forum_user['language'].'/topic.php';
 
+		// Load parser
+		if (!defined('FORUM_PARSER_LOADED'))
+			require FORUM_ROOT.'include/parser.php';
 ?>
 	<div class="main-head">
 <?php
@@ -212,16 +236,16 @@ if (isset($query))
 	</div>
 	<div class="main-content main-topic">
 <?php
+	}
+	else if ($show_as == 'forums')
+	{
+		// Load the forum.php language file
+		require FORUM_ROOT.'lang/'.$forum_user['language'].'/index.php';
 
+		$forum_page['cur_category'] = $forum_page['cat_count'] = $forum_page['item_count'] = 0;
 	}
 
 	$forum_page['item_count'] = 0;
-
-	if ($show_as == 'posts')
-	{
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-	}
 
 	// Finally, lets loop through the results and output them
 	foreach ($search_set as $cur_set)
@@ -301,7 +325,7 @@ if (isset($query))
 <?php
 
 		}
-		else
+		else if ($show_as == 'topics')
 		{
 			// Start from scratch
 			$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_title_status'] = array();
@@ -387,8 +411,111 @@ if (isset($query))
 <?php
 
 		}
-	}
+		else if ($show_as == 'forums')
+		{
+			if ($cur_set['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
+			{
+				if ($forum_page['cur_category'] != 0)
+					echo "\t".'</div>'."\n";
 
+				++$forum_page['cat_count'];
+				$forum_page['item_count'] = 1;
+
+				$forum_page['item_header'] = array();
+				$forum_page['item_header']['subject']['title'] = '<strong class="subject-title">'.$lang_index['Forums'].'</strong>';
+				$forum_page['item_header']['info']['topics'] = '<strong class="info-topics">'.$lang_index['topics'].'</strong>';
+				$forum_page['item_header']['info']['post'] = '<strong class="info-posts">'.$lang_index['posts'].'</strong>';
+				$forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">'.$lang_index['last post'].'</strong>';
+
+				($hook = get_hook('se_results_forums_row_pre_cat_head')) ? eval($hook) : null;
+
+				$forum_page['cur_category'] = $cur_set['cid'];
+
+?>
+				<div class="main-head">
+					<h2 class="hn"><span><?php echo forum_htmlencode($cur_set['cat_name']) ?></span></h2>
+				</div>
+				<div class="main-subhead">
+					<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
+				</div>
+				<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
+<?php
+			}
+
+			// Reset arrays and globals for each forum
+			$forum_page['item_status'] = $forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_title'] = array();
+
+			// Is this a redirect forum?
+			if ($cur_set['redirect_url'] != '')
+			{
+				$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><a class="external" href="'.forum_htmlencode($cur_forum['redirect_url']).'" title="'.sprintf($lang_index['Link to'], forum_htmlencode($cur_forum['redirect_url'])).'"><span>'.forum_htmlencode($cur_set['forum_name']).'</span></a></h3>';
+				$forum_page['item_status']['redirect'] = 'redirect';
+
+				if ($cur_set['forum_desc'] != '')
+					$forum_page['item_subject']['desc'] = $cur_set['forum_desc'];
+
+				$forum_page['item_subject']['redirect'] = '<span>'.$lang_index['External forum'].'</span>';
+
+				($hook = get_hook('se_results_forums_row_redirect_pre_item_subject_merge')) ? eval($hook) : null;
+
+				if (!empty($forum_page['item_subject']))
+					$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
+
+				// Forum topic and post count
+				$forum_page['item_body']['info']['topics'] = '<li class="info-topics"><span class="label">'.$lang_index['No topic info'].'</span></li>';
+				$forum_page['item_body']['info']['posts'] = '<li class="info-posts"><span class="label">'.$lang_index['No post info'].'</span></li>';
+				$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_index['No lastpost info'].'</span></li>';
+
+				($hook = get_hook('se_results_forums_row_redirect_pre_display')) ? eval($hook) : null;
+			}
+			else
+			{
+				// Setup the title and link to the forum
+				$forum_page['item_title']['title'] = '<a href="'.forum_link($forum_url['forum'], array($cur_set['fid'], sef_friendly($cur_set['forum_name']))).'"><span>'.forum_htmlencode($cur_set['forum_name']).'</span></a>';
+
+				($hook = get_hook('se_results_forums_row_redirect_pre_item_title_merge')) ? eval($hook) : null;
+
+				$forum_page['item_body']['subject']['title'] = '<h3 class="hn">'.implode(' ', $forum_page['item_title']).'</h3>';
+
+				// Setup the forum description and mod list
+				if ($cur_set['forum_desc'] != '')
+					$forum_page['item_subject']['desc'] = $cur_set['forum_desc'];
+
+				($hook = get_hook('se_results_forums_row_normal_pre_item_subject_merge')) ? eval($hook) : null;
+
+				if (!empty($forum_page['item_subject']))
+					$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
+
+				// Setup forum topics, post count and last post
+				$forum_page['item_body']['info']['topics'] = '<li class="info-topics"><strong>'.forum_number_format($cur_set['num_topics']).'</strong> <span class="label">'.(($cur_set['num_topics'] == 1) ? $lang_index['topic'] : $lang_index['topics']).'</span></li>';
+				$forum_page['item_body']['info']['posts'] = '<li class="info-posts"><strong>'.forum_number_format($cur_set['num_posts']).'</strong> <span class="label">'.(($cur_set['num_posts'] == 1) ? $lang_index['post'] : $lang_index['posts']).'</span></li>';
+
+				if ($cur_set['last_post'] != '')
+					$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_index['Last post'].'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_set['last_post_id']).'">'.format_time($cur_set['last_post']).'</a></strong> <cite>'.sprintf($lang_index['Last poster'], forum_htmlencode($cur_set['last_poster'])).'</cite></li>';
+				else
+					$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><strong>'.$lang_common['Never'].'</strong></li>';
+
+				($hook = get_hook('se_results_forums_row_normal_pre_display')) ? eval($hook) : null;
+			}
+
+			// Generate classes for this forum depending on its status
+			$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
+
+			($hook = get_hook('se_results_forums_row_pre_display')) ? eval($hook) : null;
+
+?>
+			<div id="forum<?php echo $cur_set['fid'] ?>" class="main-item<?php echo $forum_page['item_style'] ?>">
+				<span class="icon <?php echo implode(' ', $forum_page['item_status']) ?>"><!-- --></span>
+				<div class="item-subject">
+					<?php echo implode("\n\t\t\t\t", $forum_page['item_body']['subject'])."\n" ?>
+				</div>
+				<ul class="item-info">
+					<?php echo implode("\n\t\t\t\t", $forum_page['item_body']['info'])."\n" ?>
+				</ul>
+			</div>
+<?php
+		}
+	}
 ?>
 	</div>
 
