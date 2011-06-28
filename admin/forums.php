@@ -117,6 +117,15 @@ else if (isset($_GET['del_forum']))
 		($hook = get_hook('afo_del_forum_qr_delete_forum_perms')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
+		// Delete forum subscriptions
+		$query = array(
+			'DELETE'	=> 'forum_subscriptions',
+			'WHERE'		=> 'forum_id='.$forum_to_delete
+		);
+
+		($hook = get_hook('afo_del_forum_qr_delete_forum_subscriptions')) ? eval($hook) : null;
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 		// Regenerate the quickjump cache
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/cache.php';
