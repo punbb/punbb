@@ -100,6 +100,15 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 				($hook = get_hook('acg_del_cat_qr_delete_forum')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+				// Delete any forum subscriptions
+				$query = array(
+					'DELETE'	=> 'forum_subscriptions',
+					'WHERE'		=> 'forum_id='.$cur_forum
+				);
+
+				($hook = get_hook('acg_del_cat_qr_delete_forum_subscriptions')) ? eval($hook) : null;
+				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
