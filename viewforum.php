@@ -167,9 +167,10 @@ else
 	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_forum['No permission'].'</p>';
 
 // Setup main options
-$forum_page['main_head_options'] = array(
-	'feed'	=> '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
-);
+$forum_page['main_head_options'] = $forum_page['main_foot_options'] = array();
+
+if (!empty($topics))
+	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>';
 
 if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 {
@@ -179,7 +180,6 @@ if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_subscribe'], array($id, generate_form_token('forum_subscribe'.$id.$forum_user['id']))).'" title="'.$lang_forum['Subscribe info'].'">'.$lang_forum['Subscribe'].'</a></span>';
 }
 
-$forum_page['main_foot_options'] = array();
 if (!$forum_user['is_guest'] && !empty($topics))
 {
 	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
@@ -388,6 +388,11 @@ else
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_head_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+?>
 		<h2 class="hn"><span><?php echo $lang_forum['Empty forum'] ?></span></h2>
 	</div>
 	<div id="forum<?php echo $id ?>" class="main-content main-forum">
