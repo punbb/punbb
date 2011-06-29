@@ -856,7 +856,7 @@ function parse_message($text, $hide_smilies)
 	if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
 	{
 		list($inside, $outside) = split_text($text, '[code]', '[/code]', $errors);
-		$text = implode("\xc1", $outside);
+		$text = implode("\x1", $outside);
 	}
 
 	$return = ($hook = get_hook('ps_parse_message_post_split')) ? eval($hook) : null;
@@ -885,7 +885,7 @@ function parse_message($text, $hide_smilies)
 	// If we split up the message before we have to concatenate it together again (code tags)
 	if (isset($inside))
 	{
-		$outside = explode("\xc1", $text);
+		$outside = explode("\x1", $text);
 		$text = '';
 
 		$num_tokens = count($outside);
