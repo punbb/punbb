@@ -16,6 +16,7 @@
 	// We need some stuff from functions.php
 	require FORUM_ROOT.'include/essentials.php';
 	require_once FORUM_ROOT.'include/parser.php';
+	require FORUM_ROOT.'lang/English/common.php';
 
 	if (!defined('FORUM_DEBUG')) {
 		define('FORUM_DEBUG', 1);
