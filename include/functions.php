@@ -2849,9 +2849,6 @@ function send_forum_subscriptions($topic_info, $new_tid)
 				$notification_emails[$cur_subscriber['language']][3] = $mail_message_full;
 
 				$mail_subject = $mail_message = $mail_subject_full = $mail_message_full = null;
-
-				echo $topic_info['forum_id'].$cur_subscriber['id'].' '.generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id']);
-				exit();
 			}
 
 			// We have to double check here because the templates could be missing
