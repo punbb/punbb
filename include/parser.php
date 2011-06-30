@@ -597,7 +597,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	else if (!preg_match('#^([a-z0-9]{3,6})://#', $url)) 	// Else if it doesn't start with abcdef://, we add http://
 		$full_url = 'http://'.$full_url;
 
-	if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+	if (defined('FORUM_SUPPORT_PCRE_UNICODE') && !defined('FORUM_DISABLE_IDNA'))
 	{
 		$idn = new idna_convert();
 		$idn->set_parameter('encoding', 'utf8');
@@ -609,7 +609,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	// Ok, not very pretty :-)
 	if (!$bbcode)
 	{
-		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE') && !defined('FORUM_DISABLE_IDNA'))
 		{
 			$link_name = ($link == '' || $link == $url) ? $url : $link;
 			if (preg_match('!^(https?|ftp|news){1}'.preg_quote('://xn--', '!').'!', $link_name))
