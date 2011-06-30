@@ -1407,11 +1407,12 @@ if ($forum_user['id'] != $id &&
 	{
 		$url_source = $user['url'];
 
-		// IDNA?
-		// Load the IDNA class for international url handling
-		require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
-		if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+		// IDNA url handling
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE') && !defined('FORUM_DISABLE_IDNA'))
 		{
+			// Load the IDNA class for international url handling
+			require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
+
 			$idn = new idna_convert();
 			$idn->set_parameter('encoding', 'utf8');
 			$idn->set_parameter('strict', false);
@@ -1638,11 +1639,12 @@ else
 		{
 			$url_source = $user['url'];
 
-			// IDNA?
-			// Load the IDNA class for international url handling
-			require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
-			if (defined('FORUM_SUPPORT_PCRE_UNICODE'))
+			// IDNA url handling
+			if (defined('FORUM_SUPPORT_PCRE_UNICODE') && !defined('FORUM_DISABLE_IDNA'))
 			{
+				// Load the IDNA class for international url handling
+				require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
+
 				$idn = new idna_convert();
 				$idn->set_parameter('encoding', 'utf8');
 				$idn->set_parameter('strict', false);
