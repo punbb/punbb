@@ -46,24 +46,6 @@
 				<file name="Oxygen/Oxygen_cs.css" />
 			</filelist>
 		</compress-css-lib>
-
-		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen_ie6.min.css" force="true">
-			<filelist dir="${css-src}">
-				<file name="Oxygen/Oxygen_ie6.css" />
-			</filelist>
-		</compress-css-lib>
-
-		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen_ie7.min.css" force="true">
-			<filelist dir="${css-src}">
-				<file name="Oxygen/Oxygen_ie7.css" />
-			</filelist>
-		</compress-css-lib>
-
-		<compress-css-lib tofile="${css-src}/Oxygen/min/Oxygen_ie8.min.css" force="true">
-			<filelist dir="${css-src}">
-				<file name="Oxygen/Oxygen_ie8.css" />
-			</filelist>
-		</compress-css-lib>
 	</target>
 
 </project>
