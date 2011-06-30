@@ -146,8 +146,7 @@ if (!isset($_POST['form_sent']))
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_cs.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
@@ -366,8 +365,8 @@ if (!isset($_POST['form_sent']))
 
 </div>
 </div>
-	<script src="<?php echo FORUM_ROOT ?>include/js/punbb.common.js"></script>
-	<script src="<?php echo FORUM_ROOT ?>include/js/punbb.install.js"></script>
+	<script src="<?php echo FORUM_ROOT ?>include/js/min/punbb.common.min.js"></script>
+	<script src="<?php echo FORUM_ROOT ?>include/js/min/punbb.install.min.js"></script>
 </body>
 </html>
 <?php
@@ -1916,8 +1915,7 @@ else
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen_cs.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
 </head>
 <body>
 

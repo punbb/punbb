@@ -93,9 +93,9 @@ $forum_javascript_commonjs_urls = '
 
 
 $forum_loader->add_js($forum_javascript_commonjs_urls, array('type' => 'inline', 'weight' => 50, 'group' => FORUM_JS_GROUP_SYSTEM));
-$forum_loader->add_js('include/js/LAB.src.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
-$forum_loader->add_js('include/js/punbb.common.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
-//$forum_loader->add_js('include/js/min/punbb.common.min.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+//$forum_loader->add_js('include/js/LAB.src.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+//$forum_loader->add_js('include/js/punbb.common.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
+$forum_loader->add_js('include/js/min/punbb.common.min.js', array('type' => 'file', 'weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
 //$forum_loader->add_js('include/js/min/jquery-1.5.2.min.js', array('type' => 'file', 'weight' => 10, 'async' => false, 'group' => FORUM_JS_GROUP_DEFAULT));
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
