@@ -203,9 +203,9 @@ if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
 	$visit_links['unanswered'] = '<span id="visit-unanswered"'.(empty($visit_links) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_unanswered']).'" title="'.$lang_common['Unanswered topics title'].'">'.$lang_common['Unanswered topics'].'</a></span>';
 }
 
-$visit_elements['<!-- forum_visit -->'] = (!empty($visit_links)) ? '<p id="visit-links" class="options">'.implode(' ', $visit_links).'</p>' : '';
-
 ($hook = get_hook('hd_visit_elements')) ? eval($hook) : null;
+
+$visit_elements['<!-- forum_visit -->'] = (!empty($visit_links)) ? '<p id="visit-links" class="options">'.implode(' ', $visit_links).'</p>' : '';
 
 $tpl_main = str_replace(array_keys($visit_elements), array_values($visit_elements), $tpl_main);
 unset($visit_elements);
