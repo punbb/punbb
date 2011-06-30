@@ -28,7 +28,6 @@
 	require_once('functions/array_insert_test.php');
 	require_once('functions/tools_test.php');
 	require_once('censor_words/censor_words_test.php');
-
 	require_once('parser/parser.php');
 
 
@@ -97,7 +96,7 @@
 	$suite->addTestSuite('tools_Test');
 	$suite->addTestSuite('censor_words_do_Test');
 	$suite->addTestSuite('handle_url_tag_Test');
-
+	$suite->addTestSuite('parse_message_Test');
 
 
 	$result = PHPUnit::run($suite);
