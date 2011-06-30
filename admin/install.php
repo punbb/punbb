@@ -63,6 +63,7 @@ function generate_config_file()
 	$config_body .= "\n\n// Disable forum hooks (extensions) by removing // from the following line\n//define('FORUM_DISABLE_HOOKS', 1);";
 	$config_body .= "\n\n// Disable forum output buffering by removing // from the following line\n//define('FORUM_DISABLE_BUFFERING', 1);";
 	$config_body .= "\n\n// Disable forum async JS loader by removing // from the following line\n//define('FORUM_DISABLE_ASYNC_JS_LOADER', 1);";
+	$config_body .= "\n\n// Disable forum IDNA support by removing // from the following line\n//define('FORUM_DISABLE_IDNA', 1);";
 
 	return $config_body;
 }
