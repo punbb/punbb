@@ -68,25 +68,23 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 
 
 // Get the server load averages (if possible)
-if (function_exists('sys_getloadavg') && is_array(sys_getloadavg()))
+if (function_exists('sys_getloadavg') && is_array($load_averages = sys_getloadavg()))
 {
-	$load_averages = sys_getloadavg();
-	array_walk($load_averages, create_function('&$v', '$v = round($v, 3);'));
+	array_walk($load_averages, create_function('&$v', '$v = forum_number_format(round($v, 2), 2);'));
 	$server_load = $load_averages[0].' '.$load_averages[1].' '.$load_averages[2];
 }
-else if (@is_readable('/proc/loadavg'))
+else if (@/**/is_readable('/proc/loadavg'))
 {
 	// We use @ just in case
-	$fh = @fopen('/proc/loadavg', 'r');
+	$fh = @/**/fopen('/proc/loadavg', 'r');
 	$load_averages = @fread($fh, 64);
-	@fclose($fh);
+	@/**/fclose($fh);
 
 	$load_averages = empty($load_averages) ? array() : explode(' ', $load_averages);
-
-	$server_load = isset($load_averages[2]) ? $load_averages[0].' '.$load_averages[1].' '.$load_averages[2] : 'Not available';
+	$server_load = isset($load_averages[2]) ? forum_number_format(round($load_averages[0], 2), 2).' '.forum_number_format(round($load_averages[1], 2), 2).' '.forum_number_format(round($load_averages[2], 2), 2) : 'Not available';
 }
 else if (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
-	$server_load = $load_averages[1].' '.$load_averages[2].' '.$load_averages[3];
+	$server_load = forum_number_format(round($load_averages[1], 2), 2).' '.forum_number_format(round($load_averages[2], 2), 2).' '.forum_number_format(round($load_averages[3], 2), 2);
 else
 	$server_load = $lang_admin_index['Not available'];
 
