@@ -33,7 +33,7 @@ PUNBB.common = function () {
 			{
 				setTimeout(function () {
 					msgEl.style.visibility = "hidden";
-				}, 3000);
+				}, 4000);
 			}
 		},
 
