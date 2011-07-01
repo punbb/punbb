@@ -91,6 +91,7 @@ $forum_url = array(
 	'admin_extensions_manage'		=>	'admin/extensions.php?section=manage',
 	'admin_extensions_hotfixes'		=>	'admin/extensions.php?section=hotfixes',
 	'admin_forums'					=>	'admin/forums.php',
+	'admin_forums_forum'			=>	'admin/forums.php#forum$1',
 	'admin_groups'					=>	'admin/groups.php',
 	'admin_loader'					=>	'admin/loader.php',
 	'admin_reindex'					=>	'admin/reindex.php',
