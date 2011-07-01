@@ -612,33 +612,37 @@ button:focus {
 -------------------------------------------------------------*/
 
 #brd-messages span {
-	color: #fff;
-	-webkit-border-bottom-right-radius: .4em;
-	-webkit-border-bottom-left-radius: .4em;
-	-moz-border-radius-bottomright: .4em;
-	-moz-border-radius-bottomleft: .4em;
-	border-bottom-right-radius: .4em;
-	border-bottom-left-radius: .4em;
+	color: #333;
+	font-weight: bold;
+	line-height: 2.1em;
+	-webkit-border-bottom-right-radius: .3em;
+	-webkit-border-bottom-left-radius: .3em;
+	-moz-border-radius-bottomright: .3em;
+	-moz-border-radius-bottomleft: .3em;
+	border-bottom-right-radius: .3em;
+	border-bottom-left-radius: .3em;
 	-moz-box-shadow: 0 2px 3px rgba(0,0,0, .2);
 	-webkit-box-shadow: 0 2px 3px rgba(0,0,0, .2);
 	box-shadow: 0 2px 3px rgba(0,0,0, .2);
 }
 
 #brd-messages .message_error {
-	border: solid 1px #FF1A0E;
+	border-color:#FFE475;
 	background: #FFBDAC;
-	color: #222;
 }
 
 #brd-messages .message_warning {
-	border: solid 1px #FF620E;
+	border-color:#FFE475;
 	background: #FFD0AC;
-	color: #222;
 }
 
 #brd-messages .message_info {
-	border: solid 1px #FFD945;
+	border-color:#FFE475;
 	background: #FFFFCC;
-	color: #222;
+	background: -moz-linear-gradient(center top , #FFFBEA, #FEF7CB);
+	background: -o-linear-gradient(top, #FFFBEA, #FEF7CB);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFBEA), to(#FEF7CB));
+	background: -webkit-linear-gradient(top, #FFFBEA, #FEF7CB);
+	background: linear-gradient(top, #FFFBEA, #FEF7CB);
 }
 

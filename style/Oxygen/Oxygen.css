@@ -2090,9 +2090,11 @@ H - MAIN CONTENT - ODDMENTS
 
 #brd-messages span {
 	text-align: center;
-	padding: .35em 1.3em .2em;
+	padding: .35em 1.3em;
 	margin: 0 1em;
-	font: 87%/1.5em Verdana, Helvetica, Arial, sans-serif;
+	font: 87%/1.5em Arial, sans-serif;
+	border-width: 1px;
+	border-style: solid;
 }
 
 
