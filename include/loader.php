@@ -57,7 +57,7 @@ class Loader
     }
 
 
-	// Add JS url or file to load
+	// Add JS url to load
 	public function add_js($data = NULL, $options = NULL)
 	{
 		$return = ($hook = get_hook('ld_fn_add_js_start')) ? eval($hook) : null;
@@ -71,9 +71,9 @@ class Loader
 
 		// Default options
 		$default_options = array(
-			// external, inline, file
+			// url, inline
 			'type'		=> array(
-				'default'	=> 'external',
+				'default'	=> 'url',
 			),
 
 			//
@@ -131,12 +131,6 @@ class Loader
 			return FALSE;
 		}
 
-		// Check type
-		if ($default_options['type'] == 'file')
-		{
-			$default_options['data'] = $this->create_url_from_file(forum_trim($data));
-		}
-
 		// Tweak weight
 		$default_options['weight'] += count($this->libs['js']) / 1000;
 
@@ -182,7 +176,7 @@ class Loader
 	}
 
 
-	// Add CSS url or file to load
+	// Add CSS url to load
 	public function add_css($data = NULL, $options = NULL)
 	{
 		$return = ($hook = get_hook('ld_fn_add_css_start')) ? eval($hook) : null;
@@ -198,7 +192,7 @@ class Loader
 		$default_options = array(
 			//
 			'type'		=> array(
-				'default'	=> 'external',
+				'default'	=> 'url',
 			),
 
 			//
@@ -253,12 +247,6 @@ class Loader
 		if (empty($default_options['data']) || utf8_strlen($default_options['data']) < 1)
 		{
 			return FALSE;
-		}
-
-		// Check type
-		if ($default_options['type'] == 'file')
-		{
-			$default_options['data'] = $this->create_url_from_file(forum_trim($data));
 		}
 
 		// Tweak weight
@@ -320,7 +308,7 @@ class Loader
 				unset($libs[$key]);
 				continue;
 			}
-			else if ($lib['type'] == 'external' || $lib['type'] == 'file')
+			else if ($lib['type'] == 'url')
 			{
 				$output .= forum_trim($this->check_conditional_comments($lib, '<link rel="stylesheet" type="text/css" media="'.$lib['media'].'" href="'.$lib['data'].'" />'))."\n";
 				unset($libs[$key]);
@@ -353,7 +341,7 @@ class Loader
 				unset($libs[$key]);
 				continue;
 			}
-			else if ($lib['type'] == 'external' || $lib['type'] == 'file')
+			else if ($lib['type'] == 'url')
 			{
 				$output .= '<script'.(($lib['async']) ? " async" : "").(($lib['defer']) ? " defer=\"true\"" : "").' src="'.$lib['data'].'"></script>'."\n";
 				unset($libs[$key]);
@@ -403,7 +391,7 @@ class Loader
 				unset($libs[$key]);
 				continue;
 			}
-			else if ($lib['type'] == 'external' || $lib['type'] == 'file')
+			else if ($lib['type'] == 'url')
 			{
 				if ($lib['group'] == FORUM_JS_GROUP_SYSTEM)
 				{
@@ -478,61 +466,6 @@ class Loader
 		else
 		{
 			return 0;
-		}
-	}
-
-
-	// Try a get uri scheme (based on Drupal)
-	private function get_file_uri_scheme($uri)
-	{
-		$position = strpos($uri, '://');
-		return $position ? substr($uri, 0, $position) : FALSE;
-	}
-
-
-	//
-	private function encode_path($path)
-	{
-		return str_replace('%2F', '/', rawurlencode($path));
-	}
-
-
-	// Creates a web-accessible URL for local file. (based on Drupal)
-	private function create_url_from_file($uri)
-	{
-		global $base_url;
-
-		$scheme = $this->get_file_uri_scheme($uri);
-
-		if (!$scheme)
-		{
-		    // Allow for:
-		    // - root-relative URIs (e.g. /foo.jpg in http://example.com/foo.jpg)
-		    // - protocol-relative URIs (e.g. //bar.jpg, which is expanded to
-		    //   http://example.com/bar.jpg by the browser when viewing a page over
-		    //   HTTP and to https://example.com/bar.jpg when viewing a HTTPS page)
-		    // Both types of relative URIs are characterized by a leading slash, hence
-		    // we can use a single check.
-		    if (utf8_substr($uri, 0, 1) == '/')
-		    {
-				return $uri;
-		    }
-		    else
-		    {
-				// If this is not a properly formatted stream, then it is a shipped file.
-				// Therefore, return the urlencoded URI with the base URL prepended.
-				return $base_url.'/'.$this->encode_path($uri);
-		    }
-		}
-		else if ($scheme == 'http' || $scheme == 'https')
-		{
-			// Check for http so that we don't have to implement getExternalUrl() for
-			// the http wrapper.
-			return $uri;
-		}
-		else
-		{
-			return FALSE;
 		}
 	}
 
