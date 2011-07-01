@@ -134,7 +134,7 @@ $lang_admin_settings = array(
 
 'Features mask passwords'			=>	'Mask passwords in forms',
 'Features mask passwords legend'	=>	'Mask passwords',
-'Features mask passwords info'		=>	'If enabled, PunBB will show password confirmation field and masking password. If masking disabled — password field is only one and open and user never register with invalid password. In login form password is always masked.',
+'Features mask passwords info'		=>	' If enabled, PunBB will mask all passwords fields and show the password confirmation field when applicable. If disabled, password fields will not be masked and users will only have to enter their passwords once when registring and changing them. The password field on the login form is always masked (regardless of this option).',
 'Enable mask passwords'				=>	'Enable mask password',
 'Enable mask passwords label'		=>	'Enable mask password in forms.',
 
