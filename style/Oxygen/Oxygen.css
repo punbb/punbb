@@ -854,6 +854,7 @@ D - COMMON INTERFACE ELEMENTS
 #querytime {
 	text-align: right;
 	font-size: 0.917em;
+	padding: 0;
 }
 
 #extensions-used {
