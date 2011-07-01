@@ -286,6 +286,10 @@ label,
 	color: #999;
 }
 
+.user-ident .username strong {
+	color: #222;
+}
+
 /* Menus
 ----------------------------------------------------------------*/
 
@@ -614,3 +618,4 @@ button:focus {
 	background: #FFFFCC;
 	color: #222;
 }
+

@@ -514,8 +514,8 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .user-ident .username a,
 .user-ident .username strong {
-	font-size: 1.167em;
-	font-weight: bold;
+	font-size: 1.7em;
+	font-weight: normal;
 }
 
 .user-ident .username a,
