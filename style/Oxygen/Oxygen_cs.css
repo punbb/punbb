@@ -521,6 +521,7 @@ input[type="number"]:focus,
 textarea:active,
 textarea:focus {
 	border-color: #C8D3DC #D3DAE1 #D3DAE1 #C8D3DC;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
 	background: #FFFFF3;
 	background: -moz-linear-gradient(top, #fffee8, #fff);
 	background: -o-linear-gradient(top, #fffee8, #fff);
