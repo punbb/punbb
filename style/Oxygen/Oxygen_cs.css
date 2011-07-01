@@ -47,6 +47,19 @@ a:focus {
 	color: #CD0021;
 }
 
+.sig-content a,
+.sig-content a:visited {
+	color: #999;
+	text-decoration: underline;
+}
+
+.sig-content a:hover,
+.sig-content a:active,
+.sig-content a:focus,
+.sig-content a:visited:hover {
+	color: #333;
+}
+
 .gen-content,
 .main-content {
 	background: #fbfbfb;
@@ -130,6 +143,16 @@ h4.post-title,
 	color: #999;
 }
 
+.sig-demo {
+	color: #333;
+}
+
+.sig-demo a,
+.sig-demo a:visited {
+	color: #333;
+	text-decoration: underline;
+}
+
 .online .userstatus span {
 	border-color: #3F9439;
 }
@@ -207,10 +230,9 @@ ul li strong {
 	background: #F4F9FD;
 }
 
-.ct-box .hn,
-.ct-box .sig-demo {
+.ct-box .hn {
 	border-color: #DBE0E4;
-	color: #1F537B;
+	color: #333;
 }
 
 .error-box .hn {
