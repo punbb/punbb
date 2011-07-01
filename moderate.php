@@ -1624,7 +1624,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			if (!empty($forum_page['item_title_status']))
 				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(', ', $forum_page['item_title_status'])).'</span>';
 
-			$forum_page['item_title']['link'] = '<strong><a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a></strong>';
+			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 			($hook = get_hook('mr_topic_loop_normal_topic_pre_item_title_merge')) ? eval($hook) : null;
 
