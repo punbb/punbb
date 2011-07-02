@@ -14,10 +14,6 @@
 // Encodes the contents of $str so that they are safe to output on an (X)HTML page
 function forum_htmlencode($str)
 {
-	$return = ($hook = get_hook('fn_forum_htmlencode_start')) ? eval($hook) : null;
-	if ($return != null)
-		return $return;
-
 	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
