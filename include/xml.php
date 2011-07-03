@@ -153,10 +153,12 @@ function validate_manifest($xml_array, $folder_name)
 			$errors[] = $lang_admin_ext['extension/engine error'];
 		else if ($ext['attributes']['engine'] != '1.0')
 			$errors[] = $lang_admin_ext['extension/engine error2'];
+
 		if (!isset($ext['id']) || $ext['id'] == '')
 			$errors[] = $lang_admin_ext['extension/id error'];
-		if ($ext['id'] != $folder_name)
+		else if ($ext['id'] != $folder_name)
 			$errors[] = $lang_admin_ext['extension/id error2'];
+
 		if (!isset($ext['title']) || $ext['title'] == '')
 			$errors[] = $lang_admin_ext['extension/title error'];
 		if (!isset($ext['version']) || $ext['version'] == '' || preg_match('/[^a-z0-9\- \.]+/i', $ext['version']))
