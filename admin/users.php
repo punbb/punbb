@@ -504,7 +504,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete users'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete users'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="delete_users_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
@@ -816,7 +816,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="change_group_comply" value="<?php echo $lang_admin_users['Change group'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="change_group_comply" value="<?php echo $lang_admin_users['Change group'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="change_group_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
