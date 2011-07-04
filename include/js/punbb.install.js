@@ -1,11 +1,16 @@
-// FORUM
+// PunBB install functions
+// version 0.2
+
+/*jslint browser: true, maxerr: 50, indent: 4 */
+/*global PUNBB: true */
+
 if (typeof PUNBB === 'undefined' || !PUNBB) {
 	var PUNBB = {};
 }
 
 // INSTALL
-PUNBB.install = function () {
-	var docEl = document.documentElement;
+PUNBB.install = (function () {
+	'use strict';
 
 	function get(el) {
 		return document.getElementById(el);
@@ -46,7 +51,7 @@ PUNBB.install = function () {
 			}
 		}
 	};
-}();
+}());
 
 
 // One onload handler
