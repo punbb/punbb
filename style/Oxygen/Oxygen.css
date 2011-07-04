@@ -71,6 +71,9 @@ hr,
 	margin-top: 1em !important;
 }
 
+.nowrap {
+	white-space: nowrap;
+}
 
 /* Text Setup (Equalise everything before styling)
 -------------------------------------------------------------*/
