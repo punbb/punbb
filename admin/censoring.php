@@ -175,7 +175,7 @@ ob_start();
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_censoring']).'?action=foo') ?>" />
 			</div>
 			<div class="ct-box" id="info-censored-intro">
-				<p><?php echo $lang_admin_censoring['Add censored word intro']; if ($forum_user['g_id'] == FORUM_ADMIN) printf(' '.$lang_admin_censoring['Add censored word extra'], '<a href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin_common['Settings'].' &rarr; '.$lang_admin_common['Features'].'</a>') ?></p>
+				<p><?php echo $lang_admin_censoring['Add censored word intro']; if ($forum_user['g_id'] == FORUM_ADMIN) printf(' '.$lang_admin_censoring['Add censored word extra'], '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin_common['Settings'].' &rarr; '.$lang_admin_common['Features'].'</a>') ?></p>
 			</div>
 			<fieldset class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?php echo $lang_admin_censoring['Add censored word legend'] ?></span></legend>
