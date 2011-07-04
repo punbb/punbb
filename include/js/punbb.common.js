@@ -4,11 +4,12 @@
 
 /*global PUNBB: true */
 
-if (typeof PUNBB === "undefined" || !PUNBB) {
+if (typeof PUNBB === undefined || !PUNBB) {
 	var PUNBB = {};
 }
 
 PUNBB.common = function () {
+	'use strict';
 	var docEl = document.documentElement;
 
 	function get(el) {
@@ -16,7 +17,7 @@ PUNBB.common = function () {
 	}
 
 	return {
-		init: function() {
+		init: function () {
 			PUNBB.common.addClass(docEl, "js");
 
 			PUNBB.common.attachWindowOpen();
@@ -29,8 +30,7 @@ PUNBB.common = function () {
 
 			// Hide Flash Messages
 			var msgEl = get("brd-messages");
-			if (msgEl)
-			{
+			if (msgEl) {
 				setTimeout(function () {
 					msgEl.style.visibility = "hidden";
 				}, 4000);
@@ -38,34 +38,32 @@ PUNBB.common = function () {
 		},
 
 		// attach FN to WINDOW.ONLOAD handler
-		addLoadEvent: function (fn)
-		{
+		addLoadEvent: function (fn) {
 			var x = window.onload;
-			window.onload = (x && typeof x == "function") ? function () { x(); fn(); } : fn;
+			window.onload = (x && typeof x === 'function') ? function () { x(); fn(); } : fn;
 		},
 
 		// return TRUE if node N has class X, else FALSE
-		hasClass: function (n, x)
-		{
+		hasClass: function (n, x) {
 			return (new RegExp("\\b" + x + "\\b")).test(n.className);
 		},
 
 		// add X class to N node, return TRUE if added, FALSE if already exists
-		addClass: function (n, x)
-		{
-			if (PUNBB.common.hasClass(n, x))
+		addClass: function (n, x) {
+			if (PUNBB.common.hasClass(n, x)) {
 				return false;
-			else
+			} else {
 				n.className += " " + x;
+			}
 
 			return true;
 		},
 
 		// remove X class from N node, return TRUE if removed, FALSE if not present
-		removeClass: function (n, x)
-		{
-			if (!PUNBB.common.hasClass(n, x))
+		removeClass: function (n, x) {
+			if (!PUNBB.common.hasClass(n, x)) {
 				return false;
+			}
 
 			x = new RegExp("\\s*\\b" + x + "\\b", "g");
 			n.className = n.className.replace(x, "");
@@ -73,49 +71,57 @@ PUNBB.common = function () {
 		},
 
 		// blink node N twice
-		blink: function (n, i)
-		{
-			if (typeof i == "undefined") i = 2;
+		blink: function (n, i) {
+			if (typeof i === undefined) {
+				i = 2;
+			}
+
 			var x = n.style.visibility;
-			if (i && x!="hidden")
-			{
-				n.style.visibility = "hidden";
-				setTimeout(function () { n.style.visibility=x; }, 200);
-				setTimeout(function () { PUNBB.common.blink(n,i-1); }, 400);
+			if (i && x !== 'hidden') {
+				n.style.visibility = 'hidden';
+				setTimeout(function () { n.style.visibility = x; }, 200);
+				setTimeout(function () { PUNBB.common.blink(n, i - 1); }, 400);
 			}
 		},
 
 		// return true if node N scrolled into view, else false (y axis only)
-		onScreen: function (n)
-		{
-			function pageYOffset() // return number of pixels page has scrolled
-			{
+		onScreen: function (n) {
+			function pageYOffset() {
+				// return number of pixels page has scrolled
 				var y = -1;
-				if (window.pageYOffset)
-					y = window.pageYOffset; // all except IE
-				else if (docEl && docEl.scrollTop)
-					y = docEl.scrollTop; // IE 6 Strict
-				else if (document.body)
-					y = document.body.scrollTop; // all other IE ver
+				if (window.pageYOffset) {
+					// all except IE
+					y = window.pageYOffset;
+				} else if (docEl && docEl.scrollTop) {
+					// IE 6 Strict
+					y = docEl.scrollTop;
+				} else if (document.body) {
+					// all other IE ver
+					y = document.body.scrollTop;
+				}
 
 				return y;
 			}
 
-			function innerHeight() // return inner height of browser window
-			{
+			function innerHeight() {
+				// return inner height of browser window
 				var y = -1;
-				if (window.innerHeight)
-					y = window.innerHeight; // all except IE
-				else if (docEl && docEl.clientHeight)
-					y = docEl.clientHeight; // IE 6 Strict Mode
-				else if (document.body)
-					y = document.body.clientHeight; // all other IE ver
+				if (window.innerHeight) {
+					// all except IE
+					y = window.innerHeight;
+				} else if (docEl && docEl.clientHeight) {
+					// IE 6 Strict Mode
+					y = docEl.clientHeight;
+				} else if (document.body) {
+					// all other IE ver
+					y = document.body.clientHeight;
+				}
 
 				return y;
 			}
 
-			function nodeYOffset(n) // return y coordinate of node N
-			{
+			function nodeYOffset(n) {
+			// return y coordinate of node N
 				var y = n.offsetTop;
 				n = n.offsetParent;
 				return n ? y += nodeYOffset(n) : y;
@@ -130,56 +136,52 @@ PUNBB.common = function () {
 		},
 
 		// apply FN to every ARR item, return array of results
-		map: function (fn, arr)
-		{
-			for (var i=0,len=arr.length; i<len; i++)
-			{
+		map: function (fn, arr) {
+			var i, len;
+			for (i = 0, len = arr.length; i < len; i += 1) {
 				arr[i] = fn(arr[i]);
 			}
 			return arr;
 		},
 
 		// return first index where FN(ARR[i]) is true or -1 if none
-		find: function (fn, arr)
-		{
-			for (var i=0,len=arr.length; i<len; i++)
-			{
-				if (fn(arr[i])) return i;
+		find: function (fn, arr) {
+			var i, len;
+			for (i = 0, len = arr.length; i < len; i += 1) {
+				if (fn(arr[i])) {
+					return i;
+				}
 			}
 			return -1;
 		},
 
 		// return array of elements for which FN(ARR[i]) is true
-		arrayOfMatched: function (fn, arr)
-		{
-			var matched = [];
-			for (var i=0,len=arr.length; i<len; i++)
-			{
-				if (fn(arr[i])) matched.push(arr[i]);
+		arrayOfMatched: function (fn, arr) {
+			var i, len, matched = [];
+			for (i = 0, len = arr.length; i < len; i += 1) {
+				if (fn(arr[i])) {
+					matched.push(arr[i]);
+				}
 			}
 			return matched;
 		},
 
 		// flattens multi-dimentional arrays into simple arrays
-		flatten: function (arr)
-		{
-			var flt = [];
-			for (var i=0,len=arr.length; i<len; i++)
-			{
-				if (typeof arr[i] == "object" && arr.length)
-				{
+		flatten: function (arr) {
+			var i, len, flt = [];
+			for (i = 0, len = arr.length; i < len; i += 1) {
+				if (typeof arr[i] === 'object' && arr.length) {
 					flt.concat(PUNBB.common.flatten(arr[i]));
-				}
-				else
+				} else {
 					flt.push(arr[i]);
+				}
 			}
 
 			return flt;
 		},
 
 		// check FORMs required (REQ_) fields
-		validateForm: function (form)
-		{
+		validateForm: function (form) {
 			var fn = function (x) {
 				return x.name && x.name.indexOf("req_") === 0;
 			};
@@ -192,24 +194,22 @@ PUNBB.common = function () {
 			};
 
 			var empty = PUNBB.common.find(fn, nodes);
-			if (empty > -1)
-			{
-				if (PUNBB.common.find(fn, nodes) > -1)
-				{
+			if (empty > -1) {
+				if (PUNBB.common.find(fn, nodes) > -1) {
 					var n = get("req-msg");
 					PUNBB.common.removeClass(n, "req-warn");
 					var newlyAdded = PUNBB.common.addClass(n, "req-error");
 
-					if (!PUNBB.common.onScreen(n))
-					{
+					if (!PUNBB.common.onScreen(n)) {
 						n.scrollIntoView(); // method not in W3C DOM, but fully cross-browser?
 						setTimeout(function () { PUNBB.common.blink(n); }, 500);
-					}
-					else if (!newlyAdded)
+					} else if (!newlyAdded) {
 						PUNBB.common.blink(n);
+					}
 
-					if (PUNBB.common.onScreen(nodes[empty]))
+					if (PUNBB.common.onScreen(nodes[empty])) {
 						nodes[empty].focus();
+					}
 
 					return false;
 				}
@@ -220,8 +220,7 @@ PUNBB.common = function () {
 
 
 		// create a proper redirect URL (if were using SEF friendly URLs) and go there
-		doQuickjumpRedirect: function (url, forum_names)
-		{
+		doQuickjumpRedirect: function (url, forum_names) {
 			var selected_forum_id = get("qjump-select")[get("qjump-select").selectedIndex].value;
 			url = url.replace("$1", selected_forum_id);
 			url = url.replace("$2", forum_names[selected_forum_id]);
@@ -252,42 +251,41 @@ PUNBB.common = function () {
 		},
 
 
-		initToggleCheckboxes: function ()
-		{
+		initToggleCheckboxes: function () {
 			var fn_click = function (frm) {
 				return function () {
 					return PUNBB.common.toggleCheckboxes(frm);
 				};
 			};
 
-			var inputlist = document.getElementsByTagName("span");
-			for (var i = 0, cl = inputlist.length; i < cl; i++)
-			{
+			var i, cl, inputlist = document.getElementsByTagName("span");
+			for (i = 0, cl = inputlist.length; i < cl; i += 1) {
 				var el = inputlist[i];
-				if (PUNBB.common.hasClass(el, "select-all") && el.getAttribute("data-check-form"))
-				{
+				if (PUNBB.common.hasClass(el, "select-all") && el.getAttribute("data-check-form")) {
 					var frm = get(el.getAttribute("data-check-form"));
-					if (frm)
+					if (frm) {
 						el.onclick = fn_click(frm);
+					}
 				}
 			}
 		},
 
 		// toggle all checkboxes in the given form
-		toggleCheckboxes: function (curForm)
-		{
-			if (!curForm)
+		toggleCheckboxes: function (curForm) {
+			if (!curForm) {
 				return false;
+			}
 
-			var inputlist = curForm.getElementsByTagName("input");
-			for (var i = 0, cl = inputlist.length; i < cl; i++)
-			{
+			var i, cl, inputlist = curForm.getElementsByTagName("input");
+			for (i = 0, cl = inputlist.length; i < cl; i += 1) {
 				var el = inputlist[i];
-				if (el.getAttribute("data-no-select-all"))
+				if (el.getAttribute("data-no-select-all")) {
 					continue;
+				}
 
-				if (el.getAttribute("type") == "checkbox" && el.disabled === false)
+				if (el.getAttribute("type") == "checkbox" && el.disabled === false) {
 					el.checked = !el.checked;
+				}
 			}
 
 			return false;
@@ -308,18 +306,18 @@ PUNBB.common = function () {
 				return x.tagName.toUpperCase() == 'TEXTAREA';
 			};
 
-			var forms = document.forms;
-			for (var i = 0, len = forms.length; i<len; i++)
-			{
+			var i, len, forms = document.forms;
+			for (i = 0, len = forms.length; i < len; i += 1) {
 				var f = forms[i];
 				if (!PUNBB.common.hasClass(f, 'frm-ctrl-submit')) {
 					continue;
 				}
 
-				var elements = f.elements,
+				var j, j_len,
+					elements = f.elements,
 					nodes = PUNBB.common.arrayOfMatched(fn_textarea, elements);
 
-				for (var j = 0, j_len = nodes.length; j<j_len; j++) {
+				for (j = 0, j_len = nodes.length; j < j_len; j += 1) {
 					nodes[j].onkeypress = fn_keypress(f);
 				}
 			}
@@ -327,8 +325,7 @@ PUNBB.common = function () {
 
 
 		// attach form validation function to submit-type inputs
-		attachValidateForm: function ()
-		{
+		attachValidateForm: function () {
 			var fn_req = function (x) {
 				return x.name && x.name.indexOf("req_") === 0;
 			};
@@ -343,12 +340,10 @@ PUNBB.common = function () {
 				};
 			};
 
-			var forms = document.forms;
-			for (var i = 0, len = forms.length; i<len; i++)
-			{
+			var i, len, forms = document.forms;
+			for (i = 0, len = forms.length; i < len; i += 1) {
 				var elements = forms[i].elements;
-				if (PUNBB.common.find(fn_req, elements) > -1)
-				{
+				if (PUNBB.common.find(fn_req, elements) > -1) {
 					var nodes = PUNBB.common.arrayOfMatched(fn_button, elements),
 						formRef = forms[i];
 
@@ -362,10 +357,10 @@ PUNBB.common = function () {
 		},
 
 		//
-		attachWindowOpen: function ()
-		{
-			if (!document.getElementsByTagName)
+		attachWindowOpen: function () {
+			if (!document.getElementsByTagName) {
 				return;
+			}
 
 			var fn_open = function () {
 				return function () {
@@ -374,27 +369,31 @@ PUNBB.common = function () {
 				};
 			};
 
-			var nodes = document.getElementsByTagName("a");
-			for (var i=0; i<nodes.length; i++)
-			{
-				if (PUNBB.common.hasClass(nodes[i], "exthelp"))
+			var i, nodes = document.getElementsByTagName("a");
+			for (i = 0; i < nodes.length; i += 1) {
+				if (PUNBB.common.hasClass(nodes[i], "exthelp")) {
 					nodes[i].onclick = fn_open();
+				}
 			}
 		},
 
 		//
-		autoFocus: function ()
-		{
+		autoFocus: function () {
 			var fn_input = function (x) {
 				return x.tagName.toUpperCase() == "TEXTAREA" || (x.tagName.toUpperCase() == "INPUT" && (x.type == "text") || (x.type == "password") || (x.type == "email") || (x.type == "url") || (x.type == "number"));
 			};
 
 			var nodes = get("afocus");
-			if (!nodes || window.location.hash.replace(/#/g,"")) return;
-			nodes = nodes.all ? nodes.all : nodes.getElementsByTagName("*");
+			if (!nodes || window.location.hash.replace(/#/g, "")) {
+				return;
+			}
+
+			nodes = nodes.all || nodes.getElementsByTagName("*");
 			// TODO: make sure line above gets nodes in display-order across browsers
 			var n = PUNBB.common.find(fn_input, nodes);
-			if (n > -1) nodes[n].focus();
+			if (n > -1) {
+				nodes[n].focus();
+			}
 		},
 
 		input_support_attr: function (attr) {
