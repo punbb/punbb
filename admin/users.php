@@ -238,7 +238,7 @@ else if (isset($_GET['show_users']))
 	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_misc['Select'] .'</th>';
 
 	if ($forum_page['num_users'] > 0)
-		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'aus-show-users-results-form\'))">'.$lang_admin_common['Select all'].'</a>';
+		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-show-users-results-form">'.$lang_admin_common['Select all'].'</span>';
 
 	($hook = get_hook('aus_show_users_output_start')) ? eval($hook) : null;
 
@@ -393,6 +393,9 @@ else if (isset($_GET['show_users']))
 		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 <?php
+
+	// Init JS helper for select-all
+	$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 	($hook = get_hook('aus_show_users_end')) ? eval($hook) : null;
 
@@ -991,7 +994,7 @@ else if (isset($_GET['find_user']))
 	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_misc['Select'] .'</th>';
 
 	if ($forum_page['num_users'] > 0)
-		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'aus-find-user-results-form\'))">'.$lang_admin_common['Select all'].'</a>';
+		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-find-user-results-form">'.$lang_admin_common['Select all'].'</span>';
 
 	($hook = get_hook('aus_find_user_output_start')) ? eval($hook) : null;
 
@@ -1141,6 +1144,9 @@ else if (isset($_GET['find_user']))
 		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 <?php
+
+	// Init JS helper for select-all
+	$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 	($hook = get_hook('aus_find_user_end')) ? eval($hook) : null;
 
