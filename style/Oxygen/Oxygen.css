@@ -1955,6 +1955,53 @@ table caption {
 	width: 90%;
 }
 
+#brd-admin-uresults table .tc0,
+#brd-admin-iresults table .tc0 {
+	width: 45%;
+	}
+
+#brd-admin-uresults table .tc1,
+#brd-admin-iresults table .tc1,
+#brd-admin-iresults table .tc2 {
+	width: 20%;
+	}
+
+#brd-admin-uresults table .tc2,
+#brd-admin-uresults table .tc4 {
+	width: 10%;
+	text-align: center;
+	}
+
+#brd-admin-uresults .tc3 {
+	width: 15%;
+	}
+
+#brd-admin-uresults td.tc0 span,
+#brd-admin-uresults td.tc3 span {
+	display: block;
+	white-space: nowrap;
+	}
+
+#brd-admin-uresults td.tc0 a,
+#brd-admin-uresults td.tc3 a {
+	font-weight: bold;
+	}
+
+#brd-admin-iresults table .tc0 {
+	width: 25%;
+	}
+
+#brd-admin-iresults table .tc1 {
+	width: 25%;
+	}
+
+#brd-admin-iresults table .tc2 {
+	width: 20%;
+	}
+
+#brd-admin-iresults .tc3 {
+	width: 30%;
+	}
 
 
 /* Table Cell Styling
