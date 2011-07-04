@@ -1982,11 +1982,6 @@ table caption {
 	white-space: nowrap;
 	}
 
-#brd-admin-uresults td.tc0 a,
-#brd-admin-uresults td.tc3 a {
-	font-weight: bold;
-	}
-
 #brd-admin-iresults table .tc0 {
 	width: 25%;
 	}
