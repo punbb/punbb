@@ -136,7 +136,7 @@ define('FORUM_UNVERIFIED', 0);
 define('FORUM_ADMIN', 1);
 define('FORUM_GUEST', 2);
 
-// Avatars
+// Define avatars type
 define('FORUM_AVATAR_NONE', 0);
 define('FORUM_AVATAR_GIF', 1);
 define('FORUM_AVATAR_JPG', 2);

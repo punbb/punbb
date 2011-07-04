@@ -42,6 +42,12 @@ if (!defined('FORUM'))
 if (!defined('FORUM_DEBUG'))
 	define('FORUM_DEBUG', 1);
 
+// Define avatars type
+define('FORUM_AVATAR_NONE', 0);
+define('FORUM_AVATAR_GIF', 1);
+define('FORUM_AVATAR_JPG', 2);
+define('FORUM_AVATAR_PNG', 3);
+
 // Turn on full PHP error reporting
 error_reporting(E_ALL);
 
