@@ -8,7 +8,7 @@ if (typeof PUNBB === undefined || !PUNBB) {
 	var PUNBB = {};
 }
 
-PUNBB.common = function () {
+PUNBB.common = (function () {
 	'use strict';
 	var docEl = document.documentElement;
 
@@ -459,7 +459,7 @@ PUNBB.common = function () {
 			return !!(attr in inputElem);
 		}
 	};
-}();
+}());
 
 
 // One onload handler
