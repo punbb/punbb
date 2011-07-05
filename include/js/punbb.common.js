@@ -49,6 +49,50 @@ PUNBB.common = function () {
 			}
 		},
 
+
+		// attach FN to WINDOW.ONDOMREADY handler
+		addDOMReadyEvent: function (fn) {
+			var isLoaded = false;
+
+			if (document.addEventListener) {
+				document.addEventListener('DOMContentLoaded', function () {
+					fn();
+					isLoaded = true;
+				}, false);
+
+				window.addEventListener('load', function () {
+					if (!isLoaded) {
+						fn();
+					}
+				}, false);
+			} else if (window.attachEvent) {
+				if (window.ActiveXObject && window === window.top) {
+					_ie();
+				} else {
+					window.attachEvent('onload', fn);
+				}
+			} else {
+				var _onload = window.onload;
+				window.onload = function () {
+					if (typeof _onload === 'function') {
+						_onload();
+					}
+					fn();
+				}
+			}
+
+			function _ie() {
+				try {
+					document.documentElement.doScroll('left');
+				} catch (error) {
+					setTimeout(_ie, 0);
+					return;
+				}
+				fn();
+			}
+		},
+
+
 		// return TRUE if node N has class X, else FALSE
 		hasClass: function (n, x) {
 			return (new RegExp("\\b" + x + "\\b")).test(n.className);
@@ -417,7 +461,6 @@ PUNBB.common = function () {
 
 // One onload handler
 PUNBB.common.addLoadEvent(PUNBB.common.init);
-
 
 /* A handful of functions in this script have been released into the Public
    Domain by Shawn Brown or other authors. Although I, Shawn Brown, do not
