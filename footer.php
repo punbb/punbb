@@ -85,6 +85,7 @@ $forum_javascript_commonjs_urls = '
 	PUNBB.env = {
 		base_url: "'.forum_htmlencode($base_url).'/",
 		base_js_url: "'.forum_htmlencode($base_url).'/include/js/",
+		isWindowLoaded: false,
 		user_lang: "'.forum_htmlencode($forum_user['language']).'",
 		user_style: "'.forum_htmlencode($forum_user['style']).'",
 		user_is_guest: "'.forum_htmlencode(($forum_user['is_guest'] == 1) ? "1" : "0").'",

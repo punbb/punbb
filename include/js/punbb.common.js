@@ -20,6 +20,8 @@ PUNBB.common = function () {
 		init: function () {
 			PUNBB.common.addClass(docEl, "js");
 
+			PUNBB.env.isWindowLoaded = true;
+
 			PUNBB.common.attachWindowOpen();
 			PUNBB.common.autoFocus();
 			PUNBB.common.attachCtrlEnterForm();
@@ -39,8 +41,12 @@ PUNBB.common = function () {
 
 		// attach FN to WINDOW.ONLOAD handler
 		addLoadEvent: function (fn) {
-			var x = window.onload;
-			window.onload = (x && typeof x === 'function') ? function () { x(); fn(); } : fn;
+			if (PUNBB.env.isWindowLoaded === true) {
+				fn();
+			} else {
+				var x = window.onload;
+				window.onload = (x && typeof x === 'function') ? function () { x(); fn(); } : fn;
+			}
 		},
 
 		// return TRUE if node N has class X, else FALSE
