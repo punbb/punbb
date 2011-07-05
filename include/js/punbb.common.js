@@ -17,10 +17,8 @@ PUNBB.common = function () {
 	}
 
 	return {
-		init: function () {
+		on_domready_init: function () {
 			PUNBB.common.addClass(docEl, "js");
-
-			PUNBB.env.isWindowLoaded = true;
 
 			PUNBB.common.attachWindowOpen();
 			PUNBB.common.autoFocus();
@@ -37,6 +35,11 @@ PUNBB.common = function () {
 					msgEl.style.visibility = "hidden";
 				}, 4000);
 			}
+		},
+
+		// run on window.load
+		on_load_init: function () {
+			PUNBB.env.isWindowLoaded = true;
 		},
 
 		// attach FN to WINDOW.ONLOAD handler
@@ -460,7 +463,9 @@ PUNBB.common = function () {
 
 
 // One onload handler
-PUNBB.common.addLoadEvent(PUNBB.common.init);
+PUNBB.common.addDOMReadyEvent(PUNBB.common.on_domready_init);
+PUNBB.common.addLoadEvent(PUNBB.common.on_load_init);
+
 
 /* A handful of functions in this script have been released into the Public
    Domain by Shawn Brown or other authors. Although I, Shawn Brown, do not
