@@ -386,7 +386,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 /* Option lists
 -------------------------------------------------------------*/
 
-.options span {
+.options > span {
 	padding: 0 0 0 0.3em;
 	margin: 0 0 0 0.25em;
 }
@@ -397,7 +397,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 }
 
 
-.options span.first-item {
+.options > span.first-item {
 	border-left: 0;
 	padding-left: 0;
 	margin-left: 0;
@@ -1804,11 +1804,11 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	float: right;
 }
 
-.postfoot .post-actions span {
+.postfoot .post-actions > span {
 	margin-left: 0.75em;
 }
 
-.postfoot .post-contacts span {
+.postfoot .post-contacts > span {
 	margin-right: 0.75em;
 }
 
