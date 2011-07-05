@@ -10,7 +10,9 @@ if (typeof PUNBB === undefined || !PUNBB) {
 
 PUNBB.common = (function () {
 	'use strict';
-	var docEl = document.documentElement;
+	var docEl = document.documentElement,
+		isDOMReady = false,
+		isWindowLoaded = false;
 
 	function get(el) {
 		return document.getElementById(el);
@@ -18,6 +20,9 @@ PUNBB.common = (function () {
 
 	return {
 		on_domready_init: function () {
+			console.log('domready');
+			isDOMReady = true;
+
 			PUNBB.common.addClass(docEl, "js");
 
 			PUNBB.common.attachWindowOpen();
@@ -39,12 +44,12 @@ PUNBB.common = (function () {
 
 		// run on window.load
 		on_load_init: function () {
-			PUNBB.env.isWindowLoaded = true;
+			isWindowLoaded = true;
 		},
 
 		// attach FN to WINDOW.ONLOAD handler
 		addLoadEvent: function (fn) {
-			if (PUNBB.env.isWindowLoaded === true) {
+			if (isWindowLoaded === true) {
 				fn();
 			} else {
 				var x = window.onload;
@@ -56,6 +61,12 @@ PUNBB.common = (function () {
 		// attach FN to WINDOW.ONDOMREADY handler
 		addDOMReadyEvent: function (fn) {
 			var isLoaded = false;
+
+			// DOM already ready?
+			if (isDOMReady === true) {
+				fn();
+				return;
+			}
 
 			if (document.addEventListener) {
 				document.addEventListener('DOMContentLoaded', function () {
@@ -75,18 +86,12 @@ PUNBB.common = (function () {
 					window.attachEvent('onload', fn);
 				}
 			} else {
-				var _onload = window.onload;
-				window.onload = function () {
-					if (typeof _onload === 'function') {
-						_onload();
-					}
-					fn();
-				}
+				PUNBB.common.addLoadEvent(fn);
 			}
 
 			function _ie() {
 				try {
-					document.documentElement.doScroll('left');
+					docEl.doScroll('left');
 				} catch (error) {
 					setTimeout(_ie, 0);
 					return;
