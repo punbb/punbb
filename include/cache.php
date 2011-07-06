@@ -349,7 +349,7 @@ function generate_quickjump_cache($group_id = false)
 			$output_js .= "\n\t".'sef_friendly_url_array['.$forum_id.'] = "'.forum_htmlencode($forum_name).'";';
 
 		// Add Load Event
-		$output_js .= "\n\n\t".'PUNBB.common.addLoadEvent(function () { PUNBB.common.attachQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array); });'."\n".'}());';
+		$output_js .= "\n\n\t".'PUNBB.common.addDOMReadyEvent(function () { PUNBB.common.attachQuickjumpRedirect(forum_quickjump_url, sef_friendly_url_array); });'."\n".'}());';
 
 		if ($forum_count < 2)
 			$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);';

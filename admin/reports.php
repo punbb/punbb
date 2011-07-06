@@ -265,7 +265,7 @@ if (!$forum_page['new_reports'] && !$forum_page['old_reports'])
 }
 
 // Init JS helper for select-all
-$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
+$forum_loader->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 ($hook = get_hook('arp_end')) ? eval($hook) : null;
 

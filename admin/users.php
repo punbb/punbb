@@ -395,7 +395,7 @@ else if (isset($_GET['show_users']))
 <?php
 
 	// Init JS helper for select-all
-	$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
+	$forum_loader->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 	($hook = get_hook('aus_show_users_end')) ? eval($hook) : null;
 
@@ -1146,7 +1146,7 @@ else if (isset($_GET['find_user']))
 <?php
 
 	// Init JS helper for select-all
-	$forum_loader->add_js('PUNBB.common.addLoadEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
+	$forum_loader->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 	($hook = get_hook('aus_find_user_end')) ? eval($hook) : null;
 
