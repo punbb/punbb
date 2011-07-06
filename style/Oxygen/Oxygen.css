@@ -205,7 +205,7 @@ p.item-select label,
 	left: -999em;
 	text-indent: -999em;
 	position:absolute;
-	line-height: 0em;
+	line-height: 0;
 	visibility: hidden;
 }
 
@@ -415,10 +415,10 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .ct-box {
 	border-style: solid;
 	border-width: 1px;
-	border-radius: .35em;
 	-moz-border-radius: .35em;
 	-webkit-border-radius: .35em;
 	-khtml-border-radius: .35em;
+	border-radius: .35em;
 	margin: 1.417em;
 	padding: 0.5em 1em;
 	position: relative;
@@ -484,7 +484,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	float: left;
 	margin-left: -17em;
 	width: 16em;
-	display: inline;
 	position: relative;
 	text-align: right;
 	font-weight: bold;
@@ -599,7 +598,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .admin-submenu {
 	border-style: solid;
-	border-width: 0px 1px 0px 1px;
+	border-width: 0 1px;
 }
 
 .admin-submenu ul {
@@ -687,7 +686,6 @@ D - COMMON INTERFACE ELEMENTS
 #brd-access a:link,
 #brd-access a:visited {
 	height: 2em;
-	padding: 0 1.3em;
 	line-height: 2em;
 	position: absolute;
 	left: -999em;
@@ -769,11 +767,7 @@ D - COMMON INTERFACE ELEMENTS
 /* Breadcrumbs
 -------------------------------------------------------------*/
 
-.crumbs .crumblast {
-	/*font-weight: bold;*/
-}
-
-.crumbs .crumblast  span {
+.crumbs .crumblast span {
 	font-weight: normal;
 }
 
@@ -783,8 +777,8 @@ D - COMMON INTERFACE ELEMENTS
 }
 
 .crumbs {
-	margin: 0.5em 0em;
-	padding: 0em 1.417em;
+	margin: 0.5em 0;
+	padding: 0 1.417em;
 	font-size: 1.084em;
 }
 
@@ -1162,7 +1156,7 @@ F - MAIN CONTENT - FORMS
 	border-top-style: dashed;
 	border-top-width: 1px;
 	margin: 1.417em;
-	padding: 1.3em 0pt 0em;
+	padding: 1.3em 0 0;
 }
 
 .group1 {
@@ -1212,7 +1206,7 @@ optgroup {
 	position: relative;
 	border-top-style: solid;
 	border-top-width: 1px;
-	padding: 1.1em 0pt 0.3em 18em;
+	padding: 1.1em 0 0.3em 18em;
 }
 
 .frm-buttons .submit {
@@ -1258,9 +1252,12 @@ button {
 	text-align: center;
 	text-decoration: none;
 	padding: .32em .5em;
+	-moz-border-radius: .25em;
+	-webkit-border-radius: .25em;
+	-khtml-border-radius: .25em;
 	border-radius: .25em;
 	border: 1px solid #CCCCCC;
-	text-shadow: 0px 1px 1px #ddd;
+	text-shadow: 0 1px 1px #ddd;
 }
 
 input[type="submit"]:hover,
@@ -1738,7 +1735,6 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	margin-left: -19em;
 	left: -1px;
 	position: relative;
-	display: inline;
 	padding: 0 1em 0.5em 1.5em;
 	overflow: hidden;
 	margin-top: -1em;
@@ -1793,7 +1789,6 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	width: 15.5em;
 	padding: 0.5em 1em 0.5em 1.5em;
 	position: relative;
-	display: inline;
 	left: -1px;
 }
 
@@ -2208,7 +2203,7 @@ IE6 - FIXES
 }
 
 .ie6 .sf-set .checkbox label span {
-	padding-right: 0em;
+	padding-right: 0;
 	padding-left: 5em;
 }
 
