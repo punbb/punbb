@@ -613,8 +613,6 @@ button:focus {
 
 #brd-messages span {
 	color: #333;
-	font-weight: bold;
-	line-height: 2.1em;
 	-webkit-border-bottom-right-radius: .3em;
 	-webkit-border-bottom-left-radius: .3em;
 	-moz-border-radius-bottomright: .3em;

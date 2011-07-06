@@ -2138,6 +2138,8 @@ H - MAIN CONTENT - ODDMENTS
 	padding: .35em 1.3em;
 	margin: 0 1em;
 	font: 87%/1.5em Arial, sans-serif;
+	font-weight: bold;
+	line-height: 2em;
 	border-width: 1px;
 	border-style: solid;
 }
