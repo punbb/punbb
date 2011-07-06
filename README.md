@@ -1,6 +1,6 @@
 # PunBB
 
-PunBB is a fast and lightweight PHP-powered discussion board. It is released under the GNU General Public License. Its primary goals are to be faster, smaller and less graphically intensive as compared to other discussion boards. PunBB has fewer features than many other discussion boards, but is generally faster and outputs smaller, semantically correct XHTML-compliant pages. 
+PunBB is a fast and lightweight PHP-powered discussion board. It is released under the GNU General Public License. Its primary goals are to be faster, smaller and less graphically intensive as compared to other discussion boards. PunBB has fewer features than many other discussion boards, but is generally faster and outputs smaller, semantically correct XHTML-compliant pages.
 
 ## Quick install
  1. [Download the latest revision of PunBB](http://punbb.informer.com/downloads.php). Decompress the PunBB archive to a directory.
@@ -9,7 +9,7 @@ PunBB is a fast and lightweight PHP-powered discussion board. It is released und
 
 ## Requirements
  - A webserver
- - PHP 4.3.0 or later (PHP 5 included)
+ - PHP 5
  - A database where forum data is to be stored, created in one of: MySQL 4.1.2 or later, PostgreSQL 7.0 or later or SQLite 2
 
 ## Extension installation
@@ -30,6 +30,7 @@ Personal email addresses are not appropriate for bug reports.
  - [Styles](http://punbb.informer.com/wiki/punbb13/syles)
  - [Extensions repository](http://punbb.informer.com/extensions/)
  - [Community Forums](http://punbb.informer.com/forums/)
+ - [Twitter](https://twitter.com/punbb_forum)
  - [Development](https://github.com/punbb/punbb/)
  - [Reporting PunBB core SECURITY bugs (only!)](http://punbb.informer.com/bugreport.php)
 
