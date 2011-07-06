@@ -549,6 +549,7 @@ textarea:focus {
 	background: -o-linear-gradient(top, #fffee8, #fff);
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fffee8), to(#fff));
 	background: -webkit-linear-gradient(top, #fffee8, #fff);
+	background: -ms-linear-gradient(top, #fffee8, #fff);
 	background: linear-gradient(top, #fffee8, #fff);
 }
 
@@ -561,6 +562,7 @@ button {
 	background: -o-linear-gradient(top, #fff, #eee);
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));
 	background: -webkit-linear-gradient(top, #fff, #eee);
+	background: -ms-linear-gradient(top, #fff, #eee);
 	background: linear-gradient(top, #fff, #eee);
 	color: #404040;
 }
@@ -576,6 +578,7 @@ button:focus {
 	background: -o-linear-gradient(top, #fff, #ebebeb);
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ebebeb));
 	background: -webkit-linear-gradient(top, #fff, #ebebeb);
+	background: -ms-linear-gradient(top, #fff, #ebebeb);
 	background: linear-gradient(top, #fff, #ebebeb);
 	color: #111;
 }
@@ -625,22 +628,23 @@ button:focus {
 }
 
 #brd-messages .message_error {
-	border-color:#FFE475;
-	background: #FFBDAC;
+	border-color:#ffe475;
+	background: #ffbdac;
 }
 
 #brd-messages .message_warning {
-	border-color:#FFE475;
-	background: #FFD0AC;
+	border-color:#ffe475;
+	background: #ffd0ac;
 }
 
 #brd-messages .message_info {
-	border-color:#FFE475;
-	background: #FFFFCC;
-	background: -moz-linear-gradient(center top , #FFFBEA, #FEF7CB);
-	background: -o-linear-gradient(top, #FFFBEA, #FEF7CB);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFBEA), to(#FEF7CB));
-	background: -webkit-linear-gradient(top, #FFFBEA, #FEF7CB);
-	background: linear-gradient(top, #FFFBEA, #FEF7CB);
+	border-color:#ffe475;
+	background: #ffffcc;
+	background: -moz-linear-gradient(center top , #fffbea, #fef7cb);
+	background: -o-linear-gradient(top, #fffbea, #fef7cb);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fffbea), to(#fef7cb));
+	background: -webkit-linear-gradient(top, #fffbea, #fef7cb);
+	background: -ms-linear-gradient(top, #fffbea, #fef7cb);
+	background: linear-gradient(top, #fffbea, #fef7cb);
 }
 
