@@ -24,9 +24,9 @@
 			</filelist>
 		</compress-js-lib>
 
-		<compress-js-lib tofile="${js-src}/min/detect_timezone.min.js" force="true">
+		<compress-js-lib tofile="${js-src}/min/punbb.timezone.min.js" force="true">
 			<filelist dir="${js-src}">
-				<file name="detect_timezone.js" />
+				<file name="punbb.timezone.js" />
 			</filelist>
 		</compress-js-lib>
 
