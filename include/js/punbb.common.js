@@ -20,7 +20,6 @@ PUNBB.common = (function () {
 
 	return {
 		on_domready_init: function () {
-			console.log('domready');
 			isDOMReady = true;
 
 			PUNBB.common.addClass(docEl, "js");
