@@ -55,5 +55,5 @@ PUNBB.install = (function () {
 
 
 // One onload handler
-PUNBB.common.addLoadEvent(PUNBB.install.init);
+PUNBB.common.addDOMReadyEvent(PUNBB.install.init);
 
