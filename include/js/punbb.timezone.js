@@ -200,7 +200,7 @@ PUNBB.timezone = (function () {
 
 
 	function get_june_offset() {
-		get_date_offset(new Date(2011, 5, 1, 0, 0, 0, 0));
+		return get_date_offset(new Date(2011, 5, 1, 0, 0, 0, 0));
 	}
 
 	/**
@@ -276,7 +276,7 @@ PUNBB.timezone = (function () {
 
 				if (timezone_el && dst_el) {
 					timezone_el.value = timezone.utc_offset;
-					dst_el.value = (timezone.uses_dst === 1) ? '1' : '0';
+					dst_el.value = timezone.uses_dst ? '1' : '0';
 				}
 			});
 		}
