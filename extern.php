@@ -422,7 +422,7 @@ if ($action == 'feed')
 
 				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 				$forum_name_in_db = $forum_db->result($result);
-				if ($forum_name_in_db !== false)
+				if (!is_null($forum_name_in_db) && $forum_name_in_db !== false)
 					$forum_name = $lang_common['Title separator'].$forum_name_in_db;
 			}
 		}
