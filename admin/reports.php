@@ -142,7 +142,7 @@ if (!empty($unread_reports))
 			<div class="ct-set warn-set report set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box warn-box">
 					<h3 class="ct-legend hn"><strong><?php echo ++$forum_page['item_num'] ?></strong> <cite class="username"><?php printf($lang_admin_reports['Reported by'], $reporter) ?></cite> <span><?php echo format_time($cur_report['created']) ?></span></h3>
-					<h4 class="hn"><?php echo $forum ?> : <?php echo $topic ?> : <?php echo $post_id ?></h4>
+					<h4 class="hn"><?php echo $forum ?> &rarr; <?php echo $topic ?> &rarr; <?php echo $post_id ?></h4>
 					<p><?php echo $message ?></p>
 					<p class="item-select"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="reports[<?php echo $cur_report['id'] ?>]" value="1" /> <label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_reports['Select report'] ?></label></p>
 <?php ($hook = get_hook('arp_new_report_new_block')) ? eval($hook) : null; ?>
