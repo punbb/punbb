@@ -260,43 +260,41 @@ if ($tid && isset($_GET['qid']))
 
 	($hook = get_hook('po_qr_get_quote')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$quote_poster_and_message = $forum_db->fetch_row($result);
+	$quote_info = $forum_db->fetch_assoc($result);
 
-	if (!$quote_poster_and_message)
+	if (!$quote_info)
 	{
 		message($lang_common['Bad request']);
 	}
-
-	list($q_poster, $q_message) = $quote_poster_and_message;
 
 	($hook = get_hook('po_modify_quote_info')) ? eval($hook) : null;
 
 	if ($forum_config['p_message_bbcode'] == '1')
 	{
 		// If username contains a square bracket, we add "" or '' around it (so we know when it starts and ends)
-		if (strpos($q_poster, '[') !== false || strpos($q_poster, ']') !== false)
+		if (strpos($quote_info['poster'], '[') !== false || strpos($quote_info['poster'], ']') !== false)
 		{
-			if (strpos($q_poster, '\'') !== false)
-				$q_poster = '"'.$q_poster.'"';
+			if (strpos($quote_info['poster'], '\'') !== false)
+				$quote_info['poster'] = '"'.$quote_info['poster'].'"';
 			else
-				$q_poster = '\''.$q_poster.'\'';
+				$quote_info['poster'] = '\''.$quote_info['poster'].'\'';
 		}
 		else
 		{
 			// Get the characters at the start and end of $q_poster
-			$ends = utf8_substr($q_poster, 0, 1).utf8_substr($q_poster, -1, 1);
+			$ends = utf8_substr($quote_info['poster'], 0, 1).utf8_substr($quote_info['poster'], -1, 1);
 
 			// Deal with quoting "Username" or 'Username' (becomes '"Username"' or "'Username'")
 			if ($ends == '\'\'')
-				$q_poster = '"'.$q_poster.'"';
+				$quote_info['poster'] = '"'.$quote_info['poster'].'"';
 			else if ($ends == '""')
-				$q_poster = '\''.$q_poster.'\'';
+				$quote_info['poster'] = '\''.$quote_info['poster'].'\'';
 		}
 
-		$forum_page['quote'] = '[quote='.$q_poster.']'.$q_message.'[/quote]'."\n";
+		$forum_page['quote'] = '[quote='.$quote_info['poster'].']'.$quote_info['message'].'[/quote]'."\n";
 	}
 	else
-		$forum_page['quote'] = '> '.$q_poster.' '.$lang_common['wrote'].':'."\n\n".'> '.$q_message."\n";
+		$forum_page['quote'] = '> '.$quote_info['poster'].' '.$lang_common['wrote'].':'."\n\n".'> '.$quote_info['message']."\n";
 }
 
 
