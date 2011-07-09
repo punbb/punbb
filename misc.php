@@ -179,19 +179,17 @@ else if (isset($_GET['email']))
 	($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
 
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$recipient_info = $forum_db->fetch_row($result);
+	$recipient_info = $forum_db->fetch_assoc($result);
 
 	if (!$recipient_info)
 	{
 		message($lang_common['Bad request']);
 	}
 
-	list($recipient, $recipient_email, $email_setting) = $recipient_info;
-
-	if ($email_setting == 2 && !$forum_user['is_admmod'])
+	if ($recipient_info['email_setting'] == 2 && !$forum_user['is_admmod'])
 		message($lang_misc['Form e-mail disabled']);
 
-	if ($recipient_email == '')
+	if ($recipient_info['email'] == '')
 		message($lang_common['Bad request']);
 
 	if (isset($_POST['form_sent']))
@@ -235,7 +233,7 @@ else if (isset($_GET['email']))
 			if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 				require FORUM_ROOT.'include/email.php';
 
-			forum_mail($recipient_email, $mail_subject, $mail_message, $forum_user['email'], $forum_user['username']);
+			forum_mail($recipient_info['email'], $mail_subject, $mail_message, $forum_user['email'], $forum_user['username']);
 
 			// Set the user's last_email_sent time
 			$query = array(
@@ -266,12 +264,12 @@ else if (isset($_GET['email']))
 	);
 
 	// Setup main heading
-	$forum_page['main_head'] = sprintf($lang_misc['Send forum e-mail'], forum_htmlencode($recipient));
+	$forum_page['main_head'] = sprintf($lang_misc['Send forum e-mail'], forum_htmlencode($recipient_info['username']));
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		sprintf($lang_misc['Send forum e-mail'], forum_htmlencode($recipient))
+		sprintf($lang_misc['Send forum e-mail'], forum_htmlencode($recipient_info['username']))
 	);
 
 	($hook = get_hook('mi_email_pre_header_load')) ? eval($hook) : null;
@@ -416,14 +414,12 @@ else if (isset($_GET['report']))
 
 			($hook = get_hook('mi_report_qr_get_topic_data')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$topic_info = $forum_db->fetch_row($result);
+			$topic_info = $forum_db->fetch_assoc($result);
 
 			if (!$topic_info)
 			{
 				message($lang_common['Bad request']);
 			}
-
-			list($topic_id, $subject, $forum_id) = $topic_info;
 
 			($hook = get_hook('mi_report_pre_reports_sent')) ? eval($hook) : null;
 
@@ -433,7 +429,7 @@ else if (isset($_GET['report']))
 				$query = array(
 					'INSERT'	=> 'post_id, topic_id, forum_id, reported_by, created, message',
 					'INTO'		=> 'reports',
-					'VALUES'	=> $post_id.', '.$topic_id.', '.$forum_id.', '.$forum_user['id'].', '.time().', \''.$forum_db->escape($reason).'\''
+					'VALUES'	=> $post_id.', '.$topic_info['id'].', '.$topic_info['forum_id'].', '.$forum_user['id'].', '.time().', \''.$forum_db->escape($reason).'\''
 				);
 
 				($hook = get_hook('mi_report_add_report')) ? eval($hook) : null;
@@ -446,7 +442,7 @@ else if (isset($_GET['report']))
 				// We send it to the complete mailing-list in one swoop
 				if ($forum_config['o_mailing_list'] != '')
 				{
-					$mail_subject = 'Report('.$forum_id.') - \''.$subject.'\'';
+					$mail_subject = 'Report('.$topic_info['forum_id'].') - \''.$topic_info['subject'].'\'';
 					$mail_message = 'User \''.$forum_user['username'].'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
 
 					if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
