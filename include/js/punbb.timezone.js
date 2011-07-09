@@ -6,7 +6,7 @@
 /*jslint browser: true, maxerr: 50, indent: 4 */
 /*global PUNBB: true */
 
-if (typeof PUNBB === undefined || !PUNBB) {
+if (typeof PUNBB === 'undefined' || !PUNBB) {
 	var PUNBB = {};
 }
 

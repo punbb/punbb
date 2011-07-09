@@ -4,7 +4,7 @@
 
 /*global PUNBB: true */
 
-if (typeof PUNBB === undefined || !PUNBB) {
+if (typeof PUNBB === 'undefined' || !PUNBB) {
 	var PUNBB = {};
 }
 

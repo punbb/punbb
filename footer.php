@@ -78,7 +78,7 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 
 // START SUBST - <!-- forum_javascript -->
 $forum_javascript_commonjs_urls = '
-	if (typeof PUNBB === undefined || !PUNBB) {
+	if (typeof PUNBB === \'undefined\' || !PUNBB) {
 		var PUNBB = {};
 	}
 
