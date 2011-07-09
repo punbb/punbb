@@ -48,9 +48,8 @@ if (isset($_POST['add_rank']))
 
 	($hook = get_hook('ark_add_rank_qr_check_rank_collision')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$rank_num_min_posts = $forum_db->result($result);
 
-	if ($rank_num_min_posts !== false && $rank_num_min_posts > 0)
+	if ($forum_db->result($result) > 0)
 		message(sprintf($lang_admin_ranks['Min posts occupied message'], $min_posts));
 
 	$query = array(
@@ -102,9 +101,8 @@ else if (isset($_POST['update']))
 
 	($hook = get_hook('ark_update_qr_check_rank_collision')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$rank_num_min_posts = $forum_db->result($result);
 
-	if ($rank_num_min_posts !== false && $rank_num_min_posts > 0)
+	if ($forum_db->result($result) > 0)
 		message(sprintf($lang_admin_ranks['Min posts occupied message'], $min_posts));
 
 	$query = array(
