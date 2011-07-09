@@ -155,7 +155,7 @@ body {
 	$num_posts_to_proced = $forum_db->result($result);
 
 	$query_str = '';
-	if ($num_posts_to_proced !== false && $num_posts_to_proced > 0)
+	if ($num_posts_to_proced > 0)
 	{
 		$query_str = '?i_per_page='.$per_page.'&i_start_at='.$num_posts_to_proced.'&csrf_token='.generate_form_token('reindex'.$forum_user['id']);
 	}
