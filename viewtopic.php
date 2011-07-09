@@ -39,20 +39,20 @@ if ($pid)
 
 	($hook = get_hook('vt_qr_get_post_info')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$topic_info = $forum_db->fetch_row($result);
+	$topic_info = $forum_db->fetch_assoc($result);
 
 	if (!$topic_info)
 	{
 		message($lang_common['Bad request']);
 	}
 
-	list($id, $posted) = $topic_info;
+	$id = $topic_info['topic_id'];
 
 	// Determine on what page the post is located (depending on $forum_user['disp_posts'])
 	$query = array(
 		'SELECT'	=> 'COUNT(p.id)',
 		'FROM'		=> 'posts AS p',
-		'WHERE'		=> 'p.topic_id='.$id.' AND p.posted<'.$posted
+		'WHERE'		=> 'p.topic_id='.$topic_info['topic_id'].' AND p.posted<'.$topic_info['posted']
 	);
 
 	($hook = get_hook('vt_qr_get_post_page')) ? eval($hook) : null;
