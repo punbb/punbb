@@ -514,7 +514,7 @@ else
 		);
 
 		$result = $forum_db->query_build($query);
-		if ($forum_db->result($result))
+		if ($forum_db->result($result) > 0)
 			error(sprintf($lang_install['PunBB already installed'], $db_prefix, $db_name));
 	}
 
