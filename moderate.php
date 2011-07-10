@@ -377,8 +377,8 @@ if (isset($_GET['tid']))
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 <?php ($hook = get_hook('mr_confirm_split_posts_pre_subject')) ? eval($hook) : null; ?>
 					<div class="sf-box text required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['New subject'] ?> <em><?php echo $lang_common['Required'] ?></em></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="new_subject" value="" size="70" maxlength="70" /></span>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['New subject'] ?></span></label><br />
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="new_subject" value="" size="70" maxlength="70" required /></span>
 					</div>
 <?php ($hook = get_hook('mr_confirm_split_posts_pre_confirm_checkbox')) ? eval($hook) : null; ?>
 					<div class="sf-box checkbox">
