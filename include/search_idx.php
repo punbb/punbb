@@ -133,8 +133,8 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		$existing_words = array();
-		while ($row = $forum_db->fetch_row($result))
-			$existing_words[] = $row[1];
+		while ($row = $forum_db->fetch_assoc($result))
+			$existing_words[] = $row['word'];
 
 		$forum_db->free_result($result);
 
@@ -219,9 +219,9 @@ function strip_search_index($post_ids)
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$word_ids = array();
-	while ($row = $forum_db->fetch_row($result))
+	while ($row = $forum_db->fetch_assoc($result))
 	{
-		$word_ids[] = $row[0];
+		$word_ids[] = $row['word_id'];
 	}
 
 	if (!empty($word_ids))
@@ -238,9 +238,9 @@ function strip_search_index($post_ids)
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		$word_ids = array();
-		while ($row = $forum_db->fetch_row($result))
+		while ($row = $forum_db->fetch_assoc($result))
 		{
-			$word_ids[] = $row[0];
+			$word_ids[] = $row['word_id'];
 		}
 
 		if (!empty($word_ids))
