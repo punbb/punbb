@@ -530,7 +530,7 @@ else if (isset($_GET['del_group']))
 
 	// Check if this group has any members
 	$query = array(
-		'SELECT'	=> 'g.g_title, COUNT(u.id)',
+		'SELECT'	=> 'g.g_title AS title, COUNT(u.id) AS num_members',
 		'FROM'		=> 'groups AS g',
 		'JOINS'		=> array(
 			array(
@@ -596,9 +596,6 @@ else if (isset($_GET['del_group']))
 		redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Group removed']);
 	}
 
-	list($group_title, $num_members) = $group_info;
-
-
 	// Setup the form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
@@ -624,7 +621,7 @@ else if (isset($_GET['del_group']))
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php printf($lang_admin_groups['Remove group head'], forum_htmlencode($group_title), $num_members) ?></span></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_groups['Remove group head'], forum_htmlencode($group_info['title']), $group_info['num_members']) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_groups']) ?>?del_group=<?php echo $group_id ?>">
