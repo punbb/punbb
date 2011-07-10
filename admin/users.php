@@ -742,7 +742,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		($hook = get_hook('aus_change_group_qr_change_user_group')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		if ($move_to_group != FORUM_ADMIN && $group_is_mod == '0')
+		if ($move_to_group != FORUM_ADMIN && ($group_is_mod !== false && $group_is_mod == '0'))
 			clean_forum_moderators();
 
 		($hook = get_hook('aus_change_group_pre_redirect')) ? eval($hook) : null;
