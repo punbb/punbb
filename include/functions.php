@@ -2454,16 +2454,18 @@ function sync_forum($forum_id)
 
 	// Get topic and post count for forum
 	$query = array(
-		'SELECT'	=> 'COUNT(t.id), SUM(t.num_replies)',
+		'SELECT'	=> 'COUNT(t.id) AS num_topics, SUM(t.num_replies) AS num_posts',
 		'FROM'		=> 'topics AS t',
 		'WHERE'		=> 't.forum_id='.$forum_id
 	);
 
 	($hook = get_hook('fn_sync_forum_qr_get_forum_stats')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($num_topics, $num_posts) = $forum_db->fetch_row($result);
+	$forum_stats = $forum_db->fetch_assoc($result);
 
-	$num_posts = $num_posts + $num_topics;		// $num_posts is only the sum of all replies (we have to add the topic posts)
+	// $num_posts is only the sum of all replies (we have to add the topic posts)
+	$forum_stats['num_posts'] = $forum_stats['num_posts'] + $forum_stats['num_topics'];
+
 
 	// Get last_post, last_post_id and last_poster for forum (if any)
 	$query = array(
@@ -2476,20 +2478,19 @@ function sync_forum($forum_id)
 
 	($hook = get_hook('fn_sync_forum_qr_get_forum_last_post_data')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$last_post_info = $forum_db->fetch_row($result);
+	$last_post_info = $forum_db->fetch_assoc($result);
 
 	if ($last_post_info)
 	{
-		list($last_post, $last_post_id, $last_poster) = $last_post_info;
-		$last_poster = '\''.$forum_db->escape($last_poster).'\'';
+		$last_post_info['last_poster'] = '\''.$forum_db->escape($last_post_info['last_poster']).'\'';
 	}
 	else
-		$last_post = $last_post_id = $last_poster = 'NULL';
+		$last_post_info['last_post'] = $last_post_info['last_post_id'] = $last_post_info['last_poster'] = 'NULL';
 
 	// Now update the forum
 	$query = array(
 		'UPDATE'	=> 'forums',
-		'SET'		=> 'num_topics='.$num_topics.', num_posts='.$num_posts.', last_post='.$last_post.', last_post_id='.$last_post_id.', last_poster='.$last_poster,
+		'SET'		=> 'num_topics='.$forum_stats['num_topics'].', num_posts='.$forum_stats['num_posts'].', last_post='.$last_post_info['last_post'].', last_post_id='.$last_post_info['last_post_id'].', last_poster='.$last_post_info['last_poster'],
 		'WHERE'		=> 'id='.$forum_id
 	);
 
