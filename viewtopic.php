@@ -291,8 +291,8 @@ $query = array(
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $posts_id = array();
-while ($row = $forum_db->fetch_row($result)) {
-	$posts_id[] = $row[0];
+while ($row = $forum_db->fetch_assoc($result)) {
+	$posts_id[] = $row['id'];
 }
 
 
