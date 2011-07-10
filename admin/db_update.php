@@ -975,6 +975,18 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
 
+		// Update redirect timeout
+		if (version_compare($cur_version, '1.4', '<') && $forum_config['o_redirect_delay'] == '1')
+		{
+			$query = array(
+				'UPDATE'	=> 'config',
+				'SET'		=> 'conf_value = \'0\'',
+				'WHERE'		=> 'conf_name = \'o_redirect_delay\''
+			);
+
+			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		}
+
 		// Remove obsolete g_post_polls permission from groups table
 		$forum_db->drop_field('groups', 'g_post_polls');
 
@@ -1335,6 +1347,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
+
+
 
 		// Should we do charset conversion or not?
 		if (strpos($cur_version, '1.3') === 0)
