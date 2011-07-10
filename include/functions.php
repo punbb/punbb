@@ -2150,8 +2150,8 @@ function delete_topic($topic_id, $forum_id)
 
 	($hook = get_hook('fn_delete_topic_qr_get_forums_to_sync')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($row = $forum_db->fetch_row($result))
-		$forum_ids[] = $row[0];
+	while ($row = $forum_db->fetch_assoc($result))
+		$forum_ids[] = $row['forum_id'];
 
 	// Delete the topic and any redirect topics
 	$query = array(
@@ -2173,8 +2173,8 @@ function delete_topic($topic_id, $forum_id)
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$post_ids = array();
-	while ($row = $forum_db->fetch_row($result))
-		$post_ids[] = $row[0];
+	while ($row = $forum_db->fetch_assoc($result))
+		$post_ids[] = $row['id'];
 
 	// Make sure we have a list of post ID's
 	if (!empty($post_ids))
@@ -2236,9 +2236,9 @@ function delete_orphans()
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$orphans = array();
-	while ($row = $forum_db->fetch_row($result))
+	while ($row = $forum_db->fetch_assoc($result))
 	{
-		$orphans[] = $row[0];
+		$orphans[] = $row['id'];
 	}
 
 	if (!empty($orphans))
