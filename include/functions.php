@@ -2947,7 +2947,7 @@ function csrf_confirm_form()
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" value="<?php echo $lang_common['Confirm'] ?>" /></span>
+				<span class="submit primary"><input type="submit" value="<?php echo $lang_common['Confirm'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="confirm_cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
