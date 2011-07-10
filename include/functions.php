@@ -2519,7 +2519,7 @@ function sync_topic($topic_id)
 
 	($hook = get_hook('fn_sync_topic_qr_get_topic_reply_count')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_replies = $forum_db->result($result, 0) - 1;
+	$num_replies = $forum_db->result($result) - 1;
 
 	// Get last_post, last_post_id and last_poster
 	$query = array(
