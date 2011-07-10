@@ -113,8 +113,8 @@ $query = array(
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $topics_id = $topics = array();
-while ($row = $forum_db->fetch_row($result)) {
-	$topics_id[] = intval($row[0], 10);
+while ($row = $forum_db->fetch_assoc($result)) {
+	$topics_id[] = $row['id'];
 }
 
 // If there are topics id in this forum
