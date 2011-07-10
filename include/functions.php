@@ -2421,7 +2421,7 @@ function delete_post($post_id, $topic_id, $forum_id)
 
 	($hook = get_hook('fn_qr_get_topic_reply_count2')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_replies = $forum_db->result($result, 0) - 1;
+	$num_replies = $forum_db->result($result) - 1;
 
 	// Update the topic now that a post has been deleted
 	$query = array(
