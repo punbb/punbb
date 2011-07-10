@@ -2532,12 +2532,12 @@ function sync_topic($topic_id)
 
 	($hook = get_hook('fn_sync_topic_qr_get_topic_last_post_data')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($last_post, $last_post_id, $last_poster) = $forum_db->fetch_row($result);
+	$last_post_info = $forum_db->fetch_assoc($result);
 
 	// Now update the topic
 	$query = array(
 		'UPDATE'	=> 'topics',
-		'SET'		=> 'num_replies='.$num_replies.', last_post='.$last_post.', last_post_id='.$last_post_id.', last_poster=\''.$forum_db->escape($last_poster).'\'',
+		'SET'		=> 'num_replies='.$num_replies.', last_post='.$last_post_info['posted'].', last_post_id='.$last_post_info['id'].', last_poster=\''.$forum_db->escape($last_post_info['poster']).'\'',
 		'WHERE'		=> 'id='.$topic_id
 	);
 
