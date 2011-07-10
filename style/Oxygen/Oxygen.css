@@ -280,7 +280,7 @@ B - GLOBAL STYLES
 
 p,
 .hn {
-	padding: 0.5em 0;
+	padding: 0.35em 0;
 }
 
 ul,
@@ -316,14 +316,12 @@ th {
 
 .main-head .hn,
 .main-foot .hn {
-	font-size: 1.084em;
 	padding-right: 10em;
 }
 
 h2.main-subhead {
 	border-style: solid;
 	border-width: 1px;
-	font-size: 1.084em;
 	padding: 0.462em 10em 0.426em 1.417em;
 }
 
@@ -341,7 +339,6 @@ h2.main-subhead {
 }
 
 .main-subhead .hn {
-	font-size: 1.084em;
 	padding: 0.462em 1.417em;
 	position: relative;
 }
@@ -372,7 +369,6 @@ h2.main-subhead {
 }
 
 .content-head .hn {
-	font-size: 1.084em;
 	border-style: none none double none;
 	border-width: 3px;
 	padding: 0.462em 0;
@@ -516,7 +512,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .user-ident .username a,
 .user-ident .username strong {
-	font-size: 1.6em;
+	font-size: 1.5em;
 	font-weight: normal;
 }
 
@@ -574,7 +570,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .main-menu li,
 .admin-menu li {
-	font-size: 1.084em;
 	float: left;
 	display: inline;
 }
@@ -640,7 +635,6 @@ D - COMMON INTERFACE ELEMENTS
 }
 
 #brd-desc {
-	font-size: 1.084em;
 	padding-top: 0;
 	padding-bottom: 0;
 }
@@ -650,7 +644,7 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-navlinks ul {
 	margin: 0;
-	padding: 0.5em 0;
+	padding: 0.4em 0;
 	float: left;
 }
 
@@ -660,7 +654,6 @@ D - COMMON INTERFACE ELEMENTS
 }
 
 #brd-navlinks li a {
-	font-size: 1.167em;
 	text-decoration: none;
 }
 
@@ -1831,8 +1824,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	list-style-type: upper-alpha;
 }
 
-.entry-content h5
-/*.entry-content h5 * */ {
+.entry-content h5 {
 	font-weight: bold;
 	font-size: 1.084em;
 	padding: 0.5em 0;

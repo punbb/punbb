@@ -316,14 +316,14 @@ label,
 ----------------------------------------------------------------*/
 
 #brd-navlinks {
-	background: #113C5E;
-	border-color: #113C5E;
-	color: #ddd;
+	background: #0066B9;
+	border-color: #0066B9;
+	color: #eee;
 }
 
 #brd-navlinks a:link,
 #brd-navlinks a:visited {
-	color: #ddd;
+	color: #eee;
 }
 
 #brd-navlinks a:hover,
@@ -335,12 +335,12 @@ label,
 
 .main-options,
 .main-options span {
-	background: #DDE4EB;
+	background: #F1F1F1;
 }
 
 .main-menu,
 .admin-menu {
-	background: #1F537B;
+	background: #0066B9;
 }
 
 .admin-submenu {
@@ -393,22 +393,22 @@ label,
 ----------------------------------------------------------------*/
 
 #brd-head {
-	background: #296FA5;
-	color: #ddd;
-	border-color: #296FA5;
+	background: #f1f1f1;
+	color: #222;
+	border-radius: .4em .4em 0 0;
 }
 
 #brd-head a,
 #brd-head a:link,
 #brd-head a:visited {
-	color: #fff;
+	color: #222;
 }
 
 .main-head,
 .main-foot {
-	background: #1F537B;
+	background: #0066B9;
 	color: #ddd;
-	border-color: #1f537b;
+	border-color: #0066B9;
 }
 
 #brd-announcement h1 {
@@ -441,7 +441,7 @@ label,
 .main-foot .options a:visited,
 .main-head .js_link,
 .main-foot .options .js_link {
-	color: #ccc;
+	color: #ddd;
 }
 
 .main-head .js_link,
@@ -502,7 +502,7 @@ th {
 }
 
 .main-content .new .icon {
-	border-color: #2B75AD #235E8C #1F537B #266799;
+	border-color: #0080D7 #0065C0 #0058B3 #0072CA;
 }
 
 
@@ -543,7 +543,7 @@ input[type="number"]:focus,
 textarea:active,
 textarea:focus {
 	border-color: #C8D3DC #D3DAE1 #D3DAE1 #C8D3DC;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
 	background: #FFFFF3;
 	background: -moz-linear-gradient(top, #fffee8, #fff);
 	background: -o-linear-gradient(top, #fffee8, #fff);
