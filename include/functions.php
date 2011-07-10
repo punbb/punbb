@@ -3294,9 +3294,8 @@ function error()
 	<meta charset="utf-8"/>
 	<title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
 </head>
-<body style="margin: 40px; font: 85%/150% verdana, arial, sans-serif; color: #333;">
-<h1>An error was encountered</h1>
-<hr />
+<body style="margin: 40px; font: 85%/150% verdana, arial, sans-serif; color: #222;">
+<h1 style="color: #a00000; font-weight: normal;">An error was encountered</h1>
 <?php
 
 	if (isset($message))
