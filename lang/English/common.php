@@ -67,7 +67,6 @@ $lang_common = array(
 'Write message legend'		=>	'Compose your post',
 'Required information'		=>	'Required information',
 'Reqmark'					=>	'*',
-'Required'					=>	'(Required)',
 'Required warn'				=>	'All fields with bold label must be completed before the form is submitted.',
 'Crumb separator'			=>	' &rarr;&#160;', // The character or text that separates links in breadcrumbs
 'Title separator'			=>	' — ',
