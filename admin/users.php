@@ -203,7 +203,7 @@ else if (isset($_GET['show_users']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$users = array();
-	while ($cur_user = $forum_db->fetch_row($result))
+	while ($cur_user = $forum_db->fetch_assoc($result))
 	{
 		$users[] = $cur_user;
 	}
@@ -273,8 +273,6 @@ else if (isset($_GET['show_users']))
 		// Loop through users and print out some info
 		foreach ($users as $user)
 		{
-			list($poster_id, $poster) = $user;
-
 			$query = array(
 				'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
 				'FROM'		=> 'users AS u',
@@ -284,7 +282,7 @@ else if (isset($_GET['show_users']))
 						'ON'			=> 'g.g_id=u.group_id'
 					)
 				),
-				'WHERE'		=> 'u.id>1 AND u.id='.$poster_id
+				'WHERE'		=> 'u.id>1 AND u.id='.$user['poster_id']
 			);
 
 			($hook = get_hook('aus_show_users_qr_get_user_details')) ? eval($hook) : null;
@@ -310,7 +308,7 @@ else if (isset($_GET['show_users']))
 			else
 			{
 				$forum_page['table_row'] = array();
-				$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'">'.forum_htmlencode($poster).'</td>';
+				$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'">'.forum_htmlencode($user['poster']).'</td>';
 				$forum_page['table_row']['title'] = '<td class="tc'.count($forum_page['table_row']).'">'.$lang_admin_users['Guest'].'</td>';
 				$forum_page['table_row']['posts'] = '<td class="tc'.count($forum_page['table_row']).'"> - </td>';
 				$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"> - </td>';
