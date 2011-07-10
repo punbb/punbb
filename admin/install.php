@@ -118,10 +118,8 @@ if (!isset($_POST['form_sent']))
 	if (function_exists('sqlite_open'))
 		$db_extensions[] = array('sqlite', 'SQLite');
 
-	/* Disabled in 1.4.0 becouse a many non-compability extensions
 	if (class_exists('SQLite3'))
 		$db_extensions[] = array('sqlite3', 'SQLite3');
-	*/
 
 	if (function_exists('pg_connect'))
 		$db_extensions[] = array('pgsql', 'PostgreSQL');
