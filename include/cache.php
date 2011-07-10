@@ -76,8 +76,8 @@ function generate_config_cache()
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_config_item = $forum_db->fetch_row($result))
-		$output[$cur_config_item[0]] = $cur_config_item[1];
+	while ($cur_config_item = $forum_db->fetch_assoc($result))
+		$output[$cur_config_item['conf_name']] = $cur_config_item['conf_value'];
 
 	// Output config as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_config.php', '<?php'."\n\n".'define(\'FORUM_CONFIG_LOADED\', 1);'."\n\n".'$forum_config = '.var_export($output, true).';'."\n\n".'?>'))
@@ -197,16 +197,18 @@ function generate_stats_cache()
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	$stats['last_user'] = $forum_db->fetch_assoc($result);
 
-
 	// Get num topics and posts
 	$query = array(
-		'SELECT'	=> 'SUM(f.num_topics), SUM(f.num_posts)',
+		'SELECT'	=> 'SUM(f.num_topics) AS num_topics, SUM(f.num_posts) AS num_posts',
 		'FROM'		=> 'forums AS f'
 	);
 
 	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_post_stats')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($stats['total_topics'], $stats['total_posts']) = $forum_db->fetch_row($result);
+
+	$stats_topics_and_posts = $forum_db->fetch_assoc($result);
+	$stats['total_topics'] = $stats_topics_and_posts['num_topics'];
+	$stats['total_posts'] = $stats_topics_and_posts['num_posts'];
 
 	$stats['cached'] = time();
 
@@ -281,9 +283,9 @@ function generate_quickjump_cache($group_id = false)
 		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_groups')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_group = $forum_db->fetch_row($result))
+		while ($cur_group = $forum_db->fetch_assoc($result))
 		{
-			$groups[] = $cur_group[0];
+			$groups[] = $cur_group['g_id'];
 		}
 	}
 
@@ -392,9 +394,9 @@ function clean_quickjump_cache($group_id = false)
 		($hook = get_hook('ch_fn_clean_quickjump_cache_qr_get_groups')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_group = $forum_db->fetch_row($result))
+		while ($cur_group = $forum_db->fetch_assoc($result))
 		{
-			$groups[] = $cur_group[0];
+			$groups[] = $cur_group['g_id'];
 		}
 	}
 
@@ -498,9 +500,9 @@ function generate_updates_cache()
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	$hotfixes = array();
-	while ($cur_ext_hotfix_id = $forum_db->fetch_row($result))
+	while ($cur_ext_hotfix = $forum_db->fetch_assoc($result))
 	{
-		$hotfixes[] = urlencode($cur_ext_hotfix_id[0]);
+		$hotfixes[] = urlencode($cur_ext_hotfix['id']);
 	}
 
 	// Contact the punbb.informer.com updates service
