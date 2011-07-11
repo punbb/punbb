@@ -393,9 +393,8 @@ label,
 ----------------------------------------------------------------*/
 
 #brd-head {
-	background: #f1f1f1;
+	background: #f5f5f5;
 	color: #222;
-	border-radius: .4em .4em 0 0;
 }
 
 #brd-head a,

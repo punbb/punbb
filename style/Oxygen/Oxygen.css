@@ -621,6 +621,7 @@ D - COMMON INTERFACE ELEMENTS
 #brd-head {
 	padding-bottom: 0.75em;
 	padding-top: 1em;
+	border-radius: .4em .4em 0 0;
 }
 
 #brd-title {
