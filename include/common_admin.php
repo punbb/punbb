@@ -216,6 +216,14 @@ function forum_config_remove($name)
 
 	if (is_array($name) && count($name) > 0)
 	{
+		function clean_conf_names($n)
+		{
+			global $forum_db;
+			return '\''.forum_trim($forum_db->escape($n)).'\'';
+		}
+
+		$name = array_map('clean_conf_names', $name);
+
 		$query = array(
 			'DELETE'	=> 'config',
 			'WHERE'		=> 'conf_name in ('.implode(',', $name).')',
@@ -226,7 +234,7 @@ function forum_config_remove($name)
 	{
 		$query = array(
 			'DELETE'	=> 'config',
-			'WHERE'		=> 'conf_name=\''.$name.'\''
+			'WHERE'		=> 'conf_name=\''.$forum_db->escape($name).'\''
 		);
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 	}
