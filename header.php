@@ -190,7 +190,7 @@ $visit_elements = array();
 if ($forum_user['is_guest'])
 	$visit_elements['<!-- forum_welcome -->'] = '<p id="welcome"><span>'.$lang_common['Not logged in'].'</span> <span>'.$lang_common['Login nag'].'</span></p>';
 else
-	$visit_elements['<!-- forum_welcome -->'] = '<p id="welcome"><span>'.sprintf($lang_common['Logged in as'], '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span> <span>'.sprintf($lang_common['Last visit'], format_time($forum_user['last_visit'])).'</span></p>';
+	$visit_elements['<!-- forum_welcome -->'] = '<p id="welcome"><span>'.sprintf($lang_common['Logged in as'], '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span></p>';
 
 if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
 {
