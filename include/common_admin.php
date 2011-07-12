@@ -219,7 +219,7 @@ function forum_config_remove($name)
 		function clean_conf_names($n)
 		{
 			global $forum_db;
-			return '\''.forum_trim($forum_db->escape($n)).'\'';
+			return '\''.$forum_db->escape($n).'\'';
 		}
 
 		$name = array_map('clean_conf_names', $name);
