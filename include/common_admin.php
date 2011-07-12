@@ -214,7 +214,15 @@ function forum_config_remove($name)
 {
 	global $forum_db;
 
-	if (!empty($name))
+	if (is_array($name) && count($name) > 0)
+	{
+		$query = array(
+			'DELETE'	=> 'config',
+			'WHERE'		=> 'conf_name in ('.implode(',', $name).')',
+		);
+		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	}
+	else if (!empty($name))
 	{
 		$query = array(
 			'DELETE'	=> 'config',
