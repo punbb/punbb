@@ -1662,8 +1662,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 }
 
 .posthead .post-num {
-	float:right;
-	font-weight: bold;
+	float: right;
 }
 
 #brd-modtopic .posthead .hn {
