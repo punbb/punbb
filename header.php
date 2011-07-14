@@ -54,7 +54,7 @@ $tpl_main = file_get_contents($tpl_path);
 while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_main, $cur_include))
 {
 	if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-		error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template main.tpl. There is no such file in folder /include/user/', __FILE__, __LINE__);
+		error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template main.tpl.<br/>There is no such file in folder /include/user/', __FILE__, __LINE__);
 
 	ob_start();
 	include FORUM_ROOT.'include/user/'.$cur_include[1];

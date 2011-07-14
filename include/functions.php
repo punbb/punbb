@@ -156,7 +156,7 @@ function forum_fix_request_uri()
 
 		// Otherwise I am not aware of a work around...
 		else
-			error('The web server you are using is not correctly setting the REQUEST_URI variable. This usually means you are using IIS6, or an unpatched IIS7. Please either disable SEF URLs, upgrade to IIS7 and install any available patches or try a different web server.');
+			error('The web server you are using is not correctly setting the REQUEST_URI variable.<br/>This usually means you are using IIS6, or an unpatched IIS7. Please either disable SEF URLs, upgrade to IIS7 and install any available patches or try a different web server.');
 	}
 }
 
@@ -3099,7 +3099,7 @@ function maintenance_message()
 	while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_maint, $cur_include))
 	{
 		if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template maintenance.tpl. There is no such file in folder /include/user/.');
+			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template maintenance.tpl.<br/>There is no such file in folder /include/user/.');
 
 		ob_start();
 		include FORUM_ROOT.'include/user/'.$cur_include[1];
@@ -3221,7 +3221,7 @@ function redirect($destination_url, $message)
 	while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_redir, $cur_include))
 	{
 		if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template redirect.tpl. There is no such file in folder /include/user/.');
+			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template redirect.tpl.<br/>There is no such file in folder /include/user/.');
 
 		ob_start();
 		include FORUM_ROOT.'include/user/'.$cur_include[1];
