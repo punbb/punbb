@@ -2119,6 +2119,10 @@ H - MAIN CONTENT - ODDMENTS
 	top: 0;
 	z-index: 999;
 	padding: 0;
+	-webkit-transition: opacity .35s linear;
+	-moz-transition: opacity .35s linear;
+	-0-transition: opacity .35s linear;
+	transition: opacity .35s linear;
 }
 
 #brd-messages span {
