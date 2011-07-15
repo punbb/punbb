@@ -133,7 +133,7 @@ $lang_common = array(
 
 // Alerts
 'New alerts'				=>	'New Alerts',
-'Maintenance alert'			=>	'<strong>WARNING! Maintenance mode enabled.</strong> This board is currently in maintenance mode. <em>DO NOT</em> logout, if you do you will not be able to login again.',
+'Maintenance alert'			=>	'<strong>Maintenance mode enabled.</strong> <em>DO NOT</em> logout, if you do you will not be able to login again.',
 'Updates'					=>	'PunBB updates:',
 'Updates failed'			=>	'The latest attempt at checking for updates against the punbb.informer.com updates service failed. This probably just means that the service is temporarily overloaded or out of order. However, if this alert does not disappear within a day or two, you should disable the automatic check for updates and check for updates manually in the future.',
 'Updates version n hf'		=>	'A newer version of PunBB, version %s, is available for download at <a href="http://punbb.informer.com/">punbb.informer.com</a>. Furthermore, one or more hotfixes are available for install on the <a href="%s">Manage hotfixes</a> tab of the admin interface.',
