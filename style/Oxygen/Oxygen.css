@@ -285,7 +285,7 @@ p,
 
 ul,
 ol {
-	padding: 0.5em 0 0.5em 2em;
+	padding: 0.35em 0 0.35em 2em;
 }
 
 
@@ -491,7 +491,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 }
 
 .ct-box div {
-	padding: 0.5em 0;
+	padding: 0.35em 0;
 }
 
 .ct-box p.options {
