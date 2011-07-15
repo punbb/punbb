@@ -552,6 +552,10 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding-top: 0.5em;
 }
 
+#brd-maint .main-message {
+	padding: 0;
+}
+
 /* Section Menus (By Default - Profile and Admin)
 -------------------------------------------------------------*/
 
