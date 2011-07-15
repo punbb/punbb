@@ -1350,7 +1350,7 @@ button:active {
 
 
 .sf-set .checkbox input {
-	margin: 4px 0 2px -0.2em;
+	margin: .45em 0 .1em -0.2em;
 }
 
  /* Fixes alignment issue in Safari */
@@ -1368,12 +1368,13 @@ button:active {
 	margin: 0 1em 0 6.5em;
 }
 
-/* vertical alignment of radio buttons
- */
 input[type="radio"] {
 	vertical-align: text-bottom;
 }
 
+input[type="checkbox"] {
+	vertical-align: bottom;
+}
 
 
 /* Multi-Field Items (Radio/Checkbox Groups)
@@ -1382,7 +1383,7 @@ input[type="radio"] {
 .mf-box .mf-item {
 	position: relative;
 	top: -0.166em;
-	padding: 0.25em 0;
+	padding: .35em 0;
 }
 
 .mf-set legend {
@@ -2244,6 +2245,10 @@ IE6 - FIXES
 	position: relative;
 }
 
+.ie6 input {
+	vertical-align: text-bottom;
+}
+
 /* Footer
 -------------------------------------------------------------*/
 
@@ -2291,7 +2296,7 @@ IE7 - FIXES
 .ie7 #brd-stats ul {
 	max-height: 100%;
 	zoom: 1;
-	}
+}
 
 /* Forms
 -------------------------------------------------------------*/
@@ -2330,4 +2335,9 @@ IE7 - FIXES
 	position: relative;
 	left: -0.5em;
 }
+
+.ie7 input[type="checkbox"] {
+	vertical-align: baseline;
+}
+
 
