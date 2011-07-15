@@ -559,6 +559,7 @@ textarea:focus {
 
 input[type="submit"],
 input[type="button"],
+input[type="reset"],
 button {
 	background: #f6f6f6;
 	background: -moz-linear-gradient(top, #fff, #eee);
@@ -567,11 +568,14 @@ button {
 	background: -webkit-linear-gradient(top, #fff, #eee);
 	background: -ms-linear-gradient(top, #fff, #eee);
 	background: linear-gradient(top, #fff, #eee);
+	border-color: #CCCCCC;
 	color: #404040;
 }
 
 input[type="submit"]:hover,
 input[type="submit"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus,
 input[type="button"]:hover,
 input[type="button"]:focus,
 button:hover,
@@ -583,6 +587,7 @@ button:focus {
 	background: -webkit-linear-gradient(top, #fff, #ebebeb);
 	background: -ms-linear-gradient(top, #fff, #ebebeb);
 	background: linear-gradient(top, #fff, #ebebeb);
+	border-color: #84BCE4;
 	color: #111;
 }
 

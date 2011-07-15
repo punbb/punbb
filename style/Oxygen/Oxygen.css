@@ -1244,34 +1244,47 @@ select {
 
 input[type="submit"],
 input[type="button"],
+input[type="reset"],
 button {
 	display: inline-block;
 	vertical-align: baseline;
 	text-align: center;
 	text-decoration: none;
-	padding: .32em .5em;
+	padding: .4em .6em .5em;
 	-moz-border-radius: .25em;
 	-webkit-border-radius: .25em;
 	-khtml-border-radius: .25em;
 	border-radius: .25em;
-	border: 1px solid #CCCCCC;
+	border-style: solid;
+	border-width: 1px;
 	text-shadow: 0 1px 1px #ddd;
+
+}
+
+input[type="submit"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="file"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+button::-moz-focus-inner {
+	border: none;
 }
 
 input[type="submit"]:hover,
 input[type="submit"]:focus,
 input[type="button"]:hover,
 input[type="button"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus,
 button:hover,
 button:focus {
-	border: 1px solid #84BCE4;
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 }
 
 input[type="submit"]:active,
-input[type="button"]:active
+input[type="button"]:active,
+input[type="reset"]:active
 button:active {
 	position: relative;
 	top: 1px;
