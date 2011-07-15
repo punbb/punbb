@@ -36,7 +36,7 @@ PUNBB.common = (function () {
 			var msgEl = get("brd-messages");
 			if (msgEl) {
 				setTimeout(function () {
-					msgEl.style.opacity = 0;
+					msgEl.style.visibility = 'hidden';
 				}, 3500);
 			}
 		},

@@ -1372,8 +1372,9 @@ input[type="radio"] {
 	vertical-align: text-bottom;
 }
 
+
 input[type="checkbox"] {
-	vertical-align: bottom;
+	vertical-align: text-bottom;
 }
 
 
