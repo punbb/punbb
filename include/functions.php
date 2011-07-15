@@ -3025,7 +3025,7 @@ function message($message, $link = '', $heading = '')
 // Display a message when board is in maintenance mode
 function maintenance_message()
 {
-	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url;
+	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url, $forum_loader;
 
 	$return = ($hook = get_hook('fn_maintenance_message_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -3058,12 +3058,11 @@ function maintenance_message()
 	$tpl_maint = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"', $tpl_maint);
 	// END SUBST - <!-- forum_local -->
 
-
 	// START SUBST - <!-- forum_head -->
-
 	ob_start();
 
 	require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
+	echo $forum_loader->render_css();
 
 	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_maint = str_replace('<!-- forum_head -->', $tpl_temp, $tpl_maint);
