@@ -1916,81 +1916,65 @@ else
 	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
 </head>
 <body>
-
 <div id="brd-install" class="brd-page">
-<div id="brd-wrap" class="brd">
-
-<div id="brd-head" class="gen-content">
-	<p id="brd-title"><strong><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></strong></p>
-	<p id="brd-desc"><?php printf($lang_install['Success description'], FORUM_VERSION) ?></p>
-</div>
-
-<div id="brd-visit" class="gen-content">
-	<p><?php echo $lang_install['Success welcome'] ?></p>
-</div>
-
-<div id="brd-main" class="main basic">
-
-	<div class="main-head">
-		<h1 class="hn"><span><?php echo $lang_install['Final instructions'] ?></span></h1>
-	</div>
-
-	<div class="main-content main-frm">
-<?php if (!empty($alerts)): ?>
-		<div class="ct-box error-box">
-			<p class="warn"><strong><?php echo $lang_install['Warning'] ?></strong></p>
-			<ul>
-				<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
-			</ul>
+	<div id="brd-wrap" class="brd">
+		<div id="brd-head" class="gen-content">
+			<p id="brd-title"><strong><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></strong></p>
+			<p id="brd-desc"><?php printf($lang_install['Success description'], FORUM_VERSION) ?></p>
 		</div>
+		<div id="brd-main" class="main basic">
+			<div class="main-head">
+				<h1 class="hn"><span><?php echo $lang_install['Final instructions'] ?></span></h1>
+			</div>
+			<div class="main-content main-frm">
+<?php if (!empty($alerts)): ?>
+				<div class="ct-box error-box">
+					<p class="warn"><strong><?php echo $lang_install['Warning'] ?></strong></p>
+					<ul>
+						<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
+					</ul>
+				</div>
 <?php endif;
 
 if (!$written)
 {
-
 ?>
-		<div class="ct-box info-box">
-			<p class="warn"><?php echo $lang_install['No write info 1'] ?></p>
-			<p class="warn"><?php printf($lang_install['No write info 2'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
-			<div class="hidden">
-			<input type="hidden" name="generate_config" value="1" />
-			<input type="hidden" name="db_type" value="<?php echo $db_type; ?>" />
-			<input type="hidden" name="db_host" value="<?php echo $db_host; ?>" />
-			<input type="hidden" name="db_name" value="<?php echo forum_htmlencode($db_name); ?>" />
-			<input type="hidden" name="db_username" value="<?php echo forum_htmlencode($db_username); ?>" />
-			<input type="hidden" name="db_password" value="<?php echo forum_htmlencode($db_password); ?>" />
-			<input type="hidden" name="db_prefix" value="<?php echo forum_htmlencode($db_prefix); ?>" />
-			<input type="hidden" name="base_url" value="<?php echo forum_htmlencode($base_url); ?>" />
-			<input type="hidden" name="cookie_name" value="<?php echo forum_htmlencode($cookie_name); ?>" />
-			</div>
-			<div class="frm-buttons">
-				<span class="submit"><input type="submit" value="<?php echo $lang_install['Download config'] ?>" /></span>
-			</div>
-		</form>
+				<div class="ct-box info-box">
+					<p class="warn"><?php echo $lang_install['No write info 1'] ?></p>
+					<p class="warn"><?php printf($lang_install['No write info 2'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
+				</div>
+				<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
+					<div class="hidden">
+					<input type="hidden" name="generate_config" value="1" />
+					<input type="hidden" name="db_type" value="<?php echo $db_type; ?>" />
+					<input type="hidden" name="db_host" value="<?php echo $db_host; ?>" />
+					<input type="hidden" name="db_name" value="<?php echo forum_htmlencode($db_name); ?>" />
+					<input type="hidden" name="db_username" value="<?php echo forum_htmlencode($db_username); ?>" />
+					<input type="hidden" name="db_password" value="<?php echo forum_htmlencode($db_password); ?>" />
+					<input type="hidden" name="db_prefix" value="<?php echo forum_htmlencode($db_prefix); ?>" />
+					<input type="hidden" name="base_url" value="<?php echo forum_htmlencode($base_url); ?>" />
+					<input type="hidden" name="cookie_name" value="<?php echo forum_htmlencode($cookie_name); ?>" />
+					</div>
+					<div class="frm-buttons">
+						<span class="submit"><input type="submit" value="<?php echo $lang_install['Download config'] ?>" /></span>
+					</div>
+				</form>
 <?php
-
 }
 else
 {
-
 ?>
-		<div class="ct-box info-box">
-			<p class="warn"><?php printf($lang_install['Write info'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
-		</div>
+				<div class="ct-box info-box">
+					<p class="warn"><?php printf($lang_install['Write info'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
+				</div>
 <?php
 }
-
 ?>
+			</div>
+		</div>
 	</div>
-
-</div>
-</div>
 </div>
 </body>
 </html>
-
 <?php
-
 }

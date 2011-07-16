@@ -92,7 +92,6 @@ $lang_install = array(
 
 // Installation completed form
 'Success description'		=>	'Congratulations! PunBB %s has been successfully installed.',
-'Success welcome'			=>	'Please follow the instructions below to finalize the installation.',
 'Final instructions'		=>	'Final instructions',
 'No write info 1'			=>	'Important! To finalize the installation, you need to click on the button below to download a file called config.php. You then need to upload this file to the root directory of your PunBB installation.',
 'No write info 2'			=>	'Once you have uploaded config.php, PunBB will be fully installed! You may then %s once config.php has been uploaded.',
