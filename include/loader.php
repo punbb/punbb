@@ -224,6 +224,10 @@ class Loader
 				'default'	=> array(),
 			),
 
+			//
+			'noscript'		=> array(
+				'default'	=> false,
+			)
 		);
 
 		$length = count($default_options);
@@ -304,13 +308,19 @@ class Loader
 		{
 			if ($lib['type'] == 'inline')
 			{
-				$output .= forum_trim($this->check_conditional_comments($lib, '<style>'.$lib['data'].'</style>'))."\n";
+				if ($lib['noscript'] === true)
+					$output .= forum_trim($this->check_conditional_comments($lib, '<noscript><style>'.$lib['data'].'</style></noscript>'))."\n";
+				else
+					$output .= forum_trim($this->check_conditional_comments($lib, '<style>'.$lib['data'].'</style>'))."\n";
 				unset($libs[$key]);
 				continue;
 			}
 			else if ($lib['type'] == 'url')
 			{
-				$output .= forum_trim($this->check_conditional_comments($lib, '<link rel="stylesheet" type="text/css" media="'.$lib['media'].'" href="'.$lib['data'].'" />'))."\n";
+				if ($lib['noscript'] === true)
+					$output .= forum_trim($this->check_conditional_comments($lib, '<noscript><link rel="stylesheet" type="text/css" media="'.$lib['media'].'" href="'.$lib['data'].'" /></noscript>'))."\n";
+				else
+					$output .= forum_trim($this->check_conditional_comments($lib, '<link rel="stylesheet" type="text/css" media="'.$lib['media'].'" href="'.$lib['data'].'" />'))."\n";
 				unset($libs[$key]);
 				continue;
 			}
