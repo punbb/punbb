@@ -1250,7 +1250,7 @@ button {
 	vertical-align: baseline;
 	text-align: center;
 	text-decoration: none;
-	padding: .4em .6em .5em;
+	padding: .5em .65em;
 	-moz-border-radius: .25em;
 	-webkit-border-radius: .25em;
 	-khtml-border-radius: .25em;
@@ -1267,6 +1267,7 @@ input[type="file"]::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 button::-moz-focus-inner {
 	border: none;
+	padding: 0;
 }
 
 input[type="submit"]:hover,
