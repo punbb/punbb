@@ -3293,7 +3293,7 @@ function error()
 	<meta charset="utf-8"/>
 	<title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
 </head>
-<body style="margin: 40px; font: 85%/150% verdana, arial, sans-serif; color: #222;">
+<body style="margin: 40px; font: 85%/150% verdana, arial, sans-serif; color: #222; max-width: 55em;">
 <h1 style="color: #a00000; font-weight: normal;">An error was encountered</h1>
 <?php
 
@@ -3305,7 +3305,7 @@ function error()
 		if (defined('FORUM_DEBUG'))
 		{
 			if (isset($file) && isset($line))
-				echo '<p><em>The error occurred on line '.$line.' in '.$file.'</em></p>'."\n";
+				echo '<p>The error occurred on line '.$line.' in '.$file.'</p>'."\n";
 
 			$db_error = isset($GLOBALS['forum_db']) ? $GLOBALS['forum_db']->error() : array();
 			if (!empty($db_error['error_msg']))
@@ -3317,7 +3317,7 @@ function error()
 			}
 		}
 		else
-			echo '<p><strong>Note:</strong> For detailed error information (necessary for troubleshooting), enable "DEBUG mode". To enable "DEBUG mode", open up the file config.php in a text editor, add a line that looks like "define(\'FORUM_DEBUG\', 1);" (without the quotation marks), and re-upload the file. Once you\'ve solved the problem, it is recommended that "DEBUG mode" be turned off again (just remove the line from the file and re-upload it).</p>'."\n";
+			echo '<p style="font-size: .95em;"><strong>Note:</strong> For detailed error information (necessary for troubleshooting), enable "DEBUG mode".<br/>To enable "DEBUG mode", open up&nbsp;the file config.php in&nbsp;a&nbsp;text editor, add a&nbsp;line that looks like <nobr>"define(\'FORUM_DEBUG\', 1);"</nobr> (without the quotation marks), and re-upload the file.<br/>Once you\'ve solved the problem, it&nbsp;is recommended that "DEBUG mode" be&nbsp;turned off again (just remove the line from the file and re-upload it).</p>'."\n";
 	}
 
 ?>
