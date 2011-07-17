@@ -69,7 +69,7 @@ else
 	error('There is no valid language pack \''.forum_htmlencode($forum_user['language']).'\' installed.<br/>Please reinstall a language of that name.');
 
 // Setup the URL rewriting scheme
-if (file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php'))
+if ($forum_config['o_sef'] != 'Default' && file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php'))
 	require FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php';
 else
 	require FORUM_ROOT.'include/url/Default/forum_urls.php';
