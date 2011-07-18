@@ -1285,7 +1285,7 @@ button:focus {
 
 input[type="submit"]:active,
 input[type="button"]:active,
-input[type="reset"]:active
+input[type="reset"]:active,
 button:active {
 	position: relative;
 	top: 1px;
