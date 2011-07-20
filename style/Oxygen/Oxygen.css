@@ -1258,7 +1258,8 @@ button {
 	border-style: solid;
 	border-width: 1px;
 	text-shadow: 0 1px 1px #ddd;
-
+	-webkit-appearance: button;
+	line-height: normal;
 }
 
 input[type="submit"]::-moz-focus-inner,
