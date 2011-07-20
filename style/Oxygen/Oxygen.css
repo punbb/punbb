@@ -1569,6 +1569,7 @@ input[type="checkbox"] {
 
 .txt-set textarea {
 	width: 95%;
+	resize: vertical;
 }
 
 input[type="text"],
