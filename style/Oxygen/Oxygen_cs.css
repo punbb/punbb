@@ -25,7 +25,6 @@ a:focus {
 }
 
 .js_link {
-	visibility: hidden;
 	cursor: pointer;
 	border-color: #00579C;
 }
@@ -33,10 +32,6 @@ a:focus {
 .js_link:hover {
 	color: #CD0021;
 	border-color: #CD0021;
-}
-
-.js .js_link {
-	visibility: visible;
 }
 
 .entry-content a:visited {
