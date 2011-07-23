@@ -1292,6 +1292,14 @@ button:active {
 	top: 1px;
 }
 
+input[type="submit"][disabled]:active,
+input[type="button"][disabled]:active,
+input[type="reset"][disabled]:active,
+button[disabled]:active {
+	position: relative;
+	top: 0;
+}
+
 .js_link {
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;

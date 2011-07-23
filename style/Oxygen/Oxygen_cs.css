@@ -586,6 +586,25 @@ button:focus {
 	color: #111;
 }
 
+input[type="submit"][disabled],
+input[type="button"][disabled],
+input[type="reset"][disabled],
+button {
+	border-color: #CCCCCC;
+	color: #999;
+}
+
+input[type="submit"][disabled]:hover,
+input[type="submit"][disabled]:focus,
+input[type="reset"][disabled]:hover,
+input[type="reset"][disabled]:focus,
+input[type="button"][disabled]:hover,
+input[type="button"][disabled]:focus,
+button[disabled]:hover,
+button[disabled]:focus {
+	color: #999;
+}
+
 #querytime {
 	color: #999;
 }
