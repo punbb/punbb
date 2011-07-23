@@ -437,7 +437,7 @@ PUNBB.common = (function () {
 		//
 		autoFocus: function () {
 			var fn_input = function (x) {
-				return x.tagName.toUpperCase() == "TEXTAREA" || (x.tagName.toUpperCase() == "INPUT" && (x.type == "text") || (x.type == "password") || (x.type == "email") || (x.type == "url") || (x.type == "number"));
+				return x.offsetWidth > 0 && (x.tagName.toUpperCase() == "TEXTAREA" || (x.tagName.toUpperCase() == "INPUT" && (x.type == "text") || (x.type == "password") || (x.type == "email") || (x.type == "url") || (x.type == "number")));
 			};
 
 			var nodes = get("afocus");
