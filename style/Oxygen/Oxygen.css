@@ -1355,12 +1355,12 @@ button[disabled]:active {
 	top: 0;
 	left: 0;
 	display: block;
-	padding: 0.3em 1em;
+	padding: 0.5em 1em;
 }
 
 
 .sf-set .checkbox input {
-	margin: .45em 0 .1em -0.2em;
+	margin: .3em 0 .3em -0.2em;
 }
 
  /* Fixes alignment issue in Safari */
@@ -1379,12 +1379,14 @@ button[disabled]:active {
 }
 
 input[type="radio"] {
-	vertical-align: text-bottom;
+	vertical-align: middle;
+    bottom: 1px;
 }
 
 
 input[type="checkbox"] {
-	vertical-align: text-bottom;
+	vertical-align: middle;
+    bottom: 1px;
 }
 
 
