@@ -1875,6 +1875,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	padding: 1em 0.75em;
 }
 
+.entry-content .codebox {
+	font-size: .95em;
+}
+
 .entry-content blockquote {
 	overflow: hidden;
 	width: 100%;
