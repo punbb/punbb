@@ -1408,7 +1408,7 @@ if ($forum_user['id'] != $id &&
 		$url_source = $user['url'];
 
 		// IDNA url handling
-		if (defined('FORUM_SUPPORT_PCRE_UNICODE') && !defined('FORUM_DISABLE_IDNA'))
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
 		{
 			// Load the IDNA class for international url handling
 			require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
@@ -1640,7 +1640,7 @@ else
 			$url_source = $user['url'];
 
 			// IDNA url handling
-			if (defined('FORUM_SUPPORT_PCRE_UNICODE') && !defined('FORUM_DISABLE_IDNA'))
+			if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
 			{
 				// Load the IDNA class for international url handling
 				require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
