@@ -100,7 +100,6 @@ body {
 </style>
 </head>
 <body>
-
 <p><?php echo $lang_admin_reindex['Rebuilding index'] ?></p>
 
 <?php
@@ -118,7 +117,7 @@ body {
 				'ON'			=> 't.id=p.topic_id'
 			)
 		),
-		'WHERE'		=> 'p.id>='.$start_at,
+		'WHERE'		=> 'p.id >= '.$start_at,
 		'ORDER BY'	=> 'p.id',
 		'LIMIT'		=> $per_page
 	);
@@ -143,21 +142,21 @@ body {
 
 	// Check if there is more work to do
 	$query = array(
-		'SELECT'	=> 'COUNT(p.id)',
+		'SELECT'	=> 'p.id',
 		'FROM'		=> 'posts AS p',
-		'WHERE'		=> 'p.id>'.$post_id,
+		'WHERE'		=> 'p.id > '.$post_id,
 		'ORDER BY'	=> 'p.id',
 		'LIMIT'		=> '1'
 	);
 
 	($hook = get_hook('ari_cycle_qr_find_next_post')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_posts_to_proced = $forum_db->result($result);
+	$next_posts_to_proced = $forum_db->result($result);
 
 	$query_str = '';
-	if ($num_posts_to_proced > 0)
+	if (!is_null($next_posts_to_proced) && $next_posts_to_proced !== false)
 	{
-		$query_str = '?i_per_page='.$per_page.'&i_start_at='.$num_posts_to_proced.'&csrf_token='.generate_form_token('reindex'.$forum_user['id']);
+		$query_str = '?i_per_page='.$per_page.'&i_start_at='.$next_posts_to_proced.'&csrf_token='.generate_form_token('reindex'.$forum_user['id']);
 	}
 
 	($hook = get_hook('ari_cycle_end')) ? eval($hook) : null;
