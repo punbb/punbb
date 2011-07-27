@@ -1314,7 +1314,7 @@ button[disabled]:active {
 }
 
 .sf-set .checkbox label {
-	padding: 1px 0 2px 2.7em;
+	padding: 2px 0 2px 2.7em;
 }
 
 .sf-set .text label span,
@@ -1360,7 +1360,7 @@ button[disabled]:active {
 
 
 .sf-set .checkbox input {
-	margin: .3em 0 .3em -0.2em;
+	margin: .2em 0 .2em -0.2em;
 }
 
  /* Fixes alignment issue in Safari */
@@ -1389,6 +1389,10 @@ input[type="checkbox"] {
     bottom: 1px;
 }
 
+table input[type="checkbox"] {
+	vertical-align: baseline;
+}
+
 
 /* Multi-Field Items (Radio/Checkbox Groups)
 -------------------------------------------------------------*/
@@ -1396,7 +1400,7 @@ input[type="checkbox"] {
 .mf-box .mf-item {
 	position: relative;
 	top: -0.166em;
-	padding: .35em 0;
+	padding: .3em 0;
 }
 
 .mf-set legend {
@@ -1434,11 +1438,11 @@ input[type="checkbox"] {
 }
 
 .mf-item input {
-	margin: 0 0 0 -0.25em;
+	margin: .1em 0 .1em -0.25em;
 }
 
 .mf-item label {
-	padding: 0 0 0 2.7em;
+	padding: 1px 0 1px 2.7em;
 	float: left;
 }
 
