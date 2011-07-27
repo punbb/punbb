@@ -106,20 +106,15 @@ if (!isset($_POST['form_sent']))
 	if (function_exists('mysqli_connect'))
 	{
 		$db_extensions[] = array('mysqli', 'MySQL Improved');
-		$db_extensions[] = array('mysqli_innodb', 'MySQL Improved (InnoDB)');
 	}
 
 	if (function_exists('mysql_connect'))
 	{
 		$db_extensions[] = array('mysql', 'MySQL Standard');
-		$db_extensions[] = array('mysql_innodb', 'MySQL Standard (InnoDB)');
 	}
 
 	if (function_exists('sqlite_open'))
 		$db_extensions[] = array('sqlite', 'SQLite');
-
-	if (class_exists('SQLite3'))
-		$db_extensions[] = array('sqlite3', 'SQLite3');
 
 	if (function_exists('pg_connect'))
 		$db_extensions[] = array('pgsql', 'PostgreSQL');
@@ -441,16 +436,8 @@ else
 			require FORUM_ROOT.'include/dblayer/mysql.php';
 			break;
 
-		case 'mysql_innodb':
-			require FORUM_ROOT.'include/dblayer/mysql_innodb.php';
-			break;
-
 		case 'mysqli':
 			require FORUM_ROOT.'include/dblayer/mysqli.php';
-			break;
-
-		case 'mysqli_innodb':
-			require FORUM_ROOT.'include/dblayer/mysqli_innodb.php';
 			break;
 
 		case 'pgsql':
@@ -459,10 +446,6 @@ else
 
 		case 'sqlite':
 			require FORUM_ROOT.'include/dblayer/sqlite.php';
-			break;
-
-		case 'sqlite3':
-			require FORUM_ROOT.'include/dblayer/sqlite3.php';
 			break;
 
 		default:
