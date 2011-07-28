@@ -568,6 +568,7 @@ button {
 	background: linear-gradient(top, #fff, #eee);
 	border-color: #CCCCCC;
 	color: #404040;
+	text-shadow: 0 1px 1px #ddd;
 }
 
 input[type="submit"]:hover,
@@ -587,6 +588,9 @@ button:focus {
 	background: linear-gradient(top, #fff, #ebebeb);
 	border-color: #84BCE4;
 	color: #111;
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
+	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 }
 
 input[type="submit"][disabled],

@@ -1257,7 +1257,6 @@ button {
 	border-radius: .25em;
 	border-style: solid;
 	border-width: 1px;
-	text-shadow: 0 1px 1px #ddd;
 	-webkit-appearance: button;
 	line-height: normal;
 }
@@ -1269,19 +1268,6 @@ input[type="reset"]::-moz-focus-inner,
 button::-moz-focus-inner {
 	border: none;
 	padding: 0;
-}
-
-input[type="submit"]:hover,
-input[type="submit"]:focus,
-input[type="button"]:hover,
-input[type="button"]:focus,
-input[type="reset"]:hover,
-input[type="reset"]:focus,
-button:hover,
-button:focus {
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
-	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 }
 
 input[type="submit"]:active,
@@ -1375,7 +1361,7 @@ button[disabled]:active {
 .sf-set .sf-short label small {
 	font-size: 1em;
 	padding: 2px 0;
-	margin: 0 1em 0 6.5em;
+	margin: 0 1em 0 7em;
 }
 
 input[type="radio"] {
