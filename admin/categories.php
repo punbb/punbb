@@ -421,7 +421,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><span><?php printf($lang_admin_categories['Edit category legend'],  '<span class="hideme"> ('.forum_htmlencode($cur_category['cat_name']).')</span>') ?></span></legend>
+				<legend class="group-legend"><span><?php echo $lang_admin_categories['Edit category legend']; ?></span></legend>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 <?php ($hook = get_hook('acg_pre_edit_cat_name')) ? eval($hook) : null; ?>
 					<div class="sf-box text">
