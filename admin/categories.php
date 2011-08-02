@@ -193,7 +193,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="del_cat_comply" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="del_cat_comply" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="del_cat_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
