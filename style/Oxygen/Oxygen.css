@@ -257,7 +257,7 @@ B - GLOBAL STYLES
 .main-content,
 #brd-visit,
 #brd-qpost,
-/*#brd-index*/ #brd-announcement {
+#brd-announcement {
 	margin-bottom: 1em;
 }
 
@@ -710,7 +710,7 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-visit #visit-links {
 	text-align: right;
-	float: right;
+	float: none;
 }
 
 /* Paging and posting
