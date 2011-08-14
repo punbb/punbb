@@ -596,7 +596,7 @@ button:focus {
 input[type="submit"][disabled],
 input[type="button"][disabled],
 input[type="reset"][disabled],
-button {
+button[disabled] {
 	border-color: #CCCCCC;
 	color: #999;
 }
