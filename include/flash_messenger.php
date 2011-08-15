@@ -2,7 +2,7 @@
 /**
  * Loads the flash messenger class.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2011 PunBB
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -97,7 +97,7 @@ class FlashMessenger
 
 	private function save_messages()
 	{
-		 $_SESSION['forum_flash'] = serialize($this->messages);
+		 $_SESSION['punbb_forum_flash'] = serialize($this->messages);
 	}
 
 
@@ -105,8 +105,8 @@ class FlashMessenger
 	{
 		$messages = array();
 
-		if (isset($_SESSION['forum_flash'])) {
-			$tmp_messages = unserialize($_SESSION['forum_flash']);
+		if (isset($_SESSION['punbb_forum_flash'])) {
+			$tmp_messages = unserialize($_SESSION['punbb_forum_flash']);
 
 			if (is_array($tmp_messages))
 				$messages = $tmp_messages;
