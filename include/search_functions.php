@@ -843,8 +843,11 @@ function generate_search_crumbs($action = null)
 			$forum_page['items_info'] = generate_items_info($lang_search['Topics found'], ($forum_page['start_from'] + 1), $num_hits);
 			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_search['User defined search'].'</a></span>';
 			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.$forum_user['id'])).'">'.$lang_common['Mark all as read'].'</a></span>';
+
 			// Add link for show all topics, not only new (updated)
-			$forum_page['main_head_options']['show_all'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['forum'], $search_set[0]['forum_id']).'">'.$lang_search['All Topics'].'</a></span>';
+			if ($search_id != -1)
+				$forum_page['main_head_options']['show_all'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['forum'], $search_set[0]['forum_id']).'">'.$lang_search['All Topics'].'</a></span>';
+
 			break;
 
 		case 'show_recent':
