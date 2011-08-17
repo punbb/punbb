@@ -668,6 +668,9 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 		delete_user($id, isset($_POST['delete_posts']));
 
+		// Add flash message
+		$forum_flash->add_info($lang_profile['User delete redirect']);
+
 		($hook = get_hook('pf_delete_user_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['index']), $lang_profile['User delete redirect']);
