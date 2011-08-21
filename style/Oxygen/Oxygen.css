@@ -1833,6 +1833,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	font-size: 1.084em;
 }
 
+#brd-help .entry-content {
+	min-height: 4em;
+}
+
 .entry-content ol {
 	padding-left: 2.5em;
 	list-style-type: decimal;
