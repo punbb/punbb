@@ -1332,7 +1332,8 @@ button[disabled]:active {
 	display: block;
 	text-align: left;
 	position: relative;
-	margin: 2.1em 1em 0 1em;
+	margin: 2em 1em 0 1em;
+	padding-top: .25em;
 	font-size: 0.917em;
 }
 
