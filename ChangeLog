@@ -1,3 +1,34 @@
+PunBB 1.4
+2011-09-17 15:30:27
+====================
+
+ * support internationalized domain name in posts (must be enabled in config)
+ * better censors function for Unicode
+ * support innodb Mysql engines
+ * support SQLite3 engines
+ * faster select in large topics and forums (ported from FluxBB)
+ * optimized and updated style Oxygen
+ * HTML5 Doctype
+ * HTML5 form API
+ * simplified forms — login, register, search
+ * autodetect timezone on register (used JavaScript)
+ * CSS and JavaScript files minificated for faster loading
+ * new dynamic loading system for JavaScript, based on LABjs
+ * JavaScript files moved to page footer for faster page loading
+ * new profile fields — facebook, twitter, skype, linkedin
+ * disabled by default Redirect page. We use new system called Flash Messenger
+ * dropped support PHP 4. Now minimum required version is PHP 5.0
+ * feature: Ctrl+Enter submit handler to post forms
+ * feature: settings for enable or disable moderators list on forum main page
+ * feature: don't mask passwords
+ * feature: forum subscriptions
+ * feature: addDOMReadyEvent in punbb.common.js
+ * many small improvements in Oxygen style and html markup
+ * added functions for extension developers
+ * added last visited time to user profile and remove it from main page
+ * added hooks
+
+
 PunBB 1.3.5
 2011-03-21 15:30:27
 ====================
