@@ -4,10 +4,12 @@ PunBB 1.4
 
  * support internationalized domain name in posts (must be enabled in config)
  * better censors function for Unicode
- * support innodb Mysql engines
+ * support InnoDB Mysql engines
  * support SQLite3 engines
  * faster select in large topics and forums (ported from FluxBB)
- * optimized and updated style Oxygen
+ * much faster database query for update users online status
+ * worked "has posted" feature for SQLite engines
+ * optimized and updated Oxygen style
  * HTML5 Doctype
  * HTML5 form API
  * simplified forms — login, register, search
@@ -16,7 +18,7 @@ PunBB 1.4
  * new dynamic loading system for JavaScript, based on LABjs
  * JavaScript files moved to page footer for faster page loading
  * new profile fields — facebook, twitter, skype, linkedin
- * disabled by default Redirect page. We use new system called Flash Messenger
+ * redirect page now disabled by default. We use new system called Flash Messenger
  * dropped support PHP 4. Now minimum required version is PHP 5.0
  * feature: Ctrl+Enter submit handler to post forms
  * feature: settings for enable or disable moderators list on forum main page
