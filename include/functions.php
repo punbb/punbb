@@ -2942,7 +2942,7 @@ function csrf_confirm_form()
 		<div class="ct-box info-box">
 			<p><?php echo $lang_common['CSRF token mismatch'] ?></p>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_htmlencode($forum_page['form_action']) ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
