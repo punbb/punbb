@@ -4,13 +4,13 @@
  *
  * Updates the database to the latest version.
  *
- * @copyright (C) 2008-2009 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
 
 
-define('UPDATE_TO', '1.3.5');
+define('UPDATE_TO', '1.3.6');
 define('UPDATE_TO_DB_REVISION', 4);
 
 // The number of items to process per pageview (lower this if the update script times out during UTF-8 conversion)
