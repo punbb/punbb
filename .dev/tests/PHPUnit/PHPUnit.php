@@ -44,9 +44,9 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'PHPUnit/TestCase.php';
-require_once 'PHPUnit/TestResult.php';
-require_once 'PHPUnit/TestSuite.php';
+require_once FORUM_ROOT . '.dev/tests/PHPUnit/PHPUnit/TestCase.php';
+require_once FORUM_ROOT . '.dev/tests/PHPUnit/PHPUnit/TestResult.php';
+require_once FORUM_ROOT . '.dev/tests/PHPUnit/PHPUnit/TestSuite.php';
 
 /**
  * PHPUnit runs a TestSuite and returns a TestResult object.

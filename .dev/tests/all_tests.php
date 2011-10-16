@@ -22,14 +22,14 @@
 		define('FORUM_DEBUG', 1);
 	}
 
-	require_once('PHPUnit/PHPUnit.php');
+	require_once FORUM_ROOT . '.dev/tests/PHPUnit/PHPUnit.php';
 
 	// Tests
-    require_once('functions/utf8_test.php');
-	require_once('functions/array_insert_test.php');
-	require_once('functions/tools_test.php');
-	require_once('censor_words/censor_words_test.php');
-	require_once('parser/parser.php');
+    require_once FORUM_ROOT . '.dev/tests/functions/utf8_test.php';
+	require_once FORUM_ROOT . '.dev/tests/functions/array_insert_test.php';
+	require_once FORUM_ROOT . '.dev/tests/functions/tools_test.php';
+	require_once FORUM_ROOT . '.dev/tests/censor_words/censor_words_test.php';
+	require_once FORUM_ROOT . '.dev/tests/parser/parser.php';
 
 
 	// Strip out "bad" UTF-8 characters
