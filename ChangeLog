@@ -31,6 +31,15 @@ PunBB 1.4
  * added hooks
 
 
+PunBB 1.3.6
+2011-09-18 11:15:51
+====================
+
+* fixed XSS vulnerabilities
+* fixed error in bans on admin/bans.php and profile.php
+* fixed invalid closing tag on profile.php
+
+
 PunBB 1.3.5
 2011-03-21 15:30:27
 ====================
