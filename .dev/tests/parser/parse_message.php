@@ -93,6 +93,33 @@ class parse_message_Test extends PHPUnit_TestCase {
 		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
 	}
 
+	public function test_parse_message_url_3() {
+		$errors = array();
+
+		$result = '<p><a href="http://ya.ru/">http://ya.ru/</a></p>';
+		$src = 'http://ya.ru/';
+
+		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
+	}
+
+	public function test_parse_message_url_4() {
+		$errors = array();
+
+		$result = '<p>Посмотрите на <a href="http://xn--d1acpjx3f.xn--p1ai/">http://яндекс.рф/</a> сайте</p>';
+		$src = 'Посмотрите на http://яндекс.рф/ сайте';
+
+		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
+	}
+
+	public function test_parse_message_url_5() {
+		$errors = array();
+
+		$result = '<p>Посмотрите на <a href="http://www.xn--d1acpjx3f.xn--p1ai">www.яндекс.рф</a>/ сайте</p>';
+		$src = 'Посмотрите на www.яндекс.рф/ сайте';
+
+		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
+	}
+
 	// urls email
 	public function test_parse_message_url_mailto_1() {
 		$errors = array();
