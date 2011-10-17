@@ -60,7 +60,7 @@ class FlashMessenger
 		$messages_list = array();
 		foreach ($this->messages as $msg)
 		{
-			$messages_list[] = sprintf(self::TEMPLATE_MSG, $msg[1], $msg[0]);
+			$messages_list[] = sprintf(self::TEMPLATE_MSG, forum_htmlencode($msg[1]), forum_htmlencode($msg[0]));
 		}
 
 		if (!empty($messages_list))
