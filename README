@@ -31,7 +31,7 @@ NOTE: Make a backup of your current forum directory before proceeding. Also, don
 1. Turn the Maintenance mode on (via admin panel).
 2. Disable all extensions (via admin panel).
 3. Overwrite old files with new ones.
-4. After owerwriting, verify that cache, img/avatars and extensions (for pun_repository) directories have enough write permissions (usually 777.
+4. After overwriting, verify that cache, img/avatars and extensions (for pun_repository) directories have enough write permissions (usually 777.
 5. Clear cache directory.
 6. Go to the forum index and run db_update.php script (this may take a long time).
 7. Update all extentsions.
