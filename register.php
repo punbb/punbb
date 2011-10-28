@@ -438,7 +438,7 @@ ob_start();
 			</div>
 <?php ($hook = get_hook('rg_register_group_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="register" value="<?php echo $lang_profile['Register'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="register" value="<?php echo $lang_profile['Register'] ?>" /></span>
 			</div>
 		</form>
 	</div>

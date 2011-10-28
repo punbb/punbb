@@ -760,7 +760,7 @@ if (!empty($forums))
 			</fieldset>
 <?php endif; ($hook = get_hook('se_results_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="search" value="<?php echo $lang_search['Submit search'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="search" value="<?php echo $lang_search['Submit search'] ?>" /></span>
 			</div>
 		</form>
 	</div>

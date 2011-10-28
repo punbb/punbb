@@ -2061,7 +2061,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_identity_contact_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2420,7 +2420,7 @@ if ($forum_page['has_required']): ?>
 <?php $forum_page['item_count'] = 0; ?>
 <?php ($hook = get_hook('pf_change_details_settings_email_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2535,7 +2535,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_signature_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2663,7 +2663,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_avatar_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2778,7 +2778,7 @@ if ($forum_page['has_required']): ?>
 <?php ($hook = get_hook('pf_change_details_admin_pre_group_membership_submit')) ? eval($hook) : null; ?>
 			<div class="sf-set button-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="sf-box text">
-	 				<span class="submit"><input type="submit" name="update_group_membership" value="<?php echo $lang_profile['Update groups'] ?>" /></span>
+	 				<span class="submit primary"><input type="submit" name="update_group_membership" value="<?php echo $lang_profile['Update groups'] ?>" /></span>
 	 			</div>
 			</div>
 <?php
@@ -2844,7 +2844,7 @@ if ($forum_page['has_required']): ?>
 <?php ($hook = get_hook('pf_change_details_admin_mod_assignment_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="mf-set button-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="mf-box text">
-					<span class="submit"><input type="submit" name="update_forums" value="<?php echo $lang_profile['Update forums'] ?>" /></span>
+					<span class="submit primary"><input type="submit" name="update_forums" value="<?php echo $lang_profile['Update forums'] ?>" /></span>
 				</div>
 			</div>
 <?php
@@ -2855,7 +2855,7 @@ if ($forum_page['has_required']): ?>
 ?>
 		</div>
 		<div class="frm-buttons">
-			<span class="submit"><?php echo $lang_profile['Instructions'] ?></span>
+			<span class="submit primary"><?php echo $lang_profile['Instructions'] ?></span>
 		</div>
 	</div>
 	</form>
