@@ -343,6 +343,8 @@ label,
 .main-menu,
 .admin-menu {
 	background: #0066B9;
+	background-image: -moz-linear-gradient(center bottom , #2A6AB8 0%, #4795CC 100%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #2A6AB8),color-stop(1, #4795CC));
 }
 
 .admin-submenu {
@@ -354,8 +356,9 @@ label,
 .main-menu a:visited,
 .admin-menu a:link,
 .admin-menu a:visited {
-	color: #ddd;
+	color: #eee;
 	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 .main-menu a:hover,
@@ -408,8 +411,11 @@ label,
 .main-head,
 .main-foot {
 	background: #0066B9;
-	color: #ddd;
-	border-color: #0066B9;
+	background-image: -moz-linear-gradient(center bottom , #2F78D0 0%, #51A8E6 100%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #2F78D0),color-stop(1, #51A8E6));
+	color: #fff;
+	border-color: #4A86C1;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 #brd-announcement h1 {
