@@ -71,7 +71,7 @@ else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_P
 		<h2 class="hn"><span><?php echo $lang_profile['Reg rules head'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box user-box">
+		<div id="rules-content" class="ct-box user-box">
 			<?php echo $forum_config['o_rules_message'] ?>
 		</div>
 		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['register']) ?>">
@@ -80,7 +80,7 @@ else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_P
 <?php ($hook = get_hook('rg_rules_pre_agree_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
-						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_agreement" value="1" /></span>
+						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_agreement" value="1" required /></span>
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Agreement'] ?></span> <?php echo $lang_profile['Agreement label'] ?></label>
 					</div>
 				</div>
