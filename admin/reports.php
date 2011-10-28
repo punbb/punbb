@@ -155,7 +155,7 @@ if (!empty($unread_reports))
 ?>
 			<div class="frm-buttons">
 				<span class="select-all js_link" data-check-form="arp-new-report-form"><?php echo $lang_admin_common['Select all'] ?></span>
-				<span class="submit"><input type="submit" name="mark_as_read" value="<?php echo $lang_admin_reports['Mark read'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="mark_as_read" value="<?php echo $lang_admin_reports['Mark read'] ?>" /></span>
 			</div>
 		</form>
 	</div>

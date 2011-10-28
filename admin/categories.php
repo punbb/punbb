@@ -345,7 +345,7 @@ ob_start();
 			</fieldset>
 <?php ($hook = get_hook('acg_add_cat_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_cat" value="<?php echo $lang_admin_categories['Add category'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="add_cat" value="<?php echo $lang_admin_categories['Add category'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -391,7 +391,7 @@ if (!empty($cat_list))
 			</fieldset>
 <?php ($hook = get_hook('acg_del_cat_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="del_cat" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="del_cat" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -445,7 +445,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_admin_categories['Update all categories'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_admin_categories['Update all categories'] ?>" /></span>
 			</div>
 		</form>
 	</div>

@@ -735,7 +735,7 @@ ob_start();
 			</fieldset>
 <?php ($hook = get_hook('afo_add_forum_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_forum" value=" <?php echo $lang_admin_forums['Add forum'] ?> " /></span>
+				<span class="submit primary"><input type="submit" name="add_forum" value=" <?php echo $lang_admin_forums['Add forum'] ?> " /></span>
 			</div>
 		</form>
 	</div>
@@ -832,7 +832,7 @@ if (!empty($forums))
 ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update_positions" value="<?php echo $lang_admin_forums['Update positions'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update_positions" value="<?php echo $lang_admin_forums['Update positions'] ?>" /></span>
 			</div>
 		</form>
 	</div>

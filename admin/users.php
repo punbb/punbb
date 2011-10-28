@@ -674,7 +674,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="ban_users_comply" value="<?php echo $lang_admin_users['Ban'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="ban_users_comply" value="<?php echo $lang_admin_users['Ban'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1410,7 +1410,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 			</fieldset>
 <?php ($hook = get_hook('aus_search_form_results_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="find_user" value="<?php echo $lang_admin_users['Submit search'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="find_user" value="<?php echo $lang_admin_users['Submit search'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1440,7 +1440,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 			</fieldset>
 <?php ($hook = get_hook('aus_search_form_ip_search_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" value=" <?php echo $lang_admin_users['Submit search'] ?> " /></span>
+				<span class="submit primary"><input type="submit" value=" <?php echo $lang_admin_users['Submit search'] ?> " /></span>
 			</div>
 		</form>
 	</div>

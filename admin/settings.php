@@ -629,7 +629,7 @@ if (!$section || $section == 'setup')
 				</fieldset>
 <?php ($hook = get_hook('aop_setup_links_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1065,7 +1065,7 @@ else if ($section == 'features')
 			</fieldset>
 <?php ($hook = get_hook('aop_features_gzip_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1134,7 +1134,7 @@ else if ($section == 'announcements')
 			</fieldset>
 <?php ($hook = get_hook('aop_announcements_announcement_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1274,7 +1274,7 @@ else if ($section == 'registration')
 				</fieldset>
 <?php ($hook = get_hook('aop_registration_rules_fieldset_end')) ? eval($hook) : null; ?>
 				<div class="frm-buttons">
-					<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+					<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 				</div>
 		</form>
 	</div>
@@ -1341,7 +1341,7 @@ else if ($section == 'maintenance')
 			</fieldset>
 <?php ($hook = get_hook('aop_maintenance_maintenance_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1458,7 +1458,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 				</fieldset>
 <?php ($hook = get_hook('aop_email_smtp_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>

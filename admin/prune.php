@@ -152,7 +152,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 			</div>
 <?php ($hook = get_hook('apr_prune_comply_pre_buttons')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="prune_comply" value="<?php echo $lang_admin_prune['Prune topics'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="prune_comply" value="<?php echo $lang_admin_prune['Prune topics'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -277,7 +277,7 @@ else
 			</fieldset>
 <?php ($hook = get_hook('apr_prune_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="prune" value="<?php echo $lang_admin_prune['Prune topics'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="prune" value="<?php echo $lang_admin_prune['Prune topics'] ?>" /></span>
 			</div>
 		</form>
 	</div>

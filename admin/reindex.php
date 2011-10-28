@@ -251,7 +251,7 @@ ob_start();
 				<p class="warn"><?php echo $lang_admin_reindex['Empty index warning'] ?></p>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="rebuild_index" value="<?php echo $lang_admin_reindex['Rebuild index'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="rebuild_index" value="<?php echo $lang_admin_reindex['Rebuild index'] ?>" /></span>
 			</div>
 		</form>
 	</div>
