@@ -275,6 +275,11 @@ B - GLOBAL STYLES
 	margin: -1em 0 1em 0;
 }
 
+#rules-content {
+	max-width: 120ex;
+	padding: 1.3em 1.5em;
+}
+
 /* Content Text (Default spacing for paragraphs and lists)
 -------------------------------------------------------------*/
 

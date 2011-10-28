@@ -249,9 +249,15 @@ ul li strong {
 	color: #294F6E
 }
 
+#rules-content {
+	background: #fff;
+}
+
+
 .frm-buttons,
 .extension .options,
-.hotfix .options {
+.hotfix .options,
+#rules-content {
 	border-color: #E3E3E3;
 }
 
