@@ -571,6 +571,14 @@ button {
 	text-shadow: 0 1px 1px #ddd;
 }
 
+.primary input[type="submit"],
+.primary input[type="button"],
+.primary input[type="reset"],
+.primary button {
+	color: #202020;
+}
+
+
 input[type="submit"]:hover,
 input[type="submit"]:focus,
 input[type="reset"]:hover,
@@ -587,7 +595,7 @@ button:focus {
 	background: -ms-linear-gradient(top, #fff, #ebebeb);
 	background: linear-gradient(top, #fff, #ebebeb);
 	border-color: #84BCE4;
-	color: #111;
+	color: #101010;
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	box-shadow: 0 1px 2px rgba(0,0,0, .1);

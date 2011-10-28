@@ -1286,6 +1286,13 @@ button[disabled]:active {
 	top: 0;
 }
 
+.primary input[type="submit"],
+.primary input[type="button"],
+.primary input[type="reset"],
+.primary button {
+	font-size: 1.1em;
+}
+
 .js_link {
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
