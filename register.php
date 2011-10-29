@@ -295,8 +295,7 @@ if ($forum_config['o_regs_verify'] != '0')
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array(sprintf($lang_profile['Register at'], $forum_config['o_board_title']), forum_link($forum_url['register'])),
-
+	sprintf($lang_profile['Register at'], $forum_config['o_board_title'])
 );
 
 // Load JS for timezone detection

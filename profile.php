@@ -123,7 +123,7 @@ if ($action == 'change_pass')
 			$forum_page['crumbs'] = array(
 				array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 				array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-				($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password']), $id)
+				($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
 			);
 
 			($hook = get_hook('pf_change_pass_key_pre_header_load')) ? eval($hook) : null;
@@ -292,7 +292,7 @@ if ($action == 'change_pass')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password'], $id))
+		($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
 	);
 
 	($hook = get_hook('pf_change_pass_normal_pre_header_load')) ? eval($hook) : null;
@@ -559,7 +559,7 @@ else if ($action == 'change_email')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? array($lang_profile['Change your e-mail'], forum_link($forum_url['change_email'], $id)) : array(sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username'])), forum_link($forum_url['change_email'], $id))
+		($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))
 	);
 
 	($hook = get_hook('pf_change_email_normal_pre_header_load')) ? eval($hook) : null;
@@ -690,7 +690,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section admin']), forum_link($forum_url['profile_admin'], $id)),
-		array($lang_profile['Delete user'], forum_link($forum_url['delete_user'], $id))
+		$lang_profile['Delete user']
 	);
 
 	($hook = get_hook('pf_delete_user_pre_header_load')) ? eval($hook) : null;
@@ -1466,7 +1466,7 @@ if ($forum_user['id'] != $id &&
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id))
+		sprintf($lang_profile['Users profile'], $user['username'])
 	);
 
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1550,7 +1550,7 @@ else
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id))
+		sprintf($lang_profile['Users profile'], $user['username'])
 	);
 
 	// Is this users own profile
@@ -1580,7 +1580,7 @@ else
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array(sprintf($lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
+			sprintf($lang_profile['Section about'])
 		);
 
 		// Setup user identification
@@ -1852,7 +1852,7 @@ else
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section identity'],forum_link($forum_url['profile_identity'], $id))
+			$lang_profile['Section identity']
 		);
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -2101,7 +2101,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section settings'],forum_link($forum_url['profile_settings'], $id))
+			$lang_profile['Section settings']
 		);
 
 		// Setup the form
@@ -2447,7 +2447,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section signature'], forum_link($forum_url['profile_signature'], $id))
+			$lang_profile['Section signature']
 		);
 
 		// Setup the form
@@ -2559,7 +2559,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section avatar'],forum_link($forum_url['profile_avatar'], $id))
+			$lang_profile['Section avatar']
 		);
 
 		// Setup the form
@@ -2688,7 +2688,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section admin'],forum_link($forum_url['profile_admin'], $id))
+			$lang_profile['Section admin']
 		);
 
 		// Setup form
