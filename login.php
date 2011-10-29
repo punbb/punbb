@@ -95,6 +95,14 @@ if (isset($_POST['form_sent']) && empty($action))
 
 			($hook = get_hook('li_login_qr_update_user_group')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+			// Remove cache file with forum stats
+			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+			{
+				require FORUM_ROOT.'include/cache.php';
+			}
+
+			clean_stats_cache();
 		}
 
 		// Remove this user's guest entry from the online list

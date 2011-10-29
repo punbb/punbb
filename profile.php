@@ -668,6 +668,14 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 		delete_user($id, isset($_POST['delete_posts']));
 
+		// Remove cache file with forum stats
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		{
+			require FORUM_ROOT.'include/cache.php';
+		}
+
+		clean_stats_cache();
+
 		// Add flash message
 		$forum_flash->add_info($lang_profile['User delete redirect']);
 

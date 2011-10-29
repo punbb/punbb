@@ -451,6 +451,14 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 				delete_user($id, isset($_POST['delete_posts']));
 		}
 
+		// Remove cache file with forum stats
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		{
+			require FORUM_ROOT.'include/cache.php';
+		}
+
+		clean_stats_cache();
+
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users deleted']);
