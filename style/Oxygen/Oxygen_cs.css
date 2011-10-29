@@ -705,3 +705,19 @@ button[disabled]:focus {
 	background: linear-gradient(top, #fffbea, #fef7cb);
 }
 
+/*
+* Remove text-shadow in selection highlight: h5bp.com/i
+* These selection declarations have to be separate
+* Also: hot pink! (or customize the background color to match your design)
+*/
+::-moz-selection {
+	background: #fe57a1;
+	color: #fff;
+	text-shadow: none;
+}
+
+::selection {
+	background: #fe57a1;
+	color: #fff;
+	text-shadow: none;
+}
