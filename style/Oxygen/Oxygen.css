@@ -280,6 +280,34 @@ B - GLOBAL STYLES
 	padding: 1.3em 1.5em;
 }
 
+#rules-content h1 {
+	font-size: 1.3em;
+	line-height: 1em;
+	margin-bottom: .7em;
+}
+
+#rules-content h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: .3em;
+}
+
+#rules-content h3 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+#rules-content h4,
+#rules-content h5 {
+	font-size: 1;
+	font-weight: bold;
+}
+
+#rules-content p {
+	margin: 0 0 .65em;
+}
+
+
 /* Content Text (Default spacing for paragraphs and lists)
 -------------------------------------------------------------*/
 
