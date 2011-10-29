@@ -324,8 +324,7 @@ label,
 ----------------------------------------------------------------*/
 
 #brd-navlinks {
-	background: #0066B9;
-	border-color: #0066B9;
+	border-color: #376daa;
 	color: #eee;
 }
 
@@ -346,6 +345,7 @@ label,
 	background: #F1F1F1;
 }
 
+#brd-navlinks,
 .main-menu,
 .admin-menu {
 	background-color: #0066B9;
