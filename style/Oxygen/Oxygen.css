@@ -218,7 +218,7 @@ B - GLOBAL STYLES
 -------------------------------------------------------------*/
 
 .brd {
-	padding: 1.3em 2em;
+	padding: 1em 2em;
 	margin: 0 auto;
 	max-width: 1100px;
 	min-width: 700px;
@@ -1871,7 +1871,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	overflow: hidden;
 	width: 100%;
 	min-height: 8em;
-	font-size: 1.084em;
+/*	font-size: 1.084em;*/
 }
 
 #brd-help .entry-content {
@@ -1893,8 +1893,8 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 }
 
 .entry-content h5 {
-	font-weight: bold;
-	font-size: 1.084em;
+	font-weight: normal;
+	font-size: 1.3em;
 	padding: 0.5em 0;
 }
 
@@ -1948,7 +1948,7 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 
 .sig-content {
 	padding-top: 2em;
-	font-size: .917em;
+	font-size: .95em;
 }
 
 span.sig-line {
