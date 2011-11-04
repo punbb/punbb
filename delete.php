@@ -102,11 +102,31 @@ else if (isset($_POST['delete']))
 		// Delete just this one post
 		delete_post($id, $cur_post['tid'], $cur_post['fid']);
 
+		// Fetch previus post #id in some topic for redirect after delete
+		$query = array(
+			'SELECT'	=> 'p.id',
+			'FROM'		=> 'posts AS p',
+			'WHERE'		=> 'p.topic_id = '.$cur_post['tid'].' AND p.id < '.$id,
+			'ORDER BY'	=> 'p.id DESC',
+			'LIMIT'		=> '1'
+		);
+
+		($hook = get_hook('dl_post_deleted_get_prev_post_id')) ? eval($hook) : null;
+		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$prev_post = $forum_db->fetch_assoc($result);
+
 		$forum_flash->add_info($lang_delete['Post del redirect']);
 
 		($hook = get_hook('dl_post_deleted_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))), $lang_delete['Post del redirect']);
+		if (isset($prev_post['id']))
+		{
+			redirect(forum_link($forum_url['post'], $prev_post['id']), $lang_delete['Post del redirect']);
+		}
+		else
+		{
+			redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))), $lang_delete['Post del redirect']);
+		}
 	}
 }
 
