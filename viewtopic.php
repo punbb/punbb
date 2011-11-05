@@ -348,6 +348,10 @@ if (!empty($posts_id))
 
 		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.$lang_topic['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
+		if ($cur_post['edited'] != '')
+			$forum_page['post_ident']['edited'] = '<span class="post-edit">'.sprintf($lang_topic['Last edited'], forum_htmlencode($cur_post['edited_by']), format_time($cur_post['edited'])).'</span>';
+
+
 		($hook = get_hook('vt_row_pre_post_ident_merge')) ? eval($hook) : null;
 
 		if (isset($user_data_cache[$cur_post['poster_id']]['author_ident']))
@@ -520,9 +524,6 @@ if (!empty($posts_id))
 
 		// Perform the main parsing of the message (BBCode, smilies, censor words etc)
 		$forum_page['message']['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
-
-		if ($cur_post['edited'] != '')
-			$forum_page['message']['edited'] = '<p class="lastedit"><em>'.sprintf($lang_topic['Last edited'], forum_htmlencode($cur_post['edited_by']), format_time($cur_post['edited'])).'</em></p>';
 
 		// Do signature parsing/caching
 		if ($cur_post['signature'] != '' && $forum_user['show_sig'] != '0' && $forum_config['o_signatures'] == '1')
