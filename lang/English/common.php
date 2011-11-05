@@ -155,7 +155,7 @@ $lang_common = array(
 'Skip to content'			=>	'Skip to forum content',
 
 // Debug information
-'Querytime'					=>	'Generated in %1$s seconds, %2$s queries executed',
+'Querytime'                 =>  'Generated in %1$s seconds (%2$s%% PHP - %3$s%% DB) with %4$s queries',
 'Debug table'				=>	'Debug information',
 'Debug summary'				=>	'Database query performance information',
 'Query times'				=>	'Time (s)',

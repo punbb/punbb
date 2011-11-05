@@ -90,14 +90,14 @@ class DBLayer
 		if (strlen($sql) > 140000)
 			exit('Insane query. Aborting.');
 
-		if (defined('FORUM_SHOW_QUERIES'))
+		if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 			$q_start = forum_microtime();
 
 		$this->query_result = $this->link_id->query($sql);
 
 		if ($this->query_result)
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, sprintf('%.5f', forum_microtime() - $q_start));
 
 			++$this->num_queries;
@@ -106,7 +106,7 @@ class DBLayer
 		}
 		else
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, 0);
 
 			$this->error_no = $this->link_id->lastErrorCode();
@@ -333,7 +333,7 @@ class DBLayer
 		{
 			if ($this->in_transaction)
 			{
-				if (defined('FORUM_SHOW_QUERIES'))
+				if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 					$this->saved_queries[] = array('COMMIT', 0);
 
 				$this->link_id->exec('COMMIT');

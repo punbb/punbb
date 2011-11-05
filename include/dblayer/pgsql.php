@@ -107,7 +107,7 @@ class DBLayer
 		if (strrpos($sql, 'LIMIT') !== false)
 			$sql = preg_replace('#LIMIT ([0-9]+),([ 0-9]+)#', 'LIMIT \\2 OFFSET \\1', $sql);
 
-		if (defined('FORUM_SHOW_QUERIES'))
+		if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 			$q_start = forum_microtime();
 
 		@pg_send_query($this->link_id, $sql);
@@ -115,7 +115,7 @@ class DBLayer
 
 		if (pg_result_status($this->query_result) != PGSQL_FATAL_ERROR)
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, sprintf('%.5f', forum_microtime() - $q_start));
 
 			++$this->num_queries;
@@ -126,7 +126,7 @@ class DBLayer
 		}
 		else
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, 0);
 
 			$this->error_msg = @pg_result_error($this->query_result);
@@ -326,7 +326,7 @@ class DBLayer
 		{
 			if ($this->in_transaction)
 			{
-				if (defined('FORUM_SHOW_QUERIES'))
+				if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 					$this->saved_queries[] = array('COMMIT', 0);
 
 				@pg_query($this->link_id, 'COMMIT');

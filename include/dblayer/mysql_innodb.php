@@ -80,7 +80,7 @@ class DBLayer
 		if (strlen($sql) > 140000)
 			exit('Insane query. Aborting.');
 
-		if (defined('FORUM_SHOW_QUERIES'))
+		if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 			$q_start = forum_microtime();
 
 		if ($unbuffered)
@@ -90,7 +90,7 @@ class DBLayer
 
 		if ($this->query_result)
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, sprintf('%.5f', forum_microtime() - $q_start));
 
 			++$this->num_queries;
@@ -99,7 +99,7 @@ class DBLayer
 		}
 		else
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, 0);
 
 			if ($this->in_transaction)
