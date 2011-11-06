@@ -270,7 +270,7 @@ else
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="prune_sticky" value="1" checked="checked" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_prune['Prune sticky'] ?></span> <?php echo $lang_admin_prune['Prune sticky enable'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_prune['Prune sticky enable'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('apr_pre_prune_fieldset_end')) ? eval($hook) : null; ?>
