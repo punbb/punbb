@@ -58,6 +58,10 @@ a:focus {
 	color: #333;
 }
 
+.entry-content h5 {
+	color: #D93315;
+}
+
 .gen-content,
 .main-content {
 	background: #fbfbfb;
