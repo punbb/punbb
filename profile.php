@@ -739,7 +739,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 			</fieldset>
 <?php ($hook = get_hook('pf_delete_user_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="delete_user_comply" value="<?php echo $lang_common['Submit'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete_user_comply" value="<?php echo $lang_profile['Delete user'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>

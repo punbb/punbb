@@ -207,7 +207,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 			</fieldset>
 <?php ($hook = get_hook('ul_search_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="search" value="<?php echo $lang_ul['Submit user search'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="search" value="<?php echo $lang_ul['Submit user search'] ?>" /></span>
 			</div>
 		</div>
 		</form>

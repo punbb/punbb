@@ -188,7 +188,7 @@ else if (isset($_GET['del_forum']))
 				<p class="warn"><?php echo $lang_admin_forums['Delete forum warning'] ?></p>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="del_forum_comply" value="<?php echo $lang_admin_forums['Delete forum'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="del_forum_comply" value="<?php echo $lang_admin_forums['Delete forum'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="del_forum_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
