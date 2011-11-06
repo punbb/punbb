@@ -1387,7 +1387,7 @@ button[disabled]:active {
 
 
 .sf-set .checkbox input {
-	margin: .2em 0 .2em -0.2em;
+	margin: .2em 0 .2em -.1em;
 }
 
  /* Fixes alignment issue in Safari */
