@@ -148,8 +148,7 @@ $forum_page['hidden_fields'] = array(
 // Setup form information
 $forum_page['frm_info'] = array(
 	'<li><span>'.$lang_delete['Forum'].':<strong> '.forum_htmlencode($cur_post['forum_name']).'</strong></span></li>',
-	'<li><span>'.$lang_delete['Topic'].':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>',
-	'<li><span>'.sprintf((($cur_post['is_topic']) ? $lang_delete['Delete topic info'] : $lang_delete['Delete post info']), forum_htmlencode($cur_post['poster']), format_time($cur_post['posted'])).'</span></li>'
+	'<li><span>'.$lang_delete['Topic'].':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>'
 );
 
 // Generate the post heading
