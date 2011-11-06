@@ -162,4 +162,11 @@ $lang_common = array(
 'Query'						=>	'Query',
 'Total query time'			=>	'Total query time',
 
+// Error message
+'Forum error header'        => 'Sorry! The page could not be loaded.',
+'Forum error description'   => 'This is probably a temporary error. Just refresh the page and retry. If problem continues, please check back in 5-10 minutes.',
+'Forum error location'      => 'The error occurred on line %1$s in %2$s',
+'Forum error db reported'   => 'Database reported:',
+'Forum error db query'      => 'Failed query:',
+
 );
