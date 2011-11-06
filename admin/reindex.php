@@ -212,8 +212,10 @@ ob_start();
 		<h2 class="hn"><span><?php echo $lang_admin_reindex['Reindex heading'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="ct-box">
+		<div class="ct-box warn-box">
 			<p><?php echo $lang_admin_reindex['Reindex info'] ?></p>
+			<p class="important"><?php echo $lang_admin_reindex['Reindex warning'] ?></p>
+			<p class="warn"><?php echo $lang_admin_reindex['Empty index warning'] ?></p>
 		</div>
 		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_reindex']) ?>">
 			<div class="hidden">
@@ -240,16 +242,12 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="i_empty_index" value="1" checked="checked" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_reindex['Empty index'] ?></span> <?php echo $lang_admin_reindex['Empty index info'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_reindex['Empty index'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('ari_pre_rebuild_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('ari_rebuild_fieldset_end')) ? eval($hook) : null; ?>
-			<div class="ct-box warn-box">
-				<p class="important"><?php echo $lang_admin_reindex['Reindex warning'] ?></p>
-				<p class="warn"><?php echo $lang_admin_reindex['Empty index warning'] ?></p>
-			</div>
 			<div class="frm-buttons">
 				<span class="submit primary"><input type="submit" name="rebuild_index" value="<?php echo $lang_admin_reindex['Rebuild index'] ?>" /></span>
 			</div>
