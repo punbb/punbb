@@ -1465,7 +1465,7 @@ table input[type="checkbox"] {
 }
 
 .mf-item input {
-	margin: .1em 0 .1em -0.25em;
+	margin: .1em 0 .1em -.1em;
 }
 
 .mf-item label {
