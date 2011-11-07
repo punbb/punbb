@@ -1323,7 +1323,8 @@ button[disabled]:active {
 .primary input[type="button"],
 .primary input[type="reset"],
 .primary button {
-	font-size: 1.1em;
+	padding-left: 1.2em;
+	padding-right: 1.2em;
 }
 
 .js_link {
