@@ -1283,11 +1283,11 @@ button {
 	vertical-align: baseline;
 	text-align: center;
 	text-decoration: none;
-	padding: .5em .65em;
-	-moz-border-radius: .25em;
-	-webkit-border-radius: .25em;
-	-khtml-border-radius: .25em;
-	border-radius: .25em;
+	padding: .5em .6em;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	border-radius: 2px;
 	border-style: solid;
 	border-width: 1px;
 	-webkit-appearance: button;
