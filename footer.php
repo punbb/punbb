@@ -71,9 +71,9 @@ if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 				$query_time_total += $cur_query[1];
 			}
 
-			if ($query_time_total > 0)
+			if ($query_time_total > 0 && $time_diff > 0)
 			{
-				$time_percent_db = $time_diff / $query_time_total;
+				$time_percent_db = ($query_time_total * 100) / $time_diff;
 			}
 		}
 
