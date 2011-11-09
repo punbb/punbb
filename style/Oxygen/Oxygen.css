@@ -2205,7 +2205,8 @@ H - MAIN CONTENT - ODDMENTS
 
 
 /* IE */
-.oldie a.feed {
+.ie6 a.feed,
+.ie7 a.feed {
 	background: url(feed-icon.png) center left no-repeat;
 }
 
