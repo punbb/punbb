@@ -230,10 +230,10 @@ if (!isset($_POST['form_sent']))
 ?>					</select></span>
 				</div>
 			</div>
-			<div class="sf-set set1">
+			<div class="sf-set set1" id="db_host_block">
 				<div class="sf-box text required">
 					<label for="fld2"><span><?php echo $lang_install['Database server'] ?></span> <small><?php echo $lang_install['Database server help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" required /></span>
+					<span class="fld-input"><input id="db_host" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
