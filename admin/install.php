@@ -272,22 +272,22 @@ if (!isset($_POST['form_sent']))
 		</div>
 		<fieldset class="frm-group group1">
 			<legend class="group-legend"><strong><?php echo $lang_install['Part2 legend'] ?></strong></legend>
-			<div class="sf-set set1">
+			<div class="sf-set set4">
 				<div class="sf-box text required">
-					<label for="fld7"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld7" type="text" name="req_username" size="35" maxlength="25" required /></span>
+					<label for="admin_email"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
+					<span class="fld-input"><input id="admin_email" type="email" name="req_email" size="35" maxlength="80" required /></span>
+				</div>
+			</div>
+			<div class="sf-set set1 prepend-top">
+				<div class="sf-box text required">
+					<label for="admin_username"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
+					<span class="fld-input"><input id="admin_username" type="text" name="req_username" size="35" maxlength="25" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text required">
 					<label for="fld8"><span><?php echo $lang_install['Admin password'] ?></span> <small><?php echo $lang_install['Password help'] ?></small></label><br />
 					<span class="fld-input"><input id="fld8" type="text" name="req_password1" size="35" required autocomplete="off" /></span>
-				</div>
-			</div>
-			<div class="sf-set set4 prepend-top">
-				<div class="sf-box text required">
-					<label for="fld9"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld9" type="email" name="req_email" size="35" maxlength="80" required /></span>
 				</div>
 			</div>
 		</fieldset>

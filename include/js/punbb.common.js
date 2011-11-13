@@ -461,6 +461,22 @@ PUNBB.common = (function () {
 			}
 
 			return !!(attr in inputElem);
+		},
+
+		set_username_from_email: function (el_email, el_username) {
+			if (el_email && el_username) {
+				// Do not set empty value
+				if (el_email.value.length === 0 && el_username.value.length === 0) {
+					return;
+				}
+
+				// Do not set equal value
+				if (el_email.value === el_username.value) {
+					return;
+				}
+
+				el_username.value = el_email.value.replace(/@.*/, '');
+			}
 		}
 	};
 }());
