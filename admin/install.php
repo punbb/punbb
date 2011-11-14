@@ -195,7 +195,7 @@ if (!isset($_POST['form_sent']))
 
 	}
 
-?>	<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
+?>	<form class="frm-form frm-suggest-username" method="post" accept-charset="utf-8" action="install.php">
 	<div class="hidden">
 		<input type="hidden" name="form_sent" value="1" />
 	</div>
@@ -275,13 +275,13 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set4">
 				<div class="sf-box text required">
 					<label for="admin_email"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
-					<span class="fld-input"><input id="admin_email" type="email" name="req_email" size="35" maxlength="80" required /></span>
+					<span class="fld-input"><input id="admin_email" type="email" data-suggest-role="email" name="req_email" size="35" maxlength="80" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set1 prepend-top">
 				<div class="sf-box text required">
 					<label for="admin_username"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
-					<span class="fld-input"><input id="admin_username" type="text" name="req_username" size="35" maxlength="25" required /></span>
+					<span class="fld-input"><input id="admin_username" type="text" data-suggest-role="username" name="req_username" size="35" maxlength="25" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
