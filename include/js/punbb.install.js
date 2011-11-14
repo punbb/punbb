@@ -19,7 +19,6 @@ PUNBB.install = (function () {
 	return {
 		init: function () {
 			PUNBB.install.selectDB_attach_event();
-			PUNBB.install.get_username_from_email_attach_event();
 		},
 
 
@@ -57,16 +56,6 @@ PUNBB.install = (function () {
 				// Run first for update on page load
 				PUNBB.install.selectDB_update();
 			}
-		},
-
-		get_username_from_email_attach_event: function () {
-			var fn_keypress = function (t) {
-				return function (e) {
-					PUNBB.common.set_username_from_email(this, t);
-				};
-			};
-
-			get('admin_email').onkeyup = fn_keypress(get('admin_username'));
 		}
 	};
 }());
