@@ -1114,13 +1114,13 @@ else if (isset($_POST['form_sent']))
 
 			if (is_uploaded_file($uploaded_file['tmp_name']) && empty($errors))
 			{
+				// First check simple by size and mime type
+				$allowed_mime_types = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
 				$allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
 
 				($hook = get_hook('pf_change_details_avatar_allowed_types')) ? eval($hook) : null;
 
-				list($width, $height, $type,) = @/**/getimagesize($uploaded_file['tmp_name']);
-
-				if (!in_array($type, $allowed_types))
+				if (!in_array($uploaded_file['type'], $allowed_mime_types))
 					$errors[] = $lang_profile['Bad type'];
 				else
 				{
@@ -1131,44 +1131,54 @@ else if (isset($_POST['form_sent']))
 
 				if (empty($errors))
 				{
-					// Determine type
-					$extension = null;
-					$avatar_type = FORUM_AVATAR_NONE;
-					if ($type == IMAGETYPE_GIF)
-					{
-						$extension = '.gif';
-						$avatar_type = FORUM_AVATAR_GIF;
-					}
-					else if ($type == IMAGETYPE_JPEG)
-					{
-						$extension = '.jpg';
-						$avatar_type = FORUM_AVATAR_JPG;
-					}
-					else if ($type == IMAGETYPE_PNG)
-					{
-						$extension = '.png';
-						$avatar_type = FORUM_AVATAR_PNG;
-					}
-
-					($hook = get_hook('pf_change_details_avatar_determine_extension')) ? eval($hook) : null;
+					$avatar_tmp_file = $forum_config['o_avatars_dir'].'/'.$id.'.tmp';
 
 					// Move the file to the avatar directory. We do this before checking the width/height to circumvent open_basedir restrictions.
-					if (!@move_uploaded_file($uploaded_file['tmp_name'], $forum_config['o_avatars_dir'].'/'.$id.'.tmp'))
+					if (!@move_uploaded_file($uploaded_file['tmp_name'], $avatar_tmp_file))
 						$errors[] = sprintf($lang_profile['Move failed'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>');
 
 					if (empty($errors))
 					{
 						($hook = get_hook('pf_change_details_avatar_modify_size')) ? eval($hook) : null;
 
-						// Now check the width/height
+						// Now check the width, height, type
+						list($width, $height, $type,) = @/**/getimagesize($avatar_tmp_file);
 						if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
 						{
-							@unlink($forum_config['o_avatars_dir'].'/'.$id.'.tmp');
+							@unlink($avatar_tmp_file);
 							$errors[] = sprintf($lang_profile['Too wide or high'], $forum_config['o_avatars_width'], $forum_config['o_avatars_height']);
 						}
-						else if ($type == 1 && $uploaded_file['type'] != 'image/gif')	// Prevent dodgy uploads
+						else if ($type == IMAGETYPE_GIF && $uploaded_file['type'] != 'image/gif')	// Prevent dodgy uploads
 						{
-							@unlink($forum_config['o_avatars_dir'].'/'.$id.'.tmp');
+							@unlink($avatar_tmp_file);
+							$errors[] = $lang_profile['Bad type'];
+						}
+
+						// Determine type
+						$extension = null;
+						$avatar_type = FORUM_AVATAR_NONE;
+						if ($type == IMAGETYPE_GIF)
+						{
+							$extension = '.gif';
+							$avatar_type = FORUM_AVATAR_GIF;
+						}
+						else if ($type == IMAGETYPE_JPEG)
+						{
+							$extension = '.jpg';
+							$avatar_type = FORUM_AVATAR_JPG;
+						}
+						else if ($type == IMAGETYPE_PNG)
+						{
+							$extension = '.png';
+							$avatar_type = FORUM_AVATAR_PNG;
+						}
+
+						($hook = get_hook('pf_change_details_avatar_determine_extension')) ? eval($hook) : null;
+
+						// Check type from getimagesize type format
+						if (!in_array($avatar_type, $allowed_types) || empty($extension))
+						{
+							@unlink($avatar_tmp_file);
 							$errors[] = $lang_profile['Bad type'];
 						}
 
@@ -1180,7 +1190,7 @@ else if (isset($_POST['form_sent']))
 							delete_avatar($id);
 
 							// Put the new avatar in its place
-							@rename($forum_config['o_avatars_dir'].'/'.$id.'.tmp', $forum_config['o_avatars_dir'].'/'.$id.$extension);
+							@rename($avatar_tmp_file, $forum_config['o_avatars_dir'].'/'.$id.$extension);
 							@chmod($forum_config['o_avatars_dir'].'/'.$id.$extension, 0644);
 
 							// Avatar
