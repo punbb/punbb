@@ -1106,6 +1106,10 @@ else if (isset($_POST['form_sent']))
 
 			if (is_uploaded_file($uploaded_file['tmp_name']) && empty($errors))
 			{
+				// Move the file to the avatar directory. We do this before checking the width/height to circumvent open_basedir restrictions.
+				if (!@move_uploaded_file($uploaded_file['tmp_name'], $forum_config['o_avatars_dir'].'/'.$id.'.tmp'))
+					$errors[] = sprintf($lang_profile['Move failed'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>');
+
 				$allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
 
 				($hook = get_hook('pf_change_details_avatar_allowed_types')) ? eval($hook) : null;
@@ -1143,10 +1147,6 @@ else if (isset($_POST['form_sent']))
 					}
 
 					($hook = get_hook('pf_change_details_avatar_determine_extension')) ? eval($hook) : null;
-
-					// Move the file to the avatar directory. We do this before checking the width/height to circumvent open_basedir restrictions.
-					if (!@move_uploaded_file($uploaded_file['tmp_name'], $forum_config['o_avatars_dir'].'/'.$id.'.tmp'))
-						$errors[] = sprintf($lang_profile['Move failed'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>');
 
 					if (empty($errors))
 					{
