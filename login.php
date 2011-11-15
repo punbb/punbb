@@ -95,6 +95,14 @@ if (isset($_POST['form_sent']) && empty($action))
 
 			($hook = get_hook('li_login_qr_update_user_group')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+			// Remove cache file with forum stats
+			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+			{
+				require FORUM_ROOT.'include/cache.php';
+			}
+
+			clean_stats_cache();
 		}
 
 		// Remove this user's guest entry from the online list
@@ -273,7 +281,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_login['New password request'], forum_link($forum_url['request_password']))
+		$lang_login['New password request']
 	);
 
 	($hook = get_hook('li_forgot_pass_pre_header_load')) ? eval($hook) : null;
@@ -371,7 +379,7 @@ $forum_page['hidden_fields'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array(sprintf($lang_login['Login info'], $forum_config['o_board_title']), forum_link($forum_url['login']))
+	sprintf($lang_login['Login info'], $forum_config['o_board_title'])
 );
 
 ($hook = get_hook('li_login_pre_header_load')) ? eval($hook) : null;

@@ -234,7 +234,7 @@ if (isset($_GET['tid']))
 			</fieldset>
 <?php ($hook = get_hook('mr_confirm_delete_posts_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="delete_posts_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete_posts_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -539,6 +539,9 @@ if (isset($_GET['tid']))
 
 		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.$lang_topic['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
+		if ($cur_post['edited'] != '')
+			$forum_page['post_ident']['edited'] = '<span class="post-edit">'.sprintf($lang_topic['Last edited'], forum_htmlencode($cur_post['edited_by']), format_time($cur_post['edited'])).'</span>';
+
 		($hook = get_hook('mr_row_pre_item_ident_merge')) ? eval($hook) : null;
 
 		// Generate the checkbox field
@@ -576,9 +579,6 @@ if (isset($_GET['tid']))
 
 		// Perform the main parsing of the message (BBCode, smilies, censor words etc)
 		$forum_page['message']['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
-
-		if ($cur_post['edited'] != '')
-			$forum_page['message']['edited'] = '<p class="lastedit"><em>'.sprintf($lang_topic['Last edited'], forum_htmlencode($cur_post['edited_by']), format_time($cur_post['edited'])).'</em></p>';
 
 		($hook = get_hook('mr_post_actions_row_pre_display')) ? eval($hook) : null;
 

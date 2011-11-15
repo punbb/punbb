@@ -18,6 +18,28 @@ PUNBB.common = (function () {
 		return document.getElementById(el);
 	}
 
+	function set_username_from_email(el_email, el_username) {
+		if (el_email && el_username) {
+			// Do not set empty value
+			if (el_email.value.length === 0 && el_username.value.length === 0) {
+				return;
+			}
+
+			// Do not set equal value
+			if (el_email.value === el_username.value) {
+				return;
+			}
+
+			var username_max_len = parseInt(el_username.getAttribute('maxlength'), 10) || 0;
+			if (username_max_len > 0) {
+				el_username.value = el_email.value.replace(/@.*/, '').substr(0, username_max_len);
+			} else {
+				el_username.value = el_email.value.replace(/@.*/, '');
+			}
+		}
+	}
+
+
 	return {
 		on_domready_init: function () {
 			isDOMReady = true;
@@ -27,6 +49,7 @@ PUNBB.common = (function () {
 			PUNBB.common.attachWindowOpen();
 			PUNBB.common.autoFocus();
 			PUNBB.common.attachCtrlEnterForm();
+			PUNBB.common.attachUsernameFromEmail();
 
 			if (!PUNBB.common.input_support_attr("required")) {
 				PUNBB.common.attachValidateForm();
@@ -461,6 +484,40 @@ PUNBB.common = (function () {
 			}
 
 			return !!(attr in inputElem);
+		},
+
+		attachUsernameFromEmail: function () {
+			var fn_get_email = function (x) {
+				return (x.tagName.toUpperCase() == "INPUT" && x.type == "email" && x.getAttribute('data-suggest-role') === 'email');
+			};
+
+			var fn_get_username = function (x) {
+				return (x.tagName.toUpperCase() == "INPUT" && x.type == "text" && x.getAttribute('data-suggest-role') === 'username');
+			};
+
+			var i, len, forms = document.forms;
+			for (i = 0, len = forms.length; i < len; i += 1) {
+				var f = forms[i],
+					el_email_i = -1,
+					el_username_i = -1;
+
+				if (!PUNBB.common.hasClass(f, 'frm-suggest-username')) {
+					continue;
+				}
+
+				el_email_i = PUNBB.common.find(fn_get_email, f.elements);
+				el_username_i = PUNBB.common.find(fn_get_username, f.elements);
+
+				if (el_email_i > 0 && el_username_i > 0) {
+					var fn_keypress = function (t) {
+						return function (e) {
+							set_username_from_email(this, t);
+						};
+					};
+
+					f.elements[el_email_i].onkeyup = fn_keypress(f.elements[el_username_i]);
+				}
+			}
 		}
 	};
 }());

@@ -567,7 +567,7 @@ $forum_page['frm-sort'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_common['Search'], forum_link($forum_url['search']))
+	$lang_common['Search']
 );
 
 $advanced_search = isset($_GET['advanced']) ? true : false;
@@ -760,7 +760,7 @@ if (!empty($forums))
 			</fieldset>
 <?php endif; ($hook = get_hook('se_results_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="search" value="<?php echo $lang_search['Submit search'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="search" value="<?php echo $lang_search['Submit search'] ?>" /></span>
 			</div>
 		</form>
 	</div>

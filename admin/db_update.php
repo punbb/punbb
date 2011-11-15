@@ -563,7 +563,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="start" value="Start update" /></span>
+				<span class="submit primary"><input type="submit" name="start" value="Start update" /></span>
 			</div>
 		</form>
 	</div>

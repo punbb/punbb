@@ -191,7 +191,7 @@ if (!$forum_user['is_guest'] && !empty($topics))
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))))
+	$cur_forum['forum_name']
 );
 
 // Setup main header

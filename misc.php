@@ -33,7 +33,7 @@ if ($action == 'rules')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_common['Rules'], forum_link($forum_url['rules']))
+		$lang_common['Rules']
 	);
 
 	($hook = get_hook('mi_rules_pre_header_load')) ? eval($hook) : null;
@@ -52,7 +52,7 @@ if ($action == 'rules')
 	</div>
 
 	<div class="main-content main-frm">
-		<div class="ct-box user-box">
+		<div id="rules-content" class="ct-box user-box">
 			<?php echo $forum_config['o_rules_message']."\n" ?>
 		</div>
 	</div>

@@ -27,9 +27,16 @@ PUNBB.install = (function () {
 			var selected_db = get('req_db_type')[get('req_db_type').selectedIndex].value;
 
 			if (selected_db === 'sqlite' || selected_db === 'sqlite3') {
+				PUNBB.common.addClass(get('db_host_block'), 'hidden');
 				PUNBB.common.addClass(get('db_username_block'), 'hidden');
 				PUNBB.common.addClass(get('db_password_block'), 'hidden');
+
+				// #db_host is required and can not be empty
+				if (get('db_host').value.length < 0) {
+					get('db_host').value  = 'localhost';
+				}
 			} else {
+				PUNBB.common.removeClass(get('db_host_block'), 'hidden');
 				PUNBB.common.removeClass(get('db_username_block'), 'hidden');
 				PUNBB.common.removeClass(get('db_password_block'), 'hidden');
 			}
