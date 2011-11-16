@@ -353,7 +353,9 @@ PUNBB.common = (function () {
 		attachCtrlEnterForm: function () {
 			var fn_keypress = function (frm) {
 				return function (e) {
-					if (((e.keyCode == 13) || (e.keyCode == 10)) && (e.ctrlKey === true)) {
+					e = e || window.event;
+					var key = e.keyCode || e.which;
+					if (((key == 13) || (key == 10)) && (e.ctrlKey === true)) {
 						return frm.submit();
 					}
 				};
