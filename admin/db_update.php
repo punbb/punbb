@@ -1348,6 +1348,34 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 		}
 
+		// Fix linkedIn possible XSS founded in 1.4.0
+		if (version_compare($cur_version, '1.3', '>') && version_compare($cur_version, '1.4.1', '<'))
+		{
+			if ($forum_db->field_exists('users', 'linkedin'))
+			{
+				$query = array(
+					'SELECT'	=> 'id, linkedin',
+					'FROM'		=> 'users',
+					'WHERE'		=> 'linkedin IS NOT NULL'
+				);
+				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+				while ($cur_user = $forum_db->fetch_assoc($result))
+				{
+					if ($cur_user['linkedin'] != '' &&
+						strpos(strtolower($cur_user['linkedin']), 'http://') !== 0  &&
+						strpos(strtolower($cur_user['linkedin']), 'https://') !== 0)
+					{
+						$query = array(
+							'UPDATE'	=> 'users',
+							'SET'		=> 'linkedin=\''.$forum_db->escape('http://'.$cur_user['linkedin']).'\'',
+							'WHERE'		=> 'id = \''.$cur_user['id'].'\''
+						);
+						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+					}
+				}
+			}
+		}
 
 
 		// Should we do charset conversion or not?
