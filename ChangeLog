@@ -2,8 +2,8 @@ PunBB 1.4.1
 2011-10-27 20:29:00
 ====================
 
- * an XSS vulnerability in profile.php (reported by Secunia)
- * javascript errors on Internet Explorer 6 and 7 (reported by hklown)
+ * fixed XSS vulnerability in profile.php (reported by Secunia)
+ * fixed javascript errors on Internet Explorer 6 and 7 (reported by hklown)
 
 
 PunBB 1.4
