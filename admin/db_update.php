@@ -101,7 +101,7 @@ if (version_compare($cur_version, '1.2', '<'))
 	error('Version mismatch. The database \''.$db_name.'\' doesn\'t seem to be running a PunBB database schema supported by this update script.', __FILE__, __LINE__);
 
 // If we've already done charset conversion in a previous update, we have to do SET NAMES
-$forum_db->set_names(strpos($cur_version, '1.3') === 0 ? 'utf8' : 'latin1');
+$forum_db->set_names(version_compare($cur_version, '1.3', '>=') ? 'utf8' : 'latin1');
 
 // If MySQL, make sure it's at least 4.1.2
 if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
@@ -1379,7 +1379,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 
 		// Should we do charset conversion or not?
-		if (strpos($cur_version, '1.3') === 0)
+		if (version_compare($cur_version, '1.3', '>='))
 			$query_str = '?stage=finish';
 		elseif (strpos($cur_version, '1.2') === 0 && isset($_GET['convert_charset']))
 			$query_str = '?stage=conv_misc&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
