@@ -48,7 +48,7 @@ a:focus {
 .sig-content a,
 .sig-content a:visited {
 	color: #999;
-	text-decoration: underline;
+	border-color: #ddd;
 }
 
 .sig-content a:hover,
@@ -56,6 +56,8 @@ a:focus {
 .sig-content a:focus,
 .sig-content a:visited:hover {
 	color: #333;
+	border-color: #999;
+	text-decoration: none;
 }
 
 .entry-content h5 {
@@ -157,7 +159,8 @@ h4.post-title,
 .sig-demo a,
 .sig-demo a:visited {
 	color: #333;
-	text-decoration: underline;
+	text-decoration: none;
+	border-color: #bbb;
 }
 
 .online .userstatus span {

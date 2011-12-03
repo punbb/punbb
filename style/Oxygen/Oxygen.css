@@ -1952,6 +1952,12 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	font-size: .95em;
 }
 
+.sig-content a,
+.sig-demo a {
+	border-bottom: solid;
+	border-width: 1px;
+}
+
 span.sig-line {
 	display: block;
 	width: 200px;
