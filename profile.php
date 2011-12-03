@@ -975,6 +975,10 @@ else if (isset($_POST['form_sent']))
 			if ($form['url'] != '' && strpos(strtolower($form['url']), 'http://') !== 0  && strpos(strtolower($form['url']), 'https://') !== 0)
 				$form['url'] = 'http://'.$form['url'];
 
+			// Add http:// if the LinkedIn doesn't contain it or https:// already
+			if ($form['linkedin'] != '' && strpos(strtolower($form['linkedin']), 'http://') !== 0  && strpos(strtolower($form['linkedin']), 'https://') !== 0)
+				$form['linkedin'] = 'http://'.$form['linkedin'];
+
 			// If the ICQ UIN contains anything other than digits it's invalid
 			if ($form['icq'] != '' && !ctype_digit($form['icq']))
 				$errors[] = $lang_profile['Bad ICQ'];
@@ -1458,6 +1462,51 @@ if ($forum_user['id'] != $id &&
 		$forum_page['user_contact']['website'] = '<li><span>'.$lang_profile['Website'].': '.$forum_page['url'].'</span></li>';
 	}
 
+	// Facebook
+	if ($user['facebook'] != '')
+	{
+		if ($forum_config['o_censoring'] == '1')
+		{
+			$user['facebook'] = censor_words($user['facebook']);
+		}
+
+		$facebook_url = ((strpos($user['facebook'], 'http://') === 0) || (strpos($user['facebook'], 'https://') === 0)) ?
+			forum_htmlencode($user['facebook']) :
+			forum_htmlencode('https://www.facebook.com/'.$user['facebook'])
+		;
+		$forum_page['facebook'] = '<a href="'.$facebook_url.'" class="external url">'.$facebook_url.'</a>';
+		$forum_page['user_contact']['facebook'] = '<li><span>'.$lang_profile['Facebook'].': '.$forum_page['facebook'].'</span></li>';
+	}
+
+	// Twitter
+	if ($user['twitter'] != '')
+	{
+		if ($forum_config['o_censoring'] == '1')
+		{
+			$user['twitter'] = censor_words($user['twitter']);
+		}
+
+		$twitter_url = ((strpos($user['twitter'], 'http://') === 0) || (strpos($user['twitter'], 'https://') === 0)) ?
+			forum_htmlencode($user['twitter']) :
+			forum_htmlencode('https://twitter.com/'.$user['twitter'])
+		;
+		$forum_page['twitter'] = '<a href="'.$twitter_url.'" class="external url">'.$twitter_url.'</a>';
+		$forum_page['user_contact']['twitter'] = '<li><span>'.$lang_profile['Twitter'].': '.$forum_page['twitter'].'</span></li>';
+	}
+
+	// LinkedIn
+	if ($user['linkedin'] != '')
+	{
+		if ($forum_config['o_censoring'] == '1')
+		{
+			$user['linkedin'] = censor_words($user['linkedin']);
+		}
+
+		$linkedin_url = forum_htmlencode($user['linkedin']);
+		$forum_page['linkedin'] = '<a href="'.$linkedin_url.'" class="external url" rel="me">'.$linkedin_url.'</a>';
+		$forum_page['user_contact']['linkedin'] = '<li><span>'.$lang_profile['LinkedIn'].': '.$forum_page['linkedin'].'</span></li>';
+	}
+
 	if ($user['jabber'] !='')
 		$forum_page['user_contact']['jabber'] = '<li><span>'.$lang_profile['Jabber'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
 	if ($user['icq'] !='')
@@ -1561,8 +1610,6 @@ if ($forum_user['id'] != $id &&
 
 	require FORUM_ROOT.'footer.php';
 }
-
-
 else
 {
 	// Setup breadcrumbs
@@ -1698,7 +1745,10 @@ else
 				$user['facebook'] = censor_words($user['facebook']);
 			}
 
-			$facebook_url = (strpos($user['facebook'], 'http') === 0) ? forum_htmlencode($user['facebook']) : forum_htmlencode('https://www.facebook.com/'.$user['facebook']);
+			$facebook_url = ((strpos($user['facebook'], 'http://') === 0) || (strpos($user['facebook'], 'https://') === 0)) ?
+				forum_htmlencode($user['facebook']) :
+				forum_htmlencode('https://www.facebook.com/'.$user['facebook'])
+			;
 			$forum_page['facebook'] = '<a href="'.$facebook_url.'" class="external url">'.$facebook_url.'</a>';
 			$forum_page['user_contact']['facebook'] = '<li><span>'.$lang_profile['Facebook'].': '.$forum_page['facebook'].'</span></li>';
 		}
@@ -1711,7 +1761,10 @@ else
 				$user['twitter'] = censor_words($user['twitter']);
 			}
 
-			$twitter_url = (strpos($user['twitter'], 'http') === 0) ? forum_htmlencode($user['twitter']) : forum_htmlencode('https://twitter.com/'.$user['twitter']);
+			$twitter_url = ((strpos($user['twitter'], 'http://') === 0) || (strpos($user['twitter'], 'https://') === 0)) ?
+				forum_htmlencode($user['twitter']) :
+				forum_htmlencode('https://twitter.com/'.$user['twitter'])
+			;
 			$forum_page['twitter'] = '<a href="'.$twitter_url.'" class="external url">'.$twitter_url.'</a>';
 			$forum_page['user_contact']['twitter'] = '<li><span>'.$lang_profile['Twitter'].': '.$forum_page['twitter'].'</span></li>';
 		}
