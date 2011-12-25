@@ -62,6 +62,16 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	if (!empty($errors))
 		message(isset($_GET['install']) ? $lang_common['Bad request'] : $lang_admin_ext['Hotfix download failed']);
 
+	// Get core amd major versions
+	if (!defined('FORUM_DISABLE_EXTENSIONS_VERSION_CHECK'))
+	{
+		list($forum_version_core, $forum_version_major) = explode('.', clean_version($forum_config['o_cur_version']));
+		list($extension_maxtestedon_version_core, $extension_maxtestedon_version_major) = explode('.', clean_version($ext_data['extension']['maxtestedon']));
+
+		if (version_compare($forum_version_core.'.'.$forum_version_major, $extension_maxtestedon_version_core.'.'.$extension_maxtestedon_version_major, '>'))
+			message($lang_admin_ext['Maxtestedon error']);
+	}
+
 	// Make sure we have an array of dependencies
 	if (!isset($ext_data['extension']['dependencies']['dependency']))
 		$ext_data['extension']['dependencies'] = array();
