@@ -339,13 +339,14 @@ label,
 #brd-navlinks a:link,
 #brd-navlinks a:visited {
 	color: #eee;
+	text-decoration: none;
 }
 
 #brd-navlinks a:hover,
 #brd-navlinks a:active,
 #brd-navlinks a:focus {
 	color: #fff;
-	text-decoration: underline;
+
 }
 
 .main-options,
@@ -372,6 +373,8 @@ label,
 	border-color: #D3DAE1;
 }
 
+#brd-navlinks a:link,
+#brd-navlinks a:visited,
 .main-menu a:link,
 .main-menu a:visited,
 .admin-menu a:link,
@@ -387,27 +390,14 @@ label,
 .admin-menu a:hover,
 .admin-menu a:active,
 .admin-menu a:focus {
-	text-decoration: underline;
 	color: #fff;
 }
 
-.main-menu .active a:hover,
-.main-menu .active a:active,
-.main-menu .active a:focus,
-.main-menu .active a:visited,
-.admin-menu .active a:hover,
-.admin-menu .active a:active,
-.admin-menu .active a:focus,
-.admin-menu .active a:visited {
-	text-decoration: none;
-}
-
-.main-menu .active a {
-	color: #fff;
-}
-
+#brd-navlinks .isactive a,
+.main-menu .active a,
 .admin-menu .active a {
-	color: #eef;
+	color: #fff;
+	background: #2A6AB8;
 }
 
 #brd-admod #alert a {

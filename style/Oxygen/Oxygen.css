@@ -591,13 +591,18 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 /* Section Menus (By Default - Profile and Admin)
 -------------------------------------------------------------*/
+#brd-navlinks,
+.main-menu,
+.admin-menu {
+	padding-left: .75em;
+}
 
 .main-menu,
 .admin-menu {
 	border: 0;
-	padding: 0.4em 0 0.2em 0.75em;
 }
 
+#brd-navlinks ul,
 .main-menu ul,
 .admin-menu ul {
 	list-style-type: none;
@@ -605,24 +610,26 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding: 0;
 }
 
+#brd-navlinks li,
 .main-menu li,
 .admin-menu li {
 	float: left;
 	display: inline;
 }
 
+#brd-navlinks a,
 .main-menu a,
 .admin-menu a {
 	float: left;
 	position: relative;
-	padding: 0.2em 0.75em 0.4em 0.75em;
+	padding: 0.55em .75em;
 }
 
-.main-menu .active a,
-.admin-menu .active a {
-	font-weight: bold;
+#brd-navlinks a {
+	padding: 0.45em .75em;
 }
 
+#brd-navlinks li.first-item,
 .main-menu li.first-item,
 .admin-menu li.first-item {
 	border-left: 0;
@@ -682,13 +689,12 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-navlinks ul {
 	margin: 0;
-	padding: 0.4em 0;
+	/*padding: 0.4em 0;*/
 	float: left;
 }
 
 #brd-navlinks li {
 	display: inline;
-	margin-right: 1em;
 }
 
 #brd-navlinks li a {
@@ -1872,7 +1878,6 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	overflow: hidden;
 	width: 100%;
 	min-height: 8em;
-/*	font-size: 1.084em;*/
 }
 
 #brd-help .entry-content {
