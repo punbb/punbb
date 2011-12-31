@@ -1229,9 +1229,14 @@ F - MAIN CONTENT - FORMS
 	margin: 0;
 }
 
-.text input,
-.select select {
+.text input {
 	font-size: 1.084em;
+}
+
+select {
+	height: 25px;
+	*height: auto;
+  	line-height: 25px;
 }
 
 optgroup {
