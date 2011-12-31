@@ -1874,10 +1874,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 -------------------------------------------------------------*/
 
 .entry-content {
-	padding-bottom: 1em;
+	padding-bottom: 2em;
 	overflow: hidden;
 	width: 100%;
-	min-height: 8em;
+	min-height: 7em;
 }
 
 #brd-help .entry-content {
@@ -1887,6 +1887,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 .entry-content ol {
 	padding-left: 2.5em;
 	list-style-type: decimal;
+}
+
+.entry-content li + li {
+	margin-top: .25em;
 }
 
 .entry-content ol p,
