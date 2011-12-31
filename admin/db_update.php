@@ -473,7 +473,7 @@ switch ($stage)
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
 	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
@@ -2182,7 +2182,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
 	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>

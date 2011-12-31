@@ -145,7 +145,7 @@ if (!isset($_POST['form_sent']))
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
@@ -1914,7 +1914,7 @@ else
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
