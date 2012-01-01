@@ -844,7 +844,7 @@ function sef_friendly($str)
 // Replace censored words in $text loader
 function censor_words($text)
 {
-	global $forum_db;
+	global $forum_db, $forum_censors;
 
 	$return = ($hook = get_hook('fn_censor_words_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -876,10 +876,15 @@ function censor_words($text)
 // Replace censored words in $text
 function censor_words_do($forum_censors, $text, $unicode)
 {
-	static $search_for, $replace_with;
+	static $search_for = NULL;
+	static $replace_with = NULL;
 
-	$search_for = array();
-	$replace_with = array();
+	if (is_null($search_for))
+		$search_for = array();
+
+	if (is_null($replace_with))
+		$replace_with = array();
+
 
 	if (!empty($forum_censors))
 	{
