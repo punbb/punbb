@@ -34,11 +34,11 @@ function forum_linebreaks($str)
 
 // Start PHP session
 function forum_session_start() {
+	static $forum_session_started = FALSE;
+
 	$return = ($hook = get_hook('fn_forum_session_start_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
-
-	static $forum_session_started = FALSE;
 
 	// Check if session already started
 	if ($forum_session_started && session_id())
