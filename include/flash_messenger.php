@@ -31,8 +31,7 @@ class FlashMessenger
 
 		if (!$disabled)
 		{
-			session_cache_limiter(FALSE);
-			session_start();
+			forum_session_start();
 		}
 
 		$this->message = $this->get_message();

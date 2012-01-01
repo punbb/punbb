@@ -32,6 +32,45 @@ function forum_linebreaks($str)
 }
 
 
+// Start PHP session
+function forum_session_start() {
+	$return = ($hook = get_hook('fn_forum_session_start_start')) ? eval($hook) : null;
+	if ($return != null)
+		return;
+
+	static $forum_session_started = FALSE;
+
+	// Check if session already started
+	if ($forum_session_started && session_id())
+		return;
+
+	session_cache_limiter(FALSE);
+
+	// Check session id
+	$forum_session_id = NULL;
+	if (isset($_COOKIE['PHPSESSID']))
+		$forum_session_id = $_COOKIE['PHPSESSID'];
+	else if (isset($_GET['PHPSESSID']))
+		$forum_session_id = $_GET['PHPSESSID'];
+
+	if (empty($forum_session_id) || !preg_match('/^[a-z0-9]{16,32}$/', $forum_session_id))
+	{
+		// Create new session id
+		$forum_session_id = random_key(32, FALSE, TRUE);
+		session_id($forum_session_id);
+	}
+
+	session_start();
+	if (!isset($_SESSION['initiated']))
+	{
+		session_regenerate_id();
+		$_SESSION['initiated'] = TRUE;
+	}
+
+	$forum_session_started = TRUE;
+}
+
+
 // Converts the CDATA end sequence ]]> into ]]&gt;
 function escape_cdata($str)
 {
