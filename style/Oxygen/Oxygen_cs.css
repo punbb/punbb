@@ -333,20 +333,12 @@ label,
 
 #brd-navlinks {
 	border-color: #376daa;
-	color: #eee;
 }
 
 #brd-navlinks a:link,
 #brd-navlinks a:visited {
 	color: #eee;
 	text-decoration: none;
-}
-
-#brd-navlinks a:hover,
-#brd-navlinks a:active,
-#brd-navlinks a:focus {
-	color: #fff;
-
 }
 
 .main-options,
@@ -384,6 +376,9 @@ label,
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
+#brd-navlinks a:hover,
+#brd-navlinks a:active,
+#brd-navlinks a:focus,
 .main-menu a:hover,
 .main-menu a:active,
 .main-menu a:focus,
