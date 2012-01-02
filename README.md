@@ -35,7 +35,7 @@ Personal email addresses are not appropriate for bug reports.
  - [Reporting PunBB core SECURITY bugs (only!)](http://punbb.informer.com/bugreport.php)
 
 ## Copyright and disclaimer
-This package and its contents are (C) 2002-2011 PunBB, all rights reserved.
+This package and its contents are (C) 2002-2012 PunBB, all rights reserved.
 Partially based on code (C) 2008-2009 FluxBB.org.
 
 PunBB is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
