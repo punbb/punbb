@@ -173,6 +173,7 @@ function validate_manifest($xml_array, $folder_name)
 			$errors[] = sprintf($lang_admin_ext['extension/minversion error2'], $ext['minversion']);
 		if (!isset($ext['maxtestedon']) || $ext['maxtestedon'] == '')
 			$errors[] = $lang_admin_ext['extension/maxtestedon error'];
+
 		if (isset($ext['note']))
 		{
 			foreach ($ext['note'] as $note)
@@ -183,6 +184,7 @@ function validate_manifest($xml_array, $folder_name)
 					$errors[] = $lang_admin_ext['extension/note error2'];
 			}
 		}
+
 		if (isset($ext['hooks']) && is_array($ext['hooks']))
 		{
 			if (!isset($ext['hooks']['hook']) || !is_array($ext['hooks']['hook']))
