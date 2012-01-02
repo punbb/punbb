@@ -438,6 +438,15 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	border-top-width: 1px;
 }
 
+.extension h3 > em {
+	font-style: normal;
+}
+
+.extension .data-list {
+	list-style-type: none;
+	padding-left: 0;
+}
+
 /* Content Containers
 -------------------------------------------------------------*/
 
