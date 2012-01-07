@@ -1906,10 +1906,6 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	list-style-type: decimal;
 }
 
-.entry-content li + li {
-	margin-top: .25em;
-}
-
 .entry-content ol p,
 .entry-content ul p {
 	padding: 0;
@@ -1921,8 +1917,8 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 
 .entry-content h5 {
 	font-weight: normal;
-	font-size: 1.3em;
-	padding: 0.5em 0;
+	font-size: 1.5em;
+	line-height: 1.5em;
 }
 
 .entry-content img {
