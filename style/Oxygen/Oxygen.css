@@ -122,6 +122,8 @@ samp,
 code,
 pre {
 	font-family: monospace, sans-serif;
+	white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 /* Float Clearing
@@ -1246,6 +1248,7 @@ select {
 	height: 25px;
 	*height: auto;
   	line-height: 25px;
+  	padding-left: 3px;
 }
 
 optgroup {
