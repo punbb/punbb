@@ -820,8 +820,10 @@ if ($section == 'hotfixes')
 			<ul class="data-list">
 				<li><span><?php echo ((strpos($id, 'hotfix_') !== 0) ? sprintf($lang_admin_ext['Version'], $ext['version']) : $lang_admin_ext['Hotfix']) ?></span></li>
 				<li><span><?php printf($lang_admin_ext['Extension by'], forum_htmlencode($ext['author'])) ?></span></li>
-<?php if ($ext['description'] != ''): ?>				<li><span><?php echo forum_htmlencode($ext['description']) ?></span></li>
-<?php endif; ?>			</ul>
+				<?php if ($ext['description'] != ''): ?>
+					<li><span><?php echo forum_htmlencode($ext['description']) ?></span></li>
+				<?php endif; ?>
+			</ul>
 			<p class="options"><?php echo implode(' ', $forum_page['ext_actions']) ?></p>
 		</div>
 <?php
@@ -858,7 +860,6 @@ else
 	if ($forum_config['o_check_for_versions'] == 1)
 	{
 		// Check for the new versions of the extensions istalled
-
 		$repository_urls = array('http://punbb.informer.com/extensions');
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
 
@@ -869,7 +870,7 @@ else
 		if (is_readable(FORUM_CACHE_DIR.'cache_ext_version_notifications.php'))
 			include FORUM_CACHE_DIR.'cache_ext_version_notifications.php';
 
-		//Get latest timestamp in cache
+		// Get latest timestamp in cache
 		if (isset($forum_ext_repos))
 		{
 			$min_timestamp = 10000000000;
