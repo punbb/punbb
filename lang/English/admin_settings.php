@@ -210,7 +210,7 @@ $lang_admin_settings = array(
 'Maintenance mode'				=>	'Maintenance mode',
 'Maintenance mode label'		=>	'Put board into maintenance mode.',
 'Maintenance message label'		=>	'Maintenance message',
-'Maintenance message help'		=>	'The message to be shown when the board is in maintenance mode. You may use the default message provided or compose your own. You may use HTML in your message.',
+'Maintenance message help'		=>	'The message to be shown when the board is in maintenance mode. You may use HTML in your message.',
 'Maintenance message default'	=>	'The forums are temporarily down for maintenance. Please try again in a few minutes.<br /><br />Administrator',
 
 );

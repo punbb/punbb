@@ -4,7 +4,7 @@
  *
  * Allows administrators to control many of the settings used in the site.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -629,7 +629,7 @@ if (!$section || $section == 'setup')
 				</fieldset>
 <?php ($hook = get_hook('aop_setup_links_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1065,7 +1065,7 @@ else if ($section == 'features')
 			</fieldset>
 <?php ($hook = get_hook('aop_features_gzip_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1134,7 +1134,7 @@ else if ($section == 'announcements')
 			</fieldset>
 <?php ($hook = get_hook('aop_announcements_announcement_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1274,7 +1274,7 @@ else if ($section == 'registration')
 				</fieldset>
 <?php ($hook = get_hook('aop_registration_rules_fieldset_end')) ? eval($hook) : null; ?>
 				<div class="frm-buttons">
-					<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+					<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 				</div>
 		</form>
 	</div>
@@ -1327,7 +1327,7 @@ else if ($section == 'maintenance')
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[maintenance]" value="1"<?php if ($forum_config['o_maintenance'] == '1') echo ' checked="checked"' ?> /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Maintenance mode'] ?></span> <?php echo $lang_admin_settings['Maintenance mode label'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo $lang_admin_settings['Maintenance mode label'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('aop_maintenance_pre_maintenance_message')) ? eval($hook) : null; ?>
@@ -1341,7 +1341,7 @@ else if ($section == 'maintenance')
 			</fieldset>
 <?php ($hook = get_hook('aop_maintenance_maintenance_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1458,7 +1458,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 				</fieldset>
 <?php ($hook = get_hook('aop_email_smtp_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
 			</div>
 		</form>
 	</div>

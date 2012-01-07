@@ -2,7 +2,7 @@
 /**
  * Loads the flash messenger class.
  *
- * @copyright (C) 2008-2011 PunBB
+ * @copyright (C) 2008-2012 PunBB
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -19,14 +19,22 @@ class FlashMessenger
 	const MSG_TYPE_INFO = 'message_info';
 
 	//
-	private $messages;
+	private $message;
 
 
 	public function __construct()
 	{
-		session_cache_limiter(FALSE);
-		$result = session_start();
-		$this->messages = $this->get_messages();
+		global $forum_config;
+
+		// Do not use with redirect
+		$disabled = isset($forum_config['o_redirect_delay']) && intval($forum_config['o_redirect_delay'], 10) > 0;
+
+		if (!$disabled)
+		{
+			forum_session_start();
+		}
+
+		$this->message = $this->get_message();
 	}
 
 
@@ -54,25 +62,18 @@ class FlashMessenger
 	//
 	public function show($just_return = false)
 	{
-		if (empty($this->messages))
+		if (empty($this->message))
 			return;
 
-		$messages_list = array();
-		foreach ($this->messages as $msg)
-		{
-			$messages_list[] = sprintf(self::TEMPLATE_MSG, forum_htmlencode($msg[1]), forum_htmlencode($msg[0]));
+		$message = sprintf(self::TEMPLATE_MSG, forum_htmlencode($this->message[1]), forum_htmlencode($this->message[0]));
+
+		$m = sprintf(self::TEMPLATE_MSG_BLOCK, $message);
+		if ($just_return) {
+			$this->clear();
+			return $m;
 		}
 
-		if (!empty($messages_list))
-		{
-			$m = sprintf(self::TEMPLATE_MSG_BLOCK, implode('', $messages_list));
-			if ($just_return) {
-				$this->clear();
-				return $m;
-			}
-
-			echo $m;
-		}
+		echo $m;
 
 		$this->clear();
 	}
@@ -81,41 +82,44 @@ class FlashMessenger
 	//
 	private function clear()
 	{
-		$this->messages = array();
-		$this->save_messages();
+		$this->message = NULL;
+		$this->save_message();
 	}
 
 
 	//
 	private function add_message($message, $type)
 	{
-		array_push($this->messages, array($message, $type));
-
-		$this->save_messages();
+		$this->message = array($message, $type);
+		$this->save_message();
 	}
 
 
-	private function save_messages()
+	private function save_message()
 	{
-		 $_SESSION['punbb_forum_flash'] = serialize($this->messages);
+		$_SESSION['punbb_forum_flash'] = serialize($this->message);
 	}
 
 
-	private function get_messages()
+	private function get_message()
 	{
-		$messages = array();
+		$message = NULL;
 
 		if (isset($_SESSION['punbb_forum_flash'])) {
-			$tmp_messages = unserialize($_SESSION['punbb_forum_flash']);
+			$tmp_message = unserialize($_SESSION['punbb_forum_flash']);
 
-			if (is_array($tmp_messages))
-				$messages = $tmp_messages;
+			if (!is_null($tmp_message) && !empty($tmp_message))
+			{
+				if (is_array($tmp_message) && !empty($tmp_message[0]) && !empty($tmp_message[1]))
+				{
+					$message = $tmp_message;
+				}
+			}
 		}
 
-		return $messages;
+		return $message;
 	}
 }
-
 
 // Create the flash messenger adapter object
 $forum_flash = new FlashMessenger();

@@ -2,7 +2,7 @@
 /**
  * Allows users to search the forum based on various criteria.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -51,8 +51,8 @@ else if (isset($_GET['action']))
 	// If it's a regular search (keywords and/or author)
 	if ($action == 'search')
 	{
-		$keywords = (isset($_GET['keywords'])) ? forum_trim($_GET['keywords']) : null;
-		$author = (isset($_GET['author'])) ? forum_trim($_GET['author']) : null;
+		$keywords = (isset($_GET['keywords']) && is_string($_GET['keywords'])) ? forum_trim($_GET['keywords']) : null;
+		$author = (isset($_GET['author']) && is_string($_GET['author'])) ? forum_trim($_GET['author']) : null;
 		$sort_dir = (isset($_GET['sort_dir'])) ? (($_GET['sort_dir'] == 'DESC') ? 'DESC' : 'ASC') : 'DESC';
 		$show_as = (isset($_GET['show_as'])) ? $_GET['show_as'] : 'posts';
 		$sort_by = (isset($_GET['sort_by'])) ? intval($_GET['sort_by']) : null;
@@ -567,7 +567,7 @@ $forum_page['frm-sort'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_common['Search'], forum_link($forum_url['search']))
+	$lang_common['Search']
 );
 
 $advanced_search = isset($_GET['advanced']) ? true : false;
@@ -760,7 +760,7 @@ if (!empty($forums))
 			</fieldset>
 <?php endif; ($hook = get_hook('se_results_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="search" value="<?php echo $lang_search['Submit search'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="search" value="<?php echo $lang_search['Submit search'] ?>" /></span>
 			</div>
 		</form>
 	</div>

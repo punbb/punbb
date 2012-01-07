@@ -48,7 +48,7 @@ a:focus {
 .sig-content a,
 .sig-content a:visited {
 	color: #999;
-	text-decoration: underline;
+	border-color: #ddd;
 }
 
 .sig-content a:hover,
@@ -56,6 +56,12 @@ a:focus {
 .sig-content a:focus,
 .sig-content a:visited:hover {
 	color: #333;
+	border-color: #999;
+	text-decoration: none;
+}
+
+.entry-content h5 {
+	color: #D93315;
 }
 
 .gen-content,
@@ -110,7 +116,8 @@ h4.post-title,
 	border-color: #DDE4EB;
 }
 
-.post-num {
+.post-num,
+.post-edit {
 	color: #999;
 }
 
@@ -130,7 +137,7 @@ h4.post-title,
 .posthead,
 .postbody,
 .post-options {
-	background: #f9f9f9;
+	background: #fafafa;
 }
 
 .posthead .hn {
@@ -152,7 +159,8 @@ h4.post-title,
 .sig-demo a,
 .sig-demo a:visited {
 	color: #333;
-	text-decoration: underline;
+	text-decoration: none;
+	border-color: #bbb;
 }
 
 .online .userstatus span {
@@ -249,9 +257,15 @@ ul li strong {
 	color: #294F6E
 }
 
+#rules-content {
+	background: #fff;
+}
+
+
 .frm-buttons,
 .extension .options,
-.hotfix .options {
+.hotfix .options,
+#rules-content {
 	border-color: #E3E3E3;
 }
 
@@ -318,21 +332,13 @@ label,
 ----------------------------------------------------------------*/
 
 #brd-navlinks {
-	background: #0066B9;
-	border-color: #0066B9;
-	color: #eee;
+	border-color: #376daa;
 }
 
 #brd-navlinks a:link,
 #brd-navlinks a:visited {
 	color: #eee;
-}
-
-#brd-navlinks a:hover,
-#brd-navlinks a:active,
-#brd-navlinks a:focus {
-	color: #fff;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .main-options,
@@ -340,9 +346,18 @@ label,
 	background: #F1F1F1;
 }
 
+#brd-navlinks,
 .main-menu,
-.admin-menu {
-	background: #0066B9;
+.admin-menu,
+.main-head,
+.main-foot {
+	background-color: #0066B9;
+	background-image: -moz-linear-gradient(bottom, #2A6AB8 0%, #4795CC 100%);
+	background-image: -ms-linear-gradient(bottom, #2A6AB8 0%, #4795CC 100%);
+	background-image: -o-linear-gradient(bottom, #2A6AB8 0%, #4795CC 100%);
+	background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#2A6AB8), to(#4795CC));
+	background-image: -webkit-linear-gradient(bottom, #2A6AB8 0%, #4795CC 100%);
+	background-image: linear-gradient(bottom, #2A6AB8 0%, #4795CC 100%);
 }
 
 .admin-submenu {
@@ -350,41 +365,34 @@ label,
 	border-color: #D3DAE1;
 }
 
+#brd-navlinks a:link,
+#brd-navlinks a:visited,
 .main-menu a:link,
 .main-menu a:visited,
 .admin-menu a:link,
 .admin-menu a:visited {
-	color: #ddd;
+	color: #eee;
 	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
+#brd-navlinks a:hover,
+#brd-navlinks a:active,
+#brd-navlinks a:focus,
 .main-menu a:hover,
 .main-menu a:active,
 .main-menu a:focus,
 .admin-menu a:hover,
 .admin-menu a:active,
 .admin-menu a:focus {
-	text-decoration: underline;
 	color: #fff;
 }
 
-.main-menu .active a:hover,
-.main-menu .active a:active,
-.main-menu .active a:focus,
-.main-menu .active a:visited,
-.admin-menu .active a:hover,
-.admin-menu .active a:active,
-.admin-menu .active a:focus,
-.admin-menu .active a:visited {
-	text-decoration: none;
-}
-
-.main-menu .active a {
-	color: #fff;
-}
-
+#brd-navlinks .isactive a,
+.main-menu .active a,
 .admin-menu .active a {
-	color: #eef;
+	color: #fff;
+	background: #2A6AB8;
 }
 
 #brd-admod #alert a {
@@ -407,9 +415,9 @@ label,
 
 .main-head,
 .main-foot {
-	background: #0066B9;
-	color: #ddd;
-	border-color: #0066B9;
+	color: #fff;
+	border-color: #4A86C1;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 #brd-announcement h1 {
@@ -546,12 +554,12 @@ textarea:focus {
 	border-color: #C8D3DC #D3DAE1 #D3DAE1 #C8D3DC;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
 	background: #FFFFF3;
-	background: -moz-linear-gradient(top, #fffee8, #fff);
-	background: -o-linear-gradient(top, #fffee8, #fff);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fffee8), to(#fff));
-	background: -webkit-linear-gradient(top, #fffee8, #fff);
-	background: -ms-linear-gradient(top, #fffee8, #fff);
-	background: linear-gradient(top, #fffee8, #fff);
+	background-image: -moz-linear-gradient(top, #fffee8, #fff);
+	background-image: -ms-linear-gradient(top, #fffee8, #fff);
+	background-image: -o-linear-gradient(top, #fffee8, #fff);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fffee8), to(#fff));
+	background-image: -webkit-linear-gradient(top, #fffee8, #fff);
+	background-image: linear-gradient(top, #fffee8, #fff);
 }
 
 
@@ -559,16 +567,47 @@ input[type="submit"],
 input[type="button"],
 input[type="reset"],
 button {
-	background: #f6f6f6;
-	background: -moz-linear-gradient(top, #fff, #eee);
-	background: -o-linear-gradient(top, #fff, #eee);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));
-	background: -webkit-linear-gradient(top, #fff, #eee);
-	background: -ms-linear-gradient(top, #fff, #eee);
-	background: linear-gradient(top, #fff, #eee);
-	border-color: #CCCCCC;
 	color: #404040;
+	border-color: #CCCCCC;
+	background: #f6f6f6;
+	background-image: -moz-linear-gradient(top, #fff, #eee);
+	background-image: -ms-linear-gradient(top, #fff, #eee);
+	background-image: -o-linear-gradient(top, #fff, #eee);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));
+	background-image: -webkit-linear-gradient(top, #fff, #eee);
+	background-image: linear-gradient(top, #fff, #eee);
 	text-shadow: 0 1px 1px #ddd;
+}
+
+.primary input[type="submit"],
+.primary input[type="button"],
+.primary input[type="reset"],
+.primary button {
+	color: #fafafa;
+	background: #4897D9;
+	border-color: #2575AE;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	background-image: -moz-linear-gradient(top, #5CB7F7, #4897D9);
+	background-image: -ms-linear-gradient(top, #5CB7F7, #4897D9);
+	background-image: -o-linear-gradient(top, #5CB7F7, #4897D9);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5CB7F7), to(#4897D9));
+	background-image: -webkit-linear-gradient(top, #5CB7F7, #4897D9);
+	background-image: linear-gradient(top, #5CB7F7, #4897D9);
+}
+
+.primary.caution input[type="submit"],
+.primary.caution input[type="button"],
+.primary.caution input[type="reset"],
+.primary.caution button {
+	border-color: #C0372A;
+	background: #D95548;
+	background-image: -moz-linear-gradient(top, #F7655B, #D95548);
+	background-image: -ms-linear-gradient(top, #F7655B, #D95548);
+	background-image: -o-linear-gradient(top, #F7655B, #D95548);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F7655B), to(#D95548));
+	background-image: -webkit-linear-gradient(top, #F7655B, #D95548);
+	background-image: linear-gradient(top, #F7655B, #D95548);
 }
 
 input[type="submit"]:hover,
@@ -579,19 +618,59 @@ input[type="button"]:hover,
 input[type="button"]:focus,
 button:hover,
 button:focus {
+	color: #101010;
 	background: #f3f3f3;
-	background: -moz-linear-gradient(top, #fff, #ebebeb);
-	background: -o-linear-gradient(top, #fff, #ebebeb);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ebebeb));
-	background: -webkit-linear-gradient(top, #fff, #ebebeb);
-	background: -ms-linear-gradient(top, #fff, #ebebeb);
-	background: linear-gradient(top, #fff, #ebebeb);
+	background-image: -moz-linear-gradient(top, #fff, #ebebeb);
+	background-image: -ms-linear-gradient(top, #fff, #ebebeb);
+	background-image: -o-linear-gradient(top, #fff, #ebebeb);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ebebeb));
+	background-image: -webkit-linear-gradient(top, #fff, #ebebeb);
+	background-image: linear-gradient(top, #fff, #ebebeb);
 	border-color: #84BCE4;
-	color: #111;
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0, .1);
 	box-shadow: 0 1px 2px rgba(0,0,0, .1);
 }
+
+.primary input[type="submit"]:hover,
+.primary input[type="submit"]:focus,
+.primary input[type="reset"]:hover,
+.primary input[type="reset"]:focus,
+.primary input[type="button"]:hover,
+.primary input[type="button"]:focus,
+.primary button:hover,
+.primary button:focus {
+	color: #fff;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+	border-color: #2575AE;
+	background: #2E8BD9;
+	background-image: -moz-linear-gradient(top, #5CB7F7, #2E8BD9);
+	background-image: -ms-linear-gradient(top, #5CB7F7, #2E8BD9);
+	background-image: -o-linear-gradient(top, #5CB7F7, #2E8BD9);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5CB7F7), to(#2E8BD9));
+	background-image: -webkit-linear-gradient(top, #5CB7F7, #2E8BD9);
+	background-image: linear-gradient(top, #5CB7F7, #2E8BD9);
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0,0,0, .2);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0,0,0, .2);
+}
+
+.primary.caution input[type="submit"]:hover,
+.primary.caution input[type="submit"]:focus,
+.primary.caution input[type="button"]:hover,
+.primary.caution input[type="button"]:focus,
+.primary.caution input[type="reset"]:hover,
+.primary.caution input[type="reset"]:focus,
+.primary.caution button:hover,
+.primary.caution button:focus {
+	border-color: #C0372A;
+	background: #D93D2E;
+	background-image: -moz-linear-gradient(top, #F7655B, #D93D2E);
+	background-image: -ms-linear-gradient(top, #F7655B, #D93D2E);
+	background-image: -o-linear-gradient(top, #F7655B, #D93D2E);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F7655B), to(#D93D2E));
+	background-image: -webkit-linear-gradient(top, #F7655B, #D93D2E);
+	background-image: linear-gradient(top, #F7655B, #D93D2E);
+}
+
 
 input[type="submit"][disabled],
 input[type="button"][disabled],
@@ -677,3 +756,19 @@ button[disabled]:focus {
 	background: linear-gradient(top, #fffbea, #fef7cb);
 }
 
+/*
+* Remove text-shadow in selection highlight: h5bp.com/i
+* These selection declarations have to be separate
+* Also: hot pink! (or customize the background color to match your design)
+*/
+::-moz-selection {
+	background: #fe57a1;
+	color: #fff;
+	text-shadow: none;
+}
+
+::selection {
+	background: #fe57a1;
+	color: #fff;
+	text-shadow: none;
+}

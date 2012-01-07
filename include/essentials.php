@@ -2,7 +2,7 @@
 /**
  * Loads the minimum amount of data (eg: functions, database connection, config data, etc) necessary to integrate the site.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -22,8 +22,6 @@ $forum_start = ((float)$usec + (float)$sec);
 require FORUM_ROOT.'include/functions.php';
 // Load the Loader class
 require FORUM_ROOT.'include/loader.php';
-// Load the Flash messenger class
-require FORUM_ROOT.'include/flash_messenger.php';
 
 // Load UTF-8 functions
 require FORUM_ROOT.'include/utf8/utf8.php';
@@ -99,6 +97,9 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	generate_config_cache();
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
+
+// Load the Flash messenger class
+require FORUM_ROOT.'include/flash_messenger.php';
 
 // If the request_uri is invalid try fix it
 forum_fix_request_uri();

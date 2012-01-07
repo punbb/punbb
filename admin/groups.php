@@ -4,7 +4,7 @@
  *
  * Allows administrators to control group permissions.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -304,7 +304,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_edit_group" value=" <?php echo $lang_admin_groups['Update group'] ?> " /></span>
+				<span class="submit primary"><input type="submit" name="add_edit_group" value=" <?php echo $lang_admin_groups['Update group'] ?> " /></span>
 			</div>
 		</form>
 	</div>
@@ -664,7 +664,7 @@ else if (isset($_GET['del_group']))
 			</fieldset>
 <?php ($hook = get_hook('agr_del_group_del_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="del_group" value="<?php echo $lang_admin_groups['Remove group'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="del_group" value="<?php echo $lang_admin_groups['Remove group'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="del_group_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
@@ -743,7 +743,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 			</fieldset>
 <?php ($hook = get_hook('agr_add_group_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_group" value="<?php echo $lang_admin_groups['Add group'] ?> " /></span>
+				<span class="submit primary"><input type="submit" name="add_group" value="<?php echo $lang_admin_groups['Add group'] ?> " /></span>
 			</div>
 		</form>
 	</div>
@@ -796,7 +796,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 			</fieldset>
 <?php ($hook = get_hook('agr_default_group_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="set_default_group" value="<?php echo $lang_admin_groups['Set default'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="set_default_group" value="<?php echo $lang_admin_groups['Set default'] ?>" /></span>
 			</div>
 		</form>
 	</div>

@@ -4,7 +4,7 @@
  *
  * Updates the database to the latest version.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -473,7 +473,7 @@ switch ($stage)
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
 	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
@@ -563,7 +563,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="start" value="Start update" /></span>
+				<span class="submit primary"><input type="submit" name="start" value="Start update" /></span>
 			</div>
 		</form>
 	</div>
@@ -2182,7 +2182,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
 	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>

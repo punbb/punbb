@@ -4,7 +4,7 @@
  *
  * Used to actually install PunBB.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -64,6 +64,7 @@ function generate_config_file()
 	$config_body .= "\n\n// Disable forum hooks (extensions) by removing // from the following line\n//define('FORUM_DISABLE_HOOKS', 1);";
 	$config_body .= "\n\n// Disable forum output buffering by removing // from the following line\n//define('FORUM_DISABLE_BUFFERING', 1);";
 	$config_body .= "\n\n// Disable forum async JS loader by removing // from the following line\n//define('FORUM_DISABLE_ASYNC_JS_LOADER', 1);";
+	$config_body .= "\n\n// Disable forum extensions version check by removing // from the following line\n//define('FORUM_DISABLE_EXTENSIONS_VERSION_CHECK', 1);";
 
 	return $config_body;
 }
@@ -144,7 +145,7 @@ if (!isset($_POST['form_sent']))
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
@@ -195,7 +196,7 @@ if (!isset($_POST['form_sent']))
 
 	}
 
-?>	<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
+?>	<form class="frm-form frm-suggest-username" method="post" accept-charset="utf-8" action="install.php">
 	<div class="hidden">
 		<input type="hidden" name="form_sent" value="1" />
 	</div>
@@ -230,10 +231,10 @@ if (!isset($_POST['form_sent']))
 ?>					</select></span>
 				</div>
 			</div>
-			<div class="sf-set set1">
+			<div class="sf-set set1" id="db_host_block">
 				<div class="sf-box text required">
-					<label for="fld2"><span><?php echo $lang_install['Database server'] ?></span> <small><?php echo $lang_install['Database server help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld2" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" required /></span>
+					<label for="db_host"><span><?php echo $lang_install['Database server'] ?></span> <small><?php echo $lang_install['Database server help'] ?></small></label><br />
+					<span class="fld-input"><input id="db_host" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
@@ -272,22 +273,22 @@ if (!isset($_POST['form_sent']))
 		</div>
 		<fieldset class="frm-group group1">
 			<legend class="group-legend"><strong><?php echo $lang_install['Part2 legend'] ?></strong></legend>
-			<div class="sf-set set1">
+			<div class="sf-set set4">
 				<div class="sf-box text required">
-					<label for="fld7"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld7" type="text" name="req_username" size="35" maxlength="25" required /></span>
+					<label for="admin_email"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
+					<span class="fld-input"><input id="admin_email" type="email" data-suggest-role="email" name="req_email" size="35" maxlength="80" required /></span>
+				</div>
+			</div>
+			<div class="sf-set set1 prepend-top">
+				<div class="sf-box text required">
+					<label for="admin_username"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
+					<span class="fld-input"><input id="admin_username" type="text" data-suggest-role="username" name="req_username" size="35" maxlength="25" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text required">
 					<label for="fld8"><span><?php echo $lang_install['Admin password'] ?></span> <small><?php echo $lang_install['Password help'] ?></small></label><br />
 					<span class="fld-input"><input id="fld8" type="text" name="req_password1" size="35" required autocomplete="off" /></span>
-				</div>
-			</div>
-			<div class="sf-set set4 prepend-top">
-				<div class="sf-box text required">
-					<label for="fld9"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld9" type="email" name="req_email" size="35" maxlength="80" required /></span>
 				</div>
 			</div>
 		</fieldset>
@@ -1913,7 +1914,7 @@ else
 <head>
 	<meta charset="utf-8"/>
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/min/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">

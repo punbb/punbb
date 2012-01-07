@@ -1,5 +1,5 @@
 // PunBB timezone functions
-// version 0.1.1
+// version 0.1.2
 //
 // Based on jsTimezoneDetect by Jon Nylander at https://bitbucket.org/pellepim/jstimezonedetect
 
@@ -131,12 +131,12 @@ PUNBB.timezone = (function () {
 
 
 	function get_january_offset() {
-		return get_date_offset(new Date(2011, 0, 1, 0, 0, 0, 0));
+		return get_date_offset(new Date(2012, 0, 1, 0, 0, 0, 0));
 	}
 
 
 	function get_june_offset() {
-		return get_date_offset(new Date(2011, 5, 1, 0, 0, 0, 0));
+		return get_date_offset(new Date(2012, 5, 1, 0, 0, 0, 0));
 	}
 
 

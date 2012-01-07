@@ -4,7 +4,7 @@
  *
  * Allows administrators and moderators to create, modify, and delete bans.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -223,7 +223,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 			</fieldset>
 <?php ($hook = get_hook('aba_add_edit_ban_criteria_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_edit_ban" value=" <?php echo $lang_admin_bans['Save ban'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="add_edit_ban" value=" <?php echo $lang_admin_bans['Save ban'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -478,7 +478,7 @@ ob_start();
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_ban" value=" <?php echo $lang_admin_bans['Add ban'] ?> " /></span>
+				<span class="submit primary"><input type="submit" name="add_ban" value=" <?php echo $lang_admin_bans['Add ban'] ?> " /></span>
 			</div>
 		</form>
 	</div>

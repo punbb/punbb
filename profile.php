@@ -2,7 +2,7 @@
 /**
  * Allows users to view and edit their details.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -123,7 +123,7 @@ if ($action == 'change_pass')
 			$forum_page['crumbs'] = array(
 				array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 				array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-				($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password']), $id)
+				($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
 			);
 
 			($hook = get_hook('pf_change_pass_key_pre_header_load')) ? eval($hook) : null;
@@ -292,7 +292,7 @@ if ($action == 'change_pass')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? array($lang_profile['Change your password'], forum_link($forum_url['change_password'], $id)) : array(sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])),forum_link($forum_url['change_password'], $id))
+		($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
 	);
 
 	($hook = get_hook('pf_change_pass_normal_pre_header_load')) ? eval($hook) : null;
@@ -559,7 +559,7 @@ else if ($action == 'change_email')
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? array($lang_profile['Change your e-mail'], forum_link($forum_url['change_email'], $id)) : array(sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username'])), forum_link($forum_url['change_email'], $id))
+		($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))
 	);
 
 	($hook = get_hook('pf_change_email_normal_pre_header_load')) ? eval($hook) : null;
@@ -668,6 +668,14 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 		delete_user($id, isset($_POST['delete_posts']));
 
+		// Remove cache file with forum stats
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		{
+			require FORUM_ROOT.'include/cache.php';
+		}
+
+		clean_stats_cache();
+
 		// Add flash message
 		$forum_flash->add_info($lang_profile['User delete redirect']);
 
@@ -690,7 +698,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section admin']), forum_link($forum_url['profile_admin'], $id)),
-		array($lang_profile['Delete user'], forum_link($forum_url['delete_user'], $id))
+		$lang_profile['Delete user']
 	);
 
 	($hook = get_hook('pf_delete_user_pre_header_load')) ? eval($hook) : null;
@@ -731,7 +739,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 			</fieldset>
 <?php ($hook = get_hook('pf_delete_user_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="delete_user_comply" value="<?php echo $lang_common['Submit'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete_user_comply" value="<?php echo $lang_profile['Delete user'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
@@ -1110,13 +1118,13 @@ else if (isset($_POST['form_sent']))
 
 			if (is_uploaded_file($uploaded_file['tmp_name']) && empty($errors))
 			{
+				// First check simple by size and mime type
+				$allowed_mime_types = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
 				$allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
 
 				($hook = get_hook('pf_change_details_avatar_allowed_types')) ? eval($hook) : null;
 
-				list($width, $height, $type,) = @/**/getimagesize($uploaded_file['tmp_name']);
-
-				if (!in_array($type, $allowed_types))
+				if (!in_array($uploaded_file['type'], $allowed_mime_types))
 					$errors[] = $lang_profile['Bad type'];
 				else
 				{
@@ -1127,44 +1135,54 @@ else if (isset($_POST['form_sent']))
 
 				if (empty($errors))
 				{
-					// Determine type
-					$extension = null;
-					$avatar_type = FORUM_AVATAR_NONE;
-					if ($type == IMAGETYPE_GIF)
-					{
-						$extension = '.gif';
-						$avatar_type = FORUM_AVATAR_GIF;
-					}
-					else if ($type == IMAGETYPE_JPEG)
-					{
-						$extension = '.jpg';
-						$avatar_type = FORUM_AVATAR_JPG;
-					}
-					else if ($type == IMAGETYPE_PNG)
-					{
-						$extension = '.png';
-						$avatar_type = FORUM_AVATAR_PNG;
-					}
-
-					($hook = get_hook('pf_change_details_avatar_determine_extension')) ? eval($hook) : null;
+					$avatar_tmp_file = $forum_config['o_avatars_dir'].'/'.$id.'.tmp';
 
 					// Move the file to the avatar directory. We do this before checking the width/height to circumvent open_basedir restrictions.
-					if (!@move_uploaded_file($uploaded_file['tmp_name'], $forum_config['o_avatars_dir'].'/'.$id.'.tmp'))
+					if (!@move_uploaded_file($uploaded_file['tmp_name'], $avatar_tmp_file))
 						$errors[] = sprintf($lang_profile['Move failed'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>');
 
 					if (empty($errors))
 					{
 						($hook = get_hook('pf_change_details_avatar_modify_size')) ? eval($hook) : null;
 
-						// Now check the width/height
+						// Now check the width, height, type
+						list($width, $height, $type,) = @/**/getimagesize($avatar_tmp_file);
 						if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
 						{
-							@unlink($forum_config['o_avatars_dir'].'/'.$id.'.tmp');
+							@unlink($avatar_tmp_file);
 							$errors[] = sprintf($lang_profile['Too wide or high'], $forum_config['o_avatars_width'], $forum_config['o_avatars_height']);
 						}
-						else if ($type == 1 && $uploaded_file['type'] != 'image/gif')	// Prevent dodgy uploads
+						else if ($type == IMAGETYPE_GIF && $uploaded_file['type'] != 'image/gif')	// Prevent dodgy uploads
 						{
-							@unlink($forum_config['o_avatars_dir'].'/'.$id.'.tmp');
+							@unlink($avatar_tmp_file);
+							$errors[] = $lang_profile['Bad type'];
+						}
+
+						// Determine type
+						$extension = null;
+						$avatar_type = FORUM_AVATAR_NONE;
+						if ($type == IMAGETYPE_GIF)
+						{
+							$extension = '.gif';
+							$avatar_type = FORUM_AVATAR_GIF;
+						}
+						else if ($type == IMAGETYPE_JPEG)
+						{
+							$extension = '.jpg';
+							$avatar_type = FORUM_AVATAR_JPG;
+						}
+						else if ($type == IMAGETYPE_PNG)
+						{
+							$extension = '.png';
+							$avatar_type = FORUM_AVATAR_PNG;
+						}
+
+						($hook = get_hook('pf_change_details_avatar_determine_extension')) ? eval($hook) : null;
+
+						// Check type from getimagesize type format
+						if (!in_array($avatar_type, $allowed_types) || empty($extension))
+						{
+							@unlink($avatar_tmp_file);
 							$errors[] = $lang_profile['Bad type'];
 						}
 
@@ -1176,7 +1194,7 @@ else if (isset($_POST['form_sent']))
 							delete_avatar($id);
 
 							// Put the new avatar in its place
-							@rename($forum_config['o_avatars_dir'].'/'.$id.'.tmp', $forum_config['o_avatars_dir'].'/'.$id.$extension);
+							@rename($avatar_tmp_file, $forum_config['o_avatars_dir'].'/'.$id.$extension);
 							@chmod($forum_config['o_avatars_dir'].'/'.$id.$extension, 0644);
 
 							// Avatar
@@ -1515,7 +1533,7 @@ if ($forum_user['id'] != $id &&
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id))
+		sprintf($lang_profile['Users profile'], $user['username'])
 	);
 
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1597,7 +1615,7 @@ else
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id))
+		sprintf($lang_profile['Users profile'], $user['username'])
 	);
 
 	// Is this users own profile
@@ -1627,7 +1645,7 @@ else
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array(sprintf($lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
+			sprintf($lang_profile['Section about'])
 		);
 
 		// Setup user identification
@@ -1905,7 +1923,7 @@ else
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section identity'],forum_link($forum_url['profile_identity'], $id))
+			$lang_profile['Section identity']
 		);
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -2114,7 +2132,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_identity_contact_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2154,7 +2172,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section settings'],forum_link($forum_url['profile_settings'], $id))
+			$lang_profile['Section settings']
 		);
 
 		// Setup the form
@@ -2473,7 +2491,7 @@ if ($forum_page['has_required']): ?>
 <?php $forum_page['item_count'] = 0; ?>
 <?php ($hook = get_hook('pf_change_details_settings_email_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2500,7 +2518,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section signature'], forum_link($forum_url['profile_signature'], $id))
+			$lang_profile['Section signature']
 		);
 
 		// Setup the form
@@ -2588,7 +2606,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_signature_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2612,7 +2630,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section avatar'],forum_link($forum_url['profile_avatar'], $id))
+			$lang_profile['Section avatar']
 		);
 
 		// Setup the form
@@ -2716,7 +2734,7 @@ if ($forum_page['has_required']): ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_avatar_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -2741,7 +2759,7 @@ if ($forum_page['has_required']): ?>
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			array($lang_profile['Section admin'],forum_link($forum_url['profile_admin'], $id))
+			$lang_profile['Section admin']
 		);
 
 		// Setup form
@@ -2831,7 +2849,7 @@ if ($forum_page['has_required']): ?>
 <?php ($hook = get_hook('pf_change_details_admin_pre_group_membership_submit')) ? eval($hook) : null; ?>
 			<div class="sf-set button-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="sf-box text">
-	 				<span class="submit"><input type="submit" name="update_group_membership" value="<?php echo $lang_profile['Update groups'] ?>" /></span>
+	 				<span class="submit primary"><input type="submit" name="update_group_membership" value="<?php echo $lang_profile['Update groups'] ?>" /></span>
 	 			</div>
 			</div>
 <?php
@@ -2897,7 +2915,7 @@ if ($forum_page['has_required']): ?>
 <?php ($hook = get_hook('pf_change_details_admin_mod_assignment_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="mf-set button-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="mf-box text">
-					<span class="submit"><input type="submit" name="update_forums" value="<?php echo $lang_profile['Update forums'] ?>" /></span>
+					<span class="submit primary"><input type="submit" name="update_forums" value="<?php echo $lang_profile['Update forums'] ?>" /></span>
 				</div>
 			</div>
 <?php
@@ -2908,7 +2926,7 @@ if ($forum_page['has_required']): ?>
 ?>
 		</div>
 		<div class="frm-buttons">
-			<span class="submit"><?php echo $lang_profile['Instructions'] ?></span>
+			<span class="submit primary"><?php echo $lang_profile['Instructions'] ?></span>
 		</div>
 	</div>
 	</form>

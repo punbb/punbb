@@ -16,7 +16,6 @@ $lang_admin_prune = array(
 'Number of topics'				=>	'Number of topics',
 'Prune caution'					=>	'<strong>IMPORTANT!</strong> Use this feature with caution. Pruned posts can <em>NEVER</em> be recovered. For best performance you should put the forum in maintenance mode during pruning.',
 'Prune intro'					=>	'You may prune topics from all forums or from one particular forum. Topics will be pruned according to the value you specify for "Days old". E.g. if you were to enter 30, every topic that didn\'t contain a post dated less than 30 days old would be deleted.',
-'Prune sticky'					=>	'Prune sticky topics',
 'Prune sticky enable'			=>	'Enable pruning of sticky topics.',
 'Prune from'					=>	'Prune from forum',
 'Days to prune message'			=>	'Days to prune must be a positive integer.',

@@ -218,7 +218,7 @@ B - GLOBAL STYLES
 -------------------------------------------------------------*/
 
 .brd {
-	padding: 1.3em 2em;
+	padding: 1em 2em;
 	margin: 0 auto;
 	max-width: 1100px;
 	min-width: 700px;
@@ -274,6 +274,39 @@ B - GLOBAL STYLES
 	border-top: none;
 	margin: -1em 0 1em 0;
 }
+
+#rules-content {
+	max-width: 120ex;
+	padding: 1.3em 1.5em;
+}
+
+#rules-content h1 {
+	font-size: 1.3em;
+	line-height: 1em;
+	margin-bottom: .7em;
+}
+
+#rules-content h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: .3em;
+}
+
+#rules-content h3 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+#rules-content h4,
+#rules-content h5 {
+	font-size: 1;
+	font-weight: bold;
+}
+
+#rules-content p {
+	margin: 0 0 .65em;
+}
+
 
 /* Content Text (Default spacing for paragraphs and lists)
 -------------------------------------------------------------*/
@@ -403,6 +436,15 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .hotfix .options {
 	border-top-style: dashed;
 	border-top-width: 1px;
+}
+
+.extension h3 > em {
+	font-style: normal;
+}
+
+.extension .data-list {
+	list-style-type: none;
+	padding-left: 0;
 }
 
 /* Content Containers
@@ -558,13 +600,18 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 /* Section Menus (By Default - Profile and Admin)
 -------------------------------------------------------------*/
+#brd-navlinks,
+.main-menu,
+.admin-menu {
+	padding-left: .75em;
+}
 
 .main-menu,
 .admin-menu {
 	border: 0;
-	padding: 0.4em 0 0.2em 0.75em;
 }
 
+#brd-navlinks ul,
 .main-menu ul,
 .admin-menu ul {
 	list-style-type: none;
@@ -572,24 +619,26 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding: 0;
 }
 
+#brd-navlinks li,
 .main-menu li,
 .admin-menu li {
 	float: left;
 	display: inline;
 }
 
+#brd-navlinks a,
 .main-menu a,
 .admin-menu a {
 	float: left;
 	position: relative;
-	padding: 0.2em 0.75em 0.4em 0.75em;
+	padding: 0.55em .75em;
 }
 
-.main-menu .active a,
-.admin-menu .active a {
-	font-weight: bold;
+#brd-navlinks a {
+	padding: 0.43em .75em;
 }
 
+#brd-navlinks li.first-item,
 .main-menu li.first-item,
 .admin-menu li.first-item {
 	border-left: 0;
@@ -649,13 +698,12 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-navlinks ul {
 	margin: 0;
-	padding: 0.4em 0;
+	/*padding: 0.4em 0;*/
 	float: left;
 }
 
 #brd-navlinks li {
 	display: inline;
-	margin-right: 1em;
 }
 
 #brd-navlinks li a {
@@ -870,7 +918,7 @@ p.options {
 
 a.feed {
 	padding-left: 22px;
-	background: url(feed-icon.png) center left no-repeat;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAAVZQTFRFzF0V2XIp2l4q3GEr3W4v3mUs3m8v3nAw33Ew4Got4HVF4XQw4Xgx4nA24nYx424u43kx43ky5Hsy5HxH5XQu5Xwy5X0y5nQv5n8z5otg53gv54Ez6Hkx6II06IM06IU16IlV6X456YU16Yg26n0x6oc16olJ638y64k17IEy7Io27JZj7oUz7oU07pFM7ppk7quJ7rKV741B751k8Ik08Ys18beX8o018pNC8qNm86Rn9JE29KZn9Kxz9LKA9L2Y9ZI39alo9b+Z9cCY9pQ39ptE95c496FQ961p98OZ99S++Jk5+J5E+K9p+LR1+L+O+Zo5+Z1B+Z9F+aVS+cib+de/+pw5+qJG+qxe+rNq+r6D+sOP+s6n+tOz+506+6lS+69e+7l3++bY/MKE/Nm1/OPN/dq1/d/B/eXN/fHm/ubO/uza/vHm/vLm/vfy/vjy//nz////L/lnWgAAAAJ0Uk5TEI9BVkHYAAAA50lEQVQY0yXOu07DMBSA4XNxnDtE4bYBFYxMMPAaPCoPg5gqBgRDSVtok1McO3awxPj904+ApSJFzIqZxrcZ8brXRcIZq5wK7Z65Cu1Vy/TvbBiV0vU9QPjcYfRGmIsjtkDJ8ZkO0bLnukL73f1WKoNOxPQxNI9taUTr9Gdr7IE4S6g6v21MDwtvZYoD9nU1YWOXhhpxnpTK58OX4Kl5gTtnvOKcFjyu00SvPOf7mZhOijTZvsOFLKGZAsW/GQbpoHZrwBDw5iET2RibTR9K70yC+GTjjxVn7BTmckDAS3bOT977ENjOfw1gcm/NBi+EAAAAAElFTkSuQmCC) center left no-repeat;
 }
 
 .content-options,
@@ -1190,9 +1238,14 @@ F - MAIN CONTENT - FORMS
 	margin: 0;
 }
 
-.text input,
-.select select {
+.text input {
 	font-size: 1.084em;
+}
+
+select {
+	height: 25px;
+	*height: auto;
+  	line-height: 25px;
 }
 
 optgroup {
@@ -1250,11 +1303,11 @@ button {
 	vertical-align: baseline;
 	text-align: center;
 	text-decoration: none;
-	padding: .5em .65em;
-	-moz-border-radius: .25em;
-	-webkit-border-radius: .25em;
-	-khtml-border-radius: .25em;
-	border-radius: .25em;
+	padding: .5em .6em;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	border-radius: 2px;
 	border-style: solid;
 	border-width: 1px;
 	-webkit-appearance: button;
@@ -1284,6 +1337,14 @@ input[type="reset"][disabled]:active,
 button[disabled]:active {
 	position: relative;
 	top: 0;
+}
+
+.primary input[type="submit"],
+.primary input[type="button"],
+.primary input[type="reset"],
+.primary button {
+	padding-left: 1.2em;
+	padding-right: 1.2em;
 }
 
 .js_link {
@@ -1347,7 +1408,7 @@ button[disabled]:active {
 
 
 .sf-set .checkbox input {
-	margin: .2em 0 .2em -0.2em;
+	margin: .2em 0 .2em -.1em;
 }
 
  /* Fixes alignment issue in Safari */
@@ -1425,7 +1486,7 @@ table input[type="checkbox"] {
 }
 
 .mf-item input {
-	margin: .1em 0 .1em -0.25em;
+	margin: .1em 0 .1em -.1em;
 }
 
 .mf-item label {
@@ -1827,11 +1888,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 -------------------------------------------------------------*/
 
 .entry-content {
-	padding-bottom: 1em;
+	padding-bottom: 2em;
 	overflow: hidden;
 	width: 100%;
-	min-height: 8em;
-	font-size: 1.084em;
+	min-height: 7em;
 }
 
 #brd-help .entry-content {
@@ -1841,6 +1901,10 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 .entry-content ol {
 	padding-left: 2.5em;
 	list-style-type: decimal;
+}
+
+.entry-content li + li {
+	margin-top: .25em;
 }
 
 .entry-content ol p,
@@ -1853,8 +1917,8 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 }
 
 .entry-content h5 {
-	font-weight: bold;
-	font-size: 1.084em;
+	font-weight: normal;
+	font-size: 1.3em;
 	padding: 0.5em 0;
 }
 
@@ -1908,7 +1972,13 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 
 .sig-content {
 	padding-top: 2em;
-	font-size: .917em;
+	font-size: .95em;
+}
+
+.sig-content a,
+.sig-demo a {
+	border-bottom: solid;
+	border-width: 1px;
 }
 
 span.sig-line {
@@ -2162,6 +2232,12 @@ H - MAIN CONTENT - ODDMENTS
 	border-style: solid;
 }
 
+
+/* IE */
+.ie6 a.feed,
+.ie7 a.feed {
+	background: url(feed-icon.png) center left no-repeat;
+}
 
 /*************************************************************
 IE6 - FIXES

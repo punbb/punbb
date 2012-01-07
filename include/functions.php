@@ -2,7 +2,7 @@
 /**
  * Loads common functions used throughout the site.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -29,6 +29,45 @@ function forum_trim($str, $charlist = " \t\n\r\0\x0B\xC2\xA0")
 function forum_linebreaks($str)
 {
 	return str_replace(array("\r\n", "\r"), "\n", $str);
+}
+
+
+// Start PHP session
+function forum_session_start() {
+	static $forum_session_started = FALSE;
+
+	$return = ($hook = get_hook('fn_forum_session_start_start')) ? eval($hook) : null;
+	if ($return != null)
+		return;
+
+	// Check if session already started
+	if ($forum_session_started && session_id())
+		return;
+
+	session_cache_limiter(FALSE);
+
+	// Check session id
+	$forum_session_id = NULL;
+	if (isset($_COOKIE['PHPSESSID']))
+		$forum_session_id = $_COOKIE['PHPSESSID'];
+	else if (isset($_GET['PHPSESSID']))
+		$forum_session_id = $_GET['PHPSESSID'];
+
+	if (empty($forum_session_id) || !preg_match('/^[a-z0-9]{16,32}$/', $forum_session_id))
+	{
+		// Create new session id
+		$forum_session_id = random_key(32, FALSE, TRUE);
+		session_id($forum_session_id);
+	}
+
+	session_start();
+	if (!isset($_SESSION['initiated']))
+	{
+		session_regenerate_id();
+		$_SESSION['initiated'] = TRUE;
+	}
+
+	$forum_session_started = TRUE;
 }
 
 
@@ -475,8 +514,8 @@ function generate_navlinks()
 		{
 			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
 			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
 			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin'].'</a></li>';
+			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
 		}
 	}
 
@@ -3246,7 +3285,7 @@ function redirect($destination_url, $message)
 // Display a simple error message
 function error()
 {
-	global $forum_config;
+	global $forum_config, $lang_common;
 
 	if (!headers_sent())
 	{
@@ -3284,6 +3323,33 @@ function error()
 		$forum_config['o_gzip'] = '0';
 	}
 
+	//  Set a default error messages string if the script failed before $common_lang loaded
+	if (empty($lang_common['Forum error header']))
+	{
+		$lang_common['Forum error header'] = 'Sorry! The page could not be loaded.';
+	}
+
+	if (empty($lang_common['Forum error description']))
+	{
+		$lang_common['Forum error description'] = 'This is probably a temporary error. Just refresh the page and retry. If problem continues, please check back in 5-10 minutes.';
+	}
+
+	if (empty($lang_common['Forum error location']))
+	{
+		$lang_common['Forum error location'] = 'The error occurred on line %1$s in %2$s';
+	}
+
+	if (empty($lang_common['Forum error db reported']))
+	{
+		$lang_common['Forum error db reported'] = 'Database reported:';
+	}
+
+	if (empty($lang_common['Forum error db query']))
+	{
+		$lang_common['Forum error db query'] = 'Failed query:';
+	}
+
+
 	// Empty all output buffers and stop buffering
 	while (@ob_end_clean());
 
@@ -3297,40 +3363,43 @@ function error()
 <head>
 	<meta charset="utf-8"/>
 	<title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
+	<style>
+		strong 	{ font-weight: bold; }
+		body 	{ margin: 50px; font: 85%/150% verdana, arial, sans-serif; color: #222; max-width: 55em; }
+		h1 		{ color: #a00000; font-weight: normal; font-size: 1.45em; }
+		code 	{ font-family: monospace, sans-serif; }
+		.error_line { color: #999; font-size: .95em; }
+	</style>
 </head>
-<body style="margin: 40px; font: 85%/150% verdana, arial, sans-serif; color: #222; max-width: 55em;">
-<h1 style="color: #a00000; font-weight: normal;">An error was encountered</h1>
+<body>
+	<h1><?php echo forum_htmlencode($lang_common['Forum error header']) ?></h1>
 <?php
-
 	if (isset($message))
 		echo '<p>'.$message.'</p>'."\n";
+	else
+		echo '<p>'.forum_htmlencode($lang_common['Forum error description']).'</p>'."\n";
 
 	if ($num_args > 1)
 	{
 		if (defined('FORUM_DEBUG'))
 		{
-			if (isset($file) && isset($line))
-				echo '<p>The error occurred on line '.$line.' in '.$file.'</p>'."\n";
-
 			$db_error = isset($GLOBALS['forum_db']) ? $GLOBALS['forum_db']->error() : array();
 			if (!empty($db_error['error_msg']))
 			{
-				echo '<p><strong>Database reported:</strong> '.forum_htmlencode($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '').'.</p>'."\n";
+				echo '<p><strong>'.forum_htmlencode($lang_common['Forum error db reported']).'</strong> '.forum_htmlencode($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '').'.</p>'."\n";
 
 				if ($db_error['error_sql'] != '')
-					echo '<p><strong>Failed query:</strong> <code>'.forum_htmlencode($db_error['error_sql']).'</code></p>'."\n";
+					echo '<p><strong>'.forum_htmlencode($lang_common['Forum error db query']).'</strong> <code>'.forum_htmlencode($db_error['error_sql']).'</code></p>'."\n";
 			}
+
+			if (isset($file) && isset($line))
+				echo '<p class="error_line">'.forum_htmlencode(sprintf($lang_common['Forum error location'], $line, $file)).'</p>'."\n";
 		}
-		else
-			echo '<p style="font-size: .95em;"><strong>Note:</strong> For detailed error information (necessary for troubleshooting), enable "DEBUG mode".<br/>To enable "DEBUG mode", open up&nbsp;the file config.php in&nbsp;a&nbsp;text editor, add a&nbsp;line that looks like <nobr>"define(\'FORUM_DEBUG\', 1);"</nobr> (without the quotation marks), and re-upload the file.<br/>Once you\'ve solved the problem, it&nbsp;is recommended that "DEBUG mode" be&nbsp;turned off again (just remove the line from the file and re-upload it).</p>'."\n";
 	}
-
 ?>
-
 </body>
 </html>
 <?php
-
 	// If a database connection was established (before this error) we close it
 	if (isset($GLOBALS['forum_db']))
 		$GLOBALS['forum_db']->close();

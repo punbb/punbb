@@ -86,8 +86,8 @@ $lang_common = array(
 'Info separator'			=>	' ', // e.g. 1 Page | 10 Topics
 'Powered by'				=>	'Powered by %s, supported by %s.',
 'Maintenance'				=>	'Maintenance',
-'Installed extension'		=>	'The %s official extension is installed. Copyright &copy; 2003&ndash;2011 <a href="http://punbb.informer.com/">PunBB</a>.',
-'Installed extensions'		=>	'Currently installed <span id="extensions-used" title="%s">%s official extensions</span>. Copyright &copy; 2003&ndash;2011 <a href="http://punbb.informer.com/">PunBB</a>.',
+'Installed extension'		=>	'The %s official extension is installed. Copyright &copy; 2003&ndash;2012 <a href="http://punbb.informer.com/">PunBB</a>.',
+'Installed extensions'		=>	'Currently installed <span id="extensions-used" title="%s">%s official extensions</span>. Copyright &copy; 2003&ndash;2012 <a href="http://punbb.informer.com/">PunBB</a>.',
 
 // CSRF confirmation form
 'Confirm'					=>	'Confirm',	// Button
@@ -155,11 +155,18 @@ $lang_common = array(
 'Skip to content'			=>	'Skip to forum content',
 
 // Debug information
-'Querytime'					=>	'Generated in %1$s seconds, %2$s queries executed',
+'Querytime'                 =>  'Generated in %1$s seconds (%2$s%% PHP - %3$s%% DB) with %4$s queries',
 'Debug table'				=>	'Debug information',
 'Debug summary'				=>	'Database query performance information',
 'Query times'				=>	'Time (s)',
 'Query'						=>	'Query',
 'Total query time'			=>	'Total query time',
+
+// Error message
+'Forum error header'        => 'Sorry! The page could not be loaded.',
+'Forum error description'   => 'This is probably a temporary error. Just refresh the page and retry. If problem continues, please check back in 5-10 minutes.',
+'Forum error location'      => 'The error occurred on line %1$s in %2$s',
+'Forum error db reported'   => 'Database reported:',
+'Forum error db query'      => 'Failed query:',
 
 );

@@ -4,7 +4,7 @@
  *
  * Allows administrators and moderators to handle reported posts.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -155,7 +155,7 @@ if (!empty($unread_reports))
 ?>
 			<div class="frm-buttons">
 				<span class="select-all js_link" data-check-form="arp-new-report-form"><?php echo $lang_admin_common['Select all'] ?></span>
-				<span class="submit"><input type="submit" name="mark_as_read" value="<?php echo $lang_admin_reports['Mark read'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="mark_as_read" value="<?php echo $lang_admin_reports['Mark read'] ?>" /></span>
 			</div>
 		</form>
 	</div>

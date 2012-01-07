@@ -4,7 +4,7 @@
  *
  * Allows administrators or moderators to search the existing users based on various criteria.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -451,6 +451,14 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 				delete_user($id, isset($_POST['delete_posts']));
 		}
 
+		// Remove cache file with forum stats
+		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		{
+			require FORUM_ROOT.'include/cache.php';
+		}
+
+		clean_stats_cache();
+
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
 		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users deleted']);
@@ -502,7 +510,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete users'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete users'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="delete_users_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
@@ -674,7 +682,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="ban_users_comply" value="<?php echo $lang_admin_users['Ban'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="ban_users_comply" value="<?php echo $lang_admin_users['Ban'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1410,7 +1418,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 			</fieldset>
 <?php ($hook = get_hook('aus_search_form_results_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="find_user" value="<?php echo $lang_admin_users['Submit search'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="find_user" value="<?php echo $lang_admin_users['Submit search'] ?>" /></span>
 			</div>
 		</form>
 	</div>
@@ -1440,7 +1448,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 			</fieldset>
 <?php ($hook = get_hook('aus_search_form_ip_search_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" value=" <?php echo $lang_admin_users['Submit search'] ?> " /></span>
+				<span class="submit primary"><input type="submit" value=" <?php echo $lang_admin_users['Submit search'] ?> " /></span>
 			</div>
 		</form>
 	</div>

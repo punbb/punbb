@@ -4,7 +4,7 @@
  *
  * Allows administrators to add, modify, and remove forums.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -188,7 +188,7 @@ else if (isset($_GET['del_forum']))
 				<p class="warn"><?php echo $lang_admin_forums['Delete forum warning'] ?></p>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="del_forum_comply" value="<?php echo $lang_admin_forums['Delete forum'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="del_forum_comply" value="<?php echo $lang_admin_forums['Delete forum'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="del_forum_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
@@ -735,7 +735,7 @@ ob_start();
 			</fieldset>
 <?php ($hook = get_hook('afo_add_forum_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="add_forum" value=" <?php echo $lang_admin_forums['Add forum'] ?> " /></span>
+				<span class="submit primary"><input type="submit" name="add_forum" value=" <?php echo $lang_admin_forums['Add forum'] ?> " /></span>
 			</div>
 		</form>
 	</div>
@@ -832,7 +832,7 @@ if (!empty($forums))
 ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="update_positions" value="<?php echo $lang_admin_forums['Update positions'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update_positions" value="<?php echo $lang_admin_forums['Update positions'] ?>" /></span>
 			</div>
 		</form>
 	</div>

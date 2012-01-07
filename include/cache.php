@@ -4,7 +4,7 @@
  *
  * This file contains all of the functions used to generate the cache files used by the site.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -218,6 +218,18 @@ function generate_stats_cache()
 	unset($stats);
 }
 
+
+//
+// Clean stats cache PHP scripts
+//
+function clean_stats_cache()
+{
+	$cache_file = FORUM_CACHE_DIR.'cache_stats.php';
+	if (file_exists($cache_file))
+	{
+		unlink($cache_file);
+	}
+}
 
 
 //

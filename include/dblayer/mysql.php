@@ -2,7 +2,7 @@
 /**
  * A database layer class that relies on the MySQL PHP extension.
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -69,7 +69,7 @@ class DBLayer
 		if (strlen($sql) > 140000)
 			exit('Insane query. Aborting.');
 
-		if (defined('FORUM_SHOW_QUERIES'))
+		if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 			$q_start = forum_microtime();
 
 		if ($unbuffered)
@@ -79,7 +79,7 @@ class DBLayer
 
 		if ($this->query_result)
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, sprintf('%.5f', forum_microtime() - $q_start));
 
 			++$this->num_queries;
@@ -88,7 +88,7 @@ class DBLayer
 		}
 		else
 		{
-			if (defined('FORUM_SHOW_QUERIES'))
+			if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
 				$this->saved_queries[] = array($sql, 0);
 
 			return false;

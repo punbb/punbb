@@ -4,7 +4,7 @@
  *
  * Deletes the specified post (and, if necessary, the topic it is in).
  *
- * @copyright (C) 2008-2011 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -102,11 +102,31 @@ else if (isset($_POST['delete']))
 		// Delete just this one post
 		delete_post($id, $cur_post['tid'], $cur_post['fid']);
 
+		// Fetch previus post #id in some topic for redirect after delete
+		$query = array(
+			'SELECT'	=> 'p.id',
+			'FROM'		=> 'posts AS p',
+			'WHERE'		=> 'p.topic_id = '.$cur_post['tid'].' AND p.id < '.$id,
+			'ORDER BY'	=> 'p.id DESC',
+			'LIMIT'		=> '1'
+		);
+
+		($hook = get_hook('dl_post_deleted_get_prev_post_id')) ? eval($hook) : null;
+		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$prev_post = $forum_db->fetch_assoc($result);
+
 		$forum_flash->add_info($lang_delete['Post del redirect']);
 
 		($hook = get_hook('dl_post_deleted_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))), $lang_delete['Post del redirect']);
+		if (isset($prev_post['id']))
+		{
+			redirect(forum_link($forum_url['post'], $prev_post['id']), $lang_delete['Post del redirect']);
+		}
+		else
+		{
+			redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))), $lang_delete['Post del redirect']);
+		}
 	}
 }
 
@@ -128,8 +148,7 @@ $forum_page['hidden_fields'] = array(
 // Setup form information
 $forum_page['frm_info'] = array(
 	'<li><span>'.$lang_delete['Forum'].':<strong> '.forum_htmlencode($cur_post['forum_name']).'</strong></span></li>',
-	'<li><span>'.$lang_delete['Topic'].':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>',
-	'<li><span>'.sprintf((($cur_post['is_topic']) ? $lang_delete['Delete topic info'] : $lang_delete['Delete post info']), forum_htmlencode($cur_post['poster']), format_time($cur_post['posted'])).'</span></li>'
+	'<li><span>'.$lang_delete['Topic'].':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>'
 );
 
 // Generate the post heading
@@ -206,7 +225,7 @@ ob_start();
 			</fieldset>
 <?php ($hook = get_hook('dl_confirm_delete_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="delete" value="<?php echo ($cur_post['is_topic']) ? $lang_delete['Delete topic'] : $lang_delete['Delete post'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete" value="<?php echo ($cur_post['is_topic']) ? $lang_delete['Delete topic'] : $lang_delete['Delete post'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
