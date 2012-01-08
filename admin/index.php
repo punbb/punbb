@@ -100,14 +100,9 @@ $query = array(
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $num_online = $forum_db->result($result);
 
-// Get the database system version
-$db_version = $forum_db->get_version();
-
 // Collect some additional info about MySQL
 if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 {
-	$db_version = 'MySQL '.$db_version;
-
 	// Calculate total db size/row count
 	$result = $forum_db->query('SHOW TABLE STATUS FROM `'.$db_name.'` LIKE \''.$db_prefix.'%\'') or error(__FILE__, __LINE__);
 
