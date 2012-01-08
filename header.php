@@ -229,7 +229,7 @@ if ($forum_user['is_admmod'] && $forum_config['o_report_method'] != 1)
 	$result_header = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result_header))
-		$admod_links['reports'] = '<span id="reports"><a href="'.forum_link($forum_url['admin_reports']).'">'.$lang_common['New reports'].'</a></span>';
+		$admod_links['reports'] = '<li id="reports"><a href="'.forum_link($forum_url['admin_reports']).'">'.$lang_common['New reports'].'</a></li>';
 }
 
 if ($forum_user['g_id'] == FORUM_ADMIN)
@@ -258,12 +258,12 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
 
 	if (!empty($alert_items))
-		$admod_links['alert'] = '<span id="alert"><a href="'.forum_link($forum_url['admin_index']).'"><strong>'.$lang_common['New alerts'].'</strong></a></span>';
+		$admod_links['alert'] = '<li id="alert"><a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['New alerts'].'</a></li>';
 
 	($hook = get_hook('hd_alert')) ? eval($hook) : null;
 }
 
-$tpl_main = str_replace('<!-- forum_admod -->', (!empty($admod_links)) ? '<p id="brd-admod">'.implode(' ', $admod_links).'</p>' : '', $tpl_main);
+$tpl_main = str_replace('<!-- forum_admod -->', (!empty($admod_links)) ? '<ul id="brd-admod">'.implode(' ', $admod_links).'</ul>' : '', $tpl_main);
 
 // END SUBST - <!-- forum_admod -->
 

@@ -397,6 +397,7 @@ label,
 
 #brd-admod #alert a {
 	color: yellow;
+	font-weight: bold;
 }
 
 /* Logo and Headings
