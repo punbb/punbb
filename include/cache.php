@@ -552,17 +552,17 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 
 	foreach (array_unique(array_merge($repository_urls, $repository_url_by_extension)) as $url)
 	{
-		//Get repository timestamp
-		$remote_file = get_remote_file( $url.'/timestamp', 2);
+		// Get repository timestamp
+		$remote_file = get_remote_file($url.'/timestamp', 2);
 		$repository_timestamp = empty($remote_file['content']) ? '' : forum_trim($remote_file['content']);
 		unset($remote_file);
 		if (!is_numeric($repository_timestamp))
 			continue;
 
-		if (!isset( $forum_ext_repos[ $url ][ 'timestamp' ] ))
-			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
+		if (!isset($forum_ext_repos[$url]['timestamp']))
+			$forum_ext_repos[$url]['timestamp'] = $repository_timestamp;
 
-		if ($forum_ext_repos[ $url ][ 'timestamp' ] <= $repository_timestamp)
+		if ($forum_ext_repos[$url]['timestamp'] <= $repository_timestamp)
 		{
 			foreach ($inst_exts as $ext)
 			{
@@ -572,28 +572,29 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 				if (empty($version) || !preg_match('~^[0-9a-zA-Z\. +-]+$~u', $version))
 					continue;
 
-				$forum_ext_repos[ $url ][ 'extension_versions' ][ $ext['id'] ] = $version;
+				$forum_ext_repos[$url]['extension_versions'][$ext['id']] = $version;
 
-				//If key with current extension exist in array, compare it with version in rep-ry
-				if (!isset($forum_ext_last_versions[ $ext['id'] ]) || ( version_compare($forum_ext_last_versions[ $ext['id'] ][ 'version' ], $version, '<') ) )
+				// If key with current extension exist in array, compare it with version in repository
+				if (!isset($forum_ext_last_versions[$ext['id']]) || (version_compare($forum_ext_last_versions[$ext['id']]['version'], $version, '<')))
 				{
-					$forum_ext_last_versions[ $ext['id'] ] = array('version' => $version, 'repo_url' => $url);
+					$forum_ext_last_versions[$ext['id']] = array('version' => $version, 'repo_url' => $url);
 
 					$remote_file = get_remote_file($url.'/'.$ext['id'].'/lastchanges', 2);
 					$last_changes = empty($remote_file['content']) ? '' : forum_trim($remote_file['content']);
 					unset($remote_file);
-					if ( !empty($last_changes) )
-						$forum_ext_last_versions[ $ext['id'] ][ 'changes' ] = $last_changes;
+					if (!empty($last_changes))
+						$forum_ext_last_versions[$ext['id']]['changes'] = $last_changes;
 				}
 			}
-			//Write timestamp to cache
-			$forum_ext_repos[ $url ][ 'timestamp' ] = $repository_timestamp;
+
+			// Write timestamp to cache
+			$forum_ext_repos[$url]['timestamp'] = $repository_timestamp;
 		}
 	}
 
 	if (array_keys($forum_ext_last_versions) != array_keys($inst_exts))
 		foreach ($inst_exts as $ext)
-			if ( !in_array($ext['id'], array_keys($forum_ext_last_versions)) )
+			if (!in_array($ext['id'], array_keys($forum_ext_last_versions)))
 				$forum_ext_last_versions[$ext['id']] = array('version' => $ext['version'], 'repo_url' => '', 'changes' => '');
 
 	($hook = get_hook('ch_generate_ext_versions_cache_check_repository')) ? eval($hook) : null;
