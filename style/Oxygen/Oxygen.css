@@ -699,7 +699,6 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-navlinks ul {
 	margin: 0;
-	/*padding: 0.4em 0;*/
 	float: left;
 }
 
@@ -2154,6 +2153,7 @@ H - MAIN CONTENT - ODDMENTS
 .report p strong {
 	display: block;
 	font-weight: normal;
+	margin-top: 1em;
 }
 
 .report h4 {
