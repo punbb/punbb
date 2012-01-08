@@ -70,7 +70,7 @@ $forum_page['finish_at'] = min(($forum_page['start_from'] + 50), ($forum_page['n
 $forum_page['users_searched'] = (($forum_user['g_search_users'] == '1' && $forum_page['username'] != '') || $forum_page['show_group'] > -1);
 
 if ($forum_page['num_users'] > 0)
-	$forum_page['items_info'] = generate_items_info( (($forum_page['users_searched']) ? $lang_ul['Users found'] : $lang_ul['Users']), ($forum_page['start_from'] + 1), $forum_page['num_users']);
+	$forum_page['items_info'] = generate_items_info((($forum_page['users_searched']) ? $lang_ul['Users found'] : $lang_ul['Users']), ($forum_page['start_from'] + 1), $forum_page['num_users']);
 else
 	$forum_page['items_info'] = $lang_ul['Users'];
 
