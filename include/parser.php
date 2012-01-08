@@ -602,9 +602,14 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 
 	if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
 	{
-		$idn = new idna_convert();
-		$idn->set_parameter('encoding', 'utf8');
-		$idn->set_parameter('strict', false);
+		static $idn;
+
+		if(!isset($idn))
+		{
+			$idn = new idna_convert();
+			$idn->set_parameter('encoding', 'utf8');
+			$idn->set_parameter('strict', false);
+		}
 
 		$full_url = $idn->encode($full_url);
 	}
