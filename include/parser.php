@@ -601,15 +601,27 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
 	{
 		static $idn;
+        static $cached_encoded_urls = null;
 
-		if(!isset($idn))
-		{
-			$idn = new idna_convert();
-			$idn->set_parameter('encoding', 'utf8');
-			$idn->set_parameter('strict', false);
-		}
+        if (is_null($cached_encoded_urls))
+            $cached_encoded_urls = array();
 
-		$full_url = $idn->encode($full_url);
+        // Check in cache
+        $cache_key = md5($full_url);
+        if (isset($cached_encoded_urls[$cache_key]))
+            $full_url = $cached_encoded_urls[$cache_key];
+        else
+        {
+    		if(!isset($idn))
+    		{
+    			$idn = new idna_convert();
+    			$idn->set_parameter('encoding', 'utf8');
+    			$idn->set_parameter('strict', false);
+    		}
+
+    		$full_url = $idn->encode($full_url);
+            $cached_encoded_urls[$cache_key] = $full_url;
+        }
 	}
 
 	// Ok, not very pretty :-)
