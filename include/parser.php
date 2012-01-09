@@ -62,9 +62,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 
 		if ($forum_config['o_make_links'] == '1')
 		{
-			// Check Unicode support
-			$unicode = defined('FORUM_SUPPORT_PCRE_UNICODE');
-			$text = do_clickable($text, $unicode);
+			$text = do_clickable($text, defined('FORUM_SUPPORT_PCRE_UNICODE'));
 		}
 
 		// If we split up the message before we have to concatenate it together again (code tags)
