@@ -18,6 +18,6 @@ $lang_admin_reports = array(
 'Read reports heading'			=>	'Last 10 reports marked as read',
 'No reports'					=>	'There are no reports either read or unread for you to view.',
 'Marked read by'				=>	'Read %s by %s',
-'Post'                          => 'Post #%s',
+'Post'							=> 'Post #%s',
 
 );

@@ -3,7 +3,7 @@
 // Language definitions used in index.php
 $lang_index = array(
 
-'Moderated by'				=>  'Moderated by %s',
+'Moderated by'				=>	'Moderated by %s',
 'Link to'					=>	'Link to %s',	// As in "Link to http://punbb.informer.com/"
 'Category subtitle'			=>	'%1$s in this category with details of %2$s',
 'Forums'					=>	'Forums',

@@ -14,8 +14,8 @@ if (!defined('FORUM'))
 
 // These are the simple file based SEF URLs
 $forum_url = array(
-	'insertion_find'				=>  '.html',
-	'insertion_replace'				=>  '-$1.html',
+	'insertion_find'				=>	'.html',
+	'insertion_replace'				=>	'-$1.html',
 	'change_email'					=>	'change-email$1.html',
 	'change_email_key'				=>	'change-email$1-$2.html',
 	'change_password'				=>	'change-password$1.html',

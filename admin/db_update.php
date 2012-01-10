@@ -347,7 +347,7 @@ function convert_table_utf8($table)
 	global $forum_db;
 
 	$types = array(
-		'char' 			=> 'binary',
+		'char'			=> 'binary',
 		'varchar'		=> 'varbinary',
 		'tinytext'		=> 'tinyblob',
 		'mediumtext'	=> 'mediumblob',
@@ -389,7 +389,7 @@ function convert_avatars()
 	{
 		while (false !== ($avatar = readdir($handle)))
 		{
-			$avatar_file =  $avatar_dir.$avatar;
+			$avatar_file = $avatar_dir.$avatar;
 			if (!is_file($avatar_file))
 			{
 				continue;
@@ -833,7 +833,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		$forum_db->alter_field('reports', 'message', 'TEXT', true);
 
 
-		// Drop fulltext indexes  (should only apply to SVN installs)
+		// Drop fulltext indexes (should only apply to SVN installs)
 		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
 			$forum_db->drop_index('topics', 'subject_idx');
@@ -1363,7 +1363,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				while ($cur_user = $forum_db->fetch_assoc($result))
 				{
 					if ($cur_user['linkedin'] != '' &&
-						strpos(strtolower($cur_user['linkedin']), 'http://') !== 0  &&
+						strpos(strtolower($cur_user['linkedin']), 'http://') !== 0 &&
 						strpos(strtolower($cur_user['linkedin']), 'https://') !== 0)
 					{
 						$query = array(

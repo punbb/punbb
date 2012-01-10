@@ -1,7 +1,7 @@
 <?php
 
 // The contents of this file are very much inspired by the file i18n-ascii.txt
-// from the CMS software Textpattern (http://textpattern.com/). 
+// from the CMS software Textpattern (http://textpattern.com/).
 
 // Replacements done by sef_friendly function
 $lang_url_replace = array(

@@ -12,50 +12,47 @@
 
 /***********************************************************************
 
-  INSTRUCTIONS
+	INSTRUCTIONS
 
-  This script is used to include information about your board from
-  pages outside the forums and to syndicate news about recent
-  discussions via RSS/Atom/XML. The script can display a list of
-  recent discussions, a list of active users or a collection of
-  general board statistics. The script can be called directly via
-  an URL, from a PHP include command or through the use of Server
-  Side Includes (SSI).
+	This script is used to include information about your board from
+	pages outside the forums and to syndicate news about recent
+	discussions via RSS/Atom/XML. The script can display a list of
+	recent discussions, a list of active users or a collection of
+	general board statistics. The script can be called directly via
+	an URL, from a PHP include command or through the use of Server
+	Side Includes (SSI).
 
-  The scripts behaviour is controlled via variables supplied in the
-  URL to the script. The different variables are: action (what to
-  do), show (how many items to display), fid (the ID or ID's of
-  the forum(s) to poll for topics), nfid (the ID or ID's of forums
-  that should be excluded), tid (the ID of the topic from which to
-  display posts) and type (output as HTML or RSS). The only
-  mandatory variable is action. Possible/default values are:
+	The scripts behaviour is controlled via variables supplied in the
+	URL to the script. The different variables are: action (what to
+	do), show (how many items to display), fid (the ID or ID's of
+	the forum(s) to poll for topics), nfid (the ID or ID's of forums
+	that should be excluded), tid (the ID of the topic from which to
+	display posts) and type (output as HTML or RSS). The only
+	mandatory variable is action. Possible/default values are:
 
-    action: feed - show most recent topics/posts (HTML or RSS)
-            online - show users online (HTML)
-            online_full - as above, but includes a full list (HTML)
-            stats - show board statistics (HTML)
+		action: feed - show most recent topics/posts (HTML or RSS)
+				online - show users online (HTML)
+				online_full - as above, but includes a full list (HTML)
+				stats - show board statistics (HTML)
 
-    type:   rss - output as RSS 2.0
-            atom - output as Atom 1.0
-            xml - output as XML
-            html - output as HTML (<li>'s)
+		type:   rss - output as RSS 2.0
+				atom - output as Atom 1.0
+				xml - output as XML
+				html - output as HTML (<li>'s)
 
-    fid:    One or more forum ID's (comma-separated). If ignored,
-            topics from all readable forums will be pulled.
+		fid:    One or more forum ID's (comma-separated). If ignored,
+				topics from all readable forums will be pulled.
 
-    nfid:   One or more forum ID's (comma-separated) that are to be
-            excluded. E.g. the ID of a a test forum.
+		nfid:   One or more forum ID's (comma-separated) that are to be
+				excluded. E.g. the ID of a a test forum.
 
-    tid:    A topic ID from which to show posts. If a tid is supplied,
-            fid and nfid are ignored.
+		tid:    A topic ID from which to show posts. If a tid is supplied,
+				fid and nfid are ignored.
 
-    show:   Any integer value between 1 and 50. The default is 15.
+		show:   Any integer value between 1 and 50. The default is 15.
 
-    sort:	posted - sort topics by posted time (default)
-			last_post - sort topics by last post
-
-
-
+		sort:	posted - sort topics by posted time (default)
+				last_post - sort topics by last post
 
 /***********************************************************************/
 
@@ -69,7 +66,7 @@ require FORUM_ROOT.'include/common.php';
 
 // The length at which topic subjects will be truncated (for HTML output)
 if (!defined('FORUM_EXTERN_MAX_SUBJECT_LENGTH'))
-    define('FORUM_EXTERN_MAX_SUBJECT_LENGTH', 30);
+	define('FORUM_EXTERN_MAX_SUBJECT_LENGTH', 30);
 
 // If we're a guest and we've sent a username/pass, we can try to authenticate using those details
 if ($forum_user['is_guest'] && isset($_SERVER['PHP_AUTH_USER']))
@@ -327,7 +324,7 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title' 		=>	$forum_config['o_board_title'].$lang_common['Title separator'].$cur_topic['subject'],
+			'title'		=>	$forum_config['o_board_title'].$lang_common['Title separator'].$cur_topic['subject'],
 			'link'			=>	forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
 			'description'	=>	sprintf($lang_common['RSS description topic'], $cur_topic['subject']),
 			'items'			=>	array(),
@@ -439,7 +436,7 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title' 		=>	$forum_config['o_board_title'].$forum_name,
+			'title'			=>	$forum_config['o_board_title'].$forum_name,
 			'link'			=>	forum_link($forum_url['index']),
 			'description'	=>	sprintf($lang_common['RSS description'], $forum_config['o_board_title']),
 			'items'			=>	array(),

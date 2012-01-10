@@ -33,7 +33,7 @@ PUNBB.install = (function () {
 
 				// #db_host is required and can not be empty
 				if (get('db_host').value.length < 0) {
-					get('db_host').value  = 'localhost';
+					get('db_host').value = 'localhost';
 				}
 			} else {
 				PUNBB.common.removeClass(get('db_host_block'), 'hidden');

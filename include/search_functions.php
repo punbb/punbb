@@ -78,7 +78,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		// Remove any words that are not indexed
 		$keywords_array = array_filter($keywords_array, 'validate_search_word');
 
-  		if (empty($keywords_array))
+		if (empty($keywords_array))
 			no_search_results();
 
 		$word_count = 0;
@@ -872,7 +872,7 @@ function generate_search_crumbs($action = null)
 		case 'show_user_topics':
 			$forum_page['crumbs'][] = sprintf($lang_search['Topics by'], $search_set[0]['poster']);
 			$forum_page['items_info'] = generate_items_info($lang_search['Topics found'], ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['user_posts'] =  '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_posts'], $search_id).'">'.sprintf($lang_search['Posts by'], forum_htmlencode($search_set[0]['poster'])).'</a></span>';
+			$forum_page['main_head_options']['user_posts'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_posts'], $search_id).'">'.sprintf($lang_search['Posts by'], forum_htmlencode($search_set[0]['poster'])).'</a></span>';
 			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_search['User defined search'].'</a></span>';
 			break;
 
