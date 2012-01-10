@@ -603,7 +603,7 @@ if ($tid && $forum_config['o_topic_review'] != '0')
 		($hook = get_hook('po_topic_review_row_pre_display')) ? eval($hook) : null;
 
 ?>
-		<div class="post<?php echo ($forum_page['item_count'] == 1) ? ' firstpost' : '' ?><?php echo ($forum_page['item_total'] == $forum_page['item_count']) ? ' lastpost' : '' ?>">
+		<div class="post<?php if ($forum_page['item_count'] == 1) echo ' firstpost'; ?><?php if ($forum_page['item_total'] == $forum_page['item_count']) echo ' lastpost'; ?>">
 			<div class="posthead">
 				<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
 <?php ($hook = get_hook('po_topic_review_new_post_head_option')) ? eval($hook) : null; ?>
