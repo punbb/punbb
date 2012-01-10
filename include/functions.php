@@ -129,7 +129,7 @@ function array_insert(&$input, $offset, $element, $key = null)
 function forum_unregister_globals()
 {
 	$register_globals = @ini_get('register_globals');
-	if ($register_globals === "" || $register_globals === "0" || strtolower($register_globals) === "off")
+	if ($register_globals === '' || $register_globals === '0' || strtolower($register_globals) === 'off')
 		return;
 
 	// Prevent script.php?GLOBALS[foo]=bar
@@ -195,7 +195,7 @@ function forum_fix_request_uri()
 
 		// Otherwise I am not aware of a work around...
 		else
-			error('The web server you are using is not correctly setting the REQUEST_URI variable.<br/>This usually means you are using IIS6, or an unpatched IIS7. Please either disable SEF URLs, upgrade to IIS7 and install any available patches or try a different web server.');
+			error('The web server you are using is not correctly setting the REQUEST_URI variable.<br />This usually means you are using IIS6, or an unpatched IIS7. Please either disable SEF URLs, upgrade to IIS7 and install any available patches or try a different web server.');
 	}
 }
 
@@ -696,7 +696,7 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 			if ($current < 1 || $current > $num_pages)
 				continue;
 			else if ($current != $cur_page || $link_to_all)
-				$pages[] = '<a'.(empty($pages) ? ' class="first-item" ' : '').' href="'.forum_sublink($link, $forum_url_page, $current, $args).'">'.forum_number_format($current).'</a>';
+				$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, $current, $args).'">'.forum_number_format($current).'</a>';
 			else
 				$pages[] = '<strong'.(empty($pages) ? ' class="first-item"' : '').'>'.forum_number_format($current).'</strong>';
 
@@ -705,12 +705,12 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 			if ($cur_page != ($num_pages-3) && $cur_page != ($num_pages-4))
 				$pages[] = '<span>'.$lang_common['Spacer'].'</span>';
 
-			$pages[] = '<a'.(empty($pages) ? ' class="first-item" ' : '').' href="'.forum_sublink($link, $forum_url_page, $num_pages, $args).'">'.forum_number_format($num_pages).'</a>';
+			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, $num_pages, $args).'">'.forum_number_format($num_pages).'</a>';
 		}
 
 		// Add a next page link
 		if ($num_pages > 1 && !$link_to_all && $cur_page < $num_pages)
-			$pages[] = '<a'.(empty($pages) ? ' class="first-item" ' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page + 1), $args).'">'.$lang_common['Next'].'</a>';
+			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page + 1), $args).'">'.$lang_common['Next'].'</a>';
 	}
 
 	($hook = get_hook('fn_paginate_end')) ? eval($hook) : null;
@@ -3142,7 +3142,7 @@ function maintenance_message()
 	while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_maint, $cur_include))
 	{
 		if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template maintenance.tpl.<br/>There is no such file in folder /include/user/.');
+			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template maintenance.tpl.<br />There is no such file in folder /include/user/.');
 
 		ob_start();
 		include FORUM_ROOT.'include/user/'.$cur_include[1];
@@ -3264,7 +3264,7 @@ function redirect($destination_url, $message)
 	while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_redir, $cur_include))
 	{
 		if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template redirect.tpl.<br/>There is no such file in folder /include/user/.');
+			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template redirect.tpl.<br />There is no such file in folder /include/user/.');
 
 		ob_start();
 		include FORUM_ROOT.'include/user/'.$cur_include[1];
@@ -3361,7 +3361,7 @@ function error()
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8"/>
+	<meta charset="utf-8" />
 	<title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
 	<style>
 		strong	{ font-weight: bold; }
