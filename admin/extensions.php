@@ -202,7 +202,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		if (isset($ext_data['extension']['hooks']['hook']))
 		{
 			foreach ($ext_data['extension']['hooks']['hook'] as $ext_hook)
-  			{
+			{
 				$cur_hooks = explode(',', $ext_hook['attributes']['id']);
 				foreach ($cur_hooks as $cur_hook)
 				{
@@ -215,8 +215,8 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 					($hook = get_hook('aex_install_comply_qr_add_hook')) ? eval($hook) : null;
 					$forum_db->query_build($query) or error(__FILE__, __LINE__);
 				}
-  			}
-  		}
+			}
+		}
 
 		// Empty the PHP cache
 		forum_clear_cache();
@@ -318,7 +318,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 				<div class="ct-set data-set set1">
 					<div class="ct-box data-box">
 						<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($ext_data['extension']['title']) ?></span></h3>
-						<p><?php  echo ((strpos($id, 'hotfix_') !== 0) ? sprintf($lang_admin_ext['Version'], $ext_data['extension']['version']) : $lang_admin_ext['Hotfix']) ?></p>
+						<p><?php echo ((strpos($id, 'hotfix_') !== 0) ? sprintf($lang_admin_ext['Version'], $ext_data['extension']['version']) : $lang_admin_ext['Hotfix']) ?></p>
 						<p><?php printf($lang_admin_ext['Extension by'], forum_htmlencode($ext_data['extension']['author'])) ?></p>
 						<p><?php echo forum_htmlencode($ext_data['extension']['description']) ?></p>
 					</div>
@@ -881,7 +881,7 @@ else
 		$update_hour = (isset($forum_ext_versions_update_cache) && (time() - $forum_ext_versions_update_cache > 60 * 60));
 
 		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update
-		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_diff($inst_exts, $forum_ext_last_versions) != array()) || $update_hour  || ($update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));
+		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_diff($inst_exts, $forum_ext_last_versions) != array()) || $update_hour || ($update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));
 
 		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;
 

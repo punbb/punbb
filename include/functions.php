@@ -638,7 +638,7 @@ function generate_items_info($label, $first, $total)
 		return $return;
 
 	if ($forum_page['num_pages'] == 1)
-		$item_info =  '<span class="item-info">'.sprintf($lang_common['Item info single'], $label, forum_number_format($total)).'</span>';
+		$item_info = '<span class="item-info">'.sprintf($lang_common['Item info single'], $label, forum_number_format($total)).'</span>';
 	else
 		$item_info = '<span class="item-info">'.sprintf($lang_common['Item info plural'], $label, forum_number_format($first), forum_number_format($forum_page['finish_at']), forum_number_format($total)).'</span>';
 
@@ -1077,7 +1077,7 @@ function get_title($user)
 // Return a list of all URL schemes installed
 function get_scheme_packs()
 {
-  	$schemes = array();
+	$schemes = array();
 
 	if ($handle = opendir(FORUM_ROOT.'include/url'))
 	{
@@ -3323,7 +3323,7 @@ function error()
 		$forum_config['o_gzip'] = '0';
 	}
 
-	//  Set a default error messages string if the script failed before $common_lang loaded
+	// Set a default error messages string if the script failed before $common_lang loaded
 	if (empty($lang_common['Forum error header']))
 	{
 		$lang_common['Forum error header'] = 'Sorry! The page could not be loaded.';
@@ -3364,10 +3364,10 @@ function error()
 	<meta charset="utf-8"/>
 	<title>Error - <?php echo forum_htmlencode($forum_config['o_board_title']) ?></title>
 	<style>
-		strong 	{ font-weight: bold; }
-		body 	{ margin: 50px; font: 85%/150% verdana, arial, sans-serif; color: #222; max-width: 55em; }
-		h1 		{ color: #a00000; font-weight: normal; font-size: 1.45em; }
-		code 	{ font-family: monospace, sans-serif; }
+		strong	{ font-weight: bold; }
+		body	{ margin: 50px; font: 85%/150% verdana, arial, sans-serif; color: #222; max-width: 55em; }
+		h1		{ color: #a00000; font-weight: normal; font-size: 1.45em; }
+		code	{ font-family: monospace, sans-serif; }
 		.error_line { color: #999; font-size: .95em; }
 	</style>
 </head>

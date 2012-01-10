@@ -48,7 +48,7 @@
 		// spoofed and is not adequate for such a mission critical part of the code.
 		is_opera = global.opera && fOBJTOSTRING.call(global.opera) == sTYPEOBJ+"Opera]",
 		is_gecko = ("MozAppearance" in oDOC.documentElement.style),
-		
+
 		// the following is a feature sniff for the ability to set async=false on dynamically created script elements, as proposed to the W3C
 		// RE: http://wiki.whatwg.org/wiki/Dynamic_Script_Execution_Order
 		is_script_async = (oDOC.createElement(sSCRIPT).async === true),
@@ -65,13 +65,13 @@
 	;
 	global_defs[sPRESERVE] = bFALSE; // force preserve execution order of all loaded scripts (regardless of preloading)
 	global_defs[sPRELOAD] = bTRUE; // use various tricks for "preloading" scripts
-	
+
 	append_to[sHEAD] = oDOC.head || fGETELEMENTSBYTAGNAME(sHEAD);
 	append_to[sBODY] = fGETELEMENTSBYTAGNAME(sBODY);
-	
+
 	function isFunc(func) { return fOBJTOSTRING.call(func) === sTYPEFUNC; }
 	function canonicalScriptURI(src,base_path) {
-		var regex = /^\w+\:\/\//, ret; 
+		var regex = /^\w+\:\/\//, ret;
 		if (typeof src != sSTRING) src = "";
 		if (typeof base_path != sSTRING) base_path = "";
 		ret = ((/^\/\//.test(src)) ? oWINLOC.protocol : "") + src;
@@ -89,7 +89,7 @@
 	function engine(queueExec,opts) {
 		queueExec = !(!queueExec);
 		if (opts == nNULL) opts = global_defs;
-		
+
 		var ready = bFALSE,
 			_use_preload = queueExec && opts[sPRELOAD],
 			_use_cache_preload = _use_preload && opts.cache,
@@ -107,9 +107,9 @@
 			exec = [],
 			end_of_chain_check_interval = nNULL
 		;
-		
+
 		_use_preload = _use_cache_preload || _use_xhr_preload || _use_script_order; // if all flags are turned off, preload is moot so disable it
-		
+
 		function isScriptLoaded(elem,scriptentry) {
 			if ((elem[sREADYSTATE] && elem[sREADYSTATE]!==sCOMPLETE && elem[sREADYSTATE]!=="loaded") || scriptentry[sDONE]) { return bFALSE; }
 			elem[sONLOAD] = elem[sONREADYSTATECHANGE] = nNULL; // prevent memory leak
@@ -213,11 +213,11 @@
 		function loadScript(o) {
 			if (typeof o == "undefined" || !o) return; // skip over this script call if there's nothing to load
 			if (o.allowDup == nNULL) o.allowDup = opts.dupe;
-			var src = o.src, type = o.type, charset = o.charset, allowDup = o.allowDup, 
+			var src = o.src, type = o.type, charset = o.charset, allowDup = o.allowDup,
 				src_uri = canonicalScriptURI(src,_base_path), scriptentry, same_domain = sameDomain(src_uri);
 			if (typeof charset != sSTRING) charset = nNULL;
 			allowDup = !(!allowDup);
-			if (!allowDup && 
+			if (!allowDup &&
 				(
 					(all_scripts[src_uri] != nNULL) || (first_pass && scripts[src_uri]) || scriptTagExists(src_uri)
 				)
@@ -234,7 +234,7 @@
 			scriptentry[sDONE] = bFALSE;
 			scriptentry[sSRCURI] = src_uri;
 			scripts_loading = bTRUE;
-			
+
 			if (!_use_script_order && _use_xhr_preload && same_domain) loadScriptXHR(scriptentry,src_uri,type,charset);
 			else if (!_use_script_order && _use_cache_preload) loadScriptCache(scriptentry,src_uri,type,charset);
 			else loadScriptElem(scriptentry,src_uri,type,charset);
@@ -251,7 +251,7 @@
 			}
 			return sargs;
 		}
-				
+
 		publicAPI = {
 			script:function() {
 				fCLEARTIMEOUT(end_of_chain_check_interval);
@@ -285,7 +285,7 @@
 				fCLEARTIMEOUT(end_of_chain_check_interval);
 				first_pass = bFALSE;
 				if (!isFunc(func)) func = fNOOP;
-				// On this current chain's waitFunc function, tack on call to trigger the queue for the *next* engine 
+				// On this current chain's waitFunc function, tack on call to trigger the queue for the *next* engine
 				// in the chain, which will be executed when the current chain finishes loading
 				var e = engine(queueExec||scripts_loading,opts),	// if already in queuing, or if scripts now loading, keep queuing
 					triggerNextChain = e.trigger, // store ref to e's trigger function for use by 'wfunc'
@@ -302,19 +302,19 @@
 			}
 		};
 		if (queueExec) {
-			// if queueing, return a function that the previous chain's waitFunc function can use to trigger this 
+			// if queueing, return a function that the previous chain's waitFunc function can use to trigger this
 			// engine's queue. NOTE: this trigger function is captured and removed from the public chain API before return
 			publicAPI.trigger = function() {
 				var fn, idx=-1;
 				while (fn = exec[++idx]) fn();
-				exec = []; 
+				exec = [];
 			};
 		}
 		else publicAPI.trigger = fNOOP; // no-op trigger function because this chain is not in queuing mode, so nothing to trigger
 		return publicAPI;
 	}
 	function processOpts(opts) {
-		var k, newOpts = {}, 
+		var k, newOpts = {},
 			boolOpts = {"UseCachePreload":"cache","UseLocalXHR":"xhr","UsePreloading":sPRELOAD,"AlwaysPreserveOrder":sPRESERVE,"AllowDuplicates":"dupe"},
 			allOpts = {"AppendTo":sWHICH,"BasePath":"base"}
 		;
@@ -330,7 +330,7 @@
 		newOpts.which = (newOpts.which === sHEAD || newOpts.which === sBODY) ? newOpts.which : sHEAD;
 		return newOpts;
 	}
-	
+
 	global.$LAB = {
 		setGlobalDefaults:function(gdefs) { // intentionally does not return an "engine" instance -- must call as stand-alone function call on $LAB
 			global_defs = processOpts(gdefs);
@@ -345,16 +345,16 @@
 			return engine().wait.apply(nNULL,arguments);
 		}
 	};
-	
+
 	/* The following "hack" was suggested by Andrea Giammarchi and adapted from: http://webreflection.blogspot.com/2009/11/195-chars-to-help-lazy-loading.html
 	   NOTE: this hack only operates in FF and then only in versions where document.readyState is not present (FF < 3.6?).
-	   
-	   The hack essentially "patches" the **page** that LABjs is loaded onto so that it has a proper conforming document.readyState, so that if a script which does 
-	   proper and safe dom-ready detection is loaded onto a page, after dom-ready has passed, it will still be able to detect this state, by inspecting the now hacked 
-	   document.readyState property. The loaded script in question can then immediately trigger any queued code executions that were waiting for the DOM to be ready. 
-	   For instance, jQuery 1.4+ has been patched to take advantage of document.readyState, which is enabled by this hack. But 1.3.2 and before are **not** safe or 
+
+	   The hack essentially "patches" the **page** that LABjs is loaded onto so that it has a proper conforming document.readyState, so that if a script which does
+	   proper and safe dom-ready detection is loaded onto a page, after dom-ready has passed, it will still be able to detect this state, by inspecting the now hacked
+	   document.readyState property. The loaded script in question can then immediately trigger any queued code executions that were waiting for the DOM to be ready.
+	   For instance, jQuery 1.4+ has been patched to take advantage of document.readyState, which is enabled by this hack. But 1.3.2 and before are **not** safe or
 	   fixed by this hack, and should therefore **not** be lazy-loaded by script loader tools such as LABjs.
-	*/ 
+	*/
 	(function(addEvent,domLoaded,handler){
 		if (oDOC[sREADYSTATE] == nNULL && oDOC[addEvent]){
 			oDOC[sREADYSTATE] = "loading";
@@ -364,5 +364,5 @@
 			},bFALSE);
 		}
 	})("addEventListener","DOMContentLoaded");
-	
+
 })(window);
