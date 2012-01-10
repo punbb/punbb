@@ -553,7 +553,7 @@ if (!empty($posts_id))
 			<div id="p<?php echo $cur_post['id'] ?>" class="posthead">
 				<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
 			</div>
-			<div class="postbody<?php echo ($cur_post['is_online'] == $cur_post['poster_id']) ? ' online' : '' ?>">
+			<div class="postbody<?php if ($cur_post['is_online'] == $cur_post['poster_id']) echo ' online'; ?>">
 				<div class="post-author">
 					<ul class="author-ident">
 						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['author_ident'])."\n" ?>

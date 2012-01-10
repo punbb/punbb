@@ -846,7 +846,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 ?>
 			<div class="ct-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box">
-					<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($cur_group['g_title']) ?> <?php echo ($cur_group['g_id'] == $forum_config['o_default_user_group']) ? $lang_admin_groups['default'] : '' ?></span></h3>
+					<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($cur_group['g_title']) ?> <?php if ($cur_group['g_id'] == $forum_config['o_default_user_group']) echo $lang_admin_groups['default']; ?></span></h3>
 					<p class="options"><?php echo implode(' ', $forum_page['group_options']) ?></p>
 				</div>
 			</div>
