@@ -284,7 +284,7 @@ if (isset($forum_page['errors']))
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
+			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 			<div class="hidden">
@@ -333,7 +333,7 @@ if (!empty($forum_page['checkboxes']))
 ?>
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="mf-box checkbox">
-						<?php echo implode("\n\t\t\t\t\t", $forum_page['checkboxes'])."\n"; ?>
+						<?php echo implode("\n\t\t\t\t\t", $forum_page['checkboxes'])."\n" ?>
 					</div>
 <?php ($hook = get_hook('ed_pre_checkbox_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>

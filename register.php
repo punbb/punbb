@@ -361,7 +361,7 @@ ob_start();
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
+			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>
 		<form class="frm-form frm-suggest-username" id="afocus" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>" autocomplete="off">
 			<div class="hidden">
@@ -391,7 +391,7 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Password'] ?></span> <small><?php echo $lang_profile['Password help'] ?></small></label><br />
-						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php echo(isset($_POST['req_password1']) ? forum_htmlencode($_POST['req_password1']) : ''); ?>" required autocomplete="off" /></span>
+						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php echo (isset($_POST['req_password1'])) ? forum_htmlencode($_POST['req_password1']) : '' ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
 	<?php ($hook = get_hook('rg_register_pre_confirm_password')) ? eval($hook) : null; ?>
@@ -399,7 +399,7 @@ ob_start();
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Confirm password'] ?></span> <small><?php echo $lang_profile['Confirm password help'] ?></small></label><br />
-						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password2" size="35" value="<?php echo(isset($_POST['req_password2']) ? forum_htmlencode($_POST['req_password2']) : ''); ?>" required autocomplete="off" /></span>
+						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password2" size="35" value="<?php echo (isset($_POST['req_password2'])) ? forum_htmlencode($_POST['req_password2']) : '' ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
 	<?php endif; ?>

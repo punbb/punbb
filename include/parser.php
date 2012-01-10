@@ -612,7 +612,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 			$full_url = $cached_encoded_urls[$cache_key];
 		else
 		{
-			if(!isset($idn))
+			if (!isset($idn))
 			{
 				$idn = new idna_convert();
 				$idn->set_parameter('encoding', 'utf8');

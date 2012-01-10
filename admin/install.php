@@ -215,7 +215,7 @@ if (!isset($_POST['form_sent']))
 			</ul>
 		</div>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_install['Required warn']; ?></p>
+			<p class="important"><?php echo $lang_install['Required warn'] ?></p>
 		</div>
 		<fieldset class="frm-group group1">
 			<legend class="group-legend"><strong><?php echo $lang_install['Part1 legend'] ?></strong></legend>
@@ -335,7 +335,7 @@ if (!isset($_POST['form_sent']))
 	{
 
 ?>			<div class="hidden">
-				<input type="hidden" name="req_language" value="<?php echo $languages[0]; ?>" />
+				<input type="hidden" name="req_language" value="<?php echo $languages[0] ?>" />
 			</div>
 <?php
 	}
@@ -1947,14 +1947,14 @@ if (!$written)
 				<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
 					<div class="hidden">
 					<input type="hidden" name="generate_config" value="1" />
-					<input type="hidden" name="db_type" value="<?php echo $db_type; ?>" />
-					<input type="hidden" name="db_host" value="<?php echo $db_host; ?>" />
-					<input type="hidden" name="db_name" value="<?php echo forum_htmlencode($db_name); ?>" />
-					<input type="hidden" name="db_username" value="<?php echo forum_htmlencode($db_username); ?>" />
-					<input type="hidden" name="db_password" value="<?php echo forum_htmlencode($db_password); ?>" />
-					<input type="hidden" name="db_prefix" value="<?php echo forum_htmlencode($db_prefix); ?>" />
-					<input type="hidden" name="base_url" value="<?php echo forum_htmlencode($base_url); ?>" />
-					<input type="hidden" name="cookie_name" value="<?php echo forum_htmlencode($cookie_name); ?>" />
+					<input type="hidden" name="db_type" value="<?php echo $db_type ?>" />
+					<input type="hidden" name="db_host" value="<?php echo $db_host ?>" />
+					<input type="hidden" name="db_name" value="<?php echo forum_htmlencode($db_name) ?>" />
+					<input type="hidden" name="db_username" value="<?php echo forum_htmlencode($db_username) ?>" />
+					<input type="hidden" name="db_password" value="<?php echo forum_htmlencode($db_password) ?>" />
+					<input type="hidden" name="db_prefix" value="<?php echo forum_htmlencode($db_prefix) ?>" />
+					<input type="hidden" name="base_url" value="<?php echo forum_htmlencode($base_url) ?>" />
+					<input type="hidden" name="cookie_name" value="<?php echo forum_htmlencode($cookie_name) ?>" />
 					</div>
 					<div class="frm-buttons">
 						<span class="submit"><input type="submit" value="<?php echo $lang_install['Download config'] ?>" /></span>

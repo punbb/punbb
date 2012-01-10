@@ -359,7 +359,7 @@ if (isset($_POST['preview']) && empty($errors))
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic']; ?></span></h2>
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic'] ?></span></h2>
 	</div>
 	<div id="post-preview" class="main-content main-frm">
 		<div class="post singlepost">
@@ -413,7 +413,7 @@ if (isset($_POST['preview']) && empty($errors))
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
+			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 			<div class="hidden">
@@ -482,7 +482,7 @@ if ($fid)
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Write message'] ?></span></label>
-						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="15" cols="95" required spellcheck="true"><?php echo isset($_POST['req_message']) ? forum_htmlencode($message) : (isset($forum_page['quote']) ? forum_htmlencode($forum_page['quote']) : ''); ?></textarea></span></div>
+						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="15" cols="95" required spellcheck="true"><?php echo isset($_POST['req_message']) ? forum_htmlencode($message) : (isset($forum_page['quote']) ? forum_htmlencode($forum_page['quote']) : '') ?></textarea></span></div>
 					</div>
 				</div>
 <?php
@@ -517,7 +517,7 @@ if (!empty($forum_page['checkboxes']))
 ?>
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="mf-box checkbox">
-						<?php echo implode("\n\t\t\t\t\t", $forum_page['checkboxes'])."\n"; ?>
+						<?php echo implode("\n\t\t\t\t\t", $forum_page['checkboxes'])."\n" ?>
 					</div>
 <?php ($hook = get_hook('po_pre_checkbox_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
