@@ -162,7 +162,7 @@ function output_atom($feed)
 	echo '<feed xmlns="http://www.w3.org/2005/Atom">'."\n";
 
 	echo "\t".'<title type="html"><![CDATA['.escape_cdata($feed['title']).']]></title>'."\n";
-	echo "\t".'<link rel="self" href="'.forum_htmlencode(get_current_url()).'"/>'."\n";
+	echo "\t".'<link rel="self" href="'.forum_htmlencode(get_current_url()).'" />'."\n";
 	echo "\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</updated>'."\n";
 
 	if ($forum_config['o_show_version'] == '1')
@@ -180,7 +180,7 @@ function output_atom($feed)
 	{
 		echo "\t\t".'<entry>'."\n";
 		echo "\t\t\t".'<title type="html"><![CDATA['.escape_cdata($item['title']).']]></title>'."\n";
-		echo "\t\t\t".'<link rel="alternate" href="'.$item['link'].'"/>'."\n";
+		echo "\t\t\t".'<link rel="alternate" href="'.$item['link'].'" />'."\n";
 		echo "\t\t\t".'<'.$content_tag.' type="html"><![CDATA['.escape_cdata($item['description']).']]></'.$content_tag.'>'."\n";
 		echo "\t\t\t".'<author>'."\n";
 		echo "\t\t\t\t".'<name><![CDATA['.escape_cdata($item['author']['name']).']]></name>'."\n";

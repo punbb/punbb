@@ -143,7 +143,7 @@ if (!isset($_POST['form_sent']))
 <!--[if IE 8 ]>    <html class="oldie ie8" lang="en" dir="ltr"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" dir="ltr"> <!--<![endif]-->
 <head>
-	<meta charset="utf-8"/>
+	<meta charset="utf-8" />
 	<title>PunBB Installation</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
 </head>
@@ -1912,7 +1912,7 @@ else
 <!--[if IE 8 ]>    <html class="oldie ie8" lang="en" dir="ltr"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" dir="ltr"> <!--<![endif]-->
 <head>
-	<meta charset="utf-8"/>
+	<meta charset="utf-8" />
 	<title>PunBB Installation</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
 </head>

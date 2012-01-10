@@ -66,7 +66,7 @@ cookie_login($forum_user);
 if (file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php'))
 	include FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php';
 else
-	error('There is no valid language pack \''.forum_htmlencode($forum_user['language']).'\' installed.<br/>Please reinstall a language of that name.');
+	error('There is no valid language pack \''.forum_htmlencode($forum_user['language']).'\' installed.<br />Please reinstall a language of that name.');
 
 // Setup the URL rewriting scheme
 if ($forum_config['o_sef'] != 'Default' && file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php'))
