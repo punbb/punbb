@@ -294,7 +294,7 @@ if (!empty($founded_user_datas))
 		($hook = get_hook('ul_results_row_pre_data_output')) ? eval($hook) : null;
 
 ?>
-				<tr class="<?php echo ($forum_page['item_count'] % 2 != 0) ? 'odd' : 'even' ?><?php echo ($forum_page['item_count'] == 1) ? ' row1' : '' ?>">
+				<tr class="<?php echo ($forum_page['item_count'] % 2 != 0) ? 'odd' : 'even' ?><?php if ($forum_page['item_count'] == 1) echo ' row1'; ?>">
 					<?php echo implode("\n\t\t\t\t\t\t", $forum_page['table_row'])."\n" ?>
 				</tr>
 <?php

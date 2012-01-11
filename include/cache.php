@@ -79,7 +79,7 @@ function generate_config_cache()
 	// Output config as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_config.php', '<?php'."\n\n".'define(\'FORUM_CONFIG_LOADED\', 1);'."\n\n".'$forum_config = '.var_export($output, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write configuration cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write configuration cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 
@@ -118,7 +118,7 @@ function generate_bans_cache()
 	// Output ban list as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_bans.php', '<?php'."\n\n".'define(\'FORUM_BANS_LOADED\', 1);'."\n\n".'$forum_bans = '.var_export($output, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write bans cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write bans cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 
@@ -151,7 +151,7 @@ function generate_ranks_cache()
 	// Output ranks list as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_ranks.php', '<?php'."\n\n".'define(\'FORUM_RANKS_LOADED\', 1);'."\n\n".'$forum_ranks = '.var_export($output, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write ranks cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write ranks cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 
@@ -212,7 +212,7 @@ function generate_stats_cache()
 	// Output ranks list as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_stats.php', '<?php'."\n\n".'if (!defined(\'FORUM_STATS_LOADED\')) define(\'FORUM_STATS_LOADED\', 1);'."\n\n".'$forum_stats = '.var_export($stats, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write stats cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write stats cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 
 	unset($stats);
@@ -260,7 +260,7 @@ function generate_censors_cache()
 	// Output censors list as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_censors.php', '<?php'."\n\n".'define(\'FORUM_CENSORS_LOADED\', 1);'."\n\n".'$forum_censors = '.var_export($output, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write censor cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write censor cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 
@@ -370,7 +370,7 @@ function generate_quickjump_cache($group_id = false)
 		// Output quickjump as PHP code
 		if (!write_cache_file(FORUM_CACHE_DIR.'cache_quickjump_'.$group_id.'.php', $output))
 		{
-			error('Unable to write quickjump cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+			error('Unable to write quickjump cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 		}
 	}
 }
@@ -482,7 +482,7 @@ function generate_hooks_cache()
 	// Output hooks as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_hooks.php', '<?php'."\n\n".'define(\'FORUM_HOOKS_LOADED\', 1);'."\n\n".'$forum_hooks = '.var_export($output, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write hooks cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write hooks cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 
@@ -541,7 +541,7 @@ function generate_updates_cache()
 	// Output update status as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_updates.php', '<?php'."\n\n".'if (!defined(\'FORUM_UPDATES_LOADED\')) define(\'FORUM_UPDATES_LOADED\', 1);'."\n\n".'$forum_updates = '.var_export($output, true).';'."\n\n".'?>'))
 	{
-		error('Unable to write updates cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write updates cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 
@@ -602,7 +602,7 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 	// Output config as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_ext_version_notifications.php', '<?php'."\n\n".'if (!defined(\'FORUM_EXT_VERSIONS_LOADED\')) define(\'FORUM_EXT_VERSIONS_LOADED\', 1);'."\n\n".'$forum_ext_repos = '.var_export($forum_ext_repos, true).';'."\n\n".' $forum_ext_last_versions = '.var_export($forum_ext_last_versions, true).";\n\n".'$forum_ext_versions_update_cache = '.time().";\n\n".'?>'))
 	{
-		error('Unable to write configuration cache file to cache directory.<br/>Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
+		error('Unable to write configuration cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
 }
 

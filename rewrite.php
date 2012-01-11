@@ -32,7 +32,7 @@ if ((!isset($_SERVER['QUERY_STRING']) || empty($_SERVER['QUERY_STRING'])) && str
 // We determine the path to the script, since we need to separate the path from the data to be rewritten
 $path_to_script = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 if (substr($path_to_script, -1) != '/')
-	$path_to_script  = $path_to_script.'/';
+	$path_to_script = $path_to_script.'/';
 
 // We create our own request URI with the path removed and only the parts to rewrite included
 $request_uri = substr(urldecode($_SERVER['REQUEST_URI']), strlen($path_to_script));
@@ -84,7 +84,7 @@ if (empty($rewritten_url))
 	// Allow an extension to override the "Bad request" message with a custom 404 page
 	($hook = get_hook('re_page_not_found')) ? eval($hook) : null;
 
-	error('Page Not found (Error 404):<br/>The requested page <em>'.forum_htmlencode($request_uri).'</em> could not be found.');
+	error('Page Not found (Error 404):<br />The requested page <em>'.forum_htmlencode($request_uri).'</em> could not be found.');
 }
 
 // We change $_SERVER['PHP_SELF'] so that it reflects the file we're actually loading

@@ -314,7 +314,7 @@ else if (isset($_GET['email']))
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
+			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -506,7 +506,7 @@ else if (isset($_GET['report']))
 	</div>
 	<div class="main-content main-frm">
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn']; ?></p>
+			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>
 <?php
 		// If there were any errors, show them

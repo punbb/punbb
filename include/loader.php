@@ -23,7 +23,7 @@ class Loader
 	private $libs;
 
 	// Class instance
-    private static $instance;
+	private static $instance;
 
 
 	// Start of life
@@ -41,20 +41,20 @@ class Loader
 
 
 	// Singleton
-    public static function singleton() {
-        if (!isset(self::$instance)) {
-            $c = __CLASS__;
-            self::$instance = new $c;
-        }
+	public static function singleton() {
+		if (!isset(self::$instance)) {
+			$c = __CLASS__;
+			self::$instance = new $c;
+		}
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
 
 
-    // Clone forbiden
-    public function __clone() {
-        trigger_error('Clone is forbiden.', E_USER_ERROR);
-    }
+	// Clone forbiden
+	public function __clone() {
+		trigger_error('Clone is forbiden.', E_USER_ERROR);
+	}
 
 
 	// Add JS url to load
@@ -471,7 +471,7 @@ class Loader
 		}
 		elseif ($a['weight'] > $b['weight'])
 		{
-		    return 1;
+			return 1;
 		}
 		else
 		{
@@ -517,8 +517,8 @@ class Loader
 		}
 		else
 		{
-		    // "downlevel-revealed".
-		    $data = "\n<!--[if $expression]><!-->".$data."<!--<![endif]-->";
+			// "downlevel-revealed".
+			$data = "\n<!--[if $expression]><!-->".$data."<!--<![endif]-->";
 		}
 
 		return $data;

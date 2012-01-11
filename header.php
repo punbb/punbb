@@ -54,7 +54,7 @@ $tpl_main = file_get_contents($tpl_path);
 while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_main, $cur_include))
 {
 	if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-		error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template main.tpl.<br/>There is no such file in folder /include/user/', __FILE__, __LINE__);
+		error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template main.tpl.<br />There is no such file in folder /include/user/', __FILE__, __LINE__);
 
 	ob_start();
 	include FORUM_ROOT.'include/user/'.$cur_include[1];
@@ -98,7 +98,7 @@ else if (FORUM_PAGE == 'viewforum')
 else if (FORUM_PAGE == 'viewtopic')
 {
 	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['topic_rss'], $id).'" title="RSS" />';
-	$forum_head['atom'] =  '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['topic_atom'], $id).'" title="ATOM" />';
+	$forum_head['atom'] = '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['topic_atom'], $id).'" title="ATOM" />';
 }
 
 // If there are other page navigation links (first, next, prev and last)
@@ -277,7 +277,7 @@ $main_elements['<!-- forum_crumbs_top -->'] = (FORUM_PAGE != 'index') ? '<div id
 // Bottom breadcrumbs
 $main_elements['<!-- forum_crumbs_end -->'] = (FORUM_PAGE != 'index') ? '<div id="brd-crumbs-end" class="crumbs">'."\n\t".'<p>'.generate_crumbs(false).'</p>'."\n".'</div>' : '';
 // Main section heading
-$main_elements['<!-- forum_main_title -->'] =  '<h1 class="main-title">'.((isset($forum_page['main_title'])) ? $forum_page['main_title'] : forum_htmlencode(is_array($last_crumb = end($forum_page['crumbs'])) ? reset($last_crumb) : $last_crumb)).(isset($forum_page['main_head_pages']) ? ' <small>'.$forum_page['main_head_pages'].'</small>' : '').'</h1>'."\n";
+$main_elements['<!-- forum_main_title -->'] = '<h1 class="main-title">'.((isset($forum_page['main_title'])) ? $forum_page['main_title'] : forum_htmlencode(is_array($last_crumb = end($forum_page['crumbs'])) ? reset($last_crumb) : $last_crumb)).(isset($forum_page['main_head_pages']) ? ' <small>'.$forum_page['main_head_pages'].'</small>' : '').'</h1>'."\n";
 
 // Top pagination and post links
 $main_elements['<!-- forum_main_pagepost_top -->'] = (!empty($forum_page['page_post'])) ? '<div id="brd-pagepost-top" class="main-pagepost gen-content">'."\n\t".implode("\n\t", $forum_page['page_post'])."\n".'</div>' : '';
@@ -299,7 +299,7 @@ if (substr(FORUM_PAGE, 0, 5) == 'admin' && FORUM_PAGE_TYPE != 'paged')
 
 ($hook = get_hook('hd_main_elements')) ? eval($hook) : null;
 
-$tpl_main = str_replace(array_keys($main_elements),  array_values($main_elements), $tpl_main);
+$tpl_main = str_replace(array_keys($main_elements), array_values($main_elements), $tpl_main);
 unset($main_elements);
 
 // END MAIN SECTION INTERFACE ELEMENT SUBSTITUTION

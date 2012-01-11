@@ -41,8 +41,8 @@ $lang_misc = array(
 'Select'					=>	'Select',	// the header of a column of checkboxes
 'Move'						=>	'Move',
 'Merge'						=>	'Merge',
-'Open'						=>  'Open',
-'Close'						=>  'Close',
+'Open'						=>	'Open',
+'Close'						=>	'Close',
 'Select all'				=>	'Select all',
 
 

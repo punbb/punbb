@@ -1135,7 +1135,7 @@ li.info-lastpost cite {
 
 .item-nav,
 .item-nav a,
-.item-nav span  {
+.item-nav span {
 	white-space: nowrap;
 	font-style: normal;
 }
@@ -1241,8 +1241,8 @@ F - MAIN CONTENT - FORMS
 select {
 	height: 25px;
 	*height: auto;
-  	line-height: 25px;
-  	padding-left: 3px;
+	line-height: 25px;
+	padding-left: 3px;
 }
 
 optgroup {
@@ -1425,13 +1425,13 @@ button[disabled]:active {
 
 input[type="radio"] {
 	vertical-align: middle;
-    bottom: 1px;
+	bottom: 1px;
 }
 
 
 input[type="checkbox"] {
 	vertical-align: middle;
-    bottom: 1px;
+	bottom: 1px;
 }
 
 table input[type="checkbox"] {
@@ -1673,7 +1673,7 @@ textarea {
 	display: block;
 }
 
-.required label span  {
+.required label span {
 	font-weight: bold;
 }
 

@@ -136,11 +136,11 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	$tags_quotes = array('url', 'email', 'img');
 	// Tags we limit bbcode in
 	$tags_limit_bbcode = array(
-		'*' 	=> array('b', 'i', 'u', 'color', 'colour', 'url', 'email', 'list', 'img'),
-		'list' 	=> array('*'),
-		'url' 	=> array('b', 'i', 'u', 'color', 'colour', 'img'),
+		'*'		=> array('b', 'i', 'u', 'color', 'colour', 'url', 'email', 'list', 'img'),
+		'list'	=> array('*'),
+		'url'	=> array('b', 'i', 'u', 'color', 'colour', 'img'),
 		'email' => array('b', 'i', 'u', 'color', 'colour', 'img'),
-		'img' 	=> array()
+		'img'	=> array()
 	);
 	// Tags we can automatically fix bad nesting
 	$tags_fix = array('quote', 'b', 'i', 'u', 'color', 'colour', 'url', 'email', 'h');
@@ -595,33 +595,33 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 		$full_url = 'http://'.$full_url;
 	else if (strpos($url, 'ftp.') === 0)	// Else if it starts with ftp, we add ftp://
 		$full_url = 'ftp://'.$full_url;
-	else if (!preg_match('#^([a-z0-9]{3,6})://#', $url)) 	// Else if it doesn't start with abcdef://, we add http://
+	else if (!preg_match('#^([a-z0-9]{3,6})://#', $url))	// Else if it doesn't start with abcdef://, we add http://
 		$full_url = 'http://'.$full_url;
 
 	if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
 	{
 		static $idn;
-        static $cached_encoded_urls = null;
+		static $cached_encoded_urls = null;
 
-        if (is_null($cached_encoded_urls))
-            $cached_encoded_urls = array();
+		if (is_null($cached_encoded_urls))
+			$cached_encoded_urls = array();
 
-        // Check in cache
-        $cache_key = md5($full_url);
-        if (isset($cached_encoded_urls[$cache_key]))
-            $full_url = $cached_encoded_urls[$cache_key];
-        else
-        {
-    		if(!isset($idn))
-    		{
-    			$idn = new idna_convert();
-    			$idn->set_parameter('encoding', 'utf8');
-    			$idn->set_parameter('strict', false);
-    		}
+		// Check in cache
+		$cache_key = md5($full_url);
+		if (isset($cached_encoded_urls[$cache_key]))
+			$full_url = $cached_encoded_urls[$cache_key];
+		else
+		{
+			if (!isset($idn))
+			{
+				$idn = new idna_convert();
+				$idn->set_parameter('encoding', 'utf8');
+				$idn->set_parameter('strict', false);
+			}
 
-    		$full_url = $idn->encode($full_url);
-            $cached_encoded_urls[$cache_key] = $full_url;
-        }
+			$full_url = $idn->encode($full_url);
+			$cached_encoded_urls[$cache_key] = $full_url;
+		}
 	}
 
 	// Ok, not very pretty :-)

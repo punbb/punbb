@@ -158,7 +158,7 @@ PUNBB.timezone = (function () {
 			diff = january_offset - june_offset;
 
 		if (diff < 0) {
-		    return {
+			return {
 				'utc_offset': january_offset,
 				'dst':	1,
 				'hemisphere': HEMISPHERE_NORTH
