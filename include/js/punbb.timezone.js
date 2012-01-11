@@ -131,12 +131,14 @@ PUNBB.timezone = (function () {
 
 
 	function get_january_offset() {
-		return get_date_offset(new Date(2012, 0, 1, 0, 0, 0, 0));
+		var now = new Date();
+		return get_date_offset(new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0));
 	}
 
 
 	function get_june_offset() {
-		return get_date_offset(new Date(2012, 5, 1, 0, 0, 0, 0));
+		var now = new Date();
+		return get_date_offset(new Date(now.getFullYear(), 5, 1, 0, 0, 0, 0));
 	}
 
 
