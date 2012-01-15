@@ -188,7 +188,7 @@ if (!isset($_POST['form_sent']))
 			</div>
 		</fieldset>
 		<div class="frm-buttons">
-			<span class="submit"><input type="submit" name="changelang" value="<?php echo $lang_install['Choose language'] ?>" /></span>
+			<span class="submit primary"><input type="submit" name="changelang" value="<?php echo $lang_install['Choose language'] ?>" /></span>
 		</div>
 	</div>
 	</form>
