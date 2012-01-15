@@ -87,6 +87,9 @@ define('FORUM_NO_SET_NAMES', 1);
 // Load DB abstraction layer and try to connect
 require FORUM_ROOT.'include/dblayer/common_db.php';
 
+// Start a transaction
+$forum_db->start_transaction();
+
 // Check current version
 $query = array(
 	'SELECT'	=> 'conf_value',
