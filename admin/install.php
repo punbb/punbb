@@ -10,7 +10,7 @@
  */
 
 
-define('FORUM_VERSION', '1.4.2RC1');
+define('FORUM_VERSION', '1.4.2RC2');
 define('FORUM_DB_REVISION', 5);
 define('MIN_PHP_VERSION', '5.0.0');
 define('MIN_MYSQL_VERSION', '4.1.2');
@@ -188,7 +188,7 @@ if (!isset($_POST['form_sent']))
 			</div>
 		</fieldset>
 		<div class="frm-buttons">
-			<span class="submit"><input type="submit" name="changelang" value="<?php echo $lang_install['Choose language'] ?>" /></span>
+			<span class="submit primary"><input type="submit" name="changelang" value="<?php echo $lang_install['Choose language'] ?>" /></span>
 		</div>
 	</div>
 	</form>

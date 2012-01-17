@@ -632,11 +632,11 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .admin-menu a {
 	float: left;
 	position: relative;
-	padding: 0.55em .75em;
+	padding: 0.55em .7em;
 }
 
 #brd-navlinks a {
-	padding: 0.43em .75em;
+	padding: 0.43em .7em;
 }
 
 #brd-navlinks li.first-item,

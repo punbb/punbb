@@ -48,7 +48,6 @@ PUNBB.timezone = (function () {
 		'-720,0': new TimeZone('-12:00', 'Etc/GMT+12', false),
 		'-660,0': new TimeZone('-11:00', 'Pacific/Pago_Pago', false),
 		'-600,1': new TimeZone('-11:00', 'America/Adak', true),
-		'-660,1,s': new TimeZone('-11:00', 'Pacific/Apia', true),
 		'-600,0': new TimeZone('-10:00', 'Pacific/Honolulu', false),
 		'-570,0': new TimeZone('-09:30', 'Pacific/Marquesas', false),
 		'-540,0': new TimeZone('-09:00', 'Pacific/Gambier', false),
@@ -115,6 +114,7 @@ PUNBB.timezone = (function () {
 		'720,0': new TimeZone('+12:00', 'Pacific/Tarawa', false),
 		'765,1,s': new TimeZone('+12:45', 'Pacific/Chatham', true),
 		'780,0': new TimeZone('+13:00', 'Pacific/Tongatapu', false),
+		'780,1,s': new TimeZone('+13:00', 'Pacific/Apia', true),
 		'840,0': new TimeZone('+14:00', 'Pacific/Kiritimati', false)
 	};
 
@@ -131,12 +131,14 @@ PUNBB.timezone = (function () {
 
 
 	function get_january_offset() {
-		return get_date_offset(new Date(2012, 0, 1, 0, 0, 0, 0));
+		var now = new Date();
+		return get_date_offset(new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0));
 	}
 
 
 	function get_june_offset() {
-		return get_date_offset(new Date(2012, 5, 1, 0, 0, 0, 0));
+		var now = new Date();
+		return get_date_offset(new Date(now.getFullYear(), 5, 1, 0, 0, 0, 0));
 	}
 
 
