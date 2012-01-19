@@ -21,6 +21,7 @@ $lang_login = array(
 'Obtain pass'						=>	'new password',
 'register'							=>	'register',
 'Submit password request'			=>	'Submit request',
+'Email important'					=>	'Contact the forum administrator at %s to change password on specified email address.',
 'Email flood'						=>	'This account has already requested a new password in the past %s seconds. Please wait a while before requesting a new password again.',
 'New password request'				=>	'New password request',
 'New password errors'				=>	'<strong>Warning!</strong> The following errors must be corrected before a new password can be sent:',
