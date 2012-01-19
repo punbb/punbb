@@ -28,6 +28,6 @@ $lang_login = array(
 'New password info'					=>	'<strong>Important!</strong> An email will be sent to the specified address with instructions on how to change your password.',
 'New password cancel redirect'		=>	'New password request cancelled.',
 'Forget mail'						=>	'An email has been sent to the specified address with instructions on how to change your password. If it does not arrive you can contact the forum administrator at %s.',
-'Persistent login'					=>	'Log me in automatically each time I visit.'
+'Persistent login'					=>	'Log me in automatically each time I visit.',
 
 );

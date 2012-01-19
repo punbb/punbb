@@ -20,7 +20,7 @@ $lang_post = array(
 'Compose edited topic'	=>	'Compose and post your edited topic',
 'Guest post legend'		=>	'Required information for guests',
 'Post errors'			=>	'<strong>Warning!</strong> The following errors must be corrected before your message can be posted:',
-'Guest name'			=>	'Guest name',	// For guests (instead of Username)
+'Guest name'			=>	'Guest name', // For guests (instead of Username)
 'Guest e-mail'			=>	'Guest email',
 'Post redirect'			=>	'Post entered.',
 'Post reply'			=>	'Post new reply',
@@ -45,9 +45,6 @@ $lang_post = array(
 'Reply byline'			=>	'<span>Reply by </span>%s',
 'Post posted'			=>	'<span>Posted </span>%s',
 
-
-
-
 // Edit post
 'Edit post legend'		=>	'Edit message',
 'Edit topic'			=>	'Edit topic',
@@ -55,6 +52,6 @@ $lang_post = array(
 'Silent edit'			=>	'Silent edit.',
 'Preview edited topic'	=>	'Preview of your edited topic',
 'Preview edited reply'	=>	'Preview of your edited reply',
-'Edit redirect'			=>	'Post updated.'
+'Edit redirect'			=>	'Post updated.',
 
 );

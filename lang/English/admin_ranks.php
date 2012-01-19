@@ -24,4 +24,3 @@ $lang_admin_ranks = array(
 'Existing rank'					=>	'Existing rank',
 
 );
-

@@ -4,7 +4,7 @@
 $lang_index = array(
 
 'Moderated by'				=>	'Moderated by %s',
-'Link to'					=>	'Link to %s',	// As in "Link to http://punbb.informer.com/"
+'Link to'					=>	'Link to %s', // As in "Link to http://punbb.informer.com/"
 'Category subtitle'			=>	'%1$s in this category with details of %2$s',
 'Forums'					=>	'Forums',
 'Topics'					=>	'Topics',
@@ -43,6 +43,6 @@ $lang_index = array(
 'Board options'				=>	'Board options',
 'RSS active feed'			=>	'RSS active topics feed',
 'Guests online'				=>	'Guests online',
-'Users online'				=>	'Users online'
+'Users online'				=>	'Users online',
 
 );

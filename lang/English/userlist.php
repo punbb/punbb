@@ -25,6 +25,6 @@ $lang_ul = array(
 'Table summary'			=>	'List of users filtered and sorted according to the criteria (if any) you have chosen.',
 'Submit user search'	=>	'Search',
 'Title'					=>	'Title',
-'Posts'					=>	'Posts'
+'Posts'					=>	'Posts',
 
 );

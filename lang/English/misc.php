@@ -38,13 +38,12 @@ $lang_misc = array(
 
 // General forum and topic moderation
 'Moderate forum'			=>	'Moderate forum',
-'Select'					=>	'Select',	// the header of a column of checkboxes
+'Select'					=>	'Select', // the header of a column of checkboxes
 'Move'						=>	'Move',
 'Merge'						=>	'Merge',
 'Open'						=>	'Open',
 'Close'						=>	'Close',
 'Select all'				=>	'Select all',
-
 
 // Hostname lookup
 'Hostname lookup'			=>	'The IP address is: %1$s<br />The host name is: %2$s<br /><br />%3$s',
@@ -95,6 +94,6 @@ $lang_misc = array(
 'Confirm post split'		=>	'Confirm splitting of all selected posts',
 'Delete posts redirect'		=>	'Posts deleted.',
 'Split posts redirect'		=>	'Posts split into a new topic.',
-'No posts selected'			=>	'You must select at least one post.'
+'No posts selected'			=>	'You must select at least one post.',
 
 );

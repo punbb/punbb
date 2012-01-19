@@ -49,5 +49,4 @@ $lang_admin_bans = array(
 'Invalid e-mail message'		=>	'The email address (e.g. user@example.com) or partial email address domain (e.g. example.com) you entered is invalid.',
 'Invalid expire message'		=>	'You entered an invalid expire date. The format should be YYYY-MM-DD and the date must be at least one day in the future.',
 
-
 );
