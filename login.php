@@ -205,7 +205,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 			// Fetch user matching $email
 			$query = array(
-				'SELECT'	=> 'u.id, u.username, u.salt, u.last_email_sent',
+				'SELECT'	=> 'u.id, u.group_id, u.username, u.salt, u.last_email_sent',
 				'FROM'		=> 'users AS u',
 				'WHERE'		=> 'u.email=\''.$forum_db->escape($email).'\''
 			);
@@ -242,6 +242,9 @@ else if ($action == 'forget' || $action == 'forget_2')
 					$forgot_pass_timeout = 3600;
 
 					($hook = get_hook('li_forgot_pass_pre_flood_check')) ? eval($hook) : null;
+
+					if ($cur_hit['group_id'] == FORUM_ADMIN)
+						message(sprintf($lang_login['Email important'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 
 					if ($cur_hit['last_email_sent'] != '' && (time() - $cur_hit['last_email_sent']) < $forgot_pass_timeout && (time() - $cur_hit['last_email_sent']) >= 0)
 						message(sprintf($lang_login['Email flood'], $forgot_pass_timeout));
