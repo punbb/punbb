@@ -763,13 +763,13 @@ button[disabled]:focus {
 * Also: hot pink! (or customize the background color to match your design)
 */
 ::-moz-selection {
-	background: #fe57a1;
-	color: #fff;
+	background: #fff2a8;
+	color: #000;
 	text-shadow: none;
 }
 
 ::selection {
-	background: #fe57a1;
-	color: #fff;
+	background: #fff2a8;
+	color: #000;
 	text-shadow: none;
 }
