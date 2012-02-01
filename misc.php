@@ -153,6 +153,38 @@ else if ($action == 'markforumread')
 }
 
 
+// OpenSearch plugin?
+else if ($action == 'opensearch')
+{
+	// Send XML/no cache headers
+	header('Content-Type: text/xml; charset=utf-8');
+	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+
+	echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
+	echo '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">'."\n";
+	echo "\t".'<ShortName>'.forum_htmlencode($forum_config['o_board_title']).'</ShortName>'."\n";
+	echo "\t".'<Description>'.forum_htmlencode($forum_config['o_board_desc']).'</Description>'."\n";
+	echo "\t".'<InputEncoding>utf-8</InputEncoding>'."\n";
+	echo "\t".'<OutputEncoding>utf-8</OutputEncoding>'."\n";
+	echo "\t".'<Image width="16" height="16" type="image/x-icon">'.$base_url.'/favicon.ico</Image>'."\n";
+	echo "\t".'<Url type="text/html" method="get" template="'.$base_url.'/search.php?action=search&amp;source=opensearch&amp;keywords={searchTerms}"/>'."\n";
+	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.$base_url.'/misc.php?action=opensearch"/>'."\n";
+	echo "\t".'<Contact>'.forum_htmlencode($forum_config['o_admin_email']).'</Contact>'."\n";
+
+	if ($forum_config['o_show_version'] == '1')
+		echo "\t".'<Attribution>PunBB '.$forum_config['o_cur_version'].'</Attribution>'."\n";
+	else
+		echo "\t".'<Attribution>PunBB</Attribution>'."\n";
+
+	echo "\t".'<moz:SearchForm>'.$base_url.'/search.php</moz:SearchForm>'."\n";
+	echo '</OpenSearchDescription>'."\n";
+
+	exit;
+}
+
+
 // Send form e-mail?
 else if (isset($_GET['email']))
 {
