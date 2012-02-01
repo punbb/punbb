@@ -234,10 +234,12 @@ else if (isset($_GET['email']))
 
 		if ($subject == '')
 			$errors[] = $lang_misc['No e-mail subject'];
+		else if (utf8_strlen($subject) > 70)
+			$errors[] = $lang_post['Too long subject'];
 		if ($message == '')
 			$errors[] = $lang_misc['No e-mail message'];
-		else if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-			$errors[] = sprintf($lang_misc['Too long e-mail message'], forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+		else if (utf8_strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
+			$errors[] = sprintf($lang_misc['Too long e-mail message'], forum_number_format(utf8_strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 		if ($forum_user['last_email_sent'] != '' && (time() - $forum_user['last_email_sent']) < $forum_user['g_email_flood'] && (time() - $forum_user['last_email_sent']) >= 0)
 			$errors[] = sprintf($lang_misc['Email flood'], $forum_user['g_email_flood']);
 
@@ -366,7 +368,7 @@ else if (isset($_GET['email']))
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['E-mail message'] ?></span></label>
-						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="10" cols="95" required><?php echo(isset($_POST['req_message']) ? forum_htmlencode($_POST['req_message']) : '') ?></textarea></span></div>
+						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="10" cols="95" maxlength="<?php echo FORUM_MAX_POSTSIZE_BYTES ?>" required><?php echo(isset($_POST['req_message']) ? forum_htmlencode($_POST['req_message']) : '') ?></textarea></span></div>
 					</div>
 				</div>
 <?php ($hook = get_hook('mi_email_pre_fieldset_end')) ? eval($hook) : null; ?>
@@ -425,9 +427,9 @@ else if (isset($_GET['report']))
 		if ($reason == '')
 			message($lang_misc['No reason']);
 
-		if (strlen($reason) > FORUM_MAX_POSTSIZE_BYTES)
+		if (utf8_strlen($reason) > FORUM_MAX_POSTSIZE_BYTES)
 		{
-			$errors[] = sprintf($lang_misc['Too long reason'], forum_number_format(strlen($reason)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+			$errors[] = sprintf($lang_misc['Too long reason'], forum_number_format(utf8_strlen($reason)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 		}
 
 		if (empty($errors)) {
@@ -570,7 +572,7 @@ else if (isset($_GET['report']))
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['Reason'] ?></span> <small><?php echo $lang_misc['Reason help'] ?></small></label><br />
-						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_reason" rows="5" cols="60" required></textarea></span></div>
+						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_reason" rows="5" cols="60" maxlength="<?php echo FORUM_MAX_POSTSIZE_BYTES ?>" required></textarea></span></div>
 					</div>
 				</div>
 <?php ($hook = get_hook('mi_report_pre_fieldset_end')) ? eval($hook) : null; ?>
