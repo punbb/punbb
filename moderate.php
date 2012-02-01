@@ -1244,7 +1244,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 			</fieldset>
 <?php ($hook = get_hook('mr_delete_topics_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="delete_topics_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete_topics_comply" value="<?php echo $lang_common['Delete'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
 			</div>
 		</form>
