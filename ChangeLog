@@ -1,3 +1,23 @@
+PunBB 1.4.2
+2012-02-09 20:36:00
+====================
+
+ * Oxygen style is updated.
+ * Errors are translatable.
+ * The link from the last part of breadcrumbs is removed.
+ * "Last edited message" is moved to the post header.
+ * Flash messages is automatically disabled in the case of a redirect with delay > 0.
+ * Fixed non-updated info block of the last registered user.
+ * Fixed redirect of a post to the previous one after its deleting. Fix #53.
+ * Fixed upload of avatars in open_basedir cases.
+ * Fixed censoring functions. Thanks to Gargaj for helping.
+ * Fixed all known "Full-path disclosure" errors.
+ * Fixed extension of  an updated subsystem - broken in 1.4.0.
+ * Fixed broken update in SQLite.
+ * Auto-suggest username from the email inserted in the registration form.
+ * New function to start a session - forum_session_start().
+
+
 PunBB 1.4.1
 2011-10-27 20:29:00
 ====================
