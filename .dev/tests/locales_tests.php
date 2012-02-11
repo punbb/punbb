@@ -1,89 +1,87 @@
 <?php
-
-	define('FORUM_ROOT', '../../');
-
-	// List arrays to compare
-	$structure = array(
-		'lang_admin_bans' => 'admin_bans.php',
-		'lang_admin_categories' => 'admin_categories.php',
-		'lang_admin_censoring' => 'admin_censoring.php',
-		'lang_admin_common' => 'admin_common.php',
-		'lang_admin_ext' => 'admin_ext.php',
-		'lang_admin_forums' => 'admin_forums.php',
-		'lang_admin_groups' => 'admin_groups.php',
-		'lang_admin_index' => 'admin_index.php',
-		'lang_admin_prune' => 'admin_prune.php',
-		'lang_admin_ranks' => 'admin_ranks.php',
-		'lang_admin_reindex' => 'admin_reindex.php',
-		'lang_admin_reports' => 'admin_reports.php',
-		'lang_admin_settings' => 'admin_settings.php',
-		'lang_admin_users' => 'admin_users.php',
-		'lang_common' => 'common.php',
-		'lang_delete' => 'delete.php',
-		'lang_forum' => 'forum.php',
-		'lang_help' => 'help.php',
-		'lang_index' => 'index.php',
-		'lang_install' => 'install.php',
-		'lang_login' => 'login.php',
-		'lang_misc' => 'misc.php',
-		'lang_post' => 'post.php',
-		'lang_profile' => 'profile.php',
-		'lang_search' => 'search.php',
-		'lang_topic' => 'topic.php',
-		'lang_url_replace' => 'url_replace.php',
-		'lang_ul' => 'userlist.php'
-	);
-
-	// Default etalon locale
-	$locales = array('English');
-
-	// Read list of installed locales
-	$dirs = dir(FORUM_ROOT.'lang');
-	while (($dir = $dirs->read()) !== false)
-	{
-		if ($dir != '.' && $dir != '..' && $dir != 'English' && is_dir(FORUM_ROOT.'lang/'.$dir) && file_exists(FORUM_ROOT.'lang/'.$dir.'/common.php'))
-			$locales[] = $dir;
-	}
-	$dirs->close();
-
-	// Check for installed locales
-	if (sizeof($locales) < 2)
-		exit('No additional locales installed.');
-
-	// Make data to compare
-	foreach ($structure as $array => $file) {
-		$structure[$array] = array();
-
-		foreach ($locales as $lang) {
-			$structure[$array][$lang] = array('file' => $file, 'data' => array());
-
-			include FORUM_ROOT.'lang/'.$lang.'/'.$file;
-
-			if (isset($GLOBALS[$array])) {
-				$structure[$array][$lang]['data'] = array_keys($GLOBALS[$array]);
-
-				unset($GLOBALS[$array]);
-			}
-		}
+	if (extension_loaded('xdebug')) {
+		xdebug_disable();
 	}
 
-	// Compare locales data
-	foreach ($structure as $array => $langs) {
-		$etalon = array_shift($langs);
+	// Forum part
+	define('FORUM_QUIET_VISIT', 1);
+	define('FORUM_ROOT', './../../');
 
-		foreach ($langs as $lang => $items) {
-			$missing = array_diff($etalon['data'], $items['data']);
-			$unneeded = array_diff($items['data'], $etalon['data']);
+	// Disable error reporting for uninitialized variables
+	error_reporting(E_ALL);
 
-			if (sizeof($missing) || sizeof($unneeded))
-				echo '<h4>%FORUM_ROOT%/lang/'.$lang.'/'.$items['file'].':</h4>';
+	// Turn off PHP time limit
+	@set_time_limit(0);
 
-			if (sizeof($missing))
-				echo '<ul><li><b>$'.$array.'</b> has missing keys:</li><ul><li>'.implode('</li><li>', $missing).'</li></ul></ul>';
+	// We need some stuff from functions.php
+	require FORUM_ROOT.'include/essentials.php';
+	require FORUM_ROOT . '.dev/tests/lang/langTest.php';
 
-			if (sizeof($unneeded))
-				echo '<ul><li><b>$'.$array.'</b> has unneeded keys:</li><ul><li>'.implode('</li><li>', $unneeded).'</li></ul></ul>';
-		}
+	if (!defined('FORUM_DEBUG')) {
+		define('FORUM_DEBUG', 1);
 	}
 
+	// Strip out "bad" UTF-8 characters
+	forum_remove_bad_characters();
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PunBB 1.4 dev</title>
+<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
+<style>
+	.locale-tests-results {
+		padding: .5em 1em 1em;
+	}
+
+	.locale-tests-results h3 {
+		font-size: 1.2em;
+		color: #D93315 !important;
+		font-weight: normal;
+	}
+
+	.locale-tests-results ul {
+		list-style-type: none;
+	}
+
+	.failed em {
+		color: red;
+		font-style: normal;
+	}
+
+	.ok em {
+		color: green;
+		font-style: normal;
+	}
+
+	.phpunit-test-results {
+		list-style-type: none;
+	}
+</style>
+</head>
+<body>
+	<div id="brd-install" class="brd-page">
+		<div id="brd-wrap" class="brd">
+
+			<div id="brd-head" class="gen-content">
+				<p id="brd-title"><strong>PunBB 1.4 dev</strong></p>
+				<p id="brd-desc">Test suite for PunBB 1.4</p>
+			</div>
+
+
+			<div id="brd-main" class="main">
+				<div class="main-head">
+					<h1 class="hn"><span>Locales tests</span></h1>
+				</div>
+
+				<!-- TEST PASSES -->
+				<?php
+					$langTest = new LangTest();
+					$langTest->run();
+				?>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
