@@ -98,8 +98,8 @@ if (isset($_POST['form_sent']))
 	// Clean up message from POST
 	$message = forum_linebreaks(forum_trim($_POST['req_message']));
 
-	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-		$errors[] = sprintf($lang_post['Too long message'], forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+	if (utf8_strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
+		$errors[] = sprintf($lang_post['Too long message'], forum_number_format(utf8_strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 	else if ($forum_config['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
 		$message = utf8_ucwords(utf8_strtolower($message));
 
@@ -303,7 +303,7 @@ if (isset($forum_page['errors']))
 <?php endif; ($hook = get_hook('ed_pre_message_box')) ? eval($hook) : null; ?>				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
 						<label for="fld<?php echo ++ $forum_page['fld_count'] ?>"><span><?php echo $lang_post['Write message'] ?></span></label>
-						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="15" cols="95" required spellcheck="true"><?php echo forum_htmlencode(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea></span></div>
+						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="15" cols="95" maxlength="<?php echo FORUM_MAX_POSTSIZE_BYTES ?>" required spellcheck="true"><?php echo forum_htmlencode(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea></span></div>
 					</div>
 				</div>
 <?php

@@ -98,6 +98,6 @@ $lang_admin_users = array(
 'Cannot find IP'				=>	'The supplied IP address could not be found in the database.',
 'Not verified'					=>	'Not verified',
 'No match'						=>	'No match',
-'User search results'			=>	'User search results'
+'User search results'			=>	'User search results',
 
 );

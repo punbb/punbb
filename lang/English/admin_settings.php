@@ -52,7 +52,6 @@ $lang_admin_settings = array(
 'Error no board title'			=>	'You must enter a board title.',
 'Error timeout value'			=>	'The value of "Online timeout" must be smaller than the value of "Visit timeout".',
 
-
 // Features section
 'Features general'				=>	'General PunBB features which are optional',
 'Features general legend'		=>	'General features',

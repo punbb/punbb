@@ -68,6 +68,6 @@ $lang_search = array(
 'Go to post'				=>	'Go to post',
 'Go to forum'				=>	'Go to forum',
 'Go to topic'				=>	'Go to topic',
-'Go to profile'				=>	'Go to %s\'s profile'
+'Go to profile'				=>	'Go to %s\'s profile',
 
 );

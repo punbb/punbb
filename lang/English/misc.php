@@ -11,6 +11,7 @@ $lang_misc = array(
 'Form e-mail errors'		=>	'<strong>Warning!</strong> The following errors must be corrected before your message can be sent:',
 'No e-mail subject'			=>	'You must enter a subject.',
 'No e-mail message'			=>	'You must enter a message.',
+'Too long e-mail subject'	=>	'Subjects cannot be longer than 70 characters.',
 'Too long e-mail message'	=>	'Your message length is %s bytes. This exceeds the %s bytes limit.',
 'Email flood'				=>	'At least %s seconds have to pass between sent emails. Please wait a while and try sending again.',
 'E-mail sent redirect'		=>	'Email sent.',
@@ -38,13 +39,12 @@ $lang_misc = array(
 
 // General forum and topic moderation
 'Moderate forum'			=>	'Moderate forum',
-'Select'					=>	'Select',	// the header of a column of checkboxes
+'Select'					=>	'Select', // the header of a column of checkboxes
 'Move'						=>	'Move',
 'Merge'						=>	'Merge',
 'Open'						=>	'Open',
 'Close'						=>	'Close',
 'Select all'				=>	'Select all',
-
 
 // Hostname lookup
 'Hostname lookup'			=>	'The IP address is: %1$s<br />The host name is: %2$s<br /><br />%3$s',
@@ -95,6 +95,6 @@ $lang_misc = array(
 'Confirm post split'		=>	'Confirm splitting of all selected posts',
 'Delete posts redirect'		=>	'Posts deleted.',
 'Split posts redirect'		=>	'Posts split into a new topic.',
-'No posts selected'			=>	'You must select at least one post.'
+'No posts selected'			=>	'You must select at least one post.',
 
 );

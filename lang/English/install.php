@@ -73,7 +73,7 @@ $lang_install = array(
 'SQLite prefix collision'	=>	'The table prefix \'sqlite_\' is reserved for use by the SQLite engine. Please choose a different prefix.',
 'PunBB already installed'	=>	'A table called "%1$susers" is already present in the database "%2$s". This could mean that PunBB is already installed or that another piece of software is installed and is occupying one or more of the table names PunBB requires. If you want to install multiple copies of PunBB in the same database, you must choose a different table prefix.',
 'Invalid language'			=>	'The language pack you have chosen doesn\'t seem to exist or is corrupt. Please recheck and try again.',
-'InnoDB Not Supported'		=> 'You are running MySQL version without InnoDB support.',
+'InnoDB Not Supported'		=>	'You are running MySQL version without InnoDB support.',
 
 // Used in the install
 'Default language'			=>	'Default language',
@@ -89,7 +89,6 @@ $lang_install = array(
 'Default rank 1'			=>	'New member',
 'Default rank 2'			=>	'Member',
 
-
 // Installation completed form
 'Success description'		=>	'Congratulations! PunBB %s has been successfully installed.',
 'Final instructions'		=>	'Final instructions',
@@ -102,4 +101,5 @@ $lang_install = array(
 'File upload alert'			=>	'<strong>File uploads appear to be disallowed on this server!</strong> If you want users to be able to upload their own avatar images you must enable the file_uploads configuration setting in PHP. Once file uploads have been enabled, avatar uploads can be enabled in Administration/Settings/Features.',
 'Download config'			=>	'Download config.php file', // Label for submit button
 'Write info'				=>	'PunBB has been fully installed! You may now %s.',
+
 );

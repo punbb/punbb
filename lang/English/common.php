@@ -4,7 +4,7 @@
 $lang_common = array(
 
 // Text orientation and encoding
-'lang_direction'			=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
+'lang_direction'			=>	'ltr', // ltr (Left-To-Right) or rtl (Right-To-Left)
 'lang_identifier'			=>	'en',
 
 // Number formatting
@@ -18,12 +18,11 @@ $lang_common = array(
 'CSRF token mismatch'		=>	'Unable to confirm security token. A likely cause for this is that some time passed between when you first entered the page and when you submitted a form or clicked a link. If that is the case and you would like to continue with your action, please click the Confirm button. Otherwise, you should click the Cancel button to return to where you were.',
 'No cookie'					=>	'You appear to have logged in successfully, however a cookie has not been set. Please check your settings and if applicable, enable cookies for this website.',
 
-
 // Miscellaneous
 'Forum index'				=>	'Forum index',
-'Submit'					=>	'Submit',	// "name" of submit buttons
+'Submit'					=>	'Submit', // "name" of submit buttons
 'Cancel'					=>	'Cancel', // "name" of cancel buttons
-'Preview'					=>	'Preview',	// submit button to preview message
+'Preview'					=>	'Preview', // submit button to preview message
 'Delete'					=>	'Delete',
 'Split'						=>	'Split',
 'Ban message'				=>	'You are banned from this forum.',
@@ -38,12 +37,12 @@ $lang_common = array(
 'Maintenance mode'			=>	'Maintenance Mode',
 'Redirecting'				=>	' Redirecting…', // With space!
 'Forwarding info'			=>	'You should automatically be forwarded to a new page in %s %s.',
-'second'					=>	'second',	// singular
-'seconds'					=>	'seconds',	// plural
+'second'					=>	'second', // singular
+'seconds'					=>	'seconds', // plural
 'Click redirect'			=>	'Click here if you do not want to wait any longer (or if your browser does not automatically forward you)',
 'Invalid e-mail'			=>	'The email address you entered is invalid.',
-'New posts'					=>	'New posts',	// the link that leads to the first new post
-'New posts title'			=>	'Find topics containing posts made since your last visit.',	// the popup text for new posts links
+'New posts'					=>	'New posts', // the link that leads to the first new post
+'New posts title'			=>	'Find topics containing posts made since your last visit.', // the popup text for new posts links
 'Active topics'				=>	'Active topics',
 'Active topics title'		=>	'Find topics which contain recent posts.',
 'Unanswered topics'			=>	'Unanswered topics',
@@ -55,15 +54,15 @@ $lang_common = array(
 'Posts'						=>	'Posts',
 'Pages'						=>	'Pages',
 'Page'						=>	'Page',
-'BBCode'					=>	'BBCode',	// You probably shouldn't change this
+'BBCode'					=>	'BBCode', // You probably shouldn't change this
 'Smilies'					=>	'Smilies',
 'Images'					=>	'Images',
 'You may use'				=>	'You may use: %s',
 'and'						=>	'and',
-'Image link'				=>	'image',	// This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
-'wrote'						=>	'wrote',	// For [quote]'s (e.g., User wrote:)
-'Code'						=>	'Code',		// For [code]'s
-'Forum mailer'				=>	'%s Mailer',	// As in "MyForums Mailer" in the signature of outgoing e-mails
+'Image link'				=>	'image', // This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
+'wrote'						=>	'wrote', // For [quote]'s (e.g., User wrote:)
+'Code'						=>	'Code', // For [code]'s
+'Forum mailer'				=>	'%s Mailer', // As in "MyForums Mailer" in the signature of outgoing e-mails
 'Write message legend'		=>	'Compose your post',
 'Required information'		=>	'Required information',
 'Reqmark'					=>	'*',
@@ -90,13 +89,13 @@ $lang_common = array(
 'Installed extensions'		=>	'Currently installed <span id="extensions-used" title="%s">%s official extensions</span>. Copyright &copy; 2003&ndash;2012 <a href="http://punbb.informer.com/">PunBB</a>.',
 
 // CSRF confirmation form
-'Confirm'					=>	'Confirm',	// Button
+'Confirm'					=>	'Confirm', // Button
 'Confirm action'			=>	'Confirm action',
 'Confirm action head'		=>	'Please confirm or cancel your last action',
 
 // Title
 'Title'						=>	'Title',
-'Member'					=>	'Member',	// Default title
+'Member'					=>	'Member', // Default title
 'Moderator'					=>	'Moderator',
 'Administrator'				=>	'Administrator',
 'Banned'					=>	'Banned',
@@ -143,13 +142,13 @@ $lang_common = array(
 'Database mismatch alert'	=>	'Your PunBB database is meant to be used in conjunction with a newer version of the PunBB code. This mismatch can lead to your forum not working properly. It is suggested that you upgrade your forum to the newest version of PunBB.',
 
 // Stuff for Jump Menu
-'Go'						=>	'Go',		// submit button in forum jump
+'Go'						=>	'Go', // submit button in forum jump
 'Jump to'					=>	'Jump to forum:',
 
 // For extern.php RSS feed
 'RSS description'			=>	'The most recent topics at %s.',
 'RSS description topic'		=>	'The most recent posts in %s.',
-'RSS reply'					=>	'Re: ',	// The topic subject will be appended to this string (to signify a reply)
+'RSS reply'					=>	'Re: ', // The topic subject will be appended to this string (to signify a reply)
 
 // Accessibility
 'Skip to content'			=>	'Skip to forum content',
@@ -163,10 +162,10 @@ $lang_common = array(
 'Total query time'			=>	'Total query time',
 
 // Error message
-'Forum error header'		=> 'Sorry! The page could not be loaded.',
-'Forum error description'	=> 'This is probably a temporary error. Just refresh the page and retry. If problem continues, please check back in 5-10 minutes.',
-'Forum error location'		=> 'The error occurred on line %1$s in %2$s',
-'Forum error db reported'	=> 'Database reported:',
-'Forum error db query'		=> 'Failed query:',
+'Forum error header'		=>	'Sorry! The page could not be loaded.',
+'Forum error description'	=>	'This is probably a temporary error. Just refresh the page and retry. If problem continues, please check back in 5-10 minutes.',
+'Forum error location'		=>	'The error occurred on line %1$s in %2$s',
+'Forum error db reported'	=>	'Database reported:',
+'Forum error db query'		=>	'Failed query:',
 
 );

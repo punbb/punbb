@@ -39,6 +39,6 @@ $lang_help = array(
 'produces decimal list'	=>	'produces a numbered list.',
 'produces alpha list'	=>	'produces an alphabetically labelled list.',
 'Bold, underlined text'	=>	'Bold, underlined text',
-'Smilies info'			=>	'If you like (and if it is enabled), the forum can convert a selection of smilies to image representations of those smilies. This forum recognizes the smilies listed below and replaces them with images.'
+'Smilies info'			=>	'If you like (and if it is enabled), the forum can convert a selection of smilies to image representations of those smilies. This forum recognizes the smilies listed below and replaces them with images.',
 
 );
