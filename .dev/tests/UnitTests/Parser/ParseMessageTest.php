@@ -1,7 +1,6 @@
 <?php
 
-class parse_message_Test extends PHPUnit_TestCase {
-
+class ParseMessageTest extends PHPUnit_Framework_TestCase {
 	// [i]
 	public function test_parse_message_i() {
 		$errors = array();
@@ -267,9 +266,3 @@ http://яндекс.рф';
 		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
 	}
 }
-
-
-
-
-
-?>

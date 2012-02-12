@@ -75,3 +75,10 @@ td.lang-name {
 td.tested-function-name {
     width: 25em;
 }
+
+code,
+pre {
+    font-family: monospace, sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

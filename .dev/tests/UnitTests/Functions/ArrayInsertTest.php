@@ -1,8 +1,7 @@
 <?php
 
-class array_insert_Test extends PHPUnit_TestCase {
-	//
-    function test_array_insert() {
+class ArrayInsertTest extends PHPUnit_Framework_TestCase {
+    public function testArrayInsert() {
 		$stack = array();
 
         $this->assertEquals(0, count($stack));
@@ -19,9 +18,3 @@ class array_insert_Test extends PHPUnit_TestCase {
 		$this->assertEquals('three', $stack['two']);
     }
 }
-
-
-
-
-
-?>

@@ -1,26 +1,25 @@
 <?php
 
-class censor_words_do_Test extends PHPUnit_TestCase {
+class CensorWordsTest extends PHPUnit_Framework_TestCase {
 
-	// Test with Unicode support
-    public function test_censor_words_do_unicode_true() {
+    public function testCensorWordsWithUnicode() {
 		$this->do_test(TRUE);
     }
 
-
-	// Test without Unicode support
-    public function test_censor_words_do_unicode_false() {
+    public function testCensorWordsWithoutUnicode() {
 		$this->do_test(FALSE);
     }
 
-
-	// Create a censor words array
 	private function create_censor($search_for, $replace) {
-		return array(0 => array('id' => '1', 'search_for' => $search_for, 'replace_with' => $replace));
+		return array(
+			0 => array(
+				'id' => '1',
+				'search_for' => $search_for,
+				'replace_with' => $replace
+			)
+		);
 	}
 
-
-	// make a real test
 	private function do_test($unicode) {
 		$this->assertEquals('f***e', censor_words_do($this->create_censor('false', 'f***e'), 'false', $unicode));
 		$this->assertEquals('i have a f***e apple', censor_words_do($this->create_censor('false', 'f***e'), 'i have a false apple', $unicode));
@@ -46,9 +45,3 @@ class censor_words_do_Test extends PHPUnit_TestCase {
 		}
 	}
 }
-
-
-
-
-
-?>
