@@ -108,7 +108,9 @@ class PHPUnit_TestFailure {
      * @access public
      */
     function toString() {
-        return sprintf('<li class="phpunit-test-failed"><em>FAIL</em> %s &rarr; %s(): %s</li>', get_class($this->_failedTest), forum_htmlencode($this->_failedTest->getName()), forum_htmlencode($this->_thrownException));
+        return sprintf('<tr class="failed"><td>%s</td><td><em>Failed</em>%s</td></tr>',
+            forum_htmlencode($this->_failedTest->getName()),
+            forum_htmlencode($this->_thrownException));
     }
 }
 

@@ -1,0 +1,77 @@
+body {
+    padding-top: 80px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 300;
+    margin: 36px 0 27px;
+    line-height: 36px;
+}
+
+.brand small {
+    color: #999;
+    font-size: .8em;
+}
+
+footer {
+    margin-top: 80px;
+}
+
+.container h1 {
+    margin-bottom: .5em;
+}
+
+.quick-links {
+    list-style: none outside none;
+    margin: 36px 0;
+    min-height: 30px;
+    overflow: hidden;
+    padding: 5px 20px;
+    text-align: center;
+}
+
+.quick-links li {
+    color: #999999;
+    display: inline;
+    margin: 0 5px;
+}
+
+.locale-tests-results {
+    padding: .5em 1em 1em;
+}
+
+h2 {
+    font-size: 1.4em;
+    color: #D93315;
+    font-weight: normal;
+    margin-bottom: .4em;
+}
+
+h3 {
+    font-weight: normal;
+    margin-bottom: .4em;
+}
+
+.failed td em {
+    color: red;
+    font-style: normal;
+    display: block;
+}
+
+.passed td em {
+    color: green;
+    font-style: normal;
+}
+
+.phpunit-test-results {
+    list-style-type: none;
+}
+
+td.lang-name {
+    width: 14em;
+}
+
+td.tested-function-name {
+    width: 25em;
+}

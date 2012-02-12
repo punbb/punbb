@@ -78,10 +78,8 @@ class LangTest {
 
                 if (!file_exists(FORUM_ROOT.'lang/'.$language.'/'.$langFile)) {
                 ?>
-                    <div class="ct-box error-box">
-                        <h2 class="warn hn">
-                            <?php echo sprintf('<strong>Language "%s" is broken.</strong> Missed required "%s" file.', $language, $langFile) ?>
-                        </h2>
+                    <div class="alert alert-error">
+                        <?php echo sprintf('<strong>Language "%s" is broken.</strong> Missed required "%s" file.', $language, $langFile) ?>
                     </div>
                 <?php
                     unset($this->languageData[$language]);
@@ -102,9 +100,9 @@ class LangTest {
         unset($this->languageData['English']);
 
         foreach ($this->languageData as $language => $languageData) {
-            echo '<div class="main-content main-frm locale-tests-results">';
-            echo '<h3 class="hn">'.$language.'</h3>';
-            echo "<ul>";
+            echo '<h2 id="lang-'.$language.'">'.forum_htmlencode($language).'</h2>';
+            echo '<table class="table table-bordered table-condensed">';
+            echo "<tbody>";
 
             foreach ($languageData as $languageElementName => $languageElementItems) {
                 $etalonData = $etalon[$languageElementName]['data'];
@@ -114,35 +112,41 @@ class LangTest {
                 $unneededItems = array_diff($currentLanguageElementData, $etalonData);
 
                 if (count($missingItems) > 0 || count($unneededItems)) {
-                    echo '<li class="failed"><em>Failed</em> - '.$languageElementName.'</li>';
+                ?>
+                    <tr class="failed">
+                        <td class="lang-name"><?php echo $languageElementName ?></td>
+                        <td>
+                            <span class="label label-important">Failed</span>
+                            <?php if (count($missingItems) > 0): ?>
+                                <br />
+                                <strong>missing keys</strong>
+                                <br />
+                                <ul class="error-list">
+                                    <li><?php echo implode("</li><li>", $missingItems)."\n" ?></li>
+                                </ul>
+                            <?php endif; ?>
+
+                            <?php if (count($unneededItems) > 0): ?>
+                                <br />
+                                <strong>unneeded keys</strong>
+                                <br />
+                                <ul class="error-list">
+                                    <li><?php echo implode("</li><li>", $unneededItems)."\n" ?></li>
+                                </ul>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php
                 } else {
-                    echo '<li class="ok"><em>OK</em> - '.$languageElementName.'</li>';
+                    ?>
+                    <tr class="passed">
+                        <td class="lang-name"><?php echo $languageElementName ?></td>
+                        <td><span class="label label-success">Passed</span></td>
+                    </tr>
+                    <?php
                 }
-
-                if (count($missingItems) > 0) {
-                ?>
-                    <div class="ct-box error-box">
-                        <h2 class="warn hn"><strong><?php echo (sprintf('%s has missing keys:', $languageElementName)) ?></strong></h2>
-                        <ul class="error-list">
-                            <li><?php echo implode("</li><li>", $missingItems)."\n" ?></li>
-                        </ul>
-                    </div>
-                <?php
-                }
-
-                if (count($unneededItems) > 0) {
-                ?>
-                    <div class="ct-box error-box">
-                        <h2 class="warn hn"><strong><?php echo (sprintf('%s has unneeded keys:', $languageElementName)) ?></strong></h2>
-                        <ul class="error-list">
-                            <li><?php echo implode("</li><li>", $unneededItems)."\n" ?></li>
-                        </ul>
-                    </div>
-                <?php
-                }
-
             }
-            echo "</ul></div>";
+            echo "</tbody></table>";
         }
     }
 }

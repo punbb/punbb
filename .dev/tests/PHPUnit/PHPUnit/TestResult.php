@@ -294,7 +294,12 @@ class PHPUnit_TestResult {
      * @access public
      */
     function toHTML($showPasses = true) {
-        return '<ul class="phpunit-test-results">'.$this->toString($showPasses).'</ul>';
+        return '<table class="table table-bordered table-condensed">
+            <thead>
+                <tr><th>Tested function</th><th>Status</th></tr>
+            </thead>
+            <tbody>'.$this->toString($showPasses).'</tbody>
+        </table>';
     }
 
     /**
@@ -310,7 +315,8 @@ class PHPUnit_TestResult {
 
         if ($showPasses) {
             foreach ($this->_passedTests as $passedTest) {
-                $result .= sprintf('<li class="phpunit-test-passed"><em>OK</em> %s &rarr; %s()</li>', htmlspecialchars(get_class($passedTest)), htmlspecialchars($passedTest->getName()));
+                $result .= sprintf('<tr class="passed"><td class="tested-function-name">%s</td><td><em>Passed</em></td></tr>',
+                    htmlspecialchars($passedTest->getName()));
             }
         }
 
@@ -329,12 +335,22 @@ class PHPUnit_TestResult {
      * @access public
      */
     function reportTestSummary($html = false) {
-        $result = '<li>TESTS: '.htmlspecialchars($this->runCount()).' tests executed</li>';
-        $result .= '<li>ERRORS: '.htmlspecialchars($this->errorCount()).' errors occurred</li>';
-        $result .= '<li>FAILURES: '.htmlspecialchars($this->failureCount()).' failures occurred.</li>';
+        $result = '<tr>
+            <td class="tested-function-name">Tests:</td>
+            <td>'.htmlspecialchars($this->runCount()).' tests executed</td>
+        </tr>';
 
-        return '<ul class="phpunit-test-results">'.$result.'</ul>';
+        $result .= '<tr>
+            <td class="tested-function-name">Errors:</td>
+            <td>'.htmlspecialchars($this->errorCount()).' errors occurred</td>
+        </tr>';
 
+        $result .= '<tr>
+            <td class="tested-function-name">Failures:</td>
+            <td>'.htmlspecialchars($this->failureCount()).' failures occurred.</td>
+        </tr>';
+
+        return '<table class="table table-bordered table-condensed">'.$result.'</table>';
     }
 
     /**

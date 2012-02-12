@@ -1,19 +1,10 @@
 <?php
-	if (extension_loaded('xdebug')) {
-		xdebug_disable();
-	}
-
-	// Forum part
 	define('FORUM_QUIET_VISIT', 1);
 	define('FORUM_ROOT', './../../');
 
-	// Disable error reporting for uninitialized variables
 	error_reporting(E_ALL);
-
-	// Turn off PHP time limit
 	@set_time_limit(0);
 
-	// We need some stuff from functions.php
 	require FORUM_ROOT.'include/essentials.php';
 	require FORUM_ROOT . '.dev/tests/lang/langTest.php';
 
@@ -21,67 +12,58 @@
 		define('FORUM_DEBUG', 1);
 	}
 
-	// Strip out "bad" UTF-8 characters
 	forum_remove_bad_characters();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>PunBB 1.4 dev</title>
-<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
-<style>
-	.locale-tests-results {
-		padding: .5em 1em 1em;
-	}
-
-	.locale-tests-results h3 {
-		font-size: 1.2em;
-		color: #D93315 !important;
-		font-weight: normal;
-	}
-
-	.locale-tests-results ul {
-		list-style-type: none;
-	}
-
-	.failed em {
-		color: red;
-		font-style: normal;
-	}
-
-	.ok em {
-		color: green;
-		font-style: normal;
-	}
-
-	.phpunit-test-results {
-		list-style-type: none;
-	}
-</style>
-</head>
-<body>
-	<div id="brd-install" class="brd-page">
-		<div id="brd-wrap" class="brd">
-
-			<div id="brd-head" class="gen-content">
-				<p id="brd-title"><strong>PunBB 1.4 dev</strong></p>
-				<p id="brd-desc">Test suite for PunBB 1.4</p>
-			</div>
-
-
-			<div id="brd-main" class="main">
-				<div class="main-head">
-					<h1 class="hn"><span>Locales tests</span></h1>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>PunBB for developers - Languages test</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+	</head>
+  	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="#">PunBB <small>1.4.3</small></a>
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li><a href="../">Home</a></li>
+							<li class="active"><a href="">Tests</a></li>
+						</ul>
+					</div>
 				</div>
-
-				<!-- TEST PASSES -->
-				<?php
-					$langTest = new LangTest();
-					$langTest->run();
-				?>
 			</div>
 		</div>
-	</div>
-</body>
+		<div class="container">
+			<ul class="breadcrumb">
+                <li><a href="../">Home</a> <span class="divider">/</span></li>
+                <li><a href="index.html">Tests</a> <span class="divider">/</span></li>
+                <li class="active"><a href="">Languages test</a></li>
+            </ul>
+
+			<header>
+				<h1>Languages test</h1>
+			</header>
+
+			<?php
+				$langTest = new LangTest();
+				$langTest->run();
+			?>
+
+      		<footer>
+      		    <hr>
+        		<p>&copy; PunBB 2012</p>
+      		</footer>
+    	</div>
+   	<script src="../bootstrap/js/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	</body>
 </html>
