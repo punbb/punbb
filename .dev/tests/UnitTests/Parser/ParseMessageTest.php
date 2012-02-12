@@ -1,8 +1,7 @@
 <?php
 
 class ParseMessageTest extends PHPUnit_Framework_TestCase {
-	// [i]
-	public function test_parse_message_i() {
+	public function testParseMessageTag_i() {
 		$errors = array();
 
 		$result = '<p><em>In vino veritas — Ёжик тумане (封鎖進階設定)</em></p>';
@@ -11,8 +10,7 @@ class ParseMessageTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
 	}
 
-	// [b]
-	public function test_parse_message_b() {
+	public function testParseMessageTag_b() {
 		$errors = array();
 
 		$result = '<p><strong>In vino veritas — Ёжик тумане (封鎖進階設定)</strong></p>';
@@ -21,8 +19,7 @@ class ParseMessageTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
 	}
 
-	// [h]
-	public function test_parse_message_h() {
+	public function testParseMessageTag_h() {
 		$errors = array();
 
 		$result = '<h5>In vino veritas — Ёжик тумане (封鎖進階設定)</h5>';
@@ -31,8 +28,7 @@ class ParseMessageTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($result, parse_message(preparse_bbcode(forum_trim($src), $errors), $errors));
 	}
 
-	// [u]
-	public function test_parse_message_u() {
+	public function testParseMessageTag_u() {
 		$errors = array();
 
 		$result = '<p><span class="bbu">In vino veritas — Ёжик тумане (封鎖進階設定)</span></p>';

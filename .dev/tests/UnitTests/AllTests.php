@@ -16,17 +16,9 @@ require_once __DIR__ . '/Parser/DoClicableTest.php';
 require_once __DIR__ . '/Parser/ParseMessageTest.php';
 
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'AllTests::runInCLI');
-}
-
 class AllTests {
-    public static function runInCLI() {
-        //PHPUnit_TextUI_TestRunner::run(self::getTestSuite(), array());
-    }
-
-    public static function getTestSuite() {
-        $suite = new \PHPUnit_Framework_TestSuite("PunBB - All Tests");
+    public static function suite() {
+        $suite = new \PHPUnit_Framework_TestSuite("Forum_AllTests");
 
         $suite->addTestSuite('UnicodeTest');
         $suite->addTestSuite('FunctionsTest');
@@ -42,7 +34,7 @@ class AllTests {
     }
 
     public static function runAndReturnResultAsJSON() {
-        $suite = self::getTestSuite();
+        $suite = self::suite();
 
         $listener = new PHPUnit_Util_Log_TAP;
 
@@ -53,8 +45,4 @@ class AllTests {
 
         return $result;
     }
-}
-
-if (PHPUnit_MAIN_METHOD == 'AllTests::runInCLI') {
-    AllTests::runInCLI();
 }

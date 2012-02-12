@@ -1,7 +1,5 @@
 <?php
 
-require_once FORUM_ROOT.'include/parser.php';
-
 class DoClicableTest extends PHPUnit_Framework_TestCase {
     public function testDoClicable() {
         $this->assertEquals('[url=http://xn--caf-dma.com]http://café.com[/url]',

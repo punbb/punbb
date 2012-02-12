@@ -1,7 +1,5 @@
 <?php
 
-require_once FORUM_ROOT.'include/parser.php';
-
 class HandleUrlTagTest extends PHPUnit_Framework_TestCase {
 	public function testHandleUrlTag() {
 		$this->assertEquals('<a href="http://ya.ru/">http://ya.ru/</a>', handle_url_tag('http://ya.ru/'));
