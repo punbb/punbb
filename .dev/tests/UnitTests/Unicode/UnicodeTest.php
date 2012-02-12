@@ -1,6 +1,6 @@
 <?php
 
-class UnicodeTest extends \PHPUnit_Framework_TestCase {
+class UnicodeTest extends PHPUnit_Framework_TestCase {
 	public function testUnicodeStrlen() {
 		$this->assertEquals(0, utf8_strlen(''), 'Should be 0');
 		$this->assertEquals(4, utf8_strlen('test'), 'Should be 4');

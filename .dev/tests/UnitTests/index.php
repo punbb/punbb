@@ -24,7 +24,7 @@
 						<ul class="nav">
                             <li><a href="<?php echo $base_url ?>/.dev/">Home</a></li>
                             <li class="dropdown active">
-                                <a href="<?php echo $base_url ?>/.dev/tests/UnitTests/"
+                                <a href="<?php echo $base_url ?>/.dev/tests/"
                                     class="dropdown-toggle" data-toggle="dropdown">Tests
                                     <b class="caret"></b>
                                 </a>

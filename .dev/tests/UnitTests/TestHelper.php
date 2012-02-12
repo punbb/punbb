@@ -4,7 +4,7 @@
         define('FORUM_QUIET_VISIT', 1);
     }
 
-    define('FORUM_ROOT', __DIR__ . '/../../../');
+    define('FORUM_ROOT', dirname(__FILE__) . '/../../../');
 
     require_once FORUM_ROOT . 'include/essentials.php';
     require_once FORUM_ROOT . 'lang/English/common.php';
