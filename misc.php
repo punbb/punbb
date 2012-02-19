@@ -152,7 +152,6 @@ else if ($action == 'markforumread')
 	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($forum_name))), $lang_misc['Mark forum read redirect']);
 }
 
-
 // OpenSearch plugin?
 else if ($action == 'opensearch')
 {
@@ -170,7 +169,7 @@ else if ($action == 'opensearch')
 	echo "\t".'<OutputEncoding>utf-8</OutputEncoding>'."\n";
 	echo "\t".'<Image width="16" height="16" type="image/x-icon">'.$base_url.'/favicon.ico</Image>'."\n";
 	echo "\t".'<Url type="text/html" method="get" template="'.$base_url.'/search.php?action=search&amp;source=opensearch&amp;keywords={searchTerms}"/>'."\n";
-	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.$base_url.'/misc.php?action=opensearch"/>'."\n";
+	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.forum_link($forum_url['opensearch']).'"/>'."\n";
 	echo "\t".'<Contact>'.forum_htmlencode($forum_config['o_admin_email']).'</Contact>'."\n";
 
 	if ($forum_config['o_show_version'] == '1')
@@ -178,7 +177,7 @@ else if ($action == 'opensearch')
 	else
 		echo "\t".'<Attribution>PunBB</Attribution>'."\n";
 
-	echo "\t".'<moz:SearchForm>'.$base_url.'/search.php</moz:SearchForm>'."\n";
+	echo "\t".'<moz:SearchForm>'.forum_link($forum_url['search']).'</moz:SearchForm>'."\n";
 	echo '</OpenSearchDescription>'."\n";
 
 	exit;

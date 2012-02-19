@@ -38,6 +38,7 @@ $forum_url = array(
 	'mark_forum_read'				=>	'misc.php?action=markforumread&amp;fid=$1&amp;csrf_token=$2',
 	'new_topic'						=>	'post.php?fid=$1',
 	'new_reply'						=>	'post.php?tid=$1',
+	'opensearch'					=>	'misc.php?action=opensearch',
 	'post'							=>	'viewtopic.php?pid=$1#p$1',
 	'profile_about'					=>	'profile.php?section=about&amp;id=$1',
 	'profile_identity'				=>	'profile.php?section=identity&amp;id=$1',

@@ -40,6 +40,7 @@ $forum_url = array(
 	'mark_forum_read'				=>	'mark-forum$1-read-$2.html',
 	'new_topic'						=>	'new-topic$1.html',
 	'new_reply'						=>	'new-reply$1.html',
+	'opensearch'					=>	'misc.php?action=opensearch',
 	'post'							=>	'post$1.html#p$1',
 	'profile_about'					=>	'user$1-about.html',
 	'profile_identity'				=>	'user$1-identity.html',

@@ -108,7 +108,7 @@ if (!empty($forum_page['nav']))
 if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
 {
 	$forum_head['search'] = '<link rel="search" type="text/html" href="'.forum_link($forum_url['search']).'" title="'.$lang_common['Search'].'" />';
-	$forum_head['opensearch'] = '<link rel="search" type="application/opensearchdescription+xml" href="'.forum_link('misc.php?action=opensearch').'" title="'.forum_htmlencode($forum_config['o_board_title']).'" />';
+	$forum_head['opensearch'] = '<link rel="search" type="application/opensearchdescription+xml" href="'.forum_link($forum_url['opensearch']).'" title="'.forum_htmlencode($forum_config['o_board_title']).'" />';
 }
 
 $forum_head['author'] = '<link rel="author" type="text/html" href="'.forum_link($forum_url['users']).'" title="'.$lang_common['User list'].'" />';

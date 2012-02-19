@@ -39,6 +39,7 @@ $forum_url = array(
 	'mark_forum_read'				=>	'mark/forum/$1/read/$2/',
 	'new_topic'						=>	'new/topic/$1/',
 	'new_reply'						=>	'new/reply/$1/',
+	'opensearch'					=>	'misc.php?action=opensearch',
 	'post'							=>	'post/$1/#p$1',
 	'profile_about'					=>	'user/$1/about/',
 	'profile_identity'				=>	'user/$1/identity/',
