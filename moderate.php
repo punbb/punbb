@@ -291,7 +291,7 @@ if (isset($_GET['tid']))
 
 			if ($new_subject == '')
 				message($lang_post['No subject']);
-			else if (utf8_strlen($new_subject) > 70)
+			else if (utf8_strlen($new_subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
 				message($lang_post['Too long subject']);
 
 			// Get data from the new first post

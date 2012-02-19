@@ -121,7 +121,7 @@ if (isset($_POST['form_sent']))
 
 		if ($subject == '')
 			$errors[] = $lang_post['No subject'];
-		else if (utf8_strlen($subject) > 70)
+		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
 			$errors[] = $lang_post['Too long subject'];
 		else if ($forum_config['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
 			$errors[] = $lang_post['All caps subject'];

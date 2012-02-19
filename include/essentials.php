@@ -10,9 +10,7 @@
 if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
 
-// Define the version and database revision that this code was written for
-define('FORUM_VERSION', '1.4.2');
-define('FORUM_DB_REVISION', 5);
+require FORUM_ROOT.'include/constants.php';
 
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
@@ -131,17 +129,6 @@ if (!defined('FORUM_HOOKS_LOADED'))
 	generate_hooks_cache();
 	require FORUM_CACHE_DIR.'cache_hooks.php';
 }
-
-// Define a few commonly used constants
-define('FORUM_UNVERIFIED', 0);
-define('FORUM_ADMIN', 1);
-define('FORUM_GUEST', 2);
-
-// Define avatars type
-define('FORUM_AVATAR_NONE', 0);
-define('FORUM_AVATAR_GIF', 1);
-define('FORUM_AVATAR_JPG', 2);
-define('FORUM_AVATAR_PNG', 3);
 
 // A good place to add common functions for your extension
 ($hook = get_hook('es_essentials')) ? eval($hook) : null;

@@ -233,7 +233,7 @@ else if (isset($_GET['email']))
 
 		if ($subject == '')
 			$errors[] = $lang_misc['No e-mail subject'];
-		else if (utf8_strlen($subject) > 70)
+		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
 	     	$errors[] = $lang_misc['Too long e-mail subject'];
 
 		if ($message == '')
