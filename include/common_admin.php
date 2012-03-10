@@ -216,10 +216,13 @@ function forum_config_remove($name)
 
 	if (is_array($name) && count($name) > 0)
 	{
-		function clean_conf_names($n)
+		if (!function_exists('clean_conf_names'))
 		{
-			global $forum_db;
-			return '\''.$forum_db->escape($n).'\'';
+			function clean_conf_names($n)
+			{
+				global $forum_db;
+				return '\''.$forum_db->escape($n).'\'';
+			}
 		}
 
 		$name = array_map('clean_conf_names', $name);
