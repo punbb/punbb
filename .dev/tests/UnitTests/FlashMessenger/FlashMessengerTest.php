@@ -24,4 +24,13 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase {
         $forum_flash->add_error("Error message");
         $forum_flash->show(FALSE);
     }
+
+    public function testClear() {
+        global $forum_flash;
+
+        $this->expectOutputString("");
+        $forum_flash->add_info("Test message");
+        $forum_flash->clear();
+        $forum_flash->show(FALSE);
+    }
 }
