@@ -66,7 +66,7 @@ class DBLayer
 
 	function query($sql, $unbuffered = false)
 	{
-		if (strlen($sql) > 140000)
+		if (strlen($sql) > FORUM_DATABASE_QUERY_MAXIMUM_LENGTH)
 			exit('Insane query. Aborting.');
 
 		if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))

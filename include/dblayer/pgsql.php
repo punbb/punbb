@@ -101,7 +101,7 @@ class DBLayer
 
 	function query($sql, $unbuffered = false)	// $unbuffered is ignored since there is no pgsql_unbuffered_query()
 	{
-		if (strlen($sql) > 140000)
+		if (strlen($sql) > FORUM_DATABASE_QUERY_MAXIMUM_LENGTH)
 			exit('Insane query. Aborting.');
 
 		if (strrpos($sql, 'LIMIT') !== false)
