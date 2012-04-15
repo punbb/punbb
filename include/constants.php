@@ -21,3 +21,5 @@ define('FORUM_DATABASE_QUERY_MAXIMUM_LENGTH', 140000);
 // Define user email settings
 define('FORUM_USER_PUBLIC_EMAIL', 0);
 define('FORUM_USER_PRIVATE_EMAIL', 2);
+
+define('FORUM_PUN_EXTENSION_REPOSITORY_URL', 'http://punbb.informer.com/extensions/1.4');

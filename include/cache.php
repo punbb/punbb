@@ -566,6 +566,11 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 		{
 			foreach ($inst_exts as $ext)
 			{
+			    
+			    if ((0 === strpos($ext['id'], 'pun_') AND FORUM_PUN_EXTENSION_REPOSITORY_URL != $url) OR
+			            ((FALSE === strpos($ext['id'], 'pun_') AND !isset($ext['repo_url'])) OR (isset($ext['repo_url']) AND $ext['repo_url'] != $url)))
+			        continue;
+			    			    
 				$remote_file = get_remote_file($url.'/'.$ext['id'].'/lastversion', 2);
 				$version = empty($remote_file['content']) ? '' : forum_trim($remote_file['content']);
 				unset($remote_file);

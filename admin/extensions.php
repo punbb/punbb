@@ -860,7 +860,7 @@ else
 	if ($forum_config['o_check_for_versions'] == 1)
 	{
 		// Check for the new versions of the extensions istalled
-		$repository_urls = array('http://punbb.informer.com/extensions/1.4');
+		$repository_urls = array(FORUM_PUN_EXTENSION_REPOSITORY_URL);
 		($hook = get_hook('aex_add_extensions_repository')) ? eval($hook) : null;
 
 		$repository_url_by_extension = array();
