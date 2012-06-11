@@ -292,7 +292,7 @@ if (isset($_GET['tid']))
 			if ($new_subject == '')
 				message($lang_post['No subject']);
 			else if (utf8_strlen($new_subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-				message($lang_post['Too long subject']);
+				message(sprintf($lang_post['Too long subject'], FORUM_SUBJECT_MAXIMUM_LENGTH));
 
 			// Get data from the new first post
 			$query = array(
@@ -381,7 +381,7 @@ if (isset($_GET['tid']))
 <?php ($hook = get_hook('mr_confirm_split_posts_pre_subject')) ? eval($hook) : null; ?>
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['New subject'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="new_subject" size="70" maxlength="70" required /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="new_subject" size="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" maxlength="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" required /></span>
 					</div>
 <?php ($hook = get_hook('mr_confirm_split_posts_pre_confirm_checkbox')) ? eval($hook) : null; ?>
 					<div class="sf-box checkbox">

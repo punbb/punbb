@@ -122,7 +122,7 @@ if (isset($_POST['form_sent']))
 		if ($subject == '')
 			$errors[] = $lang_post['No subject'];
 		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-			$errors[] = $lang_post['Too long subject'];
+			$errors[] = sprintf($lang_post['Too long subject'], FORUM_SUBJECT_MAXIMUM_LENGTH);
 		else if ($forum_config['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
 			$errors[] = $lang_post['All caps subject'];
 	}
@@ -469,7 +469,7 @@ if ($fid)
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required longtext">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Topic subject'] ?></span></label><br />
-						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="70" maxlength="70" required /></span>
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" maxlength="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" required /></span>
 					</div>
 				</div>
 <?php

@@ -5,7 +5,7 @@ $lang_post = array(
 
 // Post validation stuff (many are similar to those in edit.php)
 'No subject'			=>	'Topics must contain a subject.',
-'Too long subject'		=>	'Subjects cannot be longer than 70 characters.',
+'Too long subject'		=>	'Subjects cannot be longer than %s characters.',
 'All caps subject'		=>	'Subjects cannot contain only capital letters.',
 'No message'			=>	'You must enter a message.',
 'Too long message'		=>	'Your post length is %s bytes. This exceeds the %s bytes limit.',
