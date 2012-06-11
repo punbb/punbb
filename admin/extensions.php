@@ -59,6 +59,10 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	$ext_data = xml_to_array($manifest);
 	$errors = validate_manifest($ext_data, $id);
 
+	/*
+	 * TODO
+	 * Errors must be fully specified instead "bad request" message only
+	 */
 	if (!empty($errors))
 		message(isset($_GET['install']) ? $lang_common['Bad request'] : $lang_admin_ext['Hotfix download failed']);
 
@@ -81,7 +85,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		$ext_data['extension']['dependencies'] = $ext_data['extension']['dependencies']['dependency'];
 
 	$query = array(
-		'SELECT'	=> 'e.id',
+		'SELECT'	=> 'e.id, e.version',
 		'FROM'		=> 'extensions AS e',
 		'WHERE'		=> 'e.disabled=0'
 	);
@@ -91,12 +95,21 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	$installed_ext = array();
 	while ($row = $forum_db->fetch_assoc($result))
-		$installed_ext[] = $row['id'];
+		$installed_ext[$row['id']] = $row;
 
 	foreach ($ext_data['extension']['dependencies'] as $dependency)
 	{
-		if (!in_array($dependency, $installed_ext))
-			message(sprintf($lang_admin_ext['Missing dependency'], $dependency));
+
+		$ext_dependancy_id = is_array($dependency) ? $dependency['content'] : $dependency;
+		
+	    if (!array_key_exists($ext_dependancy_id, $installed_ext))
+	    {
+		   $errors[] = sprintf($lang_admin_ext['Missing dependency'], $ext_dependancy_id);
+	    }
+	    else if (is_array($dependency) AND isset($dependency['attributes']['minversion']) AND version_compare($dependency['attributes']['minversion'], $installed_ext[$ext_dependancy_id]['version']) > 0)
+	    {
+	    	$errors[] = sprintf($lang_admin_ext['Version dependency error'], $dependency['content'], $dependency['attributes']['minversion']);
+	    }
 	}
 
 	// Setup breadcrumbs
@@ -108,7 +121,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		(strpos($id, 'hotfix_') === 0) ? $lang_admin_ext['Install hotfix'] : $lang_admin_ext['Install extension']
 	);
 
-	if (isset($_POST['install_comply']))
+	if (isset($_POST['install_comply']) AND empty($errors))
 	{
 		($hook = get_hook('aex_install_comply_form_submitted')) ? eval($hook) : null;
 
@@ -310,6 +323,27 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		<h2 class="hn"><span><?php echo end($forum_page['crumbs']) ?> "<?php echo forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
+<?php
+
+    // If there were any errors, show them
+    if (!empty($errors))
+    {
+        $forum_page['errors'] = array();
+        foreach ($errors as $cur_error)
+            $forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+
+            ($hook = get_hook('aex_install_ext_pre_errors')) ? eval($hook) : null;
+
+?>
+		<div class="ct-box error-box">
+			<h2 class="warn hn"><?php echo $lang_admin_ext['Install ext errors'] ?></h2>
+			<ul class="error-list">
+				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
+			</ul>
+		</div>
+<?php
+    }
+?>	
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id ?>">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id) ?>" />

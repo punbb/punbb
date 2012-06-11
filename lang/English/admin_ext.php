@@ -70,5 +70,7 @@ $lang_admin_ext = array(
 'Disable dependency'			=>	'This extension cannot be disabled while "%s" is enabled.',
 'Disabled dependency'			=>	'This extension cannot be enabled while "%s" is disabled.',
 'Download latest version'		=>	'Download latest version',
+'Version dependency error'    =>  'Extension "%s" must be version %s or higher',
+'Install ext errors'            =>  '<strong>Warning!</strong> The following errors must be corrected before extension can be installed:',
 
 );
