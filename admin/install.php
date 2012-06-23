@@ -36,6 +36,7 @@ error_reporting(E_ALL);
 // Turn off PHP time limit
 @set_time_limit(0);
 
+require FORUM_ROOT.'include/constants.php';
 // We need some stuff from functions.php
 require FORUM_ROOT.'include/functions.php';
 
