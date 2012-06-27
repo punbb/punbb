@@ -19,8 +19,6 @@ define('FORUM_ROOT', '../');
 define('FORUM', 1);
 define('FORUM_DEBUG', 1);
 
-require FORUM_ROOT.'include/constants.php';
-
 if (file_exists(FORUM_ROOT.'config.php'))
 	exit('The file \'config.php\' already exists which would mean that PunBB is already installed. You should go <a href="'.FORUM_ROOT.'index.php">here</a> instead.');
 
@@ -35,6 +33,7 @@ error_reporting(E_ALL);
 // Turn off PHP time limit
 @set_time_limit(0);
 
+require FORUM_ROOT.'include/constants.php';
 // We need some stuff from functions.php
 require FORUM_ROOT.'include/functions.php';
 
