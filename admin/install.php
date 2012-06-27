@@ -21,6 +21,7 @@ define('FORUM_DEBUG', 1);
 
 define('FORUM_SEARCH_MIN_WORD', 3);
 define('FORUM_SEARCH_MAX_WORD', 20);
+define('FORUM_DATABASE_QUERY_MAXIMUM_LENGTH', 140000);
 
 if (file_exists(FORUM_ROOT.'config.php'))
 	exit('The file \'config.php\' already exists which would mean that PunBB is already installed. You should go <a href="'.FORUM_ROOT.'index.php">here</a> instead.');
