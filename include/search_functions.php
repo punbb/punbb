@@ -7,10 +7,6 @@
  * @package PunBB
  */
 
-if (!defined('FORUM_SEARCH_MIN_WORD'))
-	define('FORUM_SEARCH_MIN_WORD', 3);
-if (!defined('FORUM_SEARCH_MAX_WORD'))
-	define('FORUM_SEARCH_MAX_WORD', 20);
 
 //
 // Cache the results of a search and redirect the user to the results page
