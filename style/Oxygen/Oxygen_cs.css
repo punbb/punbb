@@ -760,16 +760,11 @@ button[disabled]:focus {
 /*
 * Remove text-shadow in selection highlight: h5bp.com/i
 * These selection declarations have to be separate
-* Also: hot pink! (or customize the background color to match your design)
 */
 ::-moz-selection {
-	background: #fff2a8;
-	color: #000;
 	text-shadow: none;
 }
 
 ::selection {
-	background: #fff2a8;
-	color: #000;
 	text-shadow: none;
 }
