@@ -18,10 +18,6 @@ define('FORUM_AVATAR_PNG', 3);
 define('FORUM_SUBJECT_MAXIMUM_LENGTH', 70);
 define('FORUM_DATABASE_QUERY_MAXIMUM_LENGTH', 140000);
 
-// Define user email settings
-define('FORUM_USER_PUBLIC_EMAIL', 0);
-define('FORUM_USER_PRIVATE_EMAIL', 2);
-
 define('FORUM_SEARCH_MIN_WORD', 3);
 define('FORUM_SEARCH_MAX_WORD', 20);
 
