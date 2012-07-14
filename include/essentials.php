@@ -10,6 +10,11 @@
 if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
 
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+{
+	define('FORUM_REQUEST_AJAX', 1);
+}
+
 require FORUM_ROOT.'include/constants.php';
 
 // Record the start time (will be used to calculate the generation time for the page)

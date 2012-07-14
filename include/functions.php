@@ -1452,7 +1452,7 @@ function cookie_login(&$forum_user)
 				);
 
 				$current_url = get_current_url(255);
-				if ($current_url != null)
+				if ($current_url != null && !defined('FORUM_REQUEST_AJAX'))
 					$query['SET'] .= ', prev_url=\''.$forum_db->escape($current_url).'\'';
 
 				if ($forum_user['idle'] == '1')
@@ -2952,6 +2952,32 @@ function csrf_confirm_form()
 	if ($return != null)
 		return;
 
+	if (defined('FORUM_REQUEST_AJAX'))
+	{
+		$json_data = array(
+				'code'			=>	-3,
+				'message'		=>	$lang_common['CSRF token mismatch'],
+				'csrf_token'	=>	generate_form_token(get_current_url()),
+				'prev_url'		=>	forum_htmlencode($forum_user['prev_url']),
+		);
+
+		foreach ($_POST as $submitted_key => $submitted_val)
+		{
+			if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url')
+			{
+				$hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
+				foreach ($hidden_fields as $field_key => $field_val)
+				{
+					$json_data['post_data'][$field_key] = forum_htmlencode($field_val);
+				}
+			}
+		}
+
+		($hook = get_hook('fn_redirect_pre_send_json')) ? eval($hook) : null;
+		
+		send_json($json_data);
+	}	
+	
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
@@ -3020,6 +3046,18 @@ function message($message, $link = '', $heading = '')
 	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader, $forum_flash;
 
 	($hook = get_hook('fn_message_start')) ? eval($hook) : null;
+	
+	if (defined('FORUM_REQUEST_AJAX'))
+	{
+		$json_data = array(
+			'code'		=> -1,
+			'message'	=> $message
+		);
+
+		($hook = get_hook('fn_message_pre_send_json')) ? eval($hook) : null;
+		
+		send_json($json_data);
+	}
 
 	if (!defined('FORUM_HEADER'))
 	{
@@ -3180,6 +3218,19 @@ function redirect($destination_url, $message)
 	// Do a little spring cleaning
 	$destination_url = preg_replace('/([\r\n])|(%0[ad])|(;[\s]*data[\s]*:)/i', '', $destination_url);
 
+	if (defined('FORUM_REQUEST_AJAX'))
+	{
+		$json_data = array(
+			'code'		=> -2,
+			'message'	=> $message,
+			'destination_url' => $destination_url
+		);
+	
+		($hook = get_hook('fn_redirect_pre_send_json')) ? eval($hook) : null;
+		
+		send_json($json_data);
+	}	
+	
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($forum_config['o_redirect_delay'] == '0')
 		header('Location: '.str_replace('&amp;', '&', $destination_url));
@@ -3409,4 +3460,52 @@ function error()
 		$GLOBALS['forum_db']->close();
 
 	exit;
+}
+
+function send_json($params)
+{
+	header('Content-type: application/json; charset=utf-8');
+	if (!function_exists('json_encode'))
+	{
+		function json_encode($data)
+		{
+			switch ($type = gettype($data))
+			{
+				case 'NULL':
+					return 'null';
+				case 'boolean':
+					return ($data ? 'true' : 'false');
+				case 'integer':
+				case 'double':
+				case 'float':
+					return $data;
+				case 'string':
+					return '"' . addslashes($data) . '"';
+				case 'object':
+					$data = get_object_vars($data);
+				case 'array':
+					$output_index_count = 0;
+					$output_indexed = array();
+					$output_assoc = array();
+					foreach ($data as $key => $value)
+					{
+						$output_indexed[] = json_encode($value);
+						$output_assoc[] = json_encode($key) . ':' . json_encode($value);
+						if ($output_index_count !== NULL && $output_index_count++ !== $key)
+						{
+							$output_index_count = NULL;
+						}
+					}
+					if ($output_index_count !== NULL) {
+						return '[' . implode(',', $output_indexed) . ']';
+					} else {
+						return '{' . implode(',', $output_assoc) . '}';
+					}
+				default:
+					return ''; // Not supported
+			}
+		}
+	}
+	echo json_encode($params);
+	die;
 }
