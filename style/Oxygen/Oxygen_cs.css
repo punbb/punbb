@@ -756,15 +756,3 @@ button[disabled]:focus {
 	background: -ms-linear-gradient(top, #fffbea, #fef7cb);
 	background: linear-gradient(top, #fffbea, #fef7cb);
 }
-
-/*
-* Remove text-shadow in selection highlight: h5bp.com/i
-* These selection declarations have to be separate
-*/
-::-moz-selection {
-	text-shadow: none;
-}
-
-::selection {
-	text-shadow: none;
-}
