@@ -664,6 +664,23 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 
 
 //
+// Callback for handle_url_tag
+//
+function callback_handle_url_nobb($reg)
+{
+	return handle_url_tag($reg[1], (isset($reg[2]) ? $reg[2] : ''), false);
+}
+
+//
+// Callback for handle_url_tag
+//
+function callback_handle_url_bb($reg)
+{
+	return handle_url_tag($reg[1], (isset($reg[2]) ? $reg[2] : ''), true);
+}
+
+
+//
 // Turns an URL from the [img] tag into an <img> tag or a <a href...> tag
 //
 function handle_img_tag($url, $is_signature = false, $alt = null)
@@ -773,13 +790,12 @@ function do_bbcode($text, $is_signature = false)
 		}
 	}
 
-	$pattern[] = '#\[url\]([^\[]*?)\[/url\]#e';
-	$pattern[] = '#\[url=([^\[]+?)\](.*?)\[/url\]#e';
+	$text = preg_replace_callback('#\[url\]([^\[]*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+	$text = preg_replace_callback('#\[url=([^\[]+?)\](.*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+
 	$pattern[] = '#\[email\]([^\[]*?)\[/email\]#';
 	$pattern[] = '#\[email=([^\[]+?)\](.*?)\[/email\]#';
 
-	$replace[] = 'handle_url_tag(\'$1\')';
-	$replace[] = 'handle_url_tag(\'$1\', \'$2\')';
 	$replace[] = '<a href="mailto:$1">$1</a>';
 	$replace[] = '<a href="mailto:$1">$2</a>';
 
