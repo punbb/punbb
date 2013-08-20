@@ -1974,6 +1974,9 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	border-width: 1px;
 }
 
+.sig-demo {
+	overflow: hidden;
+}
 span.sig-line {
 	display: block;
 	width: 200px;
