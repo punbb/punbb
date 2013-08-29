@@ -351,6 +351,8 @@ function generate_quickjump_cache($group_id = false)
 			$redirect_tag = ($cur_forum['redirect_url'] != '') ? ' &gt;&gt;&gt;' : '';
 			$output .= "\t\t\t\t".'<option value="'.$cur_forum['fid'].'"<?php echo ($forum_id == '.$cur_forum['fid'].') ? \' selected="selected"\' : \'\' ?>>'.forum_htmlencode($cur_forum['forum_name']).$redirect_tag.'</option>'."\n";
 			$forum_count++;
+			
+			($hook = get_hook('ch_fn_generate_quickjump_cache_forum_loop_end')) ? eval($hook) : null;
 		}
 
 		$output .= "\t\t\t".'</optgroup>'."\n\t\t".'</select>'."\n\t\t".'<input type="submit" id="qjump-submit" value="<?php echo $lang_common[\'Go\'] ?>" /></span>'."\n\t".'</div>'."\n".'</form>'."\n";
