@@ -294,14 +294,14 @@ else if (isset($_GET['edit_forum']))
 	// Update group permissions for $forum_id
 	if (isset($_POST['save']))
 	{
-		($hook = get_hook('afo_save_forum_form_submitted')) ? eval($hook) : null;
-
 		// Start with the forum details
 		$forum_name = forum_trim($_POST['forum_name']);
 		$forum_desc = forum_linebreaks(forum_trim($_POST['forum_desc']));
 		$cat_id = intval($_POST['cat_id']);
 		$sort_by = intval($_POST['sort_by']);
 		$redirect_url = isset($_POST['redirect_url']) && $cur_forum['num_topics'] == 0 ? forum_trim($_POST['redirect_url']) : null;
+
+		($hook = get_hook('afo_save_forum_form_submitted')) ? eval($hook) : null;
 
 		if ($forum_name == '')
 			message($lang_admin_forums['Must enter forum message']);
