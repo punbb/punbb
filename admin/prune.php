@@ -242,6 +242,8 @@ else
 	$cur_category = 0;
 	while ($forum = $forum_db->fetch_assoc($result))
 	{
+		($hook = get_hook('apr_pre_prune_forum_loop_start')) ? eval($hook) : null;
+		
 		if ($forum['cid'] != $cur_category)	// Are we still in the same category?
 		{
 			if ($cur_category)
@@ -252,6 +254,8 @@ else
 		}
 
 		echo "\t\t\t\t\t\t\t\t\t".'<option value="'.$forum['fid'].'">'.forum_htmlencode($forum['forum_name']).'</option>'."\n";
+		
+		($hook = get_hook('apr_pre_prune_forum_loop_end')) ? eval($hook) : null;
 	}
 
 ?>
