@@ -887,6 +887,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	$forum_page['cur_category'] = 0;
 	foreach ($forum_list as $cur_forum)
 	{
+		($hook = get_hook('mr_move_topics_forum_loop_start')) ? eval($hook) : null;
+		
 		if ($cur_forum['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
 		{
 			if ($forum_page['cur_category'])
@@ -898,6 +900,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		if ($cur_forum['fid'] != $fid)
 			echo "\t\t\t\t".'<option value="'.$cur_forum['fid'].'">'.forum_htmlencode($cur_forum['forum_name']).'</option>'."\n";
+			
+		($hook = get_hook('mr_move_topics_forum_loop_end')) ? eval($hook) : null;
 	}
 
 ?>
