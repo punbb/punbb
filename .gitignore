@@ -9,4 +9,4 @@ db.sqlite
 test.php
 extensions/
 .htaccess
-
+node_modules/
