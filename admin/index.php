@@ -135,6 +135,8 @@ else if (ini_get('eaccelerator.enable'))
 	$php_accelerator = '<a href="http://eaccelerator.net/">eAccelerator</a>';
 else if (ini_get('xcache.cacher'))
 	$php_accelerator = '<a href="http://xcache.lighttpd.net/">XCache</a>';
+else if (extension_loaded('Zend OPcache') && ini_get('opcache.enable'))
+    $php_accelerator = '<a href="https://github.com/zendtech/ZendOptimizerPlus">Zend OPcache</a>';
 else
 	$php_accelerator = $lang_admin_index['Not applicable'];
 
