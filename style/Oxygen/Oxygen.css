@@ -2226,123 +2226,12 @@ H - MAIN CONTENT - ODDMENTS
 	border-style: solid;
 }
 
-
-/* IE */
-.ie6 a.feed,
-.ie7 a.feed {
-	background: url(feed-icon.png) center left no-repeat;
-}
-
-/*************************************************************
-IE6 - FIXES
-**************************************************************/
-
-/* Float Clearing and Has Layout Fixes
--------------------------------------------------------------*/
-
-.ie6 .brd-page,
-.ie6 .main,
-.ie6 #brd-index .main-subhead,
-.ie6 .main-content .main-item,
-.ie6 .main-content .main-item ul,
-.ie6 .gen-content,
-.ie6 .main-content,
-.ie6 .ct-box,
-.ie6 .frm-group,
-.ie6 .mf-set,
-.ie6 .sf-set,
-.ie6 .mf-box,
-.ie6 .sf-box,
-.ie6 .mf-item,
-.ie6 .txt-set,
-.ie6 .txt-box,
-.ie6 .frm-form label,
-.ie6 fieldset,
-.ie6 span.fld-input,
-.ie6 .main-subhead .hn,
-.ie6 .post,
-.ie6 .posthead,
-.ie6 .postbody,
-.ie6 .post-entry,
-.ie6 .postfoot .post-options {
-	zoom: 1;
-}
-
-.ie6 .ct-box ol,
-.ie6 .ct-box ol li {
-	zoom: normal;
-}
-
-.ie6 .postfoot .post-contacts {
-	position: absolute;
-}
-
-/* Forms
--------------------------------------------------------------*/
-
-.ie6 #brd-wrap fieldset {
-	padding-top: 1px;
-	position: relative;
-}
-
-.ie6 fieldset legend {
-	margin-left: -7px;
-}
-
-.ie6 #brd-wrap .checklist {
-	height: 9em;
-	width: 30em;
-	overflow: auto;
-}
-
-.ie6 .sf-set .checkbox label span {
-	padding-right: 0;
-	padding-left: 5em;
-}
-
-.ie6 #info-censored-intro,
-.ie6 #info-ranks-intro {
-	margin-bottom: 3em;
-}
-
-.ie6 .important strong {
-	margin-right: 1ex;
-}
-
-.ie6 #brd-stats .st-users {
-	margin-bottom: -1ex;
-}
-
-/* Fixes for the forms in post.php and edit.php. */
-.ie6 .txt-box label span {
-	position: absolute;
-}
-
-/* Fix for index.php: no backgroud for the first main-head. */
-.ie6 #brd-index .main-head {
-	position: relative;
-}
-
-.ie6 input {
-	vertical-align: text-bottom;
-}
-
-/* Footer
--------------------------------------------------------------*/
-
-.ie6 #extensions-used {
-	clear: left;
-}
-
-/* Remove scrollbar from empty textarea */
-.oldie textarea {
-	overflow: auto;
-}
-
-
 /*************************************************************
 IE7 - FIXES
 **************************************************************/
+.ie7 a.feed {
+    background: url(feed-icon.png) center left no-repeat;
+}
 
 /* Float Clearing and Has Layout Fixes
 -------------------------------------------------------------*/
@@ -2417,5 +2306,3 @@ IE7 - FIXES
 .ie7 input[type="checkbox"] {
 	vertical-align: baseline;
 }
-
-
