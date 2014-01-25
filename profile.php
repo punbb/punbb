@@ -971,29 +971,26 @@ else if (isset($_POST['form_sent']))
 				}
 			}
 
-			// Add http:// if the URL doesn't contain it or https:// already
+			// Add http:// if the URL doesn't contain it or https:// already.
 			if ($form['url'] != '' && strpos(strtolower($form['url']), 'http://') !== 0 && strpos(strtolower($form['url']), 'https://') !== 0)
 				$form['url'] = 'http://'.$form['url'];
 
-			//check Facebook for validity
 			if (strpos($form['facebook'], 'http://') === 0 || strpos($form['facebook'], 'https://') === 0)
 				if (!preg_match('#https?://(www\.)?facebook.com/.+?#', $form['facebook']))
 					$errors[] = $lang_profile['Bad Facebook'];
 
-			//check Twitter for validity
 			if (strpos($form['twitter'], 'http://') === 0 || strpos($form['twitter'], 'https://') === 0)
 				if (!preg_match('#https?://twitter.com/.+?#', $form['twitter']))
 					$errors[] = $lang_profile['Bad Twitter'];
 
-			//check LinkedIn for validity
 			if (!preg_match('#https?://(www\.)?linkedin.com/.+?#', $form['linkedin']))
 					$errors[] = $lang_profile['Bad LinkedIn'];
 
-			// Add http:// if the LinkedIn doesn't contain it or https:// already
+			// Add http:// if the LinkedIn doesn't contain it or https:// already.
 			if ($form['linkedin'] != '' && strpos(strtolower($form['linkedin']), 'http://') !== 0 && strpos(strtolower($form['linkedin']), 'https://') !== 0)
 				$form['linkedin'] = 'http://'.$form['linkedin'];
 
-			// If the ICQ UIN contains anything other than digits it's invalid
+			// If the ICQ UIN contains anything other than digits it's invalid.
 			if ($form['icq'] != '' && !ctype_digit($form['icq']))
 				$errors[] = $lang_profile['Bad ICQ'];
 
