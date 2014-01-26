@@ -2,7 +2,7 @@
 /**
  * Provides various mass-moderation tools to moderators.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2014 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -888,7 +888,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	foreach ($forum_list as $cur_forum)
 	{
 		($hook = get_hook('mr_move_topics_forum_loop_start')) ? eval($hook) : null;
-		
+
 		if ($cur_forum['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
 		{
 			if ($forum_page['cur_category'])
@@ -900,7 +900,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		if ($cur_forum['fid'] != $fid)
 			echo "\t\t\t\t".'<option value="'.$cur_forum['fid'].'">'.forum_htmlencode($cur_forum['forum_name']).'</option>'."\n";
-			
+
 		($hook = get_hook('mr_move_topics_forum_loop_end')) ? eval($hook) : null;
 	}
 

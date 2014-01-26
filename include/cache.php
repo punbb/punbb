@@ -4,7 +4,7 @@
  *
  * This file contains all of the functions used to generate the cache files used by the site.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2014 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -351,7 +351,7 @@ function generate_quickjump_cache($group_id = false)
 			$redirect_tag = ($cur_forum['redirect_url'] != '') ? ' &gt;&gt;&gt;' : '';
 			$output .= "\t\t\t\t".'<option value="'.$cur_forum['fid'].'"<?php echo ($forum_id == '.$cur_forum['fid'].') ? \' selected="selected"\' : \'\' ?>>'.forum_htmlencode($cur_forum['forum_name']).$redirect_tag.'</option>'."\n";
 			$forum_count++;
-			
+
 			($hook = get_hook('ch_fn_generate_quickjump_cache_forum_loop_end')) ? eval($hook) : null;
 		}
 

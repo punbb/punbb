@@ -4,7 +4,7 @@
  *
  * Allows administrators to delete older topics from the site.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2014 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -243,7 +243,7 @@ else
 	while ($forum = $forum_db->fetch_assoc($result))
 	{
 		($hook = get_hook('apr_pre_prune_forum_loop_start')) ? eval($hook) : null;
-		
+
 		if ($forum['cid'] != $cur_category)	// Are we still in the same category?
 		{
 			if ($cur_category)
@@ -254,7 +254,7 @@ else
 		}
 
 		echo "\t\t\t\t\t\t\t\t\t".'<option value="'.$forum['fid'].'">'.forum_htmlencode($forum['forum_name']).'</option>'."\n";
-		
+
 		($hook = get_hook('apr_pre_prune_forum_loop_end')) ? eval($hook) : null;
 	}
 

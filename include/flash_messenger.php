@@ -2,7 +2,7 @@
 /**
  * Loads the flash messenger class.
  *
- * @copyright (C) 2008-2012 PunBB
+ * @copyright (C) 2008-2014 PunBB
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */

@@ -2,7 +2,7 @@
 /**
  * Loads common functions used throughout the site.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2014 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -59,12 +59,12 @@ function forum_session_start() {
 		$forum_session_id = random_key(32, FALSE, TRUE);
 		session_id($forum_session_id);
 	}
-	
+
 	if (!isset($_SESSION))
 	{
 		session_start();
 	}
-	
+
 	if (!isset($_SESSION['initiated']))
 	{
 		session_regenerate_id();

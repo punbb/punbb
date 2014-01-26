@@ -2,7 +2,7 @@
 /**
  * Loader class for inject CSS and JS files.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on Drupal code
+ * @copyright (C) 2008-2014 PunBB, partially based on Drupal code
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
