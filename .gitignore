@@ -10,3 +10,4 @@ test.php
 extensions/
 .htaccess
 node_modules/
+tests/report/
