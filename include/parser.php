@@ -429,10 +429,15 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		else
 		{
 			// We are opening a tag
-			if (in_array($current_tag, array_keys($tags_limit_bbcode)))
-				$limit_bbcode = $tags_limit_bbcode[$current_tag];
-			else
+			if (in_array($current_tag, array_keys($tags_limit_bbcode))) {
+
+				if (!in_array($current_tag, $tags_opened) && !in_array($current_tag, $tags_closed)) {
+					// Change limits only for tags, that will be closed
+					$limit_bbcode = $tags_limit_bbcode[$current_tag];
+				}
+			} else {
 				$limit_bbcode = $tags;
+			}
 
 			if (in_array($current_tag, $tags_block) && !in_array($open_tags[$opened_tag], $tags_block) && $opened_tag != 0)
 			{
@@ -482,9 +487,12 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (in_array($current_tag, array_keys($tags_limit_bbcode)))
 				$limit_bbcode = $tags_limit_bbcode[$current_tag];
 
-			$open_tags[] = $current_tag;
-			$open_args[] = $current_arg;
-			$opened_tag++;
+			// Add the tag to stack only if it must be closed
+			if (in_array($current_tag, $tags_opened) || in_array($current_tag, $tags_closed)) {
+				$open_tags[] = $current_tag;
+				$open_args[] = $current_arg;
+				$opened_tag++;
+			}
 			$new_text .= $current;
 			continue;
 		}
