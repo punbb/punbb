@@ -881,15 +881,7 @@ else
 		$update_hour = (isset($forum_ext_versions_update_cache) && (time() - $forum_ext_versions_update_cache > 60 * 60));
 
 		// Update last versions if there is no cahe or some extension was added/removed or one day has gone since last update
-		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || $update_hour || ($update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));
-		if (!$update_new_versions_cache && isset($forum_ext_last_versions)) {
-			foreach ($inst_exts as $ext_name => $ext) {
-				if ($ext['version'] != $forum_ext_last_versions[$ext_name]) {
-					$update_new_versions_cache = true;
-					break;
-				}
-			}
-		}
+		$update_new_versions_cache = !defined('FORUM_EXT_VERSIONS_LOADED') || (isset($forum_ext_last_versions) && array_diff_key($inst_exts, $forum_ext_last_versions) != array()) || $update_hour || ($update_hour && isset($min_timestamp) && (time() - $min_timestamp > 60*60*24));
 
 		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;
 
