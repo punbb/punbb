@@ -1,0 +1,32 @@
+{
+        "name": "punbb/core",
+        "type": "library",
+        "description": "The PunBB forum core",
+        "keywords": ["forum", "laravel"],
+        "homepage": "http://punbb.com",
+        "license": "GPL-3.0+",
+        "authors": [
+                {
+                        "name": "PunBB",
+                        "email": "",
+                        "homepage": "http://punbb.com"
+                }
+        ],
+        "support": {
+                "email": "",
+                "irc": ""
+        },
+        "require": {
+                "php": ">=5.3.0",
+                "illuminate/support": "4.0.*"
+        },
+        "autoload": {
+                "classmap": [
+                        "src/migrations"
+                ],
+                "psr-0": {
+                        "PunBB": "src"
+                }
+        },
+        "minimum-stability": "dev"
+}
