@@ -52,7 +52,7 @@ if ($pid)
 	$query = array(
 		'SELECT'	=> 'COUNT(p.id)',
 		'FROM'		=> 'posts AS p',
-		'WHERE'		=> 'p.topic_id='.$topic_info['topic_id'].' AND p.posted<'.$topic_info['posted']
+		'WHERE'		=> 'p.topic_id='.$topic_info['topic_id'].' AND p.id<'.$pid
 	);
 
 	($hook = get_hook('vt_qr_get_post_page')) ? eval($hook) : null;

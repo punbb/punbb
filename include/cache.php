@@ -48,6 +48,11 @@ function write_cache_file($file, $content)
 	flock($handle, LOCK_UN);
 	fclose($handle);
 
+	// Force opcache to recompile this script
+	if (function_exists('opcache_invalidate')) {
+		opcache_invalidate($file, true);
+	}
+
 	return true;
 }
 

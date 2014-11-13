@@ -120,7 +120,7 @@ class DBLayer
 
 			++$this->num_queries;
 
-			$this->last_query_text[$this->query_result] = $sql;
+			$this->last_query_text[$this->num_queries] = $sql;
 
 			return $this->query_result;
 		}
@@ -264,7 +264,7 @@ class DBLayer
 
 	function insert_id()
 	{
-		$query_id = $this->query_result;
+		$query_id = $this->num_queries;
 
 		if ($query_id && $this->last_query_text[$query_id] != '')
 		{
