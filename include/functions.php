@@ -74,12 +74,12 @@ function forum_session_start() {
 		$forum_session_id = random_key(32, FALSE, TRUE);
 		session_id($forum_session_id);
 	}
-	
+
 	if (!isset($_SESSION))
 	{
 		session_start();
 	}
-	
+
 	if (!isset($_SESSION['initiated']))
 	{
 		session_regenerate_id();
@@ -798,6 +798,32 @@ function get_saved_queries()
 // Return all code blocks that hook into $hook_id
 function get_hook($hook_id)
 {
+	if (!defined('FORUM_DISABLE_HOOKS') && defined('FORUM_NEW_HOOKS_STYLE')) {
+		static $handlers = array();
+
+		// TODO $handlers = get from cache
+
+		// NOTE function name for handler: {hook_id}_{some_func_name}
+		if (empty($handlers)) {
+			$prefix = $hook_id . '_';
+			$functions = get_defined_functions();
+			foreach ($functions['user'] as $fn) {
+				if (substr($fn, 0, strlen($prefix)) == $prefix) {
+					$handlers[] = $fn;
+				}
+	    }
+			if (!empty($handlers)) {
+				sort($handlers);
+			}
+
+	    // TODO $handlers set to cache
+		}
+
+		foreach ($handlers as $fn) {
+			$fn();
+		}
+	}
+
 	global $forum_hooks;
 
 	return !defined('FORUM_DISABLE_HOOKS') && isset($forum_hooks[$hook_id]) ? implode("\n", $forum_hooks[$hook_id]) : false;
@@ -2989,10 +3015,10 @@ function csrf_confirm_form()
 		}
 
 		($hook = get_hook('fn_redirect_pre_send_json')) ? eval($hook) : null;
-		
+
 		send_json($json_data);
-	}	
-	
+	}
+
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
@@ -3061,7 +3087,7 @@ function message($message, $link = '', $heading = '')
 	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader, $forum_flash;
 
 	($hook = get_hook('fn_message_start')) ? eval($hook) : null;
-	
+
 	if (defined('FORUM_REQUEST_AJAX'))
 	{
 		$json_data = array(
@@ -3070,7 +3096,7 @@ function message($message, $link = '', $heading = '')
 		);
 
 		($hook = get_hook('fn_message_pre_send_json')) ? eval($hook) : null;
-		
+
 		send_json($json_data);
 	}
 
@@ -3240,12 +3266,12 @@ function redirect($destination_url, $message)
 			'message'	=> $message,
 			'destination_url' => $destination_url
 		);
-	
+
 		($hook = get_hook('fn_redirect_pre_send_json')) ? eval($hook) : null;
-		
+
 		send_json($json_data);
-	}	
-	
+	}
+
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($forum_config['o_redirect_delay'] == '0')
 		header('Location: '.str_replace('&amp;', '&', $destination_url));

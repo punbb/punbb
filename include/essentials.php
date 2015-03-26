@@ -135,6 +135,19 @@ if (!defined('FORUM_HOOKS_LOADED'))
 	require FORUM_CACHE_DIR.'cache_hooks.php';
 }
 
+// Init new style hooks
+if (!defined('FORUM_DISABLE_HOOKS') && defined('FORUM_NEW_HOOKS_STYLE')) {
+	foreach (glob(FORUM_ROOT . 'extensions/*') as $tmp_ext_name) {
+		if (!is_dir($tmp_ext_name)) {
+			continue;
+		}
+		$tmp_ext_name .= '/init.php';
+		if (file_exists($tmp_ext_name)) {
+			require $tmp_ext_name;
+		}
+	}
+}
+
 // A good place to add common functions for your extension
 ($hook = get_hook('es_essentials')) ? eval($hook) : null;
 
