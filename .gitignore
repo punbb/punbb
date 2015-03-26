@@ -9,4 +9,5 @@ db.sqlite
 test.php
 extensions/
 .htaccess
+*.sublime-*
 
