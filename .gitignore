@@ -9,5 +9,6 @@ db.sqlite
 test.php
 extensions/
 .htaccess
-*.sublime-*
 
+*.sublime-*
+/style/Oxygenwrap/
