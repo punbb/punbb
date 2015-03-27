@@ -804,23 +804,24 @@ function get_hook($hook_id)
 		// TODO $handlers = get from cache
 
 		// NOTE function name for handler: {hook_id}_{some_func_name}
-		if (empty($handlers)) {
+		if (empty($handlers[$hook_id])) {
 			$prefix = $hook_id . '_';
 			$functions = get_defined_functions();
 			foreach ($functions['user'] as $fn) {
 				if (substr($fn, 0, strlen($prefix)) == $prefix) {
-					$handlers[] = $fn;
+					$handlers[$hook_id][] = $fn;
 				}
 	    }
-			if (!empty($handlers)) {
-				sort($handlers);
+			if (!empty($handlers[$hook_id])) {
+				sort($handlers[$hook_id]);
 			}
 
 	    // TODO $handlers set to cache
 		}
-
-		foreach ($handlers as $fn) {
-			$fn();
+		if (!empty($handlers[$hook_id])) {
+			foreach ($handlers[$hook_id] as $fn) {
+				$fn();
+			}
 		}
 	}
 
