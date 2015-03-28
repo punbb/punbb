@@ -14,37 +14,9 @@ if (!defined('FORUM'))
 
 // START SUBST - <!-- forum_about -->
 ob_start();
-($hook = get_hook('ft_about_output_start')) ? eval($hook) : null;
-
-// Display the "Jump to" drop list
-if ($forum_user['g_read_board'] == '1' && $forum_config['o_quickjump'] == '1')
-{
-	($hook = get_hook('ft_about_pre_quickjump')) ? eval($hook) : null;
-
-	// Load cached quickjump
-	if (file_exists(FORUM_CACHE_DIR.'cache_quickjump_'.$forum_user['g_id'].'.php'))
-		include FORUM_CACHE_DIR.'cache_quickjump_'.$forum_user['g_id'].'.php';
-
-	if (!defined('FORUM_QJ_LOADED'))
-	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
-		generate_quickjump_cache($forum_user['g_id']);
-		require FORUM_CACHE_DIR.'cache_quickjump_'.$forum_user['g_id'].'.php';
-	}
-}
-
-($hook = get_hook('ft_about_pre_copyright')) ? eval($hook) : null;
-
-?>
-	<p id="copyright"><?php echo sprintf($lang_common['Powered by'], '<a href="http://punbb.informer.com/">PunBB</a>'.($forum_config['o_show_version'] == '1' ? ' '.$forum_config['o_cur_version'] : ''), '<a href="http://www.informer.com/">Informer Technologies, Inc</a>') ?></p>
-<?php
-
-($hook = get_hook('ft_about_end')) ? eval($hook) : null;
-
-$tpl_temp = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_about -->', $tpl_temp, $tpl_main);
+include FORUM_ROOT . 'include/view/partial/about.php';
+$view_forum_about = forum_trim(ob_get_contents());
+$tpl_main = str_replace('<!-- forum_about -->', $view_forum_about, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_about -->
 
@@ -53,71 +25,18 @@ ob_end_clean();
 if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 {
 	ob_start();
-
-	($hook = get_hook('ft_debug_output_start')) ? eval($hook) : null;
-
-	// Display debug info (if enabled/defined)
-	if (defined('FORUM_DEBUG'))
-	{
-		// Calculate script generation time
-		$time_diff = forum_microtime() - $forum_start;
-		$query_time_total = $time_percent_db = 0.0;
-
-		$saved_queries = $forum_db->get_saved_queries();
-		if (count($saved_queries) > 0)
-		{
-			foreach ($saved_queries as $cur_query)
-			{
-				$query_time_total += $cur_query[1];
-			}
-
-			if ($query_time_total > 0 && $time_diff > 0)
-			{
-				$time_percent_db = ($query_time_total / $time_diff) * 100;
-			}
-		}
-
-		echo '<p id="querytime" class="quiet">'.sprintf($lang_common['Querytime'],
-			forum_number_format($time_diff, 3),
-			forum_number_format(100 - $time_percent_db, 0),
-			forum_number_format($time_percent_db, 0),
-			forum_number_format($forum_db->get_num_queries())).'</p>'."\n";
-	}
-
-	if (defined('FORUM_SHOW_QUERIES'))
-		echo get_saved_queries();
-
-	($hook = get_hook('ft_debug_end')) ? eval($hook) : null;
-
-	$tpl_temp = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_debug -->', $tpl_temp, $tpl_main);
+	include FORUM_ROOT . 'include/view/partial/debug.php';
+	$view_forum_debug = forum_trim(ob_get_contents());
+	$tpl_main = str_replace('<!-- forum_debug -->', $view_forum_debug, $tpl_main);
 	ob_end_clean();
 }
 // END SUBST - <!-- forum_debug -->
 
 
 // START SUBST - <!-- forum_javascript -->
-$forum_javascript_commonjs_urls = '
-	if (typeof PUNBB === \'undefined\' || !PUNBB) {
-		var PUNBB = {};
-	}
-
-	PUNBB.env = {
-		base_url: "'.forum_htmlencode($base_url).'/",
-		base_js_url: "'.forum_htmlencode($base_url).'/include/js/",
-		user_lang: "'.forum_htmlencode($forum_user['language']).'",
-		user_style: "'.forum_htmlencode($forum_user['style']).'",
-		user_is_guest: "'.forum_htmlencode(($forum_user['is_guest'] == 1) ? "1" : "0").'",
-		page: "'.forum_htmlencode((defined("FORUM_PAGE")) ? FORUM_PAGE : "unknown" ).'"
-	};';
-
-
-$forum_loader->add_js($forum_javascript_commonjs_urls, array('type' => 'inline', 'weight' => 50, 'group' => FORUM_JS_GROUP_SYSTEM));
-$forum_loader->add_js($base_url.'/include/js/min/punbb.common.min.js', array('weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
-
-($hook = get_hook('ft_js_include')) ? eval($hook) : null;
-
-$tpl_main = str_replace('<!-- forum_javascript -->', $forum_loader->render_js(), $tpl_main);
+include FORUM_ROOT . 'include/view/partial/javascript.php';
+$view_forum_javascript = $forum_loader->render_js();
+$tpl_main = str_replace('<!-- forum_javascript -->', $view_forum_javascript, $tpl_main);
 // END SUBST - <!-- forum_javascript -->
 
 // Last call!
