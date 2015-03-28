@@ -1,6 +1,6 @@
 <?php
 
-if (!file_exists('init_new_style_hooks')) {
+if (!function_exists('init_new_style_hooks')) {
 
 function init_new_style_hooks() {
 	if (defined('FORUM_DISABLE_HOOKS') || !defined('FORUM_NEW_HOOKS_STYLE')) {
