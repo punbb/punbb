@@ -799,27 +799,9 @@ function get_saved_queries()
 function get_hook($hook_id)
 {
 	if (!defined('FORUM_DISABLE_HOOKS') && defined('FORUM_NEW_HOOKS_STYLE')) {
-		static $handlers = array();
-
-		// TODO $handlers = get from cache
-
-		// NOTE function name for handler: {hook_id}_{some_func_name}
-		if (empty($handlers[$hook_id])) {
-			$prefix = $hook_id . '_';
-			$functions = get_defined_functions();
-			foreach ($functions['user'] as $fn) {
-				if (substr($fn, 0, strlen($prefix)) == $prefix) {
-					$handlers[$hook_id][] = $fn;
-				}
-	    }
-			if (!empty($handlers[$hook_id])) {
-				sort($handlers[$hook_id]);
-			}
-
-	    // TODO $handlers set to cache
-		}
-		if (!empty($handlers[$hook_id])) {
-			foreach ($handlers[$hook_id] as $fn) {
+		global $forum_new_hooks;
+		if (!empty($forum_new_hooks[$hook_id])) {
+			foreach ($forum_new_hooks[$hook_id] as $fn) {
 				$fn();
 			}
 		}
