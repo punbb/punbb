@@ -209,13 +209,12 @@ if (isset($_GET['tid']))
 		define('FORUM_PAGE', 'dialogue');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'moderate/dialogue';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/moderate/dialogue.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -324,13 +323,12 @@ if (isset($_GET['tid']))
 		define('FORUM_PAGE', 'dialogue');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'moderate/dialogue2';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/moderate/dialogue2.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -395,13 +393,12 @@ if (isset($_GET['tid']))
 	define('FORUM_PAGE', 'modtopic');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'moderate/modtopic';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/moderate/modtopic.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -609,13 +606,12 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	define('FORUM_PAGE', 'dialogue');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'moderate/dialogue3';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/moderate/dialogue3.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -728,13 +724,12 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	define('FORUM_PAGE', 'dialogue');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'moderate/dialogue4';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/moderate/dialogue4.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -865,13 +860,12 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	define('FORUM_PAGE', 'dialogue');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'moderate/dialogue5';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/moderate/dialogue5.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -1141,12 +1135,11 @@ $forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['ma
 define('FORUM_PAGE', 'modforum');
 require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
+$view_forum_main = 'moderate/modforum';
+
 ob_start();
-include FORUM_ROOT . 'include/view/moderate/modforum.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+include view($view_forum_layout);
+$tpl_main = forum_trim(ob_get_contents());
 ob_end_clean();
-// END SUBST - <!-- forum_main -->
 
 require FORUM_ROOT.'footer.php';

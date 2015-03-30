@@ -2,23 +2,7 @@
 
 ($hook = get_hook('mr_post_actions_output_start')) ? eval($hook) : null;
 
-?>
-	<div class="main-head">
-<?php
-
-	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
-
-?>
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
-	</div>
-	<form id="mr-post-actions-form" class="newform" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
-	<div class="main-content main-topic">
-		<div class="hidden">
-			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
-		</div>
-
-<?php
+include view('moderate/topic_start');
 
 	if (!defined('FORUM_PARSER_LOADED'))
 		require FORUM_ROOT.'include/parser.php';
@@ -110,62 +94,10 @@
 
 		($hook = get_hook('mr_post_actions_row_pre_display')) ? eval($hook) : null;
 
-?>
-			<div class="<?php echo implode(' ', $forum_page['item_status']) ?>">
-				<div id="p<?php echo $cur_post['id'] ?>" class="posthead">
-					<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
-<?php ($hook = get_hook('mr_post_actions_pre_item_select')) ? eval($hook) : null; ?>
-<?php if (isset($forum_page['item_select'])) echo "\t\t\t\t".$forum_page['item_select']."\n" ?>
-<?php ($hook = get_hook('mr_post_actions_new_post_head_option')) ? eval($hook) : null; ?>
-				</div>
-				<div class="postbody">
-					<div class="post-author">
-						<ul class="author-ident">
-							<?php echo implode("\n\t\t\t\t\t\t", $forum_page['author_ident'])."\n" ?>
-						</ul>
-<?php ($hook = get_hook('mr_post_actions_new_user_ident_data')) ? eval($hook) : null; ?>
-					</div>
-					<div class="post-entry">
-						<h4 class="entry-title"><?php echo $forum_page['item_subject'] ?></h4>
-						<div class="entry-content">
-							<?php echo implode("\n\t\t\t\t\t\t\t", $forum_page['message'])."\n" ?>
-						</div>
-<?php ($hook = get_hook('mr_post_actions_new_post_entry_data')) ? eval($hook) : null; ?>
-					</div>
-				</div>
-			</div>
-<?php
-
+		include view('moderate/post');
 	}
 
-?>
-	</div>
-<?php
-
-$forum_page['mod_options'] = array(
-	'del_posts'		=> '<span class="submit first-item"><input type="submit" name="delete_posts" value="'.$lang_misc['Delete posts'].'" /></span>',
-	'split_posts'	=> '<span class="submit"><input type="submit" name="split_posts" value="'.$lang_misc['Split posts'].'" /></span>',
-	'del_topic'		=> '<span><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.$lang_misc['Delete whole topic'].'</a></span>'
-);
-
-($hook = get_hook('mr_post_actions_pre_mod_options')) ? eval($hook) : null;
-
-?>
-
-	<div class="main-options mod-options gen-content">
-		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
-	</div>
-	</form>
-	<div class="main-foot">
-<?php
-
-	if (!empty($forum_page['main_foot_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
-
-?>
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
-	</div>
-<?php
+	include view('moderate/topic_end');
 
 	$forum_id = $fid;
 

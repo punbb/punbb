@@ -11,25 +11,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 ($hook = get_hook('mr_topic_actions_output_start')) ? eval($hook) : null;
 
-?>
-	<div class="main-head">
-<?php
-
-	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
-
-?>
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
-	</div>
-	<form id="mr-topic-actions-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
-	<div class="main-subhead">
-		<p class="item-summary<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf($lang_forum['Forum subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
-	</div>
-	<div id="forum<?php echo $fid ?>" class="main-content main-forum<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>">
-		<div class="hidden">
-			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
-		</div>
-<?php
+	include view('moderate/forum_start');
 
 	$forum_page['item_count'] = 0;
 
@@ -144,53 +126,10 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 		($hook = get_hook('mr_topic_actions_row_pre_display')) ? eval($hook) : null;
 
-?>
-			<div id="topic<?php echo $cur_topic['id'] ?>" class="main-item<?php echo $forum_page['item_style'] ?>">
-				<span class="icon <?php echo implode(' ', $forum_page['item_status']) ?>"><!-- --></span>
-				<div class="item-subject">
-					<?php echo implode("\n\t\t\t\t\t", $forum_page['item_body']['subject'])."\n" ?>
-				</div>
-				<ul class="item-info">
-					<?php echo implode("\n\t\t\t\t\t", $forum_page['item_body']['info'])."\n" ?>
-				</ul>
-			</div>
-<?php
-
+		include view('moderate/topic');
 	}
 
-?>
-	</div>
-<?php
-
-	($hook = get_hook('mr_topic_actions_post_topic_list')) ? eval($hook) : null;
-
-	// Setup moderator control buttons
-	$forum_page['mod_options'] = array(
-		'mod_move'		=> '<span class="submit first-item"><input type="submit" name="move_topics" value="'.$lang_misc['Move'].'" /></span>',
-		'mod_delete'	=> '<span class="submit"><input type="submit" name="delete_topics" value="'.$lang_common['Delete'].'" /></span>',
-		'mod_merge'		=> '<span class="submit"><input type="submit" name="merge_topics" value="'.$lang_misc['Merge'].'" /></span>',
-		'mod_open'		=> '<span class="submit"><input type="submit" name="open" value="'.$lang_misc['Open'].'" /></span>',
-		'mod_close'		=> '<span class="submit"><input type="submit" name="close" value="'.$lang_misc['Close'].'" /></span>'
-	);
-
-	($hook = get_hook('mr_topic_actions_pre_mod_option_output')) ? eval($hook) : null;
-
-?>
-	<div class="main-options mod-options gen-content">
-		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
-	</div>
-	</form>
-	<div class="main-foot">
-<?php
-
-	if (!empty($forum_page['main_foot_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
-
-?>
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
-	</div>
-
-<?php
+	include view('moderate/forum_end');
 
 $forum_id = $fid;
 
