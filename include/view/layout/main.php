@@ -40,7 +40,7 @@
 
 	<?php
 	if (!empty($view_show_qpost)) {
-		include view('viewtopic/qpost')
+		include view('viewtopic/qpost');
 	}
 	?>
 

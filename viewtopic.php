@@ -253,14 +253,6 @@ if (!$pid)
 	define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'viewtopic');
-require FORUM_ROOT.'header.php';
-
-$view_forum_main = 'viewtopic/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
 
 // Display quick post if enabled
 if ($forum_config['o_quickpost'] == '1' &&
@@ -285,5 +277,14 @@ if ($forum_config['o_topic_views'] == '1')
 }
 
 $forum_id = $cur_topic['forum_id'];
+
+require FORUM_ROOT.'header.php';
+
+$view_forum_main = 'viewtopic/main';
+
+ob_start();
+include view($view_forum_layout);
+$tpl_main = forum_trim(ob_get_contents());
+ob_end_clean();
 
 require FORUM_ROOT.'footer.php';
