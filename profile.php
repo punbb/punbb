@@ -131,13 +131,12 @@ if ($action == 'change_pass')
 			define('FORUM_PAGE', 'profile-changepass');
 			require FORUM_ROOT.'header.php';
 
-			// START SUBST - <!-- forum_main -->
+			$view_forum_main = 'profile/profile_changepass';
+
 			ob_start();
-			include FORUM_ROOT . 'include/view/profile/profile_changepass.php';
-			$view_forum_main = forum_trim(ob_get_contents());
-			$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+			include view($view_forum_layout);
+			$tpl_main = forum_trim(ob_get_contents());
 			ob_end_clean();
-			// END SUBST - <!-- forum_main -->
 
 			require FORUM_ROOT.'footer.php';
 		}
@@ -229,13 +228,12 @@ if ($action == 'change_pass')
 	define('FORUM_PAGE', 'profile-changepass');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'profile/profile_changepass2';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/profile/profile_changepass2.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -419,13 +417,12 @@ else if ($action == 'change_email')
 	define('FORUM_PAGE', 'profile-changemail');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'profile/profile_changemail';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/profile/profile_changemail.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -488,13 +485,12 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	define('FORUM_PAGE', 'dialogue');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'profile/dialogue';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/profile/dialogue.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -1301,13 +1297,12 @@ if ($forum_user['id'] != $id &&
 	define('FORUM_PAGE', 'profile');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'profile/profile';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/profile/profile.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -1539,13 +1534,12 @@ else
 		define('FORUM_PAGE', 'profile-about');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'profile/profile_about';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/profile/profile_about.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -1578,13 +1572,12 @@ else
 		define('FORUM_PAGE', 'profile-identity');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'profile/profile_identity';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/profile/profile_identity.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -1630,13 +1623,12 @@ else
 		define('FORUM_PAGE', 'profile-settings');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'profile/profile_settings';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/profile/profile_settings.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -1678,13 +1670,12 @@ else
 		define('FORUM_PAGE', 'profile-signature');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'profile/profile_signature';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/profile/profile_signature.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -1732,13 +1723,12 @@ else
 		define('FORUM_PAGE', 'profile-avatar');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'profile/profile_avatar';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/profile/profile_avatar.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
@@ -1780,13 +1770,12 @@ else
 		define('FORUM_PAGE', 'profile-admin');
 		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
+		$view_forum_main = 'profile/profile_admin';
+
 		ob_start();
-		include FORUM_ROOT . 'include/view/profile/profile_admin.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+		include view($view_forum_layout);
+		$tpl_main = forum_trim(ob_get_contents());
 		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
 
 		require FORUM_ROOT.'footer.php';
 	}
