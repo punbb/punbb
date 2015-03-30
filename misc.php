@@ -39,16 +39,9 @@ if ($action == 'rules')
 	($hook = get_hook('mi_rules_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'rules');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'misc/rules';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -294,16 +287,9 @@ else if (isset($_GET['email']))
 	($hook = get_hook('mi_email_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'formemail');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'misc/email';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -441,16 +427,9 @@ else if (isset($_GET['report']))
 	($hook = get_hook('mi_report_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'report');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'misc/report';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
