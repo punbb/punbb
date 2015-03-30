@@ -68,17 +68,9 @@ if (isset($_GET['ip_stats']))
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-iresults');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/users/stats.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/users/stats';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -127,17 +119,9 @@ else if (isset($_GET['show_users']))
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-uresults');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/users/show.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/users/show';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -215,17 +199,9 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/users/delete.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/users/delete';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -347,17 +323,9 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/users/ban_users.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/users/ban_users';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -436,17 +404,9 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/users/change_group.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/users/change_group';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -596,17 +556,9 @@ else if (isset($_GET['find_user']))
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-uresults');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/users/find.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/users/find';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -629,14 +581,6 @@ $forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($foru
 
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-users');
-require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
-ob_start();
-include FORUM_ROOT . 'include/view/admin/users/search.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+$view_forum_main = 'admin/users/search';
+include FORUM_ROOT . 'include/render.php';
