@@ -178,16 +178,8 @@ if (isset($query))
 	else
 		define('FORUM_PAGE', 'searchforums');
 
-	require FORUM_ROOT.'header.php';
-
 	$view_forum_main = 'search/search_forums';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 //
@@ -234,13 +226,6 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 ($hook = get_hook('se_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'search');
-require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'search/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
