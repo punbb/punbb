@@ -24,28 +24,7 @@ if (isset($_POST['preview']) && empty($errors))
 
 	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;
 
-?>
-	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic'] ?></span></h2>
-	</div>
-	<div id="post-preview" class="main-content main-frm">
-		<div class="post singlepost">
-			<div class="posthead">
-				<h3 class="hn"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
-<?php ($hook = get_hook('po_preview_new_post_head_option')) ? eval($hook) : null; ?>
-			</div>
-			<div class="postbody">
-				<div class="post-entry">
-					<div class="entry-content">
-						<?php echo $forum_page['preview_message']."\n" ?>
-					</div>
-<?php ($hook = get_hook('po_preview_new_post_entry_data')) ? eval($hook) : null; ?>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php
-
+	include view('post/preview');
 }
 
 ?>
@@ -55,8 +34,9 @@ if (isset($_POST['preview']) && empty($errors))
 	<div id="post-form" class="main-content main-frm">
 <?php
 
-	if (!empty($forum_page['text_options']))
+	if (!empty($forum_page['text_options'])) {
 		echo "\t\t".'<p class="ct-options options">'.sprintf($lang_common['You may use'], implode(' ', $forum_page['text_options'])).'</p>'."\n";
+	}
 
 	// If there were any errors, show them
 	if (!empty($errors))
@@ -209,7 +189,6 @@ if (!empty($forum_page['checkboxes']))
 	</div>
 <?php
 
-
 // Check if the topic review is to be displayed
 if ($tid && $forum_config['o_topic_review'] != '0')
 {
@@ -244,54 +223,7 @@ if ($tid && $forum_config['o_topic_review'] != '0')
 	{
 		$posts[] = $cur_post;
 	}
-
-?>
-	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_post['Topic review'] ?></span></h2>
-	</div>
-	<div id="topic-review" class="main-content main-frm">
-<?php
-
-	$forum_page['item_count'] = 0;
-	$forum_page['item_total'] = count($posts);
-
-	foreach ($posts as $cur_post)
-	{
-		++$forum_page['item_count'];
-
-		$forum_page['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
-
-		// Generate the post heading
-		$forum_page['post_ident'] = array();
-		$forum_page['post_ident']['num'] = '<span class="post-num">'.forum_number_format($forum_page['total_post_count'] - $forum_page['item_count'] + 1).'</span>';
-		$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf($lang_post['Post byline'], '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
-		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.$lang_post['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
-
-		($hook = get_hook('po_topic_review_row_pre_display')) ? eval($hook) : null;
-
-?>
-		<div class="post<?php if ($forum_page['item_count'] == 1) echo ' firstpost'; ?><?php if ($forum_page['item_total'] == $forum_page['item_count']) echo ' lastpost'; ?>">
-			<div class="posthead">
-				<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
-<?php ($hook = get_hook('po_topic_review_new_post_head_option')) ? eval($hook) : null; ?>
-			</div>
-			<div class="postbody">
-				<div class="post-entry">
-					<div class="entry-content">
-						<?php echo $forum_page['message']."\n" ?>
-<?php ($hook = get_hook('po_topic_review_new_post_entry_data')) ? eval($hook) : null; ?>
-					</div>
-				</div>
-			</div>
-		</div>
-<?php
-
-	}
-
-?>
-	</div>
-<?php
-
+	include view('post/topic_review');
 }
 
 $forum_id = $cur_posting['id'];
