@@ -129,16 +129,9 @@ if ($action == 'change_pass')
 			($hook = get_hook('pf_change_pass_key_pre_header_load')) ? eval($hook) : null;
 
 			define('FORUM_PAGE', 'profile-changepass');
-			require FORUM_ROOT.'header.php';
 
 			$view_forum_main = 'profile/profile_changepass';
-
-			ob_start();
-			include view($view_forum_layout);
-			$tpl_main = forum_trim(ob_get_contents());
-			ob_end_clean();
-
-			require FORUM_ROOT.'footer.php';
+			include FORUM_ROOT . 'include/render.php';
 		}
 	}
 
@@ -226,16 +219,9 @@ if ($action == 'change_pass')
 	($hook = get_hook('pf_change_pass_normal_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'profile-changepass');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'profile/profile_changepass2';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -415,16 +401,9 @@ else if ($action == 'change_email')
 	($hook = get_hook('pf_change_email_normal_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'profile-changemail');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'profile/profile_changemail';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isset($_POST['cancel']))
@@ -483,16 +462,9 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	($hook = get_hook('pf_delete_user_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'dialogue');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'profile/dialogue';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -1295,16 +1267,9 @@ if ($forum_user['id'] != $id &&
 
 	define('FORUM_ALLOW_INDEX', 1);
 	define('FORUM_PAGE', 'profile');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'profile/profile';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 else
 {
@@ -1532,16 +1497,9 @@ else
 		($hook = get_hook('pf_change_details_about_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-about');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'profile/profile_about';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 	else if ($section == 'identity')
@@ -1570,16 +1528,9 @@ else
 		($hook = get_hook('pf_change_details_identity_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-identity');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'profile/profile_identity';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 	else if ($section == 'settings')
@@ -1621,16 +1572,9 @@ else
 		($hook = get_hook('pf_change_details_settings_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-settings');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'profile/profile_settings';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 	else if ($section == 'signature' && $forum_config['o_signatures'] == '1')
@@ -1668,16 +1612,9 @@ else
 		($hook = get_hook('pf_change_details_signature_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-signature');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'profile/profile_signature';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 	else if ($section == 'avatar' && $forum_config['o_avatars'] == '1')
@@ -1721,16 +1658,9 @@ else
 		($hook = get_hook('pf_change_details_avatar_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-avatar');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'profile/profile_avatar';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 	else if ($section == 'admin')
@@ -1768,16 +1698,9 @@ else
 		($hook = get_hook('pf_change_details_admin_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'profile-admin');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'profile/profile_admin';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 	($hook = get_hook('pf_change_details_new_section')) ? eval($hook) : null;
