@@ -205,15 +205,7 @@ if ($forum_page['num_pages'] > 1)
 define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'viewforum');
-require FORUM_ROOT.'header.php';
-
-$view_forum_main = 'viewforum/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
 $forum_id = $id;
 
-require FORUM_ROOT.'footer.php';
+$view_forum_main = 'viewforum/main';
+include FORUM_ROOT . 'include/render.php';
