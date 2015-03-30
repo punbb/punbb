@@ -116,13 +116,6 @@ if ($forum_page['num_pages'] > 1)
 define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'userlist');
-require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'userlist/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
