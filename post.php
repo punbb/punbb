@@ -328,13 +328,6 @@ $forum_page['crumbs'][] = $tid ? $lang_post['Post reply'] : $lang_post['Post new
 ($hook = get_hook('po_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'post');
-require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'post/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
