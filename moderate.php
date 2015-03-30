@@ -207,16 +207,9 @@ if (isset($_GET['tid']))
 		($hook = get_hook('mr_confirm_delete_posts_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'dialogue');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'moderate/dialogue';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
 	{
@@ -321,16 +314,9 @@ if (isset($_GET['tid']))
 		($hook = get_hook('mr_confirm_split_posts_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'dialogue');
-		require FORUM_ROOT.'header.php';
 
 		$view_forum_main = 'moderate/dialogue2';
-
-		ob_start();
-		include view($view_forum_layout);
-		$tpl_main = forum_trim(ob_get_contents());
-		ob_end_clean();
-
-		require FORUM_ROOT.'footer.php';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
 
@@ -391,16 +377,9 @@ if (isset($_GET['tid']))
 	($hook = get_hook('mr_post_actions_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'modtopic');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'moderate/modtopic';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -604,16 +583,9 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	($hook = get_hook('mr_move_topics_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'dialogue');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'moderate/dialogue3';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -722,16 +694,9 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	($hook = get_hook('mr_merge_topics_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'dialogue');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'moderate/dialogue4';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -858,16 +823,9 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	($hook = get_hook('mr_delete_topics_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'dialogue');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'moderate/dialogue5';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -1133,13 +1091,6 @@ $forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['ma
 ($hook = get_hook('mr_topic_actions_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'modforum');
-require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'moderate/modforum';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
