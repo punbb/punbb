@@ -60,7 +60,6 @@ define('FORUM_PAGE', 'index');
 require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'index/main';
-$view_forum_info = 'index/info';
 
 ob_start();
 include view($view_forum_layout);

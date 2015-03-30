@@ -39,7 +39,7 @@
 	</div>
 		<?= $view_forum_qpost ?>
 
-		<?php include view($view_forum_info) ?>
+		<?php include view('index/info') ?>
 
 	<div class="hr"><hr /></div>
 	<div id="brd-about">
