@@ -37,9 +37,14 @@
 		<?= $view_forum_pagepost_end ?>
 		<?= $view_forum_crumbs_end ?>
 	</div>
-		<?= $view_forum_qpost ?>
 
-		<?php include view('index/info') ?>
+	<?php
+	if (!empty($view_show_qpost)) {
+		include view('viewtopic/qpost')
+	}
+	?>
+
+	<?php include view('index/info') ?>
 
 	<div class="hr"><hr /></div>
 	<div id="brd-about">

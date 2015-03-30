@@ -255,15 +255,12 @@ if (!$pid)
 define('FORUM_PAGE', 'viewtopic');
 require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
+$view_forum_main = 'viewtopic/main';
+
 ob_start();
-include FORUM_ROOT . 'include/view/viewtopic/main.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+include view($view_forum_layout);
+$tpl_main = forum_trim(ob_get_contents());
 ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-
 
 // Display quick post if enabled
 if ($forum_config['o_quickpost'] == '1' &&
@@ -271,15 +268,7 @@ if ($forum_config['o_quickpost'] == '1' &&
 	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && $forum_user['g_post_replies'] == '1')) &&
 	($cur_topic['closed'] == '0' || $forum_page['is_admmod']))
 {
-
-// START SUBST - <!-- forum_qpost -->
-ob_start();
-include FORUM_ROOT . 'include/view/viewtopic/qpost.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_qpost -->', $view_forum_main, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_qpost -->
-
+	$view_show_qpost = 1;
 }
 
 // Increment "num_views" for topic
