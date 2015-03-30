@@ -41,13 +41,12 @@ if ($action == 'rules')
 	define('FORUM_PAGE', 'rules');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'misc/rules';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/misc/rules.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -297,13 +296,12 @@ else if (isset($_GET['email']))
 	define('FORUM_PAGE', 'formemail');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'misc/email';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/misc/email.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
@@ -445,13 +443,12 @@ else if (isset($_GET['report']))
 	define('FORUM_PAGE', 'report');
 	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
+	$view_forum_main = 'misc/report';
+
 	ob_start();
-	include FORUM_ROOT . 'include/view/misc/report.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+	include view($view_forum_layout);
+	$tpl_main = forum_trim(ob_get_contents());
 	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
 
 	require FORUM_ROOT.'footer.php';
 }
