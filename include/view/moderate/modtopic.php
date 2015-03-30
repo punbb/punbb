@@ -2,7 +2,7 @@
 
 ($hook = get_hook('mr_post_actions_output_start')) ? eval($hook) : null;
 
-include view('moderate/topic_start');
+include view('moderate/posts_start');
 
 	if (!defined('FORUM_PARSER_LOADED'))
 		require FORUM_ROOT.'include/parser.php';
@@ -97,7 +97,7 @@ include view('moderate/topic_start');
 		include view('moderate/post');
 	}
 
-	include view('moderate/topic_end');
+	include view('moderate/posts_end');
 
 	$forum_id = $fid;
 
