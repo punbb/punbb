@@ -54,16 +54,9 @@ else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_P
 	($hook = get_hook('rg_rules_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'rules-register');
-	require FORUM_ROOT.'header.php';
 
 	$view_forum_main = 'register/rules';
-
-	ob_start();
-	include view($view_forum_layout);
-	$tpl_main = forum_trim(ob_get_contents());
-	ob_end_clean();
-
-	require FORUM_ROOT.'footer.php';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 else if (isset($_POST['form_sent']))
@@ -279,13 +272,6 @@ $forum_loader->add_js('PUNBB.timezone.detect_on_register_form();', array('type' 
 ($hook = get_hook('rg_register_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'register');
-require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'register/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
