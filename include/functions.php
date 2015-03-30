@@ -3533,3 +3533,9 @@ function send_json($params)
 	echo json_encode($params);
 	die;
 }
+
+// using defined template engine
+if (!defined('FORUM_TEMPLATE_ENGINE')) {
+	define('FORUM_TEMPLATE_ENGINE', 'php');
+}
+require FORUM_ROOT . 'include/view/' . FORUM_TEMPLATE_ENGINE . '-template.php';

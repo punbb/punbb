@@ -23,14 +23,7 @@ $stats_list['no_of_posts'] = '<li class="st-activity"><span>'.sprintf($lang_inde
 
 ($hook = get_hook('in_stats_pre_info_output')) ? eval($hook) : null;
 
-?>
-<div id="brd-stats" class="gen-content">
-	<h2 class="hn"><span><?php echo $lang_index['Statistics'] ?></span></h2>
-	<ul>
-		<?php echo implode("\n\t\t", $stats_list)."\n" ?>
-	</ul>
-</div>
-<?php
+include view('index/stat');
 
 ($hook = get_hook('in_stats_end')) ? eval($hook) : null;
 ($hook = get_hook('in_users_online_start')) ? eval($hook) : null;
@@ -68,14 +61,8 @@ if ($forum_config['o_users_online'] == '1')
 	$forum_page['online_info']['users'] = ($forum_page['num_users'] == 0) ? $lang_index['Users none'] : sprintf((($forum_page['num_users'] == 1) ? $lang_index['Users single'] : $lang_index['Users plural']), forum_number_format($forum_page['num_users']));
 
 	($hook = get_hook('in_users_online_pre_online_info_output')) ? eval($hook) : null;
-?>
-<div id="brd-online" class="gen-content">
-	<h3 class="hn"><span><?php printf($lang_index['Currently online'], implode($lang_index['Online stats separator'], $forum_page['online_info'])) ?></span></h3>
-<?php if (!empty($users)): ?>
-	<p><?php echo implode($lang_index['Online list separator'], $users) ?></p>
-<?php endif; ($hook = get_hook('in_new_online_data')) ? eval($hook) : null; ?>
-</div>
-<?php
+
+	include view('index/online');
 
 	($hook = get_hook('in_users_online_end')) ? eval($hook) : null;
 }

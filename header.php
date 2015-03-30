@@ -44,6 +44,9 @@ else
 		$tpl_path = FORUM_ROOT.'include/template/main.tpl';
 }
 
+// init layout for templates
+$view_forum_layout = 'layout/' . basename($tpl_path, '.tpl');
+
 ($hook = get_hook('hd_pre_template_loaded')) ? eval($hook) : null;
 
 $tpl_main = file_get_contents($tpl_path);

@@ -33,8 +33,9 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 	if ($cur_forum['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
 	{
-		if ($forum_page['cur_category'] != 0)
-			echo "\t".'</div>'."\n";
+		if ($forum_page['cur_category'] != 0) {
+			include view('index/category_end');
+		}
 
 		++$forum_page['cat_count'];
 		$forum_page['item_count'] = 1;
@@ -49,15 +50,7 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 		$forum_page['cur_category'] = $cur_forum['cid'];
 
-?>	<div class="main-head">
-		<h2 class="hn"><span><?php echo forum_htmlencode($cur_forum['cat_name']) ?></span></h2>
-	</div>
-	<div class="main-subhead">
-		<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
-	</div>
-	<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
-<?php
-
+		include view('index/category_start');
 	}
 
 	// Reset arrays and globals for each forum
@@ -152,37 +145,16 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 	($hook = get_hook('in_row_pre_display')) ? eval($hook) : null;
 
-?>		<div id="forum<?php echo $cur_forum['fid'] ?>" class="main-item<?php echo $forum_page['item_style'] ?>">
-			<span class="icon <?php echo implode(' ', $forum_page['item_status']) ?>"><!-- --></span>
-			<div class="item-subject">
-				<?php echo implode("\n\t\t\t\t", $forum_page['item_body']['subject'])."\n" ?>
-			</div>
-			<ul class="item-info">
-				<?php echo implode("\n\t\t\t\t", $forum_page['item_body']['info'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
+	include view('index/topic');
 }
 // Did we output any categories and forums?
 if ($forum_page['cur_category'] > 0)
 {
-
-?>	</div>
-<?php
-
+	include view('index/category_end');
 }
 else
 {
-
-?>	<div class="main-head">
-		<h2 class="hn"><span><?php echo $lang_common['Forum message']?></span></h2>
-	</div>
-	<div class="main-content main-message">
-		<p><?php echo $lang_index['Empty board'] ?></p>
-	</div>
-<?php
-
+	include view('index/empty');
 }
 
 ($hook = get_hook('in_end')) ? eval($hook) : null;
