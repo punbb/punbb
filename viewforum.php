@@ -207,13 +207,12 @@ define('FORUM_ALLOW_INDEX', 1);
 define('FORUM_PAGE', 'viewforum');
 require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
+$view_forum_main = 'viewforum/main';
+
 ob_start();
-include FORUM_ROOT . 'include/view/viewforum/main.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
+include view($view_forum_layout);
+$tpl_main = forum_trim(ob_get_contents());
 ob_end_clean();
-// END SUBST - <!-- forum_main -->
 
 $forum_id = $id;
 
