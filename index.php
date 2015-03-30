@@ -57,13 +57,6 @@ $forum_page['main_title'] = forum_htmlencode($forum_config['o_board_title']);
 
 define('FORUM_ALLOW_INDEX', 1);
 define('FORUM_PAGE', 'index');
-require FORUM_ROOT.'header.php';
 
 $view_forum_main = 'index/main';
-
-ob_start();
-include view($view_forum_layout);
-$tpl_main = forum_trim(ob_get_contents());
-ob_end_clean();
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
