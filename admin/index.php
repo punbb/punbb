@@ -151,16 +151,8 @@ $forum_page['crumbs'][] = array($lang_admin_common['Information'], forum_link($f
 
 define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-information');
-require FORUM_ROOT.'header.php';
 
 $forum_page['item_count'] = 0;
 
-// START SUBST - <!-- forum_main -->
-ob_start();
-include FORUM_ROOT . 'include/view/admin/index/main.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+$view_forum_main = 'admin/index/main';
+include FORUM_ROOT . 'include/render.php';
