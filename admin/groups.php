@@ -86,17 +86,9 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-groups');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/groups/edit.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/groups/edit';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -391,17 +383,9 @@ else if (isset($_GET['del_group']))
 
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-groups');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/groups/delete.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/groups/delete';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -420,14 +404,6 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-groups');
-require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
-ob_start();
-include FORUM_ROOT . 'include/view/admin/groups/main.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+$view_forum_main = 'admin/groups/main';
+include FORUM_ROOT . 'include/render.php';
