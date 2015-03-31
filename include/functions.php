@@ -3024,43 +3024,9 @@ function csrf_confirm_form()
 		}
 
 	define('FORUM_PAGE', 'dialogue');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-
-	($hook = get_hook('fn_csrf_confirm_form_pre_header_load')) ? eval($hook) : null;
-
-?>
-<div id="brd-main" class="main">
-	<div class="main-head">
-		<h2 class="hn"><span><?php echo $lang_common['Confirm action head'] ?></span></h2>
-	</div>
-	<div class="main-content main-frm">
-		<div class="ct-box info-box">
-			<p><?php echo $lang_common['CSRF token mismatch'] ?></p>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_htmlencode($forum_page['form_action']) ?>">
-			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
-			</div>
-			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" value="<?php echo $lang_common['Confirm'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="confirm_cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
-			</div>
-		</form>
-	</div>
-</div>
-<?php
-
-	($hook = get_hook('fn_csrf_confirm_form_end')) ? eval($hook) : null;
-
-	$tpl_temp = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'partial/confirm_form';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -3097,38 +3063,11 @@ function message($message, $link = '', $heading = '')
 		($hook = get_hook('fn_message_pre_header_load')) ? eval($hook) : null;
 
 		define('FORUM_PAGE', 'message');
-		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
-		ob_start();
-
-		($hook = get_hook('fn_message_output_start')) ? eval($hook) : null;
+		$view_forum_main = 'partial/message';
+		include FORUM_ROOT . 'include/render.php';
 	}
 
-?>
-	<div class="main-head">
-<?php
-
-	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
-
-?>
-		<h2 class="hn"><span><?php echo $heading ?></span></h2>
-	</div>
-
-	<div class="main-content main-message">
-		<p><?php echo $message ?><?php if ($link != '') echo ' <span>'.$link.'</span>' ?></p>
-	</div>
-<?php
-
-	($hook = get_hook('fn_message_output_end')) ? eval($hook) : null;
-
-	$tpl_temp = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', "\t".$tpl_temp, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
 }
 
 
