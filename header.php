@@ -29,34 +29,16 @@ if (!defined('FORUM_HEADER')) {
 	// Load the main template
 	if (substr(FORUM_PAGE, 0, 5) == 'admin')
 	{
-		if ($forum_user['style'] != 'Oxygen' && file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/admin.tpl'))
-			$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/admin.tpl';
-		else
-			$tpl_path = FORUM_ROOT.'include/template/admin.tpl';
+		$view_forum_layout = 'layout/admin';
 	}
 	else if (FORUM_PAGE == 'help')
 	{
-		if ($forum_user['style'] != 'Oxygen' && file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/help.tpl'))
-			$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/help.tpl';
-		else
-			$tpl_path = FORUM_ROOT.'include/template/help.tpl';
+		$view_forum_layout = 'layout/help';
 	}
 	else
 	{
-		if ($forum_user['style'] != 'Oxygen' && file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/main.tpl'))
-			$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/main.tpl';
-		else
-			$tpl_path = FORUM_ROOT.'include/template/main.tpl';
+		$view_forum_layout = 'layout/main';
 	}
-
-	// init layout for templates
-	$view_forum_layout = 'layout/' . basename($tpl_path, '.tpl');
-
-	($hook = get_hook('hd_pre_template_loaded')) ? eval($hook) : null;
-
-	$tpl_main = file_get_contents($tpl_path);// TODO remove
-
-	($hook = get_hook('hd_template_loaded')) ? eval($hook) : null;
 
 	$view_forum_local = 'lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 

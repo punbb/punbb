@@ -3094,11 +3094,7 @@ function maintenance_message()
 	define('FORUM_HEADER', 1);
 	define('FORUM_PAGE', 'maintenance');
 
-	// Load the maintenance template
-	if (file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/maintenance.tpl'))
-		$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/maintenance.tpl';
-	else
-		$tpl_path = FORUM_ROOT.'include/template/maintenance.tpl';
+	$view_forum_layout = 'layout/maintenance';
 
 	$view_forum_local = 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 
@@ -3151,11 +3147,7 @@ function redirect($destination_url, $message)
 
 	define('FORUM_HEADER', 1);
 
-	// Load the redirect template
-	if (file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/redirect.tpl'))
-		$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/redirect.tpl';
-	else
-		$tpl_path = FORUM_ROOT.'include/template/redirect.tpl';
+	$view_forum_layout = 'layout/redirect';
 
 	$view_forum_local = 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 
