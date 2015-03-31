@@ -158,14 +158,6 @@ $forum_page['crumbs'][] = array($lang_admin_common['Censoring'], forum_link($for
 
 define('FORUM_PAGE_SECTION', 'settings');
 define('FORUM_PAGE', 'admin-censoring');
-require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
-ob_start();
-include FORUM_ROOT . 'include/view/admin/censoring/main.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+$view_forum_main = 'admin/censoring/main';
+include FORUM_ROOT . 'include/render.php';
