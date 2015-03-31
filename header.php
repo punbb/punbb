@@ -56,7 +56,6 @@ if (!defined('FORUM_HEADER')) {
 		}
 	}
 
-	include view('partial/visit_elements');
 	include view('partial/admod');
 	include view('partial/main_elements');
 
