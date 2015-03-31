@@ -1,5 +1,5 @@
 
-## Remove hooks from templates - use templates modification
+## Удалены хуки для шаблонов
 
 fn_redirect_pre_template_loaded
 fn_redirect_template_loaded
