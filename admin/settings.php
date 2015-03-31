@@ -285,11 +285,8 @@ if (!$section || $section == 'setup')
 
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-setup');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/settings/setup.php';
+	$view_forum_main = 'admin/settings/setup';
 }
 
 else if ($section == 'features')
@@ -309,11 +306,8 @@ else if ($section == 'features')
 
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-features');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/settings/features.php';
+	$view_forum_main = 'admin/settings/features';
 }
 else if ($section == 'announcements')
 {
@@ -332,11 +326,8 @@ else if ($section == 'announcements')
 
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-announcements');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/settings/announcements.php';
+	$view_forum_main = 'admin/settings/announcements';
 }
 else if ($section == 'registration')
 {
@@ -355,11 +346,8 @@ else if ($section == 'registration')
 
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-registration');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/settings/registration.php';
+	$view_forum_main = 'admin/settings/registration';
 }
 
 else if ($section == 'maintenance')
@@ -379,11 +367,8 @@ else if ($section == 'maintenance')
 
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-settings-maintenance');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/settings/maintenance.php';
+	$view_forum_main = 'admin/settings/maintenance';
 }
 
 else if ($section == 'email')
@@ -403,11 +388,8 @@ else if ($section == 'email')
 
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-email');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/settings/email.php';
+	$view_forum_main = 'admin/settings/email';
 }
 else
 {
@@ -416,9 +398,4 @@ else
 
 ($hook = get_hook('aop_end')) ? eval($hook) : null;
 
-$tpl_temp = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+include FORUM_ROOT . 'include/render.php';
