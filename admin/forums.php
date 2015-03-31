@@ -168,17 +168,9 @@ else if (isset($_GET['del_forum']))
 
 		define('FORUM_PAGE_SECTION', 'start');
 		define('FORUM_PAGE', 'admin-forums');
-		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
-		ob_start();
-		include FORUM_ROOT . 'include/view/admin/forums/delete.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
-
-		require FORUM_ROOT.'footer.php';
+		$view_forum_main = 'admin/forums/delete';
+		include FORUM_ROOT . 'include/render.php';
 	}
 }
 
@@ -449,17 +441,9 @@ else if (isset($_GET['edit_forum']))
 
 	define('FORUM_PAGE_SECTION', 'start');
 	define('FORUM_PAGE', 'admin-forums');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/forums/edit.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/forums/edit';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 // Setup the form
@@ -477,14 +461,6 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-forums');
-require FORUM_ROOT.'header.php';
 
-// START SUBST - <!-- forum_main -->
-ob_start();
-include FORUM_ROOT . 'include/view/admin/forums/main.php';
-$view_forum_main = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+$view_forum_main = 'admin/forums/main';
+include FORUM_ROOT . 'include/render.php';
