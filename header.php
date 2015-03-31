@@ -53,22 +53,6 @@ $tpl_main = file_get_contents($tpl_path);
 
 ($hook = get_hook('hd_template_loaded')) ? eval($hook) : null;
 
-if (0) { // no need this, should use own template construction for including files
-// START SUBST - <!-- forum_include "*" -->
-while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_main, $cur_include))
-{
-	if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-		error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template main.tpl.<br />There is no such file in folder /include/user/', __FILE__, __LINE__);
-
-	ob_start();
-	include FORUM_ROOT.'include/user/'.$cur_include[1];
-	$tpl_temp = ob_get_contents();
-	$tpl_main = str_replace($cur_include[0], $tpl_temp, $tpl_main);
-	ob_end_clean();
-}
-// END SUBST - <!-- forum_include "*" -->
-}
-
 // START SUBST - <!-- forum_local -->
 $view_forum_local = 'lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 $tpl_main = str_replace('<!-- forum_local -->', $view_forum_local, $tpl_main);
