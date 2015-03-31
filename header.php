@@ -40,8 +40,6 @@ if (!defined('FORUM_HEADER')) {
 		$view_forum_layout = 'layout/main';
 	}
 
-	$view_forum_local = 'lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
-
 	include view('partial/gen_elements');
 	include view('partial/visit_elements');
 	include view('partial/admod');

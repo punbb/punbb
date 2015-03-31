@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="oldie ie6" <?= $view_forum_local ?>> <![endif]-->
-<!--[if IE 7 ]>    <html class="oldie ie7" <?= $view_forum_local ?>> <![endif]-->
-<!--[if IE 8 ]>    <html class="oldie ie8" <?= $view_forum_local ?>> <![endif]-->
-<!--[if gt IE 8]><!--> <html <?= $view_forum_local ?>> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html class="oldie ie6" <?= helper('local') ?>> <![endif]-->
+<!--[if IE 7 ]>    <html class="oldie ie7" <?= helper('local') ?>> <![endif]-->
+<!--[if IE 8 ]>    <html class="oldie ie8" <?= helper('local') ?>> <![endif]-->
+<!--[if gt IE 8]><!--> <html <?= helper('local') ?>> <!--<![endif]-->
 <head>
 <meta charset="utf-8" />
 <?php include view('partial/head') ?>

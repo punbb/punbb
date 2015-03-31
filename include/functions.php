@@ -3096,8 +3096,6 @@ function maintenance_message()
 
 	$view_forum_layout = 'layout/maintenance';
 
-	$view_forum_local = 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
-
 	$view_forum_main = 'partial/maintenance';
 	include FORUM_ROOT . 'include/render.php';
 }
@@ -3148,8 +3146,6 @@ function redirect($destination_url, $message)
 	define('FORUM_HEADER', 1);
 
 	$view_forum_layout = 'layout/redirect';
-
-	$view_forum_local = 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 
 	$view_forum_main = 'partial/redirect';
 	include FORUM_ROOT . 'include/render.php';
