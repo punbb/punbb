@@ -250,17 +250,9 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 				define('FORUM_PAGE', 'admin-extensions-hotfixes');
 			else
 				define('FORUM_PAGE', 'admin-extensions-manage');
-			require FORUM_ROOT.'header.php';
 
-			// START SUBST - <!-- forum_main -->
-			ob_start();
-			include FORUM_ROOT . 'include/view/admin/extensions/install_notices.php';
-			$view_forum_main = forum_trim(ob_get_contents());
-			$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-			ob_end_clean();
-			// END SUBST - <!-- forum_main -->
-
-			require FORUM_ROOT.'footer.php';
+			$view_forum_main = 'admin/extensions/install_notices';
+			include FORUM_ROOT . 'include/render.php';
 		}
 		else
 		{
@@ -288,17 +280,8 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	else
 		define('FORUM_PAGE', 'admin-extensions-manage');
 
-	require FORUM_ROOT.'header.php';
-
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/extensions/install.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/extensions/install';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -403,17 +386,9 @@ else if (isset($_GET['uninstall']))
 
 			define('FORUM_PAGE_SECTION', 'extensions');
 			define('FORUM_PAGE', 'admin-extensions-manage');
-			require FORUM_ROOT.'header.php';
 
-			// START SUBST - <!-- forum_main -->
-			ob_start();
-			include FORUM_ROOT . 'include/view/admin/extensions/uninstall_notices.php';
-			$view_forum_main = forum_trim(ob_get_contents());
-			$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-			ob_end_clean();
-			// END SUBST - <!-- forum_main -->
-
-			require FORUM_ROOT.'footer.php';
+			$view_forum_main = 'admin/extensions/uninstall_notices';
+			include FORUM_ROOT . 'include/render.php';
 		}
 		else
 		{
@@ -440,17 +415,9 @@ else if (isset($_GET['uninstall']))
 			define('FORUM_PAGE', 'admin-extensions-hotfixes');
 		else
 			define('FORUM_PAGE', 'admin-extensions-manage');
-		require FORUM_ROOT.'header.php';
 
-		// START SUBST - <!-- forum_main -->
-		ob_start();
-		include FORUM_ROOT . 'include/view/admin/extensions/uninstall.php';
-		$view_forum_main = forum_trim(ob_get_contents());
-		$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-		ob_end_clean();
-		// END SUBST - <!-- forum_main -->
-
-		require FORUM_ROOT.'footer.php';
+		$view_forum_main = 'admin/extensions/uninstall';
+		include FORUM_ROOT . 'include/render.php';
 	}
 }
 
@@ -600,17 +567,9 @@ if ($section == 'hotfixes')
 
 	define('FORUM_PAGE_SECTION', 'extensions');
 	define('FORUM_PAGE', 'admin-extensions-hotfixes');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/extensions/hotfixes.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/extensions/hotfixes';
+	include FORUM_ROOT . 'include/render.php';
 }
 // Extensions list
 else
@@ -665,15 +624,7 @@ else
 
 	define('FORUM_PAGE_SECTION', 'extensions');
 	define('FORUM_PAGE', 'admin-extensions-manage');
-	require FORUM_ROOT.'header.php';
 
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-	include FORUM_ROOT . 'include/view/admin/extensions/manage.php';
-	$view_forum_main = forum_trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $view_forum_main, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
+	$view_forum_main = 'admin/extensions/manage';
+	include FORUM_ROOT . 'include/render.php';
 }
