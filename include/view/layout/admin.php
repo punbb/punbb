@@ -26,8 +26,8 @@
 </div>
 
 <div id="brd-visit" class="gen-content">
-	<?= $view_forum_welcome ?>
-	<?= $view_forum_visit ?>
+	<?= helper('welcome') ?>
+	<?= helper('visit_links') ?>
 </div>
 
 <div class="hr"><hr /></div>

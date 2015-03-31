@@ -8,3 +8,4 @@
     hd_pre_template_loaded
     hd_template_loaded
     hd_gen_elements
+    hd_visit_elements
