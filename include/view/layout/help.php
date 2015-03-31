@@ -9,8 +9,10 @@
 <?php include view('partial/head') ?>
 </head>
 <body>
-<?= $view_forum_messages ?>
-<div <?= $view_forum_page ?> class="brd-page">
+
+<?= helper('messages') ?>
+
+<div <?= helper('page_attrs') ?> class="brd-page">
 <div id="brd-wrap" class="brd">
 
 <?php include view($view_forum_main) ?>

@@ -26,7 +26,7 @@ if (!defined('FORUM_HEADER')) {
 
 	ob_start();
 
-	// Load the main template
+	// Init the main template
 	if (substr(FORUM_PAGE, 0, 5) == 'admin')
 	{
 		$view_forum_layout = 'layout/admin';
@@ -40,7 +40,22 @@ if (!defined('FORUM_HEADER')) {
 		$view_forum_layout = 'layout/main';
 	}
 
-	include view('partial/gen_elements');
+	// Forum page id and classes
+	if (!defined('FORUM_PAGE_TYPE'))
+	{
+		if (substr(FORUM_PAGE, 0, 5) == 'admin')
+			define('FORUM_PAGE_TYPE', 'admin-page');
+		else
+		{
+			if (!empty($forum_page['page_post']))
+				define('FORUM_PAGE_TYPE', 'paged-page');
+			else if (!empty($forum_page['main_menu']))
+				define('FORUM_PAGE_TYPE', 'menu-page');
+			else
+				define('FORUM_PAGE_TYPE', 'basic-page');
+		}
+	}
+
 	include view('partial/visit_elements');
 	include view('partial/admod');
 	include view('partial/main_elements');

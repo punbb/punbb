@@ -8,18 +8,20 @@
 <?php include view('partial/head') ?>
 </head>
 <body>
-<?= $view_forum_messages ?>
+
+<?= helper('messages') ?>
+
 <div id="brd-wrap" class="brd">
-<div <?= $view_forum_page ?>>
+<div <?= helper('page_attrs') ?>>
 
 <div id="brd-head" class="gen-content">
-	<?= $view_forum_skip ?>
-	<?= $view_forum_title ?>
-	<?= $view_forum_desc ?>
+	<?= helper('skip_content') ?>
+	<?= helper('title') ?>
+	<?= helper('description') ?>
 </div>
 
 <div id="brd-navlinks" class="gen-content">
-	<?= $view_forum_navlinks ?>
+	<?= helper('navlinks') ?>
 	<?= $view_forum_admod ?>
 </div>
 

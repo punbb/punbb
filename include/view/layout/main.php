@@ -8,23 +8,27 @@
 <?php include view('partial/head') ?>
 </head>
 <body>
-	<?= $view_forum_messages ?>
+
+	<?= helper('messages') ?>
+
 	<div id="brd-wrap" class="brd">
-	<div <?= $view_forum_page ?>>
+	<div <?= helper('page_attrs') ?>>
 	<div id="brd-head" class="gen-content">
-		<?= $view_forum_skip ?>
-		<?= $view_forum_title ?>
-		<?= $view_forum_desc ?>
+		<?= helper('skip_content') ?>
+		<?= helper('title') ?>
+		<?= helper('description') ?>
 	</div>
 	<div id="brd-navlinks" class="gen-content">
-		<?= $view_forum_navlinks ?>
+		<?= helper('navlinks') ?>
 		<?= $view_forum_admod ?>
 	</div>
 	<div id="brd-visit" class="gen-content">
 		<?= $view_forum_welcome ?>
 		<?= $view_forum_visit ?>
 	</div>
-	<?= $view_forum_announcement ?>
+
+	<?= helper('announcement') ?>
+
 	<div class="hr"><hr /></div>
 	<div id="brd-main">
 		<?= $view_forum_main_title ?>

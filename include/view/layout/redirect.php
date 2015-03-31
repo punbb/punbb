@@ -8,7 +8,9 @@
 <?php include view('partial/head') ?>
 </head>
 <body>
-<?= $view_forum_messages ?>
+
+<?= helper('messages') ?>
+
 <div id="brd-wrap" class="brd-page">
 <div id="brd-redirect" class="brd">
 
