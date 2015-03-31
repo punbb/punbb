@@ -3091,77 +3091,19 @@ function maintenance_message()
 	// Send a 503 HTTP response code to prevent search bots from indexing the maintenace message
 	header('HTTP/1.1 503 Service Temporarily Unavailable');
 
+	define('FORUM_HEADER', 1);
+	define('FORUM_PAGE', 'maintenance');
+
 	// Load the maintenance template
 	if (file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/maintenance.tpl'))
 		$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/maintenance.tpl';
 	else
 		$tpl_path = FORUM_ROOT.'include/template/maintenance.tpl';
 
-	($hook = get_hook('fn_maintenance_message_pre_template_loaded')) ? eval($hook) : null;
+	$view_forum_local = 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 
-	$tpl_maint = forum_trim(file_get_contents($tpl_path));
-
-	($hook = get_hook('fn_maintenance_message_template_loaded')) ? eval($hook) : null;
-
-	// START SUBST - <!-- forum_local -->
-	$tpl_maint = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"', $tpl_maint);
-	// END SUBST - <!-- forum_local -->
-
-	// START SUBST - <!-- forum_head -->
-	ob_start();
-
-	require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
-	echo $forum_loader->render_css();
-
-	$tpl_temp = forum_trim(ob_get_contents());
-	$tpl_maint = str_replace('<!-- forum_head -->', $tpl_temp, $tpl_maint);
-	ob_end_clean();
-	// END SUBST - <!-- forum_head -->
-
-
-	// START SUBST - <!-- forum_maint_main -->
-	ob_start();
-
-?>
-	<div class="main-head">
-		<h1 class="hn"><span><?php echo $lang_common['Maintenance mode'] ?></span></h1>
-	</div>
-	<div class="main-content main-message">
-		<div class="ct-box user-box">
-			<?php echo $message."\n" ?>
-		</div>
-	</div>
-<?php
-
-	$tpl_temp = "\t".forum_trim(ob_get_contents());
-	$tpl_maint = str_replace('<!-- forum_maint_main -->', $tpl_temp, $tpl_maint);
-	ob_end_clean();
-	// END SUBST - <!-- forum_maint_main -->
-
-
-	// End the transaction
-	$forum_db->end_transaction();
-
-
-	// START SUBST - <!-- forum_include "*" -->
-	while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_maint, $cur_include))
-	{
-		if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template maintenance.tpl.<br />There is no such file in folder /include/user/.');
-
-		ob_start();
-		include FORUM_ROOT.'include/user/'.$cur_include[1];
-		$tpl_temp = ob_get_contents();
-		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
-		ob_end_clean();
-	}
-	// END SUBST - <!-- forum_include "*" -->
-
-
-	// Close the db connection (and free up any result data)
-	$forum_db->close();
-
-	exit($tpl_maint);
+	$view_forum_main = 'partial/maintenance';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
@@ -3207,96 +3149,18 @@ function redirect($destination_url, $message)
 	// Send the Content-type header in case the web server is setup to send something else
 	header('Content-type: text/html; charset=utf-8');
 
+	define('FORUM_HEADER', 1);
+
 	// Load the redirect template
 	if (file_exists(FORUM_ROOT.'style/'.$forum_user['style'].'/redirect.tpl'))
 		$tpl_path = FORUM_ROOT.'style/'.$forum_user['style'].'/redirect.tpl';
 	else
 		$tpl_path = FORUM_ROOT.'include/template/redirect.tpl';
 
-	($hook = get_hook('fn_redirect_pre_template_loaded')) ? eval($hook) : null;
+	$view_forum_local = 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
 
-	$tpl_redir = forum_trim(file_get_contents($tpl_path));
-
-	($hook = get_hook('fn_redirect_template_loaded')) ? eval($hook) : null;
-
-	// START SUBST - <!-- forum_local -->
-	$tpl_redir = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_identifier'].'" lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"', $tpl_redir);
-	// END SUBST - <!-- forum_local -->
-
-	// START SUBST - <!-- forum_head -->
-	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.$forum_config['o_redirect_delay'].';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';
-	$forum_head['title'] = '<title>'.$lang_common['Redirecting'].$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_title']).'</title>';
-
-	ob_start();
-
-	// Include stylesheets
-	require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
-
-	$head_temp = forum_trim(ob_get_contents());
-	$num_temp = 0;
-	foreach (explode("\n", $head_temp) as $style_temp)
-		$forum_head['style'.$num_temp++] = $style_temp;
-
-	ob_end_clean();
-
-	($hook = get_hook('fn_redirect_head')) ? eval($hook) : null;
-
-	$tmp_head = implode("\n", $forum_head).$forum_loader->render_css();
-
-	$tpl_redir = str_replace('<!-- forum_head -->', $tmp_head, $tpl_redir);
-	unset($forum_head,$tmp_head);
-	// END SUBST - <!-- forum_head -->
-
-	// START SUBST - <!-- forum_redir_main -->
-	ob_start();
-?>
-<div id="brd-main" class="main basic">
-
-	<div class="main-head">
-		<h1 class="hn"><span><?php echo $message.$lang_common['Redirecting'] ?></span></h1>
-	</div>
-
-	<div class="main-content main-message">
-		<p><?php printf($lang_common['Forwarding info'], $forum_config['o_redirect_delay'], intval($forum_config['o_redirect_delay']) == 1 ? $lang_common['second'] : $lang_common['seconds']) ?><span> <a href="<?php echo $destination_url ?>"><?php echo $lang_common['Click redirect'] ?></a></span></p>
-	</div>
-
-</div>
-<?php
-
-	$tpl_temp = "\t".forum_trim(ob_get_contents());
-	$tpl_redir = str_replace('<!-- forum_redir_main -->', $tpl_temp, $tpl_redir);
-	ob_end_clean();
-	// END SUBST - <!-- forum_redir_main -->
-
-
-	// START SUBST - <!-- forum_debug -->
-	if (defined('FORUM_SHOW_QUERIES'))
-		$tpl_redir = str_replace('<!-- forum_debug -->', get_saved_queries(), $tpl_redir);
-
-	// End the transaction
-	$forum_db->end_transaction();
-	// END SUBST - <!-- forum_debug -->
-
-
-	// START SUBST - <!-- forum_include "*" -->
-	while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_redir, $cur_include))
-	{
-		if (!file_exists(FORUM_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;!-- forum_include "'.forum_htmlencode($cur_include[1]).'" --&gt; from template redirect.tpl.<br />There is no such file in folder /include/user/.');
-
-		ob_start();
-		include FORUM_ROOT.'include/user/'.$cur_include[1];
-		$tpl_temp = ob_get_contents();
-		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
-		ob_end_clean();
-	}
-	// END SUBST - <!-- forum_include "*" -->
-
-
-	// Close the db connection (and free up any result data)
-	$forum_db->close();
-
-	exit($tpl_redir);
+	$view_forum_main = 'partial/redirect';
+	include FORUM_ROOT . 'include/render.php';
 }
 
 
