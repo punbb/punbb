@@ -1,5 +1,7 @@
 <?php
 
+$admod_links = array();
+
 // We only need to run this query for mods/admins if there will actually be reports to look at
 if ($forum_user['is_admmod'] && $forum_config['o_report_method'] != 1)
 {
@@ -46,3 +48,6 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 
 	($hook = get_hook('hd_alert')) ? eval($hook) : null;
 }
+
+echo (!empty($admod_links)) ?
+	('<ul id="brd-admod">'.implode(' ', $admod_links).'</ul>') : '';

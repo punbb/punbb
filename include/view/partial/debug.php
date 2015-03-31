@@ -1,5 +1,8 @@
 <?php
 
+if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
+{
+
 ($hook = get_hook('ft_debug_output_start')) ? eval($hook) : null;
 
 // Display debug info (if enabled/defined)
@@ -34,3 +37,5 @@ if (defined('FORUM_SHOW_QUERIES'))
 	echo get_saved_queries();
 
 ($hook = get_hook('ft_debug_end')) ? eval($hook) : null;
+
+}

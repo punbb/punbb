@@ -57,4 +57,4 @@ ob_end_clean();
 ($hook = get_hook('hd_head')) ? eval($hook) : null;
 
 // Render CSS from forum_loader
-$tmp_head = implode("\n", $forum_head).$forum_loader->render_css();
+echo implode("\n", $forum_head).$forum_loader->render_css();

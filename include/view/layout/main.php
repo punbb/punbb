@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html <?= $view_forum_local ?>> <!--<![endif]-->
 <head>
 <meta charset="utf-8" />
-<?= $view_forum_head ?>
+<?php include view('partial/head') ?>
 </head>
 <body>
 	<?= $view_forum_messages ?>
@@ -48,12 +48,15 @@
 
 	<div class="hr"><hr /></div>
 	<div id="brd-about">
-		<?= $view_forum_about ?>
+		<?php include view('partial/about') ?>
 	</div>
-		<?= $view_forum_debug ?>
+
+	<?php include view('partial/debug') ?>
+
 	</div>
 	</div>
-	<?= $view_forum_javascript ?>
+
+	<?php include view('partial/javascript') ?>
 
 	<center>test: <?= date('Y-m-d H:i:s') ?></center>
 </body>

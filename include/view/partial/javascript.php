@@ -19,3 +19,5 @@ $forum_loader->add_js($forum_javascript_commonjs_urls, array('type' => 'inline',
 $forum_loader->add_js($base_url.'/include/js/min/punbb.common.min.js', array('weight' => 55, 'async' => false, 'group' => FORUM_JS_GROUP_SYSTEM));
 
 ($hook = get_hook('ft_js_include')) ? eval($hook) : null;
+
+echo $forum_loader->render_js();

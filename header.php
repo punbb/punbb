@@ -21,6 +21,8 @@ header('Pragma: no-cache');		// For HTTP/1.0 compability
 // Send the Content-type header in case the web server is setup to send something else
 header('Content-type: text/html; charset=utf-8');
 
+ob_start();
+
 // Load the main template
 if (substr(FORUM_PAGE, 0, 5) == 'admin')
 {
@@ -49,57 +51,16 @@ $view_forum_layout = 'layout/' . basename($tpl_path, '.tpl');
 
 ($hook = get_hook('hd_pre_template_loaded')) ? eval($hook) : null;
 
-$tpl_main = file_get_contents($tpl_path);
+$tpl_main = file_get_contents($tpl_path);// TODO remove
 
 ($hook = get_hook('hd_template_loaded')) ? eval($hook) : null;
 
-// START SUBST - <!-- forum_local -->
 $view_forum_local = 'lang="'.$lang_common['lang_identifier'].'" dir="'.$lang_common['lang_direction'].'"';
-$tpl_main = str_replace('<!-- forum_local -->', $view_forum_local, $tpl_main);
-// END SUBST - <!-- forum_local -->
 
-
-// START SUBST - <!-- forum_head -->
-include FORUM_ROOT . 'include/view/partial/head.php';
-$view_forum_head = $tmp_head;
-$tpl_main = str_replace('<!-- forum_head -->', $view_forum_head, $tpl_main);
-unset($forum_head, $tmp_head);
-// END SUBST - <!-- forum_head -->
-
-
-// START SUBST OF COMMON ELEMENTS
-// Setup array of general elements
-$gen_elements = array();
-include FORUM_ROOT . 'include/view/partial/gen_elements.php';
-// TODO insert $view_forum_messages and etc. in template
-$tpl_main = str_replace(array_keys($gen_elements), array_values($gen_elements), $tpl_main);
-unset($gen_elements);
-// END SUBST OF COMMON ELEMENTS
-
-
-// START SUBST VISIT ELEMENTS
-$visit_elements = array();
-include FORUM_ROOT . 'include/view/partial/visit_elements.php';
-// TODO insert $view_forum_visit and etc. in template
-$tpl_main = str_replace(array_keys($visit_elements), array_values($visit_elements), $tpl_main);
-unset($visit_elements);
-// END SUBST VISIT ELEMENTS
-
-
-// START SUBST - <!-- forum_admod -->
-$admod_links = array();
-include FORUM_ROOT . 'include/view/partial/admod.php';
-$tpl_main = str_replace('<!-- forum_admod -->', (!empty($admod_links)) ? '<ul id="brd-admod">'.implode(' ', $admod_links).'</ul>' : '', $tpl_main);
-// END SUBST - <!-- forum_admod -->
-
-
-// MAIN SECTION INTERFACE ELEMENT SUBSTITUTION
-$main_elements = array();
-include FORUM_ROOT . 'include/view/partial/main_elements.php';
-$tpl_main = str_replace(array_keys($main_elements), array_values($main_elements), $tpl_main);
-unset($main_elements);
-// END MAIN SECTION INTERFACE ELEMENT SUBSTITUTION
-
+include view('partial/gen_elements');
+include view('partial/visit_elements');
+include view('partial/admod');
+include view('partial/main_elements');
 
 ($hook = get_hook('hd_end')) ? eval($hook) : null;
 

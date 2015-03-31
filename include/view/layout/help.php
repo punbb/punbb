@@ -6,7 +6,7 @@
 <head>
 <head>
 <meta charset="utf-8" />
-<?= $view_forum_head ?>
+<?php include view('partial/head') ?>
 </head>
 <body>
 <?= $view_forum_messages ?>
@@ -17,6 +17,8 @@
 
 </div>
 </div>
-<?= $view_forum_javascript ?>
+
+<?php include view('partial/javascript') ?>
+
 </body>
 </html>
