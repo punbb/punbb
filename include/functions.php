@@ -802,7 +802,9 @@ function get_hook($hook_id)
 		global $forum_new_hooks;
 		if (!empty($forum_new_hooks[$hook_id])) {
 			foreach ($forum_new_hooks[$hook_id] as $fn) {
-				$fn();
+				if (function_exists($fn)) {
+					$fn();
+				}
 			}
 		}
 	}
