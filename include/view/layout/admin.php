@@ -33,16 +33,15 @@
 <div class="hr"><hr /></div>
 
 <div id="brd-main">
-	<?= $view_forum_main_title ?>
-	<?= $view_forum_crumbs_top ?>
-	<?= $view_forum_main_pagepost_top ?>
-	<?= $view_forum_admin_menu ?>
-	<?= $view_forum_admin_submenu ?>
+	<?= helper('main_title') ?>
+	<?= helper('crumbs_top') ?>
+	<?= helper('pagepost_top') ?>
+	<?= helper('admin_menu') ?>
 
 	<?php include view($view_forum_main) ?>
 
-	<?= $view_forum_main_pagepost_end ?>
-	<?= $view_forum_crumbs_end ?>
+	<?= helper('pagepost_end') ?>
+	<?= helper('crumbs_end') ?>
 </div>
 
 <div class="hr"><hr /></div>

@@ -57,7 +57,6 @@ if (!defined('FORUM_HEADER')) {
 	}
 
 	include view('partial/admod');
-	include view('partial/main_elements');
 
 	($hook = get_hook('hd_end')) ? eval($hook) : null;
 

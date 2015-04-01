@@ -31,15 +31,15 @@
 
 	<div class="hr"><hr /></div>
 	<div id="brd-main">
-		<?= $view_forum_main_title ?>
-		<?= $view_forum_crumbs_top ?>
-		<?= $view_forum_main_menu ?>
-		<?= $view_forum_main_pagepost_top ?>
+		<?= helper('main_title') ?>
+		<?= helper('crumbs_top') ?>
+		<?= helper('main_menu') ?>
+		<?= helper('pagepost_top') ?>
 
 		<?php include view($view_forum_main) ?>
 
-		<?= $view_forum_pagepost_end ?>
-		<?= $view_forum_crumbs_end ?>
+		<?= helper('pagepost_end') ?>
+		<?= helper('crumbs_end') ?>
 	</div>
 
 	<?php
