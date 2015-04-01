@@ -1,5 +1,5 @@
 
-## Удалены хуки для шаблонов
+## Удалены некоторые хуки для шаблонов
 
     fn_redirect_pre_template_loaded
     fn_redirect_template_loaded
@@ -12,7 +12,7 @@
     hd_main_elements
     hd_end
 
-## Структура шаблонов
+## Структура темы
 
 Блоки основного контента:
 
@@ -36,26 +36,12 @@
     include/view/helper/...
     include/view/...
 
-## Наследование шаблонов 
+## Переопределение шаблонов
 
-Cтруктура полностью повторяет заданную структуру шаблонов форума, например:
-
-    style/some-template1/profile/profile.twig
+Проверяется подключаемый шаблон в папке текущей темы, например login/main
     
-или
-    
-    style/template1/profile/profile.php
+    style/template1/login/main.php
     
 если такого файла нет, берется стандартный
 
-    include/view/profile/profile.php
-
-## TODO Сделать пример интеграции стороннего шаблонизатора (twig)
-
-? Враппер для шаблонизатора размещается в:
-    
-    style/some-template1/render.php
-
-Допилить функции чтобы учитывал шаблонизатор
-    function view($name)
-    function helper($name)
+    include/view/login/main.php
