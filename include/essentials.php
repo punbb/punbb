@@ -23,6 +23,9 @@ $forum_start = ((float)$usec + (float)$sec);
 
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
+
+require FORUM_ROOT . 'include/template.php';
+
 // Load the Loader class
 require FORUM_ROOT.'include/loader.php';
 
