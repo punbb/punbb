@@ -12,47 +12,47 @@
 <?= helper('messages') ?>
 
 <div id="brd-wrap" class="brd">
-<div <?= helper('page_attrs') ?>>
+	<div <?= helper('page_attrs') ?>>
 
-<div id="brd-head" class="gen-content">
-	<?= helper('skip_content') ?>
-	<?= helper('title') ?>
-	<?= helper('description') ?>
-</div>
+		<div id="brd-head" class="gen-content">
+			<?= helper('skip_content') ?>
+			<?= helper('title') ?>
+			<?= helper('description') ?>
+		</div>
 
-<div id="brd-navlinks" class="gen-content">
-	<?= helper('navlinks') ?>
-	<?php include view('partial/admod') ?>
-</div>
+		<div id="brd-navlinks" class="gen-content">
+			<?= helper('navlinks') ?>
+			<?php include view('partial/admod') ?>
+		</div>
 
-<div id="brd-visit" class="gen-content">
-	<?= helper('welcome') ?>
-	<?= helper('visit_links') ?>
-</div>
+		<div id="brd-visit" class="gen-content">
+			<?= helper('welcome') ?>
+			<?= helper('visit_links') ?>
+		</div>
 
-<div class="hr"><hr /></div>
+		<div class="hr"><hr /></div>
 
-<div id="brd-main">
-	<?= helper('main_title') ?>
-	<?= helper('crumbs_top') ?>
-	<?= helper('pagepost_top') ?>
-	<?= helper('admin_menu') ?>
+		<div id="brd-main">
+			<?= helper('main_title') ?>
+			<?= helper('crumbs_top') ?>
+			<?= helper('pagepost_top') ?>
+			<?= helper('admin_menu') ?>
 
-	<?php include view($view_forum_main) ?>
+			<?php include view($view_forum_main) ?>
 
-	<?= helper('pagepost_end') ?>
-	<?= helper('crumbs_end') ?>
-</div>
+			<?= helper('pagepost_end') ?>
+			<?= helper('crumbs_end') ?>
+		</div>
 
-<div class="hr"><hr /></div>
+		<div class="hr"><hr /></div>
 
-<div id="brd-about">
-	<?php include view('partial/about') ?>
-</div>
+		<div id="brd-about">
+			<?php include view('partial/about') ?>
+		</div>
 
-<?php include view('partial/debug') ?>
+		<?php include view('partial/debug') ?>
 
-</div>
+	</div>
 </div>
 
 <?php include view('partial/javascript') ?>

@@ -12,13 +12,13 @@
 <?= helper('messages') ?>
 
 <div id="brd-wrap" class="brd-page">
-<div id="brd-redirect" class="brd">
+	<div id="brd-redirect" class="brd">
 
-<?php include view($view_forum_main) ?>
+		<?php include view($view_forum_main) ?>
 
-<?php include view('partial/debug') ?>
+		<?php include view('partial/debug') ?>
 
-</div>
+	</div>
 </div>
 
 <?php include view('partial/javascript') ?>

@@ -4,7 +4,6 @@
 <!--[if IE 8 ]>    <html class="oldie ie8" <?= helper('local') ?>> <![endif]-->
 <!--[if gt IE 8]><!--> <html <?= helper('local') ?>> <!--<![endif]-->
 <head>
-<head>
 <meta charset="utf-8" />
 <?php include view('partial/head') ?>
 </head>
@@ -13,11 +12,11 @@
 <?= helper('messages') ?>
 
 <div <?= helper('page_attrs') ?> class="brd-page">
-<div id="brd-wrap" class="brd">
+	<div id="brd-wrap" class="brd">
 
-<?php include view($view_forum_main) ?>
+		<?php include view($view_forum_main) ?>
 
-</div>
+	</div>
 </div>
 
 <?php include view('partial/javascript') ?>

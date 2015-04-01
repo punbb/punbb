@@ -9,11 +9,11 @@
 </head>
 <body>
 <div id="brd-wrap" class="brd-page">
-<div id="brd-maint" class="brd">
+	<div id="brd-maint" class="brd">
 
-<?php include view($view_forum_main) ?>
+		<?php include view($view_forum_main) ?>
 
-</div>
+	</div>
 </div>
 
 <?php include view('partial/javascript') ?>
