@@ -56,8 +56,4 @@ if (!defined('FORUM_HEADER')) {
 		}
 	}
 
-	include view('partial/admod');
-
-	($hook = get_hook('hd_end')) ? eval($hook) : null;
-
 }

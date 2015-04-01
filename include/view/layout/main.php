@@ -20,7 +20,7 @@
 	</div>
 	<div id="brd-navlinks" class="gen-content">
 		<?= helper('navlinks') ?>
-		<?= $view_forum_admod ?>
+		<?php include view('partial/admod') ?>
 	</div>
 	<div id="brd-visit" class="gen-content">
 		<?= helper('welcome') ?>
