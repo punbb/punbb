@@ -11,13 +11,13 @@
 <?php
 
 if (!$section || $section == 'bbcode') {
-	include view('section/help/bbcode');
+	include view('help/bbcode');
 }
 else if ($section == 'img') {
-	include view('section/help/img');
+	include view('help/img');
 }
 else if ($section == 'smilies') {
-	include view('section/help/smilies');
+	include view('help/smilies');
 }
 
 ($hook = get_hook('he_new_section')) ? eval($hook) : null;
