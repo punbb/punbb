@@ -1,7 +1,10 @@
 <?php
-
 global $forum_page;
 
-return (!empty($forum_page['page_post'])) ?
-	'<div id="brd-pagepost-end" class="main-pagepost gen-content">'."\n\t".
-	implode("\n\t", $forum_page['page_post'])."\n".'</div>' : '';
+if (!empty($forum_page['page_post'])) { ?>
+	<div id="brd-pagepost-end" class="main-pagepost gen-content">
+		<?php foreach ($forum_page['page_post'] as $v) { ?>
+			<?= $v ?>
+		<?php } ?>
+	</div>
+<?php } ?>

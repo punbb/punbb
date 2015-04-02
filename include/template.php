@@ -26,5 +26,10 @@ function helper($name) {
 		$fname = FORUM_ROOT . 'include/view/helper/' . $name . '.php';
 	}
 
-	return include $fname;
+	ob_start();
+	include $fname;
+	$tmp_content = ob_get_contents();
+	ob_end_clean();
+
+	return $tmp_content;
 }

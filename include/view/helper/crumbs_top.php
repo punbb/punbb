@@ -1,5 +1,8 @@
-<?php
 
-return (FORUM_PAGE != 'index') ?
-	'<div id="brd-crumbs-top" class="crumbs">'."\n\t".'<p>'.
-		generate_crumbs(false).'</p>'."\n".'</div>' : '';
+<?php if (FORUM_PAGE != 'index') { ?>
+	<div id="brd-crumbs-top" class="crumbs">
+		<p>
+			<?= generate_crumbs(false) ?>
+		</p>
+	</div>
+<?php } ?>
