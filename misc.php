@@ -40,7 +40,7 @@ if ($action == 'rules')
 
 	define('FORUM_PAGE', 'rules');
 
-	$view_forum_main = 'misc/rules';
+	$forum_main_view = 'misc/rules';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -288,7 +288,7 @@ else if (isset($_GET['email']))
 
 	define('FORUM_PAGE', 'formemail');
 
-	$view_forum_main = 'misc/email';
+	$forum_main_view = 'misc/email';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -428,7 +428,7 @@ else if (isset($_GET['report']))
 
 	define('FORUM_PAGE', 'report');
 
-	$view_forum_main = 'misc/report';
+	$forum_main_view = 'misc/report';
 	include FORUM_ROOT . 'include/render.php';
 }
 

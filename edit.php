@@ -205,5 +205,5 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE', 'postedit');
 
-$view_forum_main = 'edit/main';
+$forum_main_view = 'edit/main';
 include FORUM_ROOT . 'include/render.php';

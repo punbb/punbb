@@ -36,7 +36,7 @@
 				<?= helper('main_menu') ?>
 				<?= helper('pagepost_top') ?>
 
-				<?php include view($view_forum_main) ?>
+				<?php include view($forum_main_view) ?>
 
 				<?= helper('pagepost_end') ?>
 				<?= helper('crumbs_end') ?>

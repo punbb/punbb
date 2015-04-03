@@ -87,7 +87,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-groups');
 
-	$view_forum_main = 'admin/groups/edit';
+	$forum_main_view = 'admin/groups/edit';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -384,7 +384,7 @@ else if (isset($_GET['del_group']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-groups');
 
-	$view_forum_main = 'admin/groups/delete';
+	$forum_main_view = 'admin/groups/delete';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -405,5 +405,5 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-groups');
 
-$view_forum_main = 'admin/groups/main';
+$forum_main_view = 'admin/groups/main';
 include FORUM_ROOT . 'include/render.php';

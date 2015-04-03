@@ -117,5 +117,5 @@ define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'userlist');
 
-$view_forum_main = 'userlist/main';
+$forum_main_view = 'userlist/main';
 include FORUM_ROOT . 'include/render.php';

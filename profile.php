@@ -130,7 +130,7 @@ if ($action == 'change_pass')
 
 			define('FORUM_PAGE', 'profile-changepass');
 
-			$view_forum_main = 'profile/profile_changepass';
+			$forum_main_view = 'profile/profile_changepass';
 			include FORUM_ROOT . 'include/render.php';
 		}
 	}
@@ -220,7 +220,7 @@ if ($action == 'change_pass')
 
 	define('FORUM_PAGE', 'profile-changepass');
 
-	$view_forum_main = 'profile/profile_changepass2';
+	$forum_main_view = 'profile/profile_changepass2';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -402,7 +402,7 @@ else if ($action == 'change_email')
 
 	define('FORUM_PAGE', 'profile-changemail');
 
-	$view_forum_main = 'profile/profile_changemail';
+	$forum_main_view = 'profile/profile_changemail';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -463,7 +463,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 	define('FORUM_PAGE', 'dialogue');
 
-	$view_forum_main = 'profile/dialogue';
+	$forum_main_view = 'profile/dialogue';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -1268,7 +1268,7 @@ if ($forum_user['id'] != $id &&
 	define('FORUM_ALLOW_INDEX', 1);
 	define('FORUM_PAGE', 'profile');
 
-	$view_forum_main = 'profile/profile';
+	$forum_main_view = 'profile/profile';
 	include FORUM_ROOT . 'include/render.php';
 }
 else
@@ -1498,7 +1498,7 @@ else
 
 		define('FORUM_PAGE', 'profile-about');
 
-		$view_forum_main = 'profile/profile_about';
+		$forum_main_view = 'profile/profile_about';
 		include FORUM_ROOT . 'include/render.php';
 	}
 
@@ -1529,7 +1529,7 @@ else
 
 		define('FORUM_PAGE', 'profile-identity');
 
-		$view_forum_main = 'profile/profile_identity';
+		$forum_main_view = 'profile/profile_identity';
 		include FORUM_ROOT . 'include/render.php';
 	}
 
@@ -1573,7 +1573,7 @@ else
 
 		define('FORUM_PAGE', 'profile-settings');
 
-		$view_forum_main = 'profile/profile_settings';
+		$forum_main_view = 'profile/profile_settings';
 		include FORUM_ROOT . 'include/render.php';
 	}
 
@@ -1613,7 +1613,7 @@ else
 
 		define('FORUM_PAGE', 'profile-signature');
 
-		$view_forum_main = 'profile/profile_signature';
+		$forum_main_view = 'profile/profile_signature';
 		include FORUM_ROOT . 'include/render.php';
 	}
 
@@ -1659,7 +1659,7 @@ else
 
 		define('FORUM_PAGE', 'profile-avatar');
 
-		$view_forum_main = 'profile/profile_avatar';
+		$forum_main_view = 'profile/profile_avatar';
 		include FORUM_ROOT . 'include/render.php';
 	}
 
@@ -1699,7 +1699,7 @@ else
 
 		define('FORUM_PAGE', 'profile-admin');
 
-		$view_forum_main = 'profile/profile_admin';
+		$forum_main_view = 'profile/profile_admin';
 		include FORUM_ROOT . 'include/render.php';
 	}
 

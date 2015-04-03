@@ -286,7 +286,7 @@ if (!$section || $section == 'setup')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-setup');
 
-	$view_forum_main = 'admin/settings/setup';
+	$forum_main_view = 'admin/settings/setup';
 }
 
 else if ($section == 'features')
@@ -307,7 +307,7 @@ else if ($section == 'features')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-features');
 
-	$view_forum_main = 'admin/settings/features';
+	$forum_main_view = 'admin/settings/features';
 }
 else if ($section == 'announcements')
 {
@@ -327,7 +327,7 @@ else if ($section == 'announcements')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-announcements');
 
-	$view_forum_main = 'admin/settings/announcements';
+	$forum_main_view = 'admin/settings/announcements';
 }
 else if ($section == 'registration')
 {
@@ -347,7 +347,7 @@ else if ($section == 'registration')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-registration');
 
-	$view_forum_main = 'admin/settings/registration';
+	$forum_main_view = 'admin/settings/registration';
 }
 
 else if ($section == 'maintenance')
@@ -368,7 +368,7 @@ else if ($section == 'maintenance')
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-settings-maintenance');
 
-	$view_forum_main = 'admin/settings/maintenance';
+	$forum_main_view = 'admin/settings/maintenance';
 }
 
 else if ($section == 'email')
@@ -389,7 +389,7 @@ else if ($section == 'email')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-email');
 
-	$view_forum_main = 'admin/settings/email';
+	$forum_main_view = 'admin/settings/email';
 }
 else
 {

@@ -68,5 +68,5 @@ $forum_page['crumbs'][] = array($lang_admin_common['Reports'], forum_link($forum
 define('FORUM_PAGE_SECTION', 'management');
 define('FORUM_PAGE', 'admin-reports');
 
-$view_forum_main = 'admin/reports/main';
+$forum_main_view = 'admin/reports/main';
 include FORUM_ROOT . 'include/render.php';

@@ -329,5 +329,5 @@ $forum_page['crumbs'][] = $tid ? $lang_post['Post reply'] : $lang_post['Post new
 
 define('FORUM_PAGE', 'post');
 
-$view_forum_main = 'post/main';
+$forum_main_view = 'post/main';
 include FORUM_ROOT . 'include/render.php';

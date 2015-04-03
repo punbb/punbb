@@ -291,7 +291,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	define ('FORUM_PAGE', 'reqpass');
 
-	$view_forum_main = 'login/reqpass';
+	$forum_main_view = 'login/reqpass';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -318,5 +318,5 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE', 'login');
 
-$view_forum_main = 'login/main';
+$forum_main_view = 'login/main';
 include FORUM_ROOT . 'include/render.php';

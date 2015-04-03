@@ -178,5 +178,5 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE', 'postdelete');
 
-$view_forum_main = 'delete/main';
+$forum_main_view = 'delete/main';
 include FORUM_ROOT . 'include/render.php';

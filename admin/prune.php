@@ -128,7 +128,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-prune');
 
-	$view_forum_main = 'admin/prune/comply';
+	$forum_main_view = 'admin/prune/comply';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -151,6 +151,6 @@ else
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-prune');
 
-	$view_forum_main = 'admin/prune/main';
+	$forum_main_view = 'admin/prune/main';
 	include FORUM_ROOT . 'include/render.php';
 }

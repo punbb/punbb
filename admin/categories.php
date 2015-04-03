@@ -174,7 +174,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		define('FORUM_PAGE_SECTION', 'start');
 		define('FORUM_PAGE', 'admin-categories');
 
-		$view_forum_main = 'admin/categories/edit';
+		$forum_main_view = 'admin/categories/edit';
 		include FORUM_ROOT . 'include/render.php';
 	}
 }
@@ -274,5 +274,5 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-categories');
 
-$view_forum_main = 'admin/categories/main';
+$forum_main_view = 'admin/categories/main';
 include FORUM_ROOT . 'include/render.php';

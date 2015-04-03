@@ -3027,7 +3027,7 @@ function csrf_confirm_form()
 
 	define('FORUM_PAGE', 'dialogue');
 
-	$view_forum_main = 'partial/confirm_form';
+	$forum_main_view = 'partial/confirm_form';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -3066,7 +3066,7 @@ function message($message, $link = '', $heading = '')
 
 		define('FORUM_PAGE', 'message');
 
-		$view_forum_main = 'partial/message';
+		$forum_main_view = 'partial/message';
 		include FORUM_ROOT . 'include/render.php';
 	}
 
@@ -3098,7 +3098,7 @@ function maintenance_message()
 
 	$forum_layout = 'layout/maintenance';
 
-	$view_forum_main = 'partial/maintenance';
+	$forum_main_view = 'partial/maintenance';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -3149,7 +3149,7 @@ function redirect($destination_url, $message)
 
 	$forum_layout = 'layout/redirect';
 
-	$view_forum_main = 'partial/redirect';
+	$forum_main_view = 'partial/redirect';
 	include FORUM_ROOT . 'include/render.php';
 }
 

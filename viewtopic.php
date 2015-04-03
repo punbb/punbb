@@ -278,5 +278,5 @@ if ($forum_config['o_topic_views'] == '1')
 
 $forum_id = $cur_topic['forum_id'];
 
-$view_forum_main = 'viewtopic/main';
+$forum_main_view = 'viewtopic/main';
 include FORUM_ROOT . 'include/render.php';

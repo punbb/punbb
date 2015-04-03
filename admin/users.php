@@ -69,7 +69,7 @@ if (isset($_GET['ip_stats']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-iresults');
 
-	$view_forum_main = 'admin/users/stats';
+	$forum_main_view = 'admin/users/stats';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -120,7 +120,7 @@ else if (isset($_GET['show_users']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-uresults');
 
-	$view_forum_main = 'admin/users/show';
+	$forum_main_view = 'admin/users/show';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -200,7 +200,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
 
-	$view_forum_main = 'admin/users/delete';
+	$forum_main_view = 'admin/users/delete';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -324,7 +324,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
 
-	$view_forum_main = 'admin/users/ban_users';
+	$forum_main_view = 'admin/users/ban_users';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -405,7 +405,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
 
-	$view_forum_main = 'admin/users/change_group';
+	$forum_main_view = 'admin/users/change_group';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -557,7 +557,7 @@ else if (isset($_GET['find_user']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-uresults');
 
-	$view_forum_main = 'admin/users/find';
+	$forum_main_view = 'admin/users/find';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -582,5 +582,5 @@ $forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($foru
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-users');
 
-$view_forum_main = 'admin/users/search';
+$forum_main_view = 'admin/users/search';
 include FORUM_ROOT . 'include/render.php';

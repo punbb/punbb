@@ -207,5 +207,5 @@ define('FORUM_ALLOW_INDEX', 1);
 define('FORUM_PAGE', 'viewforum');
 $forum_id = $id;
 
-$view_forum_main = 'viewforum/main';
+$forum_main_view = 'viewforum/main';
 include FORUM_ROOT . 'include/render.php';

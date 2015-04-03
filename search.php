@@ -178,7 +178,7 @@ if (isset($query))
 	else
 		define('FORUM_PAGE', 'searchforums');
 
-	$view_forum_main = 'search/search_forums';
+	$forum_main_view = 'search/search_forums';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -227,5 +227,5 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 
 define('FORUM_PAGE', 'search');
 
-$view_forum_main = 'search/main';
+$forum_main_view = 'search/main';
 include FORUM_ROOT . 'include/render.php';

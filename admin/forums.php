@@ -169,7 +169,7 @@ else if (isset($_GET['del_forum']))
 		define('FORUM_PAGE_SECTION', 'start');
 		define('FORUM_PAGE', 'admin-forums');
 
-		$view_forum_main = 'admin/forums/delete';
+		$forum_main_view = 'admin/forums/delete';
 		include FORUM_ROOT . 'include/render.php';
 	}
 }
@@ -442,7 +442,7 @@ else if (isset($_GET['edit_forum']))
 	define('FORUM_PAGE_SECTION', 'start');
 	define('FORUM_PAGE', 'admin-forums');
 
-	$view_forum_main = 'admin/forums/edit';
+	$forum_main_view = 'admin/forums/edit';
 	include FORUM_ROOT . 'include/render.php';
 }
 
@@ -462,5 +462,5 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-forums');
 
-$view_forum_main = 'admin/forums/main';
+$forum_main_view = 'admin/forums/main';
 include FORUM_ROOT . 'include/render.php';

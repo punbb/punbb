@@ -189,5 +189,5 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-ranks');
 
-$view_forum_main = 'admin/ranks/main';
+$forum_main_view = 'admin/ranks/main';
 include FORUM_ROOT . 'include/render.php';

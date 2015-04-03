@@ -79,5 +79,5 @@ $query = array(
 ($hook = get_hook('in_qr_get_cats_and_forums')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-$view_forum_main = 'index/main';
+$forum_main_view = 'index/main';
 include FORUM_ROOT . 'include/render.php';

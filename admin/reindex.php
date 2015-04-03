@@ -201,5 +201,5 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE_SECTION', 'management');
 define('FORUM_PAGE', 'admin-reindex');
 
-$view_forum_main = 'admin/reindex/main';
+$forum_main_view = 'admin/reindex/main';
 include FORUM_ROOT . 'include/render.php';

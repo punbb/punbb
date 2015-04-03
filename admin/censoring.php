@@ -159,5 +159,5 @@ $forum_page['crumbs'][] = array($lang_admin_common['Censoring'], forum_link($for
 define('FORUM_PAGE_SECTION', 'settings');
 define('FORUM_PAGE', 'admin-censoring');
 
-$view_forum_main = 'admin/censoring/main';
+$forum_main_view = 'admin/censoring/main';
 include FORUM_ROOT . 'include/render.php';

@@ -11,7 +11,7 @@
 <div id="brd-wrap" class="brd-page">
 	<div id="brd-maint" class="brd">
 
-		<?php include view($view_forum_main) ?>
+		<?php include view($forum_main_view) ?>
 
 	</div>
 </div>

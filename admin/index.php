@@ -154,5 +154,5 @@ define('FORUM_PAGE', 'admin-information');
 
 $forum_page['item_count'] = 0;
 
-$view_forum_main = 'admin/index/main';
+$forum_main_view = 'admin/index/main';
 include FORUM_ROOT . 'include/render.php';
