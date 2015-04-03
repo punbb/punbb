@@ -10,7 +10,7 @@ if (file_exists($_tmp_fname)) {
 }
 else {
 	// use default
-	include view($view_forum_layout);
+	include view($forum_layout);
 }
 
 require FORUM_ROOT . 'footer.php';

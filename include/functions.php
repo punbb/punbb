@@ -3096,7 +3096,7 @@ function maintenance_message()
 	define('FORUM_HEADER', 1);
 	define('FORUM_PAGE', 'maintenance');
 
-	$view_forum_layout = 'layout/maintenance';
+	$forum_layout = 'layout/maintenance';
 
 	$view_forum_main = 'partial/maintenance';
 	include FORUM_ROOT . 'include/render.php';
@@ -3147,7 +3147,7 @@ function redirect($destination_url, $message)
 
 	define('FORUM_HEADER', 1);
 
-	$view_forum_layout = 'layout/redirect';
+	$forum_layout = 'layout/redirect';
 
 	$view_forum_main = 'partial/redirect';
 	include FORUM_ROOT . 'include/render.php';

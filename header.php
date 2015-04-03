@@ -29,15 +29,15 @@ if (!defined('FORUM_HEADER')) {
 	// Init the main template
 	if (substr(FORUM_PAGE, 0, 5) == 'admin')
 	{
-		$view_forum_layout = 'layout/admin';
+		$forum_layout = 'layout/admin';
 	}
 	else if (FORUM_PAGE == 'help')
 	{
-		$view_forum_layout = 'layout/help';
+		$forum_layout = 'layout/help';
 	}
 	else
 	{
-		$view_forum_layout = 'layout/main';
+		$forum_layout = 'layout/main';
 	}
 
 	// Forum page id and classes
