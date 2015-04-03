@@ -58,5 +58,26 @@ $forum_page['main_title'] = forum_htmlencode($forum_config['o_board_title']);
 define('FORUM_ALLOW_INDEX', 1);
 define('FORUM_PAGE', 'index');
 
+// Print the categories and forums
+$query = array(
+	'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.forum_desc, f.redirect_url, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster',
+	'FROM'		=> 'categories AS c',
+	'JOINS'		=> array(
+		array(
+			'INNER JOIN'	=> 'forums AS f',
+			'ON'			=> 'c.id=f.cat_id'
+		),
+		array(
+			'LEFT JOIN'		=> 'forum_perms AS fp',
+			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+		)
+	),
+	'WHERE'		=> 'fp.read_forum IS NULL OR fp.read_forum=1',
+	'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
+);
+
+($hook = get_hook('in_qr_get_cats_and_forums')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 $view_forum_main = 'index/main';
 include FORUM_ROOT . 'include/render.php';
