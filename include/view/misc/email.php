@@ -10,30 +10,10 @@
 		<div class="ct-box warn-box">
 			<p class="important"><?php echo $lang_misc['E-mail disclosure note'] ?></p>
 		</div>
-<?php
 
-	// If there were any errors, show them
-	if (!empty($errors))
-	{
-		$forum_page['errors'] = array();
-		foreach ($errors as $cur_error)
-			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+	<?php include view('misc/errors') ?>
 
-		($hook = get_hook('mi_pre_email_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_misc['Form e-mail errors'] ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
-	}
-
-?>
-		<div id="req-msg" class="req-warn ct-box error-box">
+	<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">

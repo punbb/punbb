@@ -27,8 +27,9 @@ $errors = array();
 // Show the forum rules?
 if ($action == 'rules')
 {
-	if ($forum_config['o_rules'] == '0' || ($forum_user['is_guest'] && $forum_user['g_read_board'] == '0' && $forum_config['o_regs_allow'] == '0'))
+	if ($forum_config['o_rules'] == '0' || ($forum_user['is_guest'] && $forum_user['g_read_board'] == '0' && $forum_config['o_regs_allow'] == '0')) {
 		message($lang_common['Bad request']);
+	}
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(

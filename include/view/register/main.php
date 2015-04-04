@@ -15,28 +15,12 @@
 		</div>
 <?php
 	endif;
-
-	// If there were any errors, show them
-	if (!empty($errors))
-	{
-		$forum_page['errors'] = array();
-		foreach ($errors as $cur_error)
-			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
-
-		($hook = get_hook('rg_pre_register_errors')) ? eval($hook) : null;
-
 ?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><span><?php echo $lang_profile['Register errors'] ?></span></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
 
-	}
+	<?= helper('errors', array(
+		'errors_title' => $lang_profile['Register errors']
+	)) ?>
 
-?>
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>

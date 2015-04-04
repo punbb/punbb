@@ -329,5 +329,40 @@ $forum_page['crumbs'][] = $tid ? $lang_post['Post reply'] : $lang_post['Post new
 
 define('FORUM_PAGE', 'post');
 
+// Check if the topic review is to be displayed
+if ($tid && $forum_config['o_topic_review'] != '0') {
+	if (!defined('FORUM_PARSER_LOADED')) {
+		require FORUM_ROOT.'include/parser.php';
+	}
+
+	// Get the amount of posts in the topic
+	$query = array(
+		'SELECT'	=> 'count(p.id)',
+		'FROM'		=> 'posts AS p',
+		'WHERE'		=> 'topic_id='.$tid
+	);
+
+	($hook = get_hook('po_topic_review_qr_get_post_count')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$forum_page['total_post_count'] = $forum_db->result($result, 0);
+
+	// Get posts to display in topic review
+	$query = array(
+		'SELECT'	=> 'p.id, p.poster, p.message, p.hide_smilies, p.posted',
+		'FROM'		=> 'posts AS p',
+		'WHERE'		=> 'topic_id='.$tid,
+		'ORDER BY'	=> 'id DESC',
+		'LIMIT'		=> $forum_config['o_topic_review']
+	);
+
+	($hook = get_hook('po_topic_review_qr_get_topic_review_posts')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	$posts = array();
+	while ($cur_post = $forum_db->fetch_assoc($result)) {
+		$posts[] = $cur_post;
+	}
+}
+
 $forum_main_view = 'post/main';
 include FORUM_ROOT . 'include/render.php';

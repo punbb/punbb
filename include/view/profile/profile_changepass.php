@@ -7,29 +7,10 @@
 		<h2 class="hn"><span><?php echo $forum_page['own_profile'] ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-<?php
+		<?= helper('errors', array(
+			'errors_title' => $lang_profile['Change pass errors']
+		)) ?>
 
-			// If there were any errors, show them
-			if (!empty($errors))
-			{
-				$forum_page['errors'] = array();
-				foreach ($errors as $cur_error)
-					$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
-
-				($hook = get_hook('pf_change_pass_key_pre_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_profile['Change pass errors'] ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
-			}
-
-?>
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
 		</div>

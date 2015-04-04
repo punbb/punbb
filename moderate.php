@@ -378,6 +378,31 @@ if (isset($_GET['tid']))
 
 	define('FORUM_PAGE', 'modtopic');
 
+	if (!defined('FORUM_PARSER_LOADED'))
+		require FORUM_ROOT.'include/parser.php';
+
+	// Retrieve the posts (and their respective poster)
+	$query = array(
+		'SELECT'	=> 'u.title, u.num_posts, g.g_id, g.g_user_title, p.id, p.poster, p.poster_id, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by',
+		'FROM'		=> 'posts AS p',
+		'JOINS'		=> array(
+			array(
+				'INNER JOIN'	=> 'users AS u',
+				'ON'			=> 'u.id=p.poster_id'
+			),
+			array(
+				'INNER JOIN'	=> 'groups AS g',
+				'ON'			=> 'g.g_id=u.group_id'
+			)
+		),
+		'WHERE'		=> 'p.topic_id='.$tid,
+		'ORDER BY'	=> 'p.id',
+		'LIMIT'		=> $forum_page['start_from'].','.$forum_user['disp_posts']
+	);
+
+	($hook = get_hook('mr_post_actions_qr_get_posts')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	$forum_main_view = 'moderate/modtopic';
 	include FORUM_ROOT . 'include/render.php';
 }

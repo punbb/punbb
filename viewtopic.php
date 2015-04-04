@@ -278,5 +278,52 @@ if ($forum_config['o_topic_views'] == '1')
 
 $forum_id = $cur_topic['forum_id'];
 
+if (!defined('FORUM_PARSER_LOADED'))
+	require FORUM_ROOT.'include/parser.php';
+
+// 1. Retrieve the posts ids
+$query = array(
+	'SELECT'	=> 'p.id',
+	'FROM'		=> 'posts AS p',
+	'WHERE'		=> 'p.topic_id='.$id,
+	'ORDER BY'	=> 'p.id',
+	'LIMIT'		=> $forum_page['start_from'].','.$forum_user['disp_posts']
+);
+
+($hook = get_hook('vt_qr_get_posts_id')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$posts_id = array();
+while ($row = $forum_db->fetch_assoc($result)) {
+	$posts_id[] = $row['id'];
+}
+
+if (!empty($posts_id))
+{
+	// 2. Retrieve the posts (and their respective poster/online status) by known id`s
+	$query = array(
+		'SELECT'	=> 'u.email, u.title, u.url, u.location, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.avatar, u.avatar_width, u.avatar_height, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online',
+		'FROM'		=> 'posts AS p',
+		'JOINS'		=> array(
+			array(
+				'INNER JOIN'	=> 'users AS u',
+				'ON'			=> 'u.id=p.poster_id'
+			),
+			array(
+				'INNER JOIN'	=> 'groups AS g',
+				'ON'			=> 'g.g_id=u.group_id'
+			),
+			array(
+				'LEFT JOIN'		=> 'online AS o',
+				'ON'			=> '(o.user_id=u.id AND o.user_id!=1 AND o.idle=0)'
+			),
+		),
+		'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')',
+		'ORDER BY'	=> 'p.id'
+	);
+
+	($hook = get_hook('vt_qr_get_posts')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+}
+
 $forum_main_view = 'viewtopic/main';
 include FORUM_ROOT . 'include/render.php';

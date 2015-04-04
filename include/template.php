@@ -16,8 +16,9 @@ function view($name) {
 	return $fname;
 }
 
-function helper($name) {
+function helper($name, $vars = array()) {
 	global $forum_user;
+	extract($vars, EXTR_SKIP | EXTR_REFS);
 
 	// use from style folder
 	$fname = FORUM_ROOT . 'style/' . $forum_user['style'] . '/helper/' . $name . '.php';

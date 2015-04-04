@@ -6,58 +6,17 @@
 	<div class="main-head">
 		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
 	</div>
-<?php
 
-// If preview selected and there are no errors
-if (isset($_POST['preview']) && empty($errors))
-{
-	if (!defined('FORUM_PARSER_LOADED'))
-		require FORUM_ROOT.'include/parser.php';
+	<?php include view('post/preview') ?>
 
-	$forum_page['preview_message'] = parse_message(forum_trim($message), $hide_smilies);
-
-	// Generate the post heading
-	$forum_page['post_ident'] = array();
-	$forum_page['post_ident']['num'] = '<span class="post-num">#</span>';
-	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($tid) ? $lang_post['Reply byline'] : $lang_post['Topic byline']), '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span>';
-	$forum_page['post_ident']['link'] = '<span class="post-link">'.format_time(time()).'</span>';
-
-	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;
-
-	include view('post/preview');
-}
-
-?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo ($tid) ? $lang_post['Compose your reply'] : $lang_post['Compose your topic'] ?></span></h2>
 	</div>
 	<div id="post-form" class="main-content main-frm">
 <?php
-
 	if (!empty($forum_page['text_options'])) {
 		echo "\t\t".'<p class="ct-options options">'.sprintf($lang_common['You may use'], implode(' ', $forum_page['text_options'])).'</p>'."\n";
 	}
-
-	// If there were any errors, show them
-	if (!empty($errors))
-	{
-		$forum_page['errors'] = array();
-		foreach ($errors as $cur_error)
-			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
-
-		($hook = get_hook('po_pre_post_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_post['Post errors'] ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
-	}
-
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
@@ -189,42 +148,7 @@ if (!empty($forum_page['checkboxes']))
 	</div>
 <?php
 
-// Check if the topic review is to be displayed
-if ($tid && $forum_config['o_topic_review'] != '0')
-{
-	if (!defined('FORUM_PARSER_LOADED'))
-		require FORUM_ROOT.'include/parser.php';
-
-	// Get the amount of posts in the topic
-	$query = array(
-		'SELECT'	=> 'count(p.id)',
-		'FROM'		=> 'posts AS p',
-		'WHERE'		=> 'topic_id='.$tid
-	);
-
-	($hook = get_hook('po_topic_review_qr_get_post_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_page['total_post_count'] = $forum_db->result($result, 0);
-
-	// Get posts to display in topic review
-	$query = array(
-		'SELECT'	=> 'p.id, p.poster, p.message, p.hide_smilies, p.posted',
-		'FROM'		=> 'posts AS p',
-		'WHERE'		=> 'topic_id='.$tid,
-		'ORDER BY'	=> 'id DESC',
-		'LIMIT'		=> $forum_config['o_topic_review']
-	);
-
-	($hook = get_hook('po_topic_review_qr_get_topic_review_posts')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-	$posts = array();
-	while ($cur_post = $forum_db->fetch_assoc($result))
-	{
-		$posts[] = $cur_post;
-	}
-	include view('post/topic_review');
-}
+include view('post/topic_review');
 
 $forum_id = $cur_posting['id'];
 

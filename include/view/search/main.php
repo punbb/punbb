@@ -53,41 +53,20 @@
 						</select></span>
 					</div>
 				</div>
-<?php endif; if ((!$advanced_search && ($forum_config['o_search_all_forums'] == '0' && !$forum_user['is_admmod'])) || $advanced_search): ?>
+<?php endif;
+
+if ((!$advanced_search && ($forum_config['o_search_all_forums'] == '0' &&
+	!$forum_user['is_admmod'])) || $advanced_search) {
+
+?>
 <?php ($hook = get_hook('se_pre_forum_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<legend><span><?php echo $lang_search['Forum search'] ?> <em><?php echo ($forum_config['o_search_all_forums'] == '1' || $forum_user['is_admmod']) ? $lang_search['Forum search default'] : $lang_search['Forum search require'] ?></em></span></legend>
 <?php ($hook = get_hook('se_pre_forum_checklist')) ? eval($hook) : null; ?>
 					<div class="mf-box">
 						<div class="checklist">
+
 <?php
-
-// Get the list of categories and forums
-$query = array(
-	'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url',
-	'FROM'		=> 'categories AS c',
-	'JOINS'		=> array(
-		array(
-			'INNER JOIN'	=> 'forums AS f',
-			'ON'			=> 'c.id=f.cat_id'
-		),
-		array(
-			'LEFT JOIN'		=> 'forum_perms AS fp',
-			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
-		)
-	),
-	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.redirect_url IS NULL',
-	'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
-);
-
-($hook = get_hook('se_qr_get_cats_and_forums')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-$forums = array();
-while ($cur_forum = $forum_db->fetch_assoc($result))
-{
-	$forums[] = $cur_forum;
-}
 
 if (!empty($forums))
 {
@@ -118,7 +97,8 @@ if (!empty($forums))
 					</div>
 <?php ($hook = get_hook('se_pre_forum_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
-<?php endif; ?>
+<?php } ?>
+
 <?php ($hook = get_hook('se_forum_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('se_criteria_fieldset_end')) ? eval($hook) : null; ?>

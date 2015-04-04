@@ -1699,6 +1699,41 @@ else
 
 		define('FORUM_PAGE', 'profile-admin');
 
+		if ($forum_user['g_moderator'] != '1' && !$forum_page['own_profile']) {
+			($hook = get_hook('pf_change_details_admin_pre_group_membership')) ? eval($hook) : null;
+
+			$query = array(
+				'SELECT'	=> 'g.g_id, g.g_title',
+				'FROM'		=> 'groups AS g',
+				'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
+				'ORDER BY'	=> 'g.g_title'
+			);
+
+			($hook = get_hook('pf_change_details_admin_qr_get_groups')) ? eval($hook) : null;
+			$result_group = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		}
+
+		if ($forum_user['g_id'] == FORUM_ADMIN &&
+				($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1')) {
+			($hook = get_hook('pf_change_details_admin_pre_mod_assignment_fieldset')) ? eval($hook) : null;
+
+			$query = array(
+				'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.moderators',
+				'FROM'		=> 'categories AS c',
+				'JOINS'		=> array(
+					array(
+						'INNER JOIN'	=> 'forums AS f',
+						'ON'			=> 'c.id=f.cat_id'
+					)
+				),
+				'WHERE'		=> 'f.redirect_url IS NULL',
+				'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
+			);
+
+			($hook = get_hook('pf_change_details_admin_qr_get_cats_and_forums')) ? eval($hook) : null;
+			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		}
+
 		$forum_main_view = 'profile/profile_admin';
 		include FORUM_ROOT . 'include/render.php';
 	}

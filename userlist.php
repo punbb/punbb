@@ -117,5 +117,37 @@ define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'userlist');
 
+// Get the list of user groups (excluding the guest group)
+$query = array(
+	'SELECT'	=> 'g.g_id, g.g_title',
+	'FROM'		=> 'groups AS g',
+	'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
+	'ORDER BY'	=> 'g.g_id'
+);
+
+($hook = get_hook('ul_qr_get_groups')) ? eval($hook) : null;
+$result_group = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+// Grab the users
+$query = array(
+	'SELECT'	=> 'u.id, u.username, u.title, u.num_posts, u.registered, g.g_id, g.g_user_title',
+	'FROM'		=> 'users AS u',
+	'JOINS'		=> array(
+		array(
+			'LEFT JOIN'		=> 'groups AS g',
+			'ON'			=> 'g.g_id=u.group_id'
+		)
+	),
+	'WHERE'		=> 'u.id > 1 AND u.group_id != '.FORUM_UNVERIFIED,
+	'ORDER BY'	=> $forum_page['sort_by'].' '.$forum_page['sort_dir'].', u.id ASC',
+	'LIMIT'		=> $forum_page['start_from'].', 50'
+);
+
+if (!empty($where_sql))
+	$query['WHERE'] .= ' AND '.implode(' AND ', $where_sql);
+
+($hook = get_hook('ul_qr_get_users')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 $forum_main_view = 'userlist/main';
 include FORUM_ROOT . 'include/render.php';

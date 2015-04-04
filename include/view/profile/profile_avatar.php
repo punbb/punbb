@@ -7,29 +7,11 @@
 		<h2 class="hn"><span><?php printf(($forum_page['own_profile']) ? $lang_profile['Avatar welcome'] : $lang_profile['Avatar welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-<?php
 
-		// If there were any errors, show them
-		if (!empty($errors))
-		{
-			$forum_page['errors'] = array();
-			foreach ($errors as $cur_error)
-				$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+		<?= helper('errors', array(
+			'errors_title' => $lang_profile['Profile update errors']
+		)) ?>
 
-			($hook = get_hook('pf_change_details_avatar_pre_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
-		}
-
-?>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>" enctype="multipart/form-data">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>

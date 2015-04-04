@@ -3037,6 +3037,12 @@ function message($message, $link = '', $heading = '')
 {
 	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader, $forum_flash;
 
+	// FIX for render from function
+	global $forum_main_view;
+	$GLOBALS['message'] = $message;
+	$GLOBALS['ling'] = $link;
+	$GLOBALS['heading'] = $heading;
+
 	($hook = get_hook('fn_message_start')) ? eval($hook) : null;
 
 	if (defined('FORUM_REQUEST_AJAX'))

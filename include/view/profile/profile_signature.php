@@ -7,32 +7,15 @@
 		<h2 class="hn"><span><?php printf(($forum_page['own_profile']) ? $lang_profile['Sig welcome'] : $lang_profile['Sig welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-<?php
-
+	<?php
 		if (!empty($forum_page['text_options']))
 			echo "\t\t".'<p class="content-options options">'.sprintf($lang_common['You may use'], implode(' ', $forum_page['text_options'])).'</p>'."\n";
+	?>
 
-		// If there were any errors, show them
-		if (!empty($errors))
-		{
-			$forum_page['errors'] = array();
-			foreach ($errors as $cur_error)
-				$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+		<?= helper('errors', array(
+			'errors_title' => $lang_profile['Profile update errors']
+		)) ?>
 
-			($hook = get_hook('pf_change_details_signature_pre_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_profile['Profile update errors'] ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
-		}
-
-?>
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>

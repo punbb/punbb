@@ -11,6 +11,13 @@
     hd_visit_elements
     hd_main_elements
     hd_end
+    pf_change_pass_key_pre_errors
+    pf_change_pass_normal_pre_errors
+    pf_change_email_pre_errors
+    pf_change_details_identity_pre_errors
+    pf_change_details_signature_pre_errors
+    pf_change_details_avatar_pre_errors
+    rg_pre_register_errors
 
 ## Структура темы
 

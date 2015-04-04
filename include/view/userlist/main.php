@@ -37,18 +37,7 @@
 
 ($hook = get_hook('ul_search_new_group_option')) ? eval($hook) : null;
 
-// Get the list of user groups (excluding the guest group)
-$query = array(
-	'SELECT'	=> 'g.g_id, g.g_title',
-	'FROM'		=> 'groups AS g',
-	'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
-	'ORDER BY'	=> 'g.g_id'
-);
-
-($hook = get_hook('ul_qr_get_groups')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-while ($cur_group = $forum_db->fetch_assoc($result))
+while ($cur_group = $forum_db->fetch_assoc($result_group))
 {
 	if ($cur_group['g_id'] == $forum_page['show_group'])
 		echo "\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
@@ -98,27 +87,6 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 		</div>
 		</form>
 <?php
-
-// Grab the users
-$query = array(
-	'SELECT'	=> 'u.id, u.username, u.title, u.num_posts, u.registered, g.g_id, g.g_user_title',
-	'FROM'		=> 'users AS u',
-	'JOINS'		=> array(
-		array(
-			'LEFT JOIN'		=> 'groups AS g',
-			'ON'			=> 'g.g_id=u.group_id'
-		)
-	),
-	'WHERE'		=> 'u.id > 1 AND u.group_id != '.FORUM_UNVERIFIED,
-	'ORDER BY'	=> $forum_page['sort_by'].' '.$forum_page['sort_dir'].', u.id ASC',
-	'LIMIT'		=> $forum_page['start_from'].', 50'
-);
-
-if (!empty($where_sql))
-	$query['WHERE'] .= ' AND '.implode(' AND ', $where_sql);
-
-($hook = get_hook('ul_qr_get_users')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $founded_user_datas = array();
 while ($user_data = $forum_db->fetch_assoc($result))
