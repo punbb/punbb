@@ -9,11 +9,7 @@
  * @package PunBB
  */
 
-
-if (!defined('FORUM_ROOT'))
-	define('FORUM_ROOT', '../');
-require FORUM_ROOT.'include/common.php';
-require FORUM_ROOT.'include/common_admin.php';
+require __DIR__ . '/../vendor/pautoload.php';
 
 if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
 	require FORUM_ROOT.'include/xml.php';

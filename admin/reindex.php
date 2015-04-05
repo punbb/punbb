@@ -9,15 +9,10 @@
  * @package PunBB
  */
 
-
-if (!defined('FORUM_ROOT'))
-	define('FORUM_ROOT', '../');
-
 // Tell common.php that we don't want output buffering
 define('FORUM_DISABLE_BUFFERING', 1);
 
-require FORUM_ROOT.'include/common.php';
-require FORUM_ROOT.'include/common_admin.php';
+require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('ari_start')) ? eval($hook) : null;
 
