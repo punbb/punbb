@@ -384,6 +384,16 @@ else if (isset($_GET['del_group']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-groups');
 
+	$query = array(
+		'SELECT'	=> 'g.g_id, g.g_title',
+		'FROM'		=> 'groups AS g',
+		'WHERE'		=> 'g.g_id!='.FORUM_GUEST.' AND g.g_id!='.$group_id,
+		'ORDER BY'	=> 'g.g_title'
+	);
+
+	($hook = get_hook('agr_del_group_qr_get_groups')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	$forum_main_view = 'admin/groups/delete';
 	include FORUM_ROOT . 'include/render.php';
 }
@@ -404,6 +414,32 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-groups');
+
+$query = array(
+	'SELECT'	=> 'g.g_id, g.g_title',
+	'FROM'		=> 'groups AS g',
+	'WHERE'		=> 'g_id>'.FORUM_GUEST,
+	'ORDER BY'	=> 'g.g_title'
+);
+($hook = get_hook('agr_qr_get_allowed_base_groups')) ? eval($hook) : null;
+$result_groups = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+$query = array(
+	'SELECT'	=> 'g.g_id, g.g_title',
+	'FROM'		=> 'groups AS g',
+	'WHERE'		=> 'g_id>'.FORUM_GUEST.' AND g_moderator=0',
+	'ORDER BY'	=> 'g.g_title'
+);
+($hook = get_hook('agr_qr_get_groups')) ? eval($hook) : null;
+$result_groups_default = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+$query = array(
+	'SELECT'	=> 'g.g_id, g.g_title',
+	'FROM'		=> 'groups AS g',
+	'ORDER BY'	=> 'g.g_title'
+);
+($hook = get_hook('agr_qr_get_group_list')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/groups/main';
 include FORUM_ROOT . 'include/render.php';

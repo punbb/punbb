@@ -20,19 +20,8 @@
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_groups['Base new group label'] ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="base_group">
 <?php
-
-$query = array(
-	'SELECT'	=> 'g.g_id, g.g_title',
-	'FROM'		=> 'groups AS g',
-	'WHERE'		=> 'g_id>'.FORUM_GUEST,
-	'ORDER BY'	=> 'g.g_title'
-);
-
-($hook = get_hook('agr_qr_get_allowed_base_groups')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-while ($cur_group = $forum_db->fetch_assoc($result))
+while ($cur_group = $forum_db->fetch_assoc($result_groups))
 	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].($cur_group['g_id'] == $forum_config['o_default_user_group'] ? '" selected="selected">' : '">').forum_htmlencode($cur_group['g_title']).'</option>'."\n";
-
 ?>
 						</select></span>
 					</div>
@@ -69,16 +58,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="default_group">
 <?php
 
-$query = array(
-	'SELECT'	=> 'g.g_id, g.g_title',
-	'FROM'		=> 'groups AS g',
-	'WHERE'		=> 'g_id>'.FORUM_GUEST.' AND g_moderator=0',
-	'ORDER BY'	=> 'g.g_title'
-);
-
-($hook = get_hook('agr_qr_get_groups')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-while ($cur_group = $forum_db->fetch_assoc($result))
+while ($cur_group = $forum_db->fetch_assoc($result_groups_default))
 {
 	if ($cur_group['g_id'] == $forum_config['o_default_user_group'])
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
@@ -114,14 +94,6 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 		<div class="ct-group">
 <?php
 
-$query = array(
-	'SELECT'	=> 'g.g_id, g.g_title',
-	'FROM'		=> 'groups AS g',
-	'ORDER BY'	=> 'g.g_title'
-);
-
-($hook = get_hook('agr_qr_get_group_list')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $forum_page['item_num'] = 0;
 while ($cur_group = $forum_db->fetch_assoc($result))
 {
