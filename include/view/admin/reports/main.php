@@ -2,43 +2,6 @@
 
 ($hook = get_hook('arp_main_output_start')) ? eval($hook) : null;
 
-// Fetch any unread reports
-$query = array(
-	'SELECT'	=> 'r.id, r.topic_id, r.forum_id, r.reported_by, r.created, r.message, p.id AS pid, t.subject, f.forum_name, u.username AS reporter',
-	'FROM'		=> 'reports AS r',
-	'JOINS'		=> array(
-		array(
-			'LEFT JOIN'		=> 'posts AS p',
-			'ON'			=> 'r.post_id=p.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'topics AS t',
-			'ON'			=> 'r.topic_id=t.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'forums AS f',
-			'ON'			=> 'r.forum_id=f.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'users AS u',
-			'ON'			=> 'r.reported_by=u.id'
-		)
-	),
-	'WHERE'		=> 'r.zapped IS NULL',
-	'ORDER BY'	=> 'r.created DESC'
-);
-
-($hook = get_hook('arp_qr_get_new_reports')) ? eval($hook) : null;
-
-$forum_page['new_reports'] = false;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-$unread_reports = array();
-while ($cur_report = $forum_db->fetch_assoc($result))
-{
-	$unread_reports[] = $cur_report;
-}
-
 if (!empty($unread_reports))
 {
 	$forum_page['new_reports'] = true;
@@ -89,48 +52,6 @@ if (!empty($unread_reports))
 	</div>
 <?php
 
-}
-
-// Fetch the last 10 reports marked as read
-$query = array(
-	'SELECT'	=> 'r.id, r.topic_id, r.forum_id, r.reported_by, r.created, r.message, r.zapped, r.zapped_by AS zapped_by_id, p.id AS pid, t.subject, f.forum_name, u.username AS reporter, u2.username AS zapped_by',
-	'FROM'		=> 'reports AS r',
-	'JOINS'		=> array(
-		array(
-			'LEFT JOIN'		=> 'posts AS p',
-			'ON'			=> 'r.post_id=p.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'topics AS t',
-			'ON'			=> 'r.topic_id=t.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'forums AS f',
-			'ON'			=> 'r.forum_id=f.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'users AS u',
-			'ON'			=> 'r.reported_by=u.id'
-		),
-		array(
-			'LEFT JOIN'		=> 'users AS u2',
-			'ON'			=> 'r.zapped_by=u2.id'
-		)
-	),
-	'WHERE'		=> 'r.zapped IS NOT NULL',
-	'ORDER BY'	=> 'r.zapped DESC',
-	'LIMIT'		=> '10'
-);
-
-($hook = get_hook('arp_qr_get_last_zapped_reports')) ? eval($hook) : null;
-
-$forum_page['old_reports'] = false;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-$zapped_reports = array();
-while ($cur_report = $forum_db->fetch_assoc($result))
-{
-	$zapped_reports[] = $cur_report;
 }
 
 if (!empty($zapped_reports))
