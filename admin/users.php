@@ -120,6 +120,27 @@ else if (isset($_GET['show_users']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-uresults');
 
+	if ($forum_page['num_users'] > 0) {
+		$users_data_list = array();
+		// Loop through users and print out some info
+		foreach ($users as $user) {
+			$query = array(
+				'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
+				'FROM'		=> 'users AS u',
+				'JOINS'		=> array(
+					array(
+						'INNER JOIN'	=> 'groups AS g',
+						'ON'			=> 'g.g_id=u.group_id'
+					)
+				),
+				'WHERE'		=> 'u.id>1 AND u.id='.$user['poster_id']
+			);
+			($hook = get_hook('aus_show_users_qr_get_user_details')) ? eval($hook) : null;
+			$result2 = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$users_data_list[] = $forum_db->fetch_assoc($result2);
+		}
+	}
+
 	$forum_main_view = 'admin/users/show';
 	include FORUM_ROOT . 'include/render.php';
 }
@@ -405,6 +426,15 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
 
+	$query = array(
+		'SELECT'	=> 'g.g_id, g.g_title',
+		'FROM'		=> 'groups AS g',
+		'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
+		'ORDER BY'	=> 'g.g_title'
+	);
+	($hook = get_hook('aus_change_group_qr_get_groups')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	$forum_main_view = 'admin/users/change_group';
 	include FORUM_ROOT . 'include/render.php';
 }
@@ -557,6 +587,23 @@ else if (isset($_GET['find_user']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-uresults');
 
+	// Find any users matching the conditions
+	$query = array(
+		'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
+		'FROM'		=> 'users AS u',
+		'JOINS'		=> array(
+			array(
+				'LEFT JOIN'		=> 'groups AS g',
+				'ON'			=> 'g.g_id=u.group_id'
+			)
+		),
+		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions),
+		'ORDER BY'	=> $order_by.' '.$direction,
+		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
+	);
+	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	$forum_main_view = 'admin/users/find';
 	include FORUM_ROOT . 'include/render.php';
 }
@@ -581,6 +628,15 @@ $forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($foru
 
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-users');
+
+$query = array(
+	'SELECT'	=> 'g.g_id, g.g_title',
+	'FROM'		=> 'groups AS g',
+	'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
+	'ORDER BY'	=> 'g.g_title'
+);
+($hook = get_hook('aus_search_form_qr_get_groups')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/users/search';
 include FORUM_ROOT . 'include/render.php';

@@ -19,24 +19,12 @@
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Move users to label'] ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="move_to_group">
 <?php
-
-	$query = array(
-		'SELECT'	=> 'g.g_id, g.g_title',
-		'FROM'		=> 'groups AS g',
-		'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
-		'ORDER BY'	=> 'g.g_title'
-	);
-
-	($hook = get_hook('aus_change_group_qr_get_groups')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($cur_group = $forum_db->fetch_assoc($result))
-	{
+	while ($cur_group = $forum_db->fetch_assoc($result)) {
 		if ($cur_group['g_id'] == $forum_config['o_default_user_group'])	// Pre-select the default Members group
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 		else
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 	}
-
 ?>
 						</select></span>
 					</div>

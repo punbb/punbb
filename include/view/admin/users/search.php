@@ -206,16 +206,6 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 							<option value="-1" selected="selected"><?php echo $lang_admin_users['All groups'] ?></option>
 							<option value="<?php echo FORUM_UNVERIFIED ?>"><?php echo $lang_admin_users['Unverified users'] ?></option>
 <?php
-
-$query = array(
-	'SELECT'	=> 'g.g_id, g.g_title',
-	'FROM'		=> 'groups AS g',
-	'WHERE'		=> 'g.g_id!='.FORUM_GUEST,
-	'ORDER BY'	=> 'g.g_title'
-);
-
-($hook = get_hook('aus_search_form_qr_get_groups')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 while ($cur_group = $forum_db->fetch_assoc($result))
 	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 

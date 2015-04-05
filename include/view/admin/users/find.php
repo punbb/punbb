@@ -36,26 +36,6 @@
 			</thead>
 			<tbody>
 <?php
-
-	// Find any users matching the conditions
-	$query = array(
-		'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
-		'FROM'		=> 'users AS u',
-		'JOINS'		=> array(
-			array(
-				'LEFT JOIN'		=> 'groups AS g',
-				'ON'			=> 'g.g_id=u.group_id'
-			)
-		),
-		'WHERE'		=> 'u.id>1 AND '.implode(' AND ', $conditions),
-		'ORDER BY'	=> $order_by.' '.$direction,
-		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
-	);
-
-	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
-
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
 	if ($forum_page['num_users'] > 0)
 	{
 		$forum_page['item_count'] = 0;

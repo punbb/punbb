@@ -42,23 +42,8 @@
 		$forum_page['item_count'] = 0;
 
 		// Loop through users and print out some info
-		foreach ($users as $user)
+		foreach ($users_data_list as $user_data)
 		{
-			$query = array(
-				'SELECT'	=> 'u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title',
-				'FROM'		=> 'users AS u',
-				'JOINS'		=> array(
-					array(
-						'INNER JOIN'	=> 'groups AS g',
-						'ON'			=> 'g.g_id=u.group_id'
-					)
-				),
-				'WHERE'		=> 'u.id>1 AND u.id='.$user['poster_id']
-			);
-
-			($hook = get_hook('aus_show_users_qr_get_user_details')) ? eval($hook) : null;
-			$result2 = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
 			++$forum_page['item_count'];
 
 			$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? 'odd' : 'even');
@@ -67,8 +52,7 @@
 
 			($hook = get_hook('aus_show_users_pre_row_generation')) ? eval($hook) : null;
 
-			if ($user_data = $forum_db->fetch_assoc($result2))
-			{
+			if ($user_data) {
 				$forum_page['table_row'] = array();
 				$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['user'], $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></span><span class="usermail"><a href="mailto:'.forum_htmlencode($user_data['email']).'">'.forum_htmlencode($user_data['email']).'</a></span>'.(($user_data['admin_note'] != '') ? '<span class="usernote">'.$lang_admin_users['Admin note'].' '.forum_htmlencode($user_data['admin_note']).'</span>' : '').'</td>';
 				$forum_page['table_row']['title'] = '<td class="tc'.count($forum_page['table_row']).'">'.get_title($user_data).'</td>';
