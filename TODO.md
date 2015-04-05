@@ -18,6 +18,7 @@
     pf_change_details_signature_pre_errors
     pf_change_details_avatar_pre_errors
     rg_pre_register_errors
+    aex_install_ext_pre_errors
 
 ## Структура темы
 

@@ -6,27 +6,11 @@
 		<h2 class="hn"><span><?php echo end($forum_page['crumbs']) ?> "<?php echo forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
-<?php
 
-    // If there were any errors, show them
-    if (!empty($errors))
-    {
-        $forum_page['errors'] = array();
-        foreach ($errors as $cur_error)
-            $forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+		<?= helper('errors', array(
+			'errors_title' => $lang_admin_ext['Install ext errors']
+		)) ?>
 
-            ($hook = get_hook('aex_install_ext_pre_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_admin_ext['Install ext errors'] ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-    }
-?>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id ?>">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id) ?>" />

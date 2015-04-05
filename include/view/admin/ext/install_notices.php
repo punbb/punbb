@@ -4,20 +4,17 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo end($forum_page['crumbs']) ?> "<?php echo forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
+		<h2 class="hn"><span><?= end($forum_page['crumbs']) ?> "<?= forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
-			<p><?php echo $lang_admin_ext['Extension installed info'] ?></p>
+			<p><?= $lang_admin_ext['Extension installed info'] ?></p>
 			<ul class="data-list">
-<?php
-
-			foreach ($notices as $cur_notice)
-				echo "\t\t\t\t".'<li><span>'.$cur_notice.'</span></li>'."\n";
-
-?>
+				<?php foreach ($notices as $cur_notice) { ?>
+					<li><span><?= $cur_notice ?></span></li>
+				<?php } ?>
 			</ul>
-			<p><a href="<?php echo forum_link($forum_url['admin_extensions_manage']) ?>"><?php echo $lang_admin_common['Manage extensions'] ?></a></p>
+			<p><a href="<?= forum_link($forum_url['admin_extensions_manage']) ?>"><?= $lang_admin_common['Manage extensions'] ?></a></p>
 		</div>
 	</div>
 <?php
