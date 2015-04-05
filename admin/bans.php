@@ -374,5 +374,23 @@ if ($forum_page['page'] > 1)
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-bans');
 
+if ($forum_page['num_bans'] > 0) {
+	// Grab the bans
+	$query = array(
+		'SELECT'	=> 'b.*, u.username AS ban_creator_username',
+		'FROM'		=> 'bans AS b',
+		'JOINS'		=> array(
+			array(
+				'LEFT JOIN'		=> 'users AS u',
+				'ON'			=> 'u.id=b.ban_creator'
+			)
+		),
+		'ORDER BY'	=> 'b.id',
+		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
+	);
+
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+}
+
 $forum_main_view = 'admin/bans/main';
 include FORUM_ROOT . 'include/render.php';

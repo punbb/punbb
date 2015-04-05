@@ -47,22 +47,6 @@ if ($forum_page['num_bans'] > 0)
 		<div class="ct-group">
 <?php
 
-	// Grab the bans
-	$query = array(
-		'SELECT'	=> 'b.*, u.username AS ban_creator_username',
-		'FROM'		=> 'bans AS b',
-		'JOINS'		=> array(
-			array(
-				'LEFT JOIN'		=> 'users AS u',
-				'ON'			=> 'u.id=b.ban_creator'
-			)
-		),
-		'ORDER BY'	=> 'b.id',
-		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
-	);
-
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
 	$forum_page['item_num'] = 0;
 	while ($cur_ban = $forum_db->fetch_assoc($result))
 	{
