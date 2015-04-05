@@ -151,6 +151,21 @@ else
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-prune');
 
+	$query = array(
+		'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name',
+		'FROM'		=> 'categories AS c',
+		'JOINS'		=> array(
+			array(
+				'INNER JOIN'	=> 'forums AS f',
+				'ON'			=> 'c.id=f.cat_id'
+			)
+		),
+		'WHERE'		=> 'f.redirect_url IS NULL',
+		'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
+	);
+	($hook = get_hook('apr_qr_get_forum_list')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	$forum_main_view = 'admin/prune/main';
 	include FORUM_ROOT . 'include/render.php';
 }
