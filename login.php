@@ -7,13 +7,10 @@
  * @package PunBB
  */
 
-
 if (isset($_GET['action']))
 	define('FORUM_QUIET_VISIT', 1);
 
-if (!defined('FORUM_ROOT'))
-	define('FORUM_ROOT', './');
-require FORUM_ROOT.'include/common.php';
+require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('li_start')) ? eval($hook) : null;
 
