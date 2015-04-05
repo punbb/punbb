@@ -34,18 +34,8 @@
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Add to category label'] ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="add_to_cat">
 <?php
-
-	$query = array(
-		'SELECT'	=> 'c.id, c.cat_name',
-		'FROM'		=> 'categories AS c',
-		'ORDER BY'	=> 'c.disp_position'
-	);
-
-	($hook = get_hook('afo_qr_get_categories')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($cur_cat = $forum_db->fetch_assoc($result))
+	while ($cur_cat = $forum_db->fetch_assoc($result_categories))
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'">'.forum_htmlencode($cur_cat['cat_name']).'</option>'."\n";
-
 ?>
 						</select></span>
 					</div>
@@ -60,28 +50,6 @@
 	</div>
 
 <?php
-
-// Display all the categories and forums
-$query = array(
-	'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.disp_position',
-	'FROM'		=> 'categories AS c',
-	'JOINS'		=> array(
-		array(
-			'INNER JOIN'	=> 'forums AS f',
-			'ON'			=> 'c.id=f.cat_id'
-		)
-	),
-	'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
-);
-
-($hook = get_hook('afo_qr_get_cats_and_forums')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-$forums = array();
-while ($cur_forum = $forum_db->fetch_assoc($result))
-{
-	$forums[] = $cur_forum;
-}
 
 if (!empty($forums))
 {

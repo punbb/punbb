@@ -38,15 +38,7 @@
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_id">
 <?php
 
-	$query = array(
-		'SELECT'	=> 'c.id, c.cat_name',
-		'FROM'		=> 'categories AS c',
-		'ORDER BY'	=> 'c.disp_position'
-	);
-
-	($hook = get_hook('afo_edit_forum_qr_get_categories')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($cur_cat = $forum_db->fetch_assoc($result))
+	while ($cur_cat = $forum_db->fetch_assoc($result_categories))
 	{
 		$selected = ($cur_cat['id'] == $cur_forum['cat_id']) ? ' selected="selected"' : '';
 		echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'"'.$selected.'>'.forum_htmlencode($cur_cat['cat_name']).'</option>'."\n";
@@ -99,21 +91,6 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 	$i = 2;
 
-	$query = array(
-		'SELECT'	=> 'g.g_id, g.g_title, g.g_read_board, g.g_post_replies, g.g_post_topics, fp.read_forum, fp.post_replies, fp.post_topics',
-		'FROM'		=> 'groups AS g',
-		'JOINS'		=> array(
-			array(
-				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> 'g.g_id=fp.group_id AND fp.forum_id='.$forum_id
-			)
-		),
-		'WHERE'		=> 'g.g_id!='.FORUM_ADMIN,
-		'ORDER BY'	=> 'g.g_id'
-	);
-
-	($hook = get_hook('afo_qr_get_forum_perms')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	while ($cur_perm = $forum_db->fetch_assoc($result))
 	{
 		$read_forum = ($cur_perm['read_forum'] != '0') ? true : false;

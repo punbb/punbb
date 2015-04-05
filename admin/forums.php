@@ -442,6 +442,32 @@ else if (isset($_GET['edit_forum']))
 	define('FORUM_PAGE_SECTION', 'start');
 	define('FORUM_PAGE', 'admin-forums');
 
+	// categories
+	$query = array(
+		'SELECT'	=> 'c.id, c.cat_name',
+		'FROM'		=> 'categories AS c',
+		'ORDER BY'	=> 'c.disp_position'
+	);
+	($hook = get_hook('afo_edit_forum_qr_get_categories')) ? eval($hook) : null;
+	$result_categories = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	// groups
+	$query = array(
+		'SELECT'	=> 'g.g_id, g.g_title, g.g_read_board, g.g_post_replies, g.g_post_topics, fp.read_forum, fp.post_replies, fp.post_topics',
+		'FROM'		=> 'groups AS g',
+		'JOINS'		=> array(
+			array(
+				'LEFT JOIN'		=> 'forum_perms AS fp',
+				'ON'			=> 'g.g_id=fp.group_id AND fp.forum_id='.$forum_id
+			)
+		),
+		'WHERE'		=> 'g.g_id!='.FORUM_ADMIN,
+		'ORDER BY'	=> 'g.g_id'
+	);
+
+	($hook = get_hook('afo_qr_get_forum_perms')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
 	$forum_main_view = 'admin/forums/edit';
 	include FORUM_ROOT . 'include/render.php';
 }
@@ -461,6 +487,35 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-forums');
+
+// categories
+$query = array(
+	'SELECT'	=> 'c.id, c.cat_name',
+	'FROM'		=> 'categories AS c',
+	'ORDER BY'	=> 'c.disp_position'
+);
+($hook = get_hook('afo_qr_get_categories')) ? eval($hook) : null;
+$result_categories = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+// Display all the categories and forums
+$query = array(
+	'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.disp_position',
+	'FROM'		=> 'categories AS c',
+	'JOINS'		=> array(
+		array(
+			'INNER JOIN'	=> 'forums AS f',
+			'ON'			=> 'c.id=f.cat_id'
+		)
+	),
+	'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
+);
+($hook = get_hook('afo_qr_get_cats_and_forums')) ? eval($hook) : null;
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+$forums = array();
+while ($cur_forum = $forum_db->fetch_assoc($result)) {
+	$forums[] = $cur_forum;
+}
 
 $forum_main_view = 'admin/forums/main';
 include FORUM_ROOT . 'include/render.php';
