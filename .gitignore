@@ -13,3 +13,4 @@ extensions/
 *.sublime-*
 /style/Oxygenwrap/
 /style/ExampleTwig/
+/vendor/
