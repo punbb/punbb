@@ -119,7 +119,7 @@ update_users_online();
 
 // Check to see if we logged in without a cookie being set
 if ($forum_user['is_guest'] && isset($_GET['login']))
-	message($lang_common['No cookie']);
+	message(__('No cookie'));
 
 // If we're an administrator or moderator, make sure the CSRF token in $_POST is valid (token in post.php is dealt with in post.php)
 if (!empty($_POST) && (isset($_POST['confirm_cancel']) || (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== generate_form_token(get_current_url()))) && !defined('FORUM_SKIP_CSRF_CONFIRM'))

@@ -9,6 +9,10 @@
 
     (как в wordpress https://codex.wordpress.org/Function_Reference/_2)
 
+    хранение в
+    $_PUNBB['lang']['commmon']
+    ...
+
 ### пространство имен 
 
     namespace punbb;

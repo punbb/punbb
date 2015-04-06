@@ -12,7 +12,7 @@ require __DIR__ . '/vendor/pautoload.php';
 ($hook = get_hook('in_start')) ? eval($hook) : null;
 
 if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
+	message(__('No view'));
 
 // Load the index.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/index.php';

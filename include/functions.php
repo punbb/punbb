@@ -3332,3 +3332,17 @@ function send_json($params)
 	echo json_encode($params);
 	die;
 }
+
+function __($text, $domain = 'common', $language = null) {
+	global $_PUNBB;
+	global $forum_user; // NEEDFIX
+
+	if (empty($_PUNBB['lang'][$domain])) {
+		if (!$language) {
+			$language = $forum_user['language'];
+		}
+		$_PUNBB['lang'][$domain] = include FORUM_ROOT . 'lang/' . $language . '/common.php';
+	}
+
+	return $_PUNBB['lang'][$domain][$text];
+}
