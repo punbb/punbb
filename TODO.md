@@ -1,17 +1,29 @@
 
 ## TODO
 
-### хелпер для языковых трансляций 
+### Хелпер для языковых трансляций 
 
-    $lang_common['No view'] -> __('No view', 'common') = __('No view')
-    'common' - по умолчанию - тип "область" для констант
-    в хелпере так же подгружает указанный файл констант
+с автоподгрузкой файла трансляций
 
-    (как в wordpress https://codex.wordpress.org/Function_Reference/_2)
+было
+    
+    $lang_common['No view']
+    $lang_index['Link to']
+    ...
+
+стало 
+    
+    __('No view', 'common') или __('No view')
+    __('Link to', 'index')
+    ...
 
     хранение в
-    $_PUNBB['lang']['commmon']
+    $_PUNBB['lang']['commmon']['No view']
+    $_PUNBB['lang']['index']['Link to']
     ...
+
+- как различать  для расширения что грузить __('Link to', 'extension1'),  проверять $domain в списке расширений или лучше добавить префикс __('Link to', 'ext.extension1') ?
+- __fmt('const', [arg1, arg2, arg3], $domain, $language) - работает как sprintf(__(...), arg1, arg2,)
 
 ### пространство имен 
 
@@ -31,6 +43,37 @@
 
     db()
     ...
+
+### события
+
+передача по значению, возвращая значение может работать как фильтр
+
+    event_trigger('page_before_render', $data)
+
+    foreach ($_PUNBB['event'][$event] as $handler) {
+        if (is_callable($handler)) {
+            $result = call_user_func($handler, $data);
+            if ($result !== false) {
+                $data = $result;
+                ???
+            }
+        }
+    }
+
+    event_add(event, handler) добавляет и возвращает индекс
+    event_remove(event, index) - удаляет по индексу
+
+хранениие
+
+    $_PUNBB['event']['page_before_render'] = array(handler1, handler2, handler3)
+
+обработчик
+
+    function handler1($data) {
+        return false; - останавливает цикл вызова обработчиков
+        return $some_modified_data; - или возвращает какойто результат
+    }
+
 
 ### расширения
 
