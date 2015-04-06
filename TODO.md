@@ -72,6 +72,8 @@
     function handler1($data) {
         return false; - останавливает цикл вызова обработчиков
         return $some_modified_data; - или возвращает какойто результат
+        или лучше [$some_modified_data, false]
+        если надо возвратить результат и остановить цикл
     }
 
 
