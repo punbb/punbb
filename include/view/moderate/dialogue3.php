@@ -4,7 +4,8 @@
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo end($forum_page['crumbs']).' '.$lang_misc['To new forum'] ?></span></h2>
+		<h2 class="hn"><span><?php echo end($forum_page['crumbs']).' '.
+			__('To new forum', 'misc') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -13,11 +14,11 @@
 			</div>
 <?php ($hook = get_hook('mr_move_topics_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_misc['Move topic'] ?></strong></legend>
+				<legend class="group-legend"><strong><?= __('Move topic', 'misc') ?></strong></legend>
 <?php ($hook = get_hook('mr_move_topics_pre_move_to_forum')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['Move to'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Move to', 'misc') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="move_to_forum">
 <?php
 
@@ -50,14 +51,15 @@
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo (++$forum_page['fld_count']) ?>" name="with_redirect" value="1"<?php if ($action == 'single') echo ' checked="checked"' ?> /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo ($action == 'single') ? $lang_misc['Leave redirect'] : $lang_misc['Leave redirects'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo ($action == 'single') ?
+							__('Leave redirect', 'misc') : __('Leave redirects', 'misc') ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('mr_move_topics_pre_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('mr_move_topics_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="move_topics_to" value="<?php echo $lang_misc['Move'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="move_topics_to" value="<?= __('Move', 'misc') ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>

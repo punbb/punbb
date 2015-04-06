@@ -3,9 +3,12 @@
 <?php
 
 $forum_page['mod_options'] = array(
-	'del_posts'		=> '<span class="submit first-item"><input type="submit" name="delete_posts" value="'.$lang_misc['Delete posts'].'" /></span>',
-	'split_posts'	=> '<span class="submit"><input type="submit" name="split_posts" value="'.$lang_misc['Split posts'].'" /></span>',
-	'del_topic'		=> '<span><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.$lang_misc['Delete whole topic'].'</a></span>'
+	'del_posts'		=> '<span class="submit first-item"><input type="submit" name="delete_posts" value="'.
+		__('Delete posts', 'misc') . '" /></span>',
+	'split_posts'	=> '<span class="submit"><input type="submit" name="split_posts" value="'.
+		__('Split posts', 'misc') . '" /></span>',
+	'del_topic'		=> '<span><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.
+		__('Delete whole topic', 'misc') . '</a></span>'
 );
 
 ($hook = get_hook('mr_post_actions_pre_mod_options')) ? eval($hook) : null;

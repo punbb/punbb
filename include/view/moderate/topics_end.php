@@ -6,12 +6,16 @@
 
 	// Setup moderator control buttons
 	$forum_page['mod_options'] = array(
-		'mod_move'		=> '<span class="submit first-item"><input type="submit" name="move_topics" value="'.$lang_misc['Move'].'" /></span>',
+		'mod_move'		=> '<span class="submit first-item"><input type="submit" name="move_topics" value="'.
+			__('Move', 'misc') . '" /></span>',
 		'mod_delete'	=> '<span class="submit"><input type="submit" name="delete_topics" value="'.
 			__('Delete') . '" /></span>',
-		'mod_merge'		=> '<span class="submit"><input type="submit" name="merge_topics" value="'.$lang_misc['Merge'].'" /></span>',
-		'mod_open'		=> '<span class="submit"><input type="submit" name="open" value="'.$lang_misc['Open'].'" /></span>',
-		'mod_close'		=> '<span class="submit"><input type="submit" name="close" value="'.$lang_misc['Close'].'" /></span>'
+		'mod_merge'		=> '<span class="submit"><input type="submit" name="merge_topics" value="'.
+			__('Merge', 'misc') . '" /></span>',
+		'mod_open'		=> '<span class="submit"><input type="submit" name="open" value="'.
+			__('Open', 'misc') . '" /></span>',
+		'mod_close'		=> '<span class="submit"><input type="submit" name="close" value="'.
+			__('Close', 'misc') . '" /></span>'
 	);
 
 	($hook = get_hook('mr_topic_actions_pre_mod_option_output')) ? eval($hook) : null;

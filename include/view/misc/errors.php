@@ -10,7 +10,7 @@ if (!empty($errors)) {
 
 ?>
 	<div class="ct-box error-box">
-		<h2 class="warn hn"><?php echo $lang_misc['Form e-mail errors'] ?></h2>
+		<h2 class="warn hn"><?= __('Form e-mail errors', 'misc') ?></h2>
 		<ul class="error-list">
 			<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 		</ul>

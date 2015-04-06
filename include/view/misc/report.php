@@ -21,7 +21,7 @@
 			($hook = get_hook('mi_pre_report_errors')) ? eval($hook) : null;
 ?>
 		<div class="ct-box error-box">
-			<h2 class="warn hn"><?php echo $lang_misc['Report errors'] ?></h2>
+			<h2 class="warn hn"><?= __('Report errors', 'misc') ?></h2>
 			<ul class="error-list">
 				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 			</ul>
@@ -39,7 +39,7 @@
 <?php ($hook = get_hook('mi_report_pre_reason')) ? eval($hook) : null; ?>
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['Reason'] ?></span> <small><?php echo $lang_misc['Reason help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Reason', 'misc') ?></span> <small><?= __('Reason help', 'misc') ?></small></label><br />
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_reason" rows="5" cols="60" required></textarea></span></div>
 					</div>
 				</div>

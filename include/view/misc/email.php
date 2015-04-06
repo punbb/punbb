@@ -8,7 +8,7 @@
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box warn-box">
-			<p class="important"><?php echo $lang_misc['E-mail disclosure note'] ?></p>
+			<p class="important"><?= __('E-mail disclosure note', 'misc') ?></p>
 		</div>
 
 	<?php include view('misc/errors') ?>
@@ -22,18 +22,18 @@
 			</div>
 <?php ($hook = get_hook('mi_email_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_misc['Write e-mail'] ?></strong></legend>
+				<legend class="group-legend"><strong><?= __('Write e-mail', 'misc') ?></strong></legend>
 <?php ($hook = get_hook('mi_email_pre_subject')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required longtext">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['E-mail subject'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('E-mail subject', 'misc') ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_subject" value="<?php echo(isset($_POST['req_subject']) ? forum_htmlencode($_POST['req_subject']) : '') ?>" size="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" maxlength="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" required /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('mi_email_pre_message_contents')) ? eval($hook) : null; ?>
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_misc['E-mail message'] ?></span></label>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('E-mail message', 'misc') ?></span></label>
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="10" cols="95" required><?php echo(isset($_POST['req_message']) ? forum_htmlencode($_POST['req_message']) : '') ?></textarea></span></div>
 					</div>
 				</div>

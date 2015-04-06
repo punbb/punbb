@@ -6,7 +6,8 @@
 	$forum_page['table_header']['title'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Title column'].'</th>';
 	$forum_page['table_header']['posts'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Posts'].'</th>';
 	$forum_page['table_header']['actions'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Actions'].'</th>';
-	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_misc['Select'] .'</th>';
+	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.
+		__('Select', 'misc') . '</th>';
 
 	if ($forum_page['num_users'] > 0)
 		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-show-users-results-form">'.$lang_admin_common['Select all'].'</span>';

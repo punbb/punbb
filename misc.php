@@ -15,10 +15,6 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('mi_start')) ? eval($hook) : null;
 
-// Load the misc.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/misc.php';
-
-
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 $errors = array();
 
@@ -69,11 +65,11 @@ else if ($action == 'markread')
 	// Reset tracked topics
 	set_tracked_topics(null);
 
-	$forum_flash->add_info($lang_misc['Mark read redirect']);
+	$forum_flash->add_info(__('Mark read redirect', 'misc'));
 
 	($hook = get_hook('mi_markread_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['index']), $lang_misc['Mark read redirect']);
+	redirect(forum_link($forum_url['index']), __('Mark read redirect', 'misc'));
 }
 
 
@@ -120,11 +116,12 @@ else if ($action == 'markforumread')
 	$tracked_topics['forums'][$fid] = time();
 	set_tracked_topics($tracked_topics);
 
-	$forum_flash->add_info($lang_misc['Mark forum read redirect']);
+	$forum_flash->add_info(__('Mark forum read redirect', 'misc'));
 
 	($hook = get_hook('mi_markforumread_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($forum_name))), $lang_misc['Mark forum read redirect']);
+	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($forum_name))),
+		__('Mark forum read redirect', 'misc'));
 }
 
 // OpenSearch plugin?
@@ -193,7 +190,7 @@ else if (isset($_GET['email']))
 	}
 
 	if ($recipient_info['email_setting'] == 2 && !$forum_user['is_admmod'])
-		message($lang_misc['Form e-mail disabled']);
+		message(__('Form e-mail disabled', 'misc'));
 
 	if ($recipient_info['email'] == '')
 		message(__('Bad request'));
@@ -207,18 +204,18 @@ else if (isset($_GET['email']))
 		$message = forum_trim($_POST['req_message']);
 
 		if ($subject == '')
-			$errors[] = $lang_misc['No e-mail subject'];
+			$errors[] = __('No e-mail subject', 'misc');
 		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-	     	$errors[] = sprintf($lang_misc['Too long e-mail subject'], FORUM_SUBJECT_MAXIMUM_LENGTH);
+	     	$errors[] = sprintf(__('Too long e-mail subject', 'misc'), FORUM_SUBJECT_MAXIMUM_LENGTH);
 
 		if ($message == '')
-			$errors[] = $lang_misc['No e-mail message'];
+			$errors[] = __('No e-mail message', 'misc');
 		else if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-			$errors[] = sprintf($lang_misc['Too long e-mail message'],
+			$errors[] = sprintf(__('Too long e-mail message', 'misc'),
 				forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 
 		if ($forum_user['last_email_sent'] != '' && (time() - $forum_user['last_email_sent']) < $forum_user['g_email_flood'] && (time() - $forum_user['last_email_sent']) >= 0)
-			$errors[] = sprintf($lang_misc['Email flood'], $forum_user['g_email_flood']);
+			$errors[] = sprintf(__('Email flood', 'misc'), $forum_user['g_email_flood']);
 
 		($hook = get_hook('mi_email_end_validation')) ? eval($hook) : null;
 
@@ -256,11 +253,11 @@ else if (isset($_GET['email']))
 			($hook = get_hook('mi_email_qr_update_last_email_sent')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_flash->add_info($lang_misc['E-mail sent redirect']);
+			$forum_flash->add_info(__('E-mail sent redirect', 'misc'));
 
 			($hook = get_hook('mi_email_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_htmlencode($_POST['redirect_url']), $lang_misc['E-mail sent redirect']);
+			redirect(forum_htmlencode($_POST['redirect_url']), __('E-mail sent redirect', 'misc'));
 		}
 	}
 
@@ -275,12 +272,12 @@ else if (isset($_GET['email']))
 	);
 
 	// Setup main heading
-	$forum_page['main_head'] = sprintf($lang_misc['Send forum e-mail'], forum_htmlencode($recipient_info['username']));
+	$forum_page['main_head'] = sprintf(__('Send forum e-mail', 'misc'), forum_htmlencode($recipient_info['username']));
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		sprintf($lang_misc['Send forum e-mail'], forum_htmlencode($recipient_info['username']))
+		sprintf(__('Send forum e-mail', 'misc'), forum_htmlencode($recipient_info['username']))
 	);
 
 	($hook = get_hook('mi_email_pre_header_load')) ? eval($hook) : null;
@@ -319,16 +316,16 @@ else if (isset($_GET['report']))
 
 		// Flood protection
 		if ($forum_user['last_email_sent'] != '' && (time() - $forum_user['last_email_sent']) < $forum_user['g_email_flood'] && (time() - $forum_user['last_email_sent']) >= 0)
-			message(sprintf($lang_misc['Report flood'], $forum_user['g_email_flood']));
+			message(sprintf(__('Report flood', 'misc'), $forum_user['g_email_flood']));
 
 		// Clean up reason from POST
 		$reason = forum_linebreaks(forum_trim($_POST['req_reason']));
 		if ($reason == '')
-			message($lang_misc['No reason']);
+			message(__('No reason', 'misc'));
 
 		if (strlen($reason) > FORUM_MAX_POSTSIZE_BYTES)
 		{
-			$errors[] = sprintf($lang_misc['Too long reason'], forum_number_format(strlen($reason)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+			$errors[] = sprintf(__('Too long reason', 'misc'), forum_number_format(strlen($reason)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 		}
 
 		if (empty($errors)) {
@@ -397,11 +394,11 @@ else if (isset($_GET['report']))
 			($hook = get_hook('mi_report_qr_update_last_email_sent')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_flash->add_info($lang_misc['Report redirect']);
+			$forum_flash->add_info(__('Report redirect', 'misc'));
 
 			($hook = get_hook('mi_report_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link($forum_url['post'], $post_id), $lang_misc['Report redirect']);
+			redirect(forum_link($forum_url['post'], $post_id), __('Report redirect', 'misc'));
 		}
 	}
 
@@ -417,7 +414,7 @@ else if (isset($_GET['report']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		$lang_misc['Report post']
+		__('Report post', 'misc')
 	);
 
 	// Setup main heading
@@ -481,7 +478,7 @@ else if (isset($_GET['subscribe']))
 
 	if ($forum_db->result($result) > 0)
 	{
-		message($lang_misc['Already subscribed']);
+		message(__('Already subscribed', 'misc'));
 	}
 
 	$query = array(
@@ -493,11 +490,12 @@ else if (isset($_GET['subscribe']))
 	($hook = get_hook('mi_subscribe_add_subscription')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info($lang_misc['Subscribe redirect']);
+	$forum_flash->add_info(__('Subscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_subscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['topic'], array($topic_id, sef_friendly($subject))), $lang_misc['Subscribe redirect']);
+	redirect(forum_link($forum_url['topic'], array($topic_id, sef_friendly($subject))),
+		__('Subscribe redirect', 'misc'));
 }
 
 
@@ -536,7 +534,7 @@ else if (isset($_GET['unsubscribe']))
 
 	if (!$subject)
 	{
-		message($lang_misc['Not subscribed']);
+		message(__('Not subscribed', 'misc'));
 	}
 
 	$query = array(
@@ -547,11 +545,11 @@ else if (isset($_GET['unsubscribe']))
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info($lang_misc['Unsubscribe redirect']);
+	$forum_flash->add_info(__('Unsubscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_unsubscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['topic'], array($topic_id, sef_friendly($subject))), $lang_misc['Unsubscribe redirect']);
+	redirect(forum_link($forum_url['topic'], array($topic_id, sef_friendly($subject))), __('Unsubscribe redirect', 'misc'));
 }
 
 
@@ -604,7 +602,7 @@ else if (isset($_GET['forum_subscribe']))
 
 	if ($forum_db->result($result) > 0)
 	{
-		message($lang_misc['Already subscribed']);
+		message(__('Already subscribed', 'misc'));
 	}
 
 	$query = array(
@@ -616,11 +614,12 @@ else if (isset($_GET['forum_subscribe']))
 	($hook = get_hook('mi_forum_subscribe_add_subscription')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info($lang_misc['Subscribe redirect']);
+	$forum_flash->add_info(__('Subscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_forum_subscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))), $lang_misc['Subscribe redirect']);
+	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))),
+		__('Subscribe redirect', 'misc'));
 }
 
 
@@ -660,7 +659,7 @@ else if (isset($_GET['forum_unsubscribe']))
 
 	if (!$forum_name)
 	{
-		message($lang_misc['Not subscribed']);
+		message(__('Not subscribed', 'misc'));
 	}
 
 	$query = array(
@@ -671,11 +670,12 @@ else if (isset($_GET['forum_unsubscribe']))
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info($lang_misc['Unsubscribe redirect']);
+	$forum_flash->add_info(__('Unsubscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_forum_unsubscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))), $lang_misc['Unsubscribe redirect']);
+	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))),
+		__('Unsubscribe redirect', 'misc'));
 }
 
 

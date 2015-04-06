@@ -80,9 +80,6 @@ else if (isset($_GET['show_users']))
 
 	($hook = get_hook('aus_show_users_selected')) ? eval($hook) : null;
 
-	// Load the misc.php language file
-	require FORUM_ROOT.'lang/'.$forum_user['language'].'/misc.php';
-
 	$query = array(
 		'SELECT'	=> 'DISTINCT p.poster_id, p.poster',
 		'FROM'		=> 'posts AS p',
@@ -539,9 +536,6 @@ else if (isset($_GET['find_user']))
 
 	if (empty($conditions))
 		message($lang_admin_users['No search terms message']);
-
-	// Load the misc.php language file
-	require FORUM_ROOT.'lang/'.$forum_user['language'].'/misc.php';
 
 	// Fetch user count
 	$query = array(

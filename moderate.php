@@ -11,10 +11,6 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('mr_start')) ? eval($hook) : null;
 
-// Load the misc.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/misc.php';
-
-
 // This particular function doesn't require forum-based moderator access. It can be used
 // by all moderators and admins.
 if (isset($_GET['get_host']))
@@ -53,7 +49,8 @@ if (isset($_GET['get_host']))
 
 	($hook = get_hook('mr_view_ip_pre_output')) ? eval($hook) : null;
 
-	message(sprintf($lang_misc['Hostname lookup'], $ip, @gethostbyaddr($ip), '<a href="'.forum_link($forum_url['admin_users']).'?show_users='.$ip.'">'.$lang_misc['Show more users'].'</a>'));
+	message(sprintf(__('Hostname lookup', 'misc'), $ip, @gethostbyaddr($ip), '<a href="'.forum_link($forum_url['admin_users']).'?show_users='.$ip.'">'.
+		__('Show more users', 'misc') . '</a>'));
 }
 
 
@@ -141,7 +138,7 @@ if (isset($_GET['tid']))
 		$posts = array_map('intval', (is_array($posts) ? $posts : explode(',', $posts)));
 
 		if (empty($posts))
-			message($lang_misc['No posts selected']);
+			message(__('No posts selected', 'misc'));
 
 		if (isset($_POST['delete_posts_comply']))
 		{
@@ -180,11 +177,12 @@ if (isset($_GET['tid']))
 			sync_topic($tid);
 			sync_forum($fid);
 
-			$forum_flash->add_info($lang_misc['Delete posts redirect']);
+			$forum_flash->add_info(__('Delete posts redirect', 'misc'));
 
 			($hook = get_hook('mr_confirm_delete_posts_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))), $lang_misc['Delete posts redirect']);
+			redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
+				__('Delete posts redirect', 'misc'));
 		}
 
 		// Setup form
@@ -201,7 +199,7 @@ if (isset($_GET['tid']))
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 			array($cur_topic['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject'])))),
-			$lang_misc['Delete posts']
+			__('Delete posts', 'misc')
 		);
 
 		($hook = get_hook('mr_confirm_delete_posts_pre_header_load')) ? eval($hook) : null;
@@ -219,7 +217,7 @@ if (isset($_GET['tid']))
 		$posts = array_map('intval', (is_array($posts) ? $posts : explode(',', $posts)));
 
 		if (empty($posts))
-			message($lang_misc['No posts selected']);
+			message(__('No posts selected', 'misc'));
 
 		if (isset($_POST['split_posts_comply']))
 		{
@@ -246,7 +244,7 @@ if (isset($_GET['tid']))
 			if ($new_subject == '')
 				message(__('No subject', 'post'));
 			else if (utf8_strlen($new_subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-				message(sprintf(__('Too long subject'], 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH));
+				message(sprintf(__('Too long subject', 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH));
 
 			// Get data from the new first post
 			$query = array(
@@ -285,11 +283,12 @@ if (isset($_GET['tid']))
 			sync_topic($tid);
 			sync_forum($fid);
 
-			$forum_flash->add_info($lang_misc['Split posts redirect']);
+			$forum_flash->add_info(__('Split posts redirect', 'misc'));
 
 			($hook = get_hook('mr_confirm_split_posts_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link($forum_url['topic'], array($new_tid, sef_friendly($new_subject))), $lang_misc['Split posts redirect']);
+			redirect(forum_link($forum_url['topic'], array($new_tid, sef_friendly($new_subject))),
+				__('Split posts redirect', 'misc'));
 		}
 
 		// Setup form
@@ -306,7 +305,7 @@ if (isset($_GET['tid']))
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 			array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 			array($cur_topic['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject'])))),
-			$lang_misc['Split posts']
+			__('Split posts', 'misc')
 		);
 
 		($hook = get_hook('mr_confirm_split_posts_pre_header_load')) ? eval($hook) : null;
@@ -332,7 +331,7 @@ if (isset($_GET['tid']))
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
 	$forum_page['start_from'] = $forum_user['disp_posts'] * ($forum_page['page'] - 1);
 	$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_posts']), ($cur_topic['num_replies'] + 1));
-	$forum_page['items_info'] = generate_items_info($lang_misc['Posts'], ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
+	$forum_page['items_info'] = generate_items_info(__('Posts', 'misc'), ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 	// Generate paging links
 	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
@@ -370,10 +369,12 @@ if (isset($_GET['tid']))
 	);
 
 	// Setup main heading
-	$forum_page['main_title'] = sprintf($lang_misc['Moderate topic head'], forum_htmlencode($cur_topic['subject']));
+	$forum_page['main_title'] = sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']));
 
-	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.$lang_misc['Select all'].'</span></span>';
-	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.$lang_misc['Select all'].'</span></span>';
+	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
+		__('Select all', 'misc') . '</span></span>';
+	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
+		__('Select all', 'misc') . '</span></span>';
 
 	if ($forum_page['num_pages'] > 1)
 		$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
@@ -503,7 +504,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		sync_forum($fid);			// Synchronize the forum FROM which the topic was moved
 		sync_forum($move_to_forum);	// Synchronize the forum TO which the topic was moved
 
-		$forum_page['redirect_msg'] = (count($topics) > 1) ? $lang_misc['Move topics redirect'] : $lang_misc['Move topic redirect'];
+		$forum_page['redirect_msg'] = (count($topics) > 1) ?
+			__('Move topics redirect', 'misc') : __('Move topic redirect', 'misc');
 
 		$forum_flash->add_info($forum_page['redirect_msg']);
 
@@ -518,7 +520,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$topics = array_map('intval', $topics);
 
 		if (empty($topics))
-			message($lang_misc['No topics selected']);
+			message(__('No topics selected', 'misc'));
 
 		if (count($topics) == 1)
 		{
@@ -584,7 +586,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	if (empty($forum_list))
 	{
-		message($lang_misc['Nowhere to move']);
+		message(__('Nowhere to move', 'misc'));
 	}
 
 
@@ -603,11 +605,13 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	if ($action == 'single')
 		$forum_page['crumbs'][] = array($subject, forum_link($forum_url['topic'], array($topics, sef_friendly($subject))));
 	else
-		$forum_page['crumbs'][] = array($lang_misc['Moderate forum'], forum_link($forum_url['moderate_forum'], $fid));
-	$forum_page['crumbs'][] = ($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'];
+		$forum_page['crumbs'][] = array(__('Moderate forum', 'misc'), forum_link($forum_url['moderate_forum'], $fid));
+	$forum_page['crumbs'][] = ($action == 'single') ?
+		__('Move topic', 'misc') : __('Move topics', 'misc');
 
 	//Setup main heading
-	$forum_page['main_title'] = end($forum_page['crumbs']).' '.$lang_misc['To new forum'];
+	$forum_page['main_title'] = end($forum_page['crumbs']).' '.
+		__('To new forum', 'misc');
 
 	($hook = get_hook('mr_move_topics_pre_header_load')) ? eval($hook) : null;
 
@@ -625,10 +629,10 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	$topics = array_map('intval', (is_array($topics) ? $topics : explode(',', $topics)));
 
 	if (empty($topics))
-		message($lang_misc['No topics selected']);
+		message(__('No topics selected', 'misc'));
 
 	if (count($topics) == 1)
-		message($lang_misc['Merge error']);
+		message(__('Merge error', 'misc'));
 
 	if (isset($_POST['merge_topics_comply']))
 	{
@@ -696,11 +700,12 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		sync_topic($merge_to_tid);
 		sync_forum($fid);
 
-		$forum_flash->add_info($lang_misc['Merge topics redirect']);
+		$forum_flash->add_info(__('Merge topics redirect', 'misc'));
 
 		($hook = get_hook('mr_confirm_merge_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_misc['Merge topics redirect']);
+		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))),
+			__('Merge topics redirect', 'misc'));
 	}
 
 	// Setup form
@@ -716,8 +721,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
-		array($lang_misc['Moderate forum'], forum_link($forum_url['moderate_forum'], $fid)),
-		$lang_misc['Merge topics']
+		array(__('Moderate forum', 'misc'), forum_link($forum_url['moderate_forum'], $fid)),
+		__('Merge topics', 'misc')
 	);
 
 	($hook = get_hook('mr_merge_topics_pre_header_load')) ? eval($hook) : null;
@@ -736,7 +741,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	$topics = array_map('intval', (is_array($topics) ? $topics : explode(',', $topics)));
 
 	if (empty($topics))
-		message($lang_misc['No topics selected']);
+		message(__('No topics selected', 'misc'));
 
 	$multi = count($topics) > 1;
 	if (isset($_POST['delete_topics_comply']))
@@ -825,11 +830,15 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		foreach ($forum_ids as $cur_forum_id)
 			sync_forum($cur_forum_id);
 
-		$forum_flash->add_info($multi ? $lang_misc['Delete topics redirect'] : $lang_misc['Delete topic redirect']);
+		$forum_flash->add_info($multi ?
+			__('Delete topics redirect', 'misc') :
+			__('Delete topic redirect', 'misc'));
 
 		($hook = get_hook('mr_confirm_delete_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $multi ? $lang_misc['Delete topics redirect'] : $lang_misc['Delete topic redirect']);
+		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $multi ?
+			__('Delete topics redirect', 'misc') :
+			__('Delete topic redirect'));
 	}
 
 
@@ -846,8 +855,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
-		array($lang_misc['Moderate forum'], forum_link($forum_url['moderate_forum'], $fid)),
-		$multi ? $lang_misc['Delete topics'] : $lang_misc['Delete topic']
+		array(__('Moderate forum', 'misc'), forum_link($forum_url['moderate_forum'], $fid)),
+		$multi ? __('Delete topics', 'misc') : __('Delete topic', 'misc')
 	);
 
 	($hook = get_hook('mr_delete_topics_pre_header_load')) ? eval($hook) : null;
@@ -873,7 +882,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		$topics = array_map('intval', $topics);
 
 		if (empty($topics))
-			message($lang_misc['No topics selected']);
+			message(__('No topics selected', 'misc'));
 
 		$query = array(
 			'UPDATE'	=> 'topics',
@@ -885,9 +894,11 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		if (count($topics) == 1)
-			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
+			$forum_page['redirect_msg'] = ($action) ?
+				__('Close topic redirect', 'misc') : __('Open topic redirect', 'misc');
 		else
-			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
+			$forum_page['redirect_msg'] = ($action) ?
+				__('Close topics redirect', 'misc') : __('Open topics redirect', 'misc');
 
 		$forum_flash->add_info($forum_page['redirect_msg']);
 
@@ -933,7 +944,8 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		($hook = get_hook('mr_open_close_single_topic_qr_open_close_topic')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
+		$forum_page['redirect_msg'] = ($action) ?
+			__('Close topic redirect', 'misc') : __('Open topic redirect', 'misc');
 
 		$forum_flash->add_info($forum_page['redirect_msg']);
 
@@ -983,11 +995,12 @@ else if (isset($_GET['stick']))
 	($hook = get_hook('mr_stick_topic_qr_stick_topic')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info($lang_misc['Stick topic redirect']);
+	$forum_flash->add_info(__('Stick topic redirect', 'misc'));
 
 	($hook = get_hook('mr_stick_topic_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['topic'], array($stick, sef_friendly($subject))), $lang_misc['Stick topic redirect']);
+	redirect(forum_link($forum_url['topic'], array($stick, sef_friendly($subject))),
+		__('Stick topic redirect', 'misc'));
 }
 
 
@@ -1030,11 +1043,12 @@ else if (isset($_GET['unstick']))
 	($hook = get_hook('mr_unstick_topic_qr_unstick_topic')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info($lang_misc['Unstick topic redirect']);
+	$forum_flash->add_info(__('Unstick topic redirect', 'misc'));
 
 	($hook = get_hook('mr_unstick_topic_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['topic'], array($unstick, sef_friendly($subject))), $lang_misc['Unstick topic redirect']);
+	redirect(forum_link($forum_url['topic'], array($unstick, sef_friendly($subject))),
+		__('Unstick topic redirect', 'misc'));
 }
 
 
@@ -1056,7 +1070,7 @@ $forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_top
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($cur_forum['num_topics']));
-$forum_page['items_info'] = generate_items_info($lang_misc['Topics'], ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
+$forum_page['items_info'] = generate_items_info(__('Topics', 'misc'), ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
 
 // Select topics
 $query = array(
@@ -1114,15 +1128,17 @@ $forum_page['form_action'] = forum_link($forum_url['moderate_forum'], $fid);
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
-	sprintf($lang_misc['Moderate forum head'], forum_htmlencode($cur_forum['forum_name']))
+	sprintf(__('Moderate forum head', 'misc'), forum_htmlencode($cur_forum['forum_name']))
 );
 
 // Setup main heading
 if ($forum_page['num_pages'] > 1)
 	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
 
-$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.$lang_misc['Select all'].'</span></span>';
-$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.$lang_misc['Select all'].'</span></span>';
+$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.
+	__('Select all', 'misc') . '</span></span>';
+$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.
+	__('Select all', 'misc') . '</span></span>';
 
 ($hook = get_hook('mr_topic_actions_pre_header_load')) ? eval($hook) : null;
 

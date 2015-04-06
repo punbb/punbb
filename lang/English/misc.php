@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in various scripts
-$lang_misc = array(
+return array(
 
 'Mark read redirect'		=>	'All topics and forums have been marked as read.',
 'Mark forum read redirect'	=>	'All topics in the specified forum have been marked as read.',

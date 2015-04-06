@@ -46,7 +46,7 @@ if ($forum_config['o_smilies'] == '1')
 <?php ($hook = get_hook('vt_quickpost_pre_message_box')) ? eval($hook) : null; ?>
 			<div class="txt-set set1">
 				<div class="txt-box textarea required">
-					<label for="fld1"><span><?= __('Write message'] ?></span></label>
+					<label for="fld1"><span><?= __('Write message', 'post') ?></span></label>
 					<div class="txt-input"><span class="fld-input"><textarea id="fld1" name="req_message" rows="7" cols="95" required spellcheck="true" ></textarea></span></div>
 				</div>
 			</div>
