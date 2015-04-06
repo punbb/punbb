@@ -16,13 +16,9 @@ require __DIR__ . '/vendor/pautoload.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 
-// Load the delete.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/delete.php';
-
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
 	message(__('Bad request'));
-
 
 // Fetch some info about the post, the topic and the forum
 $query = array(
@@ -88,11 +84,12 @@ else if (isset($_POST['delete']))
 		// Delete the topic and all of it's posts
 		delete_topic($cur_post['tid'], $cur_post['fid']);
 
-		$forum_flash->add_info($lang_delete['Topic del redirect']);
+		$forum_flash->add_info(__('Topic del redirect', 'delete'));
 
 		($hook = get_hook('dl_topic_deleted_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name']))), $lang_delete['Topic del redirect']);
+		redirect(forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name']))),
+			__('Topic del redirect', 'delete'));
 	}
 	else
 	{
@@ -112,17 +109,19 @@ else if (isset($_POST['delete']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$prev_post = $forum_db->fetch_assoc($result);
 
-		$forum_flash->add_info($lang_delete['Post del redirect']);
+		$forum_flash->add_info(__('Post del redirect', 'delete'));
 
 		($hook = get_hook('dl_post_deleted_pre_redirect')) ? eval($hook) : null;
 
 		if (isset($prev_post['id']))
 		{
-			redirect(forum_link($forum_url['post'], $prev_post['id']), $lang_delete['Post del redirect']);
+			redirect(forum_link($forum_url['post'], $prev_post['id']),
+				__('Post del redirect', 'delete'));
 		}
 		else
 		{
-			redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))), $lang_delete['Post del redirect']);
+			redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))),
+				__('Post del redirect', 'delete'));
 		}
 	}
 }
@@ -144,22 +143,23 @@ $forum_page['hidden_fields'] = array(
 
 // Setup form information
 $forum_page['frm_info'] = array(
-	'<li><span>'.$lang_delete['Forum'].':<strong> '.forum_htmlencode($cur_post['forum_name']).'</strong></span></li>',
-	'<li><span>'.$lang_delete['Topic'].':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>'
+	'<li><span>'.__('Forum', 'delete').':<strong> '.forum_htmlencode($cur_post['forum_name']).'</strong></span></li>',
+	'<li><span>'.__('Topic', 'delete').':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>'
 );
 
 // Generate the post heading
 $forum_page['post_ident'] = array();
-$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['is_topic']) ? $lang_delete['Topic byline'] : $lang_delete['Reply byline']), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
+$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['is_topic']) ?
+	__('Topic byline', 'delete') : __('Reply byline', 'delete')), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
 $forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" href="'.forum_link($forum_url['post'], $cur_post['tid']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 ($hook = get_hook('dl_pre_item_ident_merge')) ? eval($hook) : null;
 
 // Generate the post title
 if ($cur_post['is_topic'])
-	$forum_page['item_subject'] = sprintf($lang_delete['Topic title'], $cur_post['subject']);
+	$forum_page['item_subject'] = sprintf(__('Topic title', 'delete'), $cur_post['subject']);
 else
-	$forum_page['item_subject'] = sprintf($lang_delete['Reply title'], $cur_post['subject']);
+	$forum_page['item_subject'] = sprintf(__('Reply title', 'delete'), $cur_post['subject']);
 
 $forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
@@ -168,7 +168,7 @@ $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($cur_post['forum_name'], forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
 	array($cur_post['subject'], forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
-	(($cur_post['is_topic']) ? $lang_delete['Delete topic'] : $lang_delete['Delete post'])
+	(($cur_post['is_topic']) ? __('Delete topic', 'delete') : __('Delete post', 'delete'))
 );
 
 ($hook = get_hook('dl_pre_header_load')) ? eval($hook) : null;

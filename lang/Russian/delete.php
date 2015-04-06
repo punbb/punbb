@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in delete.php
-$lang_delete = array(
+return array(
 
 'Delete post'			=> 'Удалить сообщение',
 'Delete topic'			=> 'Удалить тему',
