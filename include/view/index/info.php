@@ -16,10 +16,14 @@ if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800))
 	require FORUM_CACHE_DIR.'cache_stats.php';
 }
 
-$stats_list['no_of_users'] = '<li class="st-users"><span>'.sprintf($lang_index['No of users'], '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
-$stats_list['newest_user'] = '<li class="st-users"><span>'.sprintf($lang_index['Newest user'], '<strong>'.($forum_user['g_view_users'] == '1' ? '<a href="'.forum_link($forum_url['user'], $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
-$stats_list['no_of_topics'] = '<li class="st-activity"><span>'.sprintf($lang_index['No of topics'], '<strong>'.forum_number_format($forum_stats['total_topics']).'</strong>').'</span></li>';
-$stats_list['no_of_posts'] = '<li class="st-activity"><span>'.sprintf($lang_index['No of posts'], '<strong>'.forum_number_format($forum_stats['total_posts']).'</strong>').'</span></li>';
+$stats_list['no_of_users'] =
+	'<li class="st-users"><span>'.sprintf(__('No of users', 'index'), '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
+$stats_list['newest_user'] =
+	'<li class="st-users"><span>'.sprintf(__('Newest user', 'index'), '<strong>'.($forum_user['g_view_users'] == '1' ? '<a href="'.forum_link($forum_url['user'], $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
+$stats_list['no_of_topics'] =
+	'<li class="st-activity"><span>'.sprintf(__('No of topics', 'index'), '<strong>'.forum_number_format($forum_stats['total_topics']).'</strong>').'</span></li>';
+$stats_list['no_of_posts'] =
+	'<li class="st-activity"><span>'.sprintf(__('No of posts', 'index'), '<strong>'.forum_number_format($forum_stats['total_posts']).'</strong>').'</span></li>';
 
 ($hook = get_hook('in_stats_pre_info_output')) ? eval($hook) : null;
 
@@ -57,8 +61,13 @@ if ($forum_config['o_users_online'] == '1')
 	}
 
 	$forum_page['online_info'] = array();
-	$forum_page['online_info']['guests'] = ($forum_page['num_guests'] == 0) ? $lang_index['Guests none'] : sprintf((($forum_page['num_guests'] == 1) ? $lang_index['Guests single'] : $lang_index['Guests plural']), forum_number_format($forum_page['num_guests']));
-	$forum_page['online_info']['users'] = ($forum_page['num_users'] == 0) ? $lang_index['Users none'] : sprintf((($forum_page['num_users'] == 1) ? $lang_index['Users single'] : $lang_index['Users plural']), forum_number_format($forum_page['num_users']));
+	$forum_page['online_info']['guests'] = ($forum_page['num_guests'] == 0) ?
+		__('Guests none', 'index') : sprintf((($forum_page['num_guests'] == 1) ?
+			__('Guests single', 'index') :
+			__('Guests plural', 'index')), forum_number_format($forum_page['num_guests']));
+	$forum_page['online_info']['users'] = ($forum_page['num_users'] == 0) ?
+		__('Users none', 'index') : sprintf((($forum_page['num_users'] == 1) ?
+			__('Users single', 'index') : __('Users plural', 'index')), forum_number_format($forum_page['num_users']));
 
 	($hook = get_hook('in_users_online_pre_online_info_output')) ? eval($hook) : null;
 

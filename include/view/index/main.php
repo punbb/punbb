@@ -20,10 +20,14 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 		$forum_page['item_count'] = 1;
 
 		$forum_page['item_header'] = array();
-		$forum_page['item_header']['subject']['title'] = '<strong class="subject-title">'.$lang_index['Forums'].'</strong>';
-		$forum_page['item_header']['info']['topics'] = '<strong class="info-topics">'.$lang_index['topics'].'</strong>';
-		$forum_page['item_header']['info']['post'] = '<strong class="info-posts">'.$lang_index['posts'].'</strong>';
-		$forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">'.$lang_index['last post'].'</strong>';
+		$forum_page['item_header']['subject']['title'] =
+			'<strong class="subject-title">' . __('Forums', 'index').'</strong>';
+		$forum_page['item_header']['info']['topics'] =
+			'<strong class="info-topics">' . __('topics', 'index') . '</strong>';
+		$forum_page['item_header']['info']['post'] =
+			'<strong class="info-posts">' . __('posts', 'index') . '</strong>';
+		$forum_page['item_header']['info']['lastpost'] =
+			'<strong class="info-lastpost">' . __('last post', 'index') . '</strong>';
 
 		($hook = get_hook('in_forum_pre_cat_head')) ? eval($hook) : null;
 
@@ -38,13 +42,16 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 	// Is this a redirect forum?
 	if ($cur_forum['redirect_url'] != '')
 	{
-		$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><a class="external" href="'.forum_htmlencode($cur_forum['redirect_url']).'" title="'.sprintf($lang_index['Link to'], forum_htmlencode($cur_forum['redirect_url'])).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a></h3>';
+		$forum_page['item_body']['subject']['title'] =
+			'<h3 class="hn"><a class="external" href="'.forum_htmlencode($cur_forum['redirect_url']).'" title="'.
+				sprintf(__('Link to', 'index'), forum_htmlencode($cur_forum['redirect_url'])).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a></h3>';
 		$forum_page['item_status']['redirect'] = 'redirect';
 
 		if ($cur_forum['forum_desc'] != '')
 			$forum_page['item_subject']['desc'] = $cur_forum['forum_desc'];
 
-		$forum_page['item_subject']['redirect'] = '<span>'.$lang_index['External forum'].'</span>';
+		$forum_page['item_subject']['redirect'] =
+			'<span>' . __('External forum', 'index') . '</span>';
 
 		($hook = get_hook('in_redirect_row_pre_item_subject_merge')) ? eval($hook) : null;
 
@@ -52,9 +59,12 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 			$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
 
 		// Forum topic and post count
-		$forum_page['item_body']['info']['topics'] = '<li class="info-topics"><span class="label">'.$lang_index['No topic info'].'</span></li>';
-		$forum_page['item_body']['info']['posts'] = '<li class="info-posts"><span class="label">'.$lang_index['No post info'].'</span></li>';
-		$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_index['No lastpost info'].'</span></li>';
+		$forum_page['item_body']['info']['topics'] =
+			'<li class="info-topics"><span class="label">' . __('No topic info', 'index') . '</span></li>';
+		$forum_page['item_body']['info']['posts'] =
+			'<li class="info-posts"><span class="label">' . __('No post info', 'index') . '</span></li>';
+		$forum_page['item_body']['info']['lastpost'] =
+			'<li class="info-lastpost"><span class="label">' . __('No lastpost info', 'index') . '</span></li>';
 
 		($hook = get_hook('in_redirect_row_pre_display')) ? eval($hook) : null;
 	}
@@ -72,7 +82,11 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 				if ((empty($tracked_topics['topics'][$check_topic_id]) || $tracked_topics['topics'][$check_topic_id] < $check_last_post) && (empty($tracked_topics['forums'][$cur_forum['fid']]) || $tracked_topics['forums'][$cur_forum['fid']] < $check_last_post))
 				{
 					$forum_page['item_status']['new'] = 'new';
-					$forum_page['item_title']['status'] = '<small>'.sprintf($lang_index['Forum has new'], '<a href="'.forum_link($forum_url['search_new_results'], $cur_forum['fid']).'" title="'.$lang_index['New posts title'].'">'.$lang_index['Forum new posts'].'</a>').'</small>';
+					$forum_page['item_title']['status'] =
+						'<small>' . sprintf(__('Forum has new', 'index'),
+							'<a href="'.forum_link($forum_url['search_new_results'], $cur_forum['fid']).
+							'" title="' . __('New posts title', 'index') . '">' .
+							__('Forum new posts', 'index').'</a>').'</small>';
 
 					break;
 				}
@@ -98,7 +112,9 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 			($hook = get_hook('in_row_modify_modlist')) ? eval($hook) : null;
 
-			$forum_page['item_subject']['modlist'] = '<span class="modlist">'.sprintf($lang_index['Moderated by'], implode(', ', $forum_page['item_mods'])).'</span>';
+			$forum_page['item_subject']['modlist'] =
+				'<span class="modlist">' .
+					sprintf(__('Moderated by', 'index'), implode(', ', $forum_page['item_mods'])).'</span>';
 		}
 
 		($hook = get_hook('in_normal_row_pre_item_subject_merge')) ? eval($hook) : null;
@@ -108,13 +124,21 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 
 		// Setup forum topics, post count and last post
-		$forum_page['item_body']['info']['topics'] = '<li class="info-topics"><strong>'.forum_number_format($cur_forum['num_topics']).'</strong> <span class="label">'.(($cur_forum['num_topics'] == 1) ? $lang_index['topic'] : $lang_index['topics']).'</span></li>';
-		$forum_page['item_body']['info']['posts'] = '<li class="info-posts"><strong>'.forum_number_format($cur_forum['num_posts']).'</strong> <span class="label">'.(($cur_forum['num_posts'] == 1) ? $lang_index['post'] : $lang_index['posts']).'</span></li>';
+		$forum_page['item_body']['info']['topics'] =
+			'<li class="info-topics"><strong>'.forum_number_format($cur_forum['num_topics']).'</strong> <span class="label">'.(($cur_forum['num_topics'] == 1) ?
+				__('topic', 'index') : __('topics', 'index')) . '</span></li>';
+		$forum_page['item_body']['info']['posts'] =
+			'<li class="info-posts"><strong>'.forum_number_format($cur_forum['num_posts']).'</strong> <span class="label">'.(($cur_forum['num_posts'] == 1) ?
+				__('post', 'index') : __('posts', 'index')) . '</span></li>';
 
 		if ($cur_forum['last_post'] != '')
-			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_index['Last post'].'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_forum['last_post_id']).'">'.format_time($cur_forum['last_post']).'</a></strong> <cite>'.sprintf($lang_index['Last poster'], forum_htmlencode($cur_forum['last_poster'])).'</cite></li>';
+			$forum_page['item_body']['info']['lastpost'] =
+				'<li class="info-lastpost"><span class="label">' . __('Last post', 'index') .
+				'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_forum['last_post_id']).'">'.format_time($cur_forum['last_post']).
+				'</a></strong> <cite>'.sprintf(__('Last poster', 'index'), forum_htmlencode($cur_forum['last_poster'])).'</cite></li>';
 		else
-			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><strong>'.$lang_common['Never'].'</strong></li>';
+			$forum_page['item_body']['info']['lastpost'] =
+				'<li class="info-lastpost"><strong>' . __('Never') . '</strong></li>';
 
 		($hook = get_hook('in_normal_row_pre_display')) ? eval($hook) : null;
 	}

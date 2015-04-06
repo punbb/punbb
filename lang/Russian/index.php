@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in index.php
-$lang_index = array(
+return array(
 
 'Moderated by'				=> 'Модераторы: %s',
 'Link to'					=> 'Ссылка на %s',	// As in "Link to http://punbb.informer.com/"

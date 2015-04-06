@@ -14,10 +14,6 @@ require __DIR__ . '/vendor/pautoload.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 
-// Load the index.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/index.php';
-
-
 // Get list of forums and topics with new posts since last visit
 if (!$forum_user['is_guest'])
 {

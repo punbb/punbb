@@ -73,7 +73,7 @@ if ($forum_user['is_guest'] && isset($_SERVER['PHP_AUTH_USER']))
 if ($forum_user['g_read_board'] == '0')
 {
 	http_authenticate_user();
-	exit($lang_common['No view']);
+	exit(__('No view'));
 }
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'feed';
@@ -99,7 +99,7 @@ function http_authenticate_user()
 //
 function output_rss($feed)
 {
-	global $lang_common, $forum_config;
+	global $forum_config;
 
 	// Send XML/no cache headers
 	header('Content-Type: text/xml; charset=utf-8');
@@ -148,7 +148,7 @@ function output_rss($feed)
 //
 function output_atom($feed)
 {
-	global $lang_common, $forum_config;
+	global $forum_config;
 
 	// Send XML/no cache headers
 	header('Content-Type: text/xml; charset=utf-8');
@@ -207,7 +207,7 @@ function output_atom($feed)
 //
 function output_xml($feed)
 {
-	global $lang_common, $forum_config;
+	global $forum_config;
 
 	// Send XML/no cache headers
 	header('Content-Type: application/xml; charset=utf-8');
@@ -311,7 +311,7 @@ if ($action == 'feed')
 		if (!$cur_topic)
 		{
 			http_authenticate_user();
-			exit($lang_common['Bad request']);
+			exit(__('Bad request'));
 		}
 
 		if (!defined('FORUM_PARSER_LOADED'))
@@ -322,9 +322,10 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title'		=>	$forum_config['o_board_title'].$lang_common['Title separator'].$cur_topic['subject'],
+			'title'		=>	$forum_config['o_board_title'] .
+				__('Title separator') . $cur_topic['subject'],
 			'link'			=>	forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
-			'description'	=>	sprintf($lang_common['RSS description topic'], $cur_topic['subject']),
+			'description'	=>	sprintf(__('RSS description topic'), $cur_topic['subject']),
 			'items'			=>	array(),
 			'type'			=>	'posts'
 		);
@@ -355,7 +356,8 @@ if ($action == 'feed')
 
 			$item = array(
 				'id'			=>	$cur_post['id'],
-				'title'			=>	$cur_topic['first_post_id'] == $cur_post['id'] ? $cur_topic['subject'] : $lang_common['RSS reply'].$cur_topic['subject'],
+				'title'			=>	$cur_topic['first_post_id'] == $cur_post['id'] ?
+					$cur_topic['subject'] : __('RSS reply') . $cur_topic['subject'],
 				'link'			=>	forum_link($forum_url['post'], $cur_post['id']),
 				'description'	=>	$cur_post['message'],
 				'author'		=>	array(
@@ -418,7 +420,7 @@ if ($action == 'feed')
 				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 				$forum_name_in_db = $forum_db->result($result);
 				if (!is_null($forum_name_in_db) && $forum_name_in_db !== false)
-					$forum_name = $lang_common['Title separator'].$forum_name_in_db;
+					$forum_name = __('Title separator') . $forum_name_in_db;
 			}
 		}
 
@@ -436,7 +438,7 @@ if ($action == 'feed')
 		$feed = array(
 			'title'			=>	$forum_config['o_board_title'].$forum_name,
 			'link'			=>	forum_link($forum_url['index']),
-			'description'	=>	sprintf($lang_common['RSS description'], $forum_config['o_board_title']),
+			'description'	=>	sprintf(__('RSS description'), $forum_config['o_board_title']),
 			'items'			=>	array(),
 			'type'			=>	'topics'
 		);
@@ -517,9 +519,6 @@ if ($action == 'feed')
 // Show users online
 else if ($action == 'online' || $action == 'online_full')
 {
-	// Load the index.php language file
-	require FORUM_ROOT.'lang/'.$forum_config['o_default_lang'].'/index.php';
-
 	// Fetch users online info and generate strings for output
 	$num_guests = $num_users = 0;
 	$users = array();
@@ -552,12 +551,13 @@ else if ($action == 'online' || $action == 'online_full')
 	header('Pragma: public');
 
 
-	echo $lang_index['Guests online'].': '.forum_number_format($num_guests).'<br />'."\n";
+	echo __('Guests online', 'index') . ': ' . forum_number_format($num_guests) . '<br />' . "\n";
 
 	if ($_GET['action'] == 'online_full' && !empty($users))
-		echo $lang_index['Users online'].': '.implode($lang_index['Online list separator'], $users).'<br />'."\n";
+		echo __('Users online', 'index') . ': ' .
+			implode(__('Online list separator', 'index'), $users).'<br />'."\n";
 	else
-		echo $lang_index['Users online'].': '.forum_number_format($num_users).'<br />'."\n";
+		echo __('Users online', 'index') . ': ' . forum_number_format($num_users).'<br />'."\n";
 
 	exit;
 }
@@ -565,9 +565,6 @@ else if ($action == 'online' || $action == 'online_full')
 // Show board statistics
 else if ($action == 'stats')
 {
-	// Load the index.php language file
-	require FORUM_ROOT.'lang/'.$forum_config['o_default_lang'].'/index.php';
-
 	// Collect some statistics from the database
 	$query = array(
 		'SELECT'	=> 'COUNT(u.id) - 1',
@@ -608,10 +605,10 @@ else if ($action == 'stats')
 
 	($hook = get_hook('ex_pre_stats_output')) ? eval($hook) : null;
 
-	echo sprintf($lang_index['No of users'], forum_number_format($stats['total_users'])).'<br />'."\n";
-	echo sprintf($lang_index['Newest user'], '<a href="'.forum_link($forum_url['user'], $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>').'<br />'."\n";
-	echo sprintf($lang_index['No of topics'], forum_number_format($stats['total_topics'])).'<br />'."\n";
-	echo sprintf($lang_index['No of posts'], forum_number_format($stats['total_posts'])).'<br />'."\n";
+	echo sprintf(__('No of users', 'index'), forum_number_format($stats['total_users'])).'<br />'."\n";
+	echo sprintf(__('Newest user', 'index'), '<a href="'.forum_link($forum_url['user'], $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>').'<br />'."\n";
+	echo sprintf(__('No of topics', 'index'), forum_number_format($stats['total_topics'])).'<br />'."\n";
+	echo sprintf(__('No of posts', 'index'), forum_number_format($stats['total_posts'])).'<br />'."\n";
 
 	exit;
 }
@@ -620,4 +617,4 @@ else if ($action == 'stats')
 ($hook = get_hook('ex_new_action')) ? eval($hook) : null;
 
 // If we end up here, the script was called with some wacky parameters
-exit($lang_common['Bad request']);
+exit(__('Bad request'));

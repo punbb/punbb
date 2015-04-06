@@ -3335,11 +3335,14 @@ function send_json($params)
 
 function __($text, $domain = 'common', $language = null) {
 	global $_PUNBB;
-	global $forum_user; // NEEDFIX
+	global $forum_user, $forum_config; // NEEDFIX
 
 	if (empty($_PUNBB['lang'][$domain])) {
 		if (!$language) {
 			$language = $forum_user['language'];
+			if (!$language) {
+				$language = $forum_config['o_default_lang'];
+			}
 		}
 		$_PUNBB['lang'][$domain] = include FORUM_ROOT .
 			'lang/' . $language . '/' . $domain . '.php';
