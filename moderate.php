@@ -227,9 +227,6 @@ if (isset($_GET['tid']))
 				redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
 					__('No confirm redirect'));
 
-			// Load the post.php language file
-			require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
-
 			($hook = get_hook('mr_confirm_split_posts_form_submitted')) ? eval($hook) : null;
 
 			// Verify that the post IDs are valid
@@ -247,9 +244,9 @@ if (isset($_GET['tid']))
 			$new_subject = isset($_POST['new_subject']) ? forum_trim($_POST['new_subject']) : '';
 
 			if ($new_subject == '')
-				message($lang_post['No subject']);
+				message(__('No subject', 'post'));
 			else if (utf8_strlen($new_subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-				message(sprintf($lang_post['Too long subject'], FORUM_SUBJECT_MAXIMUM_LENGTH));
+				message(sprintf(__('Too long subject'], 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH));
 
 			// Get data from the new first post
 			$query = array(

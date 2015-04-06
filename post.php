@@ -16,10 +16,6 @@ require __DIR__ . '/vendor/pautoload.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 
-// Load the post.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
-
-
 $tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
 $fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
 if ($tid < 1 && $fid < 1 || $tid > 0 && $fid > 0)
@@ -110,7 +106,7 @@ if (isset($_POST['form_sent']))
 
 	// Flood protection
 	if (!isset($_POST['preview']) && $forum_user['last_post'] != '' && (time() - $forum_user['last_post']) < $forum_user['g_post_flood'] && (time() - $forum_user['last_post']) >= 0)
-		$errors[] = sprintf($lang_post['Flood'], $forum_user['g_post_flood']);
+		$errors[] = sprintf(__('Flood', 'post'), $forum_user['g_post_flood']);
 
 	// If it's a new topic
 	if ($fid)
@@ -118,11 +114,11 @@ if (isset($_POST['form_sent']))
 		$subject = forum_trim($_POST['req_subject']);
 
 		if ($subject == '')
-			$errors[] = $lang_post['No subject'];
+			$errors[] = __('No subject', 'post');
 		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-			$errors[] = sprintf($lang_post['Too long subject'], FORUM_SUBJECT_MAXIMUM_LENGTH);
+			$errors[] = sprintf(__('Too long subject', 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH);
 		else if ($forum_config['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
-			$errors[] = $lang_post['All caps subject'];
+			$errors[] = __('All caps subject', 'post');
 	}
 
 	// If the user is logged in we get the username and e-mail from $forum_user
@@ -149,7 +145,7 @@ if (isset($_POST['form_sent']))
 				require FORUM_ROOT.'include/email.php';
 
 			if (!is_valid_email($email))
-				$errors[] = $lang_post['Invalid e-mail'];
+				$errors[] = __('Invalid e-mail', 'post');
 
 			if (is_banned_email($email))
 				$errors[] = $lang_profile['Banned e-mail'];
@@ -158,15 +154,15 @@ if (isset($_POST['form_sent']))
 
 	// If we're an administrator or moderator, make sure the CSRF token in $_POST is valid
 	if ($forum_user['is_admmod'] && (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== generate_form_token(get_current_url())))
-		$errors[] = $lang_post['CSRF token mismatch'];
+		$errors[] = __('CSRF token mismatch', 'post');
 
 	// Clean up message from POST
 	$message = forum_linebreaks(forum_trim($_POST['req_message']));
 
 	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-		$errors[] = sprintf($lang_post['Too long message'], forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+		$errors[] = sprintf(__('Too long message', 'post'), forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 	else if ($forum_config['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
-		$errors[] = $lang_post['All caps message'];
+		$errors[] = __('All caps message', 'post');
 
 	// Validate BBCode syntax
 	if ($forum_config['p_message_bbcode'] == '1' || $forum_config['o_make_links'] == '1')
@@ -178,7 +174,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	if ($message == '')
-		$errors[] = $lang_post['No message'];
+		$errors[] = __('No message', 'post');
 
 	$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 	$subscribe = isset($_POST['subscribe']) ? 1 : 0;
@@ -237,7 +233,7 @@ if (isset($_POST['form_sent']))
 
 		($hook = get_hook('po_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['post'], $new_pid), $lang_post['Post redirect']);
+		redirect(forum_link($forum_url['post'], $new_pid), __('Post redirect', 'post'));
 	}
 }
 
@@ -324,7 +320,8 @@ $forum_page['crumbs'][] = array($forum_config['o_board_title'], forum_link($foru
 $forum_page['crumbs'][] = array($cur_posting['forum_name'], forum_link($forum_url['forum'], array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
 if ($tid)
 	$forum_page['crumbs'][] = array($cur_posting['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_posting['subject']))));
-$forum_page['crumbs'][] = $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'];
+$forum_page['crumbs'][] = $tid ?
+	__('Post reply', 'post') : __('Post new topic', 'post');
 
 ($hook = get_hook('po_pre_header_load')) ? eval($hook) : null;
 

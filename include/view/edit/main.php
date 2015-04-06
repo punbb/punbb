@@ -4,13 +4,15 @@
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo ($id == $cur_post['first_post_id']) ? $lang_post['Edit topic'] : $lang_post['Edit reply'] ?></span></h2>
+		<h2 class="hn"><span><?php echo ($id == $cur_post['first_post_id']) ?
+			__('Edit topic', 'post') : __('Edit reply', 'post') ?></span></h2>
 	</div>
 
 	<?php include view('edit/preview') ?>
 
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo ($id != $cur_post['first_post_id']) ? $lang_post['Compose edited reply'] : $lang_post['Compose edited topic'] ?></span></h2>
+		<h2 class="hn"><span><?php echo ($id != $cur_post['first_post_id']) ?
+			__('Compose edited reply', 'post') : __('Compose edited topic', 'post') ?></span></h2>
 	</div>
 	<div id="post-form" class="main-content main-frm">
 <?php
@@ -29,17 +31,17 @@
 			</div>
 <?php ($hook = get_hook('ed_pre_main_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_post['Edit post legend'] ?></strong></legend>
+				<legend class="group-legend"><strong><?= __('Edit post legend', 'post') ?></strong></legend>
 <?php ($hook = get_hook('ed_pre_subject')) ? eval($hook) : null; ?>
 <?php if ($can_edit_subject): ?>				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
-						<label for="fld<?php echo ++ $forum_page['fld_count'] ?>"><span><?php echo $lang_post['Topic subject'] ?></span></label><br />
+						<label for="fld<?php echo ++ $forum_page['fld_count'] ?>"><span><?= __('Topic subject', 'post') ?></span></label><br />
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" size="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" maxlength="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" value="<?php echo forum_htmlencode(isset($_POST['req_subject']) ? $_POST['req_subject'] : $cur_post['subject']) ?>" required /></span>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('ed_pre_message_box')) ? eval($hook) : null; ?>				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
-						<label for="fld<?php echo ++ $forum_page['fld_count'] ?>"><span><?php echo $lang_post['Write message'] ?></span></label>
+						<label for="fld<?php echo ++ $forum_page['fld_count'] ?>"><span><?= __('Write message', 'post') ?></span></label>
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="req_message" rows="15" cols="95" required spellcheck="true"><?php echo forum_htmlencode(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea></span></div>
 					</div>
 				</div>
@@ -49,17 +51,21 @@ $forum_page['checkboxes'] = array();
 if ($forum_config['o_smilies'] == '1')
 {
 	if (isset($_POST['hide_smilies']) || $cur_post['hide_smilies'] == '1')
-		$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1" checked="checked" /></span> <label for="fld'.$forum_page['fld_count'].'">'.$lang_post['Hide smilies'].'</label></div>';
+		$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1" checked="checked" /></span> <label for="fld'.$forum_page['fld_count'].'">'.
+		__('Hide smilies', 'post') . '</label></div>';
 	else
-		$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1" /></span> <label for="fld'.$forum_page['fld_count'].'">'.$lang_post['Hide smilies'].'</label></div>';
+		$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1" /></span> <label for="fld'.$forum_page['fld_count'].'">'.
+		__('Hide smilies', 'post') . '</label></div>';
 }
 
 if ($forum_page['is_admmod'])
 {
 	if ((isset($_POST['form_sent']) && isset($_POST['silent'])) || !isset($_POST['form_sent']))
-		$forum_page['checkboxes']['silent'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="silent" value="1" checked="checked" /></span> <label for="fld'.$forum_page['fld_count'].'">'.$lang_post['Silent edit'].'</label></div>';
+		$forum_page['checkboxes']['silent'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="silent" value="1" checked="checked" /></span> <label for="fld'.$forum_page['fld_count'].'">'.
+		__('Silent edit', 'post') . '</label></div>';
 	else
-		$forum_page['checkboxes']['silent'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="silent" value="1" /></span> <label for="fld'.$forum_page['fld_count'].'">'.$lang_post['Silent edit'].'</label></div>';
+		$forum_page['checkboxes']['silent'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="silent" value="1" /></span> <label for="fld'.$forum_page['fld_count'].'">'.
+		__('Silent edit', 'post') . '</label></div>';
 }
 
 ($hook = get_hook('ed_pre_checkbox_display')) ? eval($hook) : null;
@@ -88,8 +94,10 @@ if (!empty($forum_page['checkboxes']))
 
 ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="submit_button" value="<?php echo ($id != $cur_post['first_post_id']) ? $lang_post['Submit reply'] : $lang_post['Submit topic'] ?>" /></span>
-				<span class="submit"><input type="submit" name="preview" value="<?php echo ($id != $cur_post['first_post_id']) ? $lang_post['Preview reply'] : $lang_post['Preview topic'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="submit_button" value="<?php echo ($id != $cur_post['first_post_id']) ?
+					__('Submit reply', 'post') : __('Submit topic', 'post') ?>" /></span>
+				<span class="submit"><input type="submit" name="preview" value="<?php echo ($id != $cur_post['first_post_id']) ?
+					__('Preview reply', 'post') : __('Preview topic', 'post') ?>" /></span>
 			</div>
 		</form>
 	</div>

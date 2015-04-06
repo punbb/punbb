@@ -16,10 +16,6 @@ require __DIR__ . '/vendor/pautoload.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 
-// Load the post.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
-
-
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
 	message(__('Bad request'));
@@ -85,9 +81,9 @@ if (isset($_POST['form_sent']))
 		$subject = forum_trim($_POST['req_subject']);
 
 		if ($subject == '')
-			$errors[] = $lang_post['No subject'];
+			$errors[] = __('No subject', 'post');
 		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
-			$errors[] = sprintf($lang_post['Too long subject'], FORUM_SUBJECT_MAXIMUM_LENGTH);
+			$errors[] = sprintf(__('Too long subject', 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH);
 		else if ($forum_config['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
 			$subject = utf8_ucwords(utf8_strtolower($subject));
 	}
@@ -96,7 +92,7 @@ if (isset($_POST['form_sent']))
 	$message = forum_linebreaks(forum_trim($_POST['req_message']));
 
 	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
-		$errors[] = sprintf($lang_post['Too long message'], forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
+		$errors[] = sprintf(__('Too long message', 'post'), forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 	else if ($forum_config['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
 		$message = utf8_ucwords(utf8_strtolower($message));
 
@@ -110,7 +106,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	if ($message == '')
-		$errors[] = $lang_post['No message'];
+		$errors[] = __('No message', 'post');
 
 	$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 
@@ -157,7 +153,7 @@ if (isset($_POST['form_sent']))
 
 		($hook = get_hook('ed_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['post'], $id), $lang_post['Edit redirect']);
+		redirect(forum_link($forum_url['post'], $id), __('Edit redirect', 'post'));
 	}
 }
 
@@ -198,7 +194,8 @@ $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 	array($cur_post['forum_name'], forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
 	array($cur_post['subject'], forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
-	(($id == $cur_post['first_post_id']) ? $lang_post['Edit topic'] : $lang_post['Edit reply'])
+	(($id == $cur_post['first_post_id']) ?
+		__('Edit topic', 'post') : __('Edit reply', 'post'))
 );
 
 ($hook = get_hook('ed_pre_header_load')) ? eval($hook) : null;

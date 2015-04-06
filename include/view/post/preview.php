@@ -11,13 +11,15 @@ if (isset($_POST['preview']) && empty($errors)) {
 	// Generate the post heading
 	$forum_page['post_ident'] = array();
 	$forum_page['post_ident']['num'] = '<span class="post-num">#</span>';
-	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($tid) ? $lang_post['Reply byline'] : $lang_post['Topic byline']), '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span>';
+	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($tid) ?
+		__('Reply byline', 'post') : __('Topic byline', 'post')), '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span>';
 	$forum_page['post_ident']['link'] = '<span class="post-link">'.format_time(time()).'</span>';
 
 	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $tid ?
+			__('Preview reply', 'post') : __('Preview new topic', 'post') ?></span></h2>
 	</div>
 	<div id="post-preview" class="main-content main-frm">
 		<div class="post singlepost">

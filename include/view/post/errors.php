@@ -8,7 +8,7 @@ if (!empty($errors)) {
 		($hook = get_hook('po_pre_post_errors')) ? eval($hook) : null;
 ?>
 	<div class="ct-box error-box">
-		<h2 class="warn hn"><?php echo $lang_post['Post errors'] ?></h2>
+		<h2 class="warn hn"><?= __('Post errors', 'post') ?></h2>
 		<ul class="error-list">
 			<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
 		</ul>

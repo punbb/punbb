@@ -8,7 +8,8 @@ if (isset($_POST['preview']) && empty($forum_page['errors'])) {
 	// Generate the post heading
 	$forum_page['post_ident'] = array();
 	$forum_page['post_ident']['num'] = '<span class="post-num">#</span>';
-	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($id == $cur_post['first_post_id']) ? $lang_post['Topic byline'] : $lang_post['Reply byline']), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
+	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($id == $cur_post['first_post_id']) ?
+		__('Topic byline', 'post') : __('Reply byline', 'post')), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
 	$forum_page['post_ident']['link'] = '<span class="post-link">'.format_time(time()).'</span>';
 
 	$forum_page['preview_message'] = parse_message($message, $hide_smilies);
@@ -17,7 +18,8 @@ if (isset($_POST['preview']) && empty($forum_page['errors'])) {
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $id == $cur_post['first_post_id'] ? $lang_post['Preview edited topic'] : $lang_post['Preview edited reply'] ?></span></h2>
+		<h2 class="hn"><span><?php echo $id == $cur_post['first_post_id'] ?
+			__('Preview edited topic', 'post') : ___('Preview edited reply', 'post') ?></span></h2>
 	</div>
 	<div id="post-preview" class="main-content main-frm">
 		<div class="post singlepost">
