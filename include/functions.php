@@ -3341,7 +3341,8 @@ function __($text, $domain = 'common', $language = null) {
 		if (!$language) {
 			$language = $forum_user['language'];
 		}
-		$_PUNBB['lang'][$domain] = include FORUM_ROOT . 'lang/' . $language . '/common.php';
+		$_PUNBB['lang'][$domain] = include FORUM_ROOT .
+			'lang/' . $language . '/' . $domain . '.php';
 	}
 
 	return $_PUNBB['lang'][$domain][$text];
