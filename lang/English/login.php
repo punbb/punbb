@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in login.php
-$lang_login = array(
+return array(
 
 // Miscellaneous
 'Login'								=>	'Login',

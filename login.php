@@ -14,10 +14,6 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('li_start')) ? eval($hook) : null;
 
-// Load the login.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/login.php';
-
-
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 $errors = array();
 
@@ -76,7 +72,7 @@ if (isset($_POST['form_sent']) && empty($action))
 	($hook = get_hook('li_login_pre_auth_message')) ? eval($hook) : null;
 
 	if (!$authorized)
-		$errors[] = sprintf($lang_login['Wrong user/pass']);
+		$errors[] = sprintf(__('Wrong user/pass', 'login'));
 
 	// Did everything go according to plan?
 	if (empty($errors))
@@ -116,7 +112,8 @@ if (isset($_POST['form_sent']) && empty($action))
 
 		($hook = get_hook('li_login_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_htmlencode($_POST['redirect_url']).((substr_count($_POST['redirect_url'], '?') == 1) ? '&amp;' : '?').'login=1', $lang_login['Login redirect']);
+		redirect(forum_htmlencode($_POST['redirect_url']).((substr_count($_POST['redirect_url'], '?') == 1) ? '&amp;' : '?').'login=1',
+			__('Login redirect', 'login'));
 	}
 }
 
@@ -167,7 +164,7 @@ else if ($action == 'out')
 
 	($hook = get_hook('li_logout_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['index']), $lang_login['Logout redirect']);
+	redirect(forum_link($forum_url['index']), __('Logout redirect', 'login'));
 }
 
 
@@ -183,7 +180,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	{
 		// User pressed the cancel button
 		if (isset($_POST['cancel']))
-			redirect(forum_link($forum_url['index']), $lang_login['New password cancel redirect']);
+			redirect(forum_link($forum_url['index']), __('New password cancel redirect', 'login'));
 
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
@@ -191,7 +188,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 		// Validate the email-address
 		$email = strtolower(forum_trim($_POST['req_email']));
 		if (!is_valid_email($email))
-			$errors[] = $lang_login['Invalid e-mail'];
+			$errors[] = __('Invalid e-mail', 'login');
 
 		($hook = get_hook('li_forgot_pass_end_validation')) ? eval($hook) : null;
 
@@ -241,10 +238,10 @@ else if ($action == 'forget' || $action == 'forget_2')
 					($hook = get_hook('li_forgot_pass_pre_flood_check')) ? eval($hook) : null;
 
 					if ($cur_hit['group_id'] == FORUM_ADMIN)
-						message(sprintf($lang_login['Email important'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+						message(sprintf(__('Email important', 'login'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 
 					if ($cur_hit['last_email_sent'] != '' && (time() - $cur_hit['last_email_sent']) < $forgot_pass_timeout && (time() - $cur_hit['last_email_sent']) >= 0)
-						message(sprintf($lang_login['Email flood'], $forgot_pass_timeout));
+						message(sprintf(__('Email flood', 'login'), $forgot_pass_timeout));
 
 					// Generate a new password activation key
 					$new_password_key = random_key(8, true);
@@ -267,10 +264,10 @@ else if ($action == 'forget' || $action == 'forget_2')
 					forum_mail($email, $mail_subject, $cur_mail_message);
 				}
 
-				message(sprintf($lang_login['Forget mail'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+				message(sprintf(__('Forget mail', 'login'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 			}
 			else
-				$errors[] = sprintf($lang_login['No e-mail match'], forum_htmlencode($email));
+				$errors[] = sprintf(__('No e-mail match', 'login'), forum_htmlencode($email));
 		}
 	}
 
@@ -281,7 +278,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		$lang_login['New password request']
+		__('New password request', 'login')
 	);
 
 	($hook = get_hook('li_forgot_pass_pre_header_load')) ? eval($hook) : null;
@@ -308,7 +305,7 @@ $forum_page['hidden_fields'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	sprintf($lang_login['Login info'], $forum_config['o_board_title'])
+	sprintf(__('Login info', 'login'), $forum_config['o_board_title'])
 );
 
 ($hook = get_hook('li_login_pre_header_load')) ? eval($hook) : null;
