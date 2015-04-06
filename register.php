@@ -44,8 +44,8 @@ else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_P
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_common['Register'], forum_link($forum_url['register'])),
-		$lang_common['Rules']
+		array(__('Register'), forum_link($forum_url['register'])),
+		__('Rules')
 	);
 
 	($hook = get_hook('rg_rules_pre_header_load')) ? eval($hook) : null;
@@ -153,7 +153,7 @@ else if (isset($_POST['form_sent']))
 			{
 				$language = preg_replace('#[\.\\\/]#', '', $_POST['language']);
 				if (!file_exists(FORUM_ROOT.'lang/'.$language.'/common.php'))
-					message($lang_common['Bad request']);
+					message(__('Bad request'));
 			}
 			else
 				$language = $forum_config['o_default_lang'];

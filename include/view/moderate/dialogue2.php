@@ -23,15 +23,15 @@
 <?php ($hook = get_hook('mr_confirm_split_posts_pre_confirm_checkbox')) ? eval($hook) : null; ?>
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_confirm" value="1" checked="checked" /></span>
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_common['Please confirm'] ?></span> <?php echo $lang_misc['Confirm topic split'] ?>.</label>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Please confirm') ?></span> <?php echo $lang_misc['Confirm topic split'] ?>.</label>
 					</div>
 				</div>
 <?php ($hook = get_hook('mr_confirm_split_posts_pre_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('mr_confirm_split_posts_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="split_posts_comply" value="<?php echo $lang_common['Split'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
+				<span class="submit primary"><input type="submit" name="split_posts_comply" value="<?= __('Split') ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

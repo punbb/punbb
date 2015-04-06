@@ -112,7 +112,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 //
 function preparse_tags($text, &$errors, $is_signature = false)
 {
-	global $lang_common, $forum_config;
+	global $forum_config;
 
 	// Start off by making some arrays of bbcode tags and what we need to do with each one
 
@@ -273,7 +273,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (strlen(substr($current, $equalpos)) == 2)
 			{
 				// Empty tag argument
-				$errors[] = sprintf($lang_common['BBCode error 6'], $current_tag);
+				$errors[] = sprintf(__('BBCode error 6'), $current_tag);
 				return false;
 			}
 			$current = strtolower(substr($current, 0, $equalpos)).substr($current, $equalpos);
@@ -316,7 +316,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		// Check the current tag is allowed here
 		if (!in_array($current_tag, $limit_bbcode) && $current_tag != $open_tags[$opened_tag])
 		{
-			$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
+			$errors[] = sprintf(__('BBCode error 3'), $current_tag, $open_tags[$opened_tag]);
 			return false;
 		}
 
@@ -329,7 +329,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				//We tried to close a tag which is not open
 				if (in_array($current_tag, $tags_opened))
 				{
-					$errors[] = sprintf($lang_common['BBCode error 1'], $current_tag);
+					$errors[] = sprintf(__('BBCode error 1'), $current_tag);
 					return false;
 				}
 			}
@@ -363,7 +363,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 								if (!in_array($temp_tag, $tags_fix))
 								{
 									// We couldn't fix nesting
-									$errors[] = sprintf($lang_common['BBCode error 5'], array_pop($temp_opened));
+									$errors[] = sprintf(__('BBCode error 5'), array_pop($temp_opened));
 									return false;
 								}
 								array_push($temp_opened, $temp_tag);
@@ -397,7 +397,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 						else
 						{
 							// We couldn't fix nesting
-							$errors[] = sprintf($lang_common['BBCode error 1'], $current_tag);
+							$errors[] = sprintf(__('BBCode error 1'), $current_tag);
 							return false;
 						}
 					}
@@ -437,7 +437,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (in_array($current_tag, $tags_block) && !in_array($open_tags[$opened_tag], $tags_block) && $opened_tag != 0)
 			{
 				// We tried to open a block tag within a non-block tag
-				$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
+				$errors[] = sprintf(__('BBCode error 3'), $current_tag, $open_tags[$opened_tag]);
 				return false;
 			}
 
@@ -453,7 +453,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (in_array($current_tag, $open_tags) && !in_array($current_tag, array_keys($tags_nested)))
 			{
 				// We nested a tag we shouldn't
-				$errors[] = sprintf($lang_common['BBCode error 4'], $current_tag);
+				$errors[] = sprintf(__('BBCode error 4'), $current_tag);
 				return false;
 			}
 			else if (in_array($current_tag, array_keys($tags_nested)))
@@ -496,7 +496,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		if (in_array($check, $open_tags))
 		{
 			// We left an important tag open
-			$errors[] = sprintf($lang_common['BBCode error 5'], $check);
+			$errors[] = sprintf(__('BBCode error 5'), $check);
 			return false;
 		}
 	}
@@ -504,7 +504,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	if ($current_ignore)
 	{
 		// We left an ignore tag open
-		$errors[] = sprintf($lang_common['BBCode error 5'], $current_ignore);
+		$errors[] = sprintf(__('BBCode error 5'), $current_ignore);
 		return false;
 	}
 
@@ -521,8 +521,6 @@ function preparse_tags($text, &$errors, $is_signature = false)
 //
 function preparse_list_tag($content, $type = '*', &$errors)
 {
-	global $lang_common;
-
 	if (strlen($type) != 1)
 		$type = '*';
 
@@ -551,7 +549,7 @@ function preparse_list_tag($content, $type = '*', &$errors)
 //
 function split_text($text, $start, $end, &$errors, $retab = true)
 {
-	global $forum_config, $lang_common;
+	global $forum_config;
 
 	$tokens = explode($start, $text);
 
@@ -564,7 +562,7 @@ function split_text($text, $start, $end, &$errors, $retab = true)
 
 		if (count($temp) != 2)
 		{
-			$errors[] = $lang_common['BBCode code problem'];
+			$errors[] = __('BBCode code problem');
 			return array(null, array($text));
 		}
 		$inside[] = $temp[0];
@@ -685,7 +683,7 @@ function callback_handle_url_bb($reg)
 //
 function handle_img_tag($url, $is_signature = false, $alt = null)
 {
-	global $lang_common, $forum_user;
+	global $forum_user;
 
 	$return = ($hook = get_hook('ps_handle_img_tag_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -694,7 +692,7 @@ function handle_img_tag($url, $is_signature = false, $alt = null)
 	if ($alt == null)
 		$alt = $url;
 
-	$img_tag = '<a href="'.$url.'">&lt;'.$lang_common['Image link'].'&gt;</a>';
+	$img_tag = '<a href="'.$url.'">&lt;'.__('Image link').'&gt;</a>';
 
 	if ($is_signature && $forum_user['show_img_sig'] != '0')
 		$img_tag = '<img class="sigimage" src="'.$url.'" alt="'.forum_htmlencode($alt).'" />';
@@ -743,7 +741,7 @@ function handle_list_tag($content, $type = '*')
 //
 function do_bbcode($text, $is_signature = false)
 {
-	global $lang_common, $forum_user, $forum_config;
+	global $forum_user, $forum_config;
 
 	$return = ($hook = get_hook('ps_do_bbcode_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -751,7 +749,7 @@ function do_bbcode($text, $is_signature = false)
 
 	if (strpos($text, '[quote') !== false)
 	{
-		$text = preg_replace('#\[quote=(&\#039;|&quot;|"|\'|)(.*?)\\1\]#e', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</cite><blockquote><p>"', $text);
+		$text = preg_replace('#\[quote=(&\#039;|&quot;|"|\'|)(.*?)\\1\]#e', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".__(\'wrote\').":</cite><blockquote><p>"', $text);
 		$text = preg_replace('#\[quote\]\s*#', '</p><div class="quotebox"><blockquote><p>', $text);
 		$text = preg_replace('#\s*\[\/quote\]#S', '</p></blockquote></div><p>', $text);
 	}
@@ -866,7 +864,7 @@ function do_smilies($text)
 //
 function parse_message($text, $hide_smilies)
 {
-	global $forum_config, $lang_common, $forum_user;
+	global $forum_config, $forum_user;
 
 	$return = ($hook = get_hook('ps_parse_message_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -954,7 +952,7 @@ function parse_message($text, $hide_smilies)
 //
 function parse_signature($text)
 {
-	global $forum_config, $lang_common, $forum_user;
+	global $forum_config, $forum_user;
 
 	$return = ($hook = get_hook('ps_parse_signature_start')) ? eval($hook) : null;
 	if ($return != null)

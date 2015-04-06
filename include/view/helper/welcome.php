@@ -1,14 +1,14 @@
 <?php
-global $forum_user, $lang_common;
+global $forum_user;
 
 if ($forum_user['is_guest']) { ?>
 	<p id="welcome">
-		<span><?= $lang_common['Not logged in'] ?></span>
-		<span><?= $lang_common['Login nag'] ?></span>
+		<span><?= __('Not logged in') ?></span>
+		<span><?= __('Login nag') ?></span>
 	</p>
 <?php } else { ?>
 	<p id="welcome">
-		<span><?= sprintf($lang_common['Logged in as'],
+		<span><?= sprintf(__('Logged in as'),
 			'<strong>' . forum_htmlencode($forum_user['username']).'</strong>') ?></span>
 	</p>
 <?php } ?>

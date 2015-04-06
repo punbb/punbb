@@ -2,7 +2,8 @@
 
 if (FORUM_PAGE == 'redirect') {
 	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.$forum_config['o_redirect_delay'].';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';
-	$forum_head['title'] = '<title>'.$lang_common['Redirecting'].$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_title']).'</title>';
+	$forum_head['title'] = '<title>' . __('Redirecting') .
+		__('Title separator') . forum_htmlencode($forum_config['o_board_title']).'</title>';
 
 	// Include stylesheets
 	require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
@@ -25,7 +26,8 @@ else {
 	if (!defined('FORUM_ALLOW_INDEX'))
 		$forum_head['robots'] = '<meta name="ROBOTS" content="NOINDEX, FOLLOW" />';
 	else
-		$forum_head['descriptions'] = '<meta name="description" content="'.generate_crumbs(true).$lang_common['Title separator'].forum_htmlencode($forum_config['o_board_desc']).'" />';
+		$forum_head['descriptions'] = '<meta name="description" content="'.generate_crumbs(true).
+			__('Title separator') . forum_htmlencode($forum_config['o_board_desc']).'" />';
 
 	// Should we output a MicroID? http://microid.org/
 	if (strpos(FORUM_PAGE, 'profile') === 0)
@@ -56,11 +58,13 @@ else {
 
 	if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
 	{
-		$forum_head['search'] = '<link rel="search" type="text/html" href="'.forum_link($forum_url['search']).'" title="'.$lang_common['Search'].'" />';
+		$forum_head['search'] = '<link rel="search" type="text/html" href="'.forum_link($forum_url['search']).'" title="'.
+			__('Search') . '" />';
 		$forum_head['opensearch'] = '<link rel="search" type="application/opensearchdescription+xml" href="'.forum_link($forum_url['opensearch']).'" title="'.forum_htmlencode($forum_config['o_board_title']).'" />';
 	}
 
-	$forum_head['author'] = '<link rel="author" type="text/html" href="'.forum_link($forum_url['users']).'" title="'.$lang_common['User list'].'" />';
+	$forum_head['author'] = '<link rel="author" type="text/html" href="'.forum_link($forum_url['users']).'" title="'.
+		__('User list') . '" />';
 
 	ob_start();
 

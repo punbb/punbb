@@ -57,10 +57,10 @@ function is_banned_email($email)
 //
 function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_name = '')
 {
-	global $forum_config, $lang_common;
+	global $forum_config;
 
 	// Default sender address
-	$from_name = sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']);
+	$from_name = sprintf(__('Forum mailer'), $forum_config['o_board_title']);
 	$from_email = $forum_config['o_webmaster_email'];
 
 	($hook = get_hook('em_fn_forum_mail_start')) ? eval($hook) : null;

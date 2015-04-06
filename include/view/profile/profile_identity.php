@@ -15,7 +15,7 @@
 <?php
 if ($forum_page['has_required']): ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
+			<p class="important"><?= __('Required warn') ?></p>
 		</div>
 <?php endif; ?>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -24,7 +24,7 @@ if ($forum_page['has_required']): ?>
 			</div>
 <?php if ($forum_page['has_required']): ($hook = get_hook('pf_change_details_identity_pre_req_info_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_common['Required information'] ?></strong></legend>
+				<legend class="group-legend"><strong><?= __('Required information') ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_identity_pre_username')) ? eval($hook) : null; ?>
 <?php if ($forum_user['is_admmod'] && ($forum_user['g_id'] == FORUM_ADMIN || $forum_user['g_mod_rename_users'] == '1')): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">

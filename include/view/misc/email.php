@@ -14,7 +14,7 @@
 	<?php include view('misc/errors') ?>
 
 	<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
+			<p class="important"><?= __('Required warn') ?></p>
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -41,8 +41,8 @@
 			</fieldset>
 <?php ($hook = get_hook('mi_email_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
+				<span class="submit primary"><input type="submit" name="submit" value="<?= __('Submit') ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

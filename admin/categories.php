@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('acg_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN)
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -55,7 +55,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 {
 	$cat_to_delete = intval($_POST['cat_to_delete']);
 	if ($cat_to_delete < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// User pressed the cancel button
 	if (isset($_POST['del_cat_cancel']))
@@ -145,7 +145,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		$cat_name = $forum_db->result($result);
 
 		if (is_null($cat_name) || $cat_name === false)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 
 		// Setup the form

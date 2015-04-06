@@ -14,7 +14,7 @@ require __DIR__ . '/vendor/pautoload.php';
 ($hook = get_hook('po_start')) ? eval($hook) : null;
 
 if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
+	message(__('No view'));
 
 // Load the post.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
@@ -23,7 +23,7 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
 $tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
 $fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
 if ($tid < 1 && $fid < 1 || $tid > 0 && $fid > 0)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 
 // Fetch some info about the topic and/or the forum
@@ -72,13 +72,13 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $cur_posting = $forum_db->fetch_assoc($result);
 
 if (!$cur_posting)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 $is_subscribed = $tid && $cur_posting['is_subscribed'];
 
 // Is someone trying to post into a redirect forum?
 if ($cur_posting['redirect_url'] != '')
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_posting['moderators'] != '') ? unserialize($cur_posting['moderators']) : array();
@@ -91,7 +91,7 @@ if ((($tid && (($cur_posting['post_replies'] == '' && $forum_user['g_post_replie
 	($fid && (($cur_posting['post_topics'] == '' && $forum_user['g_post_topics'] == '0') || $cur_posting['post_topics'] == '0')) ||
 	(isset($cur_posting['closed']) && $cur_posting['closed'] == '1')) &&
 	!$forum_page['is_admmod'])
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 
 ($hook = get_hook('po_posting_location_selected')) ? eval($hook) : null;
@@ -106,7 +106,7 @@ if (isset($_POST['form_sent']))
 
 	// Make sure form_user is correct
 	if (($forum_user['is_guest'] && $_POST['form_user'] != 'Guest') || (!$forum_user['is_guest'] && $_POST['form_user'] != $forum_user['username']))
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// Flood protection
 	if (!isset($_POST['preview']) && $forum_user['last_post'] != '' && (time() - $forum_user['last_post']) < $forum_user['g_post_flood'] && (time() - $forum_user['last_post']) >= 0)
@@ -247,7 +247,7 @@ if ($tid && isset($_GET['qid']))
 {
 	$qid = intval($_GET['qid']);
 	if ($qid < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// Get the quote and quote poster
 	$query = array(
@@ -262,7 +262,7 @@ if ($tid && isset($_GET['qid']))
 
 	if (!$quote_info)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	($hook = get_hook('po_modify_quote_info')) ? eval($hook) : null;
@@ -292,7 +292,7 @@ if ($tid && isset($_GET['qid']))
 		$forum_page['quote'] = '[quote='.$quote_info['poster'].']'.$quote_info['message'].'[/quote]'."\n";
 	}
 	else
-		$forum_page['quote'] = '> '.$quote_info['poster'].' '.$lang_common['wrote'].':'."\n\n".'> '.$quote_info['message']."\n";
+		$forum_page['quote'] = '> '.$quote_info['poster'].' '.__('wrote').':'."\n\n".'> '.$quote_info['message']."\n";
 }
 
 
@@ -310,11 +310,14 @@ $forum_page['hidden_fields'] = array(
 // Setup help
 $forum_page['text_options'] = array();
 if ($forum_config['p_message_bbcode'] == '1')
-	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a></span>';
+	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.
+	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 if ($forum_config['p_message_img_tag'] == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
+	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.
+	sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 if ($forum_config['o_smilies'] == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
+	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.
+	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 // Setup breadcrumbs
 $forum_page['crumbs'][] = array($forum_config['o_board_title'], forum_link($forum_url['index']));

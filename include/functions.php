@@ -426,13 +426,11 @@ function forum_dump()
 // A wrapper for PHP's number_format function
 function forum_number_format($number, $decimals = 0)
 {
-	global $lang_common;
-
 	$return = ($hook = get_hook('fn_forum_number_format_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	return number_format($number, $decimals, $lang_common['lang_decimal_point'], $lang_common['lang_thousands_sep']);
+	return number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'));
 }
 
 
@@ -442,14 +440,14 @@ define('FORUM_FT_DATE', 1);
 define('FORUM_FT_TIME', 2);
 function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null, $time_format = null, $no_text = false)
 {
-	global $forum_config, $lang_common, $forum_user, $forum_time_formats, $forum_date_formats;
+	global $forum_config, $forum_user, $forum_time_formats, $forum_date_formats;
 
 	$return = ($hook = get_hook('fn_format_time_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
 	if ($timestamp == '')
-		return ($no_text ? '' : $lang_common['Never']);
+		return ($no_text ? '' : __('Never'));
 
 	if ($date_format == null)
 		$date_format = $forum_date_formats[$forum_user['date_format']];
@@ -474,9 +472,9 @@ function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null,
 			$yesterday = gmdate('Y-m-d', $now + $diff - 86400);
 
 			if ($base == $today)
-				$formatted_time = $lang_common['Today'];
+				$formatted_time = __('Today');
 			else if ($base == $yesterday)
-				$formatted_time = $lang_common['Yesterday'];
+				$formatted_time = __('Yesterday');
 		}
 	}
 
@@ -496,45 +494,58 @@ function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null,
 // Generate the "navigator" that appears at the top of every page
 function generate_navlinks()
 {
-	global $forum_config, $lang_common, $forum_url, $forum_user;
+	global $forum_config, $forum_url, $forum_user;
 
 	$return = ($hook = get_hook('fn_generate_navlinks_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
 	// Index should always be displayed
-	$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['index']).'">'.$lang_common['Index'].'</a></li>';
+	$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['index']).'">'.
+		__('Index') . '</a></li>';
 
 	if ($forum_user['g_read_board'] == '1' && $forum_user['g_view_users'] == '1')
-		$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_common['User list'].'</a></li>';
+		$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['users']).'">'.
+		__('User list') . '</a></li>';
 
 	if ($forum_config['o_rules'] == '1' && (!$forum_user['is_guest'] || $forum_user['g_read_board'] == '1' || $forum_config['o_regs_allow'] == '1'))
-		$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['rules']).'">'.$lang_common['Rules'].'</a></li>';
+		$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['rules']).'">'.
+		__('Rules') . '</a></li>';
 
 	if ($forum_user['is_guest'])
 	{
 		if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
-			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
+			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			__('Search') . '</a></li>';
 
-		$links['register'] = '<li id="navregister"'.((FORUM_PAGE == 'register') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['register']).'">'.$lang_common['Register'].'</a></li>';
-		$links['login'] = '<li id="navlogin"'.((FORUM_PAGE == 'login') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['login']).'">'.$lang_common['Login'].'</a></li>';
+		$links['register'] = '<li id="navregister"'.((FORUM_PAGE == 'register') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['register']).'">'.
+			__('Register') . '</a></li>';
+		$links['login'] = '<li id="navlogin"'.((FORUM_PAGE == 'login') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['login']).'">'.
+			__('Login') . '</a></li>';
 	}
 	else
 	{
 		if (!$forum_user['is_admmod'])
 		{
 			if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
-				$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
+				$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+				__('Search') . '</a></li>';
 
-			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
+			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.
+				__('Profile') . '</a></li>';
+			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.
+				__('Logout') . '</a></li>';
 		}
 		else
 		{
-			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
-			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
-			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin'].'</a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
+			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+				__('Search') . '</a></li>';
+			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.
+				__('Profile') . '</a></li>';
+			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.
+				__('Admin') . '</a></li>';
+			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.
+				__('Logout') . '</a></li>';
 		}
 	}
 
@@ -614,7 +625,7 @@ function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_h
 // Generate breadcrumb navigation
 function generate_crumbs($reverse)
 {
-	global $lang_common, $forum_url, $forum_config, $forum_page;
+	global $forum_url, $forum_config, $forum_page;
 
 	$return = ($hook = get_hook('fn_generate_crumbs_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -629,15 +640,19 @@ function generate_crumbs($reverse)
 	if ($reverse)
 	{
 		for ($i = ($num_crumbs - 1); $i >= 0; --$i)
-			$crumbs .= (is_array($forum_page['crumbs'][$i]) ? forum_htmlencode($forum_page['crumbs'][$i][0]) : forum_htmlencode($forum_page['crumbs'][$i])).((isset($forum_page['page']) && $i == ($num_crumbs - 1)) ? ' ('.$lang_common['Page'].' '.forum_number_format($forum_page['page']).')' : '').($i > 0 ? $lang_common['Title separator'] : '');
+			$crumbs .= (is_array($forum_page['crumbs'][$i]) ? forum_htmlencode($forum_page['crumbs'][$i][0]) : forum_htmlencode($forum_page['crumbs'][$i])).((isset($forum_page['page']) && $i == ($num_crumbs - 1)) ? ' ('.
+				__('Page').' '.forum_number_format($forum_page['page']).')' : '').($i > 0 ?
+				__('Title separator') : '');
 	}
 	else
 		for ($i = 0; $i < $num_crumbs; ++$i)
 		{
 			if ($i < ($num_crumbs - 1))
-				$crumbs .= '<span class="crumb'.(($i == 0) ? ' crumbfirst' : '').'">'.(($i >= 1) ? '<span>'.$lang_common['Crumb separator'].'</span>' : '').(is_array($forum_page['crumbs'][$i]) ? '<a href="'.$forum_page['crumbs'][$i][1].'">'.forum_htmlencode($forum_page['crumbs'][$i][0]).'</a>' : forum_htmlencode($forum_page['crumbs'][$i])).'</span> ';
+				$crumbs .= '<span class="crumb'.(($i == 0) ? ' crumbfirst' : '').'">'.(($i >= 1) ? '<span>'.
+					__('Crumb separator') . '</span>' : '').(is_array($forum_page['crumbs'][$i]) ? '<a href="'.$forum_page['crumbs'][$i][1].'">'.forum_htmlencode($forum_page['crumbs'][$i][0]).'</a>' : forum_htmlencode($forum_page['crumbs'][$i])).'</span> ';
 			else
-				$crumbs .= '<span class="crumb crumblast'.(($i == 0) ? ' crumbfirst' : '').'">'.(($i >= 1) ? '<span>'.$lang_common['Crumb separator'].'</span>' : '').(is_array($forum_page['crumbs'][$i]) ? '<a href="'.$forum_page['crumbs'][$i][1].'">'.forum_htmlencode($forum_page['crumbs'][$i][0]).'</a>' : forum_htmlencode($forum_page['crumbs'][$i])).'</span> ';
+				$crumbs .= '<span class="crumb crumblast'.(($i == 0) ? ' crumbfirst' : '').'">'.(($i >= 1) ? '<span>'.
+					__('Crumb separator') . '</span>' : '').(is_array($forum_page['crumbs'][$i]) ? '<a href="'.$forum_page['crumbs'][$i][1].'">'.forum_htmlencode($forum_page['crumbs'][$i][0]).'</a>' : forum_htmlencode($forum_page['crumbs'][$i])).'</span> ';
 		}
 
 	($hook = get_hook('fn_generate_crumbs_end')) ? eval($hook) : null;
@@ -650,16 +665,16 @@ function generate_crumbs($reverse)
 // Generate a string with page and item information for multipage headings
 function generate_items_info($label, $first, $total)
 {
-	global $forum_page, $lang_common;
+	global $forum_page;
 
 	$return = ($hook = get_hook('fn_generate_page_info_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
 	if ($forum_page['num_pages'] == 1)
-		$item_info = '<span class="item-info">'.sprintf($lang_common['Item info single'], $label, forum_number_format($total)).'</span>';
+		$item_info = '<span class="item-info">'.sprintf(__('Item info single'), $label, forum_number_format($total)).'</span>';
 	else
-		$item_info = '<span class="item-info">'.sprintf($lang_common['Item info plural'], $label, forum_number_format($first), forum_number_format($forum_page['finish_at']), forum_number_format($total)).'</span>';
+		$item_info = '<span class="item-info">'.sprintf(__('Item info plural'), $label, forum_number_format($first), forum_number_format($forum_page['finish_at']), forum_number_format($total)).'</span>';
 
 	($hook = get_hook('fn_generate_page_info_end')) ? eval($hook) : null;
 
@@ -670,7 +685,7 @@ function generate_items_info($label, $first, $total)
 // Generate a string with numbered links (for multipage scripts)
 function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_default_scheme = null)
 {
-	global $forum_url, $lang_common;
+	global $forum_url;
 
 	if ($is_default_scheme == null)
 		$forum_url_page = $forum_url['page'];
@@ -700,14 +715,15 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 	{
 		// Add a previous page link
 		if ($num_pages > 1 && $cur_page > 1)
-			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page - 1), $args).'">'.$lang_common['Previous'].'</a>';
+			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page - 1), $args).'">'.
+			__('Previous').'</a>';
 
 		if ($cur_page > 3)
 		{
 			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, 1, $args).'">'.forum_number_format(1).'</a>';
 
 			if ($cur_page > 5)
-				$pages[] = '<span>'.$lang_common['Spacer'].'</span>';
+				$pages[] = '<span>'.__('Spacer').'</span>';
 		}
 
 		// Don't ask me how the following works. It just does, OK? :-)
@@ -722,14 +738,15 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 		if ($cur_page <= ($num_pages-3))
 		{
 			if ($cur_page != ($num_pages-3) && $cur_page != ($num_pages-4))
-				$pages[] = '<span>'.$lang_common['Spacer'].'</span>';
+				$pages[] = '<span>'.__('Spacer').'</span>';
 
 			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, $num_pages, $args).'">'.forum_number_format($num_pages).'</a>';
 		}
 
 		// Add a next page link
 		if ($num_pages > 1 && !$link_to_all && $cur_page < $num_pages)
-			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page + 1), $args).'">'.$lang_common['Next'].'</a>';
+			$pages[] = '<a'.(empty($pages) ? ' class="first-item"' : '').' href="'.forum_sublink($link, $forum_url_page, ($cur_page + 1), $args).'">'.
+			__('Next') . '</a>';
 	}
 
 	($hook = get_hook('fn_paginate_end')) ? eval($hook) : null;
@@ -741,7 +758,7 @@ function paginate($num_pages, $cur_page, $link, $separator, $args = null, $is_de
 // Display executed queries (if enabled) for debug
 function get_saved_queries()
 {
-	global $forum_db, $lang_common;
+	global $forum_db;
 
 	// Get the queries so that we can print them out
 	$saved_queries = $forum_db->get_saved_queries();
@@ -752,11 +769,11 @@ function get_saved_queries()
 <div id="brd-debug" class="main">
 	<div class="debug">
 		<table>
-			<caption><?php echo $lang_common['Debug summary'] ?></caption>
+			<caption><?= __('Debug summary') ?></caption>
 			<thead>
 				<tr>
-					<th class="tcl" scope="col"><?php echo $lang_common['Query times'] ?></th>
-					<th class="tcr" scope="col"><?php echo $lang_common['Query'] ?></th>
+					<th class="tcl" scope="col"><?= __('Query times') ?></th>
+					<th class="tcr" scope="col"><?= __('Query') ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -779,7 +796,7 @@ function get_saved_queries()
 ?>
 				<tr>
 					<td class="tcl border-less"><?php echo forum_number_format($query_time_total, 5) ?></td>
-					<td class="tcr border-less"><?php echo $lang_common['Total query time'] ?></td>
+					<td class="tcr border-less"><?= __('Total query time') ?></td>
 				</tr>
 			</tbody>
 		</table>
@@ -995,7 +1012,7 @@ function censor_words_do($forum_censors, $text, $unicode)
 // Verifies that the provided username is OK for insertion into the database
 function validate_username($username, $exclude_id = null)
 {
-	global $lang_common, $lang_register, $lang_profile, $forum_config;
+	global $lang_register, $lang_profile, $forum_config;
 
 	$errors = array();
 
@@ -1011,7 +1028,8 @@ function validate_username($username, $exclude_id = null)
 		$errors[] = $lang_profile['Username too short'];
 	else if (utf8_strlen($username) > 25)
 		$errors[] = $lang_profile['Username too long'];
-	else if (strtolower($username) == 'guest' || utf8_strtolower($username) == utf8_strtolower($lang_common['Guest']))
+	else if (strtolower($username) == 'guest' ||
+			utf8_strtolower($username) == utf8_strtolower(__('Guest')))
 		$errors[] = $lang_profile['Username guest'];
 	else if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $username) || preg_match('/((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))/', $username))
 		$errors[] = $lang_profile['Username IP'];
@@ -1041,7 +1059,7 @@ function validate_username($username, $exclude_id = null)
 // $user must contain the elements 'username', 'title', 'posts', 'g_id' and 'g_user_title'
 function get_title($user)
 {
-	global $forum_db, $forum_config, $forum_bans, $lang_common;
+	global $forum_db, $forum_config, $forum_bans;
 	static $ban_list, $forum_ranks;
 
 	$return = ($hook = get_hook('fn_get_title_start')) ? eval($hook) : null;
@@ -1078,13 +1096,13 @@ function get_title($user)
 		$user_title = forum_htmlencode($forum_config['o_censoring'] == '1' ? censor_words($user['title']) : $user['title']);
 	// If the user is banned
 	else if (in_array(utf8_strtolower($user['username']), $ban_list))
-		$user_title = $lang_common['Banned'];
+		$user_title = __('Banned');
 	// If the user group has a default user title
 	else if ($user['g_user_title'] != '')
 		$user_title = forum_htmlencode($user['g_user_title']);
 	// If the user is a guest
 	else if ($user['g_id'] == FORUM_GUEST)
-		$user_title = $lang_common['Guest'];
+		$user_title = __('Guest');
 	else
 	{
 		// Are there any ranks?
@@ -1095,7 +1113,7 @@ function get_title($user)
 
 		// If the user didn't "reach" any rank (or if ranks are disabled), we assign the default
 		if (!isset($user_title))
-			$user_title = $lang_common['Member'];
+			$user_title = __('Member');
 	}
 
 	($hook = get_hook('fn_get_title_end')) ? eval($hook) : null;
@@ -1597,7 +1615,7 @@ function set_default_user()
 // Check whether the connecting user is banned (and delete any expired bans while we're at it)
 function check_bans()
 {
-	global $forum_db, $forum_config, $lang_common, $forum_user, $forum_bans;
+	global $forum_db, $forum_config, $forum_user, $forum_bans;
 
 	$return = ($hook = get_hook('fn_check_bans_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -1669,7 +1687,10 @@ function check_bans()
 			($hook = get_hook('fn_check_bans_qr_delete_online_user')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			message($lang_common['Ban message'].(($cur_ban['expire'] != '') ? ' '.sprintf($lang_common['Ban message 2'], format_time($cur_ban['expire'], 1, null, null, true)) : '').(($cur_ban['message'] != '') ? ' '.$lang_common['Ban message 3'].'</p><p><strong>'.forum_htmlencode($cur_ban['message']).'</strong></p>' : '</p>').'<p>'.sprintf($lang_common['Ban message 4'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+			message(__('Ban message').(($cur_ban['expire'] != '') ? ' '.
+				sprintf(__('Ban message 2'), format_time($cur_ban['expire'], 1, null, null, true)) : '').(($cur_ban['message'] != '') ? ' '.
+				__('Ban message 3').'</p><p><strong>'.forum_htmlencode($cur_ban['message']).'</strong></p>' : '</p>').'<p>'.
+				sprintf(__('Ban message 4'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 		}
 	}
 
@@ -1865,7 +1886,7 @@ function get_tracked_topics()
 // Adds a new user. The username must be passed through validate_username() first.
 function add_user($user_info, &$new_uid)
 {
-	global $forum_db, $base_url, $lang_common, $forum_config, $forum_user, $forum_url;
+	global $forum_db, $base_url, $forum_config, $forum_user, $forum_url;
 
 	$return = ($hook = get_hook('fn_add_user_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -1897,7 +1918,7 @@ function add_user($user_info, &$new_uid)
 		$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
 		$mail_message = str_replace('<username>', $user_info['username'], $mail_message);
 		$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', forum_link($forum_url['change_password_key'], array($new_uid, substr($user_info['activate_key'], 1, -1)))), $mail_message);
-		$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
+		$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message);
 
 		($hook = get_hook('fn_add_user_send_verification')) ? eval($hook) : null;
 
@@ -2102,7 +2123,7 @@ function delete_avatar($user_id)
 // Creates a new topic with its first post
 function add_topic($post_info, &$new_tid, &$new_pid)
 {
-	global $forum_db, $db_type, $forum_config, $lang_common;
+	global $forum_db, $db_type, $forum_config;
 
 	$return = ($hook = get_hook('fn_add_topic_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -2334,7 +2355,7 @@ function delete_orphans()
 // Creates a new post
 function add_post($post_info, &$new_pid)
 {
-	global $forum_db, $db_type, $forum_config, $lang_common;
+	global $forum_db, $db_type, $forum_config;
 
 	$return = ($hook = get_hook('fn_add_post_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -2700,7 +2721,7 @@ function clean_forum_moderators()
 // Send out subscription emails
 function send_subscriptions($post_info, $new_pid)
 {
-	global $forum_config, $forum_db, $forum_url, $lang_common;
+	global $forum_config, $forum_db, $forum_url;
 
 	$return = ($hook = get_hook('fn_send_subscriptions_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -2789,7 +2810,7 @@ function send_subscriptions($post_info, $new_pid)
 				$mail_message = str_replace('<replier>', $post_info['poster'], $mail_message);
 				$mail_message = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message);
 				$mail_message = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message);
-				$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
+				$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message);
 
 				$mail_subject_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject_full);
 				$mail_message_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message_full);
@@ -2797,7 +2818,7 @@ function send_subscriptions($post_info, $new_pid)
 				$mail_message_full = str_replace('<message>', $post_info['message'], $mail_message_full);
 				$mail_message_full = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message_full);
 				$mail_message_full = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message_full);
-				$mail_message_full = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message_full);
+				$mail_message_full = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message_full);
 
 				$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
 				$notification_emails[$cur_subscriber['language']][1] = $mail_message;
@@ -2826,7 +2847,7 @@ function send_subscriptions($post_info, $new_pid)
 // Send out subscription emails
 function send_forum_subscriptions($topic_info, $new_tid)
 {
-	global $forum_config, $forum_db, $forum_url, $lang_common;
+	global $forum_config, $forum_db, $forum_url;
 
 	$return = ($hook = get_hook('fn_send_forum_subscriptions_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -2903,7 +2924,7 @@ function send_forum_subscriptions($topic_info, $new_tid)
 				$mail_message = str_replace('<topic_subject>', '\''.$topic_info['subject'].'\'', $mail_message);
 				$mail_message = str_replace('<topic_url>', forum_link($forum_url['topic'], array($new_tid, sef_friendly($topic_info['subject']))), $mail_message);
 				$mail_message = str_replace('<unsubscribe_url>', forum_link($forum_url['forum_unsubscribe'], array($topic_info['forum_id'], generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id']))), $mail_message);
-				$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
+				$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message);
 
 				$mail_subject_full = str_replace('<forum_name>', '\''.$topic_info['forum_name'].'\'', $mail_subject_full);
 				$mail_message_full = str_replace('<forum_name>', '\''.$topic_info['forum_name'].'\'', $mail_message_full);
@@ -2912,7 +2933,7 @@ function send_forum_subscriptions($topic_info, $new_tid)
 				$mail_message_full = str_replace('<message>', $topic_info['message'], $mail_message_full);
 				$mail_message_full = str_replace('<topic_url>', forum_link($forum_url['topic'], $new_tid), $mail_message_full);
 				$mail_message_full = str_replace('<unsubscribe_url>', forum_link($forum_url['forum_unsubscribe'], array($topic_info['forum_id'], generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id']))), $mail_message_full);
-				$mail_message_full = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message_full);
+				$mail_message_full = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message_full);
 
 				$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
 				$notification_emails[$cur_subscriber['language']][1] = $mail_message;
@@ -2945,7 +2966,7 @@ function send_forum_subscriptions($topic_info, $new_tid)
 // Used when the CSRF token from the request does not match the token stored in the database.
 function csrf_confirm_form()
 {
-	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_flash, $forum_loader;
+	global $forum_db, $forum_url, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_flash, $forum_loader;
 
 	// If we've disabled the CSRF check for this page, we have nothing to do here.
 	if (defined('FORUM_DISABLE_CSRF_CONFIRM'))
@@ -2953,7 +2974,7 @@ function csrf_confirm_form()
 
 	// User pressed the cancel button
 	if (isset($_POST['confirm_cancel']))
-		redirect(forum_htmlencode($_POST['prev_url']), $lang_common['Cancel redirect']);
+		redirect(forum_htmlencode($_POST['prev_url']), __('Cancel redirect'));
 
 	// A helper function for csrf_confirm_form. It takes a multi-dimensional array and returns it as a
 	// single-dimensional array suitable for use in hidden fields.
@@ -2982,7 +3003,7 @@ function csrf_confirm_form()
 	{
 		$json_data = array(
 				'code'			=>	-3,
-				'message'		=>	$lang_common['CSRF token mismatch'],
+				'message'		=>	__('CSRF token mismatch'),
 				'csrf_token'	=>	generate_form_token(get_current_url()),
 				'prev_url'		=>	forum_htmlencode($forum_user['prev_url']),
 		);
@@ -3007,7 +3028,7 @@ function csrf_confirm_form()
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		$lang_common['Confirm action']
+		__('Confirm action')
 	);
 
 	$forum_page['form_action'] = get_current_url();
@@ -3035,7 +3056,7 @@ function csrf_confirm_form()
 // Display a message
 function message($message, $link = '', $heading = '')
 {
-	global $forum_db, $forum_url, $lang_common, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader, $forum_flash;
+	global $forum_db, $forum_url, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader, $forum_flash;
 
 	// FIX for render from function
 	global $forum_main_view;
@@ -3060,12 +3081,12 @@ function message($message, $link = '', $heading = '')
 	if (!defined('FORUM_HEADER'))
 	{
 		if ($heading == '')
-			$heading = $lang_common['Forum message'];
+			$heading = __('Forum message');
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			$lang_common['Forum message']
+			__('Forum message')
 		);
 
 		($hook = get_hook('fn_message_pre_header_load')) ? eval($hook) : null;
@@ -3082,7 +3103,7 @@ function message($message, $link = '', $heading = '')
 // Display a message when board is in maintenance mode
 function maintenance_message()
 {
-	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url, $forum_loader;
+	global $forum_db, $forum_config, $forum_user, $base_url, $forum_loader;
 
 	$return = ($hook = get_hook('fn_maintenance_message_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -3112,7 +3133,7 @@ function maintenance_message()
 // Display $message and redirect user to $destination_url
 function redirect($destination_url, $message)
 {
-	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url, $forum_loader;
+	global $forum_db, $forum_config, $forum_user, $base_url, $forum_loader;
 
 	define('FORUM_PAGE', 'redirect');
 
@@ -3163,7 +3184,7 @@ function redirect($destination_url, $message)
 // Display a simple error message
 function error()
 {
-	global $forum_config, $lang_common;
+	global $forum_config;
 
 	if (!headers_sent())
 	{
@@ -3201,33 +3222,6 @@ function error()
 		$forum_config['o_gzip'] = '0';
 	}
 
-	// Set a default error messages string if the script failed before $common_lang loaded
-	if (empty($lang_common['Forum error header']))
-	{
-		$lang_common['Forum error header'] = 'Sorry! The page could not be loaded.';
-	}
-
-	if (empty($lang_common['Forum error description']))
-	{
-		$lang_common['Forum error description'] = 'This is probably a temporary error. Just refresh the page and retry. If problem continues, please check back in 5-10 minutes.';
-	}
-
-	if (empty($lang_common['Forum error location']))
-	{
-		$lang_common['Forum error location'] = 'The error occurred on line %1$s in %2$s';
-	}
-
-	if (empty($lang_common['Forum error db reported']))
-	{
-		$lang_common['Forum error db reported'] = 'Database reported:';
-	}
-
-	if (empty($lang_common['Forum error db query']))
-	{
-		$lang_common['Forum error db query'] = 'Failed query:';
-	}
-
-
 	// Empty all output buffers and stop buffering
 	while (@ob_end_clean());
 
@@ -3250,12 +3244,12 @@ function error()
 	</style>
 </head>
 <body>
-	<h1><?php echo forum_htmlencode($lang_common['Forum error header']) ?></h1>
+	<h1><?php echo forum_htmlencode(__('Forum error header')) ?></h1>
 <?php
 	if (isset($message))
 		echo '<p>'.$message.'</p>'."\n";
 	else
-		echo '<p>'.forum_htmlencode($lang_common['Forum error description']).'</p>'."\n";
+		echo '<p>'.forum_htmlencode(__('Forum error description')).'</p>'."\n";
 
 	if ($num_args > 1)
 	{
@@ -3264,14 +3258,14 @@ function error()
 			$db_error = isset($GLOBALS['forum_db']) ? $GLOBALS['forum_db']->error() : array();
 			if (!empty($db_error['error_msg']))
 			{
-				echo '<p><strong>'.forum_htmlencode($lang_common['Forum error db reported']).'</strong> '.forum_htmlencode($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '').'.</p>'."\n";
+				echo '<p><strong>'.forum_htmlencode(__('Forum error db reported')).'</strong> '.forum_htmlencode($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '').'.</p>'."\n";
 
 				if ($db_error['error_sql'] != '')
-					echo '<p><strong>'.forum_htmlencode($lang_common['Forum error db query']).'</strong> <code>'.forum_htmlencode($db_error['error_sql']).'</code></p>'."\n";
+					echo '<p><strong>'.forum_htmlencode(__('Forum error db query')).'</strong> <code>'.forum_htmlencode($db_error['error_sql']).'</code></p>'."\n";
 			}
 
 			if (isset($file) && isset($line))
-				echo '<p class="error_line">'.forum_htmlencode(sprintf($lang_common['Forum error location'], $line, $file)).'</p>'."\n";
+				echo '<p class="error_line">'.forum_htmlencode(sprintf(__('Forum error location'), $line, $file)).'</p>'."\n";
 		}
 	}
 ?>

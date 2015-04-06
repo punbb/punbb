@@ -1,5 +1,5 @@
 <div class="main-subhead">
-	<h2 class="hn"><span><?php printf($lang_help['Help with'], $lang_common['BBCode']) ?></span></h2>
+	<h2 class="hn"><span><?php printf($lang_help['Help with'], __('BBCode')) ?></span></h2>
 </div>
 <div class="main-content main-frm">
 	<div class="ct-box info-box">
@@ -61,7 +61,7 @@
 		<h3 class="hn"><span><?php echo $lang_help['Quotes info'] ?></span></h3>
 		<div class="entry-content">
 			<code>[quote=James]<?php echo $lang_help['Quote text'] ?>[/quote]</code> <span><?php echo $lang_help['produces named'] ?></span>
-			<div class="quotebox"><cite>James <?php echo $lang_common['wrote'] ?>:</cite><blockquote><p><?php echo $lang_help['Quote text'] ?></p></blockquote></div>
+			<div class="quotebox"><cite>James <?= __('wrote') ?>:</cite><blockquote><p><?php echo $lang_help['Quote text'] ?></p></blockquote></div>
 			<code>[quote]<?php echo $lang_help['Quote text'] ?>[/quote]</code> <span><?php echo $lang_help['produces unnamed'] ?></span>
 			<div class="quotebox"><blockquote><p><?php echo $lang_help['Quote text'] ?></p></blockquote></div>
 		</div>

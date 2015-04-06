@@ -8,7 +8,7 @@
 	</div>
 	<div class="main-content main-frm">
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
+			<p class="important"><?= __('Required warn') ?></p>
 		</div>
 <?php
 		// If there were any errors, show them
@@ -35,7 +35,7 @@
 			</div>
 <?php ($hook = get_hook('mi_report_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_common['Required information'] ?></strong></legend>
+				<legend class="group-legend"><strong><?= __('Required information') ?></strong></legend>
 <?php ($hook = get_hook('mi_report_pre_reason')) ? eval($hook) : null; ?>
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea required">
@@ -47,8 +47,8 @@
 			</fieldset>
 <?php ($hook = get_hook('mi_report_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
+				<span class="submit primary"><input type="submit" name="submit" value="<?= __('Submit') ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

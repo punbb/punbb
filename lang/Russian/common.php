@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions for frequently used strings
-return $lang_common = array(
+return array(
 
 // Text orientation and encoding
 'lang_direction'			=> 'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)

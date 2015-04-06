@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('acs_start')) ? eval($hook) : null;
 
 if (!$forum_user['is_admmod'])
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';

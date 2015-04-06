@@ -30,7 +30,7 @@
 <?php ($hook = get_hook('rg_rules_group_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit primary"><input type="submit" name="agree" value="<?php echo $lang_profile['Agree'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

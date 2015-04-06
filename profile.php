@@ -15,16 +15,16 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 $section = isset($_GET['section']) ? $_GET['section'] : 'about';	// Default to section "about"
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 2)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 $errors = array();
 
 if ($action != 'change_pass' || !isset($_GET['key']))
 {
 	if ($forum_user['g_read_board'] == '0')
-		message($lang_common['No view']);
+		message(__('No view'));
 	else if ($forum_user['g_view_users'] == '0' && ($forum_user['is_guest'] || $forum_user['id'] != $id))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 }
 
 // Load the profile.php language file
@@ -49,7 +49,7 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $user = $forum_db->fetch_assoc($result);
 
 if (!$user)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 
 if ($action == 'change_pass')
@@ -58,7 +58,7 @@ if ($action == 'change_pass')
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link($forum_url['profile_about'], $id), $lang_common['Cancel redirect']);
+		redirect(forum_link($forum_url['profile_about'], $id), __('Cancel redirect'));
 
 	if (isset($_GET['key']))
 	{
@@ -136,7 +136,7 @@ if ($action == 'change_pass')
 	if ($forum_user['id'] != $id &&
 		$forum_user['g_id'] != FORUM_ADMIN &&
 		($forum_user['g_moderator'] != '1' || $forum_user['g_mod_edit_users'] == '0' || $forum_user['g_mod_change_passwords'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	if (isset($_POST['form_sent']))
 	{
@@ -228,13 +228,13 @@ else if ($action == 'change_email')
 	if ($forum_user['id'] != $id &&
 		$forum_user['g_id'] != FORUM_ADMIN &&
 		($forum_user['g_moderator'] != '1' || $forum_user['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	($hook = get_hook('pf_change_email_selected')) ? eval($hook) : null;
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link($forum_url['profile_about'], $id), $lang_common['Cancel redirect']);
+		redirect(forum_link($forum_url['profile_about'], $id), __('Cancel redirect'));
 
 	if (isset($_GET['key']))
 	{
@@ -271,7 +271,7 @@ else if ($action == 'change_email')
 		// Validate the email-address
 		$new_email = strtolower(forum_trim($_POST['req_new_email']));
 		if (!is_valid_email($new_email))
-			$errors[] = $lang_common['Invalid e-mail'];
+			$errors[] = __('Invalid e-mail');
 
 		// Check if it's a banned e-mail address
 		if (is_banned_email($new_email))
@@ -363,7 +363,7 @@ else if ($action == 'change_email')
 			$mail_message = str_replace('<username>', $forum_user['username'], $mail_message);
 			$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
 			$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', forum_link($forum_url['change_email_key'], array($id, $new_email_key))), $mail_message);
-			$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
+			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message);
 
 			($hook = get_hook('pf_change_email_normal_pre_activation_email_sent')) ? eval($hook) : null;
 
@@ -407,12 +407,12 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 {
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link($forum_url['profile_admin'], $id), $lang_common['Cancel redirect']);
+		redirect(forum_link($forum_url['profile_admin'], $id), __('Cancel redirect'));
 
 	($hook = get_hook('pf_delete_user_selected')) ? eval($hook) : null;
 
 	if ($forum_user['g_id'] != FORUM_ADMIN)
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	if ($user['g_id'] == FORUM_ADMIN)
 		message($lang_profile['Cannot delete admin']);
@@ -471,7 +471,7 @@ else if ($action == 'delete_avatar')
 	if ($forum_user['id'] != $id &&
 		$forum_user['g_id'] != FORUM_ADMIN &&
 		($forum_user['g_moderator'] != '1' || $forum_user['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -494,7 +494,7 @@ else if ($action == 'delete_avatar')
 else if (isset($_POST['update_group_membership']))
 {
 	if ($forum_user['g_id'] != FORUM_ADMIN)
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	($hook = get_hook('pf_change_group_form_submitted')) ? eval($hook) : null;
 
@@ -533,7 +533,7 @@ else if (isset($_POST['update_group_membership']))
 else if (isset($_POST['update_forums']))
 {
 	if ($forum_user['g_id'] != FORUM_ADMIN)
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	($hook = get_hook('pf_forum_moderators_form_submitted')) ? eval($hook) : null;
 
@@ -585,7 +585,7 @@ else if (isset($_POST['update_forums']))
 else if (isset($_POST['ban']))
 {
 	if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0'))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	($hook = get_hook('pf_ban_user_selected')) ? eval($hook) : null;
 
@@ -599,7 +599,7 @@ else if (isset($_POST['form_sent']))
 	if ($forum_user['id'] != $id &&
 		$forum_user['g_id'] != FORUM_ADMIN &&
 		($forum_user['g_moderator'] != '1' || $forum_user['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	($hook = get_hook('pf_change_details_form_submitted')) ? eval($hook) : null;
 
@@ -656,7 +656,7 @@ else if (isset($_POST['form_sent']))
 				// Validate the email-address
 				$form['email'] = strtolower(forum_trim($_POST['req_email']));
 				if (!is_valid_email($form['email']))
-					$errors[] = $lang_common['Invalid e-mail'];
+					$errors[] = __('Invalid e-mail');
 			}
 
 			if ($forum_user['is_admmod'])
@@ -672,7 +672,7 @@ else if (isset($_POST['form_sent']))
 				{
 					// A list of words that the title may not contain
 					// If the language is English, there will be some duplicates, but it's not the end of the world
-					$forbidden = array('Member', 'Moderator', 'Administrator', 'Banned', 'Guest', $lang_common['Member'], $lang_common['Moderator'], $lang_common['Administrator'], $lang_common['Banned'], $lang_common['Guest']);
+					$forbidden = array('Member', 'Moderator', 'Administrator', 'Banned', 'Guest', __('Member'), __('Moderator'), __('Administrator'), __('Banned'), __('Guest'));
 
 					if (in_array($form['title'], $forbidden))
 						$errors[] = $lang_profile['Forbidden title'];
@@ -721,7 +721,7 @@ else if (isset($_POST['form_sent']))
 
 			// Validate timezone
 			if (($form['timezone'] > 14.0) || ($form['timezone'] < -12.0)) {
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 			}
 
 			$form['email_setting'] = intval($form['email_setting']);
@@ -738,7 +738,7 @@ else if (isset($_POST['form_sent']))
 			{
 				$form['language'] = preg_replace('#[\.\\\/]#', '', $form['language']);
 				if (!file_exists(FORUM_ROOT.'lang/'.$form['language'].'/common.php'))
-					message($lang_common['Bad request']);
+					message(__('Bad request'));
 			}
 
 			if ($form['disp_topics'] != '' && intval($form['disp_topics']) < 3) $form['disp_topics'] = 3;
@@ -757,7 +757,7 @@ else if (isset($_POST['form_sent']))
 			{
 				$form['style'] = preg_replace('#[\.\\\/]#', '', $form['style']);
 				if (!file_exists(FORUM_ROOT.'style/'.$form['style'].'/'.$form['style'].'.php'))
-					message($lang_common['Bad request']);
+					message(__('Bad request'));
 			}
 			break;
 		}
@@ -973,7 +973,7 @@ else if (isset($_POST['form_sent']))
 
 		// Make sure we have something to update
 		if (empty($new_values))
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Run the update
 		$query = array(
@@ -1600,11 +1600,14 @@ else
 		// Setup help
 		$forum_page['text_options'] = array();
 		if ($forum_config['p_sig_bbcode'] == '1')
-			$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a></span>';
+			$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.
+			sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 		if ($forum_config['p_sig_img_tag'] == '1')
-			$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
+			$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.
+			sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 		if ($forum_config['o_smilies_sig'] == '1')
-			$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
+			$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.
+			sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 		($hook = get_hook('pf_change_details_signature_pre_header_load')) ? eval($hook) : null;
 
@@ -1663,7 +1666,7 @@ else
 	else if ($section == 'admin')
 	{
 		if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0' || $forum_user['id'] == $id))
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
@@ -1737,5 +1740,5 @@ else
 
 	($hook = get_hook('pf_change_details_new_section')) ? eval($hook) : null;
 
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 }

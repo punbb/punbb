@@ -17,7 +17,7 @@ if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
 ($hook = get_hook('aex_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN)
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -60,7 +60,8 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	 * Errors must be fully specified instead "bad request" message only
 	 */
 	if (!empty($errors))
-		message(isset($_GET['install']) ? $lang_common['Bad request'] : $lang_admin_ext['Hotfix download failed']);
+		message(isset($_GET['install']) ?
+			__('Bad request') : $lang_admin_ext['Hotfix download failed']);
 
 	// Get core amd major versions
 	if (!defined('FORUM_DISABLE_EXTENSIONS_VERSION_CHECK'))
@@ -305,7 +306,7 @@ else if (isset($_GET['uninstall']))
 
 	if (!$ext_data)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	// Check dependancies
@@ -444,7 +445,7 @@ else if (isset($_GET['flip']))
 	// No rows
 	if (is_null($ext_status) || $ext_status === false)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	// Are we disabling or enabling?

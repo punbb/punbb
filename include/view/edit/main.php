@@ -16,12 +16,12 @@
 <?php
 
 	if (!empty($forum_page['text_options']))
-		echo "\t\t".'<p class="ct-options options">'.sprintf($lang_common['You may use'], implode(' ', $forum_page['text_options'])).'</p>'."\n";
+		echo "\t\t".'<p class="ct-options options">'.sprintf(__('You may use'), implode(' ', $forum_page['text_options'])).'</p>'."\n";
 
 	include view('edit/errors');
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_common['Required warn'] ?></p>
+			<p class="important"><?= __('Required warn') ?></p>
 		</div>
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 			<div class="hidden">

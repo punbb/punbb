@@ -179,7 +179,7 @@
 			$forum_page['item_pages'] = ceil(($cur_set['num_replies'] + 1) / $forum_user['disp_posts']);
 
 			if ($forum_page['item_pages'] > 1)
-				$forum_page['item_nav']['pages'] = '<span>'.$lang_forum['Pages'].'&#160;</span>'.paginate($forum_page['item_pages'], -1, $forum_url['topic'], $lang_common['Page separator'], array($cur_set['tid'], sef_friendly($cur_set['subject'])));
+				$forum_page['item_nav']['pages'] = '<span>'.$lang_forum['Pages'].'&#160;</span>'.paginate($forum_page['item_pages'], -1, $forum_url['topic'], __('Page separator'), array($cur_set['tid'], sef_friendly($cur_set['subject'])));
 
 			// Does this topic contain posts we haven't read? If so, tag it accordingly.
 			if (!$forum_user['is_guest'] && $cur_set['last_post'] > $forum_user['last_visit'] && (!isset($tracked_topics['topics'][$cur_set['tid']]) || $tracked_topics['topics'][$cur_set['tid']] < $cur_set['last_post']) && (!isset($tracked_topics['forums'][$cur_set['forum_id']]) || $tracked_topics['forums'][$cur_set['forum_id']] < $cur_set['last_post']))
@@ -322,7 +322,7 @@
 					sprintf(__('Last poster', 'index'), forum_htmlencode($cur_set['last_poster'])).'</cite></li>';
 				else
 					$forum_page['item_body']['info']['lastpost'] =
-					'<li class="info-lastpost"><strong>'.$lang_common['Never'].'</strong></li>';
+					'<li class="info-lastpost"><strong>' . __('Never') . '</strong></li>';
 
 				($hook = get_hook('se_results_forums_row_normal_pre_display')) ? eval($hook) : null;
 			}

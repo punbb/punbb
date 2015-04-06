@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $lang_common['Rules'] ?></span></h2>
+		<h2 class="hn"><span><?= __('Rules') ?></span></h2>
 	</div>
 
 	<div class="main-content main-frm">

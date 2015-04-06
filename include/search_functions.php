@@ -13,7 +13,7 @@
 //
 function create_search_cache($keywords, $author, $search_in = false, $forum = array(-1), $show_as = 'topics', $sort_by = null, $sort_dir = 'DESC')
 {
-	global $forum_db, $forum_user, $forum_config, $forum_url, $lang_search, $lang_common, $db_type;
+	global $forum_db, $forum_user, $forum_config, $forum_url, $lang_search, $db_type;
 
 	$return = ($hook = get_hook('sf_fn_create_search_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -152,7 +152,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	}
 
 	// If it's a search for author name (and that author name isn't Guest)
-	if ($author && $author != 'guest' && $author != utf8_strtolower($lang_common['Guest']))
+	if ($author && $author != 'guest' && $author != utf8_strtolower(__('Guest')))
 	{
 		$query = array(
 			'SELECT'	=> 'u.id',
@@ -418,7 +418,7 @@ function generate_cached_search_query($search_id, &$show_as)
 //
 function generate_action_search_query($action, $value, &$search_id, &$url_type, &$show_as)
 {
-	global $forum_db, $forum_user, $forum_config, $lang_common, $forum_url, $db_type;
+	global $forum_db, $forum_user, $forum_config, $forum_url, $db_type;
 
 	$return = ($hook = get_hook('sf_fn_generate_action_search_query_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -428,7 +428,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 	{
 		case 'show_new':
 			if ($forum_user['is_guest'])
-				message($lang_common['No permission']);
+				message(__('No permission'));
 
 			$query = array(
 				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
@@ -588,11 +588,11 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 
 		case 'show_subscriptions':
 			if ($forum_user['is_guest'])
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			// Check we're allowed to see the subscriptions we're trying to look at
 			if ($forum_user['g_id'] != FORUM_ADMIN && $forum_user['id'] != $value)
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			$query = array(
 				'SELECT'	=> 't.id AS tid, t.poster, t.subject, t.first_post_id, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.sticky, t.forum_id, f.forum_name',
@@ -639,11 +639,11 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 
 		case 'show_forum_subscriptions':
 			if ($forum_user['is_guest'])
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			// Check we're allowed to see the subscriptions we're trying to look at
 			if ($forum_user['g_id'] != FORUM_ADMIN && $forum_user['id'] != $value)
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			$query = array(
 				'SELECT'	=> 'c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.forum_desc, f.redirect_url, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster',
@@ -723,7 +723,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 //
 function get_search_results($query, &$search_set)
 {
-	global $forum_db, $forum_user, $forum_page, $lang_common;
+	global $forum_db, $forum_user, $forum_page;
 
 	$return = ($hook = get_hook('sf_fn_get_search_results_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -826,7 +826,7 @@ function no_search_results($action = 'search')
 //
 function generate_search_crumbs($action = null)
 {
-	global $forum_page, $lang_common, $lang_search, $forum_url, $forum_user, $num_hits, $search_set, $search_id, $show_as;
+	global $forum_page, $lang_search, $forum_url, $forum_user, $num_hits, $search_set, $search_id, $show_as;
 
 	$return = ($hook = get_hook('sf_fn_generate_search_crumbs_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -838,7 +838,8 @@ function generate_search_crumbs($action = null)
 			$forum_page['crumbs'][] = $lang_search['Topics with new'];
 			$forum_page['items_info'] = generate_items_info($lang_search['Topics found'], ($forum_page['start_from'] + 1), $num_hits);
 			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_search['User defined search'].'</a></span>';
-			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.$forum_user['id'])).'">'.$lang_common['Mark all as read'].'</a></span>';
+			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.$forum_user['id'])).'">'.
+				__('Mark all as read').'</a></span>';
 
 			// Add link for show all topics, not only new (updated)
 			if ($search_id != -1)

@@ -270,7 +270,7 @@ function generate_censors_cache()
 //
 function generate_quickjump_cache($group_id = false)
 {
-	global $forum_db, $lang_common, $forum_url, $forum_config, $forum_user, $base_url;
+	global $forum_db, $forum_url, $forum_config, $forum_user, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -302,7 +302,8 @@ function generate_quickjump_cache($group_id = false)
 	foreach ($groups as $group_id)
 	{
 		$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);'."\n".'$forum_id = isset($forum_id) ? $forum_id : 0;'."\n\n".'?>';
-		$output .= '<form id="qjump" method="get" accept-charset="utf-8" action="'.$base_url.'/viewforum.php">'."\n\t".'<div class="frm-fld frm-select">'."\n\t\t".'<label for="qjump-select"><span><?php echo $lang_common[\'Jump to\'] ?>'.'</span></label><br />'."\n\t\t".'<span class="frm-input"><select id="qjump-select" name="id">'."\n";
+		$output .= '<form id="qjump" method="get" accept-charset="utf-8" action="'.$base_url.'/viewforum.php">'."\n\t".'<div class="frm-fld frm-select">'."\n\t\t".
+		'<label for="qjump-select"><span><?= __(\'Jump to\') ?>'.'</span></label><br />'."\n\t\t".'<span class="frm-input"><select id="qjump-select" name="id">'."\n";
 
 		// Get the list of categories and forums from the DB
 		$query = array(
@@ -351,11 +352,12 @@ function generate_quickjump_cache($group_id = false)
 			$redirect_tag = ($cur_forum['redirect_url'] != '') ? ' &gt;&gt;&gt;' : '';
 			$output .= "\t\t\t\t".'<option value="'.$cur_forum['fid'].'"<?php echo ($forum_id == '.$cur_forum['fid'].') ? \' selected="selected"\' : \'\' ?>>'.forum_htmlencode($cur_forum['forum_name']).$redirect_tag.'</option>'."\n";
 			$forum_count++;
-			
+
 			($hook = get_hook('ch_fn_generate_quickjump_cache_forum_loop_end')) ? eval($hook) : null;
 		}
 
-		$output .= "\t\t\t".'</optgroup>'."\n\t\t".'</select>'."\n\t\t".'<input type="submit" id="qjump-submit" value="<?php echo $lang_common[\'Go\'] ?>" /></span>'."\n\t".'</div>'."\n".'</form>'."\n";
+		$output .= "\t\t\t".'</optgroup>'."\n\t\t".'</select>'."\n\t\t".
+		'<input type="submit" id="qjump-submit" value="<?= __(\'Go\') ?>" /></span>'."\n\t".'</div>'."\n".'</form>'."\n";
 		$output_js = "\n".'(function () {'."\n\t".'var forum_quickjump_url = "'.forum_link($forum_url['forum']).'";'."\n\t".'var sef_friendly_url_array = new Array('.count($forums).');';
 
 		foreach ($sef_friendly_names as $forum_id => $forum_name)
@@ -568,11 +570,11 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 		{
 			foreach ($inst_exts as $ext)
 			{
-			    
+
 			    if ((0 === strpos($ext['id'], 'pun_') AND FORUM_PUN_EXTENSION_REPOSITORY_URL != $url) OR
 			            ((FALSE === strpos($ext['id'], 'pun_') AND !isset($ext['repo_url'])) OR (isset($ext['repo_url']) AND $ext['repo_url'] != $url)))
 			        continue;
-			    			    
+
 				$remote_file = get_remote_file($url.'/'.$ext['id'].'/lastversion', 2);
 				$version = empty($remote_file['content']) ? '' : forum_trim($remote_file['content']);
 				unset($remote_file);

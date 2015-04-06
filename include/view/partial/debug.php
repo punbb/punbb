@@ -26,7 +26,7 @@ if (defined('FORUM_DEBUG'))
 		}
 	}
 
-	echo '<p id="querytime" class="quiet">'.sprintf($lang_common['Querytime'],
+	echo '<p id="querytime" class="quiet">'.sprintf(__('Querytime'),
 		forum_number_format($time_diff, 3),
 		forum_number_format(100 - $time_percent_db, 0),
 		forum_number_format($time_percent_db, 0),

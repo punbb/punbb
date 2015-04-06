@@ -14,7 +14,7 @@ require __DIR__ . '/vendor/pautoload.php';
 ($hook = get_hook('ed_start')) ? eval($hook) : null;
 
 if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
+	message(__('No view'));
 
 // Load the post.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
@@ -22,7 +22,7 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 
 // Fetch some info about the post, the topic and the forum
@@ -51,7 +51,7 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $cur_post = $forum_db->fetch_assoc($result);
 
 if (!$cur_post)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_post['moderators'] != '') ? unserialize($cur_post['moderators']) : array();
@@ -64,7 +64,7 @@ if (($forum_user['g_edit_posts'] == '0' ||
 	$cur_post['poster_id'] != $forum_user['id'] ||
 	$cur_post['closed'] == '1') &&
 	!$forum_page['is_admmod'])
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 
 $can_edit_subject = $id == $cur_post['first_post_id'];
@@ -183,11 +183,14 @@ $forum_page['hidden_fields'] = array(
 // Setup help
 $forum_page['main_head_options'] = array();
 if ($forum_config['p_message_bbcode'] == '1')
-	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a></span>';
+	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.
+	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 if ($forum_config['p_message_img_tag'] == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
+	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.
+	sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 if ($forum_config['o_smilies'] == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
+	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.
+	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 
 // Setup breadcrumbs

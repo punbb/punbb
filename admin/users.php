@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('aus_start')) ? eval($hook) : null;
 
 if (!$forum_user['is_admmod'])
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -27,7 +27,7 @@ if (isset($_GET['ip_stats']))
 {
 	$ip_stats = intval($_GET['ip_stats']);
 	if ($ip_stats < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	($hook = get_hook('aus_ip_stats_selected')) ? eval($hook) : null;
 
@@ -149,7 +149,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 		redirect(forum_link($forum_url['admin_users']), $lang_admin_common['Cancel redirect']);
 
 	if ($forum_user['g_id'] != FORUM_ADMIN)
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	if (empty($_POST['users']))
 		message($lang_admin_users['No users selected']);
@@ -225,7 +225,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 {
 	if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0'))
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	if (empty($_POST['users']))
 		message($lang_admin_users['No users selected']);
@@ -349,7 +349,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) || isset($_POST['change_group_cancel']))
 {
 	if ($forum_user['g_id'] != FORUM_ADMIN)
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	// User pressed the cancel button
 	if (isset($_POST['change_group_cancel']))
@@ -385,7 +385,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		$group_is_mod = $forum_db->result($result);
 
 		if ($move_to_group == FORUM_GUEST || (is_null($group_is_mod) || $group_is_mod === false))
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Move users
 		$query = array(
@@ -448,10 +448,10 @@ else if (isset($_GET['find_user']))
 	$order_by = isset($_GET['order_by']) ? forum_trim($_GET['order_by']) : null;
 	$direction = isset($_GET['direction']) ? forum_trim($_GET['direction']) : null;
 	if ($order_by == null || $direction == null)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	if (!in_array($order_by, array('username', 'email', 'num_posts', 'num_posts', 'registered')) || !in_array($direction, array('ASC', 'DESC')))
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	($hook = get_hook('aus_find_user_selected')) ? eval($hook) : null;
 
@@ -576,7 +576,10 @@ else if (isset($_GET['find_user']))
 	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
 
 	// Generate paging
-	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str), $lang_common['Paging separator'], null, true).'</p>';
+	$forum_page['page_post']['paging'] =
+		'<p class="paging"><span class="pages">' .
+		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str),
+			__('Paging separator'), null, true).'</p>';
 
 	($hook = get_hook('aus_find_user_pre_header_load')) ? eval($hook) : null;
 

@@ -12,7 +12,7 @@ require __DIR__ . '/vendor/pautoload.php';
 ($hook = get_hook('vf_start')) ? eval($hook) : null;
 
 if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
+	message(__('No view'));
 
 // Load the viewforum.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/forum.php';
@@ -20,7 +20,7 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/forum.php';
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Fetch some info about the forum
 $query = array(
@@ -49,7 +49,7 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $cur_forum = $forum_db->fetch_assoc($result);
 
 if (!$cur_forum)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 
 ($hook = get_hook('vf_modify_forum_info')) ? eval($hook) : null;
@@ -86,13 +86,17 @@ $forum_page['items_info'] = generate_items_info($lang_forum['Topics'], ($forum_p
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages'])
 {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['forum'], $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['forum'], $forum_url['page'], ($forum_page['page'] + 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
+	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['forum'], $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+		__('Page') . ' ' . $forum_page['num_pages'].'" />';
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['forum'], $forum_url['page'], ($forum_page['page'] + 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+		__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
 }
 if ($forum_page['page'] > 1)
 {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['forum'], $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.$lang_common['Page'].' 1" />';
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['forum'], $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
+	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+	__('Page') . ' 1" />';
 }
 
 
@@ -153,12 +157,15 @@ if (!empty($topics_id))
 }
 
 // Generate paging/posting links
-$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['forum'], $lang_common['Paging separator'], array($id, sef_friendly($cur_forum['forum_name']))).'</p>';
+$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['forum'],
+		__('Paging separator'), array($id, sef_friendly($cur_forum['forum_name']))).'</p>';
 
 if ($forum_user['may_post'])
 	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link($forum_url['new_topic'], $id).'"><span>'.$lang_forum['Post topic'].'</span></a></p>';
 else if ($forum_user['is_guest'])
-	$forum_page['page_post']['posting'] = '<p class="posting">'.sprintf($lang_forum['Login to post'], '<a href="'.forum_link($forum_url['login']).'">'.$lang_common['login'].'</a>', '<a href="'.forum_link($forum_url['register']).'">'.$lang_common['register'].'</a>').'</p>';
+	$forum_page['page_post']['posting'] = '<p class="posting">'.sprintf($lang_forum['Login to post'], '<a href="'.forum_link($forum_url['login']).'">'.
+		__('login').'</a>', '<a href="'.forum_link($forum_url['register']).'">'.__('register').'</a>').'</p>';
 else
 	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_forum['No permission'].'</p>';
 
@@ -194,7 +201,7 @@ $forum_page['crumbs'] = array(
 $forum_page['main_title'] = '<a class="permalink" href="'.forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))).'" rel="bookmark" title="'.$lang_forum['Permalink forum'].'">'.forum_htmlencode($cur_forum['forum_name']).'</a>';
 
 if ($forum_page['num_pages'] > 1)
-	$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
+	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
 
 ($hook = get_hook('vf_pre_header_load')) ? eval($hook) : null;
 

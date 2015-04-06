@@ -17,7 +17,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('ari_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN)
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -29,7 +29,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 	$per_page = intval($_GET['i_per_page']);
 	$start_at = intval($_GET['i_start_at']);
 	if ($per_page < 1 || $start_at < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -82,7 +82,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php $lang_common['lang_identifier'] ?>" dir="<?php echo $lang_common['lang_direction'] ?>">
+<html lang="<?= __('lang_identifier') ?>" dir="<?= __('lang_direction') ?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo generate_crumbs(true) ?></title>

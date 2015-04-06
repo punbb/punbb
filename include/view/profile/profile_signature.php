@@ -9,7 +9,8 @@
 	<div class="main-content main-frm">
 	<?php
 		if (!empty($forum_page['text_options']))
-			echo "\t\t".'<p class="content-options options">'.sprintf($lang_common['You may use'], implode(' ', $forum_page['text_options'])).'</p>'."\n";
+			echo "\t\t".'<p class="content-options options">'.
+			sprintf(__('You may use'), implode(' ', $forum_page['text_options'])).'</p>'."\n";
 	?>
 
 		<?= helper('errors', array(

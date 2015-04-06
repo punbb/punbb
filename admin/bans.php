@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('aba_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0'))
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -30,7 +30,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		{
 			$add_ban = intval($_GET['add_ban']);
 			if ($add_ban < 2)
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			$user_id = $add_ban;
 
@@ -109,7 +109,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	{
 		$ban_id = intval($_GET['edit_ban']);
 		if ($ban_id < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		($hook = get_hook('aba_edit_ban_selected')) ? eval($hook) : null;
 
@@ -125,7 +125,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 		if (!$banned_user_info)
 		{
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 		}
 
 		list($ban_user, $ban_ip, $ban_email, $ban_message, $ban_expire) = $banned_user_info;
@@ -289,7 +289,7 @@ else if (isset($_GET['del_ban']))
 {
 	$ban_id = intval($_GET['del_ban']);
 	if ($ban_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// Validate the CSRF token
 	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('del_ban'.$ban_id)))
@@ -351,18 +351,27 @@ $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 
 $forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_bans']));
 
 // Generate paging
-$forum_page['page_post']['paging']='<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_bans'], $lang_common['Paging separator'], null, true).'</p>';
+$forum_page['page_post']['paging'] =
+	'<p class="paging"><span class="pages">' . __('Pages') .
+	'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_bans'],
+		__('Paging separator'), null, true).'</p>';
 
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages'])
 {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], $forum_page['num_pages']).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] + 1)).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
+	$forum_page['nav']['last'] =
+		'<link rel="last" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], $forum_page['num_pages']).'" title="'.
+		__('Page') . ' '.$forum_page['num_pages'].'" />';
+	$forum_page['nav']['next'] =
+		'<link rel="next" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] + 1)).'" title="'.
+		__('Page').' '.($forum_page['page'] + 1).'" />';
 }
 if ($forum_page['page'] > 1)
 {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['admin_bans']).'" title="'.$lang_common['Page'].' 1" />';
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.
+	__('Page') . ' '.($forum_page['page'] - 1).'" />';
+	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['admin_bans']).'" title="'.
+	__('Page').' 1" />';
 }
 
 ($hook = get_hook('aba_pre_header_load')) ? eval($hook) : null;

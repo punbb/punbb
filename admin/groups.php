@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('agr_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN)
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -48,7 +48,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 		$group_id = intval($_GET['edit_group']);
 		if ($group_id < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		$query = array(
 			'SELECT'	=> 'g.*',
@@ -61,7 +61,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 		$group = $forum_db->fetch_assoc($result);
 
 		if (!$group)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		$mode = 'edit';
 	}
@@ -237,7 +237,7 @@ else if (isset($_POST['set_default_group']))
 
 	// Make sure it's not the admin or guest groups
 	if ($group_id == FORUM_ADMIN || $group_id == FORUM_GUEST)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// Make sure it's not a moderator group
 	$query = array(
@@ -251,7 +251,7 @@ else if (isset($_POST['set_default_group']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result) != 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	$query = array(
 		'UPDATE'	=> 'config',
@@ -282,7 +282,7 @@ else if (isset($_GET['del_group']))
 {
 	$group_id = intval($_GET['del_group']);
 	if ($group_id <= FORUM_GUEST)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// User pressed the cancel button
 	if (isset($_POST['del_group_cancel']))

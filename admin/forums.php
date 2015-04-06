@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('afo_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN)
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -26,7 +26,7 @@ if (isset($_POST['add_forum']))
 {
 	$add_to_cat = isset($_POST['add_to_cat']) ? intval($_POST['add_to_cat']) : 0;
 	if ($add_to_cat < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	$forum_name = forum_trim($_POST['forum_name']);
 	$position = intval($_POST['position']);
@@ -47,7 +47,7 @@ if (isset($_POST['add_forum']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result) != 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 
 	$query = array(
@@ -79,7 +79,7 @@ else if (isset($_GET['del_forum']))
 {
 	$forum_to_delete = intval($_GET['del_forum']);
 	if ($forum_to_delete < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// User pressed the cancel button
 	if (isset($_POST['del_forum_cancel']))
@@ -148,7 +148,7 @@ else if (isset($_GET['del_forum']))
 		$forum_name = $forum_db->result($result);
 
 		if (is_null($forum_name) || $forum_name === false)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 
 		// Setup breadcrumbs
@@ -235,7 +235,7 @@ else if (isset($_GET['edit_forum']))
 {
 	$forum_id = intval($_GET['edit_forum']);
 	if ($forum_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	($hook = get_hook('afo_edit_forum_selected')) ? eval($hook) : null;
 
@@ -251,7 +251,7 @@ else if (isset($_GET['edit_forum']))
 	$cur_forum = $forum_db->fetch_assoc($result);
 
 	if (is_null($cur_forum) || $cur_forum === false)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 
 	// Update group permissions for $forum_id
@@ -270,7 +270,7 @@ else if (isset($_GET['edit_forum']))
 			message($lang_admin_forums['Must enter forum message']);
 
 		if ($cat_id < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		$forum_desc = ($forum_desc != '') ? '\''.$forum_db->escape($forum_desc).'\'' : 'NULL';
 		$redirect_url = ($redirect_url != '') ? '\''.$forum_db->escape($redirect_url).'\'' : 'NULL';

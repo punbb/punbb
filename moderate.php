@@ -20,11 +20,11 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/misc.php';
 if (isset($_GET['get_host']))
 {
 	if (!$forum_user['is_admmod'])
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$_get_host = $_GET['get_host'];
 	if (!is_string($_get_host))
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	($hook = get_hook('mr_view_ip_selected')) ? eval($hook) : null;
 
@@ -35,7 +35,7 @@ if (isset($_GET['get_host']))
 	{
 		$get_host = intval($_get_host);
 		if ($get_host < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		$query = array(
 			'SELECT'	=> 'p.poster_ip',
@@ -48,7 +48,7 @@ if (isset($_GET['get_host']))
 		$ip = $forum_db->result($result);
 
 		if (!$ip)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 	}
 
 	($hook = get_hook('mr_view_ip_pre_output')) ? eval($hook) : null;
@@ -60,7 +60,7 @@ if (isset($_GET['get_host']))
 // All other functions require moderator/admin access
 $fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
 if ($fid < 1)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Get some info about the forum we're moderating
 $query = array(
@@ -80,11 +80,11 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $cur_forum = $forum_db->fetch_assoc($result);
 
 if (!$cur_forum)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Make sure we're not trying to moderate a redirect forum
 if ($cur_forum['redirect_url'] != '')
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Setup the array of moderators
 $mods_array = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderators']) : array();
@@ -92,7 +92,7 @@ $mods_array = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderat
 ($hook = get_hook('mr_pre_permission_check')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || !array_key_exists($forum_user['username'], $mods_array)))
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Get topic/forum tracking data
 if (!$forum_user['is_guest'])
@@ -101,7 +101,8 @@ if (!$forum_user['is_guest'])
 
 // Did someone click a cancel button?
 if (isset($_POST['cancel']))
-	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_common['Cancel redirect']);
+	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))),
+		__('Cancel redirect'));
 
 // All topic moderation features require a topic id in GET
 if (isset($_GET['tid']))
@@ -110,7 +111,7 @@ if (isset($_GET['tid']))
 
 	$tid = intval($_GET['tid']);
 	if ($tid < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// Fetch some info about the topic
 	$query = array(
@@ -124,11 +125,12 @@ if (isset($_GET['tid']))
 	$cur_topic = $forum_db->fetch_assoc($result);
 
 	if (!$cur_topic)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// User pressed the cancel button
 	if (isset($_POST['delete_posts_cancel']))
-		redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))), $lang_common['Cancel redirect']);
+		redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
+			__('Cancel redirect'));
 
 	// Delete one or more posts
 	if (isset($_POST['delete_posts']) || isset($_POST['delete_posts_comply']))
@@ -144,7 +146,8 @@ if (isset($_GET['tid']))
 		if (isset($_POST['delete_posts_comply']))
 		{
 			if (!isset($_POST['req_confirm']))
-				redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))), $lang_common['No confirm redirect']);
+				redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
+					__('No confirm redirect'));
 
 			($hook = get_hook('mr_confirm_delete_posts_form_submitted')) ? eval($hook) : null;
 
@@ -158,7 +161,7 @@ if (isset($_GET['tid']))
 			($hook = get_hook('mr_confirm_delete_posts_qr_verify_post_ids')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 			if ($forum_db->result($result) != count($posts))
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			// Delete the posts
 			$query = array(
@@ -221,7 +224,8 @@ if (isset($_GET['tid']))
 		if (isset($_POST['split_posts_comply']))
 		{
 			if (!isset($_POST['req_confirm']))
-				redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))), $lang_common['No confirm redirect']);
+				redirect(forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
+					__('No confirm redirect'));
 
 			// Load the post.php language file
 			require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
@@ -238,7 +242,7 @@ if (isset($_GET['tid']))
 			($hook = get_hook('mr_confirm_split_posts_qr_verify_post_ids')) ? eval($hook) : null;
 			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 			if ($forum_db->result($result) != count($posts))
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 
 			$new_subject = isset($_POST['new_subject']) ? forum_trim($_POST['new_subject']) : '';
 
@@ -334,18 +338,24 @@ if (isset($_GET['tid']))
 	$forum_page['items_info'] = generate_items_info($lang_misc['Posts'], ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 	// Generate paging links
-	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_topic'], $lang_common['Paging separator'], array($fid, $tid)).'</p>';
+	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_topic'],
+		__('Paging separator'), array($fid, $tid)).'</p>';
 
 	// Navigation links for header and page numbering for title/meta description
 	if ($forum_page['page'] < $forum_page['num_pages'])
 	{
-		$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], $forum_page['num_pages'], array($fid, $tid)).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
-		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], ($forum_page['page'] + 1), array($fid, $tid)).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
+		$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], $forum_page['num_pages'], array($fid, $tid)).'" title="'.
+			__('Page') . ' ' . $forum_page['num_pages'].'" />';
+		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], ($forum_page['page'] + 1), array($fid, $tid)).'" title="'.
+			__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
 	}
 	if ($forum_page['page'] > 1)
 	{
-		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], ($forum_page['page'] - 1), array($fid, $tid)).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
-		$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['moderate_topic'], array($fid, $tid)).'" title="'.$lang_common['Page'].' 1" />';
+		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], ($forum_page['page'] - 1), array($fid, $tid)).'" title="'.
+		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
+		$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['moderate_topic'], array($fid, $tid)).'" title="'.
+		__('Page').' 1" />';
 	}
 
 	if ($forum_config['o_censoring'] == '1')
@@ -369,7 +379,7 @@ if (isset($_GET['tid']))
 	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.$lang_misc['Select all'].'</span></span>';
 
 	if ($forum_page['num_pages'] > 1)
-		$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
+		$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
 
 	($hook = get_hook('mr_post_actions_pre_header_load')) ? eval($hook) : null;
 
@@ -417,7 +427,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		$move_to_forum = isset($_POST['move_to_forum']) ? intval($_POST['move_to_forum']) : 0;
 		if (empty($topics) || $move_to_forum < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Fetch the forum name for the forum we're moving to
 		$query = array(
@@ -432,7 +442,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$move_to_forum_name = $forum_db->result($result);
 
 		if (!$move_to_forum_name)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Verify that the topic IDs are valid
 		$query = array(
@@ -444,7 +454,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		($hook = get_hook('mr_confirm_move_topics_qr_verify_topic_ids')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		if ($forum_db->result($result) != count($topics))
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Delete any redirect topics if there are any (only if we moved/copied the topic back to where it where it was once moved from)
 		$query = array(
@@ -525,7 +535,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	{
 		$topics = intval($_GET['move_topics']);
 		if ($topics < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		$action = 'single';
 	}
@@ -544,7 +554,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		if (!$subject)
 		{
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 		}
 	}
 
@@ -638,7 +648,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		list($num_topics, $merge_to_tid) = $forum_db->fetch_row($result);
 		if ($num_topics != count($topics))
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Make any redirect topics point to our new, merged topic
 		$query = array(
@@ -735,7 +745,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	if (isset($_POST['delete_topics_comply']))
 	{
 		if (!isset($_POST['req_confirm']))
-			redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_common['Cancel redirect']);
+			redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))),
+				__('Cancel redirect'));
 
 		($hook = get_hook('mr_confirm_delete_topics_form_submitted')) ? eval($hook) : null;
 
@@ -749,7 +760,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		($hook = get_hook('mr_confirm_delete_topics_qr_verify_topic_ids')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		if ($forum_db->result($result) != count($topics))
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// Create an array of forum IDs that need to be synced
 		$forum_ids = array($fid);
@@ -892,7 +903,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 	{
 		$topic_id = ($action) ? intval($_GET['close']) : intval($_GET['open']);
 		if ($topic_id < 1)
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 
 		// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 		// If it's in GET, we need to make sure it's valid.
@@ -913,7 +924,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 
 		if (!$subject)
 		{
-			message($lang_common['Bad request']);
+			message(__('Bad request'));
 		}
 
 		$query = array(
@@ -941,7 +952,7 @@ else if (isset($_GET['stick']))
 {
 	$stick = intval($_GET['stick']);
 	if ($stick < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -963,7 +974,7 @@ else if (isset($_GET['stick']))
 
 	if (!$subject)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	$query = array(
@@ -988,7 +999,7 @@ else if (isset($_GET['unstick']))
 {
 	$unstick = intval($_GET['unstick']);
 	if ($unstick < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -1010,7 +1021,7 @@ else if (isset($_GET['unstick']))
 
 	if (!$subject)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	$query = array(
@@ -1037,7 +1048,7 @@ else if (isset($_GET['unstick']))
 
 // If forum is empty
 if ($cur_forum['num_topics'] == 0)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Load the viewforum.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/forum.php';
@@ -1078,18 +1089,24 @@ if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 // Generate paging links
-$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_forum'], $lang_common['Paging separator'], $fid).'</p>';
+$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+	__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_forum'],
+		__('Paging separator'), $fid).'</p>';
 
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages'])
 {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['num_pages'], $fid).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], ($forum_page['page'] + 1), $fid).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
+	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['num_pages'], $fid).'" title="'.
+		__('Page') . ' ' . $forum_page['num_pages'].'" />';
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], ($forum_page['page'] + 1), $fid).'" title="'.
+		__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
 }
 if ($forum_page['page'] > 1)
 {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], ($forum_page['page'] - 1), $fid).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['moderate_forum'], $fid).'" title="'.$lang_common['Page'].' 1" />';
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], ($forum_page['page'] - 1), $fid).'" title="'.
+		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
+	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['moderate_forum'], $fid).'" title="'.
+		__('Page') . ' 1" />';
 }
 
 // Setup form
@@ -1105,7 +1122,7 @@ $forum_page['crumbs'] = array(
 
 // Setup main heading
 if ($forum_page['num_pages'] > 1)
-	$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
+	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
 
 $forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.$lang_misc['Select all'].'</span></span>';
 $forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.$lang_misc['Select all'].'</span></span>';

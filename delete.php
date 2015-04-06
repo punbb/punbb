@@ -14,14 +14,14 @@ require __DIR__ . '/vendor/pautoload.php';
 ($hook = get_hook('dl_start')) ? eval($hook) : null;
 
 if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
+	message(__('No view'));
 
 // Load the delete.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/delete.php';
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 
 // Fetch some info about the post, the topic and the forum
@@ -50,7 +50,7 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $cur_post = $forum_db->fetch_assoc($result);
 
 if (!$cur_post)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_post['moderators'] != '') ? unserialize($cur_post['moderators']) : array();
@@ -66,14 +66,14 @@ if ((($forum_user['g_delete_posts'] == '0' && !$cur_post['is_topic']) ||
 	$cur_post['poster_id'] != $forum_user['id'] ||
 	$cur_post['closed'] == '1') &&
 	!$forum_page['is_admmod'])
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 
 ($hook = get_hook('dl_post_selected')) ? eval($hook) : null;
 
 // User pressed the cancel button
 if (isset($_POST['cancel']))
-	redirect(forum_link($forum_url['post'], $id), $lang_common['Cancel redirect']);
+	redirect(forum_link($forum_url['post'], $id), __('Cancel redirect'));
 
 // User pressed the delete button
 else if (isset($_POST['delete']))
@@ -81,7 +81,7 @@ else if (isset($_POST['delete']))
 	($hook = get_hook('dl_form_submitted')) ? eval($hook) : null;
 
 	if (!isset($_POST['req_confirm']))
-		redirect(forum_link($forum_url['post'], $id), $lang_common['No confirm redirect']);
+		redirect(forum_link($forum_url['post'], $id), __('No confirm redirect'));
 
 	if ($cur_post['is_topic'])
 	{

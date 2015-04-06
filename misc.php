@@ -26,13 +26,13 @@ $errors = array();
 if ($action == 'rules')
 {
 	if ($forum_config['o_rules'] == '0' || ($forum_user['is_guest'] && $forum_user['g_read_board'] == '0' && $forum_config['o_regs_allow'] == '0')) {
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		$lang_common['Rules']
+		__('Rules')
 	);
 
 	($hook = get_hook('mi_rules_pre_header_load')) ? eval($hook) : null;
@@ -48,7 +48,7 @@ if ($action == 'rules')
 else if ($action == 'markread')
 {
 	if ($forum_user['is_guest'])
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -81,11 +81,11 @@ else if ($action == 'markread')
 else if ($action == 'markforumread')
 {
 	if ($forum_user['is_guest'])
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
 	if ($fid < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -113,7 +113,7 @@ else if ($action == 'markforumread')
 
 	if (!$forum_name)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	$tracked_topics = get_tracked_topics();
@@ -163,18 +163,18 @@ else if ($action == 'opensearch')
 else if (isset($_GET['email']))
 {
 	if ($forum_user['is_guest'] || $forum_user['g_send_email'] == '0')
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$recipient_id = intval($_GET['email']);
 
 	if ($recipient_id < 2)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	($hook = get_hook('mi_email_selected')) ? eval($hook) : null;
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_htmlencode($_POST['redirect_url']), $lang_common['Cancel redirect']);
+		redirect(forum_htmlencode($_POST['redirect_url']), __('Cancel redirect'));
 
 	$query = array(
 		'SELECT'	=> 'u.username, u.email, u.email_setting',
@@ -189,14 +189,14 @@ else if (isset($_GET['email']))
 
 	if (!$recipient_info)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	if ($recipient_info['email_setting'] == 2 && !$forum_user['is_admmod'])
 		message($lang_misc['Form e-mail disabled']);
 
 	if ($recipient_info['email'] == '')
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	if (isset($_POST['form_sent']))
 	{
@@ -237,7 +237,7 @@ else if (isset($_GET['email']))
 			$mail_message = str_replace('<sender>', $forum_user['username'], $mail_message);
 			$mail_message = str_replace('<board_title>', $forum_config['o_board_title'], $mail_message);
 			$mail_message = str_replace('<mail_message>', $message, $mail_message);
-			$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
+			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), $forum_config['o_board_title']), $mail_message);
 
 			($hook = get_hook('mi_email_new_replace_data')) ? eval($hook) : null;
 
@@ -296,18 +296,18 @@ else if (isset($_GET['email']))
 else if (isset($_GET['report']))
 {
 	if ($forum_user['is_guest'])
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$post_id = intval($_GET['report']);
 	if ($post_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 
 	($hook = get_hook('mi_report_selected')) ? eval($hook) : null;
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link($forum_url['post'], $post_id), $lang_common['Cancel redirect']);
+		redirect(forum_link($forum_url['post'], $post_id), __('Cancel redirect'));
 
 
 	if (isset($_POST['form_sent']))
@@ -351,7 +351,7 @@ else if (isset($_GET['report']))
 
 			if (!$topic_info)
 			{
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 			}
 
 			($hook = get_hook('mi_report_pre_reports_sent')) ? eval($hook) : null;
@@ -436,11 +436,11 @@ else if (isset($_GET['report']))
 else if (isset($_GET['subscribe']))
 {
 	if ($forum_user['is_guest'] || $forum_config['o_subscriptions'] != '1')
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$topic_id = intval($_GET['subscribe']);
 	if ($topic_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -467,7 +467,7 @@ else if (isset($_GET['subscribe']))
 
 	if (!$subject)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	$query = array(
@@ -505,11 +505,11 @@ else if (isset($_GET['subscribe']))
 else if (isset($_GET['unsubscribe']))
 {
 	if ($forum_user['is_guest'] || $forum_config['o_subscriptions'] != '1')
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$topic_id = intval($_GET['unsubscribe']);
 	if ($topic_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -559,11 +559,11 @@ else if (isset($_GET['unsubscribe']))
 else if (isset($_GET['forum_subscribe']))
 {
 	if ($forum_user['is_guest'] || $forum_config['o_subscriptions'] != '1')
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$forum_id = intval($_GET['forum_subscribe']);
 	if ($forum_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -590,7 +590,7 @@ else if (isset($_GET['forum_subscribe']))
 
 	if (!$forum_name)
 	{
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 	}
 
 	$query = array(
@@ -628,11 +628,11 @@ else if (isset($_GET['forum_subscribe']))
 else if (isset($_GET['forum_unsubscribe']))
 {
 	if ($forum_user['is_guest'] || $forum_config['o_subscriptions'] != '1')
-		message($lang_common['No permission']);
+		message(__('No permission'));
 
 	$forum_id = intval($_GET['forum_unsubscribe']);
 	if ($forum_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
@@ -681,4 +681,4 @@ else if (isset($_GET['forum_unsubscribe']))
 
 ($hook = get_hook('mi_new_action')) ? eval($hook) : null;
 
-message($lang_common['Bad request']);
+message(__('Bad request'));

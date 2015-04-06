@@ -19,7 +19,7 @@ require FORUM_ROOT.'include/search_functions.php';
 
 
 if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
+	message(__('No view'));
 else if ($forum_user['g_search'] == '0')
 	message($lang_search['No search permission']);
 
@@ -29,7 +29,7 @@ if (isset($_GET['search_id']))
 {
 	$search_id = intval($_GET['search_id']);
 	if ($search_id < 1)
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// Generate the query to grab the cached results
 	$query = generate_cached_search_query($search_id, $show_as);
@@ -43,7 +43,7 @@ else if (isset($_GET['action']))
 
 	// Validate action
 	if (!validate_search_action($action))
-		message($lang_common['Bad request']);
+		message(__('Bad request'));
 
 	// If it's a regular search (keywords and/or author)
 	if ($action == 'search')
@@ -77,7 +77,7 @@ else if (isset($_GET['action']))
 		{
 			$value = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 			if ($value < 2)
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 		}
 		else if ($action == 'show_recent')
 			$value = (isset($_GET['value'])) ? intval($_GET['value']) : 86400;
@@ -136,7 +136,9 @@ if (isset($query))
 
 	// Generate paging links
 	if ($show_as == 'posts' || $show_as == 'topics')
-		$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $url_type, $lang_common['Paging separator'], $search_id).'</p>';
+		$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $url_type,
+			__('Paging separator'), $search_id).'</p>';
 
 	// Get topic/forum tracking data
 	if (!$forum_user['is_guest'])
@@ -147,18 +149,22 @@ if (isset($query))
 	{
 		if ($forum_page['page'] < $forum_page['num_pages'])
 		{
-			$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.$lang_common['Page'].' '.$forum_page['num_pages'].'" />';
-			$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] + 1), $search_id).'" title="'.$lang_common['Page'].' '.($forum_page['page'] + 1).'" />';
+			$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.
+				__('Page').' '.$forum_page['num_pages'].'" />';
+			$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] + 1), $search_id).'" title="'.
+				__('Page').' '.($forum_page['page'] + 1).'" />';
 		}
 		if ($forum_page['page'] > 1)
 		{
-			$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] - 1), $search_id).'" title="'.$lang_common['Page'].' '.($forum_page['page'] - 1).'" />';
-			$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($url_type, $search_id).'" title="'.$lang_common['Page'].' 1" />';
+			$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] - 1), $search_id).'" title="'.
+				__('Page').' '.($forum_page['page'] - 1).'" />';
+			$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($url_type, $search_id).'" title="'.
+				__('Page').' 1" />';
 		}
 
 		// Setup main heading
 		if ($forum_page['num_pages'] > 1)
-			$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
+			$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
 	}
 
 	// Setup main options header
@@ -206,7 +212,7 @@ $forum_page['frm-sort'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	$lang_common['Search']
+	__('Search')
 );
 
 $advanced_search = isset($_GET['advanced']) ? true : false;

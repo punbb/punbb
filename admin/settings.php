@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 ($hook = get_hook('aop_start')) ? eval($hook) : null;
 
 if ($forum_user['g_id'] != FORUM_ADMIN)
-	message($lang_common['No permission']);
+	message(__('No permission'));
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
@@ -46,11 +46,11 @@ if (isset($_POST['form_sent']))
 
 			// Make sure default_lang, default_style, and sef exist
 			if (!file_exists(FORUM_ROOT.'style/'.$form['default_style'].'/'.$form['default_style'].'.php'))
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 			if (!file_exists(FORUM_ROOT.'lang/'.$form['default_lang'].'/common.php'))
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'/forum_urls.php'))
-				message($lang_common['Bad request']);
+				message(__('Bad request'));
 			if (!isset($form['default_dst']) || $form['default_dst'] != '1')
 				$form['default_dst'] = '0';
 
