@@ -63,10 +63,10 @@ $forum_user = array();
 cookie_login($forum_user);
 
 // Attempt to load the common language file
-if (file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php'))
-	include FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php';
-else
+if (!file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php')) {
 	error('There is no valid language pack \''.forum_htmlencode($forum_user['language']).'\' installed.<br />Please reinstall a language of that name.');
+}
+
 
 // Setup the URL rewriting scheme
 if ($forum_config['o_sef'] != 'Default' && file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php'))
