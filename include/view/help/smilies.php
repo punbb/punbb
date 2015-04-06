@@ -1,11 +1,11 @@
 
 <div id="smilies" class="main-subhead">
-	<h2 class="hn"><span><?php printf($lang_help['Help with'], __('Smilies')) ?></span></h2>
+	<h2 class="hn"><span><?php printf(__('Help with', 'help'), __('Smilies')) ?></span></h2>
 </div>
 
 <div class="main-content main-frm">
 	<div class="ct-box help-box">
-		<p class="hn"><?php echo $lang_help['Smilies info'] ?></p>
+		<p class="hn"><?= __('Smilies info', 'help') ?></p>
 		<div class="entry-content">
 <?php
 
@@ -21,7 +21,8 @@ foreach ($smilies as $smiley_text => $smiley_img)
 	$smiley_groups[$smiley_img][] = $smiley_text;
 
 foreach ($smiley_groups as $smiley_img => $smiley_texts)
-	echo "\t\t\t\t".'<p>'.implode(' '.__('and').' ', $smiley_texts).' <span>'.$lang_help['produces'].'</span> <img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.$smiley_texts[0].'" /></p>'."\n";
+	echo "\t\t\t\t".'<p>'.implode(' '.__('and').' ', $smiley_texts).' <span>'.
+		__('produces', 'help') . '</span> <img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.$smiley_texts[0].'" /></p>'."\n";
 
 ?>
 		</div>

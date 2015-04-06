@@ -1,89 +1,117 @@
 <div class="main-subhead">
-	<h2 class="hn"><span><?php printf($lang_help['Help with'], __('BBCode')) ?></span></h2>
+	<h2 class="hn"><span><?php printf(__('Help with', 'help'), __('BBCode')) ?></span></h2>
 </div>
 <div class="main-content main-frm">
 	<div class="ct-box info-box">
-		<p><?php echo $lang_help['BBCode info'] ?></p>
+		<p><?= __('BBCode info', 'help') ?></p>
 	</div>
 	<div class="ct-box help-box">
-		<h3 class="hn"><span><?php echo $lang_help['Text style'] ?></span></h3>
+		<h3 class="hn"><span><?= __('Text style', 'help') ?></span></h3>
 		<div class="entry-content">
-			<code>[b]<?php echo $lang_help['Bold text'] ?>[/b]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><strong><?php echo $lang_help['Bold text'] ?></strong></samp>
+			<code>[b]<?= __('Bold text', 'help') ?>[/b]</code> <span><?= __('produces', 'help') ?></span>
+			<samp><strong><?= __('Bold text', 'help') ?></strong></samp>
 		</div>
 		<div class="entry-content">
-			<code>[u]<?php echo $lang_help['Underlined text'] ?>[/u]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><span class="bbu"><?php echo $lang_help['Underlined text'] ?></span></samp>
+			<code>[u]<?= __('Underlined text', 'help') ?>[/u]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<samp><span class="bbu"><?= __('Underlined text', 'help') ?></span></samp>
 		</div>
 		<div class="entry-content">
-			<code>[i]<?php echo $lang_help['Italic text'] ?>[/i]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><i><?php echo $lang_help['Italic text'] ?></i></samp>
+			<code>[i]<?= __('Italic text', 'help') ?>[/i]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<samp><i><?= __('Italic text', 'help') ?></i></samp>
 		</div>
 		<div class="entry-content">
-			<code>[color=#FF0000]<?php echo $lang_help['Red text'] ?>[/color]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><span style="color: #ff0000"><?php echo $lang_help['Red text'] ?></span></samp>
+			<code>[color=#FF0000]<?= __('Red text', 'help') ?>[/color]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<samp><span style="color: #ff0000"><?= __('Red text', 'help') ?></span></samp>
 		</div>
 		<div class="entry-content">
-			<code>[color=blue]<?php echo $lang_help['Blue text'] ?>[/color]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><span style="color: blue"><?php echo $lang_help['Blue text'] ?></span></samp>
+			<code>[color=blue]<?= __('Blue text', 'help') ?>[/color]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<samp><span style="color: blue"><?= __('Blue text', 'help') ?></span></samp>
 		</div>
 		<div class="entry-content">
-			<code>[b][u]<?php echo $lang_help['Bold, underlined text'] ?>[/u][/b]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><span class="bbu"><strong><?php echo $lang_help['Bold, underlined text'] ?></strong></span></samp>
+			<code>[b][u]<?= __('Bold, underlined text', 'help') ?>[/u][/b]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<samp><span class="bbu"><strong><?= __('Bold, underlined text', 'help') ?></strong></span></samp>
 		</div>
 		<div class="entry-content">
-			<code>[h]<?php echo $lang_help['Heading text'] ?>[/h]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<div class="entry-content"><h5><samp><?php echo $lang_help['Heading text'] ?></samp></h5></div>
+			<code>[h]<?= __('Heading text', 'help') ?>[/h]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<div class="entry-content"><h5><samp><?= __('Heading text', 'help') ?></samp></h5></div>
 		</div>
 <?php ($hook = get_hook('he_new_bbcode_text_style')) ? eval($hook) : null; ?>
 	</div>
 	<div class="ct-box help-box">
-		<h3 class="hn"><span><?php echo $lang_help['Links info'] ?></span></h3>
+		<h3 class="hn"><span><?= __('Links info', 'help') ?></span></h3>
 		<div class="entry-content">
-			<code>[url=<?php echo $base_url.'/' ?>]<?php echo forum_htmlencode($forum_config['o_board_title']) ?>[/url]</code> <span><?php echo $lang_help['produces'] ?></span>
+			<code>[url=<?php echo $base_url.'/' ?>]<?php echo forum_htmlencode($forum_config['o_board_title']) ?>[/url]</code>
+			<span><?= __('produces', 'help') ?></span>
 			<samp><a href="<?php echo $base_url.'/' ?>"><?php echo forum_htmlencode($forum_config['o_board_title']) ?></a></samp>
 		</div>
 		<div class="entry-content">
-			<code>[url]<?php echo $base_url.'/' ?>[/url]</code> <span><?php echo $lang_help['produces'] ?></span>
+			<code>[url]<?php echo $base_url.'/' ?>[/url]</code>
+			<span><?= __('produces', 'help') ?></span>
 			<samp><a href="<?php echo $base_url ?>"><?php echo $base_url.'/' ?></a></samp>
 		</div>
 		<div class="entry-content">
-			<code>[email]name@example.com[/email]</code> <span><?php echo $lang_help['produces'] ?></span>
+			<code>[email]name@example.com[/email]</code>
+			<span><?= __('produces', 'help') ?></span>
 			<samp><a href="mailto:name@example.com">name@example.com</a></samp>
 		</div>
 		<div class="entry-content">
-			<code>[email=name@example.com]<?php echo $lang_help['My e-mail address'] ?>[/email]</code> <span><?php echo $lang_help['produces'] ?></span>
-			<samp><a href="mailto:name@example.com"><?php echo $lang_help['My e-mail address'] ?></a></samp>
+			<code>[email=name@example.com]<?= __('My e-mail address', 'help') ?>[/email]</code>
+			<span><?= __('produces', 'help') ?></span>
+			<samp><a href="mailto:name@example.com"><?= __('My e-mail address', 'help') ?></a></samp>
 		</div>
 <?php ($hook = get_hook('he_new_bbcode_link')) ? eval($hook) : null; ?>
 	</div>
 	<div class="ct-box help-box">
-		<h3 class="hn"><span><?php echo $lang_help['Quotes info'] ?></span></h3>
+		<h3 class="hn"><span><?= __('Quotes info', 'help') ?></span></h3>
 		<div class="entry-content">
-			<code>[quote=James]<?php echo $lang_help['Quote text'] ?>[/quote]</code> <span><?php echo $lang_help['produces named'] ?></span>
-			<div class="quotebox"><cite>James <?= __('wrote') ?>:</cite><blockquote><p><?php echo $lang_help['Quote text'] ?></p></blockquote></div>
-			<code>[quote]<?php echo $lang_help['Quote text'] ?>[/quote]</code> <span><?php echo $lang_help['produces unnamed'] ?></span>
-			<div class="quotebox"><blockquote><p><?php echo $lang_help['Quote text'] ?></p></blockquote></div>
+			<code>[quote=James]<?= __('Quote text', 'help') ?>[/quote]</code>
+			<span><?= __('produces named', 'help') ?></span>
+			<div class="quotebox"><cite>James <?= __('wrote') ?>:</cite><blockquote><p><?= __('Quote text', 'help') ?></p></blockquote></div>
+			<code>[quote]<?= __('Quote text', 'help') ?>[/quote]</code>
+			<span><?= __('produces unnamed', 'help') ?></span>
+			<div class="quotebox"><blockquote><p><?= __('Quote text', 'help') ?></p></blockquote></div>
 		</div>
 	</div>
 	<div class="ct-box help-box">
-		<h3 class="hn"><span><?php echo $lang_help['Code info'] ?></span></h3>
+		<h3 class="hn"><span><?= __('Code info', 'help') ?></span></h3>
 		<div class="entry-content">
-			<code>[code]<?php echo $lang_help['Code text'] ?>[/code]</code> <span><?php echo $lang_help['produces code box'] ?></span>
-			<div class="codebox"><pre><code><?php echo $lang_help['Code text'] ?></code></pre></div>
-			<code>[code]<?php echo $lang_help['Code text long'] ?>[/code]</code> <span><?php echo $lang_help['produces scroll box'] ?></span>
-			<div class="codebox"><pre><code><?php echo $lang_help['Code text long'] ?></code></pre></div>
+			<code>[code]<?= __('Code text', 'help') ?>[/code]</code>
+			<span><?= __('produces code box', 'help') ?></span>
+			<div class="codebox"><pre><code><?= __('Code text', 'help') ?></code></pre></div>
+			<code>[code]<?= __('Code text long', 'help') ?>[/code]</code>
+			<span><?= __('produces scroll box', 'help') ?></span>
+			<div class="codebox"><pre><code><?= __('Code text long', 'help') ?></code></pre></div>
 		</div>
 	</div>
 	<div class="ct-box help-box">
-		<h3 class="hn"><span><?php echo $lang_help['List info'] ?></span></h3>
+		<h3 class="hn"><span><?= __('List info', 'help') ?></span></h3>
 		<div class="entry-content">
-			<code>[list][*]<?php echo $lang_help['List text 1'] ?>[/*][*]<?php echo $lang_help['List text 2'] ?>[/*][*]<?php echo $lang_help['List text 3'] ?>[/*][/list]</code> <span><?php echo $lang_help['produces list'] ?></span>
-			<ul><li><?php echo $lang_help['List text 1'] ?></li><li><?php echo $lang_help['List text 2'] ?></li><li><?php echo $lang_help['List text 3'] ?></li></ul>
-			<code>[list=1][*]<?php echo $lang_help['List text 1'] ?>[/*][*]<?php echo $lang_help['List text 2'] ?>[/*][*]<?php echo $lang_help['List text 3'] ?>[/*][/list]</code> <span><?php echo $lang_help['produces decimal list'] ?></span>
-			<ol class="decimal"><li><?php echo $lang_help['List text 1'] ?></li><li><?php echo $lang_help['List text 2'] ?></li><li><?php echo $lang_help['List text 3'] ?></li></ol>
-			<code>[list=a][*]<?php echo $lang_help['List text 1'] ?>[/*][*]<?php echo $lang_help['List text 2'] ?>[/*][*]<?php echo $lang_help['List text 3'] ?>[/*][/list]</code> <span><?php echo $lang_help['produces alpha list'] ?></span>
-			<ol class="alpha"><li><?php echo $lang_help['List text 1'] ?></li><li><?php echo $lang_help['List text 2'] ?></li><li><?php echo $lang_help['List text 3'] ?></li></ol>
+			<code>[list][*]<?= __('List text 1', 'help') ?>[/*][*]<?= __('List text 2', 'help') ?>[/*][*]<?= __('List text 3', 'help') ?>[/*][/list]</code>
+			<span><?= __('produces list', 'help') ?></span>
+			<ul>
+				<li><?= __('List text 1', 'help') ?></li>
+				<li><?= __('List text 2', 'help') ?></li>
+				<li><?= __('List text 3', 'help') ?></li>
+			</ul>
+			<code>[list=1][*]<?= __('List text 1', 'help') ?>[/*][*]<?=
+				__('List text 2', 'help') ?>[/*][*]<?= __('List text 3') ?>[/*][/list]</code>
+				<span><?= __('produces decimal list', 'help') ?></span>
+			<ol class="decimal">
+				<li><?= __('List text 1', 'help') ?></li>
+				<li><?= __('List text 2', 'help') ?></li>
+				<li><?= __('List text 3', 'help') ?></li></ol>
+			<code>[list=a][*]<?= __('List text 1', 'help') ?>[/*][*]<?= __('List text 2', 'help') ?>[/*][*]<?= __('List text 3', 'help') ?>[/*][/list]</code>
+			<span><?= __('produces alpha list', 'help') ?></span>
+			<ol class="alpha">
+				<li><?= __('List text 1', 'help') ?></li>
+				<li><?= __('List text 2', 'help') ?></li>
+				<li><?= __('List text 3', 'help') ?></li></ol>
 		</div>
 	</div>
 <?php ($hook = get_hook('he_new_bbcode_section')) ? eval($hook) : null; ?>

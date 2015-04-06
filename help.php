@@ -16,16 +16,13 @@ require __DIR__ . '/vendor/pautoload.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 
-// Load the help.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/help.php';
-
 $section = isset($_GET['section']) ? $_GET['section'] : null;
 if (!$section)
 	message(__('Bad request'));
 
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['help'])),
-	$lang_help['Help']
+	__('Help', 'help')
 );
 
 define('FORUM_PAGE', 'help');

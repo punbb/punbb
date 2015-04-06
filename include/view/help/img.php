@@ -1,9 +1,9 @@
 <div class="main-subhead">
-	<h2 class="hn"><span><?php printf($lang_help['Help with'], __('Images')) ?></span></h2>
+	<h2 class="hn"><span><?php printf(__('Help with', 'help'), __('Images')) ?></span></h2>
 </div>
 <div class="main-content main-frm">
 	<div class="ct-box help-box">
-		<p class="hn"><?php echo $lang_help['Image info'] ?></p>
+		<p class="hn"><?= __('Image info', 'help') ?></p>
 		<div class="entry-content">
 			<code>[img=PunBB bbcode test]<?php echo $base_url ?>/img/test.png[/img]</code>
 			<samp><img src="<?php echo $base_url ?>/img/test.png" alt="PunBB bbcode test" /></samp>

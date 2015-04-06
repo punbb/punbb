@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in help.php
-$lang_help = array(
+return array(
 
 'Help'					=> 'Помощь',
 'Help with'				=> 'Помощь в использовании %s',

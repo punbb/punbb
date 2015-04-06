@@ -6,7 +6,7 @@
 <div id="brd-main" class="main">
 
 <div class="main-head">
-	<h1 class="hn"><span><?php echo $lang_help['Help'] ?></span></h1>
+	<h1 class="hn"><span><?= __('Help', 'help') ?></span></h1>
 </div>
 <?php
 
