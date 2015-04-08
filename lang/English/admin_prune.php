@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_prune = array(
+return array(
 
 'Prune settings head'			=>	'Prune topics according to age of latest post and forum',
 'Prune legend'					=>	'Select posts to prune',

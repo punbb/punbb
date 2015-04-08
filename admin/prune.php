@@ -18,8 +18,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_prune.php';
-
 
 if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comply']))
 {
@@ -57,17 +55,17 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 		delete_orphans();
 
-		$forum_flash->add_info($lang_admin_prune['Prune done']);
+		$forum_flash->add_info(__('Prune done', 'admin_prune'));
 
 		($hook = get_hook('apr_prune_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_prune']), $lang_admin_prune['Prune done']);
+		redirect(forum_link($forum_url['admin_prune']), __('Prune done', 'admin_prune'));
 	}
 
 
 	$prune_days = intval($_POST['req_prune_days']);
 	if ($prune_days < 0)
-		message($lang_admin_prune['Days to prune message']);
+		message(__('Days to prune message', 'admin_prune'));
 
 	$prune_date = time() - ($prune_days * 86400);
 	$prune_from = $_POST['prune_from'];
@@ -107,7 +105,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	$num_topics = $forum_db->result($result);
 
 	if (!$num_topics)
-		message($lang_admin_prune['No days old message']);
+		message(__('No days old message', 'admin_prune'));
 
 
 	// Setup breadcrumbs
@@ -115,8 +113,8 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
-		array($lang_admin_prune['Prune topics'], forum_link($forum_url['admin_prune'])),
-		$lang_admin_prune['Confirm prune heading']
+		array(__('Prune topics', 'admin_prune'), forum_link($forum_url['admin_prune'])),
+		__('Confirm prune heading', 'admin_prune')
 	);
 
 	($hook = get_hook('apr_prune_comply_pre_header_load')) ? eval($hook) : null;

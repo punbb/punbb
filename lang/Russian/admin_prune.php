@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_prune = array(
+return array(
 
 'Prune settings head'			=> 'Удалить темы по дате создания последнего сообщения и форуму',
 'Prune legend'					=> 'Удаление сообщений',
