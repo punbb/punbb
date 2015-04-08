@@ -87,18 +87,22 @@
 				sprintf(__('Search replies', 'topic'), forum_number_format($cur_set['num_replies']), '<a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.forum_htmlencode($cur_set['forum_name']).'</a>').'</small>';
 
 			// Generate author identification
-			$forum_page['user_ident'] = ($cur_set['poster_id'] > 1 && $forum_user['g_view_users'] == '1') ? '<strong class="username"><a title="'.sprintf($lang_search['Go to profile'], forum_htmlencode($cur_set['pposter'])).'" href="'.forum_link($forum_url['user'], $cur_set['poster_id']).'">'.forum_htmlencode($cur_set['pposter']).'</a></strong>' : '<strong class="username">'.forum_htmlencode($cur_set['pposter']).'</strong>';
+			$forum_page['user_ident'] = ($cur_set['poster_id'] > 1 && $forum_user['g_view_users'] == '1') ? '<strong class="username"><a title="'.
+				sprintf(__('Go to profile', 'search'), forum_htmlencode($cur_set['pposter'])).'" href="'.forum_link($forum_url['user'], $cur_set['poster_id']).'">'.forum_htmlencode($cur_set['pposter']).'</a></strong>' : '<strong class="username">'.forum_htmlencode($cur_set['pposter']).'</strong>';
 
 			// Generate the post actions links
 			$forum_page['post_actions'] = array();
-			$forum_page['post_actions']['forum'] = '<span><a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.$lang_search['Go to forum'].'<span>: '.forum_htmlencode($cur_set['forum_name']).'</span></a></span>';
+			$forum_page['post_actions']['forum'] = '<span><a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.
+				__('Go to forum', 'search') . '<span>: '.forum_htmlencode($cur_set['forum_name']).'</span></a></span>';
 
 			if ($cur_set['pid'] != $cur_set['first_post_id'])
 				$forum_page['post_actions']['topic'] = '<span><a class="permalink" rel="bookmark" title="'.
-				__('Permalink topic', 'topic') . '" href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.$lang_search['Go to topic'].'<span>: '.forum_htmlencode($cur_set['subject']).'</span></a></span>';
+				__('Permalink topic', 'topic') . '" href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.
+					__('Go to topic', 'search') . '<span>: '.forum_htmlencode($cur_set['subject']).'</span></a></span>';
 
 			$forum_page['post_actions']['post'] = '<span><a class="permalink" rel="bookmark" title="'.
-				__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_set['pid']).'">'.$lang_search['Go to post'].'<span> '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
+				__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_set['pid']).'">'.
+					__('Go to post', 'search') . '<span> '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 
 			$forum_page['message'] = parse_message($cur_set['message'], $cur_set['hide_smilies']);
 
@@ -210,7 +214,8 @@
 
 			$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 
-			$forum_page['item_body']['info']['forum'] = '<li class="info-forum"><span class="label">'.$lang_search['Posted in'].'</span><a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.$cur_set['forum_name'].'</a></li>';
+			$forum_page['item_body']['info']['forum'] = '<li class="info-forum"><span class="label">'.
+				__('Posted in', 'search') . '</span><a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.$cur_set['forum_name'].'</a></li>';
 			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><strong>'.forum_number_format($cur_set['num_replies']).'</strong> <span class="label">'.(($cur_set['num_replies'] == 1) ? $lang_forum['Reply'] : $lang_forum['Replies']).'</span></li>';
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_forum['Last post'].'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_set['last_post_id']).'">'.format_time($cur_set['last_post']).'</a></strong> <cite>'.sprintf($lang_forum['by poster'], forum_htmlencode($cur_set['last_poster'])).'</cite></li>';
 

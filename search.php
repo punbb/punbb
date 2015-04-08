@@ -11,9 +11,6 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('se_start')) ? eval($hook) : null;
 
-// Load the search.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/search.php';
-
 // Load the necessary search functions
 require FORUM_ROOT.'include/search_functions.php';
 
@@ -21,7 +18,7 @@ require FORUM_ROOT.'include/search_functions.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 else if ($forum_user['g_search'] == '0')
-	message($lang_search['No search permission']);
+	message(__('No search permission', 'search'));
 
 
 // If a search_id was supplied
@@ -63,7 +60,7 @@ else if (isset($_GET['action']))
 			$author = '';
 
 		if (!$keywords && !$author)
-			message($lang_search['No terms']);
+			message(__('No terms', 'search'));
 
 		// Create a cache of the results and redirect the user to the results
 		create_search_cache($keywords, $author, $search_in, $forum, $show_as, $sort_by, $sort_dir);
@@ -168,7 +165,7 @@ if (isset($query))
 	}
 
 	// Setup main options header
-	$forum_page['main_title'] = $lang_search['Search options'];
+	$forum_page['main_title'] = __('Search options', 'search');
 
 
 	($hook = get_hook('se_results_pre_header_load')) ? eval($hook) : null;
@@ -191,22 +188,22 @@ if (isset($query))
 
 // Setup form information
 $forum_page['frm-info'] = array(
-	'keywords'	=> '<li><span>'.$lang_search['Keywords info'].'</span></li>',
-	'refine'	=> '<li><span>'.$lang_search['Refine info'].'</span></li>',
-	'wildcard'	=> '<li><span>'.$lang_search['Wildcard info'].'</span></li>'
+	'keywords'	=> '<li><span>' . __('Keywords info', 'search') . '</span></li>',
+	'refine'	=> '<li><span>' . __('Refine info', 'search') . '</span></li>',
+	'wildcard'	=> '<li><span>' . __('Wildcard info', 'search') . '</span></li>'
 );
 
 if ($forum_config['o_search_all_forums'] == '1' || $forum_user['is_admmod'])
-	$forum_page['frm-info']['forums'] = '<li><span>'.$lang_search['Forum default info'].'</span></li>';
+	$forum_page['frm-info']['forums'] = '<li><span>' . __('Forum default info', 'search') . '</span></li>';
 else
-	$forum_page['frm-info']['forums'] = '<li><span>'.$lang_search['Forum require info'].'</span></li>';
+	$forum_page['frm-info']['forums'] = '<li><span>' . __('Forum require info', 'search') . '</span></li>';
 
 // Setup sort by options
 $forum_page['frm-sort'] = array(
-	'post_time'		=> '<option value="0">'.$lang_search['Sort by post time'].'</option>',
-	'author'		=> '<option value="1">'.$lang_search['Sort by author'].'</option>',
-	'subject'		=> '<option value="2">'.$lang_search['Sort by subject'].'</option>',
-	'forum_name'	=> '<option value="3">'.$lang_search['Sort by forum'].'</option>'
+	'post_time'		=> '<option value="0">' . __('Sort by post time', 'search') . '</option>',
+	'author'		=> '<option value="1">' . __('Sort by author', 'search') . '</option>',
+	'subject'		=> '<option value="2">' . __('Sort by subject', 'search') . '</option>',
+	'forum_name'	=> '<option value="3">' . __('Sort by forum', 'search') . '</option>'
 );
 
 // Setup breadcrumbs
@@ -220,7 +217,8 @@ $advanced_search = isset($_GET['advanced']) ? true : false;
 // Show link for advanced form
 if (!$advanced_search)
 {
-	$forum_page['main_head_options']['advanced_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_advanced']).'">'.$lang_search['Advanced search'].'</a></span>';
+	$forum_page['main_head_options']['advanced_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_advanced']).'">'.
+		__('Advanced search', 'search') . '</a></span>';
 }
 
 // Setup form

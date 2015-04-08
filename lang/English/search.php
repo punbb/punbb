@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in search.php
-$lang_search = array(
+return array(
 
 // The search form
 'No search permission'		=>	'You do not have permission to use the search feature.',
