@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo sprintf($lang_profile['Register at'], $forum_config['o_board_title']) ?></span></h2>
+		<h2 class="hn"><span><?php echo sprintf(__('Register at', 'profile'), $forum_config['o_board_title']) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 <?php
@@ -18,7 +18,7 @@
 ?>
 
 	<?= helper('errors', array(
-		'errors_title' => $lang_profile['Register errors']
+		'errors_title' => __('Register errors', 'profile')
 	)) ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
@@ -36,14 +36,14 @@
 <?php ($hook = get_hook('rg_register_pre_email')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['E-mail'] ?></span> <small><?php echo $lang_profile['E-mail help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('E-mail', 'profile') ?></span> <small><?= __('E-mail help', 'profile') ?></small></label><br />
 						<span class="fld-input"><input type="email" data-suggest-role="email" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_email1" value="<?php echo(isset($_POST['req_email1']) ? forum_htmlencode($_POST['req_email1']) : '') ?>" size="35" maxlength="80" required spellcheck="false" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('rg_register_pre_username')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count']; if ($forum_config['o_regs_verify'] == '0') echo ' prepend-top'; ?>">
 					<div class="sf-box text required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Username'] ?></span> <small><?php echo $lang_profile['Username help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Username', 'profile') ?></span> <small><?= __('Username help', 'profile') ?></small></label><br />
 						<span class="fld-input"><input type="text" data-suggest-role="username" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php echo(isset($_POST['req_username']) ? forum_htmlencode($_POST['req_username']) : '') ?>" size="35" maxlength="25" required spellcheck="false" /></span>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 <?php if ($forum_config['o_regs_verify'] == '0'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Password'] ?></span> <small><?php echo $lang_profile['Password help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Password', 'profile') ?></span> <small><?= __('Password help', 'profile') ?></small></label><br />
 						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php if (isset($_POST['req_password1'])) echo forum_htmlencode($_POST['req_password1']); ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 	<?php if ($forum_config['o_mask_passwords'] == '1'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Confirm password'] ?></span> <small><?php echo $lang_profile['Confirm password help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Confirm password', 'profile') ?></span> <small><?= __('Confirm password help', 'profile') ?></small></label><br />
 						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password2" size="35" value="<?php if (isset($_POST['req_password2'])) echo forum_htmlencode($_POST['req_password2']); ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Language'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Language', 'profile') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="language">
 <?php
 
@@ -113,7 +113,7 @@
 			</div>
 <?php ($hook = get_hook('rg_register_group_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="register" value="<?php echo $lang_profile['Register'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="register" value="<?= __('Register', 'profile') ?>" /></span>
 			</div>
 		</form>
 	</div>

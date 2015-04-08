@@ -38,10 +38,8 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 
 	if ($is_signature)
 	{
-		global $lang_profile;
-
 		if (preg_match('#\[quote(=(&quot;|"|\'|)(.*)\\1)?\]|\[/quote\]|\[code\]|\[/code\]|\[list(=([1a\*]))?\]|\[/list\]#i', $text))
-			$errors[] = $lang_profile['Signature quote/code/list'];
+			$errors[] = __('Signature quote/code/list', 'profile');
 	}
 
 	if ($forum_config['p_sig_bbcode'] == '1' && $is_signature || $forum_config['p_message_bbcode'] == '1' && !$is_signature)

@@ -1,6 +1,6 @@
 <?php
 
-$lang_profile = array(
+return array(
 
 // Navigation and sections
 'Profile redirect'			=>	'Profile updated.',

@@ -4,7 +4,8 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ?
+			__('Profile welcome', 'profile') : __('Profile welcome user', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<p class="content-options options"><?php echo implode(' ', $forum_page['user_options']) ?></p>
@@ -25,7 +26,7 @@
 <?php if (!empty($forum_page['user_contact'])): ?>
 			<div class="ct-set data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
-					<h4 class="ct-legend hn"><span><?php echo $lang_profile['Contact info'] ?></span></h4>
+					<h4 class="ct-legend hn"><span><?= __('Contact info', 'profile') ?></span></h4>
 					<ul class="data-box">
 						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['user_contact'])."\n" ?>
 					</ul>
@@ -35,7 +36,7 @@
 <?php endif; if (!empty($forum_page['user_activity'])): ?>
 			<div class="ct-set data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
-					<h4 class="ct-legend hn"><span><?php echo $lang_profile['Posts and topics'] ?></span></h4>
+					<h4 class="ct-legend hn"><span><?= __('Posts and topics', 'profile') ?></span></h4>
 					<ul class="data-box">
 						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['user_activity']) ?>
 					</ul>
@@ -45,7 +46,7 @@
 <?php endif; if (isset($forum_page['sig_demo'])): ?>
 			<div class="ct-set data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
-					<h4 class="ct-legend hn"><span><?php echo $lang_profile['Current signature'] ?></span></h4>
+					<h4 class="ct-legend hn"><span><?= __('Current signature', 'profile') ?></span></h4>
 					<div class="sig-demo"><?php echo $forum_page['sig_demo'] ?></div>
 				</div>
 			</div>
@@ -54,7 +55,7 @@
 <?php if (!empty($forum_page['user_private'])): ?>
 			<div id="private-profile" class="ct-set data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
-					<h3 class="ct-legend hn"><span><?php echo $lang_profile['Private info'] ?></span></h3>
+					<h3 class="ct-legend hn"><span><?= __('Private info', 'profile') ?></span></h3>
 					<ul class="data-list">
 						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['user_private'])."\n" ?>
 					</ul>

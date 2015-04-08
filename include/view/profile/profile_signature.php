@@ -4,7 +4,8 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php printf(($forum_page['own_profile']) ? $lang_profile['Sig welcome'] : $lang_profile['Sig welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+		<h2 class="hn"><span><?php printf(($forum_page['own_profile']) ?
+			__('Sig welcome', 'profile') : __('Sig welcome user', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 	<?php
@@ -14,7 +15,7 @@
 	?>
 
 		<?= helper('errors', array(
-			'errors_title' => $lang_profile['Profile update errors']
+			'errors_title' => __('Profile update errors', 'profile')
 		)) ?>
 
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -23,19 +24,20 @@
 			</div>
 <?php ($hook = get_hook('pf_change_details_signature_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_profile['Signature'] ?></strong></legend>
+				<legend class="group-legend"><strong><?= __('Signature', 'profile') ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_signature_pre_signature_demo')) ? eval($hook) : null; ?>
 <?php if (isset($forum_page['sig_demo'])): ?>
 				<div class="ct-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="ct-box">
-						<h3 class="ct-legend hn"><?php echo $lang_profile['Current signature'] ?></h3>
+						<h3 class="ct-legend hn"><?= __('Current signature', 'profile') ?></h3>
 						<div class="sig-demo"><?php echo $forum_page['sig_demo'] ?></div>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('pf_change_details_signature_pre_signature_text')) ? eval($hook) : null; ?>
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Compose signature'] ?></span> <small><?php printf($lang_profile['Sig max size'], forum_number_format($forum_config['p_sig_length']), forum_number_format($forum_config['p_sig_lines'])) ?></small></label>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Compose signature', 'profile') ?></span>
+						<small><?php printf(__('Sig max size', 'profile'), forum_number_format($forum_config['p_sig_length']), forum_number_format($forum_config['p_sig_lines'])) ?></small></label>
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="signature" rows="4" cols="65"><?php echo(isset($_POST['signature']) ? forum_htmlencode($_POST['signature']) : forum_htmlencode($user['signature'])) ?></textarea></span></div>
 					</div>
 				</div>
@@ -43,7 +45,7 @@
 			</fieldset>
 <?php ($hook = get_hook('pf_change_details_signature_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update" value="<?= __('Update profile', 'profile') ?>" /></span>
 			</div>
 		</form>
 	</div>

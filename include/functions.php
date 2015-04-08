@@ -1012,7 +1012,7 @@ function censor_words_do($forum_censors, $text, $unicode)
 // Verifies that the provided username is OK for insertion into the database
 function validate_username($username, $exclude_id = null)
 {
-	global $lang_register, $lang_profile, $forum_config;
+	global $lang_register, $forum_config;
 
 	$errors = array();
 
@@ -1025,27 +1025,27 @@ function validate_username($username, $exclude_id = null)
 
 	// Validate username
 	if (utf8_strlen($username) < 2)
-		$errors[] = $lang_profile['Username too short'];
+		$errors[] = __('Username too short', 'profile');
 	else if (utf8_strlen($username) > 25)
-		$errors[] = $lang_profile['Username too long'];
+		$errors[] = __('Username too long', 'profile');
 	else if (strtolower($username) == 'guest' ||
 			utf8_strtolower($username) == utf8_strtolower(__('Guest')))
-		$errors[] = $lang_profile['Username guest'];
+		$errors[] = __('Username guest', 'profile');
 	else if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $username) || preg_match('/((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))/', $username))
-		$errors[] = $lang_profile['Username IP'];
+		$errors[] = __('Username IP', 'profile');
 	else if ((strpos($username, '[') !== false || strpos($username, ']') !== false) && strpos($username, '\'') !== false && strpos($username, '"') !== false)
-		$errors[] = $lang_profile['Username reserved chars'];
+		$errors[] = __('Username reserved chars', 'profile');
 	else if (preg_match('/(?:\[\/?(?:b|u|i|h|colou?r|quote|code|img|url|email|list)\]|\[(?:code|quote|list)=)/i', $username))
-		$errors[] = $lang_profile['Username BBCode'];
+		$errors[] = __('Username BBCode', 'profile');
 
 	// Check username for any censored words
 	if ($forum_config['o_censoring'] == '1' && censor_words($username) != $username)
-		$errors[] = $lang_profile['Username censor'];
+		$errors[] = __('Username censor', 'profile');
 
 	// Check for username dupe
 	$dupe = check_username_dupe($username, $exclude_id);
 	if ($dupe !== false)
-		$errors[] = sprintf($lang_profile['Username dupe'], forum_htmlencode($dupe));
+		$errors[] = sprintf(__('Username dupe', 'profile'), forum_htmlencode($dupe));
 
 	($hook = get_hook('fn_validate_username_end')) ? eval($hook) : null;
 

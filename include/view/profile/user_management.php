@@ -16,7 +16,7 @@ if (!empty($forum_page['user_management'])) {
 ?>
 	<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 		<div class="sf-box select">
-			<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_profile['User group'] ?></span></label><br />
+			<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('User group', 'profile') ?></span></label><br />
 			<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="group_id">
 <?php
 
@@ -35,7 +35,7 @@ if (!empty($forum_page['user_management'])) {
 <?php ($hook = get_hook('pf_change_details_admin_pre_group_membership_submit')) ? eval($hook) : null; ?>
 	<div class="sf-set button-set set<?php echo ++$forum_page['item_count'] ?>">
 		<div class="sf-box text">
-			<span class="submit primary"><input type="submit" name="update_group_membership" value="<?php echo $lang_profile['Update groups'] ?>" /></span>
+			<span class="submit primary"><input type="submit" name="update_group_membership" value="<?= __('Update groups', 'profile') ?>" /></span>
 		</div>
 	</div>
 <?php

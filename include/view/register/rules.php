@@ -6,10 +6,10 @@
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo sprintf($lang_profile['Register at'], $forum_config['o_board_title']) ?></span></h2>
+		<h2 class="hn"><span><?= sprintf(__('Register at', 'profile'), $forum_config['o_board_title']) ?></span></h2>
 	</div>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_profile['Reg rules head'] ?></span></h2>
+		<h2 class="hn"><span><?= __('Reg rules head', 'profile') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div id="rules-content" class="ct-box user-box">
@@ -22,14 +22,14 @@
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_agreement" value="1" required /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Agreement'] ?></span> <?php echo $lang_profile['Agreement label'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?= __('Agreement', 'profile') ?></span> <?= __('Agreement label', 'profile') ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('rg_rules_pre_group_end')) ? eval($hook) : null; ?>
 			</div>
 <?php ($hook = get_hook('rg_rules_group_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="agree" value="<?php echo $lang_profile['Agree'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="agree" value="<?= __('Agree', 'profile') ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>

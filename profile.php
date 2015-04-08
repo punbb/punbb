@@ -27,10 +27,6 @@ if ($action != 'change_pass' || !isset($_GET['key']))
 		message(__('No permission'));
 }
 
-// Load the profile.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/profile.php';
-
-
 // Fetch info about the user whose profile we're viewing
 $query = array(
 	'SELECT'	=> 'u.*, g.g_id, g.g_user_title, g.g_moderator',
@@ -66,12 +62,12 @@ if ($action == 'change_pass')
 
 		// If the user is already logged in we shouldn't be here :)
 		if (!$forum_user['is_guest'])
-			message($lang_profile['Pass logout']);
+			message(__('Pass logout', 'profile'));
 
 		($hook = get_hook('pf_change_pass_key_supplied')) ? eval($hook) : null;
 
 		if ($key == '' || $key != $user['activate_key'])
-			message(sprintf($lang_profile['Pass key bad'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+			message(sprintf(__('Pass key bad', 'profile'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 		else
 		{
 			if (isset($_POST['form_sent']))
@@ -82,9 +78,9 @@ if ($action == 'change_pass')
 				$new_password2 = ($forum_config['o_mask_passwords'] == '1') ? forum_trim($_POST['req_new_password2']) : $new_password1;
 
 				if (utf8_strlen($new_password1) < 4)
-					$errors[] = $lang_profile['Pass too short'];
+					$errors[] = __('Pass too short', 'profile');
 				else if ($new_password1 != $new_password2)
-					$errors[] = $lang_profile['Pass not match'];
+					$errors[] = __('Pass not match', 'profile');
 
 				// Did everything go according to plan?
 				if (empty($errors))
@@ -101,11 +97,11 @@ if ($action == 'change_pass')
 					$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 					// Add flash message
-					$forum_flash->add_info($lang_profile['Pass updated']);
+					$forum_flash->add_info(__('Pass updated', 'profile'));
 
 					($hook = get_hook('pf_change_pass_key_pre_redirect')) ? eval($hook) : null;
 
-					redirect(forum_link($forum_url['index']), $lang_profile['Pass updated']);
+					redirect(forum_link($forum_url['index']), __('Pass updated', 'profile'));
 				}
 			}
 
@@ -119,8 +115,9 @@ if ($action == 'change_pass')
 			// Setup breadcrumbs
 			$forum_page['crumbs'] = array(
 				array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-				array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-				($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
+				array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), forum_link($forum_url['profile_about'], $id)),
+				($forum_page['own_profile']) ? __('Change your password', 'profile') :
+				sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))
 			);
 
 			($hook = get_hook('pf_change_pass_key_pre_header_load')) ? eval($hook) : null;
@@ -147,9 +144,9 @@ if ($action == 'change_pass')
 		$new_password2 = ($forum_config['o_mask_passwords'] == '1') ? forum_trim($_POST['req_new_password2']) : $new_password1;
 
 		if (utf8_strlen($new_password1) < 4)
-			$errors[] = $lang_profile['Pass too short'];
+			$errors[] = __('Pass too short', 'profile');
 		else if ($new_password1 != $new_password2)
-			$errors[] = $lang_profile['Pass not match'];
+			$errors[] = __('Pass not match', 'profile');
 
 		$authorized = false;
 		if (!empty($user['password']))
@@ -161,7 +158,7 @@ if ($action == 'change_pass')
 		}
 
 		if (!$authorized)
-			$errors[] = $lang_profile['Wrong old password'];
+			$errors[] = __('Wrong old password', 'profile');
 
 		// Did everything go according to plan?
 		if (empty($errors))
@@ -186,11 +183,11 @@ if ($action == 'change_pass')
 			}
 
 			// Add flash message
-			$forum_flash->add_info($lang_profile['Pass updated redirect']);
+			$forum_flash->add_info(__('Pass updated redirect', 'profile'));
 
 			($hook = get_hook('pf_change_pass_normal_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link($forum_url['profile_about'], $id), $lang_profile['Pass updated redirect']);
+			redirect(forum_link($forum_url['profile_about'], $id), __('Pass updated redirect', 'profile'));
 		}
 	}
 
@@ -209,8 +206,9 @@ if ($action == 'change_pass')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))
+		array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['profile_about'], $id)),
+		($forum_page['own_profile']) ? __('Change your password', 'profile') :
+		sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))
 	);
 
 	($hook = get_hook('pf_change_pass_normal_pre_header_load')) ? eval($hook) : null;
@@ -243,7 +241,7 @@ else if ($action == 'change_email')
 		($hook = get_hook('pf_change_email_key_supplied')) ? eval($hook) : null;
 
 		if ($key == '' || $key != $user['activate_key'])
-			message(sprintf($lang_profile['E-mail key bad'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+			message(sprintf(__('E-mail key bad', 'profile'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 		else
 		{
 			$query = array(
@@ -255,7 +253,7 @@ else if ($action == 'change_email')
 			($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			message($lang_profile['E-mail updated']);
+			message(__('E-mail updated', 'profile'));
 		}
 	}
 	else if (isset($_POST['form_sent']))
@@ -263,7 +261,7 @@ else if ($action == 'change_email')
 		($hook = get_hook('pf_change_email_normal_form_submitted')) ? eval($hook) : null;
 
 		if (forum_hash($_POST['req_password'], $forum_user['salt']) !== $forum_user['password'])
-			$errors[] = $lang_profile['Wrong password'];
+			$errors[] = __('Wrong password', 'profile');
 
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
@@ -279,7 +277,7 @@ else if ($action == 'change_email')
 			($hook = get_hook('pf_change_email_normal_banned_email')) ? eval($hook) : null;
 
 			if ($forum_config['p_allow_banned_email'] == '0')
-				$errors[] = $lang_profile['Banned e-mail'];
+				$errors[] = __('Banned e-mail', 'profile');
 			else if ($forum_config['o_mailing_list'] != '')
 			{
 				$mail_subject = 'Alert - Banned e-mail detected';
@@ -310,7 +308,7 @@ else if ($action == 'change_email')
 			($hook = get_hook('pf_change_email_normal_dupe_email')) ? eval($hook) : null;
 
 			if ($forum_config['p_allow_dupe_email'] == '0')
-				$errors[] = $lang_profile['Dupe e-mail'];
+				$errors[] = __('Dupe e-mail', 'profile');
 			else if (($forum_config['o_mailing_list'] != '') && empty($errors))
 			{
 				$mail_subject = 'Alert - Duplicate e-mail detected';
@@ -335,7 +333,7 @@ else if ($action == 'change_email')
 				($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
 				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-				redirect(forum_link($forum_url['profile_about'], $id), $lang_profile['E-mail updated redirect']);
+				redirect(forum_link($forum_url['profile_about'], $id), __('E-mail updated redirect', 'profile'));
 			}
 
 			// We have a confirmed e-mail so we going to send an activation link
@@ -369,7 +367,7 @@ else if ($action == 'change_email')
 
 			forum_mail($new_email, $mail_subject, $mail_message);
 
-			message(sprintf($lang_profile['Activate e-mail sent'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+			message(sprintf(__('Activate e-mail sent', 'profile'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 		}
 	}
 
@@ -386,13 +384,13 @@ else if ($action == 'change_email')
 	);
 
 	// Setup form information
-	$forum_page['frm_info'] = '<p class="important"><span>'.$lang_profile['E-mail info'].'</span></p>';
+	$forum_page['frm_info'] = '<p class="important"><span>' . __('E-mail info', 'profile') . '</span></p>';
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section about']), forum_link($forum_url['profile_about'], $id)),
-		($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))
+		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), forum_link($forum_url['profile_about'], $id)),
+		($forum_page['own_profile']) ? __('Change your e-mail', 'profile') : sprintf(__('Change user e-mail', 'profile'), forum_htmlencode($user['username']))
 	);
 
 	($hook = get_hook('pf_change_email_normal_pre_header_load')) ? eval($hook) : null;
@@ -415,7 +413,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 		message(__('No permission'));
 
 	if ($user['g_id'] == FORUM_ADMIN)
-		message($lang_profile['Cannot delete admin']);
+		message(__('Cannot delete admin', 'profile'));
 
 	if (isset($_POST['delete_user_comply']))
 	{
@@ -432,11 +430,11 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 		clean_stats_cache();
 
 		// Add flash message
-		$forum_flash->add_info($lang_profile['User delete redirect']);
+		$forum_flash->add_info(__('User delete redirect', 'profile'));
 
 		($hook = get_hook('pf_delete_user_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['index']), $lang_profile['User delete redirect']);
+		redirect(forum_link($forum_url['index']), __('User delete redirect', 'profile'));
 	}
 
 	// Setup form
@@ -445,15 +443,15 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 	// Setup form information
 	$forum_page['frm_info'] = array(
-		'<li class="warn"><span>'.$lang_profile['Delete warning'].'</span></li>',
-		'<li class="warn"><span>'.$lang_profile['Delete posts info'].'</span></li>'
+		'<li class="warn"><span>' . __('Delete warning', 'profile') . '</span></li>',
+		'<li class="warn"><span>' . __('Delete posts info', 'profile') . '</span></li>'
 	);
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array(sprintf($lang_profile['Users profile'], $user['username'], $lang_profile['Section admin']), forum_link($forum_url['profile_admin'], $id)),
-		$lang_profile['Delete user']
+		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section admin', 'profile')), forum_link($forum_url['profile_admin'], $id)),
+		__('Delete user', 'profile')
 	);
 
 	($hook = get_hook('pf_delete_user_pre_header_load')) ? eval($hook) : null;
@@ -483,11 +481,11 @@ else if ($action == 'delete_avatar')
 	delete_avatar($id);
 
 	// Add flash message
-	$forum_flash->add_info($lang_profile['Avatar deleted redirect']);
+	$forum_flash->add_info(__('Avatar deleted redirect', 'profile'));
 
 	($hook = get_hook('pf_delete_avatar_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['profile_avatar'], $id), $lang_profile['Avatar deleted redirect']);
+	redirect(forum_link($forum_url['profile_avatar'], $id), __('Avatar deleted redirect', 'profile'));
 }
 
 
@@ -524,11 +522,11 @@ else if (isset($_POST['update_group_membership']))
 		clean_forum_moderators();
 
 	// Add flash message
-	$forum_flash->add_info($lang_profile['Group membership redirect']);
+	$forum_flash->add_info(__('Group membership redirect', 'profile'));
 
 	($hook = get_hook('pf_change_group_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['profile_admin'], $id), $lang_profile['Group membership redirect']);
+	redirect(forum_link($forum_url['profile_admin'], $id), __('Group membership redirect', 'profile'));
 }
 else if (isset($_POST['update_forums']))
 {
@@ -574,11 +572,11 @@ else if (isset($_POST['update_forums']))
 	}
 
 	// Add flash message
-	$forum_flash->add_info($lang_profile['Moderate forums redirect']);
+	$forum_flash->add_info(__('Moderate forums redirect', 'profile'));
 
 	($hook = get_hook('pf_forum_moderators_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['profile_admin'], $id), $lang_profile['Moderate forums redirect']);
+	redirect(forum_link($forum_url['profile_admin'], $id), __('Moderate forums redirect', 'profile'));
 }
 
 
@@ -589,7 +587,7 @@ else if (isset($_POST['ban']))
 
 	($hook = get_hook('pf_ban_user_selected')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id, $lang_profile['Ban redirect']);
+	redirect(forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id, __('Ban redirect', 'profile'));
 }
 
 
@@ -675,7 +673,7 @@ else if (isset($_POST['form_sent']))
 					$forbidden = array('Member', 'Moderator', 'Administrator', 'Banned', 'Guest', __('Member'), __('Moderator'), __('Administrator'), __('Banned'), __('Guest'));
 
 					if (in_array($form['title'], $forbidden))
-						$errors[] = $lang_profile['Forbidden title'];
+						$errors[] = __('Forbidden title', 'profile');
 				}
 			}
 
@@ -686,16 +684,16 @@ else if (isset($_POST['form_sent']))
 			//check Facebook for validity
 			if (strpos($form['facebook'], 'http://') === 0 || strpos($form['facebook'], 'https://') === 0)
 				if (!preg_match('#https?://(www\.)?facebook.com/.+?#', $form['facebook']))
-					$errors[] = $lang_profile['Bad Facebook'];
+					$errors[] = __('Bad Facebook', 'profile');
 
 			//check Twitter for validity
 			if (strpos($form['twitter'], 'http://') === 0 || strpos($form['twitter'], 'https://') === 0)
 				if (!preg_match('#https?://twitter.com/.+?#', $form['twitter']))
-					$errors[] = $lang_profile['Bad Twitter'];
+					$errors[] = __('Bad Twitter', 'profile');
 
 			//check LinkedIn for validity
 			if (!preg_match('#https?://(www\.)?linkedin.com/.+?#', $form['linkedin']))
-					$errors[] = $lang_profile['Bad LinkedIn'];
+					$errors[] = __('Bad LinkedIn', 'profile');
 
 			// Add http:// if the LinkedIn doesn't contain it or https:// already
 			if ($form['linkedin'] != '' && strpos(strtolower($form['linkedin']), 'http://') !== 0 && strpos(strtolower($form['linkedin']), 'https://') !== 0)
@@ -703,7 +701,7 @@ else if (isset($_POST['form_sent']))
 
 			// If the ICQ UIN contains anything other than digits it's invalid
 			if ($form['icq'] != '' && !ctype_digit($form['icq']))
-				$errors[] = $lang_profile['Bad ICQ'];
+				$errors[] = __('Bad ICQ', 'profile');
 
 			break;
 		}
@@ -765,7 +763,7 @@ else if (isset($_POST['form_sent']))
 		case 'signature':
 		{
 			if ($forum_config['o_signatures'] == '0')
-				message($lang_profile['Signatures disabled']);
+				message(__('Signatures disabled', 'profile'));
 
 			($hook = get_hook('pf_change_details_signature_validation')) ? eval($hook) : null;
 
@@ -774,9 +772,9 @@ else if (isset($_POST['form_sent']))
 
 			// Validate signature
 			if (utf8_strlen($form['signature']) > $forum_config['p_sig_length'])
-				$errors[] = sprintf($lang_profile['Sig too long'], forum_number_format($forum_config['p_sig_length']), forum_number_format(utf8_strlen($form['signature']) - $forum_config['p_sig_length']));
+				$errors[] = sprintf(__('Sig too long', 'profile'), forum_number_format($forum_config['p_sig_length']), forum_number_format(utf8_strlen($form['signature']) - $forum_config['p_sig_length']));
 			if (substr_count($form['signature'], "\n") > ($forum_config['p_sig_lines'] - 1))
-				$errors[] = sprintf($lang_profile['Sig too many lines'], forum_number_format($forum_config['p_sig_lines']));
+				$errors[] = sprintf(__('Sig too many lines', 'profile'), forum_number_format($forum_config['p_sig_lines']));
 
 			if ($form['signature'] != '' && $forum_config['p_sig_all_caps'] == '0' && check_is_all_caps($form['signature']) && !$forum_user['is_admmod'])
 				$form['signature'] = utf8_ucwords(utf8_strtolower($form['signature']));
@@ -796,13 +794,13 @@ else if (isset($_POST['form_sent']))
 		case 'avatar':
 		{
 			if ($forum_config['o_avatars'] == '0')
-				message($lang_profile['Avatars disabled']);
+				message(__('Avatars disabled', 'profile'));
 
 			($hook = get_hook('pf_change_details_avatar_validation')) ? eval($hook) : null;
 
 			if (!isset($_FILES['req_file']))
 			{
-				$errors[] = $lang_profile['No file'];
+				$errors[] = __('No file', 'profile');
 				break;
 			}
 			else
@@ -815,25 +813,25 @@ else if (isset($_POST['form_sent']))
 				{
 					case 1:	// UPLOAD_ERR_INI_SIZE
 					case 2:	// UPLOAD_ERR_FORM_SIZE
-						$errors[] = $lang_profile['Too large ini'];
+						$errors[] = __('Too large ini', 'profile');
 						break;
 
 					case 3:	// UPLOAD_ERR_PARTIAL
-						$errors[] = $lang_profile['Partial upload'];
+						$errors[] = __('Partial upload', 'profile');
 						break;
 
 					case 4:	// UPLOAD_ERR_NO_FILE
-						$errors[] = $lang_profile['No file'];
+						$errors[] = __('No file', 'profile');
 						break;
 
 					case 6:	// UPLOAD_ERR_NO_TMP_DIR
-						$errors[] = $lang_profile['No tmp directory'];
+						$errors[] = __('No tmp directory', 'profile');
 						break;
 
 					default:
 						// No error occured, but was something actually uploaded?
 						if ($uploaded_file['size'] == 0)
-							$errors[] = $lang_profile['No file'];
+							$errors[] = __('No file', 'profile');
 						break;
 				}
 			}
@@ -847,12 +845,12 @@ else if (isset($_POST['form_sent']))
 				($hook = get_hook('pf_change_details_avatar_allowed_types')) ? eval($hook) : null;
 
 				if (!in_array($uploaded_file['type'], $allowed_mime_types))
-					$errors[] = $lang_profile['Bad type'];
+					$errors[] = __('Bad type', 'profile');
 				else
 				{
 					// Make sure the file isn't too big
 					if ($uploaded_file['size'] > $forum_config['o_avatars_size'])
-						$errors[] = sprintf($lang_profile['Too large'], forum_number_format($forum_config['o_avatars_size']));
+						$errors[] = sprintf(__('Too large', 'profile'), forum_number_format($forum_config['o_avatars_size']));
 				}
 
 				if (empty($errors))
@@ -861,7 +859,7 @@ else if (isset($_POST['form_sent']))
 
 					// Move the file to the avatar directory. We do this before checking the width/height to circumvent open_basedir restrictions.
 					if (!@move_uploaded_file($uploaded_file['tmp_name'], $avatar_tmp_file))
-						$errors[] = sprintf($lang_profile['Move failed'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>');
+						$errors[] = sprintf(__('Move failed', 'profile'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>');
 
 					if (empty($errors))
 					{
@@ -872,12 +870,12 @@ else if (isset($_POST['form_sent']))
 						if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
 						{
 							@unlink($avatar_tmp_file);
-							$errors[] = sprintf($lang_profile['Too wide or high'], $forum_config['o_avatars_width'], $forum_config['o_avatars_height']);
+							$errors[] = sprintf(__('Too wide or high', 'profile'), $forum_config['o_avatars_width'], $forum_config['o_avatars_height']);
 						}
 						else if ($type == IMAGETYPE_GIF && $uploaded_file['type'] != 'image/gif')	// Prevent dodgy uploads
 						{
 							@unlink($avatar_tmp_file);
-							$errors[] = $lang_profile['Bad type'];
+							$errors[] = __('Bad type', 'profile');
 						}
 
 						// Determine type
@@ -905,7 +903,7 @@ else if (isset($_POST['form_sent']))
 						if (!in_array($avatar_type, $allowed_types) || empty($extension))
 						{
 							@unlink($avatar_tmp_file);
-							$errors[] = $lang_profile['Bad type'];
+							$errors[] = __('Bad type', 'profile');
 						}
 
 						($hook = get_hook('pf_change_details_avatar_validate_file')) ? eval($hook) : null;
@@ -941,7 +939,7 @@ else if (isset($_POST['form_sent']))
 				}
 			}
 			else if (empty($errors))
-				$errors[] = $lang_profile['Unknown failure'];
+				$errors[] = __('Unknown failure', 'profile');
 
 			break;
 		}
@@ -1084,11 +1082,11 @@ else if (isset($_POST['form_sent']))
 		}
 
 		// Add flash message
-		$forum_flash->add_info($lang_profile['Profile redirect']);
+		$forum_flash->add_info(__('Profile redirect', 'profile'));
 
 		($hook = get_hook('pf_change_details_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['profile_'.$section], $id), $lang_profile['Profile redirect']);
+		redirect(forum_link($forum_url['profile_'.$section], $id), __('Profile redirect', 'profile'));
 	}
 }
 
@@ -1130,25 +1128,33 @@ if ($forum_user['id'] != $id &&
 	$forum_page['user_info'] = array();
 
 	if ($user['realname'] !='')
-		$forum_page['user_info']['realname'] = '<li><span>'.$lang_profile['Realname'].': <strong class="fn">'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['realname']) : $user['realname']).'</strong></span></li>';
+		$forum_page['user_info']['realname'] = '<li><span>'.
+			__('Realname', 'profile') . ': <strong class="fn">'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['realname']) : $user['realname']).'</strong></span></li>';
 
 	if ($user['location'] !='')
-		$forum_page['user_info']['location'] = '<li><span>'.$lang_profile['From'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['location']) : $user['location']).'</strong></span></li>';
+		$forum_page['user_info']['location'] = '<li><span>'.
+			__('From', 'profile') . ': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['location']) : $user['location']).'</strong></span></li>';
 
-	$forum_page['user_info']['registered'] = '<li><span>'.$lang_profile['Registered'].': <strong> '.format_time($user['registered'], 1).'</strong></span></li>';
-	$forum_page['user_info']['lastpost'] = '<li><span>'.$lang_profile['Last post'].': <strong> '.format_time($user['last_post']).'</strong></span></li>';
+	$forum_page['user_info']['registered'] = '<li><span>'.
+		__('Registered', 'profile') . ': <strong> '.format_time($user['registered'], 1).'</strong></span></li>';
+	$forum_page['user_info']['lastpost'] = '<li><span>'.
+		__('Last post', 'profile') . ': <strong> '.format_time($user['last_post']).'</strong></span></li>';
 
 	if ($forum_config['o_show_post_count'] == '1' || $forum_user['is_admmod'])
-		$forum_page['user_info']['posts'] = '<li><span>'.$lang_profile['Posts'].': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
+		$forum_page['user_info']['posts'] = '<li><span>'.
+			__('Posts', 'profile') . ': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
 
 	// Setup user address
 	$forum_page['user_contact'] = array();
 
 	if ($user['email_setting'] == '0' && !$forum_user['is_guest'] && $forum_user['g_send_email'] == '1')
-		$forum_page['user_contact']['email'] = '<li><span>'.$lang_profile['E-mail'].': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode(($forum_config['o_censoring'] == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
+		$forum_page['user_contact']['email'] = '<li><span>'.
+			__('E-mail', 'profile') . ': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode(($forum_config['o_censoring'] == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
 
 	if ($user['email_setting'] != '2' && !$forum_user['is_guest'] && $forum_user['g_send_email'] == '1')
-		$forum_page['user_contact']['forum-mail'] = '<li><span>'.$lang_profile['E-mail'].': <a href="'.forum_link($forum_url['email'], $id).'">'.$lang_profile['Send forum e-mail'].'</a></span></li>';
+		$forum_page['user_contact']['forum-mail'] = '<li><span>'.
+			__('E-mail', 'profile') . ': <a href="'.forum_link($forum_url['email'], $id).'">'.
+				__('Send forum e-mail', 'profile') . '</a></span></li>';
 
 	if ($user['url'] != '')
 	{
@@ -1181,7 +1187,8 @@ if ($forum_user['id'] != $id &&
 		$user['url'] = forum_htmlencode($user['url']);
 		$forum_page['url'] = '<a href="'.$url_source.'" class="external url" rel="me">'.$user['url'].'</a>';
 
-		$forum_page['user_contact']['website'] = '<li><span>'.$lang_profile['Website'].': '.$forum_page['url'].'</span></li>';
+		$forum_page['user_contact']['website'] = '<li><span>'.
+			__('Website', 'profile') . ': '.$forum_page['url'].'</span></li>';
 	}
 
 	// Facebook
@@ -1197,7 +1204,8 @@ if ($forum_user['id'] != $id &&
 			forum_htmlencode('https://www.facebook.com/'.$user['facebook'])
 		;
 		$forum_page['facebook'] = '<a href="'.$facebook_url.'" class="external url">'.$facebook_url.'</a>';
-		$forum_page['user_contact']['facebook'] = '<li><span>'.$lang_profile['Facebook'].': '.$forum_page['facebook'].'</span></li>';
+		$forum_page['user_contact']['facebook'] = '<li><span>'.
+			__('Facebook', 'profile') . ': '.$forum_page['facebook'].'</span></li>';
 	}
 
 	// Twitter
@@ -1213,7 +1221,8 @@ if ($forum_user['id'] != $id &&
 			forum_htmlencode('https://twitter.com/'.$user['twitter'])
 		;
 		$forum_page['twitter'] = '<a href="'.$twitter_url.'" class="external url">'.$twitter_url.'</a>';
-		$forum_page['user_contact']['twitter'] = '<li><span>'.$lang_profile['Twitter'].': '.$forum_page['twitter'].'</span></li>';
+		$forum_page['user_contact']['twitter'] = '<li><span>'.
+			__('Twitter', 'profile') . ': '.$forum_page['twitter'].'</span></li>';
 	}
 
 	// LinkedIn
@@ -1226,19 +1235,25 @@ if ($forum_user['id'] != $id &&
 
 		$linkedin_url = forum_htmlencode($user['linkedin']);
 		$forum_page['linkedin'] = '<a href="'.$linkedin_url.'" class="external url" rel="me">'.$linkedin_url.'</a>';
-		$forum_page['user_contact']['linkedin'] = '<li><span>'.$lang_profile['LinkedIn'].': '.$forum_page['linkedin'].'</span></li>';
+		$forum_page['user_contact']['linkedin'] = '<li><span>'.
+			__('LinkedIn', 'profile') . ': '.$forum_page['linkedin'].'</span></li>';
 	}
 
 	if ($user['jabber'] !='')
-		$forum_page['user_contact']['jabber'] = '<li><span>'.$lang_profile['Jabber'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
+		$forum_page['user_contact']['jabber'] = '<li><span>'.
+			__('Jabber', 'profile') . ': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
 	if ($user['icq'] !='')
-		$forum_page['user_contact']['icq'] = '<li><span>'.$lang_profile['ICQ'].': <strong> '.forum_htmlencode($user['icq']).'</strong></span></li>';
+		$forum_page['user_contact']['icq'] = '<li><span>'.
+			__('ICQ', 'profile') . ': <strong> '.forum_htmlencode($user['icq']).'</strong></span></li>';
 	if ($user['msn'] !='')
-		$forum_page['user_contact']['msn'] = '<li><span>'.$lang_profile['MSN'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</strong></span></li>';
+		$forum_page['user_contact']['msn'] = '<li><span>'.
+			__('MSN', 'profile') . ': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</strong></span></li>';
 	if ($user['aim'] !='')
-		$forum_page['user_contact']['aim'] = '<li><span>'.$lang_profile['AOL IM'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</strong></span></li>';
+		$forum_page['user_contact']['aim'] = '<li><span>'.
+			__('AOL IM', 'profile') . ': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</strong></span></li>';
 	if ($user['yahoo'] !='')
-		$forum_page['user_contact']['yahoo'] = '<li><span>'.$lang_profile['Yahoo'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</strong></span></li>';
+		$forum_page['user_contact']['yahoo'] = '<li><span>'.
+			__('Yahoo', 'profile') . ': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</strong></span></li>';
 
 	// Setup signature demo
 	if ($forum_config['o_signatures'] == '1' && isset($parsed_signature))
@@ -1248,14 +1263,16 @@ if ($forum_user['id'] != $id &&
 	if ($forum_user['g_search'] == '1')
 	{
 		$forum_page['user_activity'] = array();
-		$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.sprintf($lang_profile['View user posts'], forum_htmlencode($user['username'])).'</a></li>';
-		$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.sprintf($lang_profile['View user topics'], forum_htmlencode($user['username'])).'</a></li>';
+		$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.
+			sprintf(__('View user posts', 'profile'), forum_htmlencode($user['username'])).'</a></li>';
+		$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.
+			sprintf(__('View user topics', 'profile'), forum_htmlencode($user['username'])).'</a></li>';
 	}
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		sprintf($lang_profile['Users profile'], $user['username'])
+		sprintf(__('Users profile', 'profile'), $user['username'])
 	);
 
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1273,7 +1290,7 @@ else
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		sprintf($lang_profile['Users profile'], $user['username'])
+		sprintf(__('Users profile', 'profile'), $user['username'])
 	);
 
 	// Is this users own profile
@@ -1281,18 +1298,24 @@ else
 
 	// Setup navigation menu
 	$forum_page['main_menu'] = array();
-	$forum_page['main_menu']['about'] = '<li class="first-item'.(($section == 'about') ? ' active' : '').'"><a href="'.forum_link($forum_url['profile_about'], $id).'"><span>'.$lang_profile['Section about'].'</span></a></li>';
-	$forum_page['main_menu']['identity'] = '<li'.(($section == 'identity') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_identity'], $id).'"><span>'.$lang_profile['Section identity'].'</span></a></li>';
-	$forum_page['main_menu']['settings'] = '<li'.(($section == 'settings') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_settings'], $id).'"><span>'.$lang_profile['Section settings'].'</span></a></li>';
+	$forum_page['main_menu']['about'] = '<li class="first-item'.(($section == 'about') ? ' active' : '').'"><a href="'.forum_link($forum_url['profile_about'], $id).'"><span>'.
+		__('Section about', 'profile') . '</span></a></li>';
+	$forum_page['main_menu']['identity'] = '<li'.(($section == 'identity') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_identity'], $id).'"><span>'.
+		__('Section identity', 'profile') . '</span></a></li>';
+	$forum_page['main_menu']['settings'] = '<li'.(($section == 'settings') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_settings'], $id).'"><span>'.
+		__('Section settings', 'profile') . '</span></a></li>';
 
 	if ($forum_config['o_signatures'] == '1')
-		$forum_page['main_menu']['signature'] = '<li'.(($section == 'signature') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_signature'], $id).'"><span>'.$lang_profile['Section signature'].'</span></a></li>';
+		$forum_page['main_menu']['signature'] = '<li'.(($section == 'signature') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_signature'], $id).'"><span>'.
+			__('Section signature', 'profile') . '</span></a></li>';
 
 	if ($forum_config['o_avatars'] == '1')
-		$forum_page['main_menu']['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_avatar'], $id).'"><span>'.$lang_profile['Section avatar'].'</span></a></li>';
+		$forum_page['main_menu']['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_avatar'], $id).'"><span>'.
+			__('Section avatar', 'profile') . '</span></a></li>';
 
 	if ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_ban_users'] == '1' && !$forum_page['own_profile']))
-		$forum_page['main_menu']['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_admin'], $id).'"><span>'.$lang_profile['Section admin'].'</span></a></li>';
+		$forum_page['main_menu']['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_admin'], $id).'"><span>'.
+			__('Section admin', 'profile') . '</span></a></li>';
 
 	($hook = get_hook('pf_change_details_modify_main_menu')) ? eval($hook) : null;
 	// End navigation menu
@@ -1302,8 +1325,8 @@ else
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			sprintf($lang_profile['Section about'])
+			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['user'], $id)),
+			sprintf(__('Section about', 'profile'))
 		);
 
 		// Setup user identification
@@ -1330,35 +1353,49 @@ else
 		$forum_page['user_info'] = array();
 
 		if ($user['realname'] !='')
-			$forum_page['user_info']['realname'] = '<li><span>'.$lang_profile['Realname'].': <strong class="fn">'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['realname']) : $user['realname']).'</strong></span></li>';
+			$forum_page['user_info']['realname'] = '<li><span>'.
+				__('Realname', 'profile') . ': <strong class="fn">'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['realname']) : $user['realname']).'</strong></span></li>';
 
 		if ($user['location'] !='')
-			$forum_page['user_info']['location'] = '<li><span>'.$lang_profile['From'].': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['location']) : $user['location']).'</strong></span></li>';
+			$forum_page['user_info']['location'] = '<li><span>'.
+				__('From', 'profile') . ': <strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['location']) : $user['location']).'</strong></span></li>';
 
-		$forum_page['user_info']['registered'] = '<li><span>'.$lang_profile['Registered'].': <strong> '.format_time($user['registered'], 1).'</strong></span></li>';
-		$forum_page['user_info']['lastvisit'] = '<li><span>'.$lang_profile['Last visit'].': <strong> '.format_time($user['last_visit']).'</strong></span></li>';
-		$forum_page['user_info']['lastpost'] = '<li><span>'.$lang_profile['Last post'].': <strong> '.format_time($user['last_post']).'</strong></span></li>';
+		$forum_page['user_info']['registered'] = '<li><span>'.
+			__('Registered', 'profile') . ': <strong> '.format_time($user['registered'], 1).'</strong></span></li>';
+		$forum_page['user_info']['lastvisit'] = '<li><span>'.
+			__('Last visit', 'profile') . ': <strong> '.format_time($user['last_visit']).'</strong></span></li>';
+		$forum_page['user_info']['lastpost'] = '<li><span>'.
+			__('Last post', 'profile') . ': <strong> '.format_time($user['last_post']).'</strong></span></li>';
 
 		if ($forum_config['o_show_post_count'] == '1' || $forum_user['is_admmod'])
-			$forum_page['user_info']['posts'] = '<li><span>'.$lang_profile['Posts'].': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
+			$forum_page['user_info']['posts'] = '<li><span>'.
+				__('Posts', 'profile') . ': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
 		else
-			$forum_page['user_private']['posts'] = '<li><span>'.$lang_profile['Posts'].': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
+			$forum_page['user_private']['posts'] = '<li><span>'.
+			__('Posts', 'profile') . ': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
 
 		if ($forum_user['is_admmod'] && $user['admin_note'] != '')
-			$forum_page['user_private']['note'] = '<li><span>'.$lang_profile['Note'].': <strong>'.forum_htmlencode($user['admin_note']).'</strong></span></li>';
+			$forum_page['user_private']['note'] = '<li><span>'.
+			__('Note', 'profile') . ': <strong>'.forum_htmlencode($user['admin_note']).'</strong></span></li>';
 
 		// Setup user address
 		$forum_page['user_contact'] = array();
 
 		if (($user['email_setting'] == '0' && !$forum_user['is_guest']) && $forum_user['g_send_email'] == '1')
-			$forum_page['user_contact']['email'] = '<li><span>'.$lang_profile['E-mail'].': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode(($forum_config['o_censoring'] == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
+			$forum_page['user_contact']['email'] = '<li><span>'.
+				__('E-mail', 'profile') . ': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode(($forum_config['o_censoring'] == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
 		else if ($forum_page['own_profile'] || $forum_user['is_admmod'])
-				$forum_page['user_private']['email'] = '<li><span>'.$lang_profile['E-mail'].': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode(($forum_config['o_censoring'] == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
+				$forum_page['user_private']['email'] = '<li><span>'.
+				__('E-mail', 'profile') . ': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode(($forum_config['o_censoring'] == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
 
 		if ($user['email_setting'] != '2')
-			$forum_page['user_contact']['forum-mail'] = '<li><span>'.$lang_profile['E-mail'].': <a href="'.forum_link($forum_url['email'], $id).'">'.$lang_profile['Send forum e-mail'].'</a></span></li>';
+			$forum_page['user_contact']['forum-mail'] = '<li><span>'.
+				__('E-mail', 'profile') . ': <a href="'.forum_link($forum_url['email'], $id).'">'.
+					__('Send forum e-mail', 'profile') . '</a></span></li>';
 		else if ($forum_user['id'] == $id || ($forum_user['is_admmod'] && $user['email_setting'] == '2'))
-			$forum_page['user_private']['forum-mail'] = '<li><span>'.$lang_profile['E-mail'].': <a href="'.forum_link($forum_url['email'], $id).'">'.$lang_profile['Send forum e-mail'].'</a></span></li>';
+			$forum_page['user_private']['forum-mail'] = '<li><span>'.
+				__('E-mail', 'profile') . ': <a href="'.forum_link($forum_url['email'], $id).'">'.
+					__('Send forum e-mail', 'profile') . '</a></span></li>';
 
 		// Website
 		if ($user['url'] != '')
@@ -1392,7 +1429,8 @@ else
 			$user['url'] = forum_htmlencode($user['url']);
 			$forum_page['url'] = '<a href="'.$url_source.'" class="external url" rel="me">'.$user['url'].'</a>';
 
-			$forum_page['user_contact']['website'] = '<li><span>'.$lang_profile['Website'].': '.$forum_page['url'].'</span></li>';
+			$forum_page['user_contact']['website'] = '<li><span>'.
+				__('Website', 'profile') . ': '.$forum_page['url'].'</span></li>';
 		}
 
 		// Facebook
@@ -1408,7 +1446,8 @@ else
 				forum_htmlencode('https://www.facebook.com/'.$user['facebook'])
 			;
 			$forum_page['facebook'] = '<a href="'.$facebook_url.'" class="external url">'.$facebook_url.'</a>';
-			$forum_page['user_contact']['facebook'] = '<li><span>'.$lang_profile['Facebook'].': '.$forum_page['facebook'].'</span></li>';
+			$forum_page['user_contact']['facebook'] = '<li><span>'.
+				__('Facebook', 'profile') . ': '.$forum_page['facebook'].'</span></li>';
 		}
 
 		// Twitter
@@ -1424,7 +1463,8 @@ else
 				forum_htmlencode('https://twitter.com/'.$user['twitter'])
 			;
 			$forum_page['twitter'] = '<a href="'.$twitter_url.'" class="external url">'.$twitter_url.'</a>';
-			$forum_page['user_contact']['twitter'] = '<li><span>'.$lang_profile['Twitter'].': '.$forum_page['twitter'].'</span></li>';
+			$forum_page['user_contact']['twitter'] = '<li><span>'.
+				__('Twitter', 'profile') . ': '.$forum_page['twitter'].'</span></li>';
 		}
 
 		// LinkedIn
@@ -1437,26 +1477,34 @@ else
 
 			$linkedin_url = forum_htmlencode($user['linkedin']);
 			$forum_page['linkedin'] = '<a href="'.$linkedin_url.'" class="external url" rel="me">'.$linkedin_url.'</a>';
-			$forum_page['user_contact']['linkedin'] = '<li><span>'.$lang_profile['LinkedIn'].': '.$forum_page['linkedin'].'</span></li>';
+			$forum_page['user_contact']['linkedin'] = '<li><span>'.
+				__('LinkedIn', 'profile') . ': '.$forum_page['linkedin'].'</span></li>';
 		}
 
 
 		if ($forum_user['is_admmod'])
-			$forum_page['user_private']['ip']= '<li><span>'.$lang_profile['IP'].': <a href="'.forum_link($forum_url['get_host'], forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
+			$forum_page['user_private']['ip']= '<li><span>'.
+				__('IP', 'profile') . ': <a href="'.forum_link($forum_url['get_host'], forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
 
 		// Setup user messaging
 		if ($user['jabber'] !='')
-			$forum_page['user_contact']['jabber'] = '<li><span>'.$lang_profile['Jabber'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
+			$forum_page['user_contact']['jabber'] = '<li><span>'.
+				__('Jabber', 'profile') . ': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</strong></span></li>';
 		if ($user['skype'] !='')
-			$forum_page['user_contact']['skype'] = '<li><span>'.$lang_profile['Skype'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['skype']) : $user['skype']).'</strong></span></li>';
+			$forum_page['user_contact']['skype'] = '<li><span>'.
+				__('Skype', 'profile') . ': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['skype']) : $user['skype']).'</strong></span></li>';
 		if ($user['icq'] !='')
-			$forum_page['user_contact']['icq'] = '<li><span>'.$lang_profile['ICQ'].': <strong>'.forum_htmlencode($user['icq']).'</strong></span></li>';
+			$forum_page['user_contact']['icq'] = '<li><span>'.
+				__('ICQ', 'profile') . ': <strong>'.forum_htmlencode($user['icq']).'</strong></span></li>';
 		if ($user['msn'] !='')
-			$forum_page['user_contact']['msn'] = '<li><span>'.$lang_profile['MSN'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</strong></span></li>';
+			$forum_page['user_contact']['msn'] = '<li><span>'.
+				__('MSN', 'profile') . ': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</strong></span></li>';
 		if ($user['aim'] !='')
-			$forum_page['user_contact']['aim'] = '<li><span>'.$lang_profile['AOL IM'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</strong></span></li>';
+			$forum_page['user_contact']['aim'] = '<li><span>'.
+				__('AOL IM', 'profile') . ': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</strong></span></li>';
 		if ($user['yahoo'] !='')
-			$forum_page['user_contact']['yahoo'] = '<li><span>'.$lang_profile['Yahoo'].': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</strong></span></li>';
+			$forum_page['user_contact']['yahoo'] = '<li><span>'.
+				__('Yahoo', 'profile') . ': <strong>'.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</strong></span></li>';
 
 		// Setup signature demo
 		if ($forum_config['o_signatures'] == '1' && isset($parsed_signature))
@@ -1466,28 +1514,40 @@ else
 		$forum_page['user_activity'] = array();
 		if ($forum_user['g_search'] == '1' || $forum_user['is_admmod'])
 		{
-			$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your posts'] : sprintf($lang_profile['View user posts'], forum_htmlencode($user['username']))).'</a></li>';
-			$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your topics'] : sprintf($lang_profile['View user topics'], forum_htmlencode($user['username']))).'</a></li>';
+			$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.(($forum_page['own_profile']) ?
+				__('View your posts', 'profile') :
+				sprintf(__('View user posts', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
+			$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.(($forum_page['own_profile']) ?
+				__('View your topics', 'profile') :
+				sprintf(__('View user topics', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
 		}
 
 		// Subscriptions
 		if (($forum_page['own_profile'] || $forum_user['g_id'] == FORUM_ADMIN) && $forum_config['o_subscriptions'] == '1')
 		{
 			// Topic subscriptions
-			$forum_page['user_activity']['search_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_subscriptions'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your subscriptions'] : sprintf($lang_profile['View user subscriptions'], forum_htmlencode($user['username']))).'</a></li>';
+			$forum_page['user_activity']['search_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_subscriptions'], $id).'">'.(($forum_page['own_profile']) ?
+				__('View your subscriptions', 'profile') :
+				sprintf(__('View user subscriptions', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
 
 			// Forum subscriptions
-			$forum_page['user_activity']['search_forum_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_forum_subscriptions'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your forum subscriptions'] : sprintf($lang_profile['View user forum subscriptions'], forum_htmlencode($user['username']))).'</a></li>';
+			$forum_page['user_activity']['search_forum_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_forum_subscriptions'], $id).'">'.(($forum_page['own_profile']) ?
+				__('View your forum subscriptions', 'profile') :
+				sprintf(__('View user forum subscriptions', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
 		}
 
 		// Setup user options
 		$forum_page['user_options'] = array();
 
 		if ($forum_page['own_profile'] || $forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_change_passwords'] == '1'))
-			$forum_page['user_options']['change_password'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_password'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['Change your password'] : sprintf($lang_profile['Change user password'], forum_htmlencode($user['username']))).'</a></span>';
+			$forum_page['user_options']['change_password'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_password'], $id).'">'.(($forum_page['own_profile']) ?
+				__('Change your password', 'profile') :
+				sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))).'</a></span>';
 
 		if (!$forum_user['is_admmod'])
-			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_email'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['Change your e-mail'] : sprintf($lang_profile['Change user e-mail'], forum_htmlencode($user['username']))).'</a></span>';
+			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_email'], $id).'">'.(($forum_page['own_profile']) ?
+				__('Change your e-mail', 'profile') :
+				sprintf(__('Change user e-mail', 'profile'), forum_htmlencode($user['username']))).'</a></span>';
 
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
@@ -1504,8 +1564,8 @@ else
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			$lang_profile['Section identity']
+			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['user'], $id)),
+			__('Section identity', 'profile')
 		);
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1553,8 +1613,8 @@ else
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			$lang_profile['Section settings']
+			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['user'], $id)),
+			__('Section settings', 'profile')
 		);
 
 		// Setup the form
@@ -1576,7 +1636,7 @@ else
 
 	else if ($section == 'signature' && $forum_config['o_signatures'] == '1')
 	{
-		$forum_page['sig_info'][] = '<li>'.$lang_profile['Signature info'].'</li>';
+		$forum_page['sig_info'][] = '<li>' . __('Signature info', 'profile') . '</li>';
 
 		if ($user['signature'] != '')
 			$forum_page['sig_demo'] = $parsed_signature;
@@ -1584,8 +1644,8 @@ else
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			$lang_profile['Section signature']
+			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['user'], $id)),
+			__('Section signature', 'profile')
 		);
 
 		// Setup the form
@@ -1624,8 +1684,8 @@ else
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			$lang_profile['Section avatar']
+			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['user'], $id)),
+			__('Section avatar', 'profile')
 		);
 
 		// Setup the form
@@ -1643,16 +1703,22 @@ else
 
 		if (!empty($forum_page['avatar_markup']))
 		{
-			$forum_page['frm_info']['avatar_replace'] = '<li><span>'.$lang_profile['Avatar info replace'].'</span></li>';
-			$forum_page['frm_info']['avatar_type'] = '<li><span>'.$lang_profile['Avatar info type'].'</span></li>';
-			$forum_page['frm_info']['avatar_size'] = '<li><span>'.sprintf($lang_profile['Avatar info size'], $forum_config['o_avatars_width'], $forum_config['o_avatars_height'], forum_number_format($forum_config['o_avatars_size']), forum_number_format(ceil($forum_config['o_avatars_size'] / 1024))).'</span></li>';
+			$forum_page['frm_info']['avatar_replace'] = '<li><span>'.
+				__('Avatar info replace', 'profile') . '</span></li>';
+			$forum_page['frm_info']['avatar_type'] = '<li><span>'.
+				__('Avatar info type', 'profile') . '</span></li>';
+			$forum_page['frm_info']['avatar_size'] = '<li><span>'.
+				sprintf(__('Avatar info size', 'profile'), $forum_config['o_avatars_width'], $forum_config['o_avatars_height'], forum_number_format($forum_config['o_avatars_size']), forum_number_format(ceil($forum_config['o_avatars_size'] / 1024))).'</span></li>';
 			$forum_page['avatar_demo'] = $forum_page['avatar_markup'];
 		}
 		else
 		{
-			$forum_page['frm_info']['avatar_none'] = '<li><span>'.$lang_profile['Avatar info none'].'</span></li>';
-			$forum_page['frm_info']['avatar_info'] = '<li><span>'.$lang_profile['Avatar info type'].'</span></li>';
-			$forum_page['frm_info']['avatar_size'] = '<li><span>'.sprintf($lang_profile['Avatar info size'], $forum_config['o_avatars_width'], $forum_config['o_avatars_height'], forum_number_format($forum_config['o_avatars_size']), forum_number_format(ceil($forum_config['o_avatars_size'] / 1024))).'</span></li>';
+			$forum_page['frm_info']['avatar_none'] = '<li><span>'.
+				__('Avatar info none', 'profile') . '</span></li>';
+			$forum_page['frm_info']['avatar_info'] = '<li><span>'.
+				__('Avatar info type', 'profile') . '</span></li>';
+			$forum_page['frm_info']['avatar_size'] = '<li><span>'.
+				sprintf(__('Avatar info size', 'profile'), $forum_config['o_avatars_width'], $forum_config['o_avatars_height'], forum_number_format($forum_config['o_avatars_size']), forum_number_format(ceil($forum_config['o_avatars_size'] / 1024))).'</span></li>';
 		}
 
 		($hook = get_hook('pf_change_details_avatar_pre_header_load')) ? eval($hook) : null;
@@ -1671,8 +1737,8 @@ else
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array(sprintf($lang_profile['Users profile'], $user['username']), forum_link($forum_url['user'], $id)),
-			$lang_profile['Section admin']
+			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link($forum_url['user'], $id)),
+			__('Section admin', 'profile')
 		);
 
 		// Setup form
@@ -1688,11 +1754,17 @@ else
 		$forum_page['user_management'] = array();
 
 		if ($forum_user['g_moderator'] == '1')
-			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
+			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
+				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id.'">'.
+					__('Ban user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		else if ($forum_user['g_moderator'] != '1' && $user['g_id'] != FORUM_ADMIN )
 		{
-			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Ban user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id.'">'.$lang_profile['Ban user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
-			$forum_page['user_management']['delete'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.$lang_profile['Delete user'].'</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['delete_user'], $id).'">'.$lang_profile['Delete user info'].'</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
+			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
+				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id.'">'.
+					__('Ban user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
+			$forum_page['user_management']['delete'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
+				__('Delete user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['delete_user'], $id).'">'.
+					__('Delete user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		}
 
 		($hook = get_hook('pf_change_details_admin_pre_header_load')) ? eval($hook) : null;

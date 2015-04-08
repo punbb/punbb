@@ -133,9 +133,6 @@ if (isset($_POST['form_sent']))
 		$username = forum_trim($_POST['req_username']);
 		$email = strtolower(forum_trim(($forum_config['p_force_guest_email'] == '1') ? $_POST['req_email'] : $_POST['email']));
 
-		// Load the profile.php language file
-		require FORUM_ROOT.'lang/'.$forum_user['language'].'/profile.php';
-
 		// It's a guest, so we have to validate the username
 		$errors = array_merge($errors, validate_username($username));
 
@@ -148,7 +145,7 @@ if (isset($_POST['form_sent']))
 				$errors[] = __('Invalid e-mail', 'post');
 
 			if (is_banned_email($email))
-				$errors[] = $lang_profile['Banned e-mail'];
+				$errors[] = __('Banned e-mail', 'profile');
 		}
 	}
 

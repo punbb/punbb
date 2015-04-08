@@ -18,22 +18,19 @@ if (!$forum_user['is_guest'])
 	exit;
 }
 
-// Load the profile.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/profile.php';
-
 if ($forum_config['o_regs_allow'] == '0')
-	message($lang_profile['No new regs']);
+	message(__('No new regs', 'profile'));
 
 $errors = array();
 
 
 // User pressed the cancel button
 if (isset($_GET['cancel']))
-	redirect(forum_link($forum_url['index']), $lang_profile['Reg cancel redirect']);
+	redirect(forum_link($forum_url['index']), __('Reg cancel redirect', 'profile'));
 
 // User pressed agree but failed to tick checkbox
 else if (isset($_GET['agree']) && !isset($_GET['req_agreement']))
-	redirect(forum_link($forum_url['index']), $lang_profile['Reg cancel redirect']);
+	redirect(forum_link($forum_url['index']), __('Reg cancel redirect', 'profile'));
 
 // Show the rules
 else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
@@ -71,7 +68,7 @@ else if (isset($_POST['form_sent']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 	if ($forum_db->result($result) > 0)
 	{
-		$errors[] = $lang_profile['Registration flood'];
+		$errors[] = __('Registration flood', 'profile');
 	}
 
 	// Did everything go according to plan so far?
@@ -96,21 +93,21 @@ else if (isset($_POST['form_sent']))
 
 		// ... and the password
 		if (utf8_strlen($password1) < 4)
-			$errors[] = $lang_profile['Pass too short'];
+			$errors[] = __('Pass too short', 'profile');
 		else if ($password1 != $password2)
-			$errors[] = $lang_profile['Pass not match'];
+			$errors[] = __('Pass not match', 'profile');
 
 		// ... and the e-mail address
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
 
 		if (!is_valid_email($email1))
-			$errors[] = $lang_profile['Invalid e-mail'];
+			$errors[] = __('Invalid e-mail', 'profile');
 
 		// Check if it's a banned e-mail address
 		$banned_email = is_banned_email($email1);
 		if ($banned_email && $forum_config['p_allow_banned_email'] == '0')
-			$errors[] = $lang_profile['Banned e-mail'];
+			$errors[] = __('Banned e-mail', 'profile');
 
 		// Clean old unverified registrators - delete older than 72 hours
 		$query = array(
@@ -140,7 +137,7 @@ else if (isset($_POST['form_sent']))
 		if (!empty($dupe_list) && empty($errors))
 		{
 			if ($forum_config['p_allow_dupe_email'] == '0')
-				$errors[] = $lang_profile['Dupe e-mail'];
+				$errors[] = __('Dupe e-mail', 'profile');
 		}
 
 		($hook = get_hook('rg_register_end_validation')) ? eval($hook) : null;
@@ -224,7 +221,7 @@ else if (isset($_POST['form_sent']))
 			// Must the user verify the registration or do we log him/her in right now?
 			if ($forum_config['o_regs_verify'] == '1')
 			{
-				message(sprintf($lang_profile['Reg e-mail'], '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
+				message(sprintf(__('Reg e-mail', 'profile'), '<a href="mailto:'.forum_htmlencode($forum_config['o_admin_email']).'">'.forum_htmlencode($forum_config['o_admin_email']).'</a>'));
 			}
 			else
 			{
@@ -241,7 +238,7 @@ else if (isset($_POST['form_sent']))
 
 			forum_setcookie($cookie_name, base64_encode($new_uid.'|'.$password_hash.'|'.$expire.'|'.sha1($salt.$password_hash.forum_hash($expire, $salt))), $expire);
 
-			redirect(forum_link($forum_url['index']), $lang_profile['Reg complete']);
+			redirect(forum_link($forum_url['index']), __('Reg complete', 'profile'));
 		}
 	}
 }
@@ -253,12 +250,13 @@ $forum_page['form_action'] = forum_link($forum_url['register']).'?action=registe
 // Setup form information
 $forum_page['frm_info'] = array();
 if ($forum_config['o_regs_verify'] != '0')
-	$forum_page['frm_info']['email'] = '<p class="warn">'.$lang_profile['Reg e-mail info'].'</p>';
+	$forum_page['frm_info']['email'] = '<p class="warn">'.
+		__('Reg e-mail info', 'profile') . '</p>';
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	sprintf($lang_profile['Register at'], $forum_config['o_board_title'])
+	sprintf(__('Register at', 'profile'), $forum_config['o_board_title'])
 );
 
 // Load JS for timezone detection

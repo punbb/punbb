@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_profile['User management'] ?></span></h2>
+		<h2 class="hn"><span><?= __('User management', 'profile') ?></span></h2>
 	</div>
 	<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 		<div class="hidden">
@@ -24,7 +24,7 @@
 
 ?>
 			<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
-				<legend><span><?php echo $lang_profile['Moderator assignment'] ?></span></legend>
+				<legend><span><?= __('Moderator assignment', 'profile') ?></span></legend>
 <?php ($hook = get_hook('pf_change_details_admin_pre_forum_checklist')) ? eval($hook) : null; ?>
 				<div class="mf-box">
 					<div class="checklist">
@@ -60,7 +60,7 @@
 <?php ($hook = get_hook('pf_change_details_admin_mod_assignment_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="mf-set button-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="mf-box text">
-					<span class="submit primary"><input type="submit" name="update_forums" value="<?php echo $lang_profile['Update forums'] ?>" /></span>
+					<span class="submit primary"><input type="submit" name="update_forums" value="<?= __('Update forums', 'profile') ?>" /></span>
 				</div>
 			</div>
 <?php
@@ -71,7 +71,7 @@
 ?>
 		</div>
 		<div class="frm-buttons">
-			<span class="submit primary"><?php echo $lang_profile['Instructions'] ?></span>
+			<span class="submit primary"><?= __('Instructions', 'profile') ?></span>
 		</div>
 	</div>
 	</form>

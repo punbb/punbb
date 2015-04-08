@@ -4,7 +4,8 @@
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ?
+			__('Profile welcome', 'profile') : __('Profile welcome user', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box warn-box">
@@ -23,14 +24,15 @@
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="delete_posts" value="1" checked="checked" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Delete posts'] ?></span> <?php printf($lang_profile['Delete posts label'], forum_htmlencode($user['username'])) ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?= __('Delete posts', 'profile') ?></span>
+						<?php printf(__('Delete posts label', 'profile'), forum_htmlencode($user['username'])) ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_delete_user_pre_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php ($hook = get_hook('pf_delete_user_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary caution"><input type="submit" name="delete_user_comply" value="<?php echo $lang_profile['Delete user'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="delete_user_comply" value="<?= __('Delete user', 'profile') ?>" /></span>
 				<span class="cancel"><input type="submit" name="cancel" value="<?= __('Cancel') ?>" formnovalidate /></span>
 			</div>
 		</form>
