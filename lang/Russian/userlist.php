@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in userlist.php
-$lang_ul = array(
+return array(
 
 'Users'						=> 'Пользователей',
 'Users found'				=> 'По заданным критериям найдены пользователи',

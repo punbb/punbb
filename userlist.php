@@ -16,9 +16,6 @@ if ($forum_user['g_read_board'] == '0')
 else if ($forum_user['g_view_users'] == '0')
 	message(__('No permission'));
 
-// Load the userlist.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/userlist.php';
-
 // Miscellaneous setup
 $forum_page['show_post_count'] = ($forum_config['o_show_post_count'] == '1' || $forum_user['is_admmod']) ? true : false;
 
@@ -67,9 +64,10 @@ $forum_page['finish_at'] = min(($forum_page['start_from'] + 50), ($forum_page['n
 $forum_page['users_searched'] = (($forum_user['g_search_users'] == '1' && $forum_page['username'] != '') || $forum_page['show_group'] > -1);
 
 if ($forum_page['num_users'] > 0)
-	$forum_page['items_info'] = generate_items_info((($forum_page['users_searched']) ? $lang_ul['Users found'] : $lang_ul['Users']), ($forum_page['start_from'] + 1), $forum_page['num_users']);
+	$forum_page['items_info'] = generate_items_info((($forum_page['users_searched']) ?
+		__('Users found', 'ul') : __('Users', 'ul')), ($forum_page['start_from'] + 1), $forum_page['num_users']);
 else
-	$forum_page['items_info'] = $lang_ul['Users'];
+	$forum_page['items_info'] = __('Users', 'ul');
 
 // Generate paging links
 $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
@@ -97,7 +95,8 @@ if (empty($_GET))
 	$forum_page['main_head_options'] = array();
 else
 	$forum_page['main_head_options'] = array(
-		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
+		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.
+			__('Perform new search', 'ul') . '</a></span>'
 	);
 
 // Setup form
