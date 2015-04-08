@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_bans = array(
+return array(
 
 'Ban advanced'					=>	'Ban advanced settings',
 'Ban advanced heading'			=>	'Ban by username with IP and email or just ban by IP, by email or both',

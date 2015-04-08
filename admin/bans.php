@@ -18,7 +18,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || 
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_bans.php';
 
 // Add/edit a ban (stage 1)
 if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
@@ -47,7 +46,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 			$banned_user_info = $forum_db->fetch_row($result);
 			if (!$banned_user_info)
 			{
-				message($lang_admin_bans['No user id message']);
+				message(__('No user id message', 'admin_bans'));
 			}
 
 			list($group_id, $ban_user, $ban_email, $ban_ip) = $banned_user_info;
@@ -71,7 +70,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 				$banned_user_info = $forum_db->fetch_row($result);
 				if (!$banned_user_info)
 				{
-					message($lang_admin_bans['No user username message']);
+					message(__('No user username message', 'admin_bans'));
 				}
 
 				list($user_id, $group_id, $ban_user, $ban_email, $ban_ip) = $banned_user_info;
@@ -80,7 +79,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 		// Make sure we're not banning an admin
 		if (isset($group_id) && $group_id == FORUM_ADMIN)
-			message($lang_admin_bans['User is admin message']);
+			message(__('User is admin message', 'admin_bans'));
 
 		// If we have a $user_id, we can try to find the last known IP of that user
 		if (isset($user_id))
@@ -148,7 +147,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	if ($forum_user['g_id'] == FORUM_ADMIN)
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']));
-	$forum_page['crumbs'][] = $lang_admin_bans['Ban advanced'];
+	$forum_page['crumbs'][] = __('Ban advanced', 'admin_bans');
 
 	($hook = get_hook('aba_add_edit_ban_pre_header_load')) ? eval($hook) : null;
 
@@ -170,9 +169,9 @@ else if (isset($_POST['add_edit_ban']))
 	$ban_expire = forum_trim($_POST['ban_expire']);
 
 	if ($ban_user == '' && $ban_ip == '' && $ban_email == '')
-		message($lang_admin_bans['Must enter message']);
+		message(__('Must enter message', 'admin_bans'));
 	else if (strtolower($ban_user) == 'guest')
-		message($lang_admin_bans['Can\'t ban guest user']);
+		message(__('Can\'t ban guest user', 'admin_bans'));
 
 	($hook = get_hook('aba_add_edit_ban_form_submitted')) ? eval($hook) : null;
 
@@ -196,7 +195,7 @@ else if (isset($_POST['add_edit_ban']))
 					$octets[$c] = ltrim($octets[$c], "0");
 
 					if ($c > 7 || (!empty($octets[$c]) && !ctype_xdigit($octets[$c])) || intval($octets[$c], 16) > 65535)
-						message($lang_admin_bans['Invalid IP message']);
+						message(__('Invalid IP message', 'admin_bans'));
 				}
 
 				$cur_address = implode(':', $octets);
@@ -212,7 +211,7 @@ else if (isset($_POST['add_edit_ban']))
 					$octets[$c] = (strlen($octets[$c]) > 1) ? ltrim($octets[$c], "0") : $octets[$c];
 
 					if ($c > 3 || !ctype_digit($octets[$c]) || intval($octets[$c]) > 255)
-						message($lang_admin_bans['Invalid IP message']);
+						message(__('Invalid IP message', 'admin_bans'));
 				}
 
 				$cur_address = implode('.', $octets);
@@ -229,7 +228,7 @@ else if (isset($_POST['add_edit_ban']))
 	if ($ban_email != '' && !is_valid_email($ban_email))
 	{
 		if (!preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/', $ban_email))
-			message($lang_admin_bans['Invalid e-mail message']);
+			message(__('Invalid e-mail message', 'admin_bans'));
 	}
 
 	if ($ban_expire != '' && $ban_expire != 'Never')
@@ -237,7 +236,7 @@ else if (isset($_POST['add_edit_ban']))
 		$ban_expire = strtotime($ban_expire);
 
 		if ($ban_expire == -1 || $ban_expire <= time())
-			message($lang_admin_bans['Invalid expire message']);
+			message(__('Invalid expire message', 'admin_bans'));
 	}
 	else
 		$ban_expire = 'NULL';
@@ -276,11 +275,13 @@ else if (isset($_POST['add_edit_ban']))
 
 	generate_bans_cache();
 
-	$forum_flash->add_info((($_POST['mode'] == 'edit') ? $lang_admin_bans['Ban edited'] : $lang_admin_bans['Ban added']));
+	$forum_flash->add_info((($_POST['mode'] == 'edit') ?
+		__('Ban edited', 'admin_bans') : __('Ban added', 'admin_bans')));
 
 	($hook = get_hook('aba_add_edit_ban_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_bans']), (($_POST['mode'] == 'edit') ? $lang_admin_bans['Ban edited'] : $lang_admin_bans['Ban added']));
+	redirect(forum_link($forum_url['admin_bans']), (($_POST['mode'] == 'edit') ?
+		__('Ban edited', 'admin_bans') : __('Ban added', 'admin_bans')));
 }
 
 
@@ -311,11 +312,11 @@ else if (isset($_GET['del_ban']))
 
 	generate_bans_cache();
 
-	$forum_flash->add_info($lang_admin_bans['Ban removed']);
+	$forum_flash->add_info(__('Ban removed', 'admin_bans'));
 
 	($hook = get_hook('aba_del_ban_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_bans']), $lang_admin_bans['Ban removed']);
+	redirect(forum_link($forum_url['admin_bans']), __('Ban removed', 'admin_bans'));
 }
 
 

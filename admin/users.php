@@ -19,8 +19,6 @@ if (!$forum_user['is_admmod'])
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_users.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_bans.php';
-
 
 // Show IP statistics for a certain user ID
 if (isset($_GET['ip_stats']))
@@ -261,7 +259,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 			$ban_expire = strtotime($ban_expire);
 
 			if ($ban_expire == -1 || $ban_expire <= time())
-				message($lang_admin_bans['Invalid expire message']);
+				message(__('Invalid expire message', 'admin_bans'));
 		}
 		else
 			$ban_expire = 'NULL';

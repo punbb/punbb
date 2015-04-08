@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_bans = array(
+return array(
 
 'Ban advanced'  				=> 'Расширенные настройки блокировок',
 'Ban advanced heading'  		=> 'Блокировка по имени пользователя с IP-адресом и адресом электронной почты или просто по IP, по email или по обоим адресам',
