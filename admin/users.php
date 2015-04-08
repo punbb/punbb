@@ -18,7 +18,6 @@ if (!$forum_user['is_admmod'])
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_users.php';
 
 // Show IP statistics for a certain user ID
 if (isset($_GET['ip_stats']))
@@ -56,7 +55,7 @@ if (isset($_GET['ip_stats']))
 	if ($forum_user['g_id'] == FORUM_ADMIN)
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
-	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
+	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
 	($hook = get_hook('aus_ip_stats_pre_header_load')) ? eval($hook) : null;
 
@@ -74,7 +73,7 @@ else if (isset($_GET['show_users']))
 	$ip = $_GET['show_users'];
 
 	if (empty($ip) || (!preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $ip) && !preg_match('/^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/', $ip)))
-		message($lang_admin_users['Invalid IP address']);
+		message(__('Invalid IP address', 'admin_users'));
 
 	($hook = get_hook('aus_show_users_selected')) ? eval($hook) : null;
 
@@ -104,7 +103,7 @@ else if (isset($_GET['show_users']))
 	if ($forum_user['g_id'] == FORUM_ADMIN)
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
-	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
+	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
 	($hook = get_hook('aus_show_users_pre_header_load')) ? eval($hook) : null;
 
@@ -147,7 +146,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 		message(__('No permission'));
 
 	if (empty($_POST['users']))
-		message($lang_admin_users['No users selected']);
+		message(__('No users selected', 'admin_users'));
 
 	($hook = get_hook('aus_delete_users_selected')) ? eval($hook) : null;
 
@@ -169,7 +168,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result) > 0)
-		message($lang_admin_users['Delete admin message']);
+		message(__('Delete admin message', 'admin_users'));
 
 	if (isset($_POST['delete_users_comply']))
 	{
@@ -192,7 +191,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users deleted']);
+		redirect(forum_link($forum_url['admin_users']), __('Users deleted', 'admin_users'));
 	}
 
 	// Setup form
@@ -204,7 +203,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
-		$lang_admin_users['Delete users']
+		__('Delete users', 'admin_users')
 	);
 
 	($hook = get_hook('aus_delete_users_pre_header_load')) ? eval($hook) : null;
@@ -223,7 +222,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		message(__('No permission'));
 
 	if (empty($_POST['users']))
-		message($lang_admin_users['No users selected']);
+		message(__('No users selected', 'admin_users'));
 
 	($hook = get_hook('aus_ban_users_selected')) ? eval($hook) : null;
 
@@ -245,7 +244,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result) > 0)
-		message($lang_admin_users['Ban admin message']);
+		message(__('Ban admin message', 'admin_users'));
 
 	if (isset($_POST['ban_users_comply']))
 	{
@@ -311,11 +310,11 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		generate_bans_cache();
 
 		// Add flash message
-		$forum_flash->add_info($lang_admin_users['Users banned']);
+		$forum_flash->add_info(__('Users banned', 'admin_users'));
 
 		($hook = get_hook('aus_ban_users_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['Users banned']);
+		redirect(forum_link($forum_url['admin_users']), __('Users banned', 'admin_users'));
 	}
 
 	// Setup form
@@ -329,7 +328,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	if ($forum_user['g_id'] == FORUM_ADMIN)
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
-	$forum_page['crumbs'][] = $lang_admin_users['Ban users'];
+	$forum_page['crumbs'][] = __('Ban users', 'admin_users');
 
 	($hook = get_hook('aus_ban_users_pre_header_load')) ? eval($hook) : null;
 
@@ -351,7 +350,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		redirect(forum_link($forum_url['admin_users']), $lang_admin_common['Cancel redirect']);
 
 	if (empty($_POST['users']))
-		message($lang_admin_users['No users selected']);
+		message(__('No users selected', 'admin_users'));
 
 	($hook = get_hook('aus_change_group_selected')) ? eval($hook) : null;
 
@@ -397,7 +396,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 		($hook = get_hook('aus_change_group_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), $lang_admin_users['User groups updated']);
+		redirect(forum_link($forum_url['admin_users']), __('User groups updated', 'admin_users'));
 	}
 
 	// Setup form
@@ -409,7 +408,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Searches'], forum_link($forum_url['admin_users'])),
-		$lang_admin_users['Change group']
+		__('Change group', 'admin_users')
 	);
 
 	($hook = get_hook('aus_change_group_pre_header_load')) ? eval($hook) : null;
@@ -464,7 +463,7 @@ else if (isset($_GET['find_user']))
 	$query_str[] = 'user_group='.$user_group;
 
 	if ((!empty($posts_greater) || !empty($posts_less)) && !ctype_digit($posts_greater.$posts_less))
-		message($lang_admin_users['Non numeric value message']);
+		message(__('Non numeric value message', 'admin_users'));
 
 	// Try to convert date/time to timestamps
 	if ($last_post_after != '')
@@ -473,7 +472,7 @@ else if (isset($_GET['find_user']))
 
 		$last_post_after = strtotime($last_post_after);
 		if ($last_post_after === false || $last_post_after == -1)
-			message($lang_admin_users['Invalid date/time message']);
+			message(__('Invalid date/time message', 'admin_users'));
 
 		$conditions[] = 'u.last_post>'.$last_post_after;
 	}
@@ -483,7 +482,7 @@ else if (isset($_GET['find_user']))
 
 		$last_post_before = strtotime($last_post_before);
 		if ($last_post_before === false || $last_post_before == -1)
-			message($lang_admin_users['Invalid date/time message']);
+			message(__('Invalid date/time message', 'admin_users'));
 
 		$conditions[] = 'u.last_post<'.$last_post_before;
 	}
@@ -493,7 +492,7 @@ else if (isset($_GET['find_user']))
 
 		$registered_after = strtotime($registered_after);
 		if ($registered_after === false || $registered_after == -1)
-			message($lang_admin_users['Invalid date/time message']);
+			message(__('Invalid date/time message', 'admin_users'));
 
 		$conditions[] = 'u.registered>'.$registered_after;
 	}
@@ -503,7 +502,7 @@ else if (isset($_GET['find_user']))
 
 		$registered_before = strtotime($registered_before);
 		if ($registered_before === false || $registered_before == -1)
-			message($lang_admin_users['Invalid date/time message']);
+			message(__('Invalid date/time message', 'admin_users'));
 
 		$conditions[] = 'u.registered<'.$registered_before;
 	}
@@ -533,7 +532,7 @@ else if (isset($_GET['find_user']))
 		$conditions[] = 'u.group_id='.intval($user_group);
 
 	if (empty($conditions))
-		message($lang_admin_users['No search terms message']);
+		message(__('No search terms message', 'admin_users'));
 
 	// Fetch user count
 	$query = array(
@@ -565,7 +564,7 @@ else if (isset($_GET['find_user']))
 	if ($forum_user['g_id'] == FORUM_ADMIN)
 		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = array($lang_admin_common['Searches'], forum_link($forum_url['admin_users']));
-	$forum_page['crumbs'][] = $lang_admin_users['User search results'];
+	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
 	// Generate paging
 	$forum_page['page_post']['paging'] =

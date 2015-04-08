@@ -142,7 +142,7 @@
 					<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 						<div class="sf-box checkbox">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[default_dst]" value="1"<?php if ($forum_config['o_default_dst'] == 1) echo ' checked="checked"' ?> /></span>
-							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo _('DST label', 'admin_settings') ?></label>
+							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo __('DST label', 'admin_settings') ?></label>
 						</div>
 					</div>
 <?php ($hook = get_hook('aop_setup_pre_time_format')) ? eval($hook) : null; ?>

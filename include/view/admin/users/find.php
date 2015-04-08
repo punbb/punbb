@@ -2,10 +2,14 @@
 
 	// Set up table headers
 	$forum_page['table_header'] = array();
-	$forum_page['table_header']['username'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['User information'].'</th>';
-	$forum_page['table_header']['title'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Title column'].'</th>';
-	$forum_page['table_header']['posts'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Posts'].'</th>';
-	$forum_page['table_header']['actions'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Actions'].'</th>';
+	$forum_page['table_header']['username'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.
+		__('User information', 'admin_users').'</th>';
+	$forum_page['table_header']['title'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.
+		__('Title column', 'admin_users').'</th>';
+	$forum_page['table_header']['posts'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.
+		__('Posts', 'admin_users').'</th>';
+	$forum_page['table_header']['actions'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.
+		__('Actions', 'admin_users').'</th>';
 	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.
 		__('Select', 'misc') . '</th>';
 
@@ -22,7 +26,7 @@
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
+		<h2 class="hn"><span><?php printf(__('Users found', 'admin_users'), $forum_page['num_users']) ?></span></h2>
 	</div>
 	<form id="aus-find-user-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
 	<div class="main-content main-forum">
@@ -47,7 +51,7 @@
 
 			// This script is a special case in that we want to display "Not verified" for non-verified users
 			if (($user_data['g_id'] == '' || $user_data['g_id'] == FORUM_UNVERIFIED) && $user_data['title'] != __('Banned'))
-				$user_title = '<strong>'.$lang_admin_users['Not verified'].'</strong>';
+				$user_title = '<strong>'.__('Not verified', 'admin_users').'</strong>';
 			else
 				$user_title = get_title($user_data);
 
@@ -58,10 +62,13 @@
 			($hook = get_hook('aus_find_user_pre_row_generation')) ? eval($hook) : null;
 
 			$forum_page['table_row'] = array();
-			$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['user'], $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></span><span class="usermail"><a href="mailto:'.forum_htmlencode($user_data['email']).'">'.forum_htmlencode($user_data['email']).'</a></span>'.(($user_data['admin_note'] != '') ? '<span class="usernote">'.$lang_admin_users['Admin note'].' '.forum_htmlencode($user_data['admin_note']).'</span>' : '').'</td>';
+			$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['user'], $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></span><span class="usermail"><a href="mailto:'.forum_htmlencode($user_data['email']).'">'.forum_htmlencode($user_data['email']).'</a></span>'.(($user_data['admin_note'] != '') ? '<span class="usernote">'.
+				__('Admin note', 'admin_users').' '.forum_htmlencode($user_data['admin_note']).'</span>' : '').'</td>';
 			$forum_page['table_row']['title'] = '<td class="tc'.count($forum_page['table_row']).'">'.$user_title.'</td>';
 			$forum_page['table_row']['posts'] = '<td class="tc'.count($forum_page['table_row']).'">'.forum_number_format($user_data['num_posts']).'</td>';
-			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['admin_users']).'?ip_stats='.$user_data['id'].'">'.$lang_admin_users['View IP stats'].'</a></span> <span><a href="'.forum_link($forum_url['search_user_posts'], $user_data['id']).'">'.$lang_admin_users['Show posts'].'</a></span></td>';
+			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['admin_users']).'?ip_stats='.$user_data['id'].'">'.
+				__('View IP stats', 'admin_users').'</a></span> <span><a href="'.forum_link($forum_url['search_user_posts'], $user_data['id']).'">'.
+				__('Show posts', 'admin_users').'</a></span></td>';
 			$forum_page['table_row']['select'] = '<td class="tc'.count($forum_page['table_row']).'"><input type="checkbox" name="users['.$user_data['id'].']" value="1" /></td>';
 
 			($hook = get_hook('aus_find_user_pre_row_output')) ? eval($hook) : null;
@@ -79,7 +86,8 @@
 			($hook = get_hook('aus_find_user_pre_no_results_row_generation')) ? eval($hook) : null;
 
 			$forum_page['table_row'] = array();
-			$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'">'.$lang_admin_users['No match'].'</td>';
+			$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'">'.
+				__('No match', 'admin_users').'</td>';
 			$forum_page['table_row']['title'] = '<td class="tc'.count($forum_page['table_row']).'"> - </td>';
 			$forum_page['table_row']['posts'] = '<td class="tc'.count($forum_page['table_row']).'"> - </td>';
 			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"> - </td>';
@@ -107,12 +115,14 @@
 	if ($forum_page['num_users'] > 0)
 	{
 		if ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_ban_users'] == '1'))
-			$forum_page['mod_options']['ban'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="ban_users" value="'.$lang_admin_users['Ban'].'" /></span>';
+			$forum_page['mod_options']['ban'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="ban_users" value="'.
+				__('Ban', 'admin_users').'" /></span>';
 
 		if ($forum_user['g_id'] == FORUM_ADMIN)
 		{
 			$forum_page['mod_options']['delete'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="delete_users" value="'.$lang_admin_common['Delete'].'" /></span>';
-			$forum_page['mod_options']['change_group'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="change_group" value="'.$lang_admin_users['Change group'].'" /></span>';
+			$forum_page['mod_options']['change_group'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="change_group" value="'.
+				__('Change group', 'admin_users').'" /></span>';
 		}
 	}
 
@@ -137,7 +147,7 @@
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
+		<h2 class="hn"><span><?php printf(__('Users found', 'admin_users'), $forum_page['num_users']) ?></span></h2>
 	</div>
 <?php
 

@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_users['Change group head'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Change group head', 'admin_users') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
@@ -13,10 +13,10 @@
 				<input type="hidden" name="users" value="<?php echo implode(',', $users) ?>" />
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><span><?php echo $lang_admin_users['Move users legend'] ?></span></legend>
+				<legend class="group-legend"><span><?php echo __('Move users legend', 'admin_users') ?></span></legend>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_users['Move users to label'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Move users to label', 'admin_users') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="move_to_group">
 <?php
 	while ($cur_group = $forum_db->fetch_assoc($result)) {
@@ -31,7 +31,7 @@
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="change_group_comply" value="<?php echo $lang_admin_users['Change group'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="change_group_comply" value="<?php echo __('Change group', 'admin_users') ?>" /></span>
 				<span class="cancel"><input type="submit" name="change_group_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>

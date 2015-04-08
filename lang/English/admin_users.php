@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_users = array(
+return array(
 
 // admin_users
 'Search head'					=>	'Find users',
