@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_groups = array(
+return array(
 
 // admin_groups
 'Group settings heading'		=>	'Group\'s default permission that apply when no forum specific permissions are set',

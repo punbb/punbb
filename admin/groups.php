@@ -18,8 +18,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_groups.php';
-
 
 // Add/edit a group (stage 1)
 if (isset($_POST['add_group']) || isset($_GET['edit_group']))
@@ -75,7 +73,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups'])),
-		$mode == 'edit' ? $lang_admin_groups['Edit group heading'] : $lang_admin_groups['Add group heading']
+		$mode == 'edit' ? __('Edit group heading', 'admin_groups') : __('Add group heading', 'admin_groups')
 	);
 
 	($hook = get_hook('agr_add_edit_group_pre_header_load')) ? eval($hook) : null;
@@ -117,7 +115,7 @@ else if (isset($_POST['add_edit_group']))
 	$email_flood = isset($_POST['email_flood']) ? intval($_POST['email_flood']) : '0';
 
 	if ($title == '')
-		message($lang_admin_groups['Must enter group message']);
+		message(__('Must enter group message', 'admin_groups'));
 
 	$user_title = ($user_title != '') ? '\''.$forum_db->escape($user_title).'\'' : 'NULL';
 
@@ -138,7 +136,7 @@ else if (isset($_POST['add_edit_group']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		if ($forum_db->result($result) != 0)
-			message(sprintf($lang_admin_groups['Already a group message'], forum_htmlencode($title)));
+			message(sprintf(__('Already a group message', 'admin_groups'), forum_htmlencode($title)));
 
 		// Insert the new group
 		$query = array(
@@ -184,7 +182,7 @@ else if (isset($_POST['add_edit_group']))
 
 		// Make sure the default group isn't assigned moderator privileges
 		if ($moderator == '1' && $forum_config['o_default_user_group'] == $group_id)
-			message($lang_admin_groups['Moderator default group']);
+			message(__('Moderator default group', 'admin_groups'));
 
 		$query = array(
 			'SELECT'	=> 'COUNT(g.g_id)',
@@ -196,7 +194,7 @@ else if (isset($_POST['add_edit_group']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 		if ($forum_db->result($result) != 0)
-			message(sprintf($lang_admin_groups['Already a group message'], forum_htmlencode($title)));
+			message(sprintf(__('Already a group message', 'admin_groups'), forum_htmlencode($title)));
 
 		// Save changes
 		$query = array(
@@ -220,11 +218,11 @@ else if (isset($_POST['add_edit_group']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash->add_info((($_POST['mode'] == 'edit') ? $lang_admin_groups['Group edited'] : $lang_admin_groups['Group added']));
+	$forum_flash->add_info((($_POST['mode'] == 'edit') ? __('Group edited', 'admin_groups') : __('Group added', 'admin_groups')));
 
 	($hook = get_hook('agr_add_edit_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_groups']), (($_POST['mode'] == 'edit') ? $lang_admin_groups['Group edited'] : $lang_admin_groups['Group added']));
+	redirect(forum_link($forum_url['admin_groups']), (($_POST['mode'] == 'edit') ? __('Group edited', 'admin_groups') : __('Group added', 'admin_groups')));
 }
 
 
@@ -269,11 +267,11 @@ else if (isset($_POST['set_default_group']))
 	generate_config_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_groups['Default group set']);
+	$forum_flash->add_info(__('Default group set', 'admin_groups'));
 
 	($hook = get_hook('agr_set_default_group_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Default group set']);
+	redirect(forum_link($forum_url['admin_groups']), __('Default group set', 'admin_groups'));
 }
 
 
@@ -290,7 +288,7 @@ else if (isset($_GET['del_group']))
 
 	// Make sure we don't remove the default group
 	if ($group_id == $forum_config['o_default_user_group'])
-		message($lang_admin_groups['Cannot remove default group']);
+		message(__('Cannot remove default group', 'admin_groups'));
 
 	($hook = get_hook('agr_del_group_selected')) ? eval($hook) : null;
 
@@ -356,11 +354,11 @@ else if (isset($_GET['del_group']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash->add_info($lang_admin_groups['Group removed']);
+		$forum_flash->add_info(__('Group removed', 'admin_groups'));
 
 		($hook = get_hook('agr_del_group_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_groups']), $lang_admin_groups['Group removed']);
+		redirect(forum_link($forum_url['admin_groups']), __('Group removed', 'admin_groups'));
 	}
 
 	// Setup the form
@@ -372,7 +370,7 @@ else if (isset($_GET['del_group']))
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
 		array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups'])),
-		$lang_admin_groups['Remove group']
+		__('Remove group', 'admin_groups')
 	);
 
 	($hook = get_hook('agr_del_group_pre_header_load')) ? eval($hook) : null;
