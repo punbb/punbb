@@ -4,19 +4,19 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php printf($lang_admin_categories['Confirm delete cat'], forum_htmlencode($cat_name)) ?></span></h2>
+		<h2 class="hn"><span><?php printf(__('Confirm delete cat', 'admin_categories'), forum_htmlencode($cat_name)) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box warn-box">
-			<p class="warn"><?php echo $lang_admin_categories['Delete category warning'] ?></p>
+			<p class="warn"><?= __('Delete category warning', 'admin_categories') ?></p>
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit primary caution"><input type="submit" name="del_cat_comply" value="<?php echo $lang_admin_categories['Delete category'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="del_cat_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="del_cat_comply" value="<?= __('Delete category', 'admin_categories') ?>" /></span>
+				<span class="cancel"><input type="submit" name="del_cat_cancel" value="<?= __('Cancel', 'admin_categories') ?>" /></span>
 			</div>
 		</form>
 	</div>

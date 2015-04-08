@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in admin-categories
-$lang_admin_categories = array(
+return array(
 
 'Add category head'				=>	'Add category (create a new category at the specified position)',
 'Add category info'				=>	'Your new category will not appear on the board index page until at least one forum is added to it. To create a new forum in this category or to move an existing forum to it go to the %s page.',

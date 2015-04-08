@@ -18,15 +18,13 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_categories.php';
-
 
 // Add a new category
 if (isset($_POST['add_cat']))
 {
 	$new_cat_name = forum_trim($_POST['new_cat_name']);
 	if ($new_cat_name == '')
-		message($lang_admin_categories['Must name category']);
+		message(__('Must name category', 'admin_categories'));
 
 	$new_cat_pos = intval($_POST['position']);
 
@@ -42,11 +40,11 @@ if (isset($_POST['add_cat']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_categories['Category added']);
+	$forum_flash->add_info(__('Category added', 'admin_categories'));
 
 	($hook = get_hook('acg_add_cat_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category added']);
+	redirect(forum_link($forum_url['admin_categories']), __('Category added', 'admin_categories'));
 }
 
 
@@ -126,11 +124,11 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash->add_info($lang_admin_categories['Category deleted']);
+		$forum_flash->add_info(__('Category deleted', 'admin_categories'));
 
 		($hook = get_hook('acg_del_cat_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Category deleted']);
+		redirect(forum_link($forum_url['admin_categories']), __('Category deleted', 'admin_categories'));
 	}
 	else	// If the user hasn't comfirmed the delete
 	{
@@ -162,7 +160,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 			array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
 			array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories'])),
-			$lang_admin_categories['Delete category']
+			__('Delete category', 'admin_categories')
 		);
 
 		($hook = get_hook('acg_del_cat_pre_header_load')) ? eval($hook) : null;
@@ -198,10 +196,10 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 		if (isset($cat_name[$cur_cat['id']]) && isset($cat_order[$cur_cat['id']]))
 		{
 			if ($cat_name[$cur_cat['id']] == '')
-				message($lang_admin_categories['Must name category']);
+				message(__('Must name category', 'admin_categories'));
 
 			if ($cat_order[$cur_cat['id']] < 0)
-				message($lang_admin_categories['Must be integer']);
+				message(__('Must be integer', 'admin_categories'));
 
 			// We only want to update if we changed anything
 			if ($cur_cat['cat_name'] != $cat_name[$cur_cat['id']] || $cur_cat['disp_position'] != $cat_order[$cur_cat['id']])
@@ -225,11 +223,11 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_categories['Categories updated']);
+	$forum_flash->add_info(__('Categories updated', 'admin_categories'));
 
 	($hook = get_hook('acg_update_cats_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_categories']), $lang_admin_categories['Categories updated']);
+	redirect(forum_link($forum_url['admin_categories']), __('Categories updated', 'admin_categories'));
 }
 
 

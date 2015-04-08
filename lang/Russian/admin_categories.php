@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in admin-categories
-$lang_admin_categories = array(
+return array(
 
 'Add category head'				=> 'Добавление категории',
 'Add category info'				=> 'Новая категория не будет видна, пока не будет добавлен хотя бы один форум. Создать новый форум в категории или переместить в неё уже существующий можно в разделе %s.',
