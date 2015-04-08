@@ -65,7 +65,7 @@ if (!empty($cat_list))
 <?php ($hook = get_hook('acg_pre_del_category_select')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Select category label', 'admin_categories') ?></span> <small><?php echo $lang_admin_common['Delete help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Select category label', 'admin_categories') ?></span> <small><?php echo __('Delete help', 'admin_common') ?></small></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_to_delete">
 <?php
 

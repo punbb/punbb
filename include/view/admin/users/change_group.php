@@ -32,7 +32,7 @@
 			</fieldset>
 			<div class="frm-buttons">
 				<span class="submit primary"><input type="submit" name="change_group_comply" value="<?php echo __('Change group', 'admin_users') ?>" /></span>
-				<span class="cancel"><input type="submit" name="change_group_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="change_group_cancel" value="<?php echo __('Cancel', 'admin_common') ?>" /></span>
 			</div>
 		</form>
 	</div>

@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comply']))
 {
 	if (isset($_POST['prune_comply']))
@@ -111,8 +108,8 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 		array(__('Prune topics', 'admin_prune'), forum_link($forum_url['admin_prune'])),
 		__('Confirm prune heading', 'admin_prune')
 	);
@@ -135,9 +132,9 @@ else
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
-		array($lang_admin_common['Prune topics'], forum_link($forum_url['admin_prune']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
+		array(__('Prune topics', 'admin_common'), forum_link($forum_url['admin_prune']))
 	);
 
 	($hook = get_hook('apr_pre_header_load')) ? eval($hook) : null;

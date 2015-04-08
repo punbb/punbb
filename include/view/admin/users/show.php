@@ -14,7 +14,8 @@
 		__('Select', 'misc') . '</th>';
 
 	if ($forum_page['num_users'] > 0)
-		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-show-users-results-form">'.$lang_admin_common['Select all'].'</span>';
+		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-show-users-results-form">'.
+		__('Select all', 'admin_common').'</span>';
 
 	($hook = get_hook('aus_show_users_output_start')) ? eval($hook) : null;
 
@@ -125,7 +126,8 @@
 
 		if ($forum_user['g_id'] == FORUM_ADMIN)
 		{
-			$forum_page['mod_options']['delete'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="delete_users" value="'.$lang_admin_common['Delete'].'" /></span>';
+			$forum_page['mod_options']['delete'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="delete_users" value="'.
+				__('Delete', 'admin_common').'" /></span>';
 			$forum_page['mod_options']['change_group'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="change_group" value="'.
 				__('Change group', 'admin_users').'" /></span>';
 		}

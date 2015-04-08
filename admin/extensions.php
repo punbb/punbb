@@ -19,9 +19,6 @@ if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Make sure we have XML support
 if (!function_exists('xml_parser_create'))
 	message(__('No XML support', 'admin_ext'));
@@ -36,7 +33,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	// User pressed the cancel button
 	if (isset($_POST['install_cancel']))
-		redirect(forum_link(isset($_GET['install']) ? $forum_url['admin_extensions_manage'] : $forum_url['admin_extensions_hotfixes']), $lang_admin_common['Cancel redirect']);
+		redirect(forum_link(isset($_GET['install']) ? $forum_url['admin_extensions_manage'] : $forum_url['admin_extensions_hotfixes']), __('Cancel redirect', 'admin_common'));
 
 	$id = preg_replace('/[^0-9a-z_]/', '', isset($_GET['install']) ? $_GET['install'] : $_GET['install_hotfix']);
 
@@ -111,9 +108,9 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
-		array((strpos($id, 'hotfix_') === 0) ? $lang_admin_common['Manage hotfixes'] : $lang_admin_common['Manage extensions'], (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
+		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
 		(strpos($id, 'hotfix_') === 0) ? __('Install hotfix', 'admin_ext') :
 			__('Install extension', 'admin_ext')
 	);
@@ -287,7 +284,7 @@ else if (isset($_GET['uninstall']))
 {
 	// User pressed the cancel button
 	if (isset($_POST['uninstall_cancel']))
-		redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_common['Cancel redirect']);
+		redirect(forum_link($forum_url['admin_extensions_manage']), __('Cancel redirect', 'admin_common'));
 
 	($hook = get_hook('aex_uninstall_selected')) ? eval($hook) : null;
 
@@ -328,9 +325,9 @@ else if (isset($_GET['uninstall']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
-		array((strpos($id, 'hotfix_') === 0) ? $lang_admin_common['Manage hotfixes'] : $lang_admin_common['Manage extensions'], (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
+		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
 		(strpos($id, 'hotfix_') === 0) ? __('Uninstall hotfix', 'admin_ext') : __('Uninstall extension', 'admin_ext')
 	);
 
@@ -555,9 +552,9 @@ if ($section == 'hotfixes')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
-		array($lang_admin_common['Manage hotfixes'], forum_link($forum_url['admin_extensions_hotfixes']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
+		array(__('Manage hotfixes', 'admin_common'), forum_link($forum_url['admin_extensions_hotfixes']))
 	);
 
 	($hook = get_hook('aex_section_hotfixes_pre_header_load')) ? eval($hook) : null;
@@ -612,9 +609,9 @@ else
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
-		array($lang_admin_common['Manage extensions'], forum_link($forum_url['admin_extensions_manage']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
+		array(__('Manage extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage']))
 	);
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;

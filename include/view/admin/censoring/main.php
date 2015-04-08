@@ -13,7 +13,9 @@
 			</div>
 			<div class="ct-box" id="info-censored-intro">
 				<p><?= __('Add censored word intro', 'admin_censoring'); if ($forum_user['g_id'] == FORUM_ADMIN) printf(' '.
-					__('Add censored word extra', 'admin_censoring'), '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin_common['Settings'].' &rarr; '.$lang_admin_common['Features'].'</a>') ?></p>
+					__('Add censored word extra', 'admin_censoring'), '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.
+					__('Settings', 'admin_common').' &rarr; '.
+					__('Features', 'admin_common').'</a>') ?></p>
 			</div>
 			<fieldset class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?= __('Add censored word legend', 'admin_censoring') ?></span></legend>
@@ -77,7 +79,7 @@ if (!empty($forum_censors))
 						</div>
 <?php ($hook = get_hook('acs_pre_edit_submit')) ? eval($hook) : null; ?>
 						<div class="mf-field">
-							<span class="submit"><input type="submit" name="update[<?php echo $cur_word['id'] ?>]" value="<?php echo $lang_admin_common['Update'] ?>" /> <input type="submit" name="remove[<?php echo $cur_word['id'] ?>]" value="<?php echo $lang_admin_common['Remove'] ?>" formnovalidate /></span>
+							<span class="submit"><input type="submit" name="update[<?php echo $cur_word['id'] ?>]" value="<?php echo __('Update', 'admin_common') ?>" /> <input type="submit" name="remove[<?php echo $cur_word['id'] ?>]" value="<?php echo __('Remove', 'admin_common') ?>" formnovalidate /></span>
 						</div>
 					</div>
 <?php ($hook = get_hook('acs_pre_edit_word_fieldset_end')) ? eval($hook) : null; ?>

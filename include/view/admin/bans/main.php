@@ -51,7 +51,8 @@ if ($forum_page['num_bans'] > 0)
 	while ($cur_ban = $forum_db->fetch_assoc($result))
 	{
 		$forum_page['ban_info'] = array();
-		$forum_page['ban_creator'] = ($cur_ban['ban_creator_username'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_ban['ban_creator']).'">'.forum_htmlencode($cur_ban['ban_creator_username']).'</a>' : $lang_admin_common['Unknown'];
+		$forum_page['ban_creator'] = ($cur_ban['ban_creator_username'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_ban['ban_creator']).'">'.forum_htmlencode($cur_ban['ban_creator_username']).'</a>' :
+			__('Unknown', 'admin_common');
 
 		if ($cur_ban['username'] != '')
 			$forum_page['ban_info']['username'] = '<li><span>'.

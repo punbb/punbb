@@ -16,7 +16,7 @@
 			</div>
 			<div class="frm-buttons">
 				<span class="submit primary caution"><input type="submit" name="del_forum_comply" value="<?= __('Delete forum', 'admin_forums') ?>" /></span>
-				<span class="cancel"><input type="submit" name="del_forum_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="del_forum_cancel" value="<?php echo __('Cancel', 'admin_common') ?>" /></span>
 			</div>
 		</form>
 	</div>

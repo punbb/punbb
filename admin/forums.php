@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Add a "default" forum
 if (isset($_POST['add_forum']))
 {
@@ -81,7 +78,7 @@ else if (isset($_GET['del_forum']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_forum_cancel']))
-		redirect(forum_link($forum_url['admin_forums']), $lang_admin_common['Cancel redirect']);
+		redirect(forum_link($forum_url['admin_forums']), __('Cancel redirect', 'admin_common'));
 
 	($hook = get_hook('afo_del_forum_form_submitted')) ? eval($hook) : null;
 
@@ -152,9 +149,9 @@ else if (isset($_GET['del_forum']))
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-			array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-			array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums'])),
+			array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+			array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
+			array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums'])),
 			__('Delete forum', 'admin_forums')
 		);
 
@@ -427,9 +424,9 @@ else if (isset($_GET['edit_forum']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums'])),
 		__('Edit forum', 'admin_forums')
 	);
 
@@ -474,9 +471,9 @@ $forum_page['fld_count'] = $forum_page['group_count'] = $forum_page['item_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums']))
 );
 
 ($hook = get_hook('afo_pre_header_load')) ? eval($hook) : null;

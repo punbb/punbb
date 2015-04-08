@@ -26,7 +26,7 @@
 			</fieldset>
 			<div class="frm-buttons">
 				<span class="submit primary caution"><input type="submit" name="delete_users_comply" value="<?php echo __('Delete users', 'admin_users') ?>" /></span>
-				<span class="cancel"><input type="submit" name="delete_users_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="delete_users_cancel" value="<?php echo __('Cancel', 'admin_common') ?>" /></span>
 			</div>
 		</form>
 	</div>

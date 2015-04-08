@@ -141,7 +141,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 ?>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="save" value="<?php echo __('Save changes', 'admin_common') ?>" /></span>
 				<span class="submit"><input type="submit" name="revert_perms" value="<?php echo __('Restore defaults', 'admin_forums') ?>" formnovalidate /></span>
 			</div>
 		</form>

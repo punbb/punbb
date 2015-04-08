@@ -12,7 +12,9 @@
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_ranks']).'?action=foo') ?>" />
 			</div>
 			<div class="ct-box" id="info-ranks-intro">
-				<p><?php printf(__('Add rank intro', 'admin_ranks'), '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.$lang_admin_common['Settings'].' &rarr; '.$lang_admin_common['Features'].'</a>') ?></p>
+				<p><?php printf(__('Add rank intro', 'admin_ranks'), '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.
+					__('Settings', 'admin_common').' &rarr; '.
+					__('Features', 'admin_common').'</a>') ?></p>
 			</div>
 			<fieldset class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo __('Add rank legend', 'admin_ranks') ?></strong></legend>

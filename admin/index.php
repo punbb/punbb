@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if (!$forum_user['is_admmod'])
 	message(__('No permission'));
 
-// Load the admin.php language files
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Show phpinfo() output
 if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'] == FORUM_ADMIN)
 {
@@ -136,11 +133,11 @@ else
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
 if ($forum_user['g_id'] == FORUM_ADMIN)
-	$forum_page['crumbs'][] = array($lang_admin_common['Start'], forum_link($forum_url['admin_index']));
-$forum_page['crumbs'][] = array($lang_admin_common['Information'], forum_link($forum_url['admin_index']));
+	$forum_page['crumbs'][] = array(__('Start', 'admin_common'), forum_link($forum_url['admin_index']));
+$forum_page['crumbs'][] = array(__('Information', 'admin_common'), forum_link($forum_url['admin_index']));
 
 ($hook = get_hook('ain_pre_header_load')) ? eval($hook) : null;
 

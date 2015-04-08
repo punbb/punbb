@@ -14,7 +14,7 @@
 					<li><span><?= $cur_notice ?></span></li>
 				<?php } ?>
 			</ul>
-			<p><a href="<?= forum_link($forum_url['admin_extensions_manage']) ?>"><?= $lang_admin_common['Manage extensions'] ?></a></p>
+			<p><a href="<?= forum_link($forum_url['admin_extensions_manage']) ?>"><?= __('Manage extensions', 'admin_common') ?></a></p>
 		</div>
 	</div>
 <?php

@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 $section = isset($_GET['section']) ? $_GET['section'] : null;
 
 
@@ -271,9 +268,9 @@ if (!$section || $section == 'setup')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		array($lang_admin_common['Setup'], forum_link($forum_url['admin_settings_setup']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
+		array(__('Setup', 'admin_common'), forum_link($forum_url['admin_settings_setup']))
 	);
 
 	($hook = get_hook('aop_setup_pre_header_load')) ? eval($hook) : null;
@@ -292,9 +289,9 @@ else if ($section == 'features')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		array($lang_admin_common['Features'], forum_link($forum_url['admin_settings_features']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
+		array(__('Features', 'admin_common'), forum_link($forum_url['admin_settings_features']))
 	);
 
 	($hook = get_hook('aop_features_pre_header_load')) ? eval($hook) : null;
@@ -312,9 +309,9 @@ else if ($section == 'announcements')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		array($lang_admin_common['Announcements'], forum_link($forum_url['admin_settings_announcements']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
+		array(__('Announcements', 'admin_common'), forum_link($forum_url['admin_settings_announcements']))
 	);
 
 	($hook = get_hook('aop_announcements_pre_header_load')) ? eval($hook) : null;
@@ -332,9 +329,9 @@ else if ($section == 'registration')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		array($lang_admin_common['Registration'], forum_link($forum_url['admin_settings_registration']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
+		array(__('Registration', 'admin_common'), forum_link($forum_url['admin_settings_registration']))
 	);
 
 	($hook = get_hook('aop_registration_pre_header_load')) ? eval($hook) : null;
@@ -353,9 +350,9 @@ else if ($section == 'maintenance')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
-		array($lang_admin_common['Maintenance mode'], forum_link($forum_url['admin_settings_maintenance']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
+		array(__('Maintenance mode', 'admin_common'), forum_link($forum_url['admin_settings_maintenance']))
 	);
 
 	($hook = get_hook('aop_maintenance_pre_header_load')) ? eval($hook) : null;
@@ -374,9 +371,9 @@ else if ($section == 'email')
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Settings'], forum_link($forum_url['admin_settings_setup'])),
-		array($lang_admin_common['E-mail'], forum_link($forum_url['admin_settings_email']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
+		array(__('E-mail', 'admin_common'), forum_link($forum_url['admin_settings_email']))
 	);
 
 	($hook = get_hook('aop_email_pre_header_load')) ? eval($hook) : null;

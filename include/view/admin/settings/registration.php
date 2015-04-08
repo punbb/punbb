@@ -112,7 +112,7 @@
 				</fieldset>
 <?php ($hook = get_hook('aop_registration_rules_fieldset_end')) ? eval($hook) : null; ?>
 				<div class="frm-buttons">
-					<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
+					<span class="submit primary"><input type="submit" name="save" value="<?php echo __('Save changes', 'admin_common') ?>" /></span>
 				</div>
 		</form>
 	</div>

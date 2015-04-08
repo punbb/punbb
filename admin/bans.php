@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0'))
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Add/edit a ban (stage 1)
 if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 {
@@ -142,11 +139,11 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 	);
 	if ($forum_user['g_id'] == FORUM_ADMIN)
-		$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
-	$forum_page['crumbs'][] = array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']));
+		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), forum_link($forum_url['admin_bans']));
 	$forum_page['crumbs'][] = __('Ban advanced', 'admin_bans');
 
 	($hook = get_hook('aba_add_edit_ban_pre_header_load')) ? eval($hook) : null;
@@ -331,11 +328,11 @@ $forum_page['hidden_fields'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
 if ($forum_user['g_id'] == FORUM_ADMIN)
-	$forum_page['crumbs'][] = array($lang_admin_common['Users'], forum_link($forum_url['admin_users']));
-$forum_page['crumbs'][] = array($lang_admin_common['Bans'], forum_link($forum_url['admin_bans']));
+	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), forum_link($forum_url['admin_bans']));
 
 
 // Fetch user count

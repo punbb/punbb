@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if (!$forum_user['is_admmod'])
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Mark reports as read
 if (isset($_POST['mark_as_read']))
 {
@@ -51,11 +48,11 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
 if ($forum_user['g_id'] == FORUM_ADMIN)
-	$forum_page['crumbs'][] = array($lang_admin_common['Management'], forum_link($forum_url['admin_reports']));
-$forum_page['crumbs'][] = array($lang_admin_common['Reports'], forum_link($forum_url['admin_reports']));
+	$forum_page['crumbs'][] = array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports']));
+$forum_page['crumbs'][] = array(__('Reports', 'admin_common'), forum_link($forum_url['admin_reports']));
 
 ($hook = get_hook('arp_pre_header_load')) ? eval($hook) : null;
 

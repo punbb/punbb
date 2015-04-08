@@ -36,7 +36,7 @@
 <?php ($hook = get_hook('agr_del_group_del_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit primary"><input type="submit" name="del_group" value="<?php echo __('Remove group', 'admin_groups') ?>" /></span>
-				<span class="cancel"><input type="submit" name="del_group_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="del_group_cancel" value="<?php echo __('Cancel', 'admin_common') ?>" /></span>
 			</div>
 		</form>
 	</div>

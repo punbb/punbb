@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Add/edit a group (stage 1)
 if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 {
@@ -70,9 +67,9 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
+		array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups'])),
 		$mode == 'edit' ? __('Edit group heading', 'admin_groups') : __('Add group heading', 'admin_groups')
 	);
 
@@ -284,7 +281,7 @@ else if (isset($_GET['del_group']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_group_cancel']))
-		redirect(forum_link($forum_url['admin_groups']), $lang_admin_common['Cancel redirect']);
+		redirect(forum_link($forum_url['admin_groups']), __('Cancel redirect', 'admin_common'));
 
 	// Make sure we don't remove the default group
 	if ($group_id == $forum_config['o_default_user_group'])
@@ -367,9 +364,9 @@ else if (isset($_GET['del_group']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-		array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
+		array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups'])),
 		__('Remove group', 'admin_groups')
 	);
 
@@ -399,9 +396,9 @@ $forum_page['item_count'] = $forum_page['fld_count'] = $forum_page['group_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-	array($lang_admin_common['Groups'], forum_link($forum_url['admin_groups']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
+	array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups']))
 );
 
 ($hook = get_hook('agr_pre_header_load')) ? eval($hook) : null;

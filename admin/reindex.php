@@ -19,9 +19,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 {
 	$per_page = intval($_GET['i_per_page']);
@@ -73,8 +70,8 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
+		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 		__('Rebuilding index title', 'admin_reindex')
 	);
 
@@ -186,9 +183,9 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
-	array($lang_admin_common['Rebuild index'], forum_link($forum_url['admin_reindex']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
+	array(__('Rebuild index', 'admin_common'), forum_link($forum_url['admin_reindex']))
 );
 
 ($hook = get_hook('ari_pre_header_load')) ? eval($hook) : null;

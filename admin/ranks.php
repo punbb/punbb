@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Add a rank
 if (isset($_POST['add_rank']))
 {
@@ -173,9 +170,9 @@ $forum_page['fld_count'] = $forum_page['item_count'] = $forum_page['group_count'
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Users'], forum_link($forum_url['admin_users'])),
-	array($lang_admin_common['Ranks'], forum_link($forum_url['admin_ranks']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
+	array(__('Ranks', 'admin_common'), forum_link($forum_url['admin_ranks']))
 );
 
 ($hook = get_hook('ark_pre_header_load')) ? eval($hook) : null;

@@ -33,7 +33,7 @@
 			</div>
 <?php endif; ?>				<div class="frm-buttons">
 				<span class="submit primary caution"><input type="submit" name="uninstall_comply" value="<?= __('Uninstall', 'admin_ext') ?>" /></span>
-				<span class="cancel"><input type="submit" name="uninstall_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="uninstall_cancel" value="<?php echo __('Cancel', 'admin_common') ?>" /></span>
 			</div>
 		</form>
 	</div>

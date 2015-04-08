@@ -63,7 +63,7 @@
 				<span class="submit primary"><input type="submit" name="install_comply" value="<?php echo ((strpos($id, 'hotfix_') !== 0) ?
 					__('Install extension', 'admin_ext') :
 					__('Install hotfix', 'admin_ext')) ?>" /></span>
-				<span class="cancel"><input type="submit" name="install_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="install_cancel" value="<?php echo __('Cancel', 'admin_common') ?>" /></span>
 			</div>
 		</form>
 	</div>

@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_common = array(
+return array(
 
 // Common items
 'Save changes'					=> 'Сохранить изменения',

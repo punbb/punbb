@@ -16,9 +16,6 @@ require __DIR__ . '/../vendor/pautoload.php';
 if ($forum_user['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
-// Load the admin.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-
 // Add a new category
 if (isset($_POST['add_cat']))
 {
@@ -57,7 +54,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_cat_cancel']))
-		redirect(forum_link($forum_url['admin_categories']), $lang_admin_common['Cancel redirect']);
+		redirect(forum_link($forum_url['admin_categories']), __('Cancel redirect', 'admin_common'));
 
 	($hook = get_hook('acg_del_cat_form_submitted')) ? eval($hook) : null;
 
@@ -157,9 +154,9 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-			array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-			array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories'])),
+			array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+			array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
+			array(__('Categories', 'admin_common'), forum_link($forum_url['admin_categories'])),
 			__('Delete category', 'admin_categories')
 		);
 
@@ -258,9 +255,9 @@ $forum_page['hidden_fields'] = array(
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
-	array($lang_admin_common['Categories'], forum_link($forum_url['admin_categories']))
+	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
+	array(__('Categories', 'admin_common'), forum_link($forum_url['admin_categories']))
 );
 
 ($hook = get_hook('acg_pre_header_load')) ? eval($hook) : null;
