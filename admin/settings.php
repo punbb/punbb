@@ -18,7 +18,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_settings.php';
 
 $section = isset($_GET['section']) ? $_GET['section'] : null;
 
@@ -37,7 +36,7 @@ if (isset($_POST['form_sent']))
 			($hook = get_hook('aop_setup_validation')) ? eval($hook) : null;
 
 			if ($form['board_title'] == '')
-				message($lang_admin_settings['Error no board title']);
+				message(__('Error no board title', 'admin_settings'));
 
 			// Clean default_lang, default_style, and sef
 			$form['default_style'] = preg_replace('#[\.\\\/]#', '', $form['default_style']);
@@ -59,7 +58,7 @@ if (isset($_POST['form_sent']))
 			$form['redirect_delay'] = intval($form['redirect_delay']);
 
 			if ($form['timeout_online'] >= $form['timeout_visit'])
-				message($lang_admin_settings['Error timeout value']);
+				message(__('Error timeout value', 'admin_settings'));
 
 			$form['disp_topics_default'] = (intval($form['disp_topics_default']) > 0) ? intval($form['disp_topics_default']) : 1;
 			$form['disp_posts_default'] = (intval($form['disp_posts_default']) > 0) ? intval($form['disp_posts_default']) : 1;
@@ -137,11 +136,11 @@ if (isset($_POST['form_sent']))
 
 			$form['admin_email'] = strtolower($form['admin_email']);
 			if (!is_valid_email($form['admin_email']))
-				message($lang_admin_settings['Error invalid admin e-mail']);
+				message(__('Error invalid admin e-mail', 'admin_settings'));
 
 			$form['webmaster_email'] = strtolower($form['webmaster_email']);
 			if (!is_valid_email($form['webmaster_email']))
-				message($lang_admin_settings['Error invalid web e-mail']);
+				message(__('Error invalid web e-mail', 'admin_settings'));
 
 			if (!isset($form['smtp_ssl']) || $form['smtp_ssl'] != '1') $form['smtp_ssl'] = '0';
 
@@ -157,7 +156,7 @@ if (isset($_POST['form_sent']))
 			if ($form['announcement_message'] != '')
 				$form['announcement_message'] = forum_linebreaks($form['announcement_message']);
 			else
-				$form['announcement_message'] = $lang_admin_settings['Announcement message default'];
+				$form['announcement_message'] = __('Announcement message default', 'admin_settings');
 
 			break;
 		}
@@ -177,7 +176,7 @@ if (isset($_POST['form_sent']))
 			if ($form['rules_message'] != '')
 				$form['rules_message'] = forum_linebreaks($form['rules_message']);
 			else
-				$form['rules_message'] = $lang_admin_settings['Rules default'];
+				$form['rules_message'] = __('Rules default', 'admin_settings');
 
 			break;
 		}
@@ -191,7 +190,7 @@ if (isset($_POST['form_sent']))
 			if ($form['maintenance_message'] != '')
 				$form['maintenance_message'] = forum_linebreaks($form['maintenance_message']);
 			else
-				$form['maintenance_message'] = $lang_admin_settings['Maintenance message default'];
+				$form['maintenance_message'] = __('Maintenance message default', 'admin_settings');
 
 			break;
 		}
@@ -256,11 +255,11 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_settings['Settings updated']);
+	$forum_flash->add_info(__('Settings updated', 'admin_settings'));
 
 	($hook = get_hook('aop_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_settings_'.$section]), $lang_admin_settings['Settings updated']);
+	redirect(forum_link($forum_url['admin_settings_'.$section]), __('Settings updated', 'admin_settings'));
 }
 
 

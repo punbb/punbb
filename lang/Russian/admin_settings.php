@@ -1,6 +1,6 @@
 <?php
 
-$lang_admin_settings = array(
+return array(
 
 'Settings updated'				=> 'Настройки обновлены.',
 
