@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in viewtopic.php
-$lang_topic = array(
+return array(
 
 'Topic byline'			=> '<span>Тема от </span>%s',
 'Reply byline'			=> '<span>Ответ от </span>%s',

@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in viewtopic.php
-$lang_topic = array(
+return array(
 
 'Topic byline'			=>	'<span>Topic by </span>%s',
 'Reply byline'			=>	'<span>Reply by </span>%s',

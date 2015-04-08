@@ -21,14 +21,19 @@ include view('moderate/posts_start');
 		$forum_page['post_ident']['num'] = '<span class="post-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span>';
 
 		if ($cur_post['poster_id'] > 1)
-			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ? $lang_topic['Topic byline'] : $lang_topic['Reply byline']), (($forum_user['g_view_users'] == '1') ? '<a title="'.sprintf($lang_topic['Go to profile'], forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
+			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
+				__('Topic byline', 'topic') : __('Reply byline', 'topic')), (($forum_user['g_view_users'] == '1') ? '<a title="'.
+					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
 		else
-			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ? $lang_topic['Topic byline'] : $lang_topic['Reply byline']), '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</span>';
+			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
+				__('Topic byline', 'topic') : __('Reply byline', 'topic')), '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</span>';
 
-		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.$lang_topic['Permalink post'].'" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
+		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.
+			__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 		if ($cur_post['edited'] != '')
-			$forum_page['post_ident']['edited'] = '<span class="post-edit">'.sprintf($lang_topic['Last edited'], forum_htmlencode($cur_post['edited_by']), format_time($cur_post['edited'])).'</span>';
+			$forum_page['post_ident']['edited'] = '<span class="post-edit">'.
+			sprintf(__('Last edited', 'topic'), forum_htmlencode($cur_post['edited_by']), format_time($cur_post['edited'])).'</span>';
 
 		($hook = get_hook('mr_row_pre_item_ident_merge')) ? eval($hook) : null;
 
@@ -38,7 +43,8 @@ include view('moderate/posts_start');
 			__('Select post', 'misc') . ' ' . forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</label></p>';
 
 		// Generate author identification
-		$forum_page['author_ident']['username'] = '<li class="username">'.(($cur_post['poster_id'] > '1') ? '<a title="'.sprintf($lang_topic['Go to profile'], forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
+		$forum_page['author_ident']['username'] = '<li class="username">'.(($cur_post['poster_id'] > '1') ? '<a title="'.
+			sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
 		$forum_page['author_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($cur_post).'</span></li>';
 
 		// Give the post some class
@@ -60,9 +66,9 @@ include view('moderate/posts_start');
 
 		// Generate the post title
 		if ($cur_post['id'] == $cur_topic['first_post_id'])
-			$forum_page['item_subject'] = sprintf($lang_topic['Topic title'], $cur_topic['subject']);
+			$forum_page['item_subject'] = sprintf(__('Topic title', 'topic'), $cur_topic['subject']);
 		else
-			$forum_page['item_subject'] = sprintf($lang_topic['Reply title'], $cur_topic['subject']);
+			$forum_page['item_subject'] = sprintf(__('Reply title', 'topic'), $cur_topic['subject']);
 
 		$forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 

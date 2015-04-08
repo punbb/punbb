@@ -319,9 +319,6 @@ if (isset($_GET['tid']))
 
 	// Show the moderate topic view
 
-	// Load the viewtopic.php language file
-	require FORUM_ROOT.'lang/'.$forum_user['language'].'/topic.php';
-
 	// Used to disable the Split and Delete buttons if there are no replies to this topic
 	$forum_page['button_status'] = ($cur_topic['num_replies'] == 0) ? ' disabled="disabled"' : '';
 
@@ -365,7 +362,7 @@ if (isset($_GET['tid']))
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array($cur_topic['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject'])))),
-		$lang_topic['Moderate topic']
+		__('Moderate topic', 'topic')
 	);
 
 	// Setup main heading

@@ -28,13 +28,13 @@ if ($forum_config['o_smilies'] == '1')
 
 ?>
 <div class="main-subhead">
-	<h2 class="hn"><span><?php echo $lang_topic['Quick post'] ?></span></h2>
+	<h2 class="hn"><span><?= __('Quick post', 'topic') ?></span></h2>
 </div>
 <div id="brd-qpost" class="main-content main-frm">
 <?php if (!empty($forum_page['text_options'])) echo "\t".
 	'<p class="content-options options">'.sprintf(__('You may use'), implode(' ', $forum_page['text_options'])).'</p>'."\n" ?>
 	<div id="req-msg" class="req-warn ct-box error-box">
-		<p class="important"><?php echo $lang_topic['Required warn'] ?></p>
+		<p class="important"><?= __('Required warn', 'topic') ?></p>
 	</div>
 	<form class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 		<div class="hidden">
