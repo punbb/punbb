@@ -65,9 +65,9 @@ $forum_page['users_searched'] = (($forum_user['g_search_users'] == '1' && $forum
 
 if ($forum_page['num_users'] > 0)
 	$forum_page['items_info'] = generate_items_info((($forum_page['users_searched']) ?
-		__('Users found', 'ul') : __('Users', 'ul')), ($forum_page['start_from'] + 1), $forum_page['num_users']);
+		__('Users found', 'userlist') : __('Users', 'userlist')), ($forum_page['start_from'] + 1), $forum_page['num_users']);
 else
-	$forum_page['items_info'] = __('Users', 'ul');
+	$forum_page['items_info'] = __('Users', 'userlist');
 
 // Generate paging links
 $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
@@ -96,7 +96,7 @@ if (empty($_GET))
 else
 	$forum_page['main_head_options'] = array(
 		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.
-			__('Perform new search', 'ul') . '</a></span>'
+			__('Perform new search', 'userlist') . '</a></span>'
 	);
 
 // Setup form
