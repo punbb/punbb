@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_forums['Add forum head'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Add forum head', 'admin_forums') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_forums']) ?>?action=adddel">
@@ -13,25 +13,25 @@
 			</div>
 <?php ($hook = get_hook('afo_pre_add_forum_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_admin_forums['Add forum legend'] ?></strong></legend>
+				<legend class="group-legend"><strong><?php echo __('Add forum legend', 'admin_forums') ?></strong></legend>
 <?php ($hook = get_hook('afo_pre_new_forum_name')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Forum name label'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Forum name label', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="forum_name" size="35" maxlength="80" required /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('afo_pre_new_forum_position')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Position label'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Position label', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><input type="number" id="fld<?php echo $forum_page['fld_count'] ?>" name="position" size="3" maxlength="3" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('afo_pre_new_forum_cat')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Add to category label'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Add to category label', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="add_to_cat">
 <?php
 	while ($cur_cat = $forum_db->fetch_assoc($result_categories))
@@ -44,7 +44,7 @@
 			</fieldset>
 <?php ($hook = get_hook('afo_add_forum_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="add_forum" value=" <?php echo $lang_admin_forums['Add forum'] ?> " /></span>
+				<span class="submit primary"><input type="submit" name="add_forum" value=" <?php echo __('Add forum', 'admin_forums') ?> " /></span>
 			</div>
 		</form>
 	</div>
@@ -58,7 +58,7 @@ if (!empty($forums))
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_forums['Edit forums head'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Edit forums head', 'admin_forums') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_forums']) ?>?action=edit">
@@ -81,7 +81,7 @@ if (!empty($forums))
 			$forum_page['group_count'] = $forum_page['item_count'] = 0;
 ?>
 			<div class="content-head">
-				<h3 class="hn"><span><?php printf($lang_admin_forums['Forums in category'], forum_htmlencode($cur_forum['cat_name'])) ?></span></h3>
+				<h3 class="hn"><span><?php printf(__('Forums in category', 'admin_forums'), forum_htmlencode($cur_forum['cat_name'])) ?></span></h3>
 			</div>
 			<div class="frm-group frm-hdgroup group<?php echo ++$forum_page['group_count'] ?>">
 
@@ -94,16 +94,17 @@ if (!empty($forums))
 
 ?>
 				<fieldset id="forum<?php echo $cur_forum['fid'] ?>" class="mf-set set<?php echo ++$forum_page['item_count'] ?><?php echo ($forum_page['item_count'] == 1) ? ' mf-head' : ' mf-extra' ?>">
-					<legend><span><?php printf($lang_admin_forums['Edit or delete'], '<a href="'.forum_link($forum_url['admin_forums']).'?edit_forum='.$cur_forum['fid'].'">'.$lang_admin_forums['Edit'].'</a>', '<a href="'.forum_link($forum_url['admin_forums']).'?del_forum='.$cur_forum['fid'].'">'.$lang_admin_forums['Delete'].'</a>') ?></span></legend>
+					<legend><span><?php printf(__('Edit or delete', 'admin_forums'), '<a href="'.forum_link($forum_url['admin_forums']).'?edit_forum='.$cur_forum['fid'].'">'.__('Edit', 'admin_forums').'</a>', '<a href="'.forum_link($forum_url['admin_forums']).'?del_forum='.$cur_forum['fid'].'">'.
+						__('Delete', 'admin_forums').'</a>') ?></span></legend>
 					<div class="mf-box">
 <?php ($hook = get_hook('afo_pre_edit_cur_forum_name')) ? eval($hook) : null; ?>
 						<div class="mf-field mf-field1 forum-field">
-							<span class="aslabel"><?php echo $lang_admin_forums['Forum name'] ?></span>
+							<span class="aslabel"><?php echo __('Forum name', 'admin_forums') ?></span>
 							<span class="fld-input"><?php echo forum_htmlencode($cur_forum['forum_name']) ?></span>
 						</div>
 <?php ($hook = get_hook('afo_pre_edit_cur_forum_position')) ? eval($hook) : null; ?>
 						<div class="mf-field">
-							<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Position label'] ?></span></label><br />
+							<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Position label', 'admin_forums') ?></span></label><br />
 							<span class="fld-input"><input type="number" id="fld<?php echo $forum_page['fld_count'] ?>" name="position[<?php echo $cur_forum['fid'] ?>]" size="3" maxlength="3" value="<?php echo $cur_forum['disp_position'] ?>" /></span>
 						</div>
 					</div>
@@ -119,7 +120,7 @@ if (!empty($forums))
 ?>
 			</div>
 			<div class="frm-buttons">
-				<span class="submit primary"><input type="submit" name="update_positions" value="<?php echo $lang_admin_forums['Update positions'] ?>" /></span>
+				<span class="submit primary"><input type="submit" name="update_positions" value="<?php echo __('Update positions', 'admin_forums') ?>" /></span>
 			</div>
 		</form>
 	</div>

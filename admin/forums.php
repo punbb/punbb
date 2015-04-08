@@ -18,8 +18,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_forums.php';
-
 
 // Add a "default" forum
 if (isset($_POST['add_forum']))
@@ -34,7 +32,7 @@ if (isset($_POST['add_forum']))
 	($hook = get_hook('afo_add_forum_form_submitted')) ? eval($hook) : null;
 
 	if ($forum_name == '')
-		message($lang_admin_forums['Must enter forum message']);
+		message(__('Must enter forum message', 'admin_forums'));
 
 	// Make sure the category we're adding to exists
 	$query = array(
@@ -66,11 +64,11 @@ if (isset($_POST['add_forum']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_forums['Forum added']);
+	$forum_flash->add_info(__('Forum added', 'admin_forums'));
 
 	($hook = get_hook('afo_add_forum_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum added']);
+	redirect(forum_link($forum_url['admin_forums']), __('Forum added', 'admin_forums'));
 }
 
 
@@ -129,11 +127,11 @@ else if (isset($_GET['del_forum']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash->add_info($lang_admin_forums['Forum deleted']);
+		$forum_flash->add_info(__('Forum deleted', 'admin_forums'));
 
 		($hook = get_hook('afo_del_forum_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forum deleted']);
+		redirect(forum_link($forum_url['admin_forums']), __('Forum deleted', 'admin_forums'));
 	}
 	else	// If the user hasn't confirmed the delete
 	{
@@ -157,7 +155,7 @@ else if (isset($_GET['del_forum']))
 			array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 			array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
 			array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums'])),
-			$lang_admin_forums['Delete forum']
+			__('Delete forum', 'admin_forums')
 		);
 
 		($hook = get_hook('afo_del_forum_pre_header_load')) ? eval($hook) : null;
@@ -201,7 +199,7 @@ else if (isset($_POST['update_positions']))
 			$new_disp_position = $positions[$cur_forum['id']];
 
 			if ($new_disp_position < 0)
-				message($lang_admin_forums['Must be integer']);
+				message(__('Must be integer', 'admin_forums'));
 
 			// We only want to update if we changed the position
 			if ($cur_forum['disp_position'] != $new_disp_position)
@@ -223,11 +221,11 @@ else if (isset($_POST['update_positions']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_forums['Forums updated']);
+	$forum_flash->add_info(__('Forums updated', 'admin_forums'));
 
 	($hook = get_hook('afo_update_positions_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_forums']), $lang_admin_forums['Forums updated']);
+	redirect(forum_link($forum_url['admin_forums']), __('Forums updated', 'admin_forums'));
 }
 
 
@@ -267,7 +265,7 @@ else if (isset($_GET['edit_forum']))
 		($hook = get_hook('afo_save_forum_form_submitted')) ? eval($hook) : null;
 
 		if ($forum_name == '')
-			message($lang_admin_forums['Must enter forum message']);
+			message(__('Must enter forum message', 'admin_forums'));
 
 		if ($cat_id < 1)
 			message(__('Bad request'));
@@ -381,11 +379,11 @@ else if (isset($_GET['edit_forum']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash->add_info($lang_admin_forums['Forum updated']);
+		$forum_flash->add_info(__('Forum updated', 'admin_forums'));
 
 		($hook = get_hook('afo_save_forum_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums_forum'], $forum_id), $lang_admin_forums['Forum updated']);
+		redirect(forum_link($forum_url['admin_forums_forum'], $forum_id), __('Forum updated', 'admin_forums'));
 	}
 	else if (isset($_POST['revert_perms']))
 	{
@@ -405,21 +403,23 @@ else if (isset($_GET['edit_forum']))
 
 		generate_quickjump_cache();
 
-		$forum_flash->add_info($lang_admin_forums['Permissions reverted']);
+		$forum_flash->add_info(__('Permissions reverted', 'admin_forums'));
 
 		($hook = get_hook('afo_revert_perms_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']).'?edit_forum='.$forum_id, $lang_admin_forums['Permissions reverted']);
+		redirect(forum_link($forum_url['admin_forums']).'?edit_forum='.$forum_id, __('Permissions reverted', 'admin_forums'));
 	}
 
 	$forum_page['form_info'] = array();
 	if ($cur_forum['redirect_url'])
-		$forum_page['form_info'][] = '<li><span>'.$lang_admin_forums['Forum perms redirect info'].'</span></li>';
+		$forum_page['form_info'][] = '<li><span>'.__('Forum perms redirect info', 'admin_forums').'</span></li>';
 
-	$forum_page['form_info']['read'] = '<li><span>'.$lang_admin_forums['Forum perms read info'].'</span></li>';
-	$forum_page['form_info']['restore'] = '<li><span>'.$lang_admin_forums['Forum perms restore info'].'</span></li>';
-	$forum_page['form_info']['groups'] = '<li><span>'. sprintf($lang_admin_forums['Forum perms groups info'], '<a href="'.forum_link($forum_url['admin_groups']).'">'.$lang_admin_forums['User groups'].'</a>').'</span></li>';
-	$forum_page['form_info']['admins'] = '<li><span>'.$lang_admin_forums['Forum perms admins info'].'</span></li>';
+	$forum_page['form_info']['read'] = '<li><span>'.__('Forum perms read info', 'admin_forums').'</span></li>';
+	$forum_page['form_info']['restore'] = '<li><span>'.__('Forum perms restore info', 'admin_forums').'</span></li>';
+	$forum_page['form_info']['groups'] = '<li><span>'. sprintf(__('Forum perms groups info', 'admin_forums'), '<a href="'.forum_link($forum_url['admin_groups']).'">'.
+		__('User groups', 'admin_forums').'</a>').'</span></li>';
+	$forum_page['form_info']['admins'] = '<li><span>'.
+		__('Forum perms admins info', 'admin_forums').'</span></li>';
 
 	// Setup the form
 	$forum_page['item_count'] = $forum_page['group_count'] = $forum_page['fld_count'] = 0;
@@ -430,7 +430,7 @@ else if (isset($_GET['edit_forum']))
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Start'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Forums'], forum_link($forum_url['admin_forums'])),
-		$lang_admin_forums['Edit forum']
+		__('Edit forum', 'admin_forums')
 	);
 
 	($hook = get_hook('afo_edit_forum_pre_header_load')) ? eval($hook) : null;

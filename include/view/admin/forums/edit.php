@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php printf($lang_admin_forums['Edit forum head'], forum_htmlencode($cur_forum['forum_name'])) ?></span></h2>
+		<h2 class="hn"><span><?php printf(__('Edit forum head', 'admin_forums'), forum_htmlencode($cur_forum['forum_name'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form method="post" class="frm-form" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_forums']) ?>?edit_forum=<?php echo $forum_id ?>">
@@ -12,29 +12,29 @@
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_forums']).'?edit_forum='.$forum_id) ?>" />
 			</div>
 			<div class="content-head">
-				<h3 class="hn"><span><?php echo $lang_admin_forums['Edit forum details head'] ?></span></h3>
+				<h3 class="hn"><span><?php echo __('Edit forum details head', 'admin_forums') ?></span></h3>
 			</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_details_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_admin_forums['Edit forum details legend'] ?></strong></legend>
+				<legend class="group-legend"><strong><?php echo __('Edit forum details legend', 'admin_forums') ?></strong></legend>
 <?php ($hook = get_hook('afo_edit_forum_pre_forum_name')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Forum name'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Forum name', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="forum_name" size="35" maxlength="80" value="<?php echo forum_htmlencode($cur_forum['forum_name']) ?>" required /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_forum_descrip')) ? eval($hook) : null; ?>
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Forum description'] ?></span> <small><?php echo $lang_admin_forums['Forum description help'] ?></small></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Forum description', 'admin_forums') ?></span> <small><?php echo __('Forum description help', 'admin_forums') ?></small></label><br />
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="forum_desc" rows="3" cols="50"><?php echo forum_htmlencode($cur_forum['forum_desc']) ?></textarea></span></div>
 					</div>
 				</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_forum_cat')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Category assignment'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Category assignment', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_id">
 <?php
 
@@ -51,18 +51,19 @@
 <?php ($hook = get_hook('afo_edit_forum_pre_forum_sort_by')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Sort topics by'] ?></span></label><br />
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Sort topics by', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="sort_by">
-							<option value="0"<?php if ($cur_forum['sort_by'] == '0') echo ' selected="selected"' ?>><?php echo $lang_admin_forums['Sort last post'] ?></option>
-							<option value="1"<?php if ($cur_forum['sort_by'] == '1') echo ' selected="selected"' ?>><?php echo $lang_admin_forums['Sort topic start'] ?></option>
+							<option value="0"<?php if ($cur_forum['sort_by'] == '0') echo ' selected="selected"' ?>><?php echo __('Sort last post', 'admin_forums') ?></option>
+							<option value="1"<?php if ($cur_forum['sort_by'] == '1') echo ' selected="selected"' ?>><?php echo __('Sort topic start', 'admin_forums') ?></option>
 <?php ($hook = get_hook('afo_edit_forum_modify_sort_by')) ? eval($hook) : null; ?>						</select></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_forum_redirect_url')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
-						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_forums['Redirect URL'] ?></span></label><br />
-						<span class="fld-input"><?php echo ($cur_forum['num_topics']) ? '<input type="url" id="fld'.$forum_page['fld_count'].'" name="redirect_url" size="45" maxlength="100" value="'.$lang_admin_forums['Only for empty forums'].'" disabled="disabled" />' : '<input type="text" id="fld'.$forum_page['fld_count'].'" name="redirect_url" size="35" maxlength="100" value="'.forum_htmlencode($cur_forum['redirect_url']).'" />' ?></span>
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Redirect URL', 'admin_forums') ?></span></label><br />
+						<span class="fld-input"><?php echo ($cur_forum['num_topics']) ? '<input type="url" id="fld'.$forum_page['fld_count'].'" name="redirect_url" size="45" maxlength="100" value="'.
+							__('Only for empty forums', 'admin_forums') . '" disabled="disabled" />' : '<input type="text" id="fld'.$forum_page['fld_count'].'" name="redirect_url" size="35" maxlength="100" value="'.forum_htmlencode($cur_forum['redirect_url']).'" />' ?></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_details_fieldset_end')) ? eval($hook) : null; ?>
@@ -78,7 +79,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
 			<div class="content-head">
-				<h3 class="hn"><span><?php echo $lang_admin_forums['Edit forum perms head'] ?></span></h3>
+				<h3 class="hn"><span><?php echo __('Edit forum perms head', 'admin_forums') ?></span></h3>
 			</div>
 			<div class="ct-box">
 				<ul>
@@ -86,7 +87,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 				</ul>
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $lang_admin_forums['Edit forum perms legend'] ?></strong></legend>
+				<legend class="group-legend"><strong><?php echo __('Edit forum perms legend', 'admin_forums') ?></strong></legend>
 <?php
 
 	$i = 2;
@@ -112,19 +113,19 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 						<div class="mf-item">
 							<input type="hidden" name="read_forum_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo ($read_forum) ? '1' : '0' ?>" />
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="read_forum_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php if ($read_forum) echo ' checked="checked"'; echo ($cur_perm['g_read_board'] == '0') ? ' disabled="disabled"' : ''; ?> /></span>
-							<label for="fld<?php echo $forum_page['fld_count'] ?>"<?php if (!$read_forum_def) echo ' class="warn"' ?>><?php echo $lang_admin_forums['Read forum'] ?> <?php if (!$read_forum_def) echo $lang_admin_forums['Not default'] ?></label>
+							<label for="fld<?php echo $forum_page['fld_count'] ?>"<?php if (!$read_forum_def) echo ' class="warn"' ?>><?php echo __('Read forum', 'admin_forums') ?> <?php if (!$read_forum_def) echo __('Not default', 'admin_forums') ?></label>
 						</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_cur_group_post_replies_permission')) ? eval($hook) : null; ?>
 						<div class="mf-item">
 							<input type="hidden" name="post_replies_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo ($post_replies) ? '1' : '0' ?>" />
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="post_replies_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php if ($post_replies) echo ' checked="checked"'; echo ($cur_forum['redirect_url'] != '') ? ' disabled="disabled"' : ''; ?> /></span>
-							<label for="fld<?php echo $forum_page['fld_count'] ?>"<?php if (!$post_replies_def) echo ' class="warn"'; ?>><?php echo $lang_admin_forums['Post replies'] ?> <?php if (!$post_replies_def) echo $lang_admin_forums['Not default'] ?></label>
+							<label for="fld<?php echo $forum_page['fld_count'] ?>"<?php if (!$post_replies_def) echo ' class="warn"'; ?>><?php echo __('Post replies', 'admin_forums') ?> <?php if (!$post_replies_def) echo __('Not default', 'admin_forums') ?></label>
 						</div>
 <?php ($hook = get_hook('afo_edit_forum_pre_cur_group_post_topics_permission')) ? eval($hook) : null; ?>
 						<div class="mf-item">
 							<input type="hidden" name="post_topics_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo ($post_topics) ? '1' : '0' ?>" />
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="post_topics_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php if ($post_topics) echo ' checked="checked"'; echo ($cur_forum['redirect_url'] != '') ? ' disabled="disabled"' : ''; ?> /></span>
-							<label for="fld<?php echo $forum_page['fld_count'] ?>"<?php if (!$post_topics_def) echo ' class="warn"'; ?>><?php echo $lang_admin_forums['Post topics'] ?> <?php if (!$post_topics_def) echo $lang_admin_forums['Not default'] ?></label>
+							<label for="fld<?php echo $forum_page['fld_count'] ?>"<?php if (!$post_topics_def) echo ' class="warn"'; ?>><?php echo __('Post topics', 'admin_forums') ?> <?php if (!$post_topics_def) echo __('Not default', 'admin_forums') ?></label>
 						</div>
 <?php ($hook = get_hook('afo_edit_forum_post_cur_group_post_topics_permission')) ? eval($hook) : null; ?>
 					</div>
@@ -141,7 +142,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 			</fieldset>
 			<div class="frm-buttons">
 				<span class="submit primary"><input type="submit" name="save" value="<?php echo $lang_admin_common['Save changes'] ?>" /></span>
-				<span class="submit"><input type="submit" name="revert_perms" value="<?php echo $lang_admin_forums['Restore defaults'] ?>" formnovalidate /></span>
+				<span class="submit"><input type="submit" name="revert_perms" value="<?php echo __('Restore defaults', 'admin_forums') ?>" formnovalidate /></span>
 			</div>
 		</form>
 	</div>

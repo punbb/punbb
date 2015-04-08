@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in admin-categories
-$lang_admin_forums = array(
+return array(
 
 'Edit forum head'				=>	'Edit forum: %s',
 'Edit or delete'				=>	'%s or %s',
