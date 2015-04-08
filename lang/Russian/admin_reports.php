@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_reports = array(
+return array(
 
 'No reports selected'			=> 'Не выбраны обращения, которые отмечены как прочтённые.',
 'Reports marked read'			=> 'Обращения отмечены как обработанные.',

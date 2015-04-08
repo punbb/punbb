@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_reports = array(
+return array(
 
 'No reports selected'			=>	'No reports were selected to be marked as read.',
 'Reports marked read'			=>	'Reports marked as read.',

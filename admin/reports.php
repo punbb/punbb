@@ -18,14 +18,12 @@ if (!$forum_user['is_admmod'])
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_reports.php';
-
 
 // Mark reports as read
 if (isset($_POST['mark_as_read']))
 {
 	if (empty($_POST['reports']))
-		message($lang_admin_reports['No reports selected']);
+		message(__('No reports selected', 'admin_reports'));
 
 	($hook = get_hook('arp_mark_as_read_form_submitted')) ? eval($hook) : null;
 
@@ -41,11 +39,11 @@ if (isset($_POST['mark_as_read']))
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_reports['Reports marked read']);
+	$forum_flash->add_info(__('Reports marked read', 'admin_reports'));
 
 	($hook = get_hook('arp_mark_as_read_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_reports']), $lang_admin_reports['Reports marked read']);
+	redirect(forum_link($forum_url['admin_reports']), __('Reports marked read', 'admin_reports'));
 }
 
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
