@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_ranks = array(
+return array(
 
 'Rank head'						=>	'Add, edit or remove ranks',
 'Rank'							=>	'Rank',

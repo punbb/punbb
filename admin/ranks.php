@@ -18,8 +18,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_ranks.php';
-
 
 // Add a rank
 if (isset($_POST['add_rank']))
@@ -28,10 +26,10 @@ if (isset($_POST['add_rank']))
 	$min_posts = intval($_POST['new_min_posts']);
 
 	if ($rank == '')
-		message($lang_admin_ranks['Title message']);
+		message(__('Title message', 'admin_ranks'));
 
 	if ($min_posts < 0)
-		message($lang_admin_ranks['Min posts message']);
+		message(__('Min posts message', 'admin_ranks'));
 
 	($hook = get_hook('ark_add_rank_form_submitted')) ? eval($hook) : null;
 
@@ -46,7 +44,7 @@ if (isset($_POST['add_rank']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result) > 0)
-		message(sprintf($lang_admin_ranks['Min posts occupied message'], $min_posts));
+		message(sprintf(__('Min posts occupied message', 'admin_ranks'), $min_posts));
 
 	$query = array(
 		'INSERT'	=> 'rank, min_posts',
@@ -64,11 +62,11 @@ if (isset($_POST['add_rank']))
 	generate_ranks_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_ranks['Rank added']);
+	$forum_flash->add_info(__('Rank added', 'admin_ranks'));
 
 	($hook = get_hook('ark_add_rank_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_ranks']), $lang_admin_ranks['Rank added']);
+	redirect(forum_link($forum_url['admin_ranks']), __('Rank added', 'admin_ranks'));
 }
 
 
@@ -81,10 +79,10 @@ else if (isset($_POST['update']))
 	$min_posts = intval($_POST['min_posts'][$id]);
 
 	if ($rank == '')
-		message($lang_admin_ranks['Title message']);
+		message(__('Title message', 'admin_ranks'));
 
 	if ($min_posts < 0)
-		message($lang_admin_ranks['Min posts message']);
+		message(__('Min posts message', 'admin_ranks'));
 
 	($hook = get_hook('ark_update_form_submitted')) ? eval($hook) : null;
 
@@ -99,7 +97,7 @@ else if (isset($_POST['update']))
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 	if ($forum_db->result($result) > 0)
-		message(sprintf($lang_admin_ranks['Min posts occupied message'], $min_posts));
+		message(sprintf(__('Min posts occupied message', 'admin_ranks'), $min_posts));
 
 	$query = array(
 		'UPDATE'	=> 'ranks',
@@ -117,11 +115,11 @@ else if (isset($_POST['update']))
 	generate_ranks_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_ranks['Rank updated']);
+	$forum_flash->add_info(__('Rank updated', 'admin_ranks'));
 
 	($hook = get_hook('ark_update_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_ranks']), $lang_admin_ranks['Rank updated']);
+	redirect(forum_link($forum_url['admin_ranks']), __('Rank updated', 'admin_ranks'));
 }
 
 
@@ -147,11 +145,11 @@ else if (isset($_POST['remove']))
 	generate_ranks_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_ranks['Rank removed']);
+	$forum_flash->add_info(__('Rank removed', 'admin_ranks'));
 
 	($hook = get_hook('ark_remove_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_ranks']), $lang_admin_ranks['Rank removed']);
+	redirect(forum_link($forum_url['admin_ranks']), __('Rank removed', 'admin_ranks'));
 }
 
 
