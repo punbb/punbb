@@ -18,8 +18,6 @@ if (!$forum_user['is_admmod'])
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_censoring.php';
-
 
 // Add a censor word
 if (isset($_POST['add_word']))
@@ -28,7 +26,7 @@ if (isset($_POST['add_word']))
 	$replace_with = forum_trim($_POST['new_replace_with']);
 
 	if ($search_for == '' || $replace_with == '')
-		message($lang_admin_censoring['Must enter text message']);
+		message(__('Must enter text message', 'admin_censoring'));
 
 	($hook = get_hook('acs_add_word_form_submitted')) ? eval($hook) : null;
 
@@ -48,11 +46,11 @@ if (isset($_POST['add_word']))
 	generate_censors_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_censoring['Censor word added']);
+	$forum_flash->add_info(__('Censor word added', 'admin_censoring'));
 
 	($hook = get_hook('acs_add_word_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word added']);
+	redirect(forum_link($forum_url['admin_censoring']), __('Censor word added', 'admin_censoring'));
 }
 
 
@@ -65,7 +63,7 @@ else if (isset($_POST['update']))
 	$replace_with = forum_trim($_POST['replace_with'][$id]);
 
 	if ($search_for == '' || $replace_with == '')
-		message($lang_admin_censoring['Must enter text message']);
+		message(__('Must enter text message', 'admin_censoring'));
 
 	($hook = get_hook('acs_update_form_submitted')) ? eval($hook) : null;
 
@@ -85,11 +83,11 @@ else if (isset($_POST['update']))
 	generate_censors_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_censoring['Censor word updated']);
+	$forum_flash->add_info(__('Censor word updated', 'admin_censoring'));
 
 	($hook = get_hook('acs_update_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word updated']);
+	redirect(forum_link($forum_url['admin_censoring']), __('Censor word updated', 'admin_censoring'));
 }
 
 
@@ -115,11 +113,11 @@ else if (isset($_POST['remove']))
 	generate_censors_cache();
 
 	// Add flash message
-	$forum_flash->add_info($lang_admin_censoring['Censor word removed']);
+	$forum_flash->add_info(__('Censor word removed', 'admin_censoring'));
 
 	($hook = get_hook('acs_remove_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), $lang_admin_censoring['Censor word removed']);
+	redirect(forum_link($forum_url['admin_censoring']), __('Censor word removed', 'admin_censoring'));
 }
 
 

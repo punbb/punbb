@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in admin_censoring
-$lang_admin_censoring = array(
+return array(
 
 'Censored word head'				=> 'Добавление, изменение и удаление нецензурных слов',
 'Add censored word legend'			=> 'Добавить слово',
