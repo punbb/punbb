@@ -18,8 +18,6 @@ if (!$forum_user['is_admmod'])
 
 // Load the admin.php language files
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_index.php';
-
 
 // Show phpinfo() output
 if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'] == FORUM_ADMIN)
@@ -28,7 +26,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'
 
 	// Is phpinfo() a disabled function?
 	if (strpos(strtolower((string)@ini_get('disable_functions')), 'phpinfo') !== false)
-		message($lang_admin_index['phpinfo disabled']);
+		message(__('phpinfo disabled', 'admin_index'));
 
 	phpinfo();
 	exit;
@@ -39,7 +37,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'
 if ($forum_user['g_id'] == FORUM_ADMIN)
 {
 	if ($forum_config['o_check_for_updates'] == '1')
-		$punbb_updates = $lang_admin_index['Check for updates enabled'];
+		$punbb_updates = __('Check for updates enabled', 'admin_index');
 	else
 	{
 		// Get a list of installed hotfix extensions
@@ -58,7 +56,8 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 			$hotfixes[] = urlencode($row['id']);
 		}
 
-		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode($forum_config['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.$lang_admin_index['Check for updates manual'].'</a>';
+		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode($forum_config['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.
+			__('Check for updates manual', 'admin_index') . '</a>';
 	}
 }
 
@@ -82,7 +81,7 @@ else if (@/**/is_readable('/proc/loadavg'))
 else if (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
 	$server_load = forum_number_format(round($load_averages[1], 2), 2).' '.forum_number_format(round($load_averages[2], 2), 2).' '.forum_number_format(round($load_averages[3], 2), 2);
 else
-	$server_load = $lang_admin_index['Not available'];
+	$server_load = __('Not available', 'admin_index');
 
 
 // Get number of current visitors
@@ -132,7 +131,7 @@ else if (ini_get('eaccelerator.enable'))
 else if (ini_get('xcache.cacher'))
 	$php_accelerator = '<a href="http://xcache.lighttpd.net/">XCache</a>';
 else
-	$php_accelerator = $lang_admin_index['Not applicable'];
+	$php_accelerator = __('Not applicable', 'admin_index');
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(

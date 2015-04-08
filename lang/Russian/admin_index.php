@@ -2,7 +2,7 @@
 
 // Language definitions used in the index page of the admin panel
 
-$lang_admin_index = array(
+return array(
 
 'Information head'				=> 'Добро пожаловать в панель администратора PunBB. Посетите <a href="http://punbb.ru/">форум русской поддержки</a>.',
 'Alerts'						=> 'Сообщения администратору',
