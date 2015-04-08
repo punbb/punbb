@@ -1058,9 +1058,6 @@ else if (isset($_GET['unstick']))
 if ($cur_forum['num_topics'] == 0)
 	message(__('Bad request'));
 
-// Load the viewforum.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/forum.php';
-
 // Determine the topic offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_topics']);
 

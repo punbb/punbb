@@ -14,10 +14,6 @@ require __DIR__ . '/vendor/pautoload.php';
 if ($forum_user['g_read_board'] == '0')
 	message(__('No view'));
 
-// Load the viewforum.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/forum.php';
-
-
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
 	message(__('Bad request'));
@@ -79,7 +75,7 @@ $forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_top
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($cur_forum['num_topics']));
-$forum_page['items_info'] = generate_items_info($lang_forum['Topics'], ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
+$forum_page['items_info'] = generate_items_info(__('Topics', 'forum'), ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
 
 ($hook = get_hook('vf_modify_page_details')) ? eval($hook) : null;
 
@@ -162,33 +158,41 @@ $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
 		__('Paging separator'), array($id, sef_friendly($cur_forum['forum_name']))).'</p>';
 
 if ($forum_user['may_post'])
-	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link($forum_url['new_topic'], $id).'"><span>'.$lang_forum['Post topic'].'</span></a></p>';
+	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link($forum_url['new_topic'], $id).'"><span>'.
+	__('Post topic', 'forum') . '</span></a></p>';
 else if ($forum_user['is_guest'])
-	$forum_page['page_post']['posting'] = '<p class="posting">'.sprintf($lang_forum['Login to post'], '<a href="'.forum_link($forum_url['login']).'">'.
+	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	sprintf(__('Login to post', 'forum'), '<a href="'.forum_link($forum_url['login']).'">'.
 		__('login').'</a>', '<a href="'.forum_link($forum_url['register']).'">'.__('register').'</a>').'</p>';
 else
-	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_forum['No permission'].'</p>';
+	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	__('No permission', 'forum') . '</p>';
 
 // Setup main options
 $forum_page['main_head_options'] = $forum_page['main_foot_options'] = array();
 
 if (!empty($topics))
-	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>';
+	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.
+	__('RSS forum feed', 'forum') . '</a></span>';
 
 if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 {
 	if ($cur_forum['is_subscribed'])
-		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_unsubscribe'], array($id, generate_form_token('forum_unsubscribe'.$id.$forum_user['id']))).'"><em>'.$lang_forum['Unsubscribe'].'</em></a></span>';
+		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_unsubscribe'], array($id, generate_form_token('forum_unsubscribe'.$id.$forum_user['id']))).'"><em>'.
+		__('Unsubscribe', 'forum') . '</em></a></span>';
 	else
-		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_subscribe'], array($id, generate_form_token('forum_subscribe'.$id.$forum_user['id']))).'" title="'.$lang_forum['Subscribe info'].'">'.$lang_forum['Subscribe'].'</a></span>';
+		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_subscribe'], array($id, generate_form_token('forum_subscribe'.$id.$forum_user['id']))).'" title="'.
+		__('Subscribe info', 'forum') . '">' . __('Subscribe', 'forum') . '</a></span>';
 }
 
 if (!$forum_user['is_guest'] && !empty($topics))
 {
-	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
+	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.
+		__('Mark forum read', 'forum') . '</a></span>';
 
 	if ($forum_page['is_admmod'])
-		$forum_page['main_foot_options']['moderate'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
+		$forum_page['main_foot_options']['moderate'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.
+		__('Moderate forum', 'forum') . '</a></span>';
 }
 
 // Setup breadcrumbs
@@ -198,7 +202,8 @@ $forum_page['crumbs'] = array(
 );
 
 // Setup main header
-$forum_page['main_title'] = '<a class="permalink" href="'.forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))).'" rel="bookmark" title="'.$lang_forum['Permalink forum'].'">'.forum_htmlencode($cur_forum['forum_name']).'</a>';
+$forum_page['main_title'] = '<a class="permalink" href="'.forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))).'" rel="bookmark" title="'.
+	__('Permalink forum', 'forum') . '">'.forum_htmlencode($cur_forum['forum_name']).'</a>';
 
 if ($forum_page['num_pages'] > 1)
 	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
