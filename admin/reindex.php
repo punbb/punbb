@@ -21,8 +21,6 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_reindex.php';
-
 
 if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 {
@@ -77,7 +75,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Management'], forum_link($forum_url['admin_reports'])),
-		$lang_admin_reindex['Rebuilding index title']
+		__('Rebuilding index title', 'admin_reindex')
 	);
 
 ?>
@@ -95,7 +93,7 @@ body {
 </style>
 </head>
 <body>
-<p><?php echo $lang_admin_reindex['Rebuilding index'] ?></p>
+<p><?php echo __('Rebuilding index', 'admin_reindex') ?></p>
 
 <?php
 
@@ -124,7 +122,7 @@ body {
 	echo '<p>';
 	while ($cur_post = $forum_db->fetch_row($result))
 	{
-		echo sprintf($lang_admin_reindex['Processing post'], $cur_post[0], $cur_post[2]).'<br />'."\n";
+		echo sprintf(__('Processing post', 'admin_reindex'), $cur_post[0], $cur_post[2]).'<br />'."\n";
 
 		if ($cur_post[0] == $cur_post[4])	// This is the "topic post" so we have to index the subject as well
 			update_search_index('post', $cur_post[0], $cur_post[1], $cur_post[3]);
@@ -159,7 +157,9 @@ body {
 	$forum_db->end_transaction();
 	$forum_db->close();
 
-	exit('<script type="text/javascript">window.location="'.forum_link($forum_url['admin_reindex']).$query_str.'"</script><br />'.$lang_admin_reindex['Javascript redirect'].' <a href="'.forum_link($forum_url['admin_reindex']).$query_str.'">'.$lang_admin_reindex['Click to continue'].'</a>.');
+	exit('<script type="text/javascript">window.location="'.forum_link($forum_url['admin_reindex']).$query_str.'"</script><br />'.
+		__('Javascript redirect', 'admin_reindex') . ' <a href="'.forum_link($forum_url['admin_reindex']).$query_str.'">'.
+		__('Click to continue', 'admin_reindex') . '</a>.');
 }
 
 

@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_reindex = array(
+return array(
 
 'Reindex heading'			=>	'Rebuild search index to restore search performance',
 'Rebuild index legend'		=>	'Rebuild search index',
