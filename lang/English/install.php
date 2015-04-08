@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in install.php
-$lang_install = array(
+return array(
 
 // Install Form
 'Install PunBB'				=>	'Install PunBB %s',
