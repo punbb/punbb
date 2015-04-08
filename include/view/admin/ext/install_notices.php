@@ -8,7 +8,7 @@
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
-			<p><?= $lang_admin_ext['Extension installed info'] ?></p>
+			<p><?= __('Extension installed info', 'admin_ext') ?></p>
 			<ul class="data-list">
 				<?php foreach ($notices as $cur_notice) { ?>
 					<li><span><?= $cur_notice ?></span></li>

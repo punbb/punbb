@@ -4,7 +4,7 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_ext['Hotfixes available'] ?></span></h2>
+		<h2 class="hn"><span><?= __('Hotfixes available', 'admin_ext') ?></span></h2>
 	</div>
 	<div class="main-content main-hotfixes">
 <?php
@@ -26,7 +26,10 @@
 		{
 			if (!array_key_exists($hotfix['attributes']['id'], $inst_exts))
 			{
-				$forum_page['ext_item'][] = '<div class="ct-box info-box hotfix available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($hotfix['content']).'</h3>'."\n\t\t\t".'<ul>'."\n\t\t\t\t".'<li><span>'.sprintf($lang_admin_ext['Extension by'], 'PunBB').'</span></li>'."\n\t\t\t\t".'<li><span>'.$lang_admin_ext['Hotfix description'].'</span></li>'."\n\t\t\t".'</ul>'."\n\t\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.$lang_admin_ext['Install hotfix'].'</a></span></p>'."\n\t\t".'</div>';
+				$forum_page['ext_item'][] = '<div class="ct-box info-box hotfix available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($hotfix['content']).'</h3>'."\n\t\t\t".'<ul>'."\n\t\t\t\t".'<li><span>'.
+					sprintf(__('Extension by', 'admin_ext'), 'PunBB').'</span></li>'."\n\t\t\t\t".'<li><span>'.
+					__('Hotfix description', 'admin_ext') . '</span></li>'."\n\t\t\t".'</ul>'."\n\t\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.
+					__('Install hotfix', 'admin_ext') . '</a></span></p>'."\n\t\t".'</div>';
 				++$num_exts;
 			}
 		}
@@ -41,7 +44,7 @@
 
 ?>
 		<div class="ct-box info-box">
-			<p><?php echo $lang_admin_ext['No available hotfixes'] ?></p>
+			<p><?= __('No available hotfixes', 'admin_ext') ?></p>
 		</div>
 <?php
 
@@ -55,7 +58,7 @@
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_ext['Installed hotfixes'] ?></span></h2>
+		<h2 class="hn"><span><?= __('Installed hotfixes', 'admin_ext') ?></span></h2>
 	</div>
 	<div class="main-content main-hotfixes">
 <?php
@@ -67,18 +70,23 @@
 				continue;
 
 		$forum_page['ext_actions'] = array(
-			'flip'		=> '<span class="first-item"><a href="'.$base_url.'/admin/extensions.php?section=hotfixes&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ? $lang_admin_ext['Disable'] : $lang_admin_ext['Enable']).'</a></span>',
-			'uninstall'	=> '<span><a href="'.$base_url.'/admin/extensions.php?section=hotfixese&amp;uninstall='.$id.'">'.$lang_admin_ext['Uninstall'].'</a></span>'
+			'flip'		=> '<span class="first-item"><a href="'.$base_url.'/admin/extensions.php?section=hotfixes&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ?
+				__('Disable', 'admin_ext') : __('Enable', 'admin_ext')).'</a></span>',
+			'uninstall'	=> '<span><a href="'.$base_url.'/admin/extensions.php?section=hotfixese&amp;uninstall='.$id.'">'.
+				__('Uninstall', 'admin_ext').'</a></span>'
 		);
 
 		($hook = get_hook('aex_section_hotfixes_pre_ext_actions')) ? eval($hook) : null;
 
 ?>
 		<div class="ct-box info-box hotfix <?php echo $ext['disabled'] == '1' ? 'disabled' : 'enabled' ?>">
-			<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($ext['title']) ?><?php if ($ext['disabled'] == '1') echo ' ( <span>'.$lang_admin_ext['Extension disabled'].'</span> )' ?></span></h3>
+			<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($ext['title']) ?><?php if ($ext['disabled'] == '1') echo ' ( <span>'.
+				__('Extension disabled', 'admin_ext') . '</span> )' ?></span></h3>
 			<ul class="data-list">
-				<li><span><?php echo ((strpos($id, 'hotfix_') !== 0) ? sprintf($lang_admin_ext['Version'], $ext['version']) : $lang_admin_ext['Hotfix']) ?></span></li>
-				<li><span><?php printf($lang_admin_ext['Extension by'], forum_htmlencode($ext['author'])) ?></span></li>
+				<li><span><?php echo ((strpos($id, 'hotfix_') !== 0) ?
+					sprintf(__('Version', 'admin_ext'), $ext['version']) :
+					__('Hotfix', 'admin_ext')) ?></span></li>
+				<li><span><?php printf(__('Extension by', 'admin_ext'), forum_htmlencode($ext['author'])) ?></span></li>
 				<?php if ($ext['description'] != ''): ?>
 					<li><span><?php echo forum_htmlencode($ext['description']) ?></span></li>
 				<?php endif; ?>
@@ -94,7 +102,7 @@
 
 ?>
 		<div class="ct-box info-box">
-			<p><?php echo $lang_admin_ext['No installed hotfixes'] ?></p>
+			<p><?= __('No installed hotfixes', 'admin_ext') ?></p>
 		</div>
 <?php
 

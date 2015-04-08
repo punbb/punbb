@@ -21,11 +21,10 @@ if ($forum_user['g_id'] != FORUM_ADMIN)
 
 // Load the admin.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_common.php';
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_ext.php';
 
 // Make sure we have XML support
 if (!function_exists('xml_parser_create'))
-	message($lang_admin_ext['No XML support']);
+	message(__('No XML support', 'admin_ext'));
 
 $section = isset($_GET['section']) ? $_GET['section'] : null;
 
@@ -61,7 +60,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	 */
 	if (!empty($errors))
 		message(isset($_GET['install']) ?
-			__('Bad request') : $lang_admin_ext['Hotfix download failed']);
+			__('Bad request') : __('Hotfix download failed', 'admin_ext'));
 
 	// Get core amd major versions
 	if (!defined('FORUM_DISABLE_EXTENSIONS_VERSION_CHECK'))
@@ -70,7 +69,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		list($extension_maxtestedon_version_core, $extension_maxtestedon_version_major) = explode('.', clean_version($ext_data['extension']['maxtestedon']));
 
 		if (version_compare($forum_version_core.'.'.$forum_version_major, $extension_maxtestedon_version_core.'.'.$extension_maxtestedon_version_major, '>'))
-			message($lang_admin_ext['Maxtestedon error']);
+			message(__('Maxtestedon error', 'admin_ext'));
 	}
 
 	// Make sure we have an array of dependencies
@@ -101,11 +100,11 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	    if (!array_key_exists($ext_dependancy_id, $installed_ext))
 	    {
-		   $errors[] = sprintf($lang_admin_ext['Missing dependency'], $ext_dependancy_id);
+		   $errors[] = sprintf(__('Missing dependency', 'admin_ext'), $ext_dependancy_id);
 	    }
 	    else if (is_array($dependency) AND isset($dependency['attributes']['minversion']) AND version_compare($dependency['attributes']['minversion'], $installed_ext[$ext_dependancy_id]['version']) > 0)
 	    {
-	    	$errors[] = sprintf($lang_admin_ext['Version dependency error'], $dependency['content'], $dependency['attributes']['minversion']);
+	    	$errors[] = sprintf(__('Version dependency error', 'admin_ext'), $dependency['content'], $dependency['attributes']['minversion']);
 	    }
 	}
 
@@ -115,7 +114,8 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
 		array((strpos($id, 'hotfix_') === 0) ? $lang_admin_common['Manage hotfixes'] : $lang_admin_common['Manage extensions'], (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
-		(strpos($id, 'hotfix_') === 0) ? $lang_admin_ext['Install hotfix'] : $lang_admin_ext['Install extension']
+		(strpos($id, 'hotfix_') === 0) ? __('Install hotfix', 'admin_ext') :
+			__('Install extension', 'admin_ext')
 	);
 
 	if (isset($_POST['install_comply']) AND empty($errors))
@@ -255,16 +255,16 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		{
 			// Add flash message
 			if (strpos($id, 'hotfix_') === 0)
-				$forum_flash->add_info($lang_admin_ext['Hotfix installed']);
+				$forum_flash->add_info(__('Hotfix installed', 'admin_ext'));
 			else
-				$forum_flash->add_info($lang_admin_ext['Extension installed']);
+				$forum_flash->add_info(__('Extension installed', 'admin_ext'));
 
 			($hook = get_hook('aex_install_comply_pre_redirect')) ? eval($hook) : null;
 
 			if (strpos($id, 'hotfix_') === 0)
-				redirect(forum_link($forum_url['admin_extensions_hotfixes']), $lang_admin_ext['Hotfix installed']);
+				redirect(forum_link($forum_url['admin_extensions_hotfixes']), __('Hotfix installed', 'admin_ext'));
 			else
-				redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_ext['Extension installed']);
+				redirect(forum_link($forum_url['admin_extensions_manage']), __('Extension installed', 'admin_ext'));
 		}
 	}
 
@@ -322,7 +322,7 @@ else if (isset($_GET['uninstall']))
 
 	if (!is_null($dependency) && $dependency !== false)
 	{
-		message(sprintf($lang_admin_ext['Uninstall dependency'], $dependency['id']));
+		message(sprintf(__('Uninstall dependency', 'admin_ext'), $dependency['id']));
 	}
 
 	// Setup breadcrumbs
@@ -331,7 +331,7 @@ else if (isset($_GET['uninstall']))
 		array($lang_admin_common['Forum administration'], forum_link($forum_url['admin_index'])),
 		array($lang_admin_common['Extensions'], forum_link($forum_url['admin_extensions_manage'])),
 		array((strpos($id, 'hotfix_') === 0) ? $lang_admin_common['Manage hotfixes'] : $lang_admin_common['Manage extensions'], (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
-		(strpos($id, 'hotfix_') === 0) ? $lang_admin_ext['Uninstall hotfix'] : $lang_admin_ext['Uninstall extension']
+		(strpos($id, 'hotfix_') === 0) ? __('Uninstall hotfix', 'admin_ext') : __('Uninstall extension', 'admin_ext')
 	);
 
 	// If the user has confirmed the uninstall
@@ -391,16 +391,16 @@ else if (isset($_GET['uninstall']))
 		{
 			// Add flash message
 			if (strpos($id, 'hotfix_') === 0)
-				$forum_flash->add_info($lang_admin_ext['Hotfix uninstalled']);
+				$forum_flash->add_info(__('Hotfix uninstalled', 'admin_ext'));
 			else
-				$forum_flash->add_info($lang_admin_ext['Extension uninstalled']);
+				$forum_flash->add_info(__('Extension uninstalled', 'admin_ext'));
 
 			($hook = get_hook('aex_uninstall_comply_pre_redirect')) ? eval($hook) : null;
 
 			if (strpos($id, 'hotfix_') === 0)
-				redirect(forum_link($forum_url['admin_extensions_hotfixes']), $lang_admin_ext['Hotfix uninstalled']);
+				redirect(forum_link($forum_url['admin_extensions_hotfixes']), __('Hotfix uninstalled', 'admin_ext'));
 			else
-				redirect(forum_link($forum_url['admin_extensions_manage']), $lang_admin_ext['Extension uninstalled']);
+				redirect(forum_link($forum_url['admin_extensions_manage']), __('Extension uninstalled', 'admin_ext'));
 		}
 	}
 	else	// If the user hasn't confirmed the uninstall
@@ -466,7 +466,7 @@ else if (isset($_GET['flip']))
 
 		if (!is_null($dependency) && $dependency !== false)
 		{
-			message(sprintf($lang_admin_ext['Disable dependency'], $dependency['id']));
+			message(sprintf(__('Disable dependency', 'admin_ext'), $dependency['id']));
 		}
 	}
 	else
@@ -499,7 +499,7 @@ else if (isset($_GET['flip']))
 		foreach ($dependencies as $dependency)
 		{
 			if (!empty($dependency) && !in_array($dependency, $installed_ext))
-				message(sprintf($lang_admin_ext['Disabled dependency'], $dependency));
+				message(sprintf(__('Disabled dependency', 'admin_ext'), $dependency));
 		}
 	}
 
@@ -520,16 +520,16 @@ else if (isset($_GET['flip']))
 
 	// Add flash message
 	if ($section == 'hotfixes')
-		$forum_flash->add_info(($disable ? $lang_admin_ext['Hotfix disabled'] : $lang_admin_ext['Hotfix enabled']));
+		$forum_flash->add_info(($disable ? __('Hotfix disabled', 'admin_ext') : __('Hotfix enabled', 'admin_ext')));
 	else
-		$forum_flash->add_info(($disable ? $lang_admin_ext['Extension disabled'] : $lang_admin_ext['Extension enabled']));
+		$forum_flash->add_info(($disable ? __('Extension disabled', 'admin_ext') : __('Extension enabled', 'admin_ext')));
 
 	($hook = get_hook('aex_flip_pre_redirect')) ? eval($hook) : null;
 
 	if ($section == 'hotfixes')
-		redirect(forum_link($forum_url['admin_extensions_hotfixes']), ($disable ? $lang_admin_ext['Hotfix disabled'] : $lang_admin_ext['Hotfix enabled']));
+		redirect(forum_link($forum_url['admin_extensions_hotfixes']), ($disable ? __('Hotfix disabled', 'admin_ext') : __('Hotfix enabled', 'admin_ext')));
 	else
-		redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? $lang_admin_ext['Extension disabled'] : $lang_admin_ext['Extension enabled']));
+		redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? __('Extension disabled', 'admin_ext') : __('Extension enabled', 'admin_ext')));
 }
 
 ($hook = get_hook('aex_new_action')) ? eval($hook) : null;

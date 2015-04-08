@@ -15,22 +15,24 @@
 				<div class="ct-set data-set set1">
 					<div class="ct-box data-box">
 						<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($ext_data['title']) ?></span></h3>
-						<p><?php echo ((strpos($id, 'hotfix_') !== 0) ? sprintf($lang_admin_ext['Version'], $ext_data['version']) : $lang_admin_ext['Hotfix']) ?></p>
-						<p><?php printf($lang_admin_ext['Extension by'], forum_htmlencode($ext_data['author'])) ?></p>
+						<p><?php echo ((strpos($id, 'hotfix_') !== 0) ?
+							sprintf(__('Version', 'admin_ext'), $ext_data['version']) :
+							__('Hotfix', 'admin_ext')) ?></p>
+						<p><?php printf(__('Extension by', 'admin_ext'), forum_htmlencode($ext_data['author'])) ?></p>
 						<p><?php echo forum_htmlencode($ext_data['description']) ?></p>
 					</div>
 				</div>
 			</div>
 <?php if ($ext_data['uninstall_note'] != ''): ?>			<div class="ct-box warn-box">
-				<p class="important"><strong><?php echo $lang_admin_ext['Uninstall note'] ?></strong></p>
+				<p class="important"><strong><?php echo __('Uninstall note', 'admin_ext') ?></strong></p>
 				<p><?php echo forum_htmlencode($ext_data['uninstall_note']) ?></p>
 			</div>
 <?php endif; ?>
 <?php if (strpos($id, 'hotfix_') !== 0): ?>			<div class="ct-box warn-box">
-				<p class="warn"><?php echo $lang_admin_ext['Installed extensions warn'] ?></p>
+				<p class="warn"><?php echo __('Installed extensions warn', 'admin_ext') ?></p>
 			</div>
 <?php endif; ?>				<div class="frm-buttons">
-				<span class="submit primary caution"><input type="submit" name="uninstall_comply" value="<?php echo $lang_admin_ext['Uninstall'] ?>" /></span>
+				<span class="submit primary caution"><input type="submit" name="uninstall_comply" value="<?= __('Uninstall', 'admin_ext') ?>" /></span>
 				<span class="cancel"><input type="submit" name="uninstall_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>

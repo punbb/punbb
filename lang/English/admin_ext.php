@@ -1,7 +1,7 @@
 <?php
 
 // Language definitions used in all admin files
-$lang_admin_ext = array(
+return array(
 
 'Install extension'				=>	'Install extension',
 'Upgrade extension'				=>	'Upgrade extension',

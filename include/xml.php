@@ -136,7 +136,7 @@ function xml_to_array($raw_xml)
 //
 function validate_manifest($xml_array, $folder_name)
 {
-	global $lang_admin_ext, $forum_config;
+	global $forum_config;
 
 	$errors = array();
 
@@ -145,65 +145,65 @@ function validate_manifest($xml_array, $folder_name)
 		return;
 
 	if (!isset($xml_array['extension']) || !is_array($xml_array['extension']))
-		$errors[] = $lang_admin_ext['extension root error'];
+		$errors[] = __('extension root error', 'admin_ext');
 	else
 	{
 		$ext = $xml_array['extension'];
 		if (!isset($ext['attributes']['engine']))
-			$errors[] = $lang_admin_ext['extension/engine error'];
+			$errors[] = __('extension/engine error', 'admin_ext');
 		else if ($ext['attributes']['engine'] != '1.0')
-			$errors[] = $lang_admin_ext['extension/engine error2'];
+			$errors[] = __('extension/engine error2', 'admin_ext');
 
 		if (!isset($ext['id']) || $ext['id'] == '')
-			$errors[] = $lang_admin_ext['extension/id error'];
+			$errors[] = __('extension/id error', 'admin_ext');
 		else if ($ext['id'] != $folder_name)
-			$errors[] = $lang_admin_ext['extension/id error2'];
+			$errors[] = __('extension/id error2', 'admin_ext');
 
 		if (!isset($ext['title']) || $ext['title'] == '')
-			$errors[] = $lang_admin_ext['extension/title error'];
+			$errors[] = __('extension/title error', 'admin_ext');
 		if (!isset($ext['version']) || $ext['version'] == '' || preg_match('/[^a-z0-9\- \.]+/i', $ext['version']))
-			$errors[] = $lang_admin_ext['extension/version error'];
+			$errors[] = __('extension/version error', 'admin_ext');
 		if (!isset($ext['description']) || $ext['description'] == '')
-			$errors[] = $lang_admin_ext['extension/description error'];
+			$errors[] = __('extension/description error', 'admin_ext');
 		if (!isset($ext['author']) || $ext['author'] == '')
-			$errors[] = $lang_admin_ext['extension/author error'];
+			$errors[] = __('extension/author error', 'admin_ext');
 		if (!isset($ext['minversion']) || $ext['minversion'] == '')
-			$errors[] = $lang_admin_ext['extension/minversion error'];
+			$errors[] = __('extension/minversion error', 'admin_ext');
 		if (isset($ext['minversion']) && version_compare(clean_version($forum_config['o_cur_version']), clean_version($ext['minversion']), '<'))
-			$errors[] = sprintf($lang_admin_ext['extension/minversion error2'], $ext['minversion']);
+			$errors[] = sprintf(__('extension/minversion error2', 'admin_ext'), $ext['minversion']);
 		if (!isset($ext['maxtestedon']) || $ext['maxtestedon'] == '')
-			$errors[] = $lang_admin_ext['extension/maxtestedon error'];
+			$errors[] = __('extension/maxtestedon error', 'admin_ext');
 
 		if (isset($ext['note']))
 		{
 			foreach ($ext['note'] as $note)
 			{
 				if (!isset($note['content']) || $note['content'] == '')
-					$errors[] = $lang_admin_ext['extension/note error'];
+					$errors[] = __('extension/note error', 'admin_ext');
 				if (!isset($note['attributes']['type']) || $note['attributes']['type'] == '')
-					$errors[] = $lang_admin_ext['extension/note error2'];
+					$errors[] = __('extension/note error2', 'admin_ext');
 			}
 		}
 
 		if (isset($ext['hooks']) && is_array($ext['hooks']))
 		{
 			if (!isset($ext['hooks']['hook']) || !is_array($ext['hooks']['hook']))
-				$errors[] = $lang_admin_ext['extension/hooks/hook error'];
+				$errors[] = __('extension/hooks/hook error', 'admin_ext');
 			else
 			{
 				foreach ($ext['hooks']['hook'] as $hook)
 				{
 					if (!isset($hook['content']) || $hook['content'] == '')
-						$errors[] = $lang_admin_ext['extension/hooks/hook error'];
+						$errors[] = __('extension/hooks/hook error', 'admin_ext');
 					if (!isset($hook['attributes']['id']) || $hook['attributes']['id'] == '')
-						$errors[] = $lang_admin_ext['extension/hooks/hook error2'];
+						$errors[] = __('extension/hooks/hook error2', 'admin_ext');
 					if (isset($hook['attributes']['priority']) && (!ctype_digit($hook['attributes']['priority']) || $hook['attributes']['priority'] < 0 || $hook['attributes']['priority'] > 10))
-						$errors[] = $lang_admin_ext['extension/hooks/hook error3'];
+						$errors[] = __('extension/hooks/hook error3', 'admin_ext');
 
 					$tokenized_hook = token_get_all('<?php '.$hook['content']);
 					$last_element = array_pop($tokenized_hook);
 					if (is_array($last_element) && $last_element[0] == T_INLINE_HTML)
-						$errors[] = $lang_admin_ext['extension/hooks/hook error4'];
+						$errors[] = __('extension/hooks/hook error4', 'admin_ext');
 				}
 			}
 		}
