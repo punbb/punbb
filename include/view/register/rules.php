@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('rg_rules_output_start')) ? eval($hook) : null;
 
