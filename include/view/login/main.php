@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('li_login_output_start')) ? eval($hook) : null;
 
@@ -13,7 +14,7 @@
 				__('Obtain pass', 'login') . '</a>') ?></p>
 		</div>
 
-		<?php include view('login/errors') ?>
+		<?php helper('errors', ['errors_title' => __('Login errors', 'login')]); ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

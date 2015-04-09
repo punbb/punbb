@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($forum_page['errors'])) {
 	if (!defined('FORUM_PARSER_LOADED')) {
