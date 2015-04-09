@@ -75,7 +75,11 @@ function generate_config_cache()
 		$output[$cur_config_item['conf_name']] = $cur_config_item['conf_value'];
 
 	// Output config as PHP code
-	if (!write_cache_file(FORUM_CACHE_DIR.'cache_config.php', '<?php'."\n\n".'define(\'FORUM_CONFIG_LOADED\', 1);'."\n\n".'$forum_config = '.var_export($output, true).';'."\n\n".'?>'))
+	if (!write_cache_file(FORUM_CACHE_DIR.'cache_config.php',
+		'<?php'."\n\n".
+			'define(\'FORUM_CONFIG_LOADED\', 1);'."\n\n".
+			'return '.var_export($output, true).';'."\n\n"
+		))
 	{
 		error('Unable to write configuration cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}

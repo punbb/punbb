@@ -3358,3 +3358,7 @@ function flash($serv = null) {
 function db($serv = null) {
 	return service('db', $serv);
 }
+
+function config($serv = null) {
+	return service('config', $serv);
+}
