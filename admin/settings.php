@@ -252,7 +252,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Add flash message
-	$forum_flash->add_info(__('Settings updated', 'admin_settings'));
+	flash()->add_info(__('Settings updated', 'admin_settings'));
 
 	($hook = get_hook('aop_pre_redirect')) ? eval($hook) : null;
 

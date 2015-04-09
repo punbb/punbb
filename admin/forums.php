@@ -61,7 +61,7 @@ if (isset($_POST['add_forum']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash->add_info(__('Forum added', 'admin_forums'));
+	flash()->add_info(__('Forum added', 'admin_forums'));
 
 	($hook = get_hook('afo_add_forum_pre_redirect')) ? eval($hook) : null;
 
@@ -124,7 +124,7 @@ else if (isset($_GET['del_forum']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash->add_info(__('Forum deleted', 'admin_forums'));
+		flash()->add_info(__('Forum deleted', 'admin_forums'));
 
 		($hook = get_hook('afo_del_forum_pre_redirect')) ? eval($hook) : null;
 
@@ -218,7 +218,7 @@ else if (isset($_POST['update_positions']))
 	generate_quickjump_cache();
 
 	// Add flash message
-	$forum_flash->add_info(__('Forums updated', 'admin_forums'));
+	flash()->add_info(__('Forums updated', 'admin_forums'));
 
 	($hook = get_hook('afo_update_positions_pre_redirect')) ? eval($hook) : null;
 
@@ -376,7 +376,7 @@ else if (isset($_GET['edit_forum']))
 		generate_quickjump_cache();
 
 		// Add flash message
-		$forum_flash->add_info(__('Forum updated', 'admin_forums'));
+		flash()->add_info(__('Forum updated', 'admin_forums'));
 
 		($hook = get_hook('afo_save_forum_pre_redirect')) ? eval($hook) : null;
 
@@ -400,7 +400,7 @@ else if (isset($_GET['edit_forum']))
 
 		generate_quickjump_cache();
 
-		$forum_flash->add_info(__('Permissions reverted', 'admin_forums'));
+		flash()->add_info(__('Permissions reverted', 'admin_forums'));
 
 		($hook = get_hook('afo_revert_perms_pre_redirect')) ? eval($hook) : null;
 

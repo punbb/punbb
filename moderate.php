@@ -178,7 +178,7 @@ if (isset($_GET['tid']))
 			sync_topic($tid);
 			sync_forum($fid);
 
-			$forum_flash->add_info(__('Delete posts redirect', 'misc'));
+			flash()->add_info(__('Delete posts redirect', 'misc'));
 
 			($hook = get_hook('mr_confirm_delete_posts_pre_redirect')) ? eval($hook) : null;
 
@@ -284,7 +284,7 @@ if (isset($_GET['tid']))
 			sync_topic($tid);
 			sync_forum($fid);
 
-			$forum_flash->add_info(__('Split posts redirect', 'misc'));
+			flash()->add_info(__('Split posts redirect', 'misc'));
 
 			($hook = get_hook('mr_confirm_split_posts_pre_redirect')) ? eval($hook) : null;
 
@@ -505,7 +505,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$forum_page['redirect_msg'] = (count($topics) > 1) ?
 			__('Move topics redirect', 'misc') : __('Move topic redirect', 'misc');
 
-		$forum_flash->add_info($forum_page['redirect_msg']);
+		flash()->add_info($forum_page['redirect_msg']);
 
 		($hook = get_hook('mr_confirm_move_topics_pre_redirect')) ? eval($hook) : null;
 
@@ -698,7 +698,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		sync_topic($merge_to_tid);
 		sync_forum($fid);
 
-		$forum_flash->add_info(__('Merge topics redirect', 'misc'));
+		flash()->add_info(__('Merge topics redirect', 'misc'));
 
 		($hook = get_hook('mr_confirm_merge_topics_pre_redirect')) ? eval($hook) : null;
 
@@ -828,7 +828,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		foreach ($forum_ids as $cur_forum_id)
 			sync_forum($cur_forum_id);
 
-		$forum_flash->add_info($multi ?
+		flash()->add_info($multi ?
 			__('Delete topics redirect', 'misc') :
 			__('Delete topic redirect', 'misc'));
 
@@ -898,7 +898,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 			$forum_page['redirect_msg'] = ($action) ?
 				__('Close topics redirect', 'misc') : __('Open topics redirect', 'misc');
 
-		$forum_flash->add_info($forum_page['redirect_msg']);
+		flash()->add_info($forum_page['redirect_msg']);
 
 		($hook = get_hook('mr_open_close_multi_topics_pre_redirect')) ? eval($hook) : null;
 
@@ -945,7 +945,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		$forum_page['redirect_msg'] = ($action) ?
 			__('Close topic redirect', 'misc') : __('Open topic redirect', 'misc');
 
-		$forum_flash->add_info($forum_page['redirect_msg']);
+		flash()->add_info($forum_page['redirect_msg']);
 
 		($hook = get_hook('mr_open_close_single_topic_pre_redirect')) ? eval($hook) : null;
 
@@ -993,7 +993,7 @@ else if (isset($_GET['stick']))
 	($hook = get_hook('mr_stick_topic_qr_stick_topic')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info(__('Stick topic redirect', 'misc'));
+	flash()->add_info(__('Stick topic redirect', 'misc'));
 
 	($hook = get_hook('mr_stick_topic_pre_redirect')) ? eval($hook) : null;
 
@@ -1041,7 +1041,7 @@ else if (isset($_GET['unstick']))
 	($hook = get_hook('mr_unstick_topic_qr_unstick_topic')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info(__('Unstick topic redirect', 'misc'));
+	flash()->add_info(__('Unstick topic redirect', 'misc'));
 
 	($hook = get_hook('mr_unstick_topic_pre_redirect')) ? eval($hook) : null;
 

@@ -272,7 +272,7 @@ else if (isset($_POST['add_edit_ban']))
 
 	generate_bans_cache();
 
-	$forum_flash->add_info((($_POST['mode'] == 'edit') ?
+	flash()->add_info((($_POST['mode'] == 'edit') ?
 		__('Ban edited', 'admin_bans') : __('Ban added', 'admin_bans')));
 
 	($hook = get_hook('aba_add_edit_ban_pre_redirect')) ? eval($hook) : null;
@@ -309,7 +309,7 @@ else if (isset($_GET['del_ban']))
 
 	generate_bans_cache();
 
-	$forum_flash->add_info(__('Ban removed', 'admin_bans'));
+	flash()->add_info(__('Ban removed', 'admin_bans'));
 
 	($hook = get_hook('aba_del_ban_pre_redirect')) ? eval($hook) : null;
 

@@ -65,7 +65,7 @@ else if ($action == 'markread')
 	// Reset tracked topics
 	set_tracked_topics(null);
 
-	$forum_flash->add_info(__('Mark read redirect', 'misc'));
+	flash()->add_info(__('Mark read redirect', 'misc'));
 
 	($hook = get_hook('mi_markread_pre_redirect')) ? eval($hook) : null;
 
@@ -116,7 +116,7 @@ else if ($action == 'markforumread')
 	$tracked_topics['forums'][$fid] = time();
 	set_tracked_topics($tracked_topics);
 
-	$forum_flash->add_info(__('Mark forum read redirect', 'misc'));
+	flash()->add_info(__('Mark forum read redirect', 'misc'));
 
 	($hook = get_hook('mi_markforumread_pre_redirect')) ? eval($hook) : null;
 
@@ -253,7 +253,7 @@ else if (isset($_GET['email']))
 			($hook = get_hook('mi_email_qr_update_last_email_sent')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_flash->add_info(__('E-mail sent redirect', 'misc'));
+			flash()->add_info(__('E-mail sent redirect', 'misc'));
 
 			($hook = get_hook('mi_email_pre_redirect')) ? eval($hook) : null;
 
@@ -394,7 +394,7 @@ else if (isset($_GET['report']))
 			($hook = get_hook('mi_report_qr_update_last_email_sent')) ? eval($hook) : null;
 			$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_flash->add_info(__('Report redirect', 'misc'));
+			flash()->add_info(__('Report redirect', 'misc'));
 
 			($hook = get_hook('mi_report_pre_redirect')) ? eval($hook) : null;
 
@@ -490,7 +490,7 @@ else if (isset($_GET['subscribe']))
 	($hook = get_hook('mi_subscribe_add_subscription')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info(__('Subscribe redirect', 'misc'));
+	flash()->add_info(__('Subscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_subscribe_pre_redirect')) ? eval($hook) : null;
 
@@ -545,7 +545,7 @@ else if (isset($_GET['unsubscribe']))
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info(__('Unsubscribe redirect', 'misc'));
+	flash()->add_info(__('Unsubscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_unsubscribe_pre_redirect')) ? eval($hook) : null;
 
@@ -614,7 +614,7 @@ else if (isset($_GET['forum_subscribe']))
 	($hook = get_hook('mi_forum_subscribe_add_subscription')) ? eval($hook) : null;
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info(__('Subscribe redirect', 'misc'));
+	flash()->add_info(__('Subscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_forum_subscribe_pre_redirect')) ? eval($hook) : null;
 
@@ -670,7 +670,7 @@ else if (isset($_GET['forum_unsubscribe']))
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_flash->add_info(__('Unsubscribe redirect', 'misc'));
+	flash()->add_info(__('Unsubscribe redirect', 'misc'));
 
 	($hook = get_hook('mi_forum_unsubscribe_pre_redirect')) ? eval($hook) : null;
 

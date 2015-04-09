@@ -105,8 +105,13 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
 
-require FORUM_ROOT.'include/flash_messenger.php';
-$forum_flash = new FlashMessenger();
+flash(function () {
+	global $_PUNBB;
+	if (!isset($_PUNBB['flash'])) {
+		$_PUNBB['flash'] = new FlashMessenger();
+	}
+	return $_PUNBB['flash'];
+});
 
 // If the request_uri is invalid try fix it
 forum_fix_request_uri();

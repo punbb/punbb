@@ -85,7 +85,7 @@ else if (isset($_POST['delete']))
 		// Delete the topic and all of it's posts
 		delete_topic($cur_post['tid'], $cur_post['fid']);
 
-		$forum_flash->add_info(__('Topic del redirect', 'delete'));
+		flash()->add_info(__('Topic del redirect', 'delete'));
 
 		($hook = get_hook('dl_topic_deleted_pre_redirect')) ? eval($hook) : null;
 
@@ -110,7 +110,7 @@ else if (isset($_POST['delete']))
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$prev_post = $forum_db->fetch_assoc($result);
 
-		$forum_flash->add_info(__('Post del redirect', 'delete'));
+		flash()->add_info(__('Post del redirect', 'delete'));
 
 		($hook = get_hook('dl_post_deleted_pre_redirect')) ? eval($hook) : null;
 

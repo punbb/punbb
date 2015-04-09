@@ -52,7 +52,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 		delete_orphans();
 
-		$forum_flash->add_info(__('Prune done', 'admin_prune'));
+		flash()->add_info(__('Prune done', 'admin_prune'));
 
 		($hook = get_hook('apr_prune_pre_redirect')) ? eval($hook) : null;
 

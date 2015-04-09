@@ -98,7 +98,7 @@ if ($action == 'change_pass')
 					$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 					// Add flash message
-					$forum_flash->add_info(__('Pass updated', 'profile'));
+					flash()->add_info(__('Pass updated', 'profile'));
 
 					($hook = get_hook('pf_change_pass_key_pre_redirect')) ? eval($hook) : null;
 
@@ -184,7 +184,7 @@ if ($action == 'change_pass')
 			}
 
 			// Add flash message
-			$forum_flash->add_info(__('Pass updated redirect', 'profile'));
+			flash()->add_info(__('Pass updated redirect', 'profile'));
 
 			($hook = get_hook('pf_change_pass_normal_pre_redirect')) ? eval($hook) : null;
 
@@ -431,7 +431,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 		clean_stats_cache();
 
 		// Add flash message
-		$forum_flash->add_info(__('User delete redirect', 'profile'));
+		flash()->add_info(__('User delete redirect', 'profile'));
 
 		($hook = get_hook('pf_delete_user_pre_redirect')) ? eval($hook) : null;
 
@@ -482,7 +482,7 @@ else if ($action == 'delete_avatar')
 	delete_avatar($id);
 
 	// Add flash message
-	$forum_flash->add_info(__('Avatar deleted redirect', 'profile'));
+	flash()->add_info(__('Avatar deleted redirect', 'profile'));
 
 	($hook = get_hook('pf_delete_avatar_pre_redirect')) ? eval($hook) : null;
 
@@ -523,7 +523,7 @@ else if (isset($_POST['update_group_membership']))
 		clean_forum_moderators();
 
 	// Add flash message
-	$forum_flash->add_info(__('Group membership redirect', 'profile'));
+	flash()->add_info(__('Group membership redirect', 'profile'));
 
 	($hook = get_hook('pf_change_group_pre_redirect')) ? eval($hook) : null;
 
@@ -573,7 +573,7 @@ else if (isset($_POST['update_forums']))
 	}
 
 	// Add flash message
-	$forum_flash->add_info(__('Moderate forums redirect', 'profile'));
+	flash()->add_info(__('Moderate forums redirect', 'profile'));
 
 	($hook = get_hook('pf_forum_moderators_pre_redirect')) ? eval($hook) : null;
 
@@ -1083,7 +1083,7 @@ else if (isset($_POST['form_sent']))
 		}
 
 		// Add flash message
-		$forum_flash->add_info(__('Profile redirect', 'profile'));
+		flash()->add_info(__('Profile redirect', 'profile'));
 
 		($hook = get_hook('pf_change_details_pre_redirect')) ? eval($hook) : null;
 
