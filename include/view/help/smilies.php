@@ -1,3 +1,6 @@
+<?php
+namespace punbb;
+?>
 
 <div id="smilies" class="main-subhead">
 	<h2 class="hn"><span><?php printf(__('Help with', 'help'), __('Smilies')) ?></span></h2>

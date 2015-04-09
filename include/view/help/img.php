@@ -1,3 +1,7 @@
+<?php
+namespace punbb;
+?>
+
 <div class="main-subhead">
 	<h2 class="hn"><span><?php printf(__('Help with', 'help'), __('Images')) ?></span></h2>
 </div>
