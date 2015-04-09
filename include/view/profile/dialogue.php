@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('pf_delete_user_output_start')) ? eval($hook) : null;
 

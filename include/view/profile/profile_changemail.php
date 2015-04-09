@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('pf_change_email_normal_output_start')) ? eval($hook) : null;
 

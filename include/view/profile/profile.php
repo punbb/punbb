@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('pf_view_details_output_start')) ? eval($hook) : null;
 

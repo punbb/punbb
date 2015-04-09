@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('pf_change_details_admin_pre_user_management')) ? eval($hook) : null;
 
