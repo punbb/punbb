@@ -4,7 +4,6 @@
 * @package utf8
 * @subpackage strings
 */
-namespace punbb;
 
 //---------------------------------------------------------------
 /**

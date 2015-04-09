@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 //
 // Cache the results of a search and redirect the user to the results page
@@ -866,7 +866,7 @@ function generate_search_crumbs($action = null)
 
 		case 'show_user_posts':
 			$forum_page['crumbs'][] = sprintf(__('Posts by', 'search'), $search_set[0]['pposter'], ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['items_info'] = generate_items_info(__('Posts found', 'search')], ($forum_page['start_from'] + 1), $num_hits);
+			$forum_page['items_info'] = generate_items_info(__('Posts found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
 			$forum_page['main_head_options']['user_topics'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_topics'], $search_id).'">'.
 				sprintf(__('Topics by', 'search'), forum_htmlencode($search_set[0]['pposter'])).'</a></span>';
 			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.

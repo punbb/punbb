@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // The contents of this file are very much inspired by the file functions_search.php
 // from the phpBB Group forum software phpBB2 (http://www.phpbb.com).

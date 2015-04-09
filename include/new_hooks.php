@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 if (!function_exists('init_new_style_hooks')) {
 
