@@ -8,6 +8,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
+namespace punbb;
 
 // Tell common.php that we don't want output buffering
 define('FORUM_DISABLE_BUFFERING', 1);

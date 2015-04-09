@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('aba_add_edit_ban_output_start')) ? eval($hook) : null;
 

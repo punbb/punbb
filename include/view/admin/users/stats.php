@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 	// Set up table headers
 	$forum_page['table_header'] = array();

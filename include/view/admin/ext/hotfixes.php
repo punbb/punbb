@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('aex_section_hotfixes_output_start')) ? eval($hook) : null;
 

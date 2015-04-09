@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 define('UPDATE_TO', '1.4.2');
 define('UPDATE_TO_DB_REVISION', 5);

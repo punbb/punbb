@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('agr_del_group_output_start')) ? eval($hook) : null;
 

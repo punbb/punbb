@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('aus_ban_users_output_start')) ? eval($hook) : null;
 

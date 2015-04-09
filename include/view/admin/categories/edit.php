@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('acg_del_cat_output_start')) ? eval($hook) : null;
 

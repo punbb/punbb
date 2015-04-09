@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('ain_main_output_start')) ? eval($hook) : null;
 

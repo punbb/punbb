@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('aop_registration_output_start')) ? eval($hook) : null;
 

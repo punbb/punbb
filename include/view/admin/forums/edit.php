@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('afo_edit_forum_output_start')) ? eval($hook) : null;
 

@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('aex_uninstall_output_start')) ? eval($hook) : null;
 

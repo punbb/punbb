@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('apr_prune_comply_output_start')) ? eval($hook) : null;
 
