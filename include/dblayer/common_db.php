@@ -13,31 +13,23 @@ if (!defined('FORUM')) {
 	exit;
 }
 
-function db($type = null) {
+db(function () {
 	global $_PUNBB;
 	// TODO fix
 	global $db_type;
 	global $db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect;
 
-	if (isset($_PUNBB['db'])) {
-		return $_PUNBB['db'];
+	if (!isset($_PUNBB['db'])) {
+		// Create the database adapter object (and open/connect to/select db)
+		$classname = 'punbb\\DBLayer_' . $db_type;
+		$_PUNBB['db'] = new $classname(
+			$db_host,
+			$db_username,
+			$db_password,
+			$db_name,
+			$db_prefix,
+			$p_connect);
 	}
 
-	if (!$type) {
-		$type = $db_type;
-	}
-
-	// Create the database adapter object (and open/connect to/select db)
-	$classname = 'punbb\\DBLayer_' . $type;
-	return $_PUNBB['db'] = new $classname(
-		$db_host,
-		$db_username,
-		$db_password,
-		$db_name,
-		$db_prefix,
-		$p_connect);
-}
-
-// TODO fix
-global $forum_db;
-$forum_db = db();
+	return $_PUNBB['db'];
+});

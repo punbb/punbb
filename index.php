@@ -35,10 +35,10 @@ if (!$forum_user['is_guest'])
 	);
 
 	($hook = get_hook('in_qr_get_new_topics')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$new_topics = array();
-	while ($cur_topic = $forum_db->fetch_assoc($result))
+	while ($cur_topic = db()->fetch_assoc($result))
 		$new_topics[$cur_topic['forum_id']][$cur_topic['id']] = $cur_topic['last_post'];
 
 	$tracked_topics = get_tracked_topics();
@@ -71,7 +71,7 @@ $query = array(
 );
 
 ($hook = get_hook('in_qr_get_cats_and_forums')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'index/main';
 include FORUM_ROOT . 'include/render.php';

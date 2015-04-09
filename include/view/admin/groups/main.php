@@ -20,7 +20,7 @@
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Base new group label', 'admin_groups') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="base_group">
 <?php
-while ($cur_group = $forum_db->fetch_assoc($result_groups))
+while ($cur_group = db()->fetch_assoc($result_groups))
 	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].($cur_group['g_id'] == $forum_config['o_default_user_group'] ? '" selected="selected">' : '">').forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 ?>
 						</select></span>
@@ -58,7 +58,7 @@ while ($cur_group = $forum_db->fetch_assoc($result_groups))
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="default_group">
 <?php
 
-while ($cur_group = $forum_db->fetch_assoc($result_groups_default))
+while ($cur_group = db()->fetch_assoc($result_groups_default))
 {
 	if ($cur_group['g_id'] == $forum_config['o_default_user_group'])
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
@@ -95,7 +95,7 @@ while ($cur_group = $forum_db->fetch_assoc($result_groups_default))
 <?php
 
 $forum_page['item_num'] = 0;
-while ($cur_group = $forum_db->fetch_assoc($result))
+while ($cur_group = db()->fetch_assoc($result))
 {
 	$forum_page['group_options'] = array(
 		'edit' => '<span class="first-item"><a href="'.forum_link($forum_url['admin_groups']).'?edit_group='.$cur_group['g_id'].'">'.__('Edit group', 'admin_groups').'</a></span>'

@@ -30,11 +30,11 @@ if (isset($_POST['add_word']))
 	$query = array(
 		'INSERT'	=> 'search_for, replace_with',
 		'INTO'		=> 'censoring',
-		'VALUES'	=> '\''.$forum_db->escape($search_for).'\', \''.$forum_db->escape($replace_with).'\''
+		'VALUES'	=> '\''.db()->escape($search_for).'\', \''.db()->escape($replace_with).'\''
 	);
 
 	($hook = get_hook('acs_add_word_qr_add_censor')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -66,12 +66,12 @@ else if (isset($_POST['update']))
 
 	$query = array(
 		'UPDATE'	=> 'censoring',
-		'SET'		=> 'search_for=\''.$forum_db->escape($search_for).'\', replace_with=\''.$forum_db->escape($replace_with).'\'',
+		'SET'		=> 'search_for=\''.db()->escape($search_for).'\', replace_with=\''.db()->escape($replace_with).'\'',
 		'WHERE'		=> 'id='.$id
 	);
 
 	($hook = get_hook('acs_update_qr_update_censor')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -101,7 +101,7 @@ else if (isset($_POST['remove']))
 	);
 
 	($hook = get_hook('acs_remove_qr_delete_censor')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))

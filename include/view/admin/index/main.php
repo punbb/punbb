@@ -63,7 +63,7 @@
 				<div class="ct-box">
 					<h3 class="ct-legend hn"><span><?php echo __('Database', 'admin_index') ?></span></h3>
 					<ul class="data-list">
-						<li><span><?php echo implode(' ', $forum_db->get_version()) ?></span></li>
+						<li><span><?php echo implode(' ', db()->get_version()) ?></span></li>
 <?php if (isset($total_records) && isset($total_size)): ?>
 						<li><span><?php echo __('Rows', 'admin_index') ?>: <?php echo forum_number_format($total_records) ?></span></li>
 						<li><span><?php echo __('Size', 'admin_index') ?>: <?php echo $total_size ?></span></li>

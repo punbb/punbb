@@ -38,19 +38,19 @@ if (isset($_POST['add_rank']))
 	);
 
 	($hook = get_hook('ark_add_rank_qr_check_rank_collision')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) > 0)
+	if (db()->result($result) > 0)
 		message(sprintf(__('Min posts occupied message', 'admin_ranks'), $min_posts));
 
 	$query = array(
 		'INSERT'	=> 'rank, min_posts',
 		'INTO'		=> 'ranks',
-		'VALUES'	=> '\''.$forum_db->escape($rank).'\', '.$min_posts
+		'VALUES'	=> '\''.db()->escape($rank).'\', '.$min_posts
 	);
 
 	($hook = get_hook('ark_add_rank_qr_add_rank')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -91,19 +91,19 @@ else if (isset($_POST['update']))
 	);
 
 	($hook = get_hook('ark_update_qr_check_rank_collision')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) > 0)
+	if (db()->result($result) > 0)
 		message(sprintf(__('Min posts occupied message', 'admin_ranks'), $min_posts));
 
 	$query = array(
 		'UPDATE'	=> 'ranks',
-		'SET'		=> 'rank=\''.$forum_db->escape($rank).'\', min_posts='.$min_posts,
+		'SET'		=> 'rank=\''.db()->escape($rank).'\', min_posts='.$min_posts,
 		'WHERE'		=> 'id='.$id
 	);
 
 	($hook = get_hook('ark_update_qr_update_rank')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -133,7 +133,7 @@ else if (isset($_POST['remove']))
 	);
 
 	($hook = get_hook('ark_remove_qr_delete_rank')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))

@@ -5,7 +5,7 @@ namespace punbb;
 
 $forum_page['cur_category'] = $forum_page['cat_count'] = $forum_page['item_count'] = 0;
 
-while ($cur_forum = $forum_db->fetch_assoc($result))
+while ($cur_forum = db()->fetch_assoc($result))
 {
 	($hook = get_hook('in_forum_loop_start')) ? eval($hook) : null;
 

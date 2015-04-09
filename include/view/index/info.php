@@ -44,11 +44,11 @@ if ($forum_config['o_users_online'] == '1')
 	);
 
 	($hook = get_hook('in_users_online_qr_get_online_info')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 	$forum_page['num_guests'] = $forum_page['num_users'] = 0;
 	$users = array();
 
-	while ($forum_user_online = $forum_db->fetch_assoc($result))
+	while ($forum_user_online = db()->fetch_assoc($result))
 	{
 		($hook = get_hook('in_users_online_add_online_user_loop')) ? eval($hook) : null;
 

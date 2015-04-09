@@ -7,7 +7,7 @@ include view('moderate/posts_start');
 
 	$forum_page['item_count'] = 0;	// Keep track of post numbers
 
-	while ($cur_post = $forum_db->fetch_assoc($result))
+	while ($cur_post = db()->fetch_assoc($result))
 	{
 		($hook = get_hook('mr_post_actions_loop_start')) ? eval($hook) : null;
 

@@ -39,20 +39,20 @@ if (isset($_POST['add_forum']))
 	);
 
 	($hook = get_hook('afo_add_forum_qr_validate_category_id')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) != 1)
+	if (db()->result($result) != 1)
 		message(__('Bad request'));
 
 
 	$query = array(
 		'INSERT'	=> 'forum_name, disp_position, cat_id',
 		'INTO'		=> 'forums',
-		'VALUES'	=> '\''.$forum_db->escape($forum_name).'\', '.$position.', '.$add_to_cat
+		'VALUES'	=> '\''.db()->escape($forum_name).'\', '.$position.', '.$add_to_cat
 	);
 
 	($hook = get_hook('afo_add_forum_qr_add_forum')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the quickjump cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -98,7 +98,7 @@ else if (isset($_GET['del_forum']))
 		);
 
 		($hook = get_hook('afo_del_forum_qr_delete_forum')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$query = array(
 			'DELETE'	=> 'forum_perms',
@@ -106,7 +106,7 @@ else if (isset($_GET['del_forum']))
 		);
 
 		($hook = get_hook('afo_del_forum_qr_delete_forum_perms')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Delete forum subscriptions
 		$query = array(
@@ -115,7 +115,7 @@ else if (isset($_GET['del_forum']))
 		);
 
 		($hook = get_hook('afo_del_forum_qr_delete_forum_subscriptions')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -139,8 +139,8 @@ else if (isset($_GET['del_forum']))
 		);
 
 		($hook = get_hook('afo_del_forum_qr_get_forum_name')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$forum_name = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$forum_name = db()->result($result);
 
 		if (is_null($forum_name) || $forum_name === false)
 			message(__('Bad request'));
@@ -186,8 +186,8 @@ else if (isset($_POST['update_positions']))
 	);
 
 	($hook = get_hook('afo_update_positions_qr_get_forums')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($cur_forum = $forum_db->fetch_assoc($result))
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	while ($cur_forum = db()->fetch_assoc($result))
 	{
 		// If these aren't set, we're looking at a forum that was added after
 		// the admin started editing: we don't want to mess with it
@@ -208,7 +208,7 @@ else if (isset($_POST['update_positions']))
 				);
 
 				($hook = get_hook('afo_update_positions_qr_update_forum_position')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 	}
@@ -242,8 +242,8 @@ else if (isset($_GET['edit_forum']))
 	);
 
 	($hook = get_hook('afo_edit_forum_qr_get_forum_details')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$cur_forum = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$cur_forum = db()->fetch_assoc($result);
 
 	if (is_null($cur_forum) || $cur_forum === false)
 		message(__('Bad request'));
@@ -267,17 +267,17 @@ else if (isset($_GET['edit_forum']))
 		if ($cat_id < 1)
 			message(__('Bad request'));
 
-		$forum_desc = ($forum_desc != '') ? '\''.$forum_db->escape($forum_desc).'\'' : 'NULL';
-		$redirect_url = ($redirect_url != '') ? '\''.$forum_db->escape($redirect_url).'\'' : 'NULL';
+		$forum_desc = ($forum_desc != '') ? '\''.db()->escape($forum_desc).'\'' : 'NULL';
+		$redirect_url = ($redirect_url != '') ? '\''.db()->escape($redirect_url).'\'' : 'NULL';
 
 		$query = array(
 			'UPDATE'	=> 'forums',
-			'SET'		=> 'forum_name=\''.$forum_db->escape($forum_name).'\', forum_desc='.$forum_desc.', redirect_url='.$redirect_url.', sort_by='.$sort_by.', cat_id='.$cat_id,
+			'SET'		=> 'forum_name=\''.db()->escape($forum_name).'\', forum_desc='.$forum_desc.', redirect_url='.$redirect_url.', sort_by='.$sort_by.', cat_id='.$cat_id,
 			'WHERE'		=> 'id='.$forum_id
 		);
 
 		($hook = get_hook('afo_save_forum_qr_update_forum')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Now let's deal with the permissions
 		if (isset($_POST['read_forum_old']))
@@ -289,8 +289,8 @@ else if (isset($_GET['edit_forum']))
 			);
 
 			($hook = get_hook('afo_save_forum_qr_get_groups')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			while ($cur_group = $forum_db->fetch_assoc($result))
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			while ($cur_group = db()->fetch_assoc($result))
 			{
 				// The default permissions for this group
 				$perms_default = array(
@@ -332,7 +332,7 @@ else if (isset($_GET['edit_forum']))
 						);
 
 						($hook = get_hook('afo_save_forum_qr_delete_group_forum_perms')) ? eval($hook) : null;
-						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+						db()->query_build($query) or error(__FILE__, __LINE__);
 					}
 					else
 					{
@@ -349,8 +349,8 @@ else if (isset($_GET['edit_forum']))
 						$query['SET'] = implode(', ', $perms_new_values);
 
 						($hook = get_hook('afo_save_forum_qr_update_forum_perms')) ? eval($hook) : null;
-						$forum_db->query_build($query) or error(__FILE__, __LINE__);
-						if (!$forum_db->affected_rows())
+						db()->query_build($query) or error(__FILE__, __LINE__);
+						if (!db()->affected_rows())
 						{
 							$query = array(
 								'INSERT'	=> 'group_id, forum_id',
@@ -362,7 +362,7 @@ else if (isset($_GET['edit_forum']))
 							$query['VALUES'] .= ', '.implode(', ', $perms_new);
 
 							($hook = get_hook('afo_save_forum_qr_add_forum_perms')) ? eval($hook) : null;
-							$forum_db->query_build($query) or error(__FILE__, __LINE__);
+							db()->query_build($query) or error(__FILE__, __LINE__);
 						}
 					}
 				}
@@ -392,7 +392,7 @@ else if (isset($_GET['edit_forum']))
 		);
 
 		($hook = get_hook('afo_revert_perms_qr_revert_forum_perms')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -442,7 +442,7 @@ else if (isset($_GET['edit_forum']))
 		'ORDER BY'	=> 'c.disp_position'
 	);
 	($hook = get_hook('afo_edit_forum_qr_get_categories')) ? eval($hook) : null;
-	$result_categories = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result_categories = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// groups
 	$query = array(
@@ -459,7 +459,7 @@ else if (isset($_GET['edit_forum']))
 	);
 
 	($hook = get_hook('afo_qr_get_forum_perms')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/forums/edit';
 	include FORUM_ROOT . 'include/render.php';
@@ -488,7 +488,7 @@ $query = array(
 	'ORDER BY'	=> 'c.disp_position'
 );
 ($hook = get_hook('afo_qr_get_categories')) ? eval($hook) : null;
-$result_categories = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result_categories = db()->query_build($query) or error(__FILE__, __LINE__);
 
 // Display all the categories and forums
 $query = array(
@@ -503,10 +503,10 @@ $query = array(
 	'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
 );
 ($hook = get_hook('afo_qr_get_cats_and_forums')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forums = array();
-while ($cur_forum = $forum_db->fetch_assoc($result)) {
+while ($cur_forum = db()->fetch_assoc($result)) {
 	$forums[] = $cur_forum;
 }
 

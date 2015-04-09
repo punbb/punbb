@@ -43,8 +43,8 @@ $query = array(
 );
 
 ($hook = get_hook('dl_qr_get_post_info')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_post = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_post = db()->fetch_assoc($result);
 
 if (!$cur_post)
 	message(__('Bad request'));
@@ -107,8 +107,8 @@ else if (isset($_POST['delete']))
 		);
 
 		($hook = get_hook('dl_post_deleted_get_prev_post_id')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$prev_post = $forum_db->fetch_assoc($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$prev_post = db()->fetch_assoc($result);
 
 		flash()->add_info(__('Post del redirect', 'delete'));
 

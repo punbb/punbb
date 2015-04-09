@@ -13,9 +13,9 @@ if ($forum_user['is_admmod'] && $forum_config['o_report_method'] != 1)
 	);
 
 	($hook = get_hook('hd_qr_get_unread_reports_count')) ? eval($hook) : null;
-	$result_header = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result_header = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result_header))
+	if (db()->result($result_header))
 		$admod_links['reports'] = '<li id="reports"><a href="'.forum_link($forum_url['admin_reports']).'">'.
 		__('New reports') . '</a></li>';
 }

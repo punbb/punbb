@@ -42,8 +42,8 @@ if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 }
 
 ($hook = get_hook('vf_qr_get_forum_info')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_forum = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_forum = db()->fetch_assoc($result);
 
 if (!$cur_forum)
 	message(__('Bad request'));
@@ -107,10 +107,10 @@ $query = array(
 );
 
 ($hook = get_hook('vt_qr_get_topics_id')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $topics_id = $topics = array();
-while ($row = $forum_db->fetch_assoc($result)) {
+while ($row = db()->fetch_assoc($result)) {
 	$topics_id[] = $row['id'];
 }
 
@@ -145,9 +145,9 @@ if (!empty($topics_id))
 	}
 
 	($hook = get_hook('vf_qr_get_topics')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	while ($cur_topic = $forum_db->fetch_assoc($result))
+	while ($cur_topic = db()->fetch_assoc($result))
 	{
 		$topics[] = $cur_topic;
 	}

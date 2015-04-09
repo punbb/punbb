@@ -42,8 +42,8 @@ $query = array(
 );
 
 ($hook = get_hook('pf_qr_get_user_info')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$user = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$user = db()->fetch_assoc($result);
 
 if (!$user)
 	message(__('Bad request'));
@@ -95,7 +95,7 @@ if ($action == 'change_pass')
 					);
 
 					($hook = get_hook('pf_change_pass_key_qr_update_password')) ? eval($hook) : null;
-					$forum_db->query_build($query) or error(__FILE__, __LINE__);
+					db()->query_build($query) or error(__FILE__, __LINE__);
 
 					// Add flash message
 					flash()->add_info(__('Pass updated', 'profile'));
@@ -173,7 +173,7 @@ if ($action == 'change_pass')
 			);
 
 			($hook = get_hook('pf_change_pass_normal_qr_update_password')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			if ($forum_user['id'] == $id)
 			{
@@ -252,7 +252,7 @@ else if ($action == 'change_email')
 			);
 
 			($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			message(__('E-mail updated', 'profile'));
 		}
@@ -292,14 +292,14 @@ else if ($action == 'change_email')
 		$query = array(
 			'SELECT'	=> 'u.id, u.username',
 			'FROM'		=> 'users AS u',
-			'WHERE'		=> 'u.email=\''.$forum_db->escape($new_email).'\''
+			'WHERE'		=> 'u.email=\''.db()->escape($new_email).'\''
 		);
 
 		($hook = get_hook('pf_change_email_normal_qr_check_email_dupe')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$dupe_list = array();
-		while ($cur_dupe = $forum_db->fetch_assoc($result))
+		while ($cur_dupe = db()->fetch_assoc($result))
 		{
 			$dupe_list[] = $cur_dupe['username'];
 		}
@@ -327,12 +327,12 @@ else if ($action == 'change_email')
 				// We have no confirmed e-mail so we change e-mail right now
 				$query = array(
 					'UPDATE'	=> 'users',
-					'SET'		=> 'email=\''.$forum_db->escape($new_email).'\'',
+					'SET'		=> 'email=\''.db()->escape($new_email).'\'',
 					'WHERE'		=> 'id='.$id
 				);
 
 				($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 
 				redirect(forum_link($forum_url['profile_about'], $id), __('E-mail updated redirect', 'profile'));
 			}
@@ -344,12 +344,12 @@ else if ($action == 'change_email')
 			// Save new e-mail and activation key
 			$query = array(
 				'UPDATE'	=> 'users',
-				'SET'		=> 'activate_string=\''.$forum_db->escape($new_email).'\', activate_key=\''.$new_email_key.'\'',
+				'SET'		=> 'activate_string=\''.db()->escape($new_email).'\', activate_key=\''.$new_email_key.'\'',
 				'WHERE'		=> 'id='.$id
 			);
 
 			($hook = get_hook('pf_change_email_normal_qr_update_email_activation')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Load the "activate e-mail" template
 			$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$forum_user['language'].'/mail_templates/activate_email.tpl'));
@@ -506,7 +506,7 @@ else if (isset($_POST['update_group_membership']))
 	);
 
 	($hook = get_hook('pf_change_group_qr_update_group')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'SELECT'	=> 'g.g_moderator',
@@ -515,8 +515,8 @@ else if (isset($_POST['update_group_membership']))
 	);
 
 	($hook = get_hook('pf_change_group_qr_check_new_group_mod')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$new_group_mod = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$new_group_mod = db()->result($result);
 
 	// If the user was a moderator or an administrator (and no longer is), we remove him/her from the moderator list in all forums
 	if (($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1') && $new_group_id != FORUM_ADMIN && $new_group_mod != '1')
@@ -545,8 +545,8 @@ else if (isset($_POST['update_forums']))
 	);
 
 	($hook = get_hook('pf_forum_moderators_qr_get_all_forum_mods')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($cur_forum = $forum_db->fetch_assoc($result))
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	while ($cur_forum = db()->fetch_assoc($result))
 	{
 		$cur_moderators = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderators']) : array();
 
@@ -560,7 +560,7 @@ else if (isset($_POST['update_forums']))
 		else if (!in_array($cur_forum['id'], $moderator_in) && in_array($id, $cur_moderators))
 			unset($cur_moderators[$user['username']]);
 
-		$cur_moderators = (!empty($cur_moderators)) ? '\''.$forum_db->escape(serialize($cur_moderators)).'\'' : 'NULL';
+		$cur_moderators = (!empty($cur_moderators)) ? '\''.db()->escape(serialize($cur_moderators)).'\'' : 'NULL';
 
 		$query = array(
 			'UPDATE'	=> 'forums',
@@ -569,7 +569,7 @@ else if (isset($_POST['update_forums']))
 		);
 
 		($hook = get_hook('pf_forum_moderators_qr_update_forum_moderators')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	// Add flash message
@@ -929,7 +929,7 @@ else if (isset($_POST['form_sent']))
 								'WHERE'		=> 'id='.$id
 							);
 							($hook = get_hook('pf_change_details_avatar_qr_update_avatar')) ? eval($hook) : null;
-							$forum_db->query_build($query) or error(__FILE__, __LINE__);
+							db()->query_build($query) or error(__FILE__, __LINE__);
 
 							// Update avatar info
 							$user['avatar'] = $avatar_type;
@@ -965,7 +965,7 @@ else if (isset($_POST['form_sent']))
 		$new_values = array();
 		foreach ($form as $key => $input)
 		{
-			$value = ($input !== '') ? '\''.$forum_db->escape($input).'\'' : 'NULL';
+			$value = ($input !== '') ? '\''.db()->escape($input).'\'' : 'NULL';
 
 			$new_values[] = $key.'='.$value;
 		}
@@ -982,7 +982,7 @@ else if (isset($_POST['form_sent']))
 		);
 
 		($hook = get_hook('pf_change_details_qr_update_user')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// If we changed the username we have to update some stuff
 		if ($username_updated)
@@ -991,57 +991,57 @@ else if (isset($_POST['form_sent']))
 
 			$query = array(
 				'UPDATE'	=> 'posts',
-				'SET'		=> 'poster=\''.$forum_db->escape($form['username']).'\'',
+				'SET'		=> 'poster=\''.db()->escape($form['username']).'\'',
 				'WHERE'		=> 'poster_id='.$id
 			);
 
 			($hook = get_hook('pf_change_details_qr_update_posts_poster')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'topics',
-				'SET'		=> 'poster=\''.$forum_db->escape($form['username']).'\'',
-				'WHERE'		=> 'poster=\''.$forum_db->escape($old_username).'\''
+				'SET'		=> 'poster=\''.db()->escape($form['username']).'\'',
+				'WHERE'		=> 'poster=\''.db()->escape($old_username).'\''
 			);
 
 			($hook = get_hook('pf_change_details_qr_update_topics_poster')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'topics',
-				'SET'		=> 'last_poster=\''.$forum_db->escape($form['username']).'\'',
-				'WHERE'		=> 'last_poster=\''.$forum_db->escape($old_username).'\''
+				'SET'		=> 'last_poster=\''.db()->escape($form['username']).'\'',
+				'WHERE'		=> 'last_poster=\''.db()->escape($old_username).'\''
 			);
 
 			($hook = get_hook('pf_change_details_qr_update_topics_last_poster')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'forums',
-				'SET'		=> 'last_poster=\''.$forum_db->escape($form['username']).'\'',
-				'WHERE'		=> 'last_poster=\''.$forum_db->escape($old_username).'\''
+				'SET'		=> 'last_poster=\''.db()->escape($form['username']).'\'',
+				'WHERE'		=> 'last_poster=\''.db()->escape($old_username).'\''
 			);
 
 			($hook = get_hook('pf_change_details_qr_update_forums_last_poster')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'online',
-				'SET'		=> 'ident=\''.$forum_db->escape($form['username']).'\'',
-				'WHERE'		=> 'ident=\''.$forum_db->escape($old_username).'\''
+				'SET'		=> 'ident=\''.db()->escape($form['username']).'\'',
+				'WHERE'		=> 'ident=\''.db()->escape($old_username).'\''
 			);
 
 			($hook = get_hook('pf_change_details_qr_update_online_ident')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'posts',
-				'SET'		=> 'edited_by=\''.$forum_db->escape($form['username']).'\'',
-				'WHERE'		=> 'edited_by=\''.$forum_db->escape($old_username).'\''
+				'SET'		=> 'edited_by=\''.db()->escape($form['username']).'\'',
+				'WHERE'		=> 'edited_by=\''.db()->escape($old_username).'\''
 			);
 
 			($hook = get_hook('pf_change_details_qr_update_posts_edited_by')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// If the user is a moderator or an administrator we have to update the moderator lists and bans cache
 			if ($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1')
@@ -1052,8 +1052,8 @@ else if (isset($_POST['form_sent']))
 				);
 
 				($hook = get_hook('pf_change_details_qr_get_all_forum_mods')) ? eval($hook) : null;
-				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				while ($cur_forum = $forum_db->fetch_assoc($result))
+				$result = db()->query_build($query) or error(__FILE__, __LINE__);
+				while ($cur_forum = db()->fetch_assoc($result))
 				{
 					$cur_moderators = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderators']) : array();
 
@@ -1065,12 +1065,12 @@ else if (isset($_POST['form_sent']))
 
 						$query = array(
 							'UPDATE'	=> 'forums',
-							'SET'		=> 'moderators=\''.$forum_db->escape(serialize($cur_moderators)).'\'',
+							'SET'		=> 'moderators=\''.db()->escape(serialize($cur_moderators)).'\'',
 							'WHERE'		=> 'id='.$cur_forum['id']
 						);
 
 						($hook = get_hook('pf_change_details_qr_update_forum_moderators')) ? eval($hook) : null;
-						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+						db()->query_build($query) or error(__FILE__, __LINE__);
 					}
 				}
 
@@ -1783,7 +1783,7 @@ else
 			);
 
 			($hook = get_hook('pf_change_details_admin_qr_get_groups')) ? eval($hook) : null;
-			$result_group = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$result_group = db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		if ($forum_user['g_id'] == FORUM_ADMIN &&
@@ -1804,7 +1804,7 @@ else
 			);
 
 			($hook = get_hook('pf_change_details_admin_qr_get_cats_and_forums')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		$forum_main_view = 'profile/profile_admin';

@@ -30,11 +30,11 @@ if (isset($_POST['add_cat']))
 	$query = array(
 		'INSERT'	=> 'cat_name, disp_position',
 		'INTO'		=> 'categories',
-		'VALUES'	=> '\''.$forum_db->escape($new_cat_name).'\', '.$new_cat_pos
+		'VALUES'	=> '\''.db()->escape($new_cat_name).'\', '.$new_cat_pos
 	);
 
 	($hook = get_hook('acg_add_cat_qr_add_category')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add flash message
 	flash()->add_info(__('Category added', 'admin_categories'));
@@ -69,10 +69,10 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		);
 
 		($hook = get_hook('acg_del_cat_qr_get_forums_to_delete')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$forum_ids = array();
-		while ($cur_forum_id = $forum_db->fetch_assoc($result)) {
+		while ($cur_forum_id = db()->fetch_assoc($result)) {
 			$forum_ids[] = $cur_forum_id['id'];
 		}
 
@@ -90,7 +90,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 				);
 
 				($hook = get_hook('acg_del_cat_qr_delete_forum')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 
 				// Delete any forum subscriptions
 				$query = array(
@@ -99,7 +99,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 				);
 
 				($hook = get_hook('acg_del_cat_qr_delete_forum_subscriptions')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -112,7 +112,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		);
 
 		($hook = get_hook('acg_del_cat_qr_delete_category')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -136,8 +136,8 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		);
 
 		($hook = get_hook('acg_del_cat_qr_get_category_name')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$cat_name = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$cat_name = db()->result($result);
 
 		if (is_null($cat_name) || $cat_name === false)
 			message(__('Bad request'));
@@ -185,8 +185,8 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 	);
 
 	($hook = get_hook('acg_update_cats_qr_get_categories')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($cur_cat = $forum_db->fetch_assoc($result))
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	while ($cur_cat = db()->fetch_assoc($result))
 	{
 		// If these aren't set, we're looking at a category that was added after
 		// the admin started editing: we don't want to mess with it
@@ -203,12 +203,12 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 			{
 				$query = array(
 					'UPDATE'	=> 'categories',
-					'SET'		=> 'cat_name=\''.$forum_db->escape($cat_name[$cur_cat['id']]).'\', disp_position='.$cat_order[$cur_cat['id']],
+					'SET'		=> 'cat_name=\''.db()->escape($cat_name[$cur_cat['id']]).'\', disp_position='.$cat_order[$cur_cat['id']],
 					'WHERE'		=> 'id='.$cur_cat['id']
 				);
 
 				($hook = get_hook('acg_update_cats_qr_update_category')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 	}
@@ -236,10 +236,10 @@ $query = array(
 );
 
 ($hook = get_hook('acg_qr_get_categories')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $cat_list = array();
-while ($cur_cat = $forum_db->fetch_assoc($result))
+while ($cur_cat = db()->fetch_assoc($result))
 {
 	$cat_list[] = $cur_cat;
 }

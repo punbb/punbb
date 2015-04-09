@@ -21,10 +21,10 @@ if (!defined('FORUM'))
 ($hook = get_hook('ft_end')) ? eval($hook) : null;
 
 // End the transaction
-$forum_db->end_transaction();
+db()->end_transaction();
 
 // Close the db connection (and free up any result data)
-$forum_db->close();
+db()->close();
 
 // TODO use event 'page_render'
 // Spit out the page

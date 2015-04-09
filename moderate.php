@@ -41,8 +41,8 @@ if (isset($_GET['get_host']))
 		);
 
 		($hook = get_hook('mr_view_ip_qr_get_poster_ip')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$ip = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$ip = db()->result($result);
 
 		if (!$ip)
 			message(__('Bad request'));
@@ -74,8 +74,8 @@ $query = array(
 );
 
 ($hook = get_hook('mr_qr_get_forum_data')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_forum = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_forum = db()->fetch_assoc($result);
 
 if (!$cur_forum)
 	message(__('Bad request'));
@@ -119,8 +119,8 @@ if (isset($_GET['tid']))
 	);
 
 	($hook = get_hook('mr_post_actions_qr_get_topic_info')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$cur_topic = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$cur_topic = db()->fetch_assoc($result);
 
 	if (!$cur_topic)
 		message(__('Bad request'));
@@ -157,8 +157,8 @@ if (isset($_GET['tid']))
 			);
 
 			($hook = get_hook('mr_confirm_delete_posts_qr_verify_post_ids')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->result($result) != count($posts))
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			if (db()->result($result) != count($posts))
 				message(__('Bad request'));
 
 			// Delete the posts
@@ -168,7 +168,7 @@ if (isset($_GET['tid']))
 			);
 
 			($hook = get_hook('mr_confirm_delete_posts_qr_delete_posts')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			if (!defined('FORUM_SEARCH_IDX_FUNCTIONS_LOADED'))
 				require FORUM_ROOT.'include/search_idx.php';
@@ -236,8 +236,8 @@ if (isset($_GET['tid']))
 			);
 
 			($hook = get_hook('mr_confirm_split_posts_qr_verify_post_ids')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			if ($forum_db->result($result) != count($posts))
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			if (db()->result($result) != count($posts))
 				message(__('Bad request'));
 
 			$new_subject = isset($_POST['new_subject']) ? forum_trim($_POST['new_subject']) : '';
@@ -255,19 +255,19 @@ if (isset($_GET['tid']))
 			);
 
 			($hook = get_hook('mr_confirm_split_posts_qr_get_first_post_data')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$first_post_data = $forum_db->fetch_assoc($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$first_post_data = db()->fetch_assoc($result);
 
 			// Create the new topic
 			$query = array(
 				'INSERT'	=> 'poster, subject, posted, first_post_id, forum_id',
 				'INTO'		=> 'topics',
-				'VALUES'	=> '\''.$forum_db->escape($first_post_data['poster']).'\', \''.$forum_db->escape($new_subject).'\', '.$first_post_data['posted'].', '.$first_post_data['id'].', '.$fid
+				'VALUES'	=> '\''.db()->escape($first_post_data['poster']).'\', \''.db()->escape($new_subject).'\', '.$first_post_data['posted'].', '.$first_post_data['id'].', '.$fid
 			);
 
 			($hook = get_hook('mr_confirm_split_posts_qr_add_topic')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$new_tid = $forum_db->insert_id();
+			db()->query_build($query) or error(__FILE__, __LINE__);
+			$new_tid = db()->insert_id();
 
 			// Move the posts to the new topic
 			$query = array(
@@ -277,7 +277,7 @@ if (isset($_GET['tid']))
 			);
 
 			($hook = get_hook('mr_confirm_split_posts_qr_move_posts')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Sync last post data for the old topic, the new topic, and the forum itself
 			sync_topic($new_tid);
@@ -404,7 +404,7 @@ if (isset($_GET['tid']))
 	);
 
 	($hook = get_hook('mr_post_actions_qr_get_posts')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'moderate/modtopic';
 	include FORUM_ROOT . 'include/render.php';
@@ -433,9 +433,9 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		);
 
 		($hook = get_hook('mr_confirm_move_topics_qr_get_move_to_forum_name')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		$move_to_forum_name = $forum_db->result($result);
+		$move_to_forum_name = db()->result($result);
 
 		if (!$move_to_forum_name)
 			message(__('Bad request'));
@@ -448,8 +448,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		);
 
 		($hook = get_hook('mr_confirm_move_topics_qr_verify_topic_ids')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->result($result) != count($topics))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		if (db()->result($result) != count($topics))
 			message(__('Bad request'));
 
 		// Delete any redirect topics if there are any (only if we moved/copied the topic back to where it where it was once moved from)
@@ -459,7 +459,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		);
 
 		($hook = get_hook('mr_confirm_move_topics_qr_delete_redirect_topics')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Move the topic(s)
 		$query = array(
@@ -469,7 +469,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		);
 
 		($hook = get_hook('mr_confirm_move_topics_qr_move_topics')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Should we create redirect topics?
 		if (isset($_POST['with_redirect']))
@@ -484,18 +484,18 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 				);
 
 				($hook = get_hook('mr_confirm_move_topics_qr_get_redirect_topic_data')) ? eval($hook) : null;
-				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				$moved_to = $forum_db->fetch_assoc($result);
+				$result = db()->query_build($query) or error(__FILE__, __LINE__);
+				$moved_to = db()->fetch_assoc($result);
 
 				// Create the redirect topic
 				$query = array(
 					'INSERT'	=> 'poster, subject, posted, last_post, moved_to, forum_id',
 					'INTO'		=> 'topics',
-					'VALUES'	=> '\''.$forum_db->escape($moved_to['poster']).'\', \''.$forum_db->escape($moved_to['subject']).'\', '.$moved_to['posted'].', '.$moved_to['last_post'].', '.$cur_topic.', '.$fid
+					'VALUES'	=> '\''.db()->escape($moved_to['poster']).'\', \''.db()->escape($moved_to['subject']).'\', '.$moved_to['posted'].', '.$moved_to['last_post'].', '.$cur_topic.', '.$fid
 				);
 
 				($hook = get_hook('mr_confirm_move_topics_qr_add_redirect_topic')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -546,8 +546,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		);
 
 		($hook = get_hook('mr_move_topics_qr_get_topic_to_move_subject')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$subject = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$subject = db()->result($result);
 
 		if (!$subject)
 		{
@@ -574,10 +574,10 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	);
 
 	($hook = get_hook('mr_move_topics_qr_get_target_forums')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_list = array();
-	while ($cur_sel_forum = $forum_db->fetch_assoc($result))
+	while ($cur_sel_forum = db()->fetch_assoc($result))
 	{
 		$forum_list[] = $cur_sel_forum;
 	}
@@ -644,8 +644,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		);
 
 		($hook = get_hook('mr_confirm_merge_topics_qr_verify_topic_ids')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		list($num_topics, $merge_to_tid) = $forum_db->fetch_row($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		list($num_topics, $merge_to_tid) = db()->fetch_row($result);
 		if ($num_topics != count($topics))
 			message(__('Bad request'));
 
@@ -661,7 +661,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 			$query['WHERE'] .= ' OR (id IN('.implode(',', $topics).') AND id != '.$merge_to_tid.')';
 
 		($hook = get_hook('mr_confirm_merge_topics_qr_fix_redirect_topics')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Merge the posts into the topic
 		$query = array(
@@ -671,7 +671,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		);
 
 		($hook = get_hook('mr_confirm_merge_topics_qr_merge_posts')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Delete any subscriptions
 		$query = array(
@@ -680,7 +680,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		);
 
 		($hook = get_hook('mr_confirm_merge_topics_qr_delete_subscriptions')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		if (!isset($_POST['with_redirect']))
 		{
@@ -691,7 +691,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 			);
 
 			($hook = get_hook('mr_confirm_merge_topics_qr_delete_merged_topics')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Synchronize the topic we merged to and the forum where the topics were merged
@@ -758,8 +758,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		);
 
 		($hook = get_hook('mr_confirm_delete_topics_qr_verify_topic_ids')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		if ($forum_db->result($result) != count($topics))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		if (db()->result($result) != count($topics))
 			message(__('Bad request'));
 
 		// Create an array of forum IDs that need to be synced
@@ -771,8 +771,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		);
 
 		($hook = get_hook('mr_confirm_delete_topics_qr_get_forums_to_sync')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($row = $forum_db->fetch_row($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($row = db()->fetch_row($result))
 			$forum_ids[] = $row[0];
 
 		// Delete the topics and any redirect topics
@@ -782,7 +782,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		);
 
 		($hook = get_hook('mr_confirm_delete_topics_qr_delete_topics')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Delete any subscriptions
 		$query = array(
@@ -791,7 +791,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		);
 
 		($hook = get_hook('mr_confirm_delete_topics_qr_delete_subscriptions')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Create a list of the post ID's in the deleted topic and strip the search index
 		$query = array(
@@ -801,10 +801,10 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		);
 
 		($hook = get_hook('mr_confirm_delete_topics_qr_get_deleted_posts')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$post_ids = array();
-		while ($row = $forum_db->fetch_row($result))
+		while ($row = db()->fetch_row($result))
 			$post_ids[] = $row[0];
 
 		// Strip the search index provided we're not just deleting redirect topics
@@ -823,7 +823,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		);
 
 		($hook = get_hook('mr_confirm_delete_topics_qr_delete_topic_posts')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		foreach ($forum_ids as $cur_forum_id)
 			sync_forum($cur_forum_id);
@@ -889,7 +889,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		);
 
 		($hook = get_hook('mr_open_close_multi_topics_qr_open_close_topics')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		if (count($topics) == 1)
 			$forum_page['redirect_msg'] = ($action) ?
@@ -924,9 +924,9 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		);
 
 		($hook = get_hook('mr_open_close_single_topic_qr_get_subject')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		$subject = $forum_db->result($result);
+		$subject = db()->result($result);
 
 		if (!$subject)
 		{
@@ -940,7 +940,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		);
 
 		($hook = get_hook('mr_open_close_single_topic_qr_open_close_topic')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$forum_page['redirect_msg'] = ($action) ?
 			__('Close topic redirect', 'misc') : __('Open topic redirect', 'misc');
@@ -976,8 +976,8 @@ else if (isset($_GET['stick']))
 	);
 
 	($hook = get_hook('mr_stick_topic_qr_get_subject')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$subject = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$subject = db()->result($result);
 
 	if (!$subject)
 	{
@@ -991,7 +991,7 @@ else if (isset($_GET['stick']))
 	);
 
 	($hook = get_hook('mr_stick_topic_qr_stick_topic')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	flash()->add_info(__('Stick topic redirect', 'misc'));
 
@@ -1024,8 +1024,8 @@ else if (isset($_GET['unstick']))
 	);
 
 	($hook = get_hook('mr_unstick_topic_qr_get_subject')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$subject = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$subject = db()->result($result);
 
 	if (!$subject)
 	{
@@ -1039,7 +1039,7 @@ else if (isset($_GET['unstick']))
 	);
 
 	($hook = get_hook('mr_unstick_topic_qr_unstick_topic')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	flash()->add_info(__('Unstick topic redirect', 'misc'));
 
@@ -1092,7 +1092,7 @@ if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
 }
 
 ($hook = get_hook('mr_qr_get_topics')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 // Generate paging links
 $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.

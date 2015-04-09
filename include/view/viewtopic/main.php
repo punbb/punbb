@@ -22,7 +22,7 @@ $forum_page['item_count'] = 0;	// Keep track of post numbers
 if (!empty($posts_id))
 {
 	$user_data_cache = array();
-	while ($cur_post = $forum_db->fetch_assoc($result))
+	while ($cur_post = db()->fetch_assoc($result))
 	{
 		($hook = get_hook('vt_post_loop_start')) ? eval($hook) : null;
 

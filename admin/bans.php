@@ -39,8 +39,8 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 			);
 
 			($hook = get_hook('aba_add_ban_qr_get_user_by_id')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$banned_user_info = $forum_db->fetch_row($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$banned_user_info = db()->fetch_row($result);
 			if (!$banned_user_info)
 			{
 				message(__('No user id message', 'admin_bans'));
@@ -59,12 +59,12 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 				$query = array(
 					'SELECT'	=> 'u.id, u.group_id, u.username, u.email, u.registration_ip',
 					'FROM'		=> 'users AS u',
-					'WHERE'		=> 'u.username=\''.$forum_db->escape($ban_user).'\' AND u.id>1'
+					'WHERE'		=> 'u.username=\''.db()->escape($ban_user).'\' AND u.id>1'
 				);
 
 				($hook = get_hook('aba_add_ban_qr_get_user_by_username')) ? eval($hook) : null;
-				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				$banned_user_info = $forum_db->fetch_row($result);
+				$result = db()->query_build($query) or error(__FILE__, __LINE__);
+				$banned_user_info = db()->fetch_row($result);
 				if (!$banned_user_info)
 				{
 					message(__('No user username message', 'admin_bans'));
@@ -90,8 +90,8 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 			);
 
 			($hook = get_hook('aba_add_ban_qr_get_last_known_ip')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$ban_ip_from_db = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$ban_ip_from_db = db()->result($result);
 
 			if ($ban_ip_from_db)
 			{
@@ -116,8 +116,8 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		);
 
 		($hook = get_hook('aba_edit_ban_qr_get_ban_data')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$banned_user_info = $forum_db->fetch_row($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$banned_user_info = db()->fetch_row($result);
 
 		if (!$banned_user_info)
 		{
@@ -238,10 +238,10 @@ else if (isset($_POST['add_edit_ban']))
 	else
 		$ban_expire = 'NULL';
 
-	$ban_user = ($ban_user != '') ? '\''.$forum_db->escape($ban_user).'\'' : 'NULL';
-	$ban_ip = ($ban_ip != '') ? '\''.$forum_db->escape($ban_ip).'\'' : 'NULL';
-	$ban_email = ($ban_email != '') ? '\''.$forum_db->escape($ban_email).'\'' : 'NULL';
-	$ban_message = ($ban_message != '') ? '\''.$forum_db->escape($ban_message).'\'' : 'NULL';
+	$ban_user = ($ban_user != '') ? '\''.db()->escape($ban_user).'\'' : 'NULL';
+	$ban_ip = ($ban_ip != '') ? '\''.db()->escape($ban_ip).'\'' : 'NULL';
+	$ban_email = ($ban_email != '') ? '\''.db()->escape($ban_email).'\'' : 'NULL';
+	$ban_message = ($ban_message != '') ? '\''.db()->escape($ban_message).'\'' : 'NULL';
 
 	if ($_POST['mode'] == 'add')
 	{
@@ -252,7 +252,7 @@ else if (isset($_POST['add_edit_ban']))
 		);
 
 		($hook = get_hook('aba_add_edit_ban_qr_add_ban')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 	else
 	{
@@ -263,7 +263,7 @@ else if (isset($_POST['add_edit_ban']))
 		);
 
 		($hook = get_hook('aba_qr_update_ban')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	// Regenerate the bans cache
@@ -301,7 +301,7 @@ else if (isset($_GET['del_ban']))
 	);
 
 	($hook = get_hook('aba_del_ban_qr_delete_ban')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the bans cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -341,8 +341,8 @@ $query = array(
 	'FROM'		=>	'bans'
 );
 
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$forum_page['num_bans'] = $forum_db->result($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$forum_page['num_bans'] = db()->result($result);
 $forum_page['num_pages'] = ceil($forum_page['num_bans'] / $forum_user['disp_topics']);
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
 $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
@@ -392,7 +392,7 @@ if ($forum_page['num_bans'] > 0) {
 		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
 	);
 
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 }
 
 $forum_main_view = 'admin/bans/main';

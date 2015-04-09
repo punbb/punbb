@@ -44,8 +44,8 @@ $query = array(
 );
 
 ($hook = get_hook('ed_qr_get_post_info')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_post = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_post = db()->fetch_assoc($result);
 
 if (!$cur_post)
 	message(__('Bad request'));
@@ -126,12 +126,12 @@ if (isset($_POST['form_sent']))
 			// Update the topic and any redirect topics
 			$query = array(
 				'UPDATE'	=> 'topics',
-				'SET'		=> 'subject=\''.$forum_db->escape($subject).'\'',
+				'SET'		=> 'subject=\''.db()->escape($subject).'\'',
 				'WHERE'		=> 'id='.$cur_post['tid'].' OR moved_to='.$cur_post['tid']
 			);
 
 			($hook = get_hook('ed_qr_update_subject')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// We changed the subject, so we need to take that into account when we update the search words
 			update_search_index('edit', $id, $message, $subject);
@@ -142,15 +142,15 @@ if (isset($_POST['form_sent']))
 		// Update the post
 		$query = array(
 			'UPDATE'	=> 'posts',
-			'SET'		=> 'message=\''.$forum_db->escape($message).'\', hide_smilies=\''.$hide_smilies.'\'',
+			'SET'		=> 'message=\''.db()->escape($message).'\', hide_smilies=\''.$hide_smilies.'\'',
 			'WHERE'		=> 'id='.$id
 		);
 
 		if (!isset($_POST['silent']) || !$forum_page['is_admmod'])
-			$query['SET'] .= ', edited='.time().', edited_by=\''.$forum_db->escape($forum_user['username']).'\'';
+			$query['SET'] .= ', edited='.time().', edited_by=\''.db()->escape($forum_user['username']).'\'';
 
 		($hook = get_hook('ed_qr_update_post')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		($hook = get_hook('ed_pre_redirect')) ? eval($hook) : null;
 

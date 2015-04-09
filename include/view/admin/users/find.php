@@ -46,7 +46,7 @@
 	{
 		$forum_page['item_count'] = 0;
 
-		while ($user_data = $forum_db->fetch_assoc($result))
+		while ($user_data = db()->fetch_assoc($result))
 		{
 			++$forum_page['item_count'];
 

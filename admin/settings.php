@@ -209,29 +209,29 @@ if (isset($_POST['form_sent']))
 			$query = array(
 				'UPDATE'	=> 'config',
 				'SET'		=> 'conf_value='.intval($input),
-				'WHERE'		=> 'conf_name=\'p_'.$forum_db->escape($key).'\''
+				'WHERE'		=> 'conf_name=\'p_'.db()->escape($key).'\''
 			);
 
 			($hook = get_hook('aop_qr_update_permission_conf')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Only update option values that have changed
 		if (array_key_exists('o_'.$key, $forum_config) && $forum_config['o_'.$key] != $input)
 		{
 			if ($input != '' || is_int($input))
-				$value = '\''.$forum_db->escape($input).'\'';
+				$value = '\''.db()->escape($input).'\'';
 			else
 				$value = 'NULL';
 
 			$query = array(
 				'UPDATE'	=> 'config',
 				'SET'		=> 'conf_value='.$value,
-				'WHERE'		=> 'conf_name=\'o_'.$forum_db->escape($key).'\''
+				'WHERE'		=> 'conf_name=\'o_'.db()->escape($key).'\''
 			);
 
 			($hook = get_hook('aop_qr_update_permission_option')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 	}
 

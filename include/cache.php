@@ -57,8 +57,6 @@ function write_cache_file($file, $content)
 //
 function generate_config_cache()
 {
-	global $forum_db;
-
 	$return = ($hook = get_hook('ch_fn_generate_config_cache_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -70,10 +68,10 @@ function generate_config_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_config_cache_qr_get_config')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_config_item = $forum_db->fetch_assoc($result))
+	while ($cur_config_item = db()->fetch_assoc($result))
 		$output[$cur_config_item['conf_name']] = $cur_config_item['conf_value'];
 
 	// Output config as PHP code
@@ -89,8 +87,6 @@ function generate_config_cache()
 //
 function generate_bans_cache()
 {
-	global $forum_db;
-
 	$return = ($hook = get_hook('ch_fn_generate_bans_cache_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -109,10 +105,10 @@ function generate_bans_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_bans_cache_qr_get_bans')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_ban = $forum_db->fetch_assoc($result))
+	while ($cur_ban = db()->fetch_assoc($result))
 		$output[] = $cur_ban;
 
 	// Output ban list as PHP code
@@ -128,8 +124,6 @@ function generate_bans_cache()
 //
 function generate_ranks_cache()
 {
-	global $forum_db;
-
 	$return = ($hook = get_hook('ch_fn_generate_ranks_cache_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -142,10 +136,10 @@ function generate_ranks_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_ranks_cache_qr_get_ranks')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_rank = $forum_db->fetch_assoc($result))
+	while ($cur_rank = db()->fetch_assoc($result))
 		$output[] = $cur_rank;
 
 	// Output ranks list as PHP code
@@ -161,8 +155,6 @@ function generate_ranks_cache()
 //
 function generate_stats_cache()
 {
-	global $forum_db;
-
 	$stats = array();
 
 	$return = ($hook = get_hook('ch_fn_generate_stats_cache_start')) ? eval($hook) : null;
@@ -177,8 +169,8 @@ function generate_stats_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_user_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$stats['total_users'] = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$stats['total_users'] = db()->result($result);
 
 
 	// Get last registered user info
@@ -191,8 +183,8 @@ function generate_stats_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_newest_user')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$stats['last_user'] = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$stats['last_user'] = db()->fetch_assoc($result);
 
 	// Get num topics and posts
 	$query = array(
@@ -201,9 +193,9 @@ function generate_stats_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_stats_cache_qr_get_post_stats')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	$stats_topics_and_posts = $forum_db->fetch_assoc($result);
+	$stats_topics_and_posts = db()->fetch_assoc($result);
 	$stats['total_topics'] = $stats_topics_and_posts['num_topics'];
 	$stats['total_posts'] = $stats_topics_and_posts['num_posts'];
 
@@ -237,8 +229,6 @@ function clean_stats_cache()
 //
 function generate_censors_cache()
 {
-	global $forum_db;
-
 	$return = ($hook = get_hook('ch_fn_generate_censors_cache_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -251,10 +241,10 @@ function generate_censors_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_censors_cache_qr_get_censored_words')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_censor = $forum_db->fetch_assoc($result))
+	while ($cur_censor = db()->fetch_assoc($result))
 		$output[] = $cur_censor;
 
 	// Output censors list as PHP code
@@ -270,7 +260,7 @@ function generate_censors_cache()
 //
 function generate_quickjump_cache($group_id = false)
 {
-	global $forum_db, $forum_url, $forum_config, $forum_user, $base_url;
+	global $forum_url, $forum_config, $forum_user, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -290,9 +280,9 @@ function generate_quickjump_cache($group_id = false)
 		);
 
 		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_groups')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_group = $forum_db->fetch_assoc($result))
+		while ($cur_group = db()->fetch_assoc($result))
 		{
 			$groups[] = $cur_group['g_id'];
 		}
@@ -324,10 +314,10 @@ function generate_quickjump_cache($group_id = false)
 		);
 
 		($hook = get_hook('ch_fn_generate_quickjump_cache_qr_get_cats_and_forums')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$forums = array();
-		while ($cur_forum = $forum_db->fetch_assoc($result))
+		while ($cur_forum = db()->fetch_assoc($result))
 		{
 			$forums[] = $cur_forum;
 		}
@@ -385,8 +375,6 @@ function generate_quickjump_cache($group_id = false)
 //
 function clean_quickjump_cache($group_id = false)
 {
-	global $forum_db;
-
 	$return = ($hook = get_hook('ch_fn_clean_quickjump_cache_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -405,9 +393,9 @@ function clean_quickjump_cache($group_id = false)
 		);
 
 		($hook = get_hook('ch_fn_clean_quickjump_cache_qr_get_groups')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_group = $forum_db->fetch_assoc($result))
+		while ($cur_group = db()->fetch_assoc($result))
 		{
 			$groups[] = $cur_group['g_id'];
 		}
@@ -432,7 +420,7 @@ function clean_quickjump_cache($group_id = false)
 //
 function generate_hooks_cache()
 {
-	global $forum_db, $forum_config, $base_url;
+	global $forum_config, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_hooks_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -453,10 +441,10 @@ function generate_hooks_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_hooks_cache_qr_get_hooks')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_hook = $forum_db->fetch_assoc($result))
+	while ($cur_hook = db()->fetch_assoc($result))
 	{
 		$load_ext_info = '$GLOBALS[\'ext_info_stack\'][] = array('."\n".
 			'\'id\'				=> \''.$cur_hook['extension_id'].'\','."\n".
@@ -496,7 +484,7 @@ function generate_hooks_cache()
 //
 function generate_updates_cache()
 {
-	global $forum_db, $forum_config;
+	global $forum_config;
 
 	$return = ($hook = get_hook('ch_fn_generate_updates_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -510,10 +498,10 @@ function generate_updates_cache()
 	);
 
 	($hook = get_hook('ch_fn_generate_updates_cache_qr_get_hotfixes')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$hotfixes = array();
-	while ($cur_ext_hotfix = $forum_db->fetch_assoc($result))
+	while ($cur_ext_hotfix = db()->fetch_assoc($result))
 	{
 		$hotfixes[] = urlencode($cur_ext_hotfix['id']);
 	}

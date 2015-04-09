@@ -34,10 +34,10 @@ if (isset($_GET['ip_stats']))
 	);
 
 	($hook = get_hook('aus_ip_stats_qr_get_user_ips')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$founded_ips = array();
-	while ($cur_ip = $forum_db->fetch_assoc($result))
+	while ($cur_ip = db()->fetch_assoc($result))
 	{
 		$founded_ips[] = $cur_ip;
 	}
@@ -77,15 +77,15 @@ else if (isset($_GET['show_users']))
 	$query = array(
 		'SELECT'	=> 'DISTINCT p.poster_id, p.poster',
 		'FROM'		=> 'posts AS p',
-		'WHERE'		=> 'p.poster_ip=\''.$forum_db->escape($ip).'\'',
+		'WHERE'		=> 'p.poster_ip=\''.db()->escape($ip).'\'',
 		'ORDER BY'	=> 'p.poster DESC'
 	);
 
 	($hook = get_hook('aus_show_users_qr_get_users_matching_ip')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$users = array();
-	while ($cur_user = $forum_db->fetch_assoc($result))
+	while ($cur_user = db()->fetch_assoc($result))
 	{
 		$users[] = $cur_user;
 	}
@@ -123,8 +123,8 @@ else if (isset($_GET['show_users']))
 				'WHERE'		=> 'u.id>1 AND u.id='.$user['poster_id']
 			);
 			($hook = get_hook('aus_show_users_qr_get_user_details')) ? eval($hook) : null;
-			$result2 = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$users_data_list[] = $forum_db->fetch_assoc($result2);
+			$result2 = db()->query_build($query) or error(__FILE__, __LINE__);
+			$users_data_list[] = db()->fetch_assoc($result2);
 		}
 	}
 
@@ -162,9 +162,9 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	);
 
 	($hook = get_hook('aus_delete_users_qr_check_for_admins')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) > 0)
+	if (db()->result($result) > 0)
 		message(__('Delete admin message', 'admin_users'));
 
 	if (isset($_POST['delete_users_comply']))
@@ -238,9 +238,9 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	);
 
 	($hook = get_hook('aus_ban_users_qr_check_for_admins')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) > 0)
+	if (db()->result($result) > 0)
 		message(__('Ban admin message', 'admin_users'));
 
 	if (isset($_POST['ban_users_comply']))
@@ -260,7 +260,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		else
 			$ban_expire = 'NULL';
 
-		$ban_message = ($ban_message != '') ? '\''.$forum_db->escape($ban_message).'\'' : 'NULL';
+		$ban_message = ($ban_message != '') ? '\''.db()->escape($ban_message).'\'' : 'NULL';
 
 		// Get the latest IPs for the posters and store them for a little later
 		$query = array(
@@ -271,10 +271,10 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		);
 
 		($hook = get_hook('aus_ban_users_qr_get_latest_user_ips')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$ips = array();
-		while ($cur_post = $forum_db->fetch_assoc($result))
+		while ($cur_post = db()->fetch_assoc($result))
 			$ips[$cur_post['poster_id']] = $cur_post['poster_ip'];
 
 		// Get the rest of the data for the posters, merge in the IP information, create a ban
@@ -285,19 +285,19 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		);
 
 		($hook = get_hook('aus_ban_users_qr_get_users')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_user = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_user = db()->fetch_assoc($result))
 		{
 			$ban_ip = isset($ips[$cur_user['id']]) ? $ips[$cur_user['id']] : $cur_user['registration_ip'];
 
 			$query = array(
 				'INSERT'	=> 'username, ip, email, message, expire, ban_creator',
 				'INTO'		=> 'bans',
-				'VALUES'	=> '\''.$forum_db->escape($cur_user['username']).'\', \''.$ban_ip.'\', \''.$forum_db->escape($cur_user['email']).'\', '.$ban_message.', '.$ban_expire.', '.$forum_user['id']
+				'VALUES'	=> '\''.db()->escape($cur_user['username']).'\', \''.$ban_ip.'\', \''.db()->escape($cur_user['email']).'\', '.$ban_message.', '.$ban_expire.', '.$forum_user['id']
 			);
 
 			($hook = get_hook('aus_ban_users_qr_add_ban')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Regenerate the bans cache
@@ -372,8 +372,8 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		);
 
 		($hook = get_hook('aus_change_group_qr_get_group_moderator_status')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$group_is_mod = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$group_is_mod = db()->result($result);
 
 		if ($move_to_group == FORUM_GUEST || (is_null($group_is_mod) || $group_is_mod === false))
 			message(__('Bad request'));
@@ -386,7 +386,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		);
 
 		($hook = get_hook('aus_change_group_qr_change_user_group')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		if ($move_to_group != FORUM_ADMIN && ($group_is_mod !== false && $group_is_mod == '0'))
 			clean_forum_moderators();
@@ -420,7 +420,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 		'ORDER BY'	=> 'g.g_title'
 	);
 	($hook = get_hook('aus_change_group_qr_get_groups')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/users/change_group';
 	include FORUM_ROOT . 'include/render.php';
@@ -509,7 +509,7 @@ else if (isset($_GET['find_user']))
 	{
 		if ($input != '' && in_array($key, array('username', 'email', 'title', 'realname', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note')))
 		{
-			$conditions[] = 'u.'.$forum_db->escape($key).' '.$like_command.' \''.$forum_db->escape(str_replace('*', '%', $input)).'\'';
+			$conditions[] = 'u.'.db()->escape($key).' '.$like_command.' \''.db()->escape(str_replace('*', '%', $input)).'\'';
 			$query_str[] = 'form%5B'.$key.'%5D='.urlencode($input);
 		}
 	}
@@ -546,8 +546,8 @@ else if (isset($_GET['find_user']))
 
 	($hook = get_hook('aus_find_user_qr_count_find_users')) ? eval($hook) : null;
 
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_page['num_users'] = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$forum_page['num_users'] = db()->result($result);
 	$forum_page['num_pages'] = ceil($forum_page['num_users'] / $forum_user['disp_topics']);
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 	$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
@@ -589,7 +589,7 @@ else if (isset($_GET['find_user']))
 		'LIMIT'		=> $forum_page['start_from'].', '.$forum_page['finish_at']
 	);
 	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/users/find';
 	include FORUM_ROOT . 'include/render.php';
@@ -623,7 +623,7 @@ $query = array(
 	'ORDER BY'	=> 'g.g_title'
 );
 ($hook = get_hook('aus_search_form_qr_get_groups')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/users/search';
 include FORUM_ROOT . 'include/render.php';

@@ -20,7 +20,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 	$forum_page['item_count'] = 0;
 
-	while ($cur_topic = $forum_db->fetch_assoc($result))
+	while ($cur_topic = db()->fetch_assoc($result))
 	{
 		($hook = get_hook('mr_topic_actions_row_loop_start')) ? eval($hook) : null;
 

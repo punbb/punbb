@@ -32,8 +32,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 		);
 
 		($hook = get_hook('agr_add_group_qr_get_base_group')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$group = $forum_db->fetch_assoc($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$group = db()->fetch_assoc($result);
 
 		$mode = 'add';
 	}
@@ -52,8 +52,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 		);
 
 		($hook = get_hook('agr_edit_group_qr_get_group')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$group = $forum_db->fetch_assoc($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$group = db()->fetch_assoc($result);
 
 		if (!$group)
 			message(__('Bad request'));
@@ -114,7 +114,7 @@ else if (isset($_POST['add_edit_group']))
 	if ($title == '')
 		message(__('Must enter group message', 'admin_groups'));
 
-	$user_title = ($user_title != '') ? '\''.$forum_db->escape($user_title).'\'' : 'NULL';
+	$user_title = ($user_title != '') ? '\''.db()->escape($user_title).'\'' : 'NULL';
 
 	($hook = get_hook('agr_add_edit_end_validation')) ? eval($hook) : null;
 
@@ -126,25 +126,25 @@ else if (isset($_POST['add_edit_group']))
 		$query = array(
 			'SELECT'	=> 'COUNT(g.g_id)',
 			'FROM'		=> 'groups AS g',
-			'WHERE'		=> 'g_title=\''.$forum_db->escape($title).'\''
+			'WHERE'		=> 'g_title=\''.db()->escape($title).'\''
 		);
 
 		($hook = get_hook('agr_add_end_qr_check_add_group_title_collision')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		if ($forum_db->result($result) != 0)
+		if (db()->result($result) != 0)
 			message(sprintf(__('Already a group message', 'admin_groups'), forum_htmlencode($title)));
 
 		// Insert the new group
 		$query = array(
 			'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
 			'INTO'		=> 'groups',
-			'VALUES'	=> '\''.$forum_db->escape($title).'\', '.$user_title.', '.$moderator.', '.$mod_edit_users.', '.$mod_rename_users.', '.$mod_change_passwords.', '.$mod_ban_users.', '.$read_board.', '.$view_users.', '.$post_replies.', '.$post_topics.', '.$edit_posts.', '.$delete_posts.', '.$delete_topics.', '.$set_title.', '.$search.', '.$search_users.', '.$send_email.', '.$post_flood.', '.$search_flood.', '.$email_flood
+			'VALUES'	=> '\''.db()->escape($title).'\', '.$user_title.', '.$moderator.', '.$mod_edit_users.', '.$mod_rename_users.', '.$mod_change_passwords.', '.$mod_ban_users.', '.$read_board.', '.$view_users.', '.$post_replies.', '.$post_topics.', '.$edit_posts.', '.$delete_posts.', '.$delete_topics.', '.$set_title.', '.$search.', '.$search_users.', '.$send_email.', '.$post_flood.', '.$search_flood.', '.$email_flood
 		);
 
 		($hook = get_hook('agr_add_end_qr_add_group')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$new_group_id = $forum_db->insert_id();
+		db()->query_build($query) or error(__FILE__, __LINE__);
+		$new_group_id = db()->insert_id();
 
 		// Now lets copy the forum specific permissions from the group which this group is based on
 		$query = array(
@@ -154,8 +154,8 @@ else if (isset($_POST['add_edit_group']))
 		);
 
 		($hook = get_hook('agr_add_end_qr_get_group_forum_perms')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_forum_perm = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_forum_perm = db()->fetch_assoc($result))
 		{
 			$query = array(
 				'INSERT'	=> 'group_id, forum_id, read_forum, post_replies, post_topics',
@@ -164,7 +164,7 @@ else if (isset($_POST['add_edit_group']))
 			);
 
 			($hook = get_hook('agr_add_end_qr_add_group_forum_perms')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 	}
 	else
@@ -184,24 +184,24 @@ else if (isset($_POST['add_edit_group']))
 		$query = array(
 			'SELECT'	=> 'COUNT(g.g_id)',
 			'FROM'		=> 'groups AS g',
-			'WHERE'		=> 'g_title=\''.$forum_db->escape($title).'\' AND g_id!='.$group_id
+			'WHERE'		=> 'g_title=\''.db()->escape($title).'\' AND g_id!='.$group_id
 		);
 
 		($hook = get_hook('agr_edit_end_qr_check_edit_group_title_collision')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		if ($forum_db->result($result) != 0)
+		if (db()->result($result) != 0)
 			message(sprintf(__('Already a group message', 'admin_groups'), forum_htmlencode($title)));
 
 		// Save changes
 		$query = array(
 			'UPDATE'	=> 'groups',
-			'SET'		=> 'g_title=\''.$forum_db->escape($title).'\', g_user_title='.$user_title.', g_moderator='.$moderator.', g_mod_edit_users='.$mod_edit_users.', g_mod_rename_users='.$mod_rename_users.', g_mod_change_passwords='.$mod_change_passwords.', g_mod_ban_users='.$mod_ban_users.', g_read_board='.$read_board.', g_view_users='.$view_users.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_send_email='.$send_email.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.', g_email_flood='.$email_flood,
+			'SET'		=> 'g_title=\''.db()->escape($title).'\', g_user_title='.$user_title.', g_moderator='.$moderator.', g_mod_edit_users='.$mod_edit_users.', g_mod_rename_users='.$mod_rename_users.', g_mod_change_passwords='.$mod_change_passwords.', g_mod_ban_users='.$mod_ban_users.', g_read_board='.$read_board.', g_view_users='.$view_users.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_send_email='.$send_email.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.', g_email_flood='.$email_flood,
 			'WHERE'		=> 'g_id='.$group_id
 		);
 
 		($hook = get_hook('agr_edit_end_qr_update_group')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// If the group doesn't have moderator privileges (it might have had before), remove its users from the moderator list in all forums
 		if (!$moderator)
@@ -243,9 +243,9 @@ else if (isset($_POST['set_default_group']))
 	);
 
 	($hook = get_hook('agr_set_default_group_qr_get_group_moderation_status')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) != 1)
+	if (db()->result($result) != 1)
 		message(__('Bad request'));
 
 	$query = array(
@@ -255,7 +255,7 @@ else if (isset($_POST['set_default_group']))
 	);
 
 	($hook = get_hook('agr_set_default_group_qr_set_default_group')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the config cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -305,8 +305,8 @@ else if (isset($_GET['del_group']))
 	);
 
 	($hook = get_hook('agr_del_group_qr_get_group_member_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$group_info = $forum_db->fetch_row($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$group_info = db()->fetch_row($result);
 
 	// If the group doesn't have any members or if we've already selected a group to move the members to
 	if (!$group_info || isset($_POST['del_group']))
@@ -322,7 +322,7 @@ else if (isset($_GET['del_group']))
 			);
 
 			($hook = get_hook('agr_del_group_qr_move_users')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Delete the group and any forum specific permissions
@@ -332,7 +332,7 @@ else if (isset($_GET['del_group']))
 		);
 
 		($hook = get_hook('agr_del_group_qr_delete_group')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$query = array(
 			'DELETE'	=> 'forum_perms',
@@ -340,7 +340,7 @@ else if (isset($_GET['del_group']))
 		);
 
 		($hook = get_hook('agr_del_group_qr_delete_group_forum_perms')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		clean_forum_moderators();
 
@@ -383,7 +383,7 @@ else if (isset($_GET['del_group']))
 	);
 
 	($hook = get_hook('agr_del_group_qr_get_groups')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/groups/delete';
 	include FORUM_ROOT . 'include/render.php';
@@ -413,7 +413,7 @@ $query = array(
 	'ORDER BY'	=> 'g.g_title'
 );
 ($hook = get_hook('agr_qr_get_allowed_base_groups')) ? eval($hook) : null;
-$result_groups = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result_groups = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $query = array(
 	'SELECT'	=> 'g.g_id, g.g_title',
@@ -422,7 +422,7 @@ $query = array(
 	'ORDER BY'	=> 'g.g_title'
 );
 ($hook = get_hook('agr_qr_get_groups')) ? eval($hook) : null;
-$result_groups_default = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result_groups_default = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $query = array(
 	'SELECT'	=> 'g.g_id, g.g_title',
@@ -430,7 +430,7 @@ $query = array(
 	'ORDER BY'	=> 'g.g_title'
 );
 ($hook = get_hook('agr_qr_get_group_list')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/groups/main';
 include FORUM_ROOT . 'include/render.php';

@@ -251,10 +251,10 @@ if ((!$advanced_search && ($forum_config['o_search_all_forums'] == '0' &&
 	);
 
 	($hook = get_hook('se_qr_get_cats_and_forums')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forums = array();
-	while ($cur_forum = $forum_db->fetch_assoc($result))
+	while ($cur_forum = db()->fetch_assoc($result))
 	{
 		$forums[] = $cur_forum;
 	}

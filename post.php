@@ -65,8 +65,8 @@ else
 	($hook = get_hook('po_qr_get_forum_info')) ? eval($hook) : null;
 }
 
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_posting = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_posting = db()->fetch_assoc($result);
 
 if (!$cur_posting)
 	message(__('Bad request'));
@@ -251,8 +251,8 @@ if ($tid && isset($_GET['qid']))
 	);
 
 	($hook = get_hook('po_qr_get_quote')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$quote_info = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$quote_info = db()->fetch_assoc($result);
 
 	if (!$quote_info)
 	{
@@ -339,8 +339,8 @@ if ($tid && $forum_config['o_topic_review'] != '0') {
 	);
 
 	($hook = get_hook('po_topic_review_qr_get_post_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_page['total_post_count'] = $forum_db->result($result, 0);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$forum_page['total_post_count'] = db()->result($result, 0);
 
 	// Get posts to display in topic review
 	$query = array(
@@ -352,10 +352,10 @@ if ($tid && $forum_config['o_topic_review'] != '0') {
 	);
 
 	($hook = get_hook('po_topic_review_qr_get_topic_review_posts')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$posts = array();
-	while ($cur_post = $forum_db->fetch_assoc($result)) {
+	while ($cur_post = db()->fetch_assoc($result)) {
 		$posts[] = $cur_post;
 	}
 }

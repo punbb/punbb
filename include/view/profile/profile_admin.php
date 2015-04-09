@@ -31,7 +31,7 @@ namespace punbb;
 					<div class="checklist">
 <?php
 			$cur_category = 0;
-			while ($cur_forum = $forum_db->fetch_assoc($result))
+			while ($cur_forum = db()->fetch_assoc($result))
 			{
 				($hook = get_hook('pf_change_details_admin_forum_loop_start')) ? eval($hook) : null;
 

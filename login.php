@@ -34,13 +34,13 @@ if (isset($_POST['form_sent']) && empty($action))
 	);
 
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
-		$query['WHERE'] = 'username=\''.$forum_db->escape($form_username).'\'';
+		$query['WHERE'] = 'username=\''.db()->escape($form_username).'\'';
 	else
-		$query['WHERE'] = 'LOWER(username)=LOWER(\''.$forum_db->escape($form_username).'\')';
+		$query['WHERE'] = 'LOWER(username)=LOWER(\''.db()->escape($form_username).'\')';
 
 	($hook = get_hook('li_login_qr_get_login_data')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($user_id, $group_id, $db_password_hash, $salt) = $forum_db->fetch_row($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	list($user_id, $group_id, $db_password_hash, $salt) = db()->fetch_row($result);
 
 	$authorized = false;
 	if (!empty($db_password_hash))
@@ -61,12 +61,12 @@ if (isset($_POST['form_sent']) && empty($action))
 			// with a randomly generated salt and a new, salted SHA1 hash
 			$query = array(
 				'UPDATE'	=> 'users',
-				'SET'		=> 'password=\''.$form_password_hash.'\', salt=\''.$forum_db->escape($salt).'\'',
+				'SET'		=> 'password=\''.$form_password_hash.'\', salt=\''.db()->escape($salt).'\'',
 				'WHERE'		=> 'id='.$user_id
 			);
 
 			($hook = get_hook('li_login_qr_update_user_hash')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 	}
 
@@ -88,7 +88,7 @@ if (isset($_POST['form_sent']) && empty($action))
 			);
 
 			($hook = get_hook('li_login_qr_update_user_group')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Remove cache file with forum stats
 			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -102,11 +102,11 @@ if (isset($_POST['form_sent']) && empty($action))
 		// Remove this user's guest entry from the online list
 		$query = array(
 			'DELETE'	=> 'online',
-			'WHERE'		=> 'ident=\''.$forum_db->escape(get_remote_address()).'\''
+			'WHERE'		=> 'ident=\''.db()->escape(get_remote_address()).'\''
 		);
 
 		($hook = get_hook('li_login_qr_delete_online_user')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$expire = ($save_pass) ? time() + 1209600 : time() + $forum_config['o_timeout_visit'];
 		forum_setcookie($cookie_name, base64_encode($user_id.'|'.$form_password_hash.'|'.$expire.'|'.sha1($salt.$form_password_hash.forum_hash($expire, $salt))), $expire);
@@ -142,7 +142,7 @@ else if ($action == 'out')
 	);
 
 	($hook = get_hook('li_logout_qr_delete_online_user')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Update last_visit (make sure there's something to update it with)
 	if (isset($forum_user['logged']))
@@ -154,7 +154,7 @@ else if ($action == 'out')
 		);
 
 		($hook = get_hook('li_logout_qr_update_last_visit')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	$expire = time() + 1209600;
@@ -202,13 +202,13 @@ else if ($action == 'forget' || $action == 'forget_2')
 			$query = array(
 				'SELECT'	=> 'u.id, u.group_id, u.username, u.salt, u.last_email_sent',
 				'FROM'		=> 'users AS u',
-				'WHERE'		=> 'u.email=\''.$forum_db->escape($email).'\''
+				'WHERE'		=> 'u.email=\''.db()->escape($email).'\''
 			);
 
 			($hook = get_hook('li_forgot_pass_qr_get_user_data')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-			while ($cur_user = $forum_db->fetch_assoc($result))
+			while ($cur_user = db()->fetch_assoc($result))
 			{
 				$users_with_email[] = $cur_user;
 			}
@@ -254,7 +254,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 					);
 
 					($hook = get_hook('li_forgot_pass_qr_set_activate_key')) ? eval($hook) : null;
-					$forum_db->query_build($query) or error(__FILE__, __LINE__);
+					db()->query_build($query) or error(__FILE__, __LINE__);
 
 					// Do the user specific replacements to the template
 					$cur_mail_message = str_replace('<username>', $cur_hit['username'], $mail_message);

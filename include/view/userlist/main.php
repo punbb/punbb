@@ -39,7 +39,7 @@ namespace punbb;
 
 ($hook = get_hook('ul_search_new_group_option')) ? eval($hook) : null;
 
-while ($cur_group = $forum_db->fetch_assoc($result_group))
+while ($cur_group = db()->fetch_assoc($result_group))
 {
 	if ($cur_group['g_id'] == $forum_page['show_group'])
 		echo "\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
@@ -91,7 +91,7 @@ while ($cur_group = $forum_db->fetch_assoc($result_group))
 <?php
 
 $founded_user_datas = array();
-while ($user_data = $forum_db->fetch_assoc($result))
+while ($user_data = db()->fetch_assoc($result))
 {
 	$founded_user_datas[] = $user_data;
 }

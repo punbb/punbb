@@ -37,7 +37,7 @@ $where_sql = array();
 $like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
 
 if ($forum_user['g_search_users'] == '1' && $forum_page['username'] != '')
-	$where_sql[] = 'u.username '.$like_command.' \''.$forum_db->escape(str_replace('*', '%', $forum_page['username'])).'\'';
+	$where_sql[] = 'u.username '.$like_command.' \''.db()->escape(str_replace('*', '%', $forum_page['username'])).'\'';
 if ($forum_page['show_group'] > -1)
 	$where_sql[] = 'u.group_id='.$forum_page['show_group'];
 
@@ -53,8 +53,8 @@ if (!empty($where_sql))
 	$query['WHERE'] .= ' AND '.implode(' AND ', $where_sql);
 
 ($hook = get_hook('ul_qr_get_user_count')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$forum_page['num_users'] = $forum_db->result($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$forum_page['num_users'] = db()->result($result);
 
 // Determine the user offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil($forum_page['num_users'] / 50);
@@ -129,7 +129,7 @@ $query = array(
 );
 
 ($hook = get_hook('ul_qr_get_groups')) ? eval($hook) : null;
-$result_group = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result_group = db()->query_build($query) or error(__FILE__, __LINE__);
 
 // Grab the users
 $query = array(
@@ -150,7 +150,7 @@ if (!empty($where_sql))
 	$query['WHERE'] .= ' AND '.implode(' AND ', $where_sql);
 
 ($hook = get_hook('ul_qr_get_users')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'userlist/main';
 include FORUM_ROOT . 'include/render.php';

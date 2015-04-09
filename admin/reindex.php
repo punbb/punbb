@@ -43,14 +43,14 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 		);
 
 		($hook = get_hook('ari_cycle_qr_empty_search_matches')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$query = array(
 			'DELETE'	=> 'search_words'
 		);
 
 		($hook = get_hook('ari_cycle_qr_empty_search_words')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Reset the sequence for the search words (not needed for SQLite)
 		switch ($db_type)
@@ -59,11 +59,11 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 			case 'mysql_innodb':
 			case 'mysqli':
 			case 'mysqli_innodb':
-				$result = $forum_db->query('ALTER TABLE '.$forum_db->prefix.'search_words auto_increment=1') or error(__FILE__, __LINE__);
+				$result = db()->query('ALTER TABLE '.db()->prefix.'search_words auto_increment=1') or error(__FILE__, __LINE__);
 				break;
 
 			case 'pgsql';
-				$result = $forum_db->query('SELECT setval(\''.$forum_db->prefix.'search_words_id_seq\', 1, false)') or error(__FILE__, __LINE__);
+				$result = db()->query('SELECT setval(\''.db()->prefix.'search_words_id_seq\', 1, false)') or error(__FILE__, __LINE__);
 		}
 	}
 
@@ -113,11 +113,11 @@ body {
 	);
 
 	($hook = get_hook('ari_cycle_qr_fetch_posts')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$post_id = 0;
 	echo '<p>';
-	while ($cur_post = $forum_db->fetch_row($result))
+	while ($cur_post = db()->fetch_row($result))
 	{
 		echo sprintf(__('Processing post', 'admin_reindex'), $cur_post[0], $cur_post[2]).'<br />'."\n";
 
@@ -140,8 +140,8 @@ body {
 	);
 
 	($hook = get_hook('ari_cycle_qr_find_next_post')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$next_posts_to_proced = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$next_posts_to_proced = db()->result($result);
 
 	$query_str = '';
 	if (!is_null($next_posts_to_proced) && $next_posts_to_proced !== false)
@@ -151,8 +151,8 @@ body {
 
 	($hook = get_hook('ari_cycle_end')) ? eval($hook) : null;
 
-	$forum_db->end_transaction();
-	$forum_db->close();
+	db()->end_transaction();
+	db()->close();
 
 	exit('<script type="text/javascript">window.location="'.forum_link($forum_url['admin_reindex']).$query_str.'"</script><br />'.
 		__('Javascript redirect', 'admin_reindex') . ' <a href="'.forum_link($forum_url['admin_reindex']).$query_str.'">'.
@@ -169,8 +169,8 @@ $query = array(
 );
 
 ($hook = get_hook('ari_qr_find_lowest_post_id')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$first_id = $forum_db->result($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$first_id = db()->result($result);
 
 if (is_null($first_id) || $first_id === false)
 {

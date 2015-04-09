@@ -62,12 +62,12 @@ else if (isset($_POST['form_sent']))
 	$query = array(
 		'SELECT'	=> 'COUNT(u.id)',
 		'FROM'		=> 'users AS u',
-		'WHERE'		=> 'u.registration_ip=\''.$forum_db->escape(get_remote_address()).'\' AND u.registered>'.(time() - 3600)
+		'WHERE'		=> 'u.registration_ip=\''.db()->escape(get_remote_address()).'\' AND u.registered>'.(time() - 3600)
 	);
 
 	($hook = get_hook('rg_register_qr_check_register_flood')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($forum_db->result($result) > 0)
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	if (db()->result($result) > 0)
 	{
 		$errors[] = __('Registration flood', 'profile');
 	}
@@ -116,7 +116,7 @@ else if (isset($_POST['form_sent']))
 			'WHERE'		=> 'group_id='.FORUM_UNVERIFIED.' AND activate_key IS NOT NULL AND registered < '.(time() - 259200)
 		);
 		($hook = get_hook('rg_register_qr_delete_unverified')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Check if someone else already has registered with that e-mail address
 		$dupe_list = array();
@@ -124,13 +124,13 @@ else if (isset($_POST['form_sent']))
 		$query = array(
 			'SELECT'	=> 'u.username',
 			'FROM'		=> 'users AS u',
-			'WHERE'		=> 'u.email=\''.$forum_db->escape($email1).'\''
+			'WHERE'		=> 'u.email=\''.db()->escape($email1).'\''
 		);
 
 		($hook = get_hook('rg_register_qr_check_email_dupe')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_dupe = $forum_db->fetch_assoc($result))
+		while ($cur_dupe = db()->fetch_assoc($result))
 		{
 			$dupe_list[] = $cur_dupe['username'];
 		}

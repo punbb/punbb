@@ -33,7 +33,7 @@ if (isset($_POST['mark_as_read']))
 	);
 
 	($hook = get_hook('arp_mark_as_read_qr_mark_reports_as_read')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add flash message
 	flash()->add_info(__('Reports marked read', 'admin_reports'));
@@ -87,9 +87,9 @@ $query = array(
 ($hook = get_hook('arp_qr_get_new_reports')) ? eval($hook) : null;
 
 $forum_page['new_reports'] = false;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 $unread_reports = array();
-while ($cur_report = $forum_db->fetch_assoc($result)) {
+while ($cur_report = db()->fetch_assoc($result)) {
 	$unread_reports[] = $cur_report;
 }
 
@@ -126,9 +126,9 @@ $query = array(
 ($hook = get_hook('arp_qr_get_last_zapped_reports')) ? eval($hook) : null;
 
 $forum_page['old_reports'] = false;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 $zapped_reports = array();
-while ($cur_report = $forum_db->fetch_assoc($result)) {
+while ($cur_report = db()->fetch_assoc($result)) {
 	$zapped_reports[] = $cur_report;
 }
 

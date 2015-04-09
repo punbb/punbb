@@ -45,10 +45,10 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		);
 
 		($hook = get_hook('ain_update_check_qr_get_hotfixes')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$hotfixes = array();
-		while ($row = $forum_db->fetch_assoc($result))
+		while ($row = db()->fetch_assoc($result))
 		{
 			$hotfixes[] = urlencode($row['id']);
 		}
@@ -89,17 +89,17 @@ $query = array(
 );
 
 ($hook = get_hook('ain_qr_get_users_online')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$num_online = $forum_db->result($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$num_online = db()->result($result);
 
 // Collect some additional info about MySQL
 if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 {
 	// Calculate total db size/row count
-	$result = $forum_db->query('SHOW TABLE STATUS FROM `'.$db_name.'` LIKE \''.$db_prefix.'%\'') or error(__FILE__, __LINE__);
+	$result = db()->query('SHOW TABLE STATUS FROM `'.$db_name.'` LIKE \''.$db_prefix.'%\'') or error(__FILE__, __LINE__);
 
 	$total_records = $total_size = 0;
-	while ($status = $forum_db->fetch_assoc($result))
+	while ($status = db()->fetch_assoc($result))
 	{
 		$total_records += $status['Rows'];
 		$total_size += $status['Data_length'] + $status['Index_length'];

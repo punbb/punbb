@@ -48,7 +48,7 @@ if ($forum_page['num_bans'] > 0)
 <?php
 
 	$forum_page['item_num'] = 0;
-	while ($cur_ban = $forum_db->fetch_assoc($result))
+	while ($cur_ban = db()->fetch_assoc($result))
 	{
 		$forum_page['ban_info'] = array();
 		$forum_page['ban_creator'] = ($cur_ban['ban_creator_username'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_ban['ban_creator']).'">'.forum_htmlencode($cur_ban['ban_creator_username']).'</a>' :

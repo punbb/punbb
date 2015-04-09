@@ -13,7 +13,7 @@ if (defined('FORUM_DEBUG'))
 	$time_diff = forum_microtime() - $forum_start;
 	$query_time_total = $time_percent_db = 0.0;
 
-	$saved_queries = $forum_db->get_saved_queries();
+	$saved_queries = db()->get_saved_queries();
 	if (count($saved_queries) > 0)
 	{
 		foreach ($saved_queries as $cur_query)
@@ -31,7 +31,7 @@ if (defined('FORUM_DEBUG'))
 		forum_number_format($time_diff, 3),
 		forum_number_format(100 - $time_percent_db, 0),
 		forum_number_format($time_percent_db, 0),
-		forum_number_format($forum_db->get_num_queries())).'</p>'."\n";
+		forum_number_format(db()->get_num_queries())).'</p>'."\n";
 }
 
 if (defined('FORUM_SHOW_QUERIES'))

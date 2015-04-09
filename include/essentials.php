@@ -90,7 +90,7 @@ if (!defined('FORUM_CACHE_DIR'))
 require FORUM_ROOT.'include/dblayer/common_db.php';
 
 // Start a transaction
-$forum_db->start_transaction();
+db()->start_transaction();
 
 // Load cached config
 if (file_exists(FORUM_CACHE_DIR.'cache_config.php'))

@@ -34,7 +34,7 @@ function is_valid_email($email)
 //
 function is_banned_email($email)
 {
-	global $forum_db, $forum_bans;
+	global $forum_bans;
 
 	$return = ($hook = get_hook('em_fn_is_banned_email_start')) ? eval($hook) : null;
 	if ($return != null)

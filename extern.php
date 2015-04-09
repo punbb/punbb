@@ -311,9 +311,9 @@ if ($action == 'feed')
 		);
 
 		($hook = get_hook('ex_qr_get_topic_data')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		$cur_topic = $forum_db->fetch_assoc($result);
+		$cur_topic = db()->fetch_assoc($result);
 		if (!$cur_topic)
 		{
 			http_authenticate_user();
@@ -351,9 +351,9 @@ if ($action == 'feed')
 			'LIMIT'		=> $show
 		);
 		($hook = get_hook('ex_qr_get_posts')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_post = $forum_db->fetch_assoc($result))
+		while ($cur_post = db()->fetch_assoc($result))
 		{
 			if ($forum_config['o_censoring'] == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
@@ -423,8 +423,8 @@ if ($action == 'feed')
 					'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fids[0]
 				);
 
-				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				$forum_name_in_db = $forum_db->result($result);
+				$result = db()->query_build($query) or error(__FILE__, __LINE__);
+				$forum_name_in_db = db()->result($result);
 				if (!is_null($forum_name_in_db) && $forum_name_in_db !== false)
 					$forum_name = __('Title separator') . $forum_name_in_db;
 			}
@@ -476,8 +476,8 @@ if ($action == 'feed')
 			$query['WHERE'] .= $forum_sql;
 
 		($hook = get_hook('ex_qr_get_topics')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_topic = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_topic = db()->fetch_assoc($result))
 		{
 			if ($forum_config['o_censoring'] == '1')
 			{
@@ -537,8 +537,8 @@ else if ($action == 'online' || $action == 'online_full')
 	);
 
 	($hook = get_hook('ex_qr_get_users_online')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($forum_user_online = $forum_db->fetch_assoc($result))
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	while ($forum_user_online = db()->fetch_assoc($result))
 	{
 		if ($forum_user_online['user_id'] > 1)
 		{
@@ -579,8 +579,8 @@ else if ($action == 'stats')
 	);
 
 	($hook = get_hook('ex_qr_get_user_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$stats['total_users'] = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$stats['total_users'] = db()->result($result);
 
 	$query = array(
 		'SELECT'	=> 'u.id, u.username',
@@ -591,8 +591,8 @@ else if ($action == 'stats')
 	);
 
 	($hook = get_hook('ex_qr_get_newest_user')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$stats['last_user'] = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$stats['last_user'] = db()->fetch_assoc($result);
 
 	$query = array(
 		'SELECT'	=> 'SUM(f.num_topics), SUM(f.num_posts)',
@@ -600,8 +600,8 @@ else if ($action == 'stats')
 	);
 
 	($hook = get_hook('ex_qr_get_post_stats')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($stats['total_topics'], $stats['total_posts']) = $forum_db->fetch_row($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	list($stats['total_topics'], $stats['total_posts']) = db()->fetch_row($result);
 
 	// Send the Content-type header in case the web server is setup to send something else
 	header('Content-type: text/html; charset=utf-8');

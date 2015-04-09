@@ -206,7 +206,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 							<option value="-1" selected="selected"><?php echo __('All groups', 'admin_users') ?></option>
 							<option value="<?php echo FORUM_UNVERIFIED ?>"><?php echo __('Unverified users', 'admin_users') ?></option>
 <?php
-while ($cur_group = $forum_db->fetch_assoc($result))
+while ($cur_group = db()->fetch_assoc($result))
 	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 
 ($hook = get_hook('aus_search_form_new_filter_group_option')) ? eval($hook) : null;

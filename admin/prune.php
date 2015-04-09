@@ -36,9 +36,9 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 			);
 
 			($hook = get_hook('apr_prune_comply_qr_get_all_forums')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-			while ($cur_forum = $forum_db->fetch_assoc($result)) {
+			while ($cur_forum = db()->fetch_assoc($result)) {
 				prune($cur_forum['id'], $_POST['prune_sticky'], $prune_date);
 				sync_forum($cur_forum['id']);
 			}
@@ -79,8 +79,8 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 		);
 
 		($hook = get_hook('apr_prune_comply_qr_get_forum_name')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$forum = forum_htmlencode($forum_db->result($result));
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$forum = forum_htmlencode(db()->result($result));
 	}
 	else
 		$forum = 'all forums';
@@ -98,8 +98,8 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 		$query['WHERE'] .= ' AND t.sticky=0';
 
 	($hook = get_hook('apr_prune_comply_qr_get_topic_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_topics = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$num_topics = db()->result($result);
 
 	if (!$num_topics)
 		message(__('No days old message', 'admin_prune'));
@@ -155,7 +155,7 @@ else
 		'ORDER BY'	=> 'c.disp_position, c.id, f.disp_position'
 	);
 	($hook = get_hook('apr_qr_get_forum_list')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/prune/main';
 	include FORUM_ROOT . 'include/render.php';

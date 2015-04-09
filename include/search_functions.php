@@ -13,7 +13,7 @@ namespace punbb;
 //
 function create_search_cache($keywords, $author, $search_in = false, $forum = array(-1), $show_as = 'topics', $sort_by = null, $sort_dir = 'DESC')
 {
-	global $forum_db, $forum_user, $forum_config, $forum_url, $db_type;
+	global $forum_user, $forum_config, $forum_url, $db_type;
 
 	$return = ($hook = get_hook('sf_fn_create_search_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -40,7 +40,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		$query = array(
 			'UPDATE'	=> 'online',
 			'SET'		=> 'last_search='.time(),
-			'WHERE'		=> 'ident=\''.$forum_db->escape(get_remote_address()).'\''
+			'WHERE'		=> 'ident=\''.db()->escape(get_remote_address()).'\''
 		);
 	}
 	else
@@ -54,7 +54,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	}
 
 	($hook = get_hook('sf_fn_create_search_cache_qr_update_last_search_time')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// We need to grab results, insert them into the cache and reload with a search id before showing them
 	$keyword_results = $author_results = array();
@@ -102,7 +102,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 								'ON'			=> 'm.word_id=w.id'
 							)
 						),
-						'WHERE'		=> 'w.word LIKE \''.$forum_db->escape(str_replace('*', '%', $cur_word)).'\''
+						'WHERE'		=> 'w.word LIKE \''.db()->escape(str_replace('*', '%', $cur_word)).'\''
 					);
 
 					// Search in what?
@@ -110,10 +110,10 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 						$query['WHERE'] .= ($search_in > 0 ? ' AND m.subject_match=0' : ' AND m.subject_match=1');
 
 					($hook = get_hook('sf_fn_create_search_cache_qr_get_keyword_hits')) ? eval($hook) : null;
-					$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+					$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 					$row = array();
-					while (list($post_id) = $forum_db->fetch_row($result))
+					while (list($post_id) = db()->fetch_row($result))
 					{
 						$row[$post_id] = 1;
 
@@ -135,7 +135,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 					}
 
 					++$word_count;
-					$forum_db->free_result($result);
+					db()->free_result($result);
 
 					break;
 				}
@@ -157,14 +157,14 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		$query = array(
 			'SELECT'	=> 'u.id',
 			'FROM'		=> 'users AS u',
-			'WHERE'		=> 'u.username '.($db_type == 'pgsql' ? 'ILIKE' : 'LIKE').' \''.$forum_db->escape(str_replace('*', '%', $author)).'\''
+			'WHERE'		=> 'u.username '.($db_type == 'pgsql' ? 'ILIKE' : 'LIKE').' \''.db()->escape(str_replace('*', '%', $author)).'\''
 		);
 
 		($hook = get_hook('sf_fn_create_search_cache_qr_get_author')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$user_ids = array();
-		while ($row = $forum_db->fetch_row($result))
+		while ($row = db()->fetch_row($result))
 		{
 			$user_ids[] = $row[0];
 		}
@@ -178,13 +178,13 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 			);
 
 			($hook = get_hook('sf_fn_create_search_cache_qr_get_author_hits')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$search_ids = array();
-			while ($row = $forum_db->fetch_row($result))
+			while ($row = db()->fetch_row($result))
 				$author_results[] = $row[0];
 
-			$forum_db->free_result($result);
+			db()->free_result($result);
 		}
 	}
 
@@ -232,10 +232,10 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	}
 
 	($hook = get_hook('sf_fn_create_search_cache_qr_get_hits')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$search_ids = array();
-	while ($row = $forum_db->fetch_row($result))
+	while ($row = db()->fetch_row($result))
 		$search_ids[] = $row[0];
 
 	// Prune "old" search results
@@ -245,12 +245,12 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	);
 
 	($hook = get_hook('sf_fn_create_search_cache_qr_get_online_idents')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$online_idents = array();
-	while ($row = $forum_db->fetch_row($result))
+	while ($row = db()->fetch_row($result))
 	{
-		$online_idents[] = '\''.$forum_db->escape($row[0]).'\'';
+		$online_idents[] = '\''.db()->escape($row[0]).'\'';
 	}
 
 	if (!empty($online_idents))
@@ -261,7 +261,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		);
 
 		($hook = get_hook('sf_fn_create_search_cache_qr_delete_old_cached_searches')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	// Final search results
@@ -275,18 +275,18 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	$query = array(
 		'INSERT'	=> 'id, ident, search_data',
 		'INTO'		=> 'search_cache',
-		'VALUES'	=> $search_id.', \''.$forum_db->escape($ident).'\', \''.$forum_db->escape($search_data).'\''
+		'VALUES'	=> $search_id.', \''.db()->escape($ident).'\', \''.db()->escape($search_data).'\''
 	);
 
 	($hook = get_hook('sf_fn_create_search_cache_qr_cache_search')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$return = ($hook = get_hook('sf_fn_create_search_cache_end')) ? eval($hook) : null;
 	if ($return != null)
 		return;
 
-	$forum_db->end_transaction();
-	$forum_db->close();
+	db()->end_transaction();
+	db()->close();
 
 	// Redirect the user to the cached result page
 	header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['search_results'], $search_id)));
@@ -299,7 +299,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 //
 function generate_cached_search_query($search_id, &$show_as)
 {
-	global $forum_db, $db_type, $forum_user, $forum_config;
+	global $db_type, $forum_user, $forum_config;
 
 	$return = ($hook = get_hook('sf_fn_generate_cached_search_query_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -310,12 +310,12 @@ function generate_cached_search_query($search_id, &$show_as)
 	$query = array(
 		'SELECT'	=> 'sc.search_data',
 		'FROM'		=> 'search_cache AS sc',
-		'WHERE'		=> 'sc.id='.$search_id.' AND sc.ident=\''.$forum_db->escape($ident).'\''
+		'WHERE'		=> 'sc.id='.$search_id.' AND sc.ident=\''.db()->escape($ident).'\''
 	);
 
 	($hook = get_hook('sf_fn_generate_cached_search_query_qr_get_cached_search_data')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	if ($row = $forum_db->fetch_assoc($result))
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	if ($row = db()->fetch_assoc($result))
 	{
 		$search_data = unserialize($row['search_data']);
 
@@ -418,7 +418,7 @@ function generate_cached_search_query($search_id, &$show_as)
 //
 function generate_action_search_query($action, $value, &$search_id, &$url_type, &$show_as)
 {
-	global $forum_db, $forum_user, $forum_config, $forum_url, $db_type;
+	global $forum_user, $forum_config, $forum_url, $db_type;
 
 	$return = ($hook = get_hook('sf_fn_generate_action_search_query_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -723,16 +723,16 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 //
 function get_search_results($query, &$search_set)
 {
-	global $forum_db, $forum_user, $forum_page;
+	global $forum_user, $forum_page;
 
 	$return = ($hook = get_hook('sf_fn_get_search_results_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$search_results = array();
-	while ($row = $forum_db->fetch_assoc($result))
+	while ($row = db()->fetch_assoc($result))
 	{
 		$search_results[] = $row;
 	}
@@ -761,7 +761,7 @@ function get_search_results($query, &$search_set)
 		++$row_num;
 	}
 
-	$forum_db->free_result($result);
+	db()->free_result($result);
 
 	$return = ($hook = get_hook('sf_fn_get_search_results_end')) ? eval($hook) : null;
 	if ($return != null)

@@ -138,7 +138,7 @@ function generate_admin_menu($submenu)
 //
 function prune($forum_id, $prune_sticky, $prune_date)
 {
-	global $forum_db, $db_type;
+	global $db_type;
 
 	$return = ($hook = get_hook('ca_fn_prune_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -157,10 +157,10 @@ function prune($forum_id, $prune_sticky, $prune_date)
 		$query['WHERE'] .= ' AND sticky=\'0\'';
 
 	($hook = get_hook('ca_fn_prune_qr_get_topics_to_prune')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$topic_ids = array();
-	while ($row = $forum_db->fetch_row($result))
+	while ($row = db()->fetch_row($result))
 		$topic_ids[] = $row[0];
 
 	if (!empty($topic_ids))
@@ -175,10 +175,10 @@ function prune($forum_id, $prune_sticky, $prune_date)
 		);
 
 		($hook = get_hook('ca_fn_prune_qr_get_posts_to_prune')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$post_ids = array();
-		while ($row = $forum_db->fetch_row($result))
+		while ($row = db()->fetch_row($result))
 			$post_ids[] = $row[0];
 
 		// Delete topics
@@ -188,7 +188,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 		);
 
 		($hook = get_hook('ca_fn_prune_qr_prune_topics')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Delete posts
 		$query = array(
@@ -197,7 +197,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 		);
 
 		($hook = get_hook('ca_fn_prune_qr_prune_posts')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Delete subscriptions
 		$query = array(
@@ -206,7 +206,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 		);
 
 		($hook = get_hook('ca_fn_prune_qr_prune_subscriptions')) ? eval($hook) : null;
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// We removed a bunch of posts, so now we have to update the search index
 		if (!defined('FORUM_SEARCH_IDX_FUNCTIONS_LOADED'))
@@ -223,7 +223,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 // call this function outside install/uninstall extension manifest section
 function forum_config_add($name, $value)
 {
-	global $forum_db, $forum_config;
+	global $forum_config;
 
 	if (!empty($name) && !isset($forum_config[$name]))
 	{
@@ -232,7 +232,7 @@ function forum_config_add($name, $value)
 			'INTO'		=> 'config',
 			'VALUES'	=> '\''.$name.'\', \''.$value.'\''
 		);
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 }
 
@@ -243,16 +243,13 @@ function forum_config_add($name, $value)
 // call this function outside install/uninstall extension manifest section
 function forum_config_remove($name)
 {
-	global $forum_db;
-
 	if (is_array($name) && count($name) > 0)
 	{
 		if (!function_exists('clean_conf_names'))
 		{
 			function clean_conf_names($n)
 			{
-				global $forum_db;
-				return '\''.$forum_db->escape($n).'\'';
+				return '\''.db()->escape($n).'\'';
 			}
 		}
 
@@ -262,15 +259,15 @@ function forum_config_remove($name)
 			'DELETE'	=> 'config',
 			'WHERE'		=> 'conf_name in ('.implode(',', $name).')',
 		);
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 	else if (!empty($name))
 	{
 		$query = array(
 			'DELETE'	=> 'config',
-			'WHERE'		=> 'conf_name=\''.$forum_db->escape($name).'\''
+			'WHERE'		=> 'conf_name=\''.db()->escape($name).'\''
 		);
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 }
 

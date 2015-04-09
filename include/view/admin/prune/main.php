@@ -31,7 +31,7 @@
 <?php
 
 	$cur_category = 0;
-	while ($forum = $forum_db->fetch_assoc($result))
+	while ($forum = db()->fetch_assoc($result))
 	{
 		($hook = get_hook('apr_pre_prune_forum_loop_start')) ? eval($hook) : null;
 

@@ -60,7 +60,7 @@ else if ($action == 'markread')
 	);
 
 	($hook = get_hook('mi_markread_qr_update_last_visit')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Reset tracked topics
 	set_tracked_topics(null);
@@ -104,8 +104,8 @@ else if ($action == 'markforumread')
 	);
 
 	($hook = get_hook('mi_markforumread_qr_get_forum_info')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_name = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$forum_name = db()->result($result);
 
 	if (!$forum_name)
 	{
@@ -181,8 +181,8 @@ else if (isset($_GET['email']))
 
 	($hook = get_hook('mi_email_qr_get_form_email_data')) ? eval($hook) : null;
 
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$recipient_info = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$recipient_info = db()->fetch_assoc($result);
 
 	if (!$recipient_info)
 	{
@@ -251,7 +251,7 @@ else if (isset($_GET['email']))
 			);
 
 			($hook = get_hook('mi_email_qr_update_last_email_sent')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			flash()->add_info(__('E-mail sent redirect', 'misc'));
 
@@ -343,8 +343,8 @@ else if (isset($_GET['report']))
 			);
 
 			($hook = get_hook('mi_report_qr_get_topic_data')) ? eval($hook) : null;
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$topic_info = $forum_db->fetch_assoc($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$topic_info = db()->fetch_assoc($result);
 
 			if (!$topic_info)
 			{
@@ -359,11 +359,11 @@ else if (isset($_GET['report']))
 				$query = array(
 					'INSERT'	=> 'post_id, topic_id, forum_id, reported_by, created, message',
 					'INTO'		=> 'reports',
-					'VALUES'	=> $post_id.', '.$topic_info['id'].', '.$topic_info['forum_id'].', '.$forum_user['id'].', '.time().', \''.$forum_db->escape($reason).'\''
+					'VALUES'	=> $post_id.', '.$topic_info['id'].', '.$topic_info['forum_id'].', '.$forum_user['id'].', '.time().', \''.db()->escape($reason).'\''
 				);
 
 				($hook = get_hook('mi_report_add_report')) ? eval($hook) : null;
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 
 			// Should we e-mail the report?
@@ -392,7 +392,7 @@ else if (isset($_GET['report']))
 			);
 
 			($hook = get_hook('mi_report_qr_update_last_email_sent')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			flash()->add_info(__('Report redirect', 'misc'));
 
@@ -459,8 +459,8 @@ else if (isset($_GET['subscribe']))
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$topic_id.' AND t.moved_to IS NULL'
 	);
 	($hook = get_hook('mi_subscribe_qr_topic_exists')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$subject = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$subject = db()->result($result);
 
 	if (!$subject)
 	{
@@ -474,9 +474,9 @@ else if (isset($_GET['subscribe']))
 	);
 
 	($hook = get_hook('mi_subscribe_qr_check_subscribed')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) > 0)
+	if (db()->result($result) > 0)
 	{
 		message(__('Already subscribed', 'misc'));
 	}
@@ -488,7 +488,7 @@ else if (isset($_GET['subscribe']))
 	);
 
 	($hook = get_hook('mi_subscribe_add_subscription')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	flash()->add_info(__('Subscribe redirect', 'misc'));
 
@@ -529,8 +529,8 @@ else if (isset($_GET['unsubscribe']))
 	);
 
 	($hook = get_hook('mi_unsubscribe_qr_check_subscribed')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$subject = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$subject = db()->result($result);
 
 	if (!$subject)
 	{
@@ -543,7 +543,7 @@ else if (isset($_GET['unsubscribe']))
 	);
 
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	flash()->add_info(__('Unsubscribe redirect', 'misc'));
 
@@ -583,8 +583,8 @@ else if (isset($_GET['forum_subscribe']))
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$forum_id
 	);
 	($hook = get_hook('mi_forum_subscribe_qr_forum_exists')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_name = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$forum_name = db()->result($result);
 
 	if (!$forum_name)
 	{
@@ -598,9 +598,9 @@ else if (isset($_GET['forum_subscribe']))
 	);
 
 	($hook = get_hook('mi_forum_subscribe_qr_check_subscribed')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	if ($forum_db->result($result) > 0)
+	if (db()->result($result) > 0)
 	{
 		message(__('Already subscribed', 'misc'));
 	}
@@ -612,7 +612,7 @@ else if (isset($_GET['forum_subscribe']))
 	);
 
 	($hook = get_hook('mi_forum_subscribe_add_subscription')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	flash()->add_info(__('Subscribe redirect', 'misc'));
 
@@ -654,8 +654,8 @@ else if (isset($_GET['forum_unsubscribe']))
 	);
 
 	($hook = get_hook('mi_forum_unsubscribe_qr_check_subscribed')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$forum_name = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$forum_name = db()->result($result);
 
 	if (!$forum_name)
 	{
@@ -668,7 +668,7 @@ else if (isset($_GET['forum_unsubscribe']))
 	);
 
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	flash()->add_info(__('Unsubscribe redirect', 'misc'));
 

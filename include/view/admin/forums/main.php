@@ -34,7 +34,7 @@
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Add to category label', 'admin_forums') ?></span></label><br />
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="add_to_cat">
 <?php
-	while ($cur_cat = $forum_db->fetch_assoc($result_categories))
+	while ($cur_cat = db()->fetch_assoc($result_categories))
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'">'.forum_htmlencode($cur_cat['cat_name']).'</option>'."\n";
 ?>
 						</select></span>

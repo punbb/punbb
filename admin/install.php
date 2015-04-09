@@ -463,21 +463,20 @@ else
 	}
 
 	// Create the database object (and connect/select db)
-	$forum_db = new DBLayer($db_host, $db_username, $db_password, $db_name, $db_prefix, false);
-
+	db() = db();
 
 	// If MySQL, make sure it's at least 4.1.2
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 	{
-		$mysql_info = $forum_db->get_version();
+		$mysql_info = db()->get_version();
 		if (version_compare($mysql_info['version'], MIN_MYSQL_VERSION, '<'))
 			error(sprintf(__('Invalid MySQL version', 'install'), forum_htmlencode($mysql_info['version']), MIN_MYSQL_VERSION));
 
 		// Check InnoDB support in DB
 		if (in_array($db_type, array('mysql_innodb', 'mysqli_innodb')))
 		{
-			$result = $forum_db->query('SHOW VARIABLES LIKE \'have_innodb\'');
-			$row = $forum_db->fetch_assoc($result);
+			$result = db()->query('SHOW VARIABLES LIKE \'have_innodb\'');
+			$row = db()->fetch_assoc($result);
 
 			if (!$row || !isset($row['Value']) || strtolower($row['Value']) != 'yes')
 			{
@@ -496,7 +495,7 @@ else
 
 
 	// Make sure PunBB isn't already installed
-	if ($forum_db->table_exists('users'))
+	if (db()->table_exists('users'))
 	{
 		$query = array(
 			'SELECT'	=> 'COUNT(id)',
@@ -504,13 +503,13 @@ else
 			'WHERE'		=> 'id=1'
 		);
 
-		$result = $forum_db->query_build($query);
-		if ($forum_db->result($result) > 0)
+		$result = db()->query_build($query);
+		if (db()->result($result) > 0)
 			error(sprintf(__('PunBB already installed', 'install'), $db_prefix, $db_name));
 	}
 
 	// Start a transaction
-	$forum_db->start_transaction();
+	db()->start_transaction();
 
 
 	// Create all tables
@@ -549,7 +548,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('bans', $schema);
+	db()->create_table('bans', $schema);
 
 
 	$schema = array(
@@ -572,7 +571,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('categories', $schema);
+	db()->create_table('categories', $schema);
 
 
 	$schema = array(
@@ -595,7 +594,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('censoring', $schema);
+	db()->create_table('censoring', $schema);
 
 
 	$schema = array(
@@ -613,7 +612,7 @@ else
 		'PRIMARY KEY'	=> array('conf_name')
 	);
 
-	$forum_db->create_table('config', $schema);
+	db()->create_table('config', $schema);
 
 
 	$schema = array(
@@ -664,7 +663,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('extensions', $schema);
+	db()->create_table('extensions', $schema);
 
 
 	$schema = array(
@@ -697,7 +696,7 @@ else
 		'PRIMARY KEY'	=> array('id', 'extension_id')
 	);
 
-	$forum_db->create_table('extension_hooks', $schema);
+	db()->create_table('extension_hooks', $schema);
 
 
 	$schema = array(
@@ -731,7 +730,7 @@ else
 		'PRIMARY KEY'	=> array('group_id', 'forum_id')
 	);
 
-	$forum_db->create_table('forum_perms', $schema);
+	db()->create_table('forum_perms', $schema);
 
 
 	$schema = array(
@@ -798,7 +797,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('forums', $schema);
+	db()->create_table('forums', $schema);
 
 
 	$schema = array(
@@ -915,7 +914,7 @@ else
 		'PRIMARY KEY'	=> array('g_id')
 	);
 
-	$forum_db->create_table('groups', $schema);
+	db()->create_table('groups', $schema);
 
 
 	$schema = array(
@@ -974,7 +973,7 @@ else
 		$schema['INDEXES']['ident_idx'] = array('ident(25)');
 	}
 
-	$forum_db->create_table('online', $schema);
+	db()->create_table('online', $schema);
 
 
 	$schema = array(
@@ -1037,7 +1036,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('posts', $schema);
+	db()->create_table('posts', $schema);
 
 
 	$schema = array(
@@ -1060,7 +1059,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('ranks', $schema);
+	db()->create_table('ranks', $schema);
 
 
 	$schema = array(
@@ -1113,7 +1112,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('reports', $schema);
+	db()->create_table('reports', $schema);
 
 
 	$schema = array(
@@ -1142,7 +1141,7 @@ else
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		$schema['INDEXES']['ident_idx'] = array('ident(8)');
 
-	$forum_db->create_table('search_cache', $schema);
+	db()->create_table('search_cache', $schema);
 
 
 	$schema = array(
@@ -1169,7 +1168,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('search_matches', $schema);
+	db()->create_table('search_matches', $schema);
 
 
 	$schema = array(
@@ -1197,7 +1196,7 @@ else
 		$schema['UNIQUE KEYS'] = array('word_idx'	=> array('word'));
 	}
 
-	$forum_db->create_table('search_words', $schema);
+	db()->create_table('search_words', $schema);
 
 
 	$schema = array(
@@ -1216,7 +1215,7 @@ else
 		'PRIMARY KEY'	=> array('user_id', 'topic_id')
 	);
 
-	$forum_db->create_table('subscriptions', $schema);
+	db()->create_table('subscriptions', $schema);
 
 
 	$schema = array(
@@ -1235,7 +1234,7 @@ else
 		'PRIMARY KEY'	=> array('user_id', 'forum_id')
 	);
 
-	$forum_db->create_table('forum_subscriptions', $schema);
+	db()->create_table('forum_subscriptions', $schema);
 
 
 	$schema = array(
@@ -1317,7 +1316,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('topics', $schema);
+	db()->create_table('topics', $schema);
 
 
 	$schema = array(
@@ -1559,7 +1558,7 @@ else
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		$schema['INDEXES']['username_idx'] = array('username(8)');
 
-	$forum_db->create_table('users', $schema);
+	db()->create_table('users', $schema);
 
 
 
@@ -1578,7 +1577,7 @@ else
 		$query['VALUES'] .= ', 1';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
@@ -1592,7 +1591,7 @@ else
 		$query['VALUES'] .= ', 2';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
@@ -1606,7 +1605,7 @@ else
 		$query['VALUES'] .= ', 3';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
@@ -1620,7 +1619,7 @@ else
 		$query['VALUES'] .= ', 4';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Insert guest and first admin user
 	$query = array(
@@ -1635,18 +1634,18 @@ else
 		$query['VALUES'] .= ', 1';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$salt = random_key(12);
 
 	$query = array(
 		'INSERT'	=> 'group_id, username, password, email, language, num_posts, last_post, registered, registration_ip, last_visit, salt',
 		'INTO'		=> 'users',
-		'VALUES'	=> '1, \''.$forum_db->escape($username).'\', \''.forum_hash($password1, $salt).'\', \''.$forum_db->escape($email).'\', \''.$forum_db->escape($default_lang).'\', 1, '.$now.', '.$now.', \'127.0.0.1\', '.$now.', \''.$forum_db->escape($salt).'\''
+		'VALUES'	=> '1, \''.db()->escape($username).'\', \''.forum_hash($password1, $salt).'\', \''.db()->escape($email).'\', \''.db()->escape($default_lang).'\', 1, '.$now.', '.$now.', \'127.0.0.1\', '.$now.', \''.db()->escape($salt).'\''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$new_uid = $forum_db->insert_id();
+	db()->query_build($query) or error(__FILE__, __LINE__);
+	$new_uid = db()->insert_id();
 
 	// Enable/disable avatars depending on file_uploads setting in PHP configuration
 	$avatars = in_array(strtolower(@ini_get('file_uploads')), array('on', 'true', '1')) ? 1 : 0;
@@ -1658,8 +1657,8 @@ else
 	$config = array(
 		'o_cur_version'				=> "'".FORUM_VERSION."'",
 		'o_database_revision'		=> "'".FORUM_DB_REVISION."'",
-		'o_board_title'				=> "'".$forum_db->escape($board_title)."'",
-		'o_board_desc'				=> "'".$forum_db->escape($board_descrip)."'",
+		'o_board_title'				=> "'".db()->escape($board_title)."'",
+		'o_board_desc'				=> "'".db()->escape($board_descrip)."'",
 		'o_default_timezone'		=> "'0'",
 		'o_time_format'				=> "'H:i:s'",
 		'o_date_format'				=> "'Y-m-d'",
@@ -1675,7 +1674,7 @@ else
 		'o_smilies'					=> "'1'",
 		'o_smilies_sig'				=> "'1'",
 		'o_make_links'				=> "'1'",
-		'o_default_lang'			=> "'".$forum_db->escape($default_lang)."'",
+		'o_default_lang'			=> "'".db()->escape($default_lang)."'",
 		'o_default_style'			=> "'Oxygen'",
 		'o_default_user_group'		=> "'3'",
 		'o_topic_review'			=> "'15'",
@@ -1695,7 +1694,7 @@ else
 		'o_report_method'			=> "'0'",
 		'o_regs_report'				=> "'0'",
 		'o_default_email_setting'	=> "'1'",
-		'o_mailing_list'			=> "'".$forum_db->escape($email)."'",
+		'o_mailing_list'			=> "'".db()->escape($email)."'",
 		'o_avatars'					=> "'$avatars'",
 		'o_avatars_dir'				=> "'img/avatars'",
 		'o_avatars_width'			=> "'60'",
@@ -1703,8 +1702,8 @@ else
 		'o_avatars_size'			=> "'15360'",
 		'o_search_all_forums'		=> "'1'",
 		'o_sef'						=> "'Default'",
-		'o_admin_email'				=> "'".$forum_db->escape($email)."'",
-		'o_webmaster_email'			=> "'".$forum_db->escape($email)."'",
+		'o_admin_email'				=> "'".db()->escape($email)."'",
+		'o_webmaster_email'			=> "'".db()->escape($email)."'",
 		'o_subscriptions'			=> "'1'",
 		'o_smtp_host'				=> "NULL",
 		'o_smtp_user'				=> "NULL",
@@ -1744,7 +1743,7 @@ else
 			'VALUES'	=> '\''.$conf_name.'\', '.$conf_value.''
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	// Insert some other default data
@@ -1754,28 +1753,28 @@ else
 		'VALUES'	=> '\''.__('Default category name', 'install').'\', 1'
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, disp_position, cat_id',
 		'INTO'		=> 'forums',
-		'VALUES'	=> '\''.__('Default forum name', 'install').'\', \''.__('Default forum descrip', 'install').'\', 1, 1, '.$now.', 1, \''.$forum_db->escape($username).'\', 1, '.$forum_db->insert_id().''
+		'VALUES'	=> '\''.__('Default forum name', 'install').'\', \''.__('Default forum descrip', 'install').'\', 1, 1, '.$now.', 1, \''.db()->escape($username).'\', 1, '.db()->insert_id().''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id',
 		'INTO'		=> 'topics',
-		'VALUES'	=> '\''.$forum_db->escape($username).'\', \''.__('Default topic subject', 'install').'\', '.$now.', 1, '.$now.', 1, \''.$forum_db->escape($username).'\', '.$forum_db->insert_id().''
+		'VALUES'	=> '\''.db()->escape($username).'\', \''.__('Default topic subject', 'install').'\', '.$now.', 1, '.$now.', 1, \''.db()->escape($username).'\', '.db()->insert_id().''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'poster, poster_id, poster_ip, message, posted, topic_id',
 		'INTO'		=> 'posts',
-		'VALUES'	=> '\''.$forum_db->escape($username).'\', '.$new_uid.', \'127.0.0.1\', \''.__('Default post contents', 'install').'\', '.$now.', '.$forum_db->insert_id().''
+		'VALUES'	=> '\''.db()->escape($username).'\', '.$new_uid.', \'127.0.0.1\', \''.__('Default post contents', 'install').'\', '.$now.', '.db()->insert_id().''
 	);
 
 	if ($db_type != 'pgsql')
@@ -1784,11 +1783,11 @@ else
 		$query['VALUES'] .= ', 1';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add new post to search table
 	require FORUM_ROOT.'include/search_idx.php';
-	update_search_index('post', $forum_db->insert_id(), __('Default post contents', 'install'), __('Default topic subject', 'install'));
+	update_search_index('post', db()->insert_id(), __('Default post contents', 'install'), __('Default topic subject', 'install'));
 
 	// Insert the default ranks
 	$query = array(
@@ -1797,7 +1796,7 @@ else
 		'VALUES'	=> '\''.__('Default rank 1', 'install') . '\', 0'
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'rank, min_posts',
@@ -1805,9 +1804,9 @@ else
 		'VALUES'	=> '\''.__('Default rank 2', 'install') . '\', 10'
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_db->end_transaction();
+	db()->end_transaction();
 
 
 	$alerts = array();
@@ -1871,10 +1870,10 @@ else
 			$query = array(
 				'INSERT'	=> 'id, title, version, description, author, uninstall, uninstall_note, dependencies',
 				'INTO'		=> 'extensions',
-				'VALUES'	=> '\'pun_repository\', \''.$forum_db->escape($ext_data['extension']['title']).'\', \''.$forum_db->escape($ext_data['extension']['version']).'\', \''.$forum_db->escape($ext_data['extension']['description']).'\', \''.$forum_db->escape($ext_data['extension']['author']).'\', NULL, NULL, \'||\'',
+				'VALUES'	=> '\'pun_repository\', \''.db()->escape($ext_data['extension']['title']).'\', \''.db()->escape($ext_data['extension']['version']).'\', \''.db()->escape($ext_data['extension']['description']).'\', \''.db()->escape($ext_data['extension']['author']).'\', NULL, NULL, \'||\'',
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			if (isset($ext_data['extension']['hooks']['hook']))
 			{
@@ -1886,10 +1885,10 @@ else
 						$query = array(
 							'INSERT'	=> 'id, extension_id, code, installed, priority',
 							'INTO'		=> 'extension_hooks',
-							'VALUES'	=> '\''.$forum_db->escape(forum_trim($cur_hook)).'\', \'pun_repository\', \''.$forum_db->escape(forum_trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
+							'VALUES'	=> '\''.db()->escape(forum_trim($cur_hook)).'\', \'pun_repository\', \''.db()->escape(forum_trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
 						);
 
-						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+						db()->query_build($query) or error(__FILE__, __LINE__);
 					}
 				}
 			}

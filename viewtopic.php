@@ -32,8 +32,8 @@ if ($pid)
 	);
 
 	($hook = get_hook('vt_qr_get_post_info')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$topic_info = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$topic_info = db()->fetch_assoc($result);
 
 	if (!$topic_info)
 	{
@@ -50,8 +50,8 @@ if ($pid)
 	);
 
 	($hook = get_hook('vt_qr_get_post_page')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$num_posts = $forum_db->result($result) + 1;
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$num_posts = db()->result($result) + 1;
 
 	$_GET['p'] = ceil($num_posts / $forum_user['disp_posts']);
 }
@@ -74,8 +74,8 @@ else if ($action == 'new')
 		);
 
 		($hook = get_hook('vt_qr_get_first_new_post')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$first_new_post_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$first_new_post_id = db()->result($result);
 
 		if ($first_new_post_id)
 		{
@@ -98,8 +98,8 @@ else if ($action == 'last')
 	);
 
 	($hook = get_hook('vt_qr_get_last_post')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$last_post_id = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$last_post_id = db()->result($result);
 
 	if ($last_post_id)
 	{
@@ -136,8 +136,8 @@ if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1')
 }
 
 ($hook = get_hook('vt_qr_get_topic_info')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_topic = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_topic = db()->fetch_assoc($result);
 
 if (!$cur_topic)
 {
@@ -292,7 +292,7 @@ if ($forum_config['o_topic_views'] == '1')
 	);
 
 	($hook = get_hook('vt_qr_increment_num_views')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 }
 
 $forum_id = $cur_topic['forum_id'];
@@ -310,9 +310,9 @@ $query = array(
 );
 
 ($hook = get_hook('vt_qr_get_posts_id')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
 $posts_id = array();
-while ($row = $forum_db->fetch_assoc($result)) {
+while ($row = db()->fetch_assoc($result)) {
 	$posts_id[] = $row['id'];
 }
 
@@ -341,7 +341,7 @@ if (!empty($posts_id))
 	);
 
 	($hook = get_hook('vt_qr_get_posts')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 }
 
 $forum_main_view = 'viewtopic/main';

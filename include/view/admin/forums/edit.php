@@ -38,7 +38,7 @@
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_id">
 <?php
 
-	while ($cur_cat = $forum_db->fetch_assoc($result_categories))
+	while ($cur_cat = db()->fetch_assoc($result_categories))
 	{
 		$selected = ($cur_cat['id'] == $cur_forum['cat_id']) ? ' selected="selected"' : '';
 		echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'"'.$selected.'>'.forum_htmlencode($cur_cat['cat_name']).'</option>'."\n";
@@ -92,7 +92,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 	$i = 2;
 
-	while ($cur_perm = $forum_db->fetch_assoc($result))
+	while ($cur_perm = db()->fetch_assoc($result))
 	{
 		$read_forum = ($cur_perm['read_forum'] != '0') ? true : false;
 		$post_replies = (($cur_perm['g_post_replies'] == '0' && $cur_perm['post_replies'] == '1') || ($cur_perm['g_post_replies'] == '1' && $cur_perm['post_replies'] != '0')) ? true : false;
