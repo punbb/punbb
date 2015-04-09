@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('mi_rules_output_start')) ? eval($hook) : null;
 

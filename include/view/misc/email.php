@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('mi_email_output_start')) ? eval($hook) : null;
 
@@ -11,7 +12,7 @@
 			<p class="important"><?= __('E-mail disclosure note', 'misc') ?></p>
 		</div>
 
-	<?php include view('misc/errors') ?>
+	<?php helper('errors', ['errors_title' => __('Form e-mail errors', 'misc')]) ?>
 
 	<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

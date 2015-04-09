@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('mi_report_output_start')) ? eval($hook) : null;
 
@@ -10,25 +11,9 @@
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>
 		</div>
-<?php
-		// If there were any errors, show them
-		if (!empty($errors)) {
-			$forum_page['errors'] = array();
-			foreach ($errors as $cur_error) {
-				$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
-			}
 
-			($hook = get_hook('mi_pre_report_errors')) ? eval($hook) : null;
-?>
-		<div class="ct-box error-box">
-			<h2 class="warn hn"><?= __('Report errors', 'misc') ?></h2>
-			<ul class="error-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-		}
-?>
+		<?php helper('errors', ['errors_title' => __('Report errors', 'misc')]) ?>
+
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
