@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('mr_confirm_delete_posts_output_start')) ? eval($hook) : null;
 

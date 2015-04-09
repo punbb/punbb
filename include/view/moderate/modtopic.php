@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('mr_post_actions_output_start')) ? eval($hook) : null;
 

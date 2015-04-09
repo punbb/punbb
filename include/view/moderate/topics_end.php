@@ -1,3 +1,7 @@
+<?php
+namespace punbb;
+?>
+
 	</div>
 
 	<?php

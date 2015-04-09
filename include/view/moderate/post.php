@@ -1,3 +1,7 @@
+<?php
+namespace punbb;
+?>
+
 <div class="<?php echo implode(' ', $forum_page['item_status']) ?>">
 	<div id="p<?php echo $cur_post['id'] ?>" class="posthead">
 		<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>

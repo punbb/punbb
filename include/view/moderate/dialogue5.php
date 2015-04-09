@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('mr_delete_topics_output_start')) ? eval($hook) : null;
 
