@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 $forum_page['item_header'] = array();
 $forum_page['item_header']['subject']['title'] = '<strong class="subject-title">'.

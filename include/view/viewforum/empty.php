@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 $forum_page['item_body']['subject']['title'] = '<h3 class="hn">'.
 	__('No topics', 'forum') . '</h3>';
 $forum_page['item_body']['subject']['desc'] = '<p>' .
