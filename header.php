@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
 if (!defined('FORUM'))
@@ -24,7 +24,8 @@ if (!defined('FORUM_HEADER')) {
 	// Send the Content-type header in case the web server is setup to send something else
 	header('Content-type: text/html; charset=utf-8');
 
-	ob_start();
+	// TODO use event 'page_render'
+	// ob_start();
 
 	// Init the main template
 	if (substr(FORUM_PAGE, 0, 5) == 'admin')

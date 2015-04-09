@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('fn_csrf_confirm_form_pre_header_load')) ? eval($hook) : null;
 

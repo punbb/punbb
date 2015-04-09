@@ -1,3 +1,6 @@
+<?php
+namespace punbb;
+?>
 
 <?php if (FORUM_PAGE != 'index') { ?>
 	<div id="brd-crumbs-end" class="crumbs">

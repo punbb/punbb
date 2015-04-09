@@ -14,7 +14,7 @@
 			sprintf(__('You may use'), implode(' ', $forum_page['text_options'])).'</p>'."\n";
 	?>
 
-		<?= helper('errors', array(
+		<?php helper('errors', array(
 			'errors_title' => __('Profile update errors', 'profile')
 		)) ?>
 

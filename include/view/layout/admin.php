@@ -1,47 +1,49 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="oldie ie6" <?= helper('local') ?>> <![endif]-->
-<!--[if IE 7 ]>    <html class="oldie ie7" <?= helper('local') ?>> <![endif]-->
-<!--[if IE 8 ]>    <html class="oldie ie8" <?= helper('local') ?>> <![endif]-->
-<!--[if gt IE 8]><!--> <html <?= helper('local') ?>> <!--<![endif]-->
+<?php
+namespace punbb;
+?><!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="oldie ie6" <?php helper('local') ?>> <![endif]-->
+<!--[if IE 7 ]>    <html class="oldie ie7" <?php helper('local') ?>> <![endif]-->
+<!--[if IE 8 ]>    <html class="oldie ie8" <?php helper('local') ?>> <![endif]-->
+<!--[if gt IE 8]><!--> <html <?php helper('local') ?>> <!--<![endif]-->
 <head>
 <meta charset="utf-8" />
 <?php include view('partial/head') ?>
 </head>
 <body>
 
-<?= helper('messages') ?>
+<?php helper('messages') ?>
 
 <div id="brd-wrap" class="brd">
-	<div <?= helper('page_attrs') ?>>
+	<div <?php helper('page_attrs') ?>>
 
 		<div id="brd-head" class="gen-content">
-			<?= helper('skip_content') ?>
-			<?= helper('title') ?>
-			<?= helper('description') ?>
+			<?php helper('skip_content') ?>
+			<?php helper('title') ?>
+			<?php helper('description') ?>
 		</div>
 
 		<div id="brd-navlinks" class="gen-content">
-			<?= helper('navlinks') ?>
+			<?php helper('navlinks') ?>
 			<?php include view('partial/admod') ?>
 		</div>
 
 		<div id="brd-visit" class="gen-content">
-			<?= helper('welcome') ?>
-			<?= helper('visit_links') ?>
+			<?php helper('welcome') ?>
+			<?php helper('visit_links') ?>
 		</div>
 
 		<div class="hr"><hr /></div>
 
 		<div id="brd-main">
-			<?= helper('main_title') ?>
-			<?= helper('crumbs_top') ?>
-			<?= helper('pagepost_top') ?>
-			<?= helper('admin_menu') ?>
+			<?php helper('main_title') ?>
+			<?php helper('crumbs_top') ?>
+			<?php helper('pagepost_top') ?>
+			<?php helper('admin_menu') ?>
 
 			<?php include view($forum_main_view) ?>
 
-			<?= helper('pagepost_end') ?>
-			<?= helper('crumbs_end') ?>
+			<?php helper('pagepost_end') ?>
+			<?php helper('crumbs_end') ?>
 		</div>
 
 		<div class="hr"><hr /></div>

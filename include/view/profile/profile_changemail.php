@@ -12,7 +12,7 @@
 			<?php echo $forum_page['frm_info']."\n" ?>
 		</div>
 
-		<?= helper('errors', array(
+		<?php helper('errors', array(
 			'errors_title' => __('Change e-mail errors', 'profile')
 		)) ?>
 

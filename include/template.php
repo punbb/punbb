@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 function view($name) {
 	global $forum_user;
@@ -26,11 +27,5 @@ function helper($name, $vars = array()) {
 		// use default
 		$fname = FORUM_ROOT . 'include/view/helper/' . $name . '.php';
 	}
-
-	ob_start();
 	include $fname;
-	$tmp_content = ob_get_contents();
-	ob_end_clean();
-
-	return $tmp_content;
 }

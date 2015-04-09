@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 require FORUM_ROOT . 'header.php';
 

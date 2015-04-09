@@ -6,12 +6,11 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
 if (!defined('FORUM'))
 	exit;
-
 
 // Load the appropriate DB layer class
 switch ($db_type)
@@ -48,7 +47,6 @@ switch ($db_type)
 		error('\''.$db_type.'\' is not a valid database type. Please check settings in config.php.', __FILE__, __LINE__);
 		break;
 }
-
 
 // Create the database adapter object (and open/connect to/select db)
 $forum_db = new DBLayer($db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect);

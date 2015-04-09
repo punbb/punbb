@@ -17,7 +17,7 @@
 	endif;
 ?>
 
-	<?= helper('errors', array(
+	<?php helper('errors', array(
 		'errors_title' => __('Register errors', 'profile')
 	)) ?>
 

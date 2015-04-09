@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_user, $forum_config, $forum_url;
 
 if ($forum_user['g_id'] == FORUM_ADMIN && $forum_config['o_maintenance'] == '1') { ?>

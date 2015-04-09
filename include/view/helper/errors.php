@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $errors;
 
 if (!empty($errors)) { ?>

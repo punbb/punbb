@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // Make sure we have built in support for MySQL
 if (!function_exists('mysqli_connect'))
@@ -28,7 +28,7 @@ class DBLayer
 	);
 
 
-	function DBLayer($db_host, $db_username, $db_password, $db_name, $db_prefix, $foo)
+	function __construct($db_host, $db_username, $db_password, $db_name, $db_prefix, $foo)
 	{
 		$this->prefix = $db_prefix;
 
@@ -40,7 +40,6 @@ class DBLayer
 			$this->link_id = @mysqli_connect($db_host, $db_username, $db_password, $db_name, $db_port);
 		else
 			$this->link_id = @mysqli_connect($db_host, $db_username, $db_password, $db_name);
-
 		if (!$this->link_id)
 			error('Unable to connect to MySQL and select database. MySQL reported: '.mysqli_connect_error(), __FILE__, __LINE__);
 

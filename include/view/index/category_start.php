@@ -1,3 +1,7 @@
+<?php
+namespace punbb;
+?>
+
 <div class="main-head">
 	<h2 class="hn"><span><?php echo forum_htmlencode($cur_forum['cat_name']) ?></span></h2>
 </div>

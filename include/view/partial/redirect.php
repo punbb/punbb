@@ -1,3 +1,7 @@
+<?php
+namespace punbb;
+?>
+
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">

@@ -9,7 +9,7 @@
 	</div>
 	<div class="main-content main-frm">
 
-		<?= helper('errors', array(
+		<?php helper('errors', array(
 			'errors_title' => __('Profile update errors', 'profile')
 		)) ?>
 

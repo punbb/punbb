@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // JS groups
 define('FORUM_JS_GROUP_SYSTEM', -100);
@@ -165,7 +165,7 @@ class Loader
 			return $output;
 
 		// Sorts the scripts into correct order
-		uasort($this->libs['js'], array('Loader', 'sort_libs'));
+		uasort($this->libs['js'], array(__CLASS__, 'sort_libs'));
 
 		if (defined('FORUM_DISABLE_ASYNC_JS_LOADER'))
 		{
@@ -287,7 +287,7 @@ class Loader
 			return $output;
 
 		// Sorts the scripts into correct order
-		uasort($this->libs['css'], array('Loader', 'sort_libs'));
+		uasort($this->libs['css'], array(__CLASS__, 'sort_libs'));
 
 		return $this->render_css_simple();
 	}
@@ -528,5 +528,3 @@ class Loader
 
 // Create the loader adapter object
 $forum_loader = Loader::singleton();
-
-?>

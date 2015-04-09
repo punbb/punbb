@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_flash;
 ?>
 

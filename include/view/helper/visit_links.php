@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_user, $forum_url;
 
 $visit_links = array();

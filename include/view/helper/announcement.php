@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_config, $forum_user;
 
 if ($forum_config['o_announcement'] == '1' && $forum_user['g_read_board'] == '1') { ?>

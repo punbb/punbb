@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 // Define the version and database revision that this code was written for
 define('FORUM_VERSION', '1.4.3');

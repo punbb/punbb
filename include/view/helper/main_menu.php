@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_page;
 
 if (!empty($forum_page['main_menu'])) { ?>

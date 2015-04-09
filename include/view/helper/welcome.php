@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_user;
 
 if ($forum_user['is_guest']) { ?>

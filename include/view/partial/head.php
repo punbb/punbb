@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 if (FORUM_PAGE == 'redirect') {
 	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.$forum_config['o_redirect_delay'].';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';

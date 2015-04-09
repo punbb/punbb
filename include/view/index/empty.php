@@ -1,3 +1,7 @@
+<?php
+namespace punbb;
+?>
+
 <div class="main-head">
 	<h2 class="hn"><span><?= __('Forum message') ?></span></h2>
 </div>

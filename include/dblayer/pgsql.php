@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // Make sure we have built in support for PostgreSQL
 if (!function_exists('pg_connect'))

@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 $admod_links = array();
 

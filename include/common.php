@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');

@@ -1,3 +1,6 @@
+<?php
+namespace punbb;
+?>
 
 <div id="forum<?php echo $cur_forum['fid'] ?>" class="main-item<?php echo $forum_page['item_style'] ?>">
 	<span class="icon <?php echo implode(' ', $forum_page['item_status']) ?>"><!-- --></span>

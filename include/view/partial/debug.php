@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 if (defined('FORUM_DEBUG') || defined('FORUM_SHOW_QUERIES'))
 {

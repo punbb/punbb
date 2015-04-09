@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 $forum_javascript_commonjs_urls = '
 	if (typeof PUNBB === \'undefined\' || !PUNBB) {

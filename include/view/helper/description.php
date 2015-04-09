@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_config;
 
 if ($forum_config['o_board_desc'] != '') { ?>

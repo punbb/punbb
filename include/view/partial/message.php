@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 ($hook = get_hook('fn_message_output_start')) ? eval($hook) : null;
 

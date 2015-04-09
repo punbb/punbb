@@ -1,4 +1,6 @@
 <?php
+namespace punbb;
+
 global $forum_page;
 
 if (substr(FORUM_PAGE, 0, 5) == 'admin' && FORUM_PAGE_TYPE != 'paged') {
