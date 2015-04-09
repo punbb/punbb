@@ -16,7 +16,7 @@ if (!defined('FORUM')) {
 function db($type = null) {
 	global $_PUNBB;
 	// TODO fix
-	global $db_type, $forum_db;
+	global $db_type;
 	global $db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect;
 
 	if (isset($_PUNBB['db'])) {
@@ -26,43 +26,10 @@ function db($type = null) {
 	if (!$type) {
 		$type = $db_type;
 	}
-	switch ($type) {
-		case 'mysql':
-			require FORUM_ROOT.'include/dblayer/mysql.php';
-			break;
-
-		case 'mysql_innodb':
-			require FORUM_ROOT.'include/dblayer/mysql_innodb.php';
-			break;
-
-		case 'mysqli':
-			require FORUM_ROOT.'include/dblayer/mysqli.php';
-			break;
-
-		case 'mysqli_innodb':
-			require FORUM_ROOT.'include/dblayer/mysqli_innodb.php';
-			break;
-
-		case 'pgsql':
-			require FORUM_ROOT.'include/dblayer/pgsql.php';
-			break;
-
-		case 'sqlite':
-			require FORUM_ROOT.'include/dblayer/sqlite.php';
-			break;
-
-		case 'sqlite3':
-			require FORUM_ROOT.'include/dblayer/sqlite3.php';
-			break;
-
-		default:
-			error('\''.$type.'\' is not a valid database type. Please check settings in config.php.', __FILE__, __LINE__);
-			break;
-	}
 
 	// Create the database adapter object (and open/connect to/select db)
 	$classname = 'punbb\\DBLayer_' . $type;
-	return $_PUNBB['db'] = $forum_db = new $classname(
+	return $_PUNBB['db'] = new $classname(
 		$db_host,
 		$db_username,
 		$db_password,
@@ -72,4 +39,5 @@ function db($type = null) {
 }
 
 // TODO fix
-db();
+global $forum_db;
+$forum_db = db();
