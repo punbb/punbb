@@ -34,6 +34,22 @@
 
 ### вынос глобальных переменных в $_PUNBB - глобальный "репозитарий"
 
+### расширения
+
+~~основной файл, подключается при загрузке ядра форума~~   
+~~/extensions/myextension-name/init.php~~
+- расширения в папке vendor вида punbb-extensionname, как то прописывать файл инициализации (опция "autoload" -> "files" у composer)
+- в init.php файле задется настройка расширинения - тема, языковой пакет, рауты...
+- расширение в виде пакета к композеру, посмотреть - установку и распространение через git репозитарий
+- настройка запуска композером команд install.php update.php uninstall.php при composer install, composer update 
+- в простейшем случае - если нет настроек БД и т.п. скрипты типа install.php не нужны - просто как стандартный пакет композера
+- web-интерфейс для управления расширениями - это будет просто интерфейс для команд композера - нужен ли?- если возможно, предусмотреть установку без композера - т.е. компируется расширение в нужную папку, запускается install.php или update.php через браузер 
+
+так же сделать как расширения
+- языковые файлы
+- темы
+- сделать возможность изменения урл форума в виде расширения, выпилить текущий из форума
+
 ### шаблоны
 
 - view, helper - всегда выводит данные вместо записи в буфер - облегчит отладку и улучшит производительность
@@ -90,48 +106,6 @@
         если надо возвратить результат и остановить цикл
     }
 
-
-### расширения
-
-основной файл, подключается при загрузке ядра форума
-    
-    /extensions/myextension-name/init.php
-
-- расширение в виде пакета к композеру, посмотреть - установку и распространение через git репозитарий
-- настройка запуска композером команд install.php update.php uninstall.php при composer install, composer update ...
-- web-интерфейс для управления расширениями - это будет просто интерфейс для команд композера - нужен ли?- если возможно, предусмотреть установку без композера - т.е. компируется расширение в нужную папку, запускается install.php или update.php через браузер 
-
-так же сделать как расширения
-- языковые файлы
-- темы
-- сделать возможность изменения урл форума в виде расширения, выпилить текущий из форума
-
-## Удалены некоторые хуки для шаблонов
-
-    fn_redirect_pre_template_loaded
-    fn_redirect_template_loaded
-    fn_maintenance_message_pre_template_loaded
-    fn_maintenance_message_template_loaded
-    hd_pre_template_loaded
-    hd_template_loaded
-    hd_gen_elements
-    hd_visit_elements
-    hd_main_elements
-    hd_end
-    pf_change_pass_key_pre_errors
-    pf_change_pass_normal_pre_errors
-    pf_change_email_pre_errors
-    pf_change_details_identity_pre_errors
-    pf_change_details_signature_pre_errors
-    pf_change_details_avatar_pre_errors
-    rg_pre_register_errors
-    aex_install_ext_pre_errors
-    li_pre_login_errors
-    li_forgot_pass_pre_new_password_errors
-    mi_pre_email_errors
-    mi_pre_report_errors
-    po_pre_post_errors
-
 ## Структура темы
 
 Блоки основного контента:
@@ -165,3 +139,29 @@
 если такого файла нет, берется стандартный
 
     include/view/login/main.php
+
+## Удалены некоторые хуки для шаблонов
+
+    fn_redirect_pre_template_loaded
+    fn_redirect_template_loaded
+    fn_maintenance_message_pre_template_loaded
+    fn_maintenance_message_template_loaded
+    hd_pre_template_loaded
+    hd_template_loaded
+    hd_gen_elements
+    hd_visit_elements
+    hd_main_elements
+    hd_end
+    pf_change_pass_key_pre_errors
+    pf_change_pass_normal_pre_errors
+    pf_change_email_pre_errors
+    pf_change_details_identity_pre_errors
+    pf_change_details_signature_pre_errors
+    pf_change_details_avatar_pre_errors
+    rg_pre_register_errors
+    aex_install_ext_pre_errors
+    li_pre_login_errors
+    li_forgot_pass_pre_new_password_errors
+    mi_pre_email_errors
+    mi_pre_report_errors
+    po_pre_post_errors
