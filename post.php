@@ -6,6 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
+namespace punbb;
 
 define('FORUM_SKIP_CSRF_CONFIRM', 1);
 

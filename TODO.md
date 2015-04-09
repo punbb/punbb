@@ -130,6 +130,7 @@
     li_forgot_pass_pre_new_password_errors
     mi_pre_email_errors
     mi_pre_report_errors
+    po_pre_post_errors
 
 ## Структура темы
 

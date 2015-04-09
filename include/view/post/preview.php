@@ -1,4 +1,5 @@
 <?php
+namespace punbb;
 
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($errors)) {

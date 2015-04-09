@@ -1,3 +1,6 @@
+<?php
+namespace punbb;
+?>
 
 <div class="post<?php if ($forum_page['item_count'] == 1) echo ' firstpost'; ?><?php if ($forum_page['item_total'] == $forum_page['item_count']) echo ' lastpost'; ?>">
 	<div class="posthead">
