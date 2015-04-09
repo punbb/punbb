@@ -9,6 +9,12 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
+namespace punbb;
+
+// TODO separate to different files
+// /feed/atom/index.php
+// /feed/rss/index.php
+// ...
 
 /***********************************************************************
 
@@ -383,7 +389,7 @@ if ($action == 'feed')
 
 		($hook = get_hook('ex_pre_topic_output')) ? eval($hook) : null;
 
-		$output_func = 'output_'.$type;
+		$output_func = 'punbb\\output_'.$type;
 		$output_func($feed);
 	}
 	else
@@ -509,7 +515,7 @@ if ($action == 'feed')
 
 		($hook = get_hook('ex_pre_forum_output')) ? eval($hook) : null;
 
-		$output_func = 'output_'.$type;
+		$output_func = 'punbb\\output_'.$type;
 		$output_func($feed);
 	}
 
