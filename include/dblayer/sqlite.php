@@ -13,7 +13,7 @@ if (!function_exists('sqlite_open'))
 	exit('This PHP environment doesn\'t have SQLite support built in. SQLite support is required if you want to use a SQLite database to run this forum. Consult the PHP documentation for further assistance.');
 
 
-class DBLayer
+class DBLayer_sqlite
 {
 	var $prefix;
 	var $link_id;

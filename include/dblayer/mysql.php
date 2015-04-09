@@ -13,7 +13,7 @@ if (!function_exists('mysql_connect'))
 	exit('This PHP environment doesn\'t have MySQL support built in. MySQL support is required if you want to use a MySQL database to run this forum. Consult the PHP documentation for further assistance.');
 
 
-class DBLayer
+class DBLayer_mysql
 {
 	var $prefix;
 	var $link_id;

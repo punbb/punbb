@@ -12,8 +12,7 @@ namespace punbb;
 if (!function_exists('mysqli_connect'))
 	exit('This PHP environment doesn\'t have Improved MySQL (mysqli) support built in. Improved MySQL support is required if you want to use a MySQL 4.1 (or later) database to run this forum. Consult the PHP documentation for further assistance.');
 
-
-class DBLayer
+class DBLayer_mysqli_innodb
 {
 	var $prefix;
 	var $link_id;

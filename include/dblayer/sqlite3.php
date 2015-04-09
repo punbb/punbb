@@ -13,7 +13,7 @@ if (!class_exists('SQLite3'))
 	exit('This PHP environment doesn\'t have SQLite3 support built in. SQLite3 support is required if you want to use a SQLite3 database to run this forum. Consult the PHP documentation for further assistance.');
 
 
-class DBLayer
+class DBLayer_sqlite3
 {
 	var $prefix;
 	var $link_id;
