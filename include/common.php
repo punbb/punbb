@@ -35,8 +35,11 @@ if (get_magic_quotes_gpc())
 forum_remove_bad_characters();
 
 // If a cookie name is not specified in config.php, we use the default (forum_cookie)
-if (empty($cookie_name))
+if (empty($cookie_name)) {
 	$cookie_name = 'forum_cookie';
+}
+
+$forum_config = config();
 
 // Enable output buffering
 if (!defined('FORUM_DISABLE_BUFFERING'))
