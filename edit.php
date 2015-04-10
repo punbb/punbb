@@ -15,7 +15,7 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('ed_start')) ? eval($hook) : null;
 
-if ($forum_user['g_read_board'] == '0')
+if (user()['g_read_board'] == '0')
 	message(__('No view'));
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -38,7 +38,7 @@ $query = array(
 		),
 		array(
 			'LEFT JOIN'		=> 'forum_perms AS fp',
-			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 		)
 	),
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id
@@ -53,13 +53,13 @@ if (!$cur_post)
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_post['moderators'] != '') ? unserialize($cur_post['moderators']) : array();
-$forum_page['is_admmod'] = ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && array_key_exists($forum_user['username'], $mods_array))) ? true : false;
+$forum_page['is_admmod'] = (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && array_key_exists(user()['username'], $mods_array))) ? true : false;
 
 ($hook = get_hook('ed_pre_permission_check')) ? eval($hook) : null;
 
 // Do we have permission to edit this post?
-if (($forum_user['g_edit_posts'] == '0' ||
-	$cur_post['poster_id'] != $forum_user['id'] ||
+if ((user()['g_edit_posts'] == '0' ||
+	$cur_post['poster_id'] != user()['id'] ||
 	$cur_post['closed'] == '1') &&
 	!$forum_page['is_admmod'])
 	message(__('No permission'));
@@ -148,7 +148,7 @@ if (isset($_POST['form_sent']))
 		);
 
 		if (!isset($_POST['silent']) || !$forum_page['is_admmod'])
-			$query['SET'] .= ', edited='.time().', edited_by=\''.db()->escape($forum_user['username']).'\'';
+			$query['SET'] .= ', edited='.time().', edited_by=\''.db()->escape(user()['username']).'\'';
 
 		($hook = get_hook('ed_qr_update_post')) ? eval($hook) : null;
 		db()->query_build($query) or error(__FILE__, __LINE__);

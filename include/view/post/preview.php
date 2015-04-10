@@ -13,7 +13,7 @@ if (isset($_POST['preview']) && empty($errors)) {
 	$forum_page['post_ident'] = array();
 	$forum_page['post_ident']['num'] = '<span class="post-num">#</span>';
 	$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($tid) ?
-		__('Reply byline', 'post') : __('Topic byline', 'post')), '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span>';
+		__('Reply byline', 'post') : __('Topic byline', 'post')), '<strong>'.forum_htmlencode(user()['username']).'</strong>').'</span>';
 	$forum_page['post_ident']['link'] = '<span class="post-link">'.format_time(time()).'</span>';
 
 	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;

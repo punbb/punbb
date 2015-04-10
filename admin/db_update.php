@@ -121,13 +121,14 @@ if (!empty(config()['o_database_revision']) && config()['o_database_revision'] >
 if (!isset($base_url))
 	$base_url = config()['o_base_url'];
 
-// There's no $forum_user, but we need the style element
+// There's no forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
-if (file_exists(FORUM_ROOT.'style/'.config()['o_default_style'].'/'.config()['o_default_style'].'.php'))
-	$forum_user['style'] = config()['o_default_style'];
+if (file_exists(FORUM_ROOT.'style/'.config()['o_default_style'].'/'.config()['o_default_style'].'.php')) {
+	$_PUNBB['user']['style'] = config()['o_default_style'];
+}
 else
 {
-	$forum_user['style'] = 'Oxygen';
+	$_PUNBB['user']['style'] = 'Oxygen';
 
 	$query = array(
 		'UPDATE'	=> 'config',

@@ -17,7 +17,7 @@ if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
 
 ($hook = get_hook('aex_start')) ? eval($hook) : null;
 
-if ($forum_user['g_id'] != FORUM_ADMIN)
+if (user()['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
 // Make sure we have XML support

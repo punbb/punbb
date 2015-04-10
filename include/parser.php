@@ -675,8 +675,6 @@ function callback_handle_url_bb($reg)
 //
 function handle_img_tag($url, $is_signature = false, $alt = null)
 {
-	global $forum_user;
-
 	$return = ($hook = get_hook('ps_handle_img_tag_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -686,9 +684,9 @@ function handle_img_tag($url, $is_signature = false, $alt = null)
 
 	$img_tag = '<a href="'.$url.'">&lt;'.__('Image link').'&gt;</a>';
 
-	if ($is_signature && $forum_user['show_img_sig'] != '0')
+	if ($is_signature && user()['show_img_sig'] != '0')
 		$img_tag = '<img class="sigimage" src="'.$url.'" alt="'.forum_htmlencode($alt).'" />';
-	else if (!$is_signature && $forum_user['show_img'] != '0')
+	else if (!$is_signature && user()['show_img'] != '0')
 		$img_tag = '<span class="postimg"><img src="'.$url.'" alt="'.forum_htmlencode($alt).'" /></span>';
 
 	$return = ($hook = get_hook('ps_handle_img_tag_end')) ? eval($hook) : null;
@@ -733,8 +731,6 @@ function handle_list_tag($content, $type = '*')
 //
 function do_bbcode($text, $is_signature = false)
 {
-	global $forum_user;
-
 	$return = ($hook = get_hook('ps_do_bbcode_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -857,8 +853,6 @@ function do_smilies($text)
 //
 function parse_message($text, $hide_smilies)
 {
-	global $forum_user;
-
 	$return = ($hook = get_hook('ps_parse_message_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -891,7 +885,7 @@ function parse_message($text, $hide_smilies)
 	if (config()['p_message_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 		$text = do_bbcode($text);
 
-	if (config()['o_smilies'] == '1' && $forum_user['show_smilies'] == '1' && $hide_smilies == '0')
+	if (config()['o_smilies'] == '1' && user()['show_smilies'] == '1' && $hide_smilies == '0')
 		$text = do_smilies($text);
 
 	$return = ($hook = get_hook('ps_parse_message_bbcode')) ? eval($hook) : null;
@@ -945,8 +939,6 @@ function parse_message($text, $hide_smilies)
 //
 function parse_signature($text)
 {
-	global $forum_user;
-
 	$return = ($hook = get_hook('ps_parse_signature_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -968,7 +960,7 @@ function parse_signature($text)
 	if (config()['p_sig_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 		$text = do_bbcode($text, true);
 
-	if (config()['o_smilies_sig'] == '1' && $forum_user['show_smilies'] == '1')
+	if (config()['o_smilies_sig'] == '1' && user()['show_smilies'] == '1')
 		$text = do_smilies($text);
 
 	$return = ($hook = get_hook('ps_parse_signature_post_bbcode')) ? eval($hook) : null;

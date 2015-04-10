@@ -12,17 +12,17 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('ul_start')) ? eval($hook) : null;
 
-if ($forum_user['g_read_board'] == '0')
+if (user()['g_read_board'] == '0')
 	message(__('No view'));
-else if ($forum_user['g_view_users'] == '0')
+else if (user()['g_view_users'] == '0')
 	message(__('No permission'));
 
 // Miscellaneous setup
-$forum_page['show_post_count'] = (config()['o_show_post_count'] == '1' || $forum_user['is_admmod']) ? true : false;
+$forum_page['show_post_count'] = (config()['o_show_post_count'] == '1' || user()['is_admmod']) ? true : false;
 
 $forum_page['username'] = '';
 if (isset($_GET['username']) && is_string($_GET['username'])) {
-	if ($_GET['username'] != '-' && $forum_user['g_search_users'] == '1') {
+	if ($_GET['username'] != '-' && user()['g_search_users'] == '1') {
 		$forum_page['username'] = $_GET['username'];
 	}
 }
@@ -36,7 +36,7 @@ $forum_page['sort_dir'] = (!isset($_GET['sort_dir']) || strtoupper($_GET['sort_d
 $where_sql = array();
 $like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
 
-if ($forum_user['g_search_users'] == '1' && $forum_page['username'] != '')
+if (user()['g_search_users'] == '1' && $forum_page['username'] != '')
 	$where_sql[] = 'u.username '.$like_command.' \''.db()->escape(str_replace('*', '%', $forum_page['username'])).'\'';
 if ($forum_page['show_group'] > -1)
 	$where_sql[] = 'u.group_id='.$forum_page['show_group'];
@@ -62,7 +62,7 @@ $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p
 $forum_page['start_from'] = 50 * ($forum_page['page'] - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + 50), ($forum_page['num_users']));
 
-$forum_page['users_searched'] = (($forum_user['g_search_users'] == '1' && $forum_page['username'] != '') || $forum_page['show_group'] > -1);
+$forum_page['users_searched'] = ((user()['g_search_users'] == '1' && $forum_page['username'] != '') || $forum_page['show_group'] > -1);
 
 if ($forum_page['num_users'] > 0)
 	$forum_page['items_info'] = generate_items_info((($forum_page['users_searched']) ?

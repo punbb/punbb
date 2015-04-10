@@ -13,7 +13,7 @@ namespace punbb;
 //
 function create_search_cache($keywords, $author, $search_in = false, $forum = array(-1), $show_as = 'topics', $sort_by = null, $sort_dir = 'DESC')
 {
-	global $forum_user, $forum_url, $db_type;
+	global $forum_url, $db_type;
 
 	$return = ($hook = get_hook('sf_fn_create_search_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -32,10 +32,10 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	$author = utf8_strtolower($author);
 
 	// Flood protection
-	if ($forum_user['last_search'] && (time() - $forum_user['last_search']) < $forum_user['g_search_flood'] && (time() - $forum_user['last_search']) >= 0)
-		message(sprintf(__('Search flood', 'search'), $forum_user['g_search_flood']));
+	if (user()['last_search'] && (time() - user()['last_search']) < user()['g_search_flood'] && (time() - user()['last_search']) >= 0)
+		message(sprintf(__('Search flood', 'search'), user()['g_search_flood']));
 
-	if ($forum_user['is_guest'])
+	if (user()['is_guest'])
 	{
 		$query = array(
 			'UPDATE'	=> 'online',
@@ -48,7 +48,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 		$query = array(
 			'UPDATE'	=> 'users',
 			'SET'		=> 'last_search='.time(),
-			'WHERE'		=> 'id='.$forum_user['id'],
+			'WHERE'		=> 'id='.user()['id'],
 		);
 
 	}
@@ -213,7 +213,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 			),
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.$forum_user['g_id'].')'
+				'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.user()['g_id'].')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND p.id IN('.implode(',', $search_ids).')',
@@ -221,7 +221,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	);
 
 	// Search a specific forum?
-	if (!in_array(-1, $forum) || (config()['o_search_all_forums'] == '0' && !$forum_user['is_admmod']))
+	if (!in_array(-1, $forum) || (config()['o_search_all_forums'] == '0' && !user()['is_admmod']))
 		$query['WHERE'] .= ' AND t.forum_id IN('.implode(',', $forum).')';
 
 	// Adjust the query if show_as posts
@@ -270,7 +270,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	// Fill an array with our results and search properties
 	$search_data = serialize(compact('search_results', 'sort_by', 'sort_dir', 'show_as'));
 	$search_id = mt_rand(1, 2147483647);
-	$ident = ($forum_user['is_guest']) ? get_remote_address() : $forum_user['username'];
+	$ident = (user()['is_guest']) ? get_remote_address() : user()['username'];
 
 	$query = array(
 		'INSERT'	=> 'id, ident, search_data',
@@ -299,13 +299,13 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 //
 function generate_cached_search_query($search_id, &$show_as)
 {
-	global $db_type, $forum_user;
+	global $db_type;
 
 	$return = ($hook = get_hook('sf_fn_generate_cached_search_query_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	$ident = ($forum_user['is_guest']) ? get_remote_address() : $forum_user['username'];
+	$ident = (user()['is_guest']) ? get_remote_address() : user()['username'];
 
 	$query = array(
 		'SELECT'	=> 'sc.search_data',
@@ -390,12 +390,12 @@ function generate_cached_search_query($search_id, &$show_as)
 		);
 
 		// With "has posted" indication
-		if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1')
+		if (!user()['is_guest'] && config()['o_show_dot'] == '1')
 		{
 			$query['SELECT'] .= ', p.poster_id AS has_posted';
 			$query['JOINS'][]	= array(
 				'LEFT JOIN'		=> 'posts AS p',
-				'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
+				'ON'			=> '(p.poster_id='.user()['id'].' AND p.topic_id=t.id)'
 			);
 
 			// Must have same columns as in prev SELECT
@@ -418,7 +418,7 @@ function generate_cached_search_query($search_id, &$show_as)
 //
 function generate_action_search_query($action, $value, &$search_id, &$url_type, &$show_as)
 {
-	global $forum_user, $forum_url, $db_type;
+	global $forum_url, $db_type;
 
 	$return = ($hook = get_hook('sf_fn_generate_action_search_query_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -427,7 +427,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 	switch ($action)
 	{
 		case 'show_new':
-			if ($forum_user['is_guest'])
+			if (user()['is_guest'])
 				message(__('No permission'));
 
 			$query = array(
@@ -440,10 +440,10 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
-				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.last_post>'.$forum_user['last_visit'].' AND t.moved_to IS NULL',
+				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.last_post>'.user()['last_visit'].' AND t.moved_to IS NULL',
 				'ORDER BY'	=> 't.last_post DESC'
 			);
 
@@ -451,12 +451,12 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 				$query['WHERE'] .= ' AND f.id='.$value;
 
 			// With "has posted" indication
-			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1')
+			if (!user()['is_guest'] && config()['o_show_dot'] == '1')
 			{
 				$query['SELECT'] .= ', p.poster_id AS has_posted';
 				$query['JOINS'][]	= array(
 					'LEFT JOIN'		=> 'posts AS p',
-					'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
+					'ON'			=> '(p.poster_id='.user()['id'].' AND p.topic_id=t.id)'
 				);
 
 				// Must have same columns as in prev SELECT
@@ -483,7 +483,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.last_post>'.(time() - $value).' AND t.moved_to IS NULL',
@@ -491,12 +491,12 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 			);
 
 			// With "has posted" indication
-			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1')
+			if (!user()['is_guest'] && config()['o_show_dot'] == '1')
 			{
 				$query['SELECT'] .= ', p.poster_id AS has_posted';
 				$query['JOINS'][]	= array(
 					'LEFT JOIN'		=> 'posts AS p',
-					'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
+					'ON'			=> '(p.poster_id='.user()['id'].' AND p.topic_id=t.id)'
 				);
 
 				// Must have same columns as in prev SELECT
@@ -527,7 +527,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND p.poster_id='.$value,
@@ -557,7 +557,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND p.poster_id='.$value,
@@ -565,12 +565,12 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 			);
 
 			// With "has posted" indication
-			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1')
+			if (!user()['is_guest'] && config()['o_show_dot'] == '1')
 			{
 				$query['SELECT'] .= ', ps.poster_id AS has_posted';
 				$query['JOINS'][]	= array(
 					'LEFT JOIN'		=> 'posts AS ps',
-					'ON'			=> '(ps.poster_id='.$forum_user['id'].' AND ps.topic_id=t.id)'
+					'ON'			=> '(ps.poster_id='.user()['id'].' AND ps.topic_id=t.id)'
 				);
 
 				// Must have same columns as in prev SELECT
@@ -587,11 +587,11 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 			break;
 
 		case 'show_subscriptions':
-			if ($forum_user['is_guest'])
+			if (user()['is_guest'])
 				message(__('Bad request'));
 
 			// Check we're allowed to see the subscriptions we're trying to look at
-			if ($forum_user['g_id'] != FORUM_ADMIN && $forum_user['id'] != $value)
+			if (user()['g_id'] != FORUM_ADMIN && user()['id'] != $value)
 				message(__('Bad request'));
 
 			$query = array(
@@ -608,7 +608,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1)',
@@ -616,12 +616,12 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 			);
 
 			// With "has posted" indication
-			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1')
+			if (!user()['is_guest'] && config()['o_show_dot'] == '1')
 			{
 				$query['SELECT'] .= ', p.poster_id AS has_posted';
 				$query['JOINS'][]	= array(
 					'LEFT JOIN'		=> 'posts AS p',
-					'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
+					'ON'			=> '(p.poster_id='.user()['id'].' AND p.topic_id=t.id)'
 				);
 
 				// Must have same columns as in prev SELECT
@@ -638,11 +638,11 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 			break;
 
 		case 'show_forum_subscriptions':
-			if ($forum_user['is_guest'])
+			if (user()['is_guest'])
 				message(__('Bad request'));
 
 			// Check we're allowed to see the subscriptions we're trying to look at
-			if ($forum_user['g_id'] != FORUM_ADMIN && $forum_user['id'] != $value)
+			if (user()['g_id'] != FORUM_ADMIN && user()['id'] != $value)
 				message(__('Bad request'));
 
 			$query = array(
@@ -659,7 +659,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1)',
@@ -684,7 +684,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 					),
 					array(
 						'LEFT JOIN'		=> 'forum_perms AS fp',
-						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+						'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 					)
 				),
 				'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.num_replies=0 AND t.moved_to IS NULL',
@@ -692,12 +692,12 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 			);
 
 			// With "has posted" indication
-			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1')
+			if (!user()['is_guest'] && config()['o_show_dot'] == '1')
 			{
 				$query['SELECT'] .= ', p.poster_id AS has_posted';
 				$query['JOINS'][]	= array(
 					'LEFT JOIN'		=> 'posts AS p',
-					'ON'			=> '(p.poster_id='.$forum_user['id'].' AND p.topic_id=t.id)'
+					'ON'			=> '(p.poster_id='.user()['id'].' AND p.topic_id=t.id)'
 				);
 
 				// Must have same columns as in prev SELECT
@@ -723,7 +723,7 @@ function generate_action_search_query($action, $value, &$search_id, &$url_type, 
 //
 function get_search_results($query, &$search_set)
 {
-	global $forum_user, $forum_page;
+	global $forum_page;
 
 	$return = ($hook = get_hook('sf_fn_get_search_results_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -827,7 +827,7 @@ function no_search_results($action = 'search')
 //
 function generate_search_crumbs($action = null)
 {
-	global $forum_page, $forum_url, $forum_user, $num_hits, $search_set, $search_id, $show_as;
+	global $forum_page, $forum_url, $num_hits, $search_set, $search_id, $show_as;
 
 	$return = ($hook = get_hook('sf_fn_generate_search_crumbs_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -840,7 +840,7 @@ function generate_search_crumbs($action = null)
 			$forum_page['items_info'] = generate_items_info(__('Topics found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
 			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
 				__('User defined search', 'search') . '</a></span>';
-			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.$forum_user['id'])).'">'.
+			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.user()['id'])).'">'.
 				__('Mark all as read').'</a></span>';
 
 			// Add link for show all topics, not only new (updated)

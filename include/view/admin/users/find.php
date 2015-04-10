@@ -116,11 +116,11 @@ namespace punbb;
 
 	if ($forum_page['num_users'] > 0)
 	{
-		if ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && $forum_user['g_mod_ban_users'] == '1'))
+		if (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && user()['g_mod_ban_users'] == '1'))
 			$forum_page['mod_options']['ban'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="ban_users" value="'.
 				__('Ban', 'admin_users').'" /></span>';
 
-		if ($forum_user['g_id'] == FORUM_ADMIN)
+		if (user()['g_id'] == FORUM_ADMIN)
 		{
 			$forum_page['mod_options']['delete'] = '<span class="submit'.((empty($forum_page['mod_options'])) ? ' first-item' : '').'"><input type="submit" name="delete_users" value="'.
 				__('Delete', 'admin_common').'" /></span>';

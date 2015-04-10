@@ -25,7 +25,7 @@ namespace punbb;
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?= __('Required information') ?></strong></legend>
 <?php ($hook = get_hook('pf_change_pass_normal_pre_old_password')) ? eval($hook) : null; ?>
-<?php if (!$forum_user['is_admmod'] || $forum_user['id'] == $id): ?>
+<?php if (!user()['is_admmod'] || user()['id'] == $id): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Old password', 'profile') ?></span> <small><?= __('Old password help', 'profile') ?></small></label><br />

@@ -17,7 +17,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('ari_start')) ? eval($hook) : null;
 
-if ($forum_user['g_id'] != FORUM_ADMIN)
+if (user()['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
 if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
@@ -29,7 +29,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('reindex'.$forum_user['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('reindex'.user()['id'])))
 		csrf_confirm_form();
 
 	($hook = get_hook('ari_cycle_start')) ? eval($hook) : null;
@@ -147,7 +147,7 @@ body {
 	$query_str = '';
 	if (!is_null($next_posts_to_proced) && $next_posts_to_proced !== false)
 	{
-		$query_str = '?i_per_page='.$per_page.'&i_start_at='.$next_posts_to_proced.'&csrf_token='.generate_form_token('reindex'.$forum_user['id']);
+		$query_str = '?i_per_page='.$per_page.'&i_start_at='.$next_posts_to_proced.'&csrf_token='.generate_form_token('reindex'.user()['id']);
 	}
 
 	($hook = get_hook('ari_cycle_end')) ? eval($hook) : null;

@@ -9,7 +9,7 @@ if (!empty($forum_page['user_management'])) {
 
 	($hook = get_hook('pf_change_details_admin_pre_membership')) ? eval($hook) : null;
 
-	if ($forum_user['g_moderator'] != '1' && !$forum_page['own_profile'])
+	if (user()['g_moderator'] != '1' && !$forum_page['own_profile'])
 	{
 
 		($hook = get_hook('pf_change_details_admin_pre_group_membership')) ? eval($hook) : null;

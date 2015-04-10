@@ -29,7 +29,7 @@ if ($forum_page['has_required']): ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?= __('Required information') ?></strong></legend>
 <?php ($hook = get_hook('pf_change_details_identity_pre_username')) ? eval($hook) : null; ?>
-<?php if ($forum_user['is_admmod'] && ($forum_user['g_id'] == FORUM_ADMIN || $forum_user['g_mod_rename_users'] == '1')): ?>
+<?php if (user()['is_admmod'] && (user()['g_id'] == FORUM_ADMIN || user()['g_mod_rename_users'] == '1')): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Username', 'profile') ?></span> <small><?= __('Username help', 'profile') ?></small></label><br />
@@ -37,7 +37,7 @@ if ($forum_page['has_required']): ?>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('pf_change_details_identity_pre_email')) ? eval($hook) : null; ?>
-<?php if ($forum_user['is_admmod']): ?>
+<?php if (user()['is_admmod']): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('E-mail', 'profile') ?></span> <small><?= __('E-mail help', 'profile') ?></small></label><br />
@@ -58,7 +58,7 @@ if ($forum_page['has_required']): ?>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_details_identity_pre_title')) ? eval($hook) : null; ?>
-<?php if ($forum_user['g_set_title'] == '1'): ?>
+<?php if (user()['g_set_title'] == '1'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Title', 'profile') ?></span><small><?= __('Leave blank', 'profile') ?></small></label><br />
@@ -74,7 +74,7 @@ if ($forum_page['has_required']): ?>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_details_identity_pre_admin_note')) ? eval($hook) : null; ?>
-<?php if ($forum_user['is_admmod']): ?>
+<?php if (user()['is_admmod']): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Admin note', 'profile') ?></span></label><br />
@@ -82,7 +82,7 @@ if ($forum_page['has_required']): ?>
 					</div>
 				</div>
 <?php endif; ($hook = get_hook('pf_change_details_identity_pre_num_posts')) ? eval($hook) : null; ?>
-<?php if ($forum_user['g_id'] == FORUM_ADMIN): ?>
+<?php if (user()['g_id'] == FORUM_ADMIN): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Edit count', 'profile') ?></span></label><br />

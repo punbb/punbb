@@ -30,6 +30,10 @@ function config($serv = null) {
 	return service('config', $serv);
 }
 
+function user($serv = null) {
+	return service('user', $serv);
+}
+
 function assets($serv = null) {
 	return service('assets', $serv);
 }
@@ -91,4 +95,14 @@ flash(function () {
 assets(function () {
 	// Create the loader adapter object
 	return Loader::singleton();
+});
+
+user(function () {
+	global $_PUNBB;
+	if (!isset($_PUNBB['user'])) {
+		$_PUNBB['user'] = array();
+		// Login and fetch user info
+		cookie_login($_PUNBB['user']);
+	}
+	return $_PUNBB['user'];
 });

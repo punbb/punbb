@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('agr_start')) ? eval($hook) : null;
 
-if ($forum_user['g_id'] != FORUM_ADMIN)
+if (user()['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
 // Add/edit a group (stage 1)

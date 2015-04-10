@@ -19,7 +19,7 @@ namespace punbb;
 
 		($hook = get_hook('pf_change_details_admin_pre_mod_assignment')) ? eval($hook) : null;
 
-		if ($forum_user['g_id'] == FORUM_ADMIN && ($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
+		if (user()['g_id'] == FORUM_ADMIN && ($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 		{
 			($hook = get_hook('pf_change_details_admin_pre_mod_assignment_fieldset')) ? eval($hook) : null;
 

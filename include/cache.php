@@ -264,7 +264,7 @@ function generate_censors_cache()
 //
 function generate_quickjump_cache($group_id = false)
 {
-	global $forum_url, $forum_user, $base_url;
+	global $forum_url, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
 	if ($return != null)

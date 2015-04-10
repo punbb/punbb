@@ -18,7 +18,7 @@ if (!defined('FORUM'))
 //
 function generate_admin_menu($submenu)
 {
-	global $forum_url, $forum_user, $db_type;
+	global $forum_url, $db_type;
 
 	$return = ($hook = get_hook('ca_fn_generate_admin_menu_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -28,7 +28,7 @@ function generate_admin_menu($submenu)
 	{
 		$forum_page['admin_submenu'] = array();
 
-		if ($forum_user['g_id'] != FORUM_ADMIN)
+		if (user()['g_id'] != FORUM_ADMIN)
 		{
 			$forum_page['admin_submenu']['index'] = '<li class="'.((FORUM_PAGE == 'admin-information') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_index']).'">'.
 				__('Information', 'admin_common') . '</span></a></li>';
@@ -42,7 +42,7 @@ function generate_admin_menu($submenu)
 			$forum_page['admin_submenu']['reports'] = '<li class="'.((FORUM_PAGE == 'admin-reports') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_reports']).'">'.
 				__('Reports', 'admin_common').'</a></li>';
 
-			if ($forum_user['g_mod_ban_users'] == '1')
+			if (user()['g_mod_ban_users'] == '1')
 				$forum_page['admin_submenu']['bans'] = '<li class="'.((FORUM_PAGE == 'admin-bans') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_bans']).'">'.
 					__('Bans', 'admin_common').'</a></li>';
 		}
@@ -109,7 +109,7 @@ function generate_admin_menu($submenu)
 	}
 	else
 	{
-		if ($forum_user['g_id'] != FORUM_ADMIN)
+		if (user()['g_id'] != FORUM_ADMIN)
 			$forum_page['admin_menu']['index'] = '<li class="active first-item"><a href="'.forum_link($forum_url['admin_index']).'"><span>'.
 				__('Moderate', 'admin_common').'</span></a></li>';
 		else

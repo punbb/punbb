@@ -14,7 +14,7 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('he_start')) ? eval($hook) : null;
 
-if ($forum_user['g_read_board'] == '0')
+if (user()['g_read_board'] == '0')
 	message(__('No view'));
 
 $section = isset($_GET['section']) ? $_GET['section'] : null;

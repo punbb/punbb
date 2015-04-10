@@ -15,7 +15,7 @@ namespace punbb;
 		</div>
 		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_reindex']) ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token('reindex'.$forum_user['id']) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token('reindex'.user()['id']) ?>" />
 			</div>
 <?php ($hook = get_hook('ari_pre_rebuild_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

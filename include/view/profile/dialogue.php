@@ -5,7 +5,7 @@ namespace punbb;
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ?
+		<h2 class="hn"><span><?php printf((user()['id'] == $id) ?
 			__('Profile welcome', 'profile') : __('Profile welcome user', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">

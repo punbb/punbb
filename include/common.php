@@ -59,15 +59,10 @@ $forum_date_formats = array(config()['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y'
 // Create forum_page array
 $forum_page = array();
 
-// Login and fetch user info
-$forum_user = array();
-cookie_login($forum_user);
-
 // Attempt to load the common language file
-if (!file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php')) {
-	error('There is no valid language pack \''.forum_htmlencode($forum_user['language']).'\' installed.<br />Please reinstall a language of that name.');
+if (!file_exists(FORUM_ROOT.'lang/'.user()['language'].'/common.php')) {
+	error('There is no valid language pack \''.forum_htmlencode(user()['language']).'\' installed.<br />Please reinstall a language of that name.');
 }
-
 
 // Setup the URL rewriting scheme
 if (config()['o_sef'] != 'Default' && file_exists(FORUM_ROOT.'include/url/'.config()['o_sef'].'/forum_urls.php'))
@@ -79,11 +74,11 @@ else
 ($hook = get_hook('co_modify_url_scheme')) ? eval($hook) : null;
 
 // Check if we are to display a maintenance message
-if (config()['o_maintenance'] && $forum_user['g_id'] > FORUM_ADMIN && !defined('FORUM_TURN_OFF_MAINT'))
+if (config()['o_maintenance'] && user()['g_id'] > FORUM_ADMIN && !defined('FORUM_TURN_OFF_MAINT'))
 	maintenance_message();
 
 // Load cached updates info
-if ($forum_user['g_id'] == FORUM_ADMIN)
+if (user()['g_id'] == FORUM_ADMIN)
 {
 	if (file_exists(FORUM_CACHE_DIR.'cache_updates.php'))
 		include FORUM_CACHE_DIR.'cache_updates.php';
@@ -119,12 +114,11 @@ check_bans();
 update_users_online();
 
 // Check to see if we logged in without a cookie being set
-if ($forum_user['is_guest'] && isset($_GET['login']))
+if (user()['is_guest'] && isset($_GET['login']))
 	message(__('No cookie'));
 
 // If we're an administrator or moderator, make sure the CSRF token in $_POST is valid (token in post.php is dealt with in post.php)
 if (!empty($_POST) && (isset($_POST['confirm_cancel']) || (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== generate_form_token(get_current_url()))) && !defined('FORUM_SKIP_CSRF_CONFIRM'))
 	csrf_confirm_form();
-
 
 ($hook = get_hook('co_common')) ? eval($hook) : null;

@@ -76,7 +76,7 @@ if (!empty($topics))
 			// Assemble the Topic heading
 
 			// Should we display the dot or not? :)
-			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1' && $cur_topic['has_posted'] == $forum_user['id'])
+			if (!user()['is_guest'] && config()['o_show_dot'] == '1' && $cur_topic['has_posted'] == user()['id'])
 			{
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">' . __('You posted indicator', 'forum') . '</span>';
 				$forum_page['item_status']['posted'] = 'posted';
@@ -108,13 +108,13 @@ if (!empty($topics))
 			if (empty($forum_page['item_status']))
 				$forum_page['item_status']['normal'] = 'normal';
 
-			$forum_page['item_pages'] = ceil(($cur_topic['num_replies'] + 1) / $forum_user['disp_posts']);
+			$forum_page['item_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()['disp_posts']);
 
 			if ($forum_page['item_pages'] > 1)
 				$forum_page['item_nav']['pages'] = '<span>' . __('Pages', 'forum') . '&#160;</span>'.paginate($forum_page['item_pages'], -1, $forum_url['topic'], __('Page separator'), array($cur_topic['id'], sef_friendly($cur_topic['subject'])));
 
 			// Does this topic contain posts we haven't read? If so, tag it accordingly.
-			if (!$forum_user['is_guest'] && $cur_topic['last_post'] > $forum_user['last_visit'] && (!isset($tracked_topics['topics'][$cur_topic['id']]) || $tracked_topics['topics'][$cur_topic['id']] < $cur_topic['last_post']) && (!isset($tracked_topics['forums'][$id]) || $tracked_topics['forums'][$id] < $cur_topic['last_post']))
+			if (!user()['is_guest'] && $cur_topic['last_post'] > user()['last_visit'] && (!isset($tracked_topics['topics'][$cur_topic['id']]) || $tracked_topics['topics'][$cur_topic['id']] < $cur_topic['last_post']) && (!isset($tracked_topics['forums'][$id]) || $tracked_topics['forums'][$id] < $cur_topic['last_post']))
 			{
 				$forum_page['item_nav']['new'] = '<em class="item-newposts"><a href="'.forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.
 					__('New posts', 'forum') . '</a></em>';

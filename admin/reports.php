@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('arp_start')) ? eval($hook) : null;
 
-if (!$forum_user['is_admmod'])
+if (!user()['is_admmod'])
 	message(__('No permission'));
 
 // Mark reports as read
@@ -29,7 +29,7 @@ if (isset($_POST['mark_as_read']))
 
 	$query = array(
 		'UPDATE'	=> 'reports',
-		'SET'		=> 'zapped='.time().', zapped_by='.$forum_user['id'],
+		'SET'		=> 'zapped='.time().', zapped_by='.user()['id'],
 		'WHERE'		=> 'id IN('.implode(',', $reports_to_mark).') AND zapped IS NULL'
 	);
 
@@ -51,7 +51,7 @@ $forum_page['crumbs'] = array(
 	array(config()['o_board_title'], forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
-if ($forum_user['g_id'] == FORUM_ADMIN)
+if (user()['g_id'] == FORUM_ADMIN)
 	$forum_page['crumbs'][] = array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports']));
 $forum_page['crumbs'][] = array(__('Reports', 'admin_common'), forum_link($forum_url['admin_reports']));
 

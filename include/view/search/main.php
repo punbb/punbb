@@ -57,12 +57,12 @@ namespace punbb;
 <?php endif;
 
 if ((!$advanced_search && (config()['o_search_all_forums'] == '0' &&
-	!$forum_user['is_admmod'])) || $advanced_search) {
+	!user()['is_admmod'])) || $advanced_search) {
 
 ?>
 <?php ($hook = get_hook('se_pre_forum_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<legend><span><?= __('Forum search', 'search') ?> <em><?php echo (config()['o_search_all_forums'] == '1' || $forum_user['is_admmod']) ?
+					<legend><span><?= __('Forum search', 'search') ?> <em><?php echo (config()['o_search_all_forums'] == '1' || user()['is_admmod']) ?
 						__('Forum search default', 'search') :
 						__('Forum search require', 'search') ?></em></span></legend>
 <?php ($hook = get_hook('se_pre_forum_checklist')) ? eval($hook) : null; ?>

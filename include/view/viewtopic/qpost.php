@@ -9,11 +9,11 @@ $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
-	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!$forum_user['is_guest']) ? forum_htmlencode($forum_user['username']) : 'Guest').'" />',
+	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!user()['is_guest']) ? forum_htmlencode(user()['username']) : 'Guest').'" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 );
 
-if (!$forum_user['is_guest'] && config()['o_subscriptions'] == '1' && ($forum_user['auto_notify'] == '1' || $cur_topic['is_subscribed']))
+if (!user()['is_guest'] && config()['o_subscriptions'] == '1' && (user()['auto_notify'] == '1' || $cur_topic['is_subscribed']))
 	$forum_page['hidden_fields']['subscribe'] = '<input type="hidden" name="subscribe" value="1" />';
 
 // Setup help

@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('afo_start')) ? eval($hook) : null;
 
-if ($forum_user['g_id'] != FORUM_ADMIN)
+if (user()['g_id'] != FORUM_ADMIN)
 	message(__('No permission'));
 
 // Add a "default" forum

@@ -73,10 +73,10 @@ if (!defined('FORUM_EXTERN_MAX_SUBJECT_LENGTH'))
 	define('FORUM_EXTERN_MAX_SUBJECT_LENGTH', 30);
 
 // If we're a guest and we've sent a username/pass, we can try to authenticate using those details
-if ($forum_user['is_guest'] && isset($_SERVER['PHP_AUTH_USER']))
+if (user()['is_guest'] && isset($_SERVER['PHP_AUTH_USER']))
 	authenticate_user($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-if ($forum_user['g_read_board'] == '0')
+if (user()['g_read_board'] == '0')
 {
 	http_authenticate_user();
 	exit(__('No view'));
@@ -90,9 +90,7 @@ $sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'posted';
 //
 function http_authenticate_user()
 {
-	global $forum_user;
-
-	if (!$forum_user['is_guest'])
+	if (!user()['is_guest'])
 		return;
 
 	header('WWW-Authenticate: Basic realm="'.config()['o_board_title'].' External Syndication"');
@@ -298,7 +296,7 @@ if ($action == 'feed')
 			'JOINS'		=> array(
 				array(
 					'LEFT JOIN'		=> 'forum_perms AS fp',
-					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.$forum_user['g_id'].')'
+					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.user()['g_id'].')'
 				)
 			),
 			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL and t.id='.$tid
@@ -368,12 +366,12 @@ if ($action == 'feed')
 
 			if ($cur_post['poster_id'] > 1)
 			{
-				if ($cur_post['email_setting'] == '0' && !$forum_user['is_guest'])
+				if ($cur_post['email_setting'] == '0' && !user()['is_guest'])
 					$item['author']['email'] = $cur_post['email'];
 
 				$item['author']['uri'] = forum_link($forum_url['user'], $cur_post['poster_id']);
 			}
-			else if ($cur_post['poster_email'] != '' && !$forum_user['is_guest'])
+			else if ($cur_post['poster_email'] != '' && !user()['is_guest'])
 				$item['author']['email'] = $cur_post['poster_email'];
 
 			$feed['items'][] = $item;
@@ -411,7 +409,7 @@ if ($action == 'feed')
 					'JOINS'		=> array(
 						array(
 							'LEFT JOIN'		=> 'forum_perms AS fp',
-							'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+							'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
 						)
 					),
 					'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fids[0]
@@ -458,7 +456,7 @@ if ($action == 'feed')
 				),
 				array(
 					'LEFT JOIN'		=> 'forum_perms AS fp',
-					'ON'			=> '(fp.forum_id = t.forum_id AND fp.group_id = '.$forum_user['g_id'].')'
+					'ON'			=> '(fp.forum_id = t.forum_id AND fp.group_id = '.user()['g_id'].')'
 				)
 			),
 			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum = 1) AND t.moved_to IS NULL',
@@ -494,12 +492,12 @@ if ($action == 'feed')
 
 			if ($cur_topic['poster_id'] > 1)
 			{
-				if ($cur_topic['email_setting'] == '0' && !$forum_user['is_guest'])
+				if ($cur_topic['email_setting'] == '0' && !user()['is_guest'])
 					$item['author']['email'] = $cur_topic['email'];
 
 				$item['author']['uri'] = forum_link($forum_url['user'], $cur_topic['poster_id']);
 			}
-			else if ($cur_topic['poster_email'] != '' && !$forum_user['is_guest'])
+			else if ($cur_topic['poster_email'] != '' && !user()['is_guest'])
 				$item['author']['email'] = $cur_topic['poster_email'];
 
 			$feed['items'][] = $item;
@@ -536,7 +534,7 @@ else if ($action == 'online' || $action == 'online_full')
 	{
 		if ($forum_user_online['user_id'] > 1)
 		{
-			$users[] = $forum_user['g_view_users'] == '1' ?'<a href="'.forum_link($forum_url['user'], $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
+			$users[] = user()['g_view_users'] == '1' ?'<a href="'.forum_link($forum_url['user'], $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
 			++$num_users;
 		}
 		else
