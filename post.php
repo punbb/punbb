@@ -118,7 +118,7 @@ if (isset($_POST['form_sent']))
 			$errors[] = __('No subject', 'post');
 		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
 			$errors[] = sprintf(__('Too long subject', 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH);
-		else if ($forum_config['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
+		else if (config()['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
 			$errors[] = __('All caps subject', 'post');
 	}
 
@@ -132,12 +132,12 @@ if (isset($_POST['form_sent']))
 	else
 	{
 		$username = forum_trim($_POST['req_username']);
-		$email = strtolower(forum_trim(($forum_config['p_force_guest_email'] == '1') ? $_POST['req_email'] : $_POST['email']));
+		$email = strtolower(forum_trim((config()['p_force_guest_email'] == '1') ? $_POST['req_email'] : $_POST['email']));
 
 		// It's a guest, so we have to validate the username
 		$errors = array_merge($errors, validate_username($username));
 
-		if ($forum_config['p_force_guest_email'] == '1' || $email != '')
+		if (config()['p_force_guest_email'] == '1' || $email != '')
 		{
 			if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 				require FORUM_ROOT.'include/email.php';
@@ -159,11 +159,11 @@ if (isset($_POST['form_sent']))
 
 	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
 		$errors[] = sprintf(__('Too long message', 'post'), forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
-	else if ($forum_config['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
+	else if (config()['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
 		$errors[] = __('All caps message', 'post');
 
 	// Validate BBCode syntax
-	if ($forum_config['p_message_bbcode'] == '1' || $forum_config['o_make_links'] == '1')
+	if (config()['p_message_bbcode'] == '1' || config()['o_make_links'] == '1')
 	{
 		if (!defined('FORUM_PARSER_LOADED'))
 			require FORUM_ROOT.'include/parser.php';
@@ -196,7 +196,8 @@ if (isset($_POST['form_sent']))
 				'message'		=> $message,
 				'hide_smilies'	=> $hide_smilies,
 				'posted'		=> $now,
-				'subscr_action'	=> ($forum_config['o_subscriptions'] == '1' && $subscribe && !$is_subscribed) ? 1 : (($forum_config['o_subscriptions'] == '1' && !$subscribe && $is_subscribed) ? 2 : 0),
+				'subscr_action'	=> (config()['o_subscriptions'] == '1' && $subscribe && !$is_subscribed) ?
+					1 : ((config()['o_subscriptions'] == '1' && !$subscribe && $is_subscribed) ? 2 : 0),
 				'topic_id'		=> $tid,
 				'forum_id'		=> $cur_posting['id'],
 				'update_user'	=> true,
@@ -218,7 +219,7 @@ if (isset($_POST['form_sent']))
 				'message'		=> $message,
 				'hide_smilies'	=> $hide_smilies,
 				'posted'		=> $now,
-				'subscribe'		=> ($forum_config['o_subscriptions'] == '1' && (isset($_POST['subscribe']) && $_POST['subscribe'] == '1')),
+				'subscribe'		=> (config()['o_subscriptions'] == '1' && (isset($_POST['subscribe']) && $_POST['subscribe'] == '1')),
 				'forum_id'		=> $fid,
 				'forum_name'	=> $cur_posting['forum_name'],
 				'update_user'	=> true,
@@ -261,7 +262,7 @@ if ($tid && isset($_GET['qid']))
 
 	($hook = get_hook('po_modify_quote_info')) ? eval($hook) : null;
 
-	if ($forum_config['p_message_bbcode'] == '1')
+	if (config()['p_message_bbcode'] == '1')
 	{
 		// If username contains a square bracket, we add "" or '' around it (so we know when it starts and ends)
 		if (strpos($quote_info['poster'], '[') !== false || strpos($quote_info['poster'], ']') !== false)
@@ -303,18 +304,18 @@ $forum_page['hidden_fields'] = array(
 
 // Setup help
 $forum_page['text_options'] = array();
-if ($forum_config['p_message_bbcode'] == '1')
+if (config()['p_message_bbcode'] == '1')
 	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.
 	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
-if ($forum_config['p_message_img_tag'] == '1')
+if (config()['p_message_img_tag'] == '1')
 	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.
 	sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
-if ($forum_config['o_smilies'] == '1')
+if (config()['o_smilies'] == '1')
 	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.
 	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 // Setup breadcrumbs
-$forum_page['crumbs'][] = array($forum_config['o_board_title'], forum_link($forum_url['index']));
+$forum_page['crumbs'][] = array(config()['o_board_title'], forum_link($forum_url['index']));
 $forum_page['crumbs'][] = array($cur_posting['forum_name'], forum_link($forum_url['forum'], array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
 if ($tid)
 	$forum_page['crumbs'][] = array($cur_posting['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_posting['subject']))));
@@ -326,7 +327,7 @@ $forum_page['crumbs'][] = $tid ?
 define('FORUM_PAGE', 'post');
 
 // Check if the topic review is to be displayed
-if ($tid && $forum_config['o_topic_review'] != '0') {
+if ($tid && config()['o_topic_review'] != '0') {
 	if (!defined('FORUM_PARSER_LOADED')) {
 		require FORUM_ROOT.'include/parser.php';
 	}
@@ -348,7 +349,7 @@ if ($tid && $forum_config['o_topic_review'] != '0') {
 		'FROM'		=> 'posts AS p',
 		'WHERE'		=> 'topic_id='.$tid,
 		'ORDER BY'	=> 'id DESC',
-		'LIMIT'		=> $forum_config['o_topic_review']
+		'LIMIT'		=> config()['o_topic_review']
 	);
 
 	($hook = get_hook('po_topic_review_qr_get_topic_review_posts')) ? eval($hook) : null;

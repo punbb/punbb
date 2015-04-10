@@ -12,6 +12,7 @@ namespace punbb;
 
 require __DIR__ . '/vendor/pautoload.php';
 
+
 ($hook = get_hook('ed_start')) ? eval($hook) : null;
 
 if ($forum_user['g_read_board'] == '0')
@@ -85,7 +86,7 @@ if (isset($_POST['form_sent']))
 			$errors[] = __('No subject', 'post');
 		else if (utf8_strlen($subject) > FORUM_SUBJECT_MAXIMUM_LENGTH)
 			$errors[] = sprintf(__('Too long subject', 'post'), FORUM_SUBJECT_MAXIMUM_LENGTH);
-		else if ($forum_config['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
+		else if (config()['p_subject_all_caps'] == '0' && check_is_all_caps($subject) && !$forum_page['is_admmod'])
 			$subject = utf8_ucwords(utf8_strtolower($subject));
 	}
 
@@ -94,11 +95,11 @@ if (isset($_POST['form_sent']))
 
 	if (strlen($message) > FORUM_MAX_POSTSIZE_BYTES)
 		$errors[] = sprintf(__('Too long message', 'post'), forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
-	else if ($forum_config['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
+	else if (config()['p_message_all_caps'] == '0' && check_is_all_caps($message) && !$forum_page['is_admmod'])
 		$message = utf8_ucwords(utf8_strtolower($message));
 
 	// Validate BBCode syntax
-	if ($forum_config['p_message_bbcode'] == '1' || $forum_config['o_make_links'] == '1')
+	if (config()['p_message_bbcode'] == '1' || config()['o_make_links'] == '1')
 	{
 		if (!defined('FORUM_PARSER_LOADED'))
 			require FORUM_ROOT.'include/parser.php';
@@ -179,20 +180,20 @@ $forum_page['hidden_fields'] = array(
 
 // Setup help
 $forum_page['main_head_options'] = array();
-if ($forum_config['p_message_bbcode'] == '1')
+if (config()['p_message_bbcode'] == '1')
 	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.
 	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
-if ($forum_config['p_message_img_tag'] == '1')
+if (config()['p_message_img_tag'] == '1')
 	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.
 	sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
-if ($forum_config['o_smilies'] == '1')
+if (config()['o_smilies'] == '1')
 	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.
 	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+	array(config()['o_board_title'], forum_link($forum_url['index'])),
 	array($cur_post['forum_name'], forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
 	array($cur_post['subject'], forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
 	(($id == $cur_post['first_post_id']) ?

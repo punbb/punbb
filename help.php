@@ -22,7 +22,7 @@ if (!$section)
 	message(__('Bad request'));
 
 $forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['help'])),
+	array(config()['o_board_title'], forum_link($forum_url['help'])),
 	__('Help', 'help')
 );
 

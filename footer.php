@@ -9,8 +9,9 @@
 namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
-if (!defined('FORUM'))
+if (!defined('FORUM')) {
 	exit;
+}
 
 // TODO use event 'page_render'
 // ob_start();

@@ -166,7 +166,7 @@ $forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+	array(config()['o_board_title'], forum_link($forum_url['index'])),
 	array($cur_post['forum_name'], forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
 	array($cur_post['subject'], forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
 	(($cur_post['is_topic']) ? __('Delete topic', 'delete') : __('Delete post', 'delete'))

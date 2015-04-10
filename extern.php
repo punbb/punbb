@@ -90,12 +90,12 @@ $sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'posted';
 //
 function http_authenticate_user()
 {
-	global $forum_config, $forum_user;
+	global $forum_user;
 
 	if (!$forum_user['is_guest'])
 		return;
 
-	header('WWW-Authenticate: Basic realm="'.$forum_config['o_board_title'].' External Syndication"');
+	header('WWW-Authenticate: Basic realm="'.config()['o_board_title'].' External Syndication"');
 	header('HTTP/1.0 401 Unauthorized');
 }
 
@@ -105,8 +105,6 @@ function http_authenticate_user()
 //
 function output_rss($feed)
 {
-	global $forum_config;
-
 	// Send XML/no cache headers
 	header('Content-Type: text/xml; charset=utf-8');
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -122,8 +120,8 @@ function output_rss($feed)
 	echo "\t\t".'<description><![CDATA['.escape_cdata($feed['description']).']]></description>'."\n";
 	echo "\t\t".'<lastBuildDate>'.gmdate('r', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</lastBuildDate>'."\n";
 
-	if ($forum_config['o_show_version'] == '1')
-		echo "\t\t".'<generator>PunBB '.$forum_config['o_cur_version'].'</generator>'."\n";
+	if (config()['o_show_version'] == '1')
+		echo "\t\t".'<generator>PunBB '.config()['o_cur_version'].'</generator>'."\n";
 	else
 		echo "\t\t".'<generator>PunBB</generator>'."\n";
 
@@ -154,8 +152,6 @@ function output_rss($feed)
 //
 function output_atom($feed)
 {
-	global $forum_config;
-
 	// Send XML/no cache headers
 	header('Content-Type: text/xml; charset=utf-8');
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -169,8 +165,8 @@ function output_atom($feed)
 	echo "\t".'<link rel="self" href="'.forum_htmlencode(get_current_url()).'" />'."\n";
 	echo "\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</updated>'."\n";
 
-	if ($forum_config['o_show_version'] == '1')
-		echo "\t".'<generator version="'.$forum_config['o_cur_version'].'">PunBB</generator>'."\n";
+	if (config()['o_show_version'] == '1')
+		echo "\t".'<generator version="'.config()['o_cur_version'].'">PunBB</generator>'."\n";
 	else
 		echo "\t".'<generator>PunBB</generator>'."\n";
 
@@ -213,8 +209,6 @@ function output_atom($feed)
 //
 function output_xml($feed)
 {
-	global $forum_config;
-
 	// Send XML/no cache headers
 	header('Content-Type: application/xml; charset=utf-8');
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -323,12 +317,12 @@ if ($action == 'feed')
 		if (!defined('FORUM_PARSER_LOADED'))
 			require FORUM_ROOT.'include/parser.php';
 
-		if ($forum_config['o_censoring'] == '1')
+		if (config()['o_censoring'] == '1')
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 		// Setup the feed
 		$feed = array(
-			'title'		=>	$forum_config['o_board_title'] .
+			'title'		=>	config()['o_board_title'] .
 				__('Title separator') . $cur_topic['subject'],
 			'link'			=>	forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
 			'description'	=>	sprintf(__('RSS description topic'), $cur_topic['subject']),
@@ -355,7 +349,7 @@ if ($action == 'feed')
 
 		while ($cur_post = db()->fetch_assoc($result))
 		{
-			if ($forum_config['o_censoring'] == '1')
+			if (config()['o_censoring'] == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
 
 			$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
@@ -442,9 +436,9 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title'			=>	$forum_config['o_board_title'].$forum_name,
+			'title'			=>	config()['o_board_title'].$forum_name,
 			'link'			=>	forum_link($forum_url['index']),
-			'description'	=>	sprintf(__('RSS description'), $forum_config['o_board_title']),
+			'description'	=>	sprintf(__('RSS description'), config()['o_board_title']),
 			'items'			=>	array(),
 			'type'			=>	'topics'
 		);
@@ -479,7 +473,7 @@ if ($action == 'feed')
 		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 		while ($cur_topic = db()->fetch_assoc($result))
 		{
-			if ($forum_config['o_censoring'] == '1')
+			if (config()['o_censoring'] == '1')
 			{
 				$cur_topic['subject'] = censor_words($cur_topic['subject']);
 				$cur_topic['message'] = censor_words($cur_topic['message']);
