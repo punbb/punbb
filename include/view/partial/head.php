@@ -16,11 +16,11 @@ if (FORUM_PAGE == 'redirect') {
 
 	($hook = get_hook('fn_redirect_head')) ? eval($hook) : null;
 
-	echo implode("\n", $forum_head).$forum_loader->render_css();
+	echo implode("\n", $forum_head).assets()->render_css();
 }
 else if (FORUM_PAGE == 'maintenance') {
 	require FORUM_ROOT.'style/'.$forum_user['style'].'/'.$forum_user['style'].'.php';
-	echo $forum_loader->render_css();
+	echo assets()->render_css();
 }
 else {
 	// Is this a page that we want search index spiders to index?
@@ -83,5 +83,5 @@ else {
 	($hook = get_hook('hd_head')) ? eval($hook) : null;
 
 	// Render CSS from forum_loader
-	echo implode("\n", $forum_head).$forum_loader->render_css();
+	echo implode("\n", $forum_head).assets()->render_css();
 }

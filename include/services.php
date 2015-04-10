@@ -30,6 +30,10 @@ function config($serv = null) {
 	return service('config', $serv);
 }
 
+function assets($serv = null) {
+	return service('assets', $serv);
+}
+
 // configure
 
 db(function () {
@@ -61,16 +65,16 @@ config(function () {
 	}
 
 	// Load cached config
-	if (file_exists(FORUM_CACHE_DIR.'cache_config.php')) {
-		$_PUNBB['config'] = include FORUM_CACHE_DIR.'cache_config.php';
+	if (file_exists(FORUM_CACHE_DIR . 'cache_config.php')) {
+		$_PUNBB['config'] = include FORUM_CACHE_DIR . 'cache_config.php';
 	}
 
 	if (!defined('FORUM_CONFIG_LOADED')) {
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED')) {
-			require FORUM_ROOT.'include/cache.php';
+			require FORUM_ROOT . 'include/cache.php';
 		}
 		generate_config_cache();
-		require FORUM_CACHE_DIR.'cache_config.php';
+		$_PUNBB['config'] = include FORUM_CACHE_DIR . 'cache_config.php';
 	}
 
 	return $_PUNBB['config'];
@@ -82,4 +86,9 @@ flash(function () {
 		$_PUNBB['flash'] = new FlashMessenger();
 	}
 	return $_PUNBB['flash'];
+});
+
+assets(function () {
+	// Create the loader adapter object
+	return Loader::singleton();
 });

@@ -2955,7 +2955,7 @@ function send_forum_subscriptions($topic_info, $new_tid)
 // Used when the CSRF token from the request does not match the token stored in the database.
 function csrf_confirm_form()
 {
-	global $forum_url, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader;
+	global $forum_url, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates;
 
 	// If we've disabled the CSRF check for this page, we have nothing to do here.
 	if (defined('FORUM_DISABLE_CSRF_CONFIRM'))
@@ -3045,7 +3045,7 @@ function csrf_confirm_form()
 // Display a message
 function message($message, $link = '', $heading = '')
 {
-	global $forum_url, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates, $forum_loader;
+	global $forum_url, $forum_config, $base_url, $forum_start, $tpl_main, $forum_user, $forum_page, $forum_updates;
 
 	// FIX for render from function
 	global $forum_main_view;
@@ -3092,7 +3092,7 @@ function message($message, $link = '', $heading = '')
 // Display a message when board is in maintenance mode
 function maintenance_message()
 {
-	global $forum_config, $forum_user, $base_url, $forum_loader;
+	global $forum_config, $forum_user, $base_url;
 
 	$return = ($hook = get_hook('fn_maintenance_message_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -3122,7 +3122,7 @@ function maintenance_message()
 // Display $message and redirect user to $destination_url
 function redirect($destination_url, $message)
 {
-	global $forum_config, $forum_user, $base_url, $forum_loader;
+	global $forum_config, $forum_user, $base_url;
 
 	define('FORUM_PAGE', 'redirect');
 

@@ -524,7 +524,3 @@ class Loader
 		return $data;
 	}
 }
-
-
-// Create the loader adapter object
-$forum_loader = Loader::singleton();

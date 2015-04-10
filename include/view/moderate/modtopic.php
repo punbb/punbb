@@ -86,6 +86,6 @@ include view('moderate/posts_start');
 	$forum_id = $fid;
 
 	// Init JS helper for select-all
-	$forum_loader->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
+	assets()->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 ($hook = get_hook('mr_post_actions_end')) ? eval($hook) : null;

@@ -23,12 +23,12 @@ list($usec, $sec) = explode(' ', microtime());
 $forum_start = ((float)$usec + (float)$sec);
 
 // Load the functions script
-require FORUM_ROOT.'include/functions.php';
+require FORUM_ROOT . 'include/functions.php';
 
 require FORUM_ROOT . 'include/template.php';
 
 // Load the Loader class
-require FORUM_ROOT.'include/loader.php';
+require FORUM_ROOT . 'include/loader.php';
 
 // Load UTF-8 functions
 require FORUM_ROOT.'include/utf8/utf8.php';

@@ -158,6 +158,6 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 $forum_id = $fid;
 
 // Init JS helper for select-all
-$forum_loader->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
+assets()->add_js('PUNBB.common.addDOMReadyEvent(PUNBB.common.initToggleCheckboxes);', array('type' => 'inline'));
 
 ($hook = get_hook('mr_end')) ? eval($hook) : null;
