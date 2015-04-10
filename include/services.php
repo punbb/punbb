@@ -15,7 +15,7 @@ function service($name, $serv = null) {
 		$_PUNBB['service'][$name] = $serv;
 	}
 
-	return $_PUNBB['service'][$name];
+	return $_PUNBB['service'][$name]; // remove this?
 }
 
 function flash($serv = null) {
