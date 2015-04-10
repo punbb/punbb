@@ -67,7 +67,7 @@ namespace punbb;
 
 		++$forum_page['item_count'];
 
-		if ($forum_config['o_censoring'] == '1')
+		if (config()['o_censoring'] == '1')
 			$cur_set['subject'] = censor_words($cur_set['subject']);
 
 		if ($show_as == 'posts')
@@ -157,7 +157,7 @@ namespace punbb;
 			// Assemble the Topic heading
 
 			// Should we display the dot or not? :)
-			if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1' && $cur_set['has_posted'] == $forum_user['id'])
+			if (!$forum_user['is_guest'] && config()['o_show_dot'] == '1' && $cur_set['has_posted'] == $forum_user['id'])
 			{
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">'.
 					__('You posted indicator', 'forum') . '</span>';

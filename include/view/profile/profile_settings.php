@@ -197,22 +197,22 @@ namespace punbb;
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<legend><span><?= __('Image display', 'profile') ?></span></legend>
 					<div class="mf-box">
-<?php if ($forum_config['o_smilies'] == '1' || $forum_config['o_smilies_sig'] == '1'): ?>
+<?php if (config()['o_smilies'] == '1' || config()['o_smilies_sig'] == '1'): ?>
 						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_smilies]" value="1"<?php if ($user['show_smilies'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?= __('Show smilies', 'profile') ?></label>
 						</div>
-<?php endif; if ($forum_config['o_avatars'] == '1'): ?>
+<?php endif; if (config()['o_avatars'] == '1'): ?>
 						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_avatars]" value="1"<?php if ($user['show_avatars'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?= __('Show avatars', 'profile') ?></label>
 						</div>
-<?php endif; if ($forum_config['p_message_img_tag'] == '1'): ?>
+<?php endif; if (config()['p_message_img_tag'] == '1'): ?>
 						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_img]" value="1"<?php if ($user['show_img'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?= __('Show images', 'profile') ?></label>
 						</div>
-<?php endif; if ($forum_config['o_signatures'] == '1' && $forum_config['p_sig_img_tag'] == '1'): ?>
+<?php endif; if (config()['o_signatures'] == '1' && config()['p_sig_img_tag'] == '1'): ?>
 						<div class="mf-item">
 							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_img_sig]" value="1"<?php if ($user['show_img_sig'] == '1') echo ' checked="checked"' ?> /></span>
 							<label for="fld<?php echo $forum_page['fld_count'] ?>"><?= __('Show images sigs', 'profile') ?></label>
@@ -223,7 +223,7 @@ namespace punbb;
 <?php ($hook = get_hook('pf_change_details_settings_pre_image_display_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
 <?php ($hook = get_hook('pf_change_details_settings_pre_show_sigs_checkbox')) ? eval($hook) : null; ?>
-<?php if ($forum_config['o_signatures'] == '1'): ?>
+<?php if (config()['o_signatures'] == '1'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[show_sig]" value="1"<?php if ($user['show_sig'] == '1') echo ' checked="checked"' ?> /></span>
@@ -280,7 +280,7 @@ namespace punbb;
 <?php ($hook = get_hook('pf_change_details_settings_pre_email_settings_fieldset_end')) ? eval($hook) : null; ?>
 				</fieldset>
 <?php ($hook = get_hook('pf_change_details_settings_email_settings_fieldset_end')) ? eval($hook) : null; ?>
-<?php if ($forum_config['o_subscriptions'] == '1'): ?>
+<?php if (config()['o_subscriptions'] == '1'): ?>
 				<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<legend><span><?= __('Subscription settings', 'profile') ?></span></legend>
 					<div class="mf-box">

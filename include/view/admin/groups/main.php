@@ -22,7 +22,7 @@ namespace punbb;
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="base_group">
 <?php
 while ($cur_group = db()->fetch_assoc($result_groups))
-	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].($cur_group['g_id'] == $forum_config['o_default_user_group'] ? '" selected="selected">' : '">').forum_htmlencode($cur_group['g_title']).'</option>'."\n";
+	echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].($cur_group['g_id'] == config()['o_default_user_group'] ? '" selected="selected">' : '">').forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 ?>
 						</select></span>
 					</div>
@@ -61,7 +61,7 @@ while ($cur_group = db()->fetch_assoc($result_groups))
 
 while ($cur_group = db()->fetch_assoc($result_groups_default))
 {
-	if ($cur_group['g_id'] == $forum_config['o_default_user_group'])
+	if ($cur_group['g_id'] == config()['o_default_user_group'])
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 	else
 		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
@@ -104,7 +104,7 @@ while ($cur_group = db()->fetch_assoc($result))
 
 	if ($cur_group['g_id'] > FORUM_GUEST)
 	{
-		if ($cur_group['g_id'] != $forum_config['o_default_user_group'])
+		if ($cur_group['g_id'] != config()['o_default_user_group'])
 			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['admin_groups']).'?del_group='.$cur_group['g_id'].'">'.__('Remove group', 'admin_groups').'</a></span>';
 		else
 			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'>'.__('Cannot remove default', 'admin_groups').'</span>';
@@ -117,7 +117,7 @@ while ($cur_group = db()->fetch_assoc($result))
 ?>
 			<div class="ct-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box">
-					<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($cur_group['g_title']) ?> <?php if ($cur_group['g_id'] == $forum_config['o_default_user_group']) echo __('default', 'admin_groups'); ?></span></h3>
+					<h3 class="ct-legend hn"><span><?php echo forum_htmlencode($cur_group['g_title']) ?> <?php if ($cur_group['g_id'] == config()['o_default_user_group']) echo __('default', 'admin_groups'); ?></span></h3>
 					<p class="options"><?php echo implode(' ', $forum_page['group_options']) ?></p>
 				</div>
 			</div>

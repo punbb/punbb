@@ -22,9 +22,7 @@ class FlashMessenger
 
 	public function __construct()
 	{
-		global $forum_config;
-
-		$disabled = isset($forum_config['o_redirect_delay']) && intval($forum_config['o_redirect_delay'], 10) > 0;
+		$disabled = !empty(config()['o_redirect_delay']) && intval(config()['o_redirect_delay'], 10) > 0;
 
 		if (!$disabled)
 		{

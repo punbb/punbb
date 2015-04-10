@@ -264,7 +264,7 @@ function generate_censors_cache()
 //
 function generate_quickjump_cache($group_id = false)
 {
-	global $forum_url, $forum_config, $forum_user, $base_url;
+	global $forum_url, $forum_user, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -424,7 +424,7 @@ function clean_quickjump_cache($group_id = false)
 //
 function generate_hooks_cache()
 {
-	global $forum_config, $base_url;
+	global $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_hooks_cache_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -488,8 +488,6 @@ function generate_hooks_cache()
 //
 function generate_updates_cache()
 {
-	global $forum_config;
-
 	$return = ($hook = get_hook('ch_fn_generate_updates_cache_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -511,7 +509,7 @@ function generate_updates_cache()
 	}
 
 	// Contact the punbb.informer.com updates service
-	$result = get_remote_file('http://punbb.informer.com/update/?type=xml&version='.urlencode($forum_config['o_cur_version']).'&hotfixes='.implode(',', $hotfixes), 8);
+	$result = get_remote_file('http://punbb.informer.com/update/?type=xml&version='.urlencode(config()['o_cur_version']).'&hotfixes='.implode(',', $hotfixes), 8);
 
 	// Make sure we got everything we need
 	if ($result != null && strpos($result['content'], '</updates>') !== false)

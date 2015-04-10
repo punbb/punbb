@@ -103,7 +103,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 		if ($cur_forum['forum_desc'] != '')
 			$forum_page['item_subject']['desc'] = $cur_forum['forum_desc'];
 
-		if ($forum_config['o_show_moderators'] == '1' && $cur_forum['moderators'] != '')
+		if (config()['o_show_moderators'] == '1' && $cur_forum['moderators'] != '')
 		{
 			$forum_page['mods_array'] = unserialize($cur_forum['moderators']);
 			$forum_page['item_mods'] = array();

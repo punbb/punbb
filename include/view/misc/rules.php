@@ -10,7 +10,7 @@ namespace punbb;
 
 	<div class="main-content main-frm">
 		<div id="rules-content" class="ct-box user-box">
-			<?php echo $forum_config['o_rules_message']."\n" ?>
+			<?php echo config()['o_rules_message']."\n" ?>
 		</div>
 	</div>
 <?php

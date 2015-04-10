@@ -13,16 +13,16 @@ $forum_page['hidden_fields'] = array(
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 );
 
-if (!$forum_user['is_guest'] && $forum_config['o_subscriptions'] == '1' && ($forum_user['auto_notify'] == '1' || $cur_topic['is_subscribed']))
+if (!$forum_user['is_guest'] && config()['o_subscriptions'] == '1' && ($forum_user['auto_notify'] == '1' || $cur_topic['is_subscribed']))
 	$forum_page['hidden_fields']['subscribe'] = '<input type="hidden" name="subscribe" value="1" />';
 
 // Setup help
 $forum_page['main_head_options'] = array();
-if ($forum_config['p_message_bbcode'] == '1')
+if (config()['p_message_bbcode'] == '1')
 	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
-if ($forum_config['p_message_img_tag'] == '1')
+if (config()['p_message_img_tag'] == '1')
 	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
-if ($forum_config['o_smilies'] == '1')
+if (config()['o_smilies'] == '1')
 	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 ($hook = get_hook('vt_quickpost_pre_display')) ? eval($hook) : null;

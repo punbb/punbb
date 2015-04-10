@@ -34,7 +34,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && $forum_user['g_id'
 // Generate check for updates text block
 if ($forum_user['g_id'] == FORUM_ADMIN)
 {
-	if ($forum_config['o_check_for_updates'] == '1')
+	if (config()['o_check_for_updates'] == '1')
 		$punbb_updates = __('Check for updates enabled', 'admin_index');
 	else
 	{
@@ -54,7 +54,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 			$hotfixes[] = urlencode($row['id']);
 		}
 
-		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode($forum_config['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.
+		$punbb_updates = '<a href="http://punbb.informer.com/update/?version='.urlencode(config()['o_cur_version']).'&amp;hotfixes='.implode(',', $hotfixes).'">'.
 			__('Check for updates manual', 'admin_index') . '</a>';
 	}
 }
@@ -133,7 +133,7 @@ else
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+	array(config()['o_board_title'], forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
 if ($forum_user['g_id'] == FORUM_ADMIN)

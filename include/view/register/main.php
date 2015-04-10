@@ -5,7 +5,7 @@ namespace punbb;
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo sprintf(__('Register at', 'profile'), $forum_config['o_board_title']) ?></span></h2>
+		<h2 class="hn"><span><?php echo sprintf(__('Register at', 'profile'), config()['o_board_title']) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 <?php
@@ -29,8 +29,8 @@ namespace punbb;
 			<div class="hidden">
 				<input type="hidden" name="form_sent" value="1" />
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
-				<input type="hidden" name="timezone" id="register_timezone" value="<?php echo forum_htmlencode($forum_config['o_default_timezone']) ?>" />
-				<input type="hidden" name="dst" id="register_dst" value="<?php echo forum_htmlencode($forum_config['o_default_dst']) ?>" />
+				<input type="hidden" name="timezone" id="register_timezone" value="<?php echo forum_htmlencode(config()['o_default_timezone']) ?>" />
+				<input type="hidden" name="dst" id="register_dst" value="<?php echo forum_htmlencode(config()['o_default_dst']) ?>" />
 			</div>
 <?php ($hook = get_hook('rg_register_pre_group')) ? eval($hook) : null; ?>
 			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -42,22 +42,22 @@ namespace punbb;
 					</div>
 				</div>
 <?php ($hook = get_hook('rg_register_pre_username')) ? eval($hook) : null; ?>
-				<div class="sf-set set<?php echo ++$forum_page['item_count']; if ($forum_config['o_regs_verify'] == '0') echo ' prepend-top'; ?>">
+				<div class="sf-set set<?php echo ++$forum_page['item_count']; if (config()['o_regs_verify'] == '0') echo ' prepend-top'; ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Username', 'profile') ?></span> <small><?= __('Username help', 'profile') ?></small></label><br />
 						<span class="fld-input"><input type="text" data-suggest-role="username" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php echo(isset($_POST['req_username']) ? forum_htmlencode($_POST['req_username']) : '') ?>" size="35" maxlength="25" required spellcheck="false" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('rg_register_pre_password')) ? eval($hook) : null; ?>
-<?php if ($forum_config['o_regs_verify'] == '0'): ?>
+<?php if (config()['o_regs_verify'] == '0'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Password', 'profile') ?></span> <small><?= __('Password help', 'profile') ?></small></label><br />
-						<span class="fld-input"><input type="<?php echo($forum_config['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php if (isset($_POST['req_password1'])) echo forum_htmlencode($_POST['req_password1']); ?>" required autocomplete="off" /></span>
+						<span class="fld-input"><input type="<?php echo(config()['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php if (isset($_POST['req_password1'])) echo forum_htmlencode($_POST['req_password1']); ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
 	<?php ($hook = get_hook('rg_register_pre_confirm_password')) ? eval($hook) : null; ?>
-	<?php if ($forum_config['o_mask_passwords'] == '1'): ?>
+	<?php if (config()['o_mask_passwords'] == '1'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Confirm password', 'profile') ?></span> <small><?= __('Confirm password help', 'profile') ?></small></label><br />
@@ -91,7 +91,7 @@ namespace punbb;
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="language">
 <?php
 
-			$select_lang = isset($_POST['language']) ? $_POST['language'] : $forum_config['o_default_lang'];
+			$select_lang = isset($_POST['language']) ? $_POST['language'] : config()['o_default_lang'];
 			foreach ($languages as $lang)
 			{
 				if ($select_lang == $lang)

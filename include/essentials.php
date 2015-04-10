@@ -93,7 +93,7 @@ if (!isset($base_url))
 }
 
 // Verify that we are running the proper database schema revision
-if (defined('PUN') || !isset($forum_config['o_database_revision']) || $forum_config['o_database_revision'] < FORUM_DB_REVISION || version_compare($forum_config['o_cur_version'], FORUM_VERSION, '<'))
+if (defined('PUN') || !isset(config()['o_database_revision']) || config()['o_database_revision'] < FORUM_DB_REVISION || version_compare(config()['o_cur_version'], FORUM_VERSION, '<'))
 	error('Your PunBB database is out-of-date and must be upgraded in order to continue.<br />Please run <a href="'.$base_url.'/admin/db_update.php">db_update.php</a> in order to complete the upgrade process.');
 
 

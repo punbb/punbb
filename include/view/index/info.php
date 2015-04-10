@@ -33,7 +33,7 @@ include view('index/stat');
 ($hook = get_hook('in_stats_end')) ? eval($hook) : null;
 ($hook = get_hook('in_users_online_start')) ? eval($hook) : null;
 
-if ($forum_config['o_users_online'] == '1')
+if (config()['o_users_online'] == '1')
 {
 	// Fetch users online info and generate strings for output
 	$query = array(

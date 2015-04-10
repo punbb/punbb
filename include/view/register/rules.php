@@ -7,14 +7,14 @@ namespace punbb;
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?= sprintf(__('Register at', 'profile'), $forum_config['o_board_title']) ?></span></h2>
+		<h2 class="hn"><span><?= sprintf(__('Register at', 'profile'), config()['o_board_title']) ?></span></h2>
 	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?= __('Reg rules head', 'profile') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div id="rules-content" class="ct-box user-box">
-			<?php echo $forum_config['o_rules_message'] ?>
+			<?php echo config()['o_rules_message'] ?>
 		</div>
 		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['register']) ?>">
 <?php ($hook = get_hook('rg_rules_pre_group')) ? eval($hook) : null; ?>

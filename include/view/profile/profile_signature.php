@@ -38,7 +38,7 @@ namespace punbb;
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Compose signature', 'profile') ?></span>
-						<small><?php printf(__('Sig max size', 'profile'), forum_number_format($forum_config['p_sig_length']), forum_number_format($forum_config['p_sig_lines'])) ?></small></label>
+						<small><?php printf(__('Sig max size', 'profile'), forum_number_format(config()['p_sig_length']), forum_number_format(config()['p_sig_lines'])) ?></small></label>
 						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="signature" rows="4" cols="65"><?php echo(isset($_POST['signature']) ? forum_htmlencode($_POST['signature']) : forum_htmlencode($user['signature'])) ?></textarea></span></div>
 					</div>
 				</div>

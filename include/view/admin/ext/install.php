@@ -40,7 +40,7 @@ namespace punbb;
 			$form_warnings[] = '<li>'.forum_htmlencode($cur_note['content']).'</li>';
 	}
 
-	if (version_compare(clean_version($forum_config['o_cur_version']), clean_version($ext_data['extension']['maxtestedon']), '>'))
+	if (version_compare(clean_version(config()['o_cur_version']), clean_version($ext_data['extension']['maxtestedon']), '>'))
 		$form_warnings[] = '<li>'.__('Maxtestedon warning', 'admin_ext').'</li>';
 
 	if (!empty($form_warnings))

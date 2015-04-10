@@ -5,7 +5,7 @@ namespace punbb;
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo sprintf(__('Login info', 'login'), $forum_config['o_board_title']) ?></span></h2>
+		<h2 class="hn"><span><?php echo sprintf(__('Login info', 'login'), config()['o_board_title']) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="content-head">

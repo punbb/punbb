@@ -111,20 +111,20 @@ $query = array(
 
 $result = db()->query_build($query);
 while ($cur_config_item = db()->fetch_row($result))
-	$forum_config[$cur_config_item[0]] = $cur_config_item[1];
+	config()[$cur_config_item[0]] = $cur_config_item[1];
 
 // Check the database revision and the current version
-if (isset($forum_config['o_database_revision']) && $forum_config['o_database_revision'] >= UPDATE_TO_DB_REVISION && version_compare($forum_config['o_cur_version'], UPDATE_TO, '>='))
+if (!empty(config()['o_database_revision']) && config()['o_database_revision'] >= UPDATE_TO_DB_REVISION && version_compare(config()['o_cur_version'], UPDATE_TO, '>='))
 	error('Your database is already as up-to-date as this script can make it.');
 
 // If $base_url isn't set, use o_base_url from config
 if (!isset($base_url))
-	$base_url = $forum_config['o_base_url'];
+	$base_url = config()['o_base_url'];
 
 // There's no $forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
-if (file_exists(FORUM_ROOT.'style/'.$forum_config['o_default_style'].'/'.$forum_config['o_default_style'].'.php'))
-	$forum_user['style'] = $forum_config['o_default_style'];
+if (file_exists(FORUM_ROOT.'style/'.config()['o_default_style'].'/'.config()['o_default_style'].'.php'))
+	$forum_user['style'] = config()['o_default_style'];
 else
 {
 	$forum_user['style'] = 'Oxygen';
@@ -140,7 +140,7 @@ else
 
 // Make sure the default language exists
 // We default to English if the default language is invalid (a 1.2 to 1.3 upgrade most likely)
-if (!file_exists(FORUM_ROOT.'lang/'.$forum_config['o_default_lang'].'/common.php'))
+if (!file_exists(FORUM_ROOT.'lang/'.config()['o_default_lang'].'/common.php'))
 {
 	$query = array(
 		'UPDATE'	=> 'config',
@@ -367,8 +367,6 @@ function convert_table_utf8($table)
 // Move avatars to DB
 function convert_avatars()
 {
-	global $forum_config;
-
 	$avatar_dir = FORUM_ROOT.'img/avatars/';
 	if (!is_dir($avatar_dir))
 	{
@@ -416,7 +414,8 @@ function convert_avatars()
 
 				// Now check the width/height
 				list($width, $height, $type,) = @/**/getimagesize($avatar_file);
-				if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
+				if (empty($width) || empty($height) ||
+						$width > config()['o_avatars_width'] || $height > config()['o_avatars_height'])
 				{
 					@/**/unlink($avatar_file);
 				}
@@ -867,65 +866,66 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		$new_config = array();
 
 		// Add quote depth option
-		if (!array_key_exists('o_quote_depth', $forum_config))
+		if (!array_key_exists('o_quote_depth', config()))
 			$new_config[] = '\'o_quote_depth\', \'3\'';
 
 		// Add database revision number
-		if (!array_key_exists('o_database_revision', $forum_config))
+		if (!array_key_exists('o_database_revision', config()))
 			$new_config[] = '\'o_database_revision\', \'0\'';
 
 		// Add default email setting option
-		if (!array_key_exists('o_default_email_setting', $forum_config))
+		if (!array_key_exists('o_default_email_setting', config()))
 			$new_config[] = '\'o_default_email_setting\', \'1\'';
 
 		// Make sure we have o_additional_navlinks (was added in 1.2.1)
-		if (!array_key_exists('o_additional_navlinks', $forum_config))
+		if (!array_key_exists('o_additional_navlinks', config()))
 			$new_config[] = '\'o_additional_navlinks\', \'\'';
 
 		// Insert new config options o_sef
-		if (!array_key_exists('o_sef', $forum_config))
+		if (!array_key_exists('o_sef', config()))
 			$new_config[] = '\'o_sef\', \'Default\'';
 
 		// Insert new config option o_topic_views
-		if (!array_key_exists('o_topic_views', $forum_config))
+		if (!array_key_exists('o_topic_views', config()))
 			$new_config[] = '\'o_topic_views\', \'1\'';
 
 		// Insert new config option o_signatures
-		if (!array_key_exists('o_signatures', $forum_config))
+		if (!array_key_exists('o_signatures', config()))
 			$new_config[] = '\'o_signatures\', \'1\'';
 
 		// Insert new config option o_smtp_ssl
-		if (!array_key_exists('o_smtp_ssl', $forum_config))
+		if (!array_key_exists('o_smtp_ssl', config()))
 			$new_config[] = '\'o_smtp_ssl\', \'0\'';
 
 		// Insert new config option o_check_for_updates
-		if (!array_key_exists('o_check_for_updates', $forum_config))
+		if (!array_key_exists('o_check_for_updates', config()))
 		{
 			$check_for_updates = (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))) ? 1 : 0;
 			$new_config[] = '\'o_check_for_updates\', \''.$check_for_updates.'\'';
 		}
 
 		// Insert new config option o_check_for_version
-		if (!array_key_exists('o_check_for_versions', $forum_config))
+		if (!array_key_exists('o_check_for_versions', config()))
 		{
-			$o_check_for_versions = array_key_exists('o_check_for_updates', $forum_config) ? $forum_config['o_check_for_updates'] : $check_for_updates;
+			$o_check_for_versions = array_key_exists('o_check_for_updates', config()) ?
+				config()['o_check_for_updates'] : $check_for_updates;
 			$new_config[] = '\'o_check_for_versions\', \''.$o_check_for_versions.'\'';
 		}
 
 		// Insert new config option o_announcement_heading
-		if (!array_key_exists('o_announcement_heading', $forum_config))
+		if (!array_key_exists('o_announcement_heading', config()))
 			$new_config[] = '\'o_announcement_heading\', \'\'';
 
 		// Insert new config option o_default_dst
-		if (!array_key_exists('o_default_dst', $forum_config))
+		if (!array_key_exists('o_default_dst', config()))
 			$new_config[] = '\'o_default_dst\', \'0\'';
 
 		// Insert new config option o_show_moderators
-		if (!array_key_exists('o_show_moderators', $forum_config))
+		if (!array_key_exists('o_show_moderators', config()))
 			$new_config[] = '\'o_show_moderators\', \'0\'';
 
 		// Insert new config option o_show_moderators
-		if (!array_key_exists('o_mask_passwords', $forum_config))
+		if (!array_key_exists('o_mask_passwords', config()))
 			$new_config[] = '\'o_mask_passwords\', \'1\'';
 
 
@@ -942,7 +942,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		unset($new_config);
 
 		// Server timezone is now simply the default timezone
-		if (!array_key_exists('o_default_timezone', $forum_config))
+		if (!array_key_exists('o_default_timezone', config()))
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -954,7 +954,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Increase visit timeout to 30 minutes (only if it hasn't been changed from the default)
-		if ($forum_config['o_timeout_visit'] == '600')
+		if (config()['o_timeout_visit'] == '600')
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -966,7 +966,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Update redirect timeout
-		if (version_compare($cur_version, '1.4', '<') && $forum_config['o_redirect_delay'] == '1')
+		if (version_compare($cur_version, '1.4', '<') && config()['o_redirect_delay'] == '1')
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -1099,7 +1099,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Replace obsolete p_mod_edit_users config setting with new per-group permission
-		if (array_key_exists('p_mod_edit_users', $forum_config))
+		if (array_key_exists('p_mod_edit_users', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
@@ -1112,7 +1112,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_edit_users = '.$forum_config['p_mod_edit_users'],
+				'SET'		=> 'g_mod_edit_users = '.config()['p_mod_edit_users'],
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1120,7 +1120,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Replace obsolete p_mod_rename_users config setting with new per-group permission
-		if (array_key_exists('p_mod_rename_users', $forum_config))
+		if (array_key_exists('p_mod_rename_users', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
@@ -1133,7 +1133,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_rename_users = '.$forum_config['p_mod_rename_users'],
+				'SET'		=> 'g_mod_rename_users = '.config()['p_mod_rename_users'],
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1141,7 +1141,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Replace obsolete p_mod_change_passwords config setting with new per-group permission
-		if (array_key_exists('p_mod_change_passwords', $forum_config))
+		if (array_key_exists('p_mod_change_passwords', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
@@ -1154,7 +1154,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_change_passwords = '.$forum_config['p_mod_change_passwords'],
+				'SET'		=> 'g_mod_change_passwords = '.config()['p_mod_change_passwords'],
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1162,7 +1162,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Replace obsolete p_mod_ban_users config setting with new per-group permission
-		if (array_key_exists('p_mod_ban_users', $forum_config))
+		if (array_key_exists('p_mod_ban_users', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
@@ -1175,7 +1175,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_ban_users = '.$forum_config['p_mod_ban_users'],
+				'SET'		=> 'g_mod_ban_users = '.config()['p_mod_ban_users'],
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1391,7 +1391,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 		// Convert config
 		echo 'Converting configuration…'."<br />\n";
-		foreach ($forum_config as $conf_name => $conf_value)
+		foreach (config() as $conf_name => $conf_value)
 		{
 			if (convert_to_utf8($conf_value, $old_charset))
 			{
@@ -2132,7 +2132,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		forum_clear_cache();
 
 		// Drop Base URL row from database config
-		if (array_key_exists('o_base_url', $forum_config))
+		if (array_key_exists('o_base_url', config()))
 		{
 			// Generate new config file
 			$new_config = "<?php\n\n\$db_type = '$db_type';\n\$db_host = '$db_host';\n\$db_name = '".addslashes($db_name)."';\n\$db_username = '".addslashes($db_username)."';\n\$db_password = '".addslashes($db_password)."';\n\$db_prefix = '".addslashes($db_prefix)."';\n\$p_connect = ".($p_connect ? 'true' : 'false').";\n\n\$base_url = '$base_url';\n\n\$cookie_name = '$cookie_name';\n\$cookie_domain = '$cookie_domain';\n\$cookie_path = '$cookie_path';\n\$cookie_secure = $cookie_secure;\n\ndefine('FORUM', 1);";

@@ -39,8 +39,6 @@ if (empty($cookie_name)) {
 	$cookie_name = 'forum_cookie';
 }
 
-$forum_config = config();
-
 // Enable output buffering
 if (!defined('FORUM_DISABLE_BUFFERING'))
 {
@@ -48,15 +46,15 @@ if (!defined('FORUM_DISABLE_BUFFERING'))
 	$_SERVER['HTTP_ACCEPT_ENCODING'] = isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : '';
 
 	// Should we use gzip output compression?
-	if ($forum_config['o_gzip'] && extension_loaded('zlib') && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false || strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate') !== false))
+	if (config()['o_gzip'] && extension_loaded('zlib') && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false || strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate') !== false))
 		ob_start('ob_gzhandler');
 	else
 		ob_start();
 }
 
 // Define standard date/time formats
-$forum_time_formats = array($forum_config['o_time_format'], 'H:i:s', 'H:i', 'g:i:s a', 'g:i a');
-$forum_date_formats = array($forum_config['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y');
+$forum_time_formats = array(config()['o_time_format'], 'H:i:s', 'H:i', 'g:i:s a', 'g:i a');
+$forum_date_formats = array(config()['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y');
 
 // Create forum_page array
 $forum_page = array();
@@ -72,8 +70,8 @@ if (!file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php')) {
 
 
 // Setup the URL rewriting scheme
-if ($forum_config['o_sef'] != 'Default' && file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php'))
-	require FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/forum_urls.php';
+if (config()['o_sef'] != 'Default' && file_exists(FORUM_ROOT.'include/url/'.config()['o_sef'].'/forum_urls.php'))
+	require FORUM_ROOT.'include/url/'.config()['o_sef'].'/forum_urls.php';
 else
 	require FORUM_ROOT.'include/url/Default/forum_urls.php';
 
@@ -81,7 +79,7 @@ else
 ($hook = get_hook('co_modify_url_scheme')) ? eval($hook) : null;
 
 // Check if we are to display a maintenance message
-if ($forum_config['o_maintenance'] && $forum_user['g_id'] > FORUM_ADMIN && !defined('FORUM_TURN_OFF_MAINT'))
+if (config()['o_maintenance'] && $forum_user['g_id'] > FORUM_ADMIN && !defined('FORUM_TURN_OFF_MAINT'))
 	maintenance_message();
 
 // Load cached updates info
@@ -91,7 +89,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 		include FORUM_CACHE_DIR.'cache_updates.php';
 
 	// Regenerate cache only if automatic updates are enabled and if the cache is more than 12 hours old
-	if ($forum_config['o_check_for_updates'] == '1' && (!defined('FORUM_UPDATES_LOADED') || $forum_updates['cached'] < (time() - 43200)))
+	if (config()['o_check_for_updates'] == '1' && (!defined('FORUM_UPDATES_LOADED') || $forum_updates['cached'] < (time() - 43200)))
 	{
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/cache.php';

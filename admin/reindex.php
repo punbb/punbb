@@ -70,7 +70,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 		__('Rebuilding index title', 'admin_reindex')
@@ -183,7 +183,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+	array(config()['o_board_title'], forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 	array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 	array(__('Rebuild index', 'admin_common'), forum_link($forum_url['admin_reindex']))

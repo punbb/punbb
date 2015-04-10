@@ -54,14 +54,15 @@ namespace punbb;
 			<div class="content-head">
 				<h3 class="hn"><span><?php echo __('Group perms head', 'admin_groups') ?></span></h3>
 			</div>
-<?php if ($mode == 'edit' && $forum_config['o_default_user_group'] == $group['g_id']): ?>
+<?php if ($mode == 'edit' && config()['o_default_user_group'] == $group['g_id']): ?>
 				<div class="ct-box">
 					<p class="warn"><?php echo __('Moderator default group', 'admin_groups') ?></p>
 				</div>
 <?php endif; ($hook = get_hook('agr_add_edit_group_pre_permissions_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 					<legend class="group-legend"><strong><?php echo __('Permissions', 'admin_groups') ?></strong></legend>
-<?php ($hook = get_hook('agr_add_edit_group_pre_mod_permissions_fieldset')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST): if ($mode != 'edit' || $forum_config['o_default_user_group'] != $group['g_id']): ?>
+<?php ($hook = get_hook('agr_add_edit_group_pre_mod_permissions_fieldset')) ? eval($hook) : null; if ($group['g_id'] != FORUM_GUEST):
+	if ($mode != 'edit' || config()['o_default_user_group'] != $group['g_id']): ?>
 					<fieldset class="mf-set set<?php echo ++$forum_page['item_count'] ?>">
 						<legend><span><?php echo __('Mod permissions', 'admin_groups') ?></span></legend>
 						<div class="mf-box">

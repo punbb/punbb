@@ -4,7 +4,7 @@ namespace punbb;
 $admod_links = array();
 
 // We only need to run this query for mods/admins if there will actually be reports to look at
-if ($forum_user['is_admmod'] && $forum_config['o_report_method'] != 1)
+if ($forum_user['is_admmod'] && config()['o_report_method'] != 1)
 {
 	$query = array(
 		'SELECT'	=> 'COUNT(r.id)',
@@ -25,11 +25,11 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 	$alert_items = array();
 
 	// Warn the admin that maintenance mode is enabled
-	if ($forum_config['o_maintenance'] == '1')
+	if (config()['o_maintenance'] == '1')
 		$alert_items['maintenance'] = '<p id="maint-alert" class="warn">'.
 		__('Maintenance alert') . '</p>';
 
-	if ($forum_config['o_check_for_updates'] == '1')
+	if (config()['o_check_for_updates'] == '1')
 	{
 		if ($forum_updates['fail'])
 			$alert_items['update_fail'] = '<p><strong>'.
@@ -47,7 +47,7 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 
 	// Warn the admin that their version of the database is newer than the version supported by the code
 	// NOTE: Why is it done on any page, but shown in admin section only.
-	if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
+	if (config()['o_database_revision'] > FORUM_DB_REVISION)
 		$alert_items['newer_database'] = '<p><strong>'.
 		__('Database mismatch') . '</strong> ' . __('Database mismatch alert') . '</p>';
 

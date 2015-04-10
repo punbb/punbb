@@ -205,7 +205,7 @@ if (isset($_POST['form_sent']))
 	foreach ($form as $key => $input)
 	{
 		// Only update permission values that have changed
-		if (array_key_exists('p_'.$key, $forum_config) && $forum_config['p_'.$key] != $input)
+		if (array_key_exists('p_'.$key, config()) && config()['p_'.$key] != $input)
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -218,7 +218,7 @@ if (isset($_POST['form_sent']))
 		}
 
 		// Only update option values that have changed
-		if (array_key_exists('o_'.$key, $forum_config) && $forum_config['o_'.$key] != $input)
+		if (array_key_exists('o_'.$key, config()) && config()['o_'.$key] != $input)
 		{
 			if ($input != '' || is_int($input))
 				$value = '\''.db()->escape($input).'\'';
@@ -244,9 +244,9 @@ if (isset($_POST['form_sent']))
 
 
 	// If changed sef - remove quick-jump cache
-	if (!empty($forum_config['o_sef']) && !empty($form['sef']))
+	if (!empty(config()['o_sef']) && !empty($form['sef']))
 	{
-		if ($forum_config['o_sef'] != $form['sef'])
+		if (config()['o_sef'] != $form['sef'])
 		{
 			clean_quickjump_cache();
 		}
@@ -268,7 +268,7 @@ if (!$section || $section == 'setup')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
 		array(__('Setup', 'admin_common'), forum_link($forum_url['admin_settings_setup']))
@@ -289,7 +289,7 @@ else if ($section == 'features')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
 		array(__('Features', 'admin_common'), forum_link($forum_url['admin_settings_features']))
@@ -309,7 +309,7 @@ else if ($section == 'announcements')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
 		array(__('Announcements', 'admin_common'), forum_link($forum_url['admin_settings_announcements']))
@@ -329,7 +329,7 @@ else if ($section == 'registration')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
 		array(__('Registration', 'admin_common'), forum_link($forum_url['admin_settings_registration']))
@@ -350,7 +350,7 @@ else if ($section == 'maintenance')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 		array(__('Maintenance mode', 'admin_common'), forum_link($forum_url['admin_settings_maintenance']))
@@ -371,7 +371,7 @@ else if ($section == 'email')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array(config()['o_board_title'], forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup'])),
 		array(__('E-mail', 'admin_common'), forum_link($forum_url['admin_settings_email']))
