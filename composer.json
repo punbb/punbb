@@ -4,6 +4,14 @@
 			"include"
 		],
 		"files": [
+			"include/constants.php",
+			"include/functions.php",
+
+			"include/utf8/utf8.php",
+			"include/utf8/ucwords.php",
+			"include/utf8/trim.php",
+
+			"include/template.php",
 			"include/services.php"
 		]
 	}

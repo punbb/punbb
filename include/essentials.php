@@ -16,21 +16,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQ
 	define('FORUM_REQUEST_AJAX', 1);
 }
 
-require FORUM_ROOT.'include/constants.php';
-
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
 $forum_start = ((float)$usec + (float)$sec);
-
-// Load the functions script
-require FORUM_ROOT . 'include/functions.php';
-
-require FORUM_ROOT . 'include/template.php';
-
-// Load UTF-8 functions
-require FORUM_ROOT.'include/utf8/utf8.php';
-require FORUM_ROOT.'include/utf8/ucwords.php';
-require FORUM_ROOT.'include/utf8/trim.php';
 
 // Reverse the effect of register_globals
 forum_unregister_globals();
@@ -39,8 +27,9 @@ forum_unregister_globals();
 ignore_user_abort(true);
 
 // Attempt to load the configuration file config.php
-if (file_exists(FORUM_ROOT.'config.php'))
+if (file_exists(FORUM_ROOT.'config.php')) {
 	include FORUM_ROOT.'config.php';
+}
 
 // If we have the 1.2 constant defined, define the proper 1.3 constant so we don't get
 // an incorrect "need to install" message
@@ -121,7 +110,7 @@ if (!defined('FORUM_HOOKS_LOADED'))
 	require FORUM_CACHE_DIR.'cache_hooks.php';
 }
 
-require FORUM_ROOT . 'include/new_hooks.php';
+init_new_style_hooks();
 
 // A good place to add common functions for your extension
 ($hook = get_hook('es_essentials')) ? eval($hook) : null;

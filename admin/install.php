@@ -31,15 +31,6 @@ error_reporting(E_ALL);
 // Turn off PHP time limit
 @set_time_limit(0);
 
-require FORUM_ROOT.'include/constants.php';
-// We need some stuff from functions.php
-require FORUM_ROOT.'include/functions.php';
-
-// Load UTF-8 functions
-require FORUM_ROOT.'include/utf8/utf8.php';
-require FORUM_ROOT.'include/utf8/ucwords.php';
-require FORUM_ROOT.'include/utf8/trim.php';
-
 // Strip out "bad" UTF-8 characters
 forum_remove_bad_characters();
 

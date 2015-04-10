@@ -22,7 +22,6 @@
 * @see http://sourceforge.net/projects/phputf8
 * @package utf8
 */
-namespace punbb;
 
 /**
 * Put the current directory in this constant

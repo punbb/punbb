@@ -66,14 +66,6 @@ if (empty($cookie_name))
 if (!defined('FORUM_CACHE_DIR'))
 	define('FORUM_CACHE_DIR', FORUM_ROOT.'cache/');
 
-// Load the functions script
-require FORUM_ROOT.'include/functions.php';
-
-// Load UTF-8 functions
-require FORUM_ROOT.'include/utf8/utf8.php';
-require FORUM_ROOT.'include/utf8/ucwords.php';
-require FORUM_ROOT.'include/utf8/trim.php';
-
 // Strip out "bad" UTF-8 characters
 forum_remove_bad_characters();
 
