@@ -84,9 +84,6 @@ if (!defined('FORUM_IGNORE_REQUEST_URI'))
 // Instruct DB abstraction layer that we don't want it to "SET NAMES". If we need to, we'll do it ourselves below.
 define('FORUM_NO_SET_NAMES', 1);
 
-// Load DB abstraction layer and try to connect
-require FORUM_ROOT.'include/dblayer/common_db.php';
-
 // Start a transaction
 db()->start_transaction();
 

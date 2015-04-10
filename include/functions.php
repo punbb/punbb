@@ -3333,32 +3333,3 @@ function __($text, $domain = 'common', $language = null) {
 
 	return $_PUNBB['lang'][$domain][$text];
 }
-
-function service($name, $serv = null) {
-	global $_PUNBB;
-
-	// get service
-	if ($serv === null) {
-		$v = $_PUNBB['service'][$name];
-		return is_callable($v)? call_user_func($v) : $v;
-	}
-
-	// set service
-	if (!isset($_PUNBB['service'][$name])) {
-		$_PUNBB['service'][$name] = $serv;
-	}
-
-	return $_PUNBB['service'][$name];
-}
-
-function flash($serv = null) {
-	return service('flash', $serv);
-}
-
-function db($serv = null) {
-	return service('db', $serv);
-}
-
-function config($serv = null) {
-	return service('config', $serv);
-}

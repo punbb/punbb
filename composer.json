@@ -2,6 +2,9 @@
 	"autoload": {
 		"classmap": [
 			"include"
+		],
+		"files": [
+			"include/services.php"
 		]
 	}
 }

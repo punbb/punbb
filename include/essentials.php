@@ -86,46 +86,12 @@ setlocale(LC_CTYPE, 'C');
 if (!defined('FORUM_CACHE_DIR'))
 	define('FORUM_CACHE_DIR', FORUM_ROOT.'cache/');
 
-// Load DB abstraction layer and connect
-require FORUM_ROOT.'include/dblayer/common_db.php';
-
 // Start a transaction
 db()->start_transaction();
-
-config(function () {
-	global $_PUNBB;
-
-	if (isset($_PUNBB['config'])) {
-		return $_PUNBB['config'];
-	}
-
-	// Load cached config
-	if (file_exists(FORUM_CACHE_DIR.'cache_config.php')) {
-		$_PUNBB['config'] = include FORUM_CACHE_DIR.'cache_config.php';
-	}
-
-	if (!defined('FORUM_CONFIG_LOADED')) {
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED')) {
-			require FORUM_ROOT.'include/cache.php';
-		}
-		generate_config_cache();
-		require FORUM_CACHE_DIR.'cache_config.php';
-	}
-
-	return $_PUNBB['config'];
-});
 
 // TODO fix
 global $forum_config;
 $forum_config = config();
-
-flash(function () {
-	global $_PUNBB;
-	if (!isset($_PUNBB['flash'])) {
-		$_PUNBB['flash'] = new FlashMessenger();
-	}
-	return $_PUNBB['flash'];
-});
 
 // If the request_uri is invalid try fix it
 forum_fix_request_uri();
