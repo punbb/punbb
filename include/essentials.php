@@ -27,9 +27,6 @@ require FORUM_ROOT . 'include/functions.php';
 
 require FORUM_ROOT . 'include/template.php';
 
-// Load the Loader class
-require FORUM_ROOT . 'include/loader.php';
-
 // Load UTF-8 functions
 require FORUM_ROOT.'include/utf8/utf8.php';
 require FORUM_ROOT.'include/utf8/ucwords.php';
