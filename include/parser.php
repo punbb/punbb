@@ -40,7 +40,8 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 			$errors[] = __('Signature quote/code/list', 'profile');
 	}
 
-	if (config()['p_sig_bbcode'] == '1' && $is_signature || config()['p_message_bbcode'] == '1' && !$is_signature)
+	if (config()->p_sig_bbcode == '1' && $is_signature ||
+				config()->p_message_bbcode == '1' && !$is_signature)
 	{
 		// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
 		if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
@@ -56,7 +57,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 
 		$text = str_replace('*'."\0".']', '*]', $text);
 
-		if (config()['o_make_links'] == '1')
+		if (config()->o_make_links == '1')
 		{
 			$text = do_clickable($text, defined('FORUM_SUPPORT_PCRE_UNICODE'));
 		}
@@ -117,7 +118,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// and tags we need to check are closed (the same as above, added it just in case)
 	$tags_closed = $tags;
 	// Tags we can nest and the depth they can be nested to (only quotes )
-	$tags_nested = array('quote' => config()['o_quote_depth'], 'list' => 5, '*' => 5);
+	$tags_nested = array('quote' => config()->o_quote_depth, 'list' => 5, '*' => 5);
 	// Tags to ignore the contents of completely (just code)
 	$tags_ignore = array('code');
 	// Block tags, block tags can only go within another block tag, they cannot be in a normal tag
@@ -561,9 +562,9 @@ function split_text($text, $start, $end, &$errors, $retab = true)
 		$outside[] = $temp[1];
 	}
 
-	if (config()['o_indent_num_spaces'] != 8 && $retab)
+	if (config()->o_indent_num_spaces != 8 && $retab)
 	{
-		$spaces = str_repeat(' ', config()['o_indent_num_spaces']);
+		$spaces = str_repeat(' ', config()->o_indent_num_spaces);
 		$inside = str_replace("\t", $spaces, $inside);
 	}
 
@@ -760,8 +761,8 @@ function do_bbcode($text, $is_signature = false)
 	$replace[] = '<span style="color: $1">$2</span>';
 	$replace[] = '</p><h5>$1</h5><p>';
 
-	if (($is_signature && config()['p_sig_img_tag'] == '1') ||
-			(!$is_signature && config()['p_message_img_tag'] == '1'))
+	if (($is_signature && config()->p_sig_img_tag == '1') ||
+			(!$is_signature && config()->p_message_img_tag == '1'))
 	{
 		$pattern[] = '#\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e';
 		$pattern[] = '#\[img=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e';
@@ -857,7 +858,7 @@ function parse_message($text, $hide_smilies)
 	if ($return != null)
 		return $return;
 
-	if (config()['o_censoring'] == '1')
+	if (config()->o_censoring == '1')
 		$text = censor_words($text);
 
 	$return = ($hook = get_hook('ps_parse_message_post_censor')) ? eval($hook) : null;
@@ -882,10 +883,10 @@ function parse_message($text, $hide_smilies)
 	if ($return != null)
 		return $return;
 
-	if (config()['p_message_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
+	if (config()->p_message_bbcode == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 		$text = do_bbcode($text);
 
-	if (config()['o_smilies'] == '1' && user()['show_smilies'] == '1' && $hide_smilies == '0')
+	if (config()->o_smilies == '1' && user()['show_smilies'] == '1' && $hide_smilies == '0')
 		$text = do_smilies($text);
 
 	$return = ($hook = get_hook('ps_parse_message_bbcode')) ? eval($hook) : null;
@@ -943,7 +944,7 @@ function parse_signature($text)
 	if ($return != null)
 		return $return;
 
-	if (config()['o_censoring'] == '1')
+	if (config()->o_censoring == '1')
 		$text = censor_words($text);
 
 	$return = ($hook = get_hook('ps_parse_signature_post_censor')) ? eval($hook) : null;
@@ -957,10 +958,10 @@ function parse_signature($text)
 	if ($return != null)
 		return $return;
 
-	if (config()['p_sig_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
+	if (config()->p_sig_bbcode == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 		$text = do_bbcode($text, true);
 
-	if (config()['o_smilies_sig'] == '1' && user()['show_smilies'] == '1')
+	if (config()->o_smilies_sig == '1' && user()['show_smilies'] == '1')
 		$text = do_smilies($text);
 
 	$return = ($hook = get_hook('ps_parse_signature_post_bbcode')) ? eval($hook) : null;

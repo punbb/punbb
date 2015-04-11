@@ -2,9 +2,10 @@
 namespace punbb;
 
 if (FORUM_PAGE == 'redirect') {
-	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.config()['o_redirect_delay'].';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';
+	$forum_head['refresh'] = '<meta http-equiv="refresh" content="'.
+		config()->o_redirect_delay.';URL='.str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url).'" />';
 	$forum_head['title'] = '<title>' . __('Redirecting') .
-		__('Title separator') . forum_htmlencode(config()['o_board_title']).'</title>';
+		__('Title separator') . forum_htmlencode(config()->o_board_title).'</title>';
 
 	// Include stylesheets
 	require FORUM_ROOT.'style/'.user()['style'].'/'.user()['style'].'.php';
@@ -28,7 +29,7 @@ else {
 		$forum_head['robots'] = '<meta name="ROBOTS" content="NOINDEX, FOLLOW" />';
 	else
 		$forum_head['descriptions'] = '<meta name="description" content="'.generate_crumbs(true).
-			__('Title separator') . forum_htmlencode(config()['o_board_desc']).'" />';
+			__('Title separator') . forum_htmlencode(config()->o_board_desc).'" />';
 
 	// Should we output a MicroID? http://microid.org/
 	if (strpos(FORUM_PAGE, 'profile') === 0)
@@ -61,7 +62,8 @@ else {
 	{
 		$forum_head['search'] = '<link rel="search" type="text/html" href="'.forum_link($forum_url['search']).'" title="'.
 			__('Search') . '" />';
-		$forum_head['opensearch'] = '<link rel="search" type="application/opensearchdescription+xml" href="'.forum_link($forum_url['opensearch']).'" title="'.forum_htmlencode(config()['o_board_title']).'" />';
+		$forum_head['opensearch'] = '<link rel="search" type="application/opensearchdescription+xml" href="'.forum_link($forum_url['opensearch']).'" title="'.
+			forum_htmlencode(config()->o_board_title).'" />';
 	}
 
 	$forum_head['author'] = '<link rel="author" type="text/html" href="'.forum_link($forum_url['users']).'" title="'.

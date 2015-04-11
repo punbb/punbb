@@ -126,7 +126,7 @@ $query = array(
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$id.' AND t.moved_to IS NULL'
 );
 
-if (!user()['is_guest'] && config()['o_subscriptions'] == '1')
+if (!user()['is_guest'] && config()->o_subscriptions == '1')
 {
 	$query['SELECT'] .= ', s.user_id AS is_subscribed';
 	$query['JOINS'][] = array(
@@ -191,7 +191,7 @@ if ($forum_page['page'] > 1)
 		__('Page').' 1" />';
 }
 
-if (config()['o_censoring'] == '1')
+if (config()->o_censoring == '1')
 	$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 // Generate paging and posting links
@@ -221,7 +221,7 @@ $forum_page['main_head_options'] = array(
 		__('RSS topic feed', 'topic') . '</a></span>'
 );
 
-if (!user()['is_guest'] && config()['o_subscriptions'] == '1')
+if (!user()['is_guest'] && config()->o_subscriptions == '1')
 {
 	if ($cur_topic['is_subscribed'])
 		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['unsubscribe'], array($id, generate_form_token('unsubscribe'.$id.user()['id']))).'"><em>'.
@@ -254,7 +254,7 @@ if ($forum_page['is_admmod'])
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array($cur_topic['forum_name'], forum_link($forum_url['forum'], array($cur_topic['forum_id'], sef_friendly($cur_topic['forum_name'])))),
 	$cur_topic['subject']
 );
@@ -276,7 +276,7 @@ if (!$pid)
 define('FORUM_PAGE', 'viewtopic');
 
 // Display quick post if enabled
-if (config()['o_quickpost'] == '1' &&
+if (config()->o_quickpost == '1' &&
 	!user()['is_guest'] &&
 	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1')) &&
 	($cur_topic['closed'] == '0' || $forum_page['is_admmod']))
@@ -285,7 +285,7 @@ if (config()['o_quickpost'] == '1' &&
 }
 
 // Increment "num_views" for topic
-if (config()['o_topic_views'] == '1')
+if (config()->o_topic_views == '1')
 {
 	$query = array(
 		'UPDATE'	=> 'topics',

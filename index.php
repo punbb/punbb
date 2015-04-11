@@ -45,7 +45,7 @@ if (!user()['is_guest'])
 }
 
 // Setup main heading
-$forum_page['main_title'] = forum_htmlencode(config()['o_board_title']);
+$forum_page['main_title'] = forum_htmlencode(config()->o_board_title);
 
 ($hook = get_hook('in_pre_header_load')) ? eval($hook) : null;
 

@@ -4,7 +4,7 @@ namespace punbb;
 ($hook = get_hook('ft_about_output_start')) ? eval($hook) : null;
 
 // Display the "Jump to" drop list
-if (user()['g_read_board'] == '1' && config()['o_quickjump'] == '1')
+if (user()['g_read_board'] == '1' && config()->o_quickjump == '1')
 {
 	($hook = get_hook('ft_about_pre_quickjump')) ? eval($hook) : null;
 
@@ -24,7 +24,8 @@ if (user()['g_read_board'] == '1' && config()['o_quickjump'] == '1')
 
 ?>
 	<p id="copyright"><?= sprintf(__('Powered by'),
-		'<a href="http://punbb.informer.com/">PunBB</a>'.(config()['o_show_version'] == '1' ? ' '.config()['o_cur_version'] : ''), '<a href="http://www.informer.com/">Informer Technologies, Inc</a>') ?></p>
+		'<a href="http://punbb.informer.com/">PunBB</a>'.(config()->o_show_version == '1' ? ' '.
+		config()->o_cur_version : ''), '<a href="http://www.informer.com/">Informer Technologies, Inc</a>') ?></p>
 <?php
 
 ($hook = get_hook('ft_about_end')) ? eval($hook) : null;

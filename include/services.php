@@ -72,13 +72,13 @@ config(function () {
 
 	// Load cached config
 	if (file_exists(FORUM_CACHE_DIR . 'cache_config.php')) {
-		$_PUNBB['config'] = include FORUM_CACHE_DIR . 'cache_config.php';
+		$_PUNBB['config'] = (object)include FORUM_CACHE_DIR . 'cache_config.php';
 	}
 
 	if (empty($_PUNBB['config'])) {
 		require FORUM_ROOT . 'include/cache.php';
 		generate_config_cache();
-		$_PUNBB['config'] = include FORUM_CACHE_DIR . 'cache_config.php';
+		$_PUNBB['config'] = (object)include FORUM_CACHE_DIR . 'cache_config.php';
 	}
 
 	return $_PUNBB['config'];

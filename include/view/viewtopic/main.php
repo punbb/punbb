@@ -64,7 +64,7 @@ if (!empty($posts_id))
 			// Generate author identification
 			if ($cur_post['poster_id'] > 1)
 			{
-				if (config()['o_avatars'] == '1' && user()['show_avatars'] != '0')
+				if (config()->o_avatars == '1' && user()['show_avatars'] != '0')
 				{
 					$forum_page['avatar_markup'] = generate_avatar_markup($cur_post['poster_id'], $cur_post['avatar'], $cur_post['avatar_width'], $cur_post['avatar_height'], $cur_post['username']);
 
@@ -97,11 +97,11 @@ if (!empty($posts_id))
 			// Generate author information
 			if ($cur_post['poster_id'] > 1)
 			{
-				if (config()['o_show_user_info'] == '1')
+				if (config()->o_show_user_info == '1')
 				{
 					if ($cur_post['location'] != '')
 					{
-						if (config()['o_censoring'] == '1')
+						if (config()->o_censoring == '1')
 							$cur_post['location'] = censor_words($cur_post['location']);
 
 						$forum_page['author_info']['from'] = '<li><span>'.
@@ -111,7 +111,7 @@ if (!empty($posts_id))
 					$forum_page['author_info']['registered'] = '<li><span>'.
 						__('Registered', 'topic') . ' <strong>'.format_time($cur_post['registered'], 1).'</strong></span></li>';
 
-					if (config()['o_show_post_count'] == '1' || user()['is_admmod'])
+					if (config()->o_show_post_count == '1' || user()['is_admmod'])
 						$forum_page['author_info']['posts'] = '<li><span>'.
 							__('Posts info', 'topic') . ' <strong>'.forum_number_format($cur_post['num_posts']).'</strong></span></li>';
 				}
@@ -131,7 +131,7 @@ if (!empty($posts_id))
 				__('IP', 'topic') . ' <a href="'.forum_link($forum_url['get_host'], $cur_post['id']).'">'.$cur_post['poster_ip'].'</a></span></li>';
 
 		// Generate author contact details
-		if (config()['o_show_user_info'] == '1')
+		if (config()->o_show_user_info == '1')
 		{
 			if (isset($user_data_cache[$cur_post['poster_id']]['post_contacts']))
 				$forum_page['post_contacts'] = $user_data_cache[$cur_post['poster_id']]['post_contacts'];
@@ -140,7 +140,8 @@ if (!empty($posts_id))
 				if ($cur_post['poster_id'] > 1)
 				{
 					if ($cur_post['url'] != '')
-						$forum_page['post_contacts']['url'] = '<span class="user-url'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a class="external" href="'.forum_htmlencode((config()['o_censoring'] == '1') ? censor_words($cur_post['url']) : $cur_post['url']).'">'.
+						$forum_page['post_contacts']['url'] = '<span class="user-url'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a class="external" href="'.
+							forum_htmlencode((config()->o_censoring == '1') ? censor_words($cur_post['url']) : $cur_post['url']).'">'.
 							sprintf(__('Visit website', 'topic'), '<span>'.
 								sprintf(__('User possessive', 'topic'), forum_htmlencode($cur_post['username'])).'</span>').'</a></span>';
 					if ((($cur_post['email_setting'] == '0' && !user()['is_guest']) || user()['is_admmod']) && user()['g_send_email'] == '1')
@@ -253,7 +254,8 @@ if (!empty($posts_id))
 		$forum_page['message']['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 		// Do signature parsing/caching
-		if ($cur_post['signature'] != '' && user()['show_sig'] != '0' && config()['o_signatures'] == '1')
+		if ($cur_post['signature'] != '' && user()['show_sig'] != '0' &&
+				config()->o_signatures == '1')
 		{
 			if (!isset($signature_cache[$cur_post['poster_id']]))
 				$signature_cache[$cur_post['poster_id']] = parse_signature($cur_post['signature']);
