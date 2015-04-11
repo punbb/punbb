@@ -14,8 +14,9 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('acs_start')) ? eval($hook) : null;
 
-if (!user()['is_admmod'])
+if (!user()->is_admmod) {
 	message(__('No permission'));
+}
 
 // Add a censor word
 if (isset($_POST['add_word']))
@@ -133,8 +134,9 @@ $forum_page['crumbs'] = array(
 	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
-if (user()['g_id'] == FORUM_ADMIN)
+if (user()->g_id == FORUM_ADMIN) {
 	$forum_page['crumbs'][] = array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup']));
+}
 $forum_page['crumbs'][] = array(__('Censoring', 'admin_common'), forum_link($forum_url['admin_censoring']));
 
 

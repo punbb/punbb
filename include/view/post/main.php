@@ -33,7 +33,7 @@ namespace punbb;
 			</div>
 <?php
 
-if (user()['is_guest'])
+if (user()->is_guest)
 {
 	$forum_page['email_form_name'] = (config()->p_force_guest_email == '1') ? 'req_email' : 'email';
 
@@ -106,7 +106,7 @@ if (config()->o_smilies == '1')
 	__('Hide smilies', 'post') . '</label></div>';
 
 // Check/uncheck the checkbox for subscriptions depending on scenario
-if (!user()['is_guest'] && config()->o_subscriptions == '1')
+if (!user()->is_guest && config()->o_subscriptions == '1')
 {
 	$subscr_checked = false;
 
@@ -114,7 +114,7 @@ if (!user()['is_guest'] && config()->o_subscriptions == '1')
 	if (isset($_POST['preview']))
 		$subscr_checked = isset($_POST['subscribe']) ? true : false;
 	// If auto subscribed
-	else if (user()['auto_notify'])
+	else if (user()->auto_notify)
 		$subscr_checked = true;
 	// If already subscribed to the topic
 	else if ($is_subscribed)

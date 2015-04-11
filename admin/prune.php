@@ -14,8 +14,9 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('apr_start')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN)
+if (user()->g_id != FORUM_ADMIN) {
 	message(__('No permission'));
+}
 
 if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comply']))
 {

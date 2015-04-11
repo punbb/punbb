@@ -20,7 +20,7 @@ namespace punbb;
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?= __('User find legend', 'userlist') ?></strong></legend>
 <?php ($hook = get_hook('ul_pre_username')) ? eval($hook) : null; ?>
-<?php if (user()['g_search_users'] == '1'): ?>
+<?php if (user()->g_search_users == '1'): ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Search for username', 'userlist') ?></span>

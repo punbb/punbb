@@ -22,7 +22,7 @@ $errors = array();
 if ($action == 'rules')
 {
 	if (config()->o_rules == '0' ||
-			(user()['is_guest'] && user()['g_read_board'] == '0' &&
+			(user()->is_guest && user()->g_read_board == '0' &&
 				config()->o_regs_allow == '0')) {
 		message(__('Bad request'));
 	}
@@ -45,20 +45,21 @@ if ($action == 'rules')
 // Mark all topics/posts as read?
 else if ($action == 'markread')
 {
-	if (user()['is_guest'])
+	if (user()->is_guest) {
 		message(__('No permission'));
+	}
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('markread'.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('markread'.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('mi_markread_selected')) ? eval($hook) : null;
 
 	$query = array(
 		'UPDATE'	=> 'users',
-		'SET'		=> 'last_visit='.user()['logged'],
-		'WHERE'		=> 'id='.user()['id']
+		'SET'		=> 'last_visit='.user()->logged,
+		'WHERE'		=> 'id='.user()->id
 	);
 
 	($hook = get_hook('mi_markread_qr_update_last_visit')) ? eval($hook) : null;
@@ -78,8 +79,9 @@ else if ($action == 'markread')
 // Mark the topics/posts in a forum as read?
 else if ($action == 'markforumread')
 {
-	if (user()['is_guest'])
+	if (user()->is_guest) {
 		message(__('No permission'));
+	}
 
 	$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
 	if ($fid < 1)
@@ -87,7 +89,7 @@ else if ($action == 'markforumread')
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('markforumread'.$fid.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('markforumread'.$fid.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('mi_markforumread_selected')) ? eval($hook) : null;
@@ -99,7 +101,7 @@ else if ($action == 'markforumread')
 		'JOINS'		=> array(
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fid
@@ -161,7 +163,7 @@ else if ($action == 'opensearch')
 // Send form e-mail?
 else if (isset($_GET['email']))
 {
-	if (user()['is_guest'] || user()['g_send_email'] == '0')
+	if (user()->is_guest || user()->g_send_email == '0')
 		message(__('No permission'));
 
 	$recipient_id = intval($_GET['email']);
@@ -191,7 +193,7 @@ else if (isset($_GET['email']))
 		message(__('Bad request'));
 	}
 
-	if ($recipient_info['email_setting'] == 2 && !user()['is_admmod'])
+	if ($recipient_info['email_setting'] == 2 && !user()->is_admmod)
 		message(__('Form e-mail disabled', 'misc'));
 
 	if ($recipient_info['email'] == '')
@@ -216,8 +218,8 @@ else if (isset($_GET['email']))
 			$errors[] = sprintf(__('Too long e-mail message', 'misc'),
 				forum_number_format(strlen($message)), forum_number_format(FORUM_MAX_POSTSIZE_BYTES));
 
-		if (user()['last_email_sent'] != '' && (time() - user()['last_email_sent']) < user()['g_email_flood'] && (time() - user()['last_email_sent']) >= 0)
-			$errors[] = sprintf(__('Email flood', 'misc'), user()['g_email_flood']);
+		if (user()->last_email_sent != '' && (time() - user()->last_email_sent) < user()->g_email_flood && (time() - user()->last_email_sent) >= 0)
+			$errors[] = sprintf(__('Email flood', 'misc'), user()->g_email_flood);
 
 		($hook = get_hook('mi_email_end_validation')) ? eval($hook) : null;
 
@@ -225,7 +227,7 @@ else if (isset($_GET['email']))
 		if (empty($errors))
 		{
 			// Load the "form e-mail" template
-			$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()['language'].'/mail_templates/form_email.tpl'));
+			$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/form_email.tpl'));
 
 			// The first row contains the subject
 			$first_crlf = strpos($mail_tpl, "\n");
@@ -233,7 +235,7 @@ else if (isset($_GET['email']))
 			$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
 			$mail_subject = str_replace('<mail_subject>', $subject, $mail_subject);
-			$mail_message = str_replace('<sender>', user()['username'], $mail_message);
+			$mail_message = str_replace('<sender>', user()->username, $mail_message);
 			$mail_message = str_replace('<board_title>', config()->o_board_title, $mail_message);
 			$mail_message = str_replace('<mail_message>', $message, $mail_message);
 			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
@@ -243,13 +245,13 @@ else if (isset($_GET['email']))
 			if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 				require FORUM_ROOT.'include/email.php';
 
-			forum_mail($recipient_info['email'], $mail_subject, $mail_message, user()['email'], user()['username']);
+			forum_mail($recipient_info['email'], $mail_subject, $mail_message, user()->email, user()->username);
 
 			// Set the user's last_email_sent time
 			$query = array(
 				'UPDATE'	=> 'users',
 				'SET'		=> 'last_email_sent='.time(),
-				'WHERE'		=> 'id='.user()['id'],
+				'WHERE'		=> 'id='.user()->id,
 			);
 
 			($hook = get_hook('mi_email_qr_update_last_email_sent')) ? eval($hook) : null;
@@ -269,7 +271,7 @@ else if (isset($_GET['email']))
 
 	$forum_page['hidden_fields'] = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
-		'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()['prev_url']).'" />',
+		'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()->prev_url).'" />',
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 	);
 
@@ -294,8 +296,9 @@ else if (isset($_GET['email']))
 // Report a post?
 else if (isset($_GET['report']))
 {
-	if (user()['is_guest'])
+	if (user()->is_guest) {
 		message(__('No permission'));
+	}
 
 	$post_id = intval($_GET['report']);
 	if ($post_id < 1)
@@ -317,8 +320,9 @@ else if (isset($_GET['report']))
 		$errors = array();
 
 		// Flood protection
-		if (user()['last_email_sent'] != '' && (time() - user()['last_email_sent']) < user()['g_email_flood'] && (time() - user()['last_email_sent']) >= 0)
-			message(sprintf(__('Report flood', 'misc'), user()['g_email_flood']));
+		if (user()->last_email_sent != '' && (time() - user()->last_email_sent) < user()->g_email_flood &&
+				(time() - user()->last_email_sent) >= 0)
+			message(sprintf(__('Report flood', 'misc'), user()->g_email_flood));
 
 		// Clean up reason from POST
 		$reason = forum_linebreaks(forum_trim($_POST['req_reason']));
@@ -361,7 +365,7 @@ else if (isset($_GET['report']))
 				$query = array(
 					'INSERT'	=> 'post_id, topic_id, forum_id, reported_by, created, message',
 					'INTO'		=> 'reports',
-					'VALUES'	=> $post_id.', '.$topic_info['id'].', '.$topic_info['forum_id'].', '.user()['id'].', '.time().', \''.db()->escape($reason).'\''
+					'VALUES'	=> $post_id.', '.$topic_info['id'].', '.$topic_info['forum_id'].', '.user()->id.', '.time().', \''.db()->escape($reason).'\''
 				);
 
 				($hook = get_hook('mi_report_add_report')) ? eval($hook) : null;
@@ -375,7 +379,7 @@ else if (isset($_GET['report']))
 				if (config()->o_mailing_list != '')
 				{
 					$mail_subject = 'Report('.$topic_info['forum_id'].') - \''.$topic_info['subject'].'\'';
-					$mail_message = 'User \''.user()['username'].'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
+					$mail_message = 'User \''.user()->username.'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
 
 					if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 						require FORUM_ROOT.'include/email.php';
@@ -390,7 +394,7 @@ else if (isset($_GET['report']))
 			$query = array(
 				'UPDATE'	=> 'users',
 				'SET'		=> 'last_email_sent='.time(),
-				'WHERE'		=> 'id='.user()['id']
+				'WHERE'		=> 'id='.user()->id
 			);
 
 			($hook = get_hook('mi_report_qr_update_last_email_sent')) ? eval($hook) : null;
@@ -434,8 +438,9 @@ else if (isset($_GET['report']))
 // Subscribe to a topic?
 else if (isset($_GET['subscribe']))
 {
-	if (user()['is_guest'] || config()->o_subscriptions != '1')
+	if (user()->is_guest || config()->o_subscriptions != '1') {
 		message(__('No permission'));
+	}
 
 	$topic_id = intval($_GET['subscribe']);
 	if ($topic_id < 1)
@@ -443,7 +448,7 @@ else if (isset($_GET['subscribe']))
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('subscribe'.$topic_id.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('subscribe'.$topic_id.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('mi_subscribe_selected')) ? eval($hook) : null;
@@ -455,7 +460,7 @@ else if (isset($_GET['subscribe']))
 		'JOINS'		=> array(
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$topic_id.' AND t.moved_to IS NULL'
@@ -472,7 +477,7 @@ else if (isset($_GET['subscribe']))
 	$query = array(
 		'SELECT'	=> 'COUNT(s.user_id)',
 		'FROM'		=> 'subscriptions AS s',
-		'WHERE'		=> 'user_id='.user()['id'].' AND topic_id='.$topic_id
+		'WHERE'		=> 'user_id='.user()->id.' AND topic_id='.$topic_id
 	);
 
 	($hook = get_hook('mi_subscribe_qr_check_subscribed')) ? eval($hook) : null;
@@ -486,7 +491,7 @@ else if (isset($_GET['subscribe']))
 	$query = array(
 		'INSERT'	=> 'user_id, topic_id',
 		'INTO'		=> 'subscriptions',
-		'VALUES'	=> user()['id'].' ,'.$topic_id
+		'VALUES'	=> user()->id.' ,'.$topic_id
 	);
 
 	($hook = get_hook('mi_subscribe_add_subscription')) ? eval($hook) : null;
@@ -504,16 +509,18 @@ else if (isset($_GET['subscribe']))
 // Unsubscribe from a topic?
 else if (isset($_GET['unsubscribe']))
 {
-	if (user()['is_guest'] || config()->o_subscriptions != '1')
+	if (user()->is_guest || config()->o_subscriptions != '1') {
 		message(__('No permission'));
+	}
 
 	$topic_id = intval($_GET['unsubscribe']);
-	if ($topic_id < 1)
+	if ($topic_id < 1) {
 		message(__('Bad request'));
+	}
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('unsubscribe'.$topic_id.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('unsubscribe'.$topic_id.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('mi_unsubscribe_selected')) ? eval($hook) : null;
@@ -524,7 +531,7 @@ else if (isset($_GET['unsubscribe']))
 		'JOINS'		=> array(
 			array(
 				'INNER JOIN'	=> 'subscriptions AS s',
-				'ON'			=> 's.user_id='.user()['id'].' AND s.topic_id=t.id'
+				'ON'			=> 's.user_id='.user()->id.' AND s.topic_id=t.id'
 			)
 		),
 		'WHERE'		=> 't.id='.$topic_id
@@ -541,7 +548,7 @@ else if (isset($_GET['unsubscribe']))
 
 	$query = array(
 		'DELETE'	=> 'subscriptions',
-		'WHERE'		=> 'user_id='.user()['id'].' AND topic_id='.$topic_id
+		'WHERE'		=> 'user_id='.user()->id.' AND topic_id='.$topic_id
 	);
 
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;
@@ -558,8 +565,9 @@ else if (isset($_GET['unsubscribe']))
 // Subscribe to a forum?
 else if (isset($_GET['forum_subscribe']))
 {
-	if (user()['is_guest'] || config()->o_subscriptions != '1')
+	if (user()->is_guest || config()->o_subscriptions != '1') {
 		message(__('No permission'));
+	}
 
 	$forum_id = intval($_GET['forum_subscribe']);
 	if ($forum_id < 1)
@@ -567,7 +575,7 @@ else if (isset($_GET['forum_subscribe']))
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('forum_subscribe'.$forum_id.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('forum_subscribe'.$forum_id.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('mi_forum_subscribe_selected')) ? eval($hook) : null;
@@ -579,7 +587,7 @@ else if (isset($_GET['forum_subscribe']))
 		'JOINS'		=> array(
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$forum_id
@@ -596,7 +604,7 @@ else if (isset($_GET['forum_subscribe']))
 	$query = array(
 		'SELECT'	=> 'COUNT(fs.user_id)',
 		'FROM'		=> 'forum_subscriptions AS fs',
-		'WHERE'		=> 'user_id='.user()['id'].' AND forum_id='.$forum_id
+		'WHERE'		=> 'user_id='.user()->id.' AND forum_id='.$forum_id
 	);
 
 	($hook = get_hook('mi_forum_subscribe_qr_check_subscribed')) ? eval($hook) : null;
@@ -610,7 +618,7 @@ else if (isset($_GET['forum_subscribe']))
 	$query = array(
 		'INSERT'	=> 'user_id, forum_id',
 		'INTO'		=> 'forum_subscriptions',
-		'VALUES'	=> user()['id'].' ,'.$forum_id
+		'VALUES'	=> user()->id.' ,'.$forum_id
 	);
 
 	($hook = get_hook('mi_forum_subscribe_add_subscription')) ? eval($hook) : null;
@@ -628,8 +636,9 @@ else if (isset($_GET['forum_subscribe']))
 // Unsubscribe from a topic?
 else if (isset($_GET['forum_unsubscribe']))
 {
-	if (user()['is_guest'] || config()->o_subscriptions != '1')
+	if (user()->is_guest || config()->o_subscriptions != '1') {
 		message(__('No permission'));
+	}
 
 	$forum_id = intval($_GET['forum_unsubscribe']);
 	if ($forum_id < 1)
@@ -637,7 +646,7 @@ else if (isset($_GET['forum_unsubscribe']))
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('forum_unsubscribe'.$forum_id.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('forum_unsubscribe'.$forum_id.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('mi_forum_unsubscribe_selected')) ? eval($hook) : null;
@@ -649,7 +658,7 @@ else if (isset($_GET['forum_unsubscribe']))
 		'JOINS'		=> array(
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$forum_id
@@ -666,7 +675,7 @@ else if (isset($_GET['forum_unsubscribe']))
 
 	$query = array(
 		'DELETE'	=> 'forum_subscriptions',
-		'WHERE'		=> 'user_id='.user()['id'].' AND forum_id='.$forum_id
+		'WHERE'		=> 'user_id='.user()->id.' AND forum_id='.$forum_id
 	);
 
 	($hook = get_hook('mi_unsubscribe_qr_delete_subscription')) ? eval($hook) : null;

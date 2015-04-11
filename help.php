@@ -14,12 +14,14 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('he_start')) ? eval($hook) : null;
 
-if (user()['g_read_board'] == '0')
+if (user()->g_read_board == '0') {
 	message(__('No view'));
+}
 
 $section = isset($_GET['section']) ? $_GET['section'] : null;
-if (!$section)
+if (!$section) {
 	message(__('Bad request'));
+}
 
 $forum_page['crumbs'] = array(
 	array(config()->o_board_title, forum_link($forum_url['help'])),

@@ -23,7 +23,7 @@ include view('moderate/posts_start');
 
 		if ($cur_post['poster_id'] > 1)
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
-				__('Topic byline', 'topic') : __('Reply byline', 'topic')), ((user()['g_view_users'] == '1') ? '<a title="'.
+				__('Topic byline', 'topic') : __('Reply byline', 'topic')), ((user()->g_view_users == '1') ? '<a title="'.
 					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
 		else
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?

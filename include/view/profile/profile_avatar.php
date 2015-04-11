@@ -36,7 +36,7 @@ namespace punbb;
 <?php if (isset($forum_page['avatar_demo'])): ?>
 						<p class="avatar-demo"><span><?php echo $forum_page['avatar_demo'] ?></span></p>
 <?php endif; ?>
-						<p><?php echo (isset($forum_page['avatar_demo'])) ? '<a href="'.forum_link($forum_url['delete_avatar'], array($id, generate_form_token('delete_avatar'.$id.user()['id']))).'">'.
+						<p><?php echo (isset($forum_page['avatar_demo'])) ? '<a href="'.forum_link($forum_url['delete_avatar'], array($id, generate_form_token('delete_avatar'.$id.user()->id))).'">'.
 							__('Delete avatar info', 'profile') . '</a>' : __('No avatar info', 'profile') ?></p>
 					</div>
 				</div>

@@ -22,10 +22,12 @@ $errors = array();
 
 if ($action != 'change_pass' || !isset($_GET['key']))
 {
-	if (user()['g_read_board'] == '0')
+	if (user()->g_read_board == '0') {
 		message(__('No view'));
-	else if (user()['g_view_users'] == '0' && (user()['is_guest'] || user()['id'] != $id))
+	}
+	else if (user()->g_view_users == '0' && (user()->is_guest || user()->id != $id)) {
 		message(__('No permission'));
+	}
 }
 
 // Fetch info about the user whose profile we're viewing
@@ -62,8 +64,9 @@ if ($action == 'change_pass')
 		$key = $_GET['key'];
 
 		// If the user is already logged in we shouldn't be here :)
-		if (!user()['is_guest'])
+		if (!user()->is_guest) {
 			message(__('Pass logout', 'profile'));
+		}
 
 		($hook = get_hook('pf_change_pass_key_supplied')) ? eval($hook) : null;
 
@@ -108,7 +111,7 @@ if ($action == 'change_pass')
 			}
 
 			// Is this users own profile
-			$forum_page['own_profile'] = (user()['id'] == $id) ? true : false;
+			$forum_page['own_profile'] = (user()->id == $id) ? true : false;
 
 			// Setup form
 			$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -132,9 +135,9 @@ if ($action == 'change_pass')
 	}
 
 	// Make sure we are allowed to change this user's password
-	if (user()['id'] != $id &&
-		user()['g_id'] != FORUM_ADMIN &&
-		(user()['g_moderator'] != '1' || user()['g_mod_edit_users'] == '0' || user()['g_mod_change_passwords'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
+	if (user()->id != $id &&
+		user()->g_id != FORUM_ADMIN &&
+		(user()->g_moderator != '1' || user()->g_mod_edit_users == '0' || user()->g_mod_change_passwords == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 		message(__('No permission'));
 
 	if (isset($_POST['form_sent']))
@@ -155,7 +158,7 @@ if ($action == 'change_pass')
 		{
 			$old_password_hash = forum_hash($old_password, $user['salt']);
 
-			if (($user['password'] == $old_password_hash) || user()['is_admmod'])
+			if (($user['password'] == $old_password_hash) || user()->is_admmod)
 				$authorized = true;
 		}
 
@@ -176,13 +179,12 @@ if ($action == 'change_pass')
 			($hook = get_hook('pf_change_pass_normal_qr_update_password')) ? eval($hook) : null;
 			db()->query_build($query) or error(__FILE__, __LINE__);
 
-			if (user()['id'] == $id)
-			{
+			if (user()->id == $id) {
 				$cookie_data = @explode('|', base64_decode($_COOKIE[$cookie_name]));
 
 				$expire = ($cookie_data[2] > time() + config()->o_timeout_visit) ?
 					time() + 1209600 : time() + config()->o_timeout_visit;
-				forum_setcookie($cookie_name, base64_encode(user()['id'].'|'.$new_password_hash.'|'.$expire.'|'.sha1($user['salt'].$new_password_hash.forum_hash($expire, $user['salt']))), $expire);
+				forum_setcookie($cookie_name, base64_encode(user()->id.'|'.$new_password_hash.'|'.$expire.'|'.sha1($user['salt'].$new_password_hash.forum_hash($expire, $user['salt']))), $expire);
 			}
 
 			// Add flash message
@@ -195,7 +197,7 @@ if ($action == 'change_pass')
 	}
 
 	// Is this users own profile
-	$forum_page['own_profile'] = (user()['id'] == $id) ? true : false;
+	$forum_page['own_profile'] = (user()->id == $id) ? true : false;
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -226,9 +228,9 @@ if ($action == 'change_pass')
 else if ($action == 'change_email')
 {
 	// Make sure we are allowed to change this user's e-mail
-	if (user()['id'] != $id &&
-		user()['g_id'] != FORUM_ADMIN &&
-		(user()['g_moderator'] != '1' || user()['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
+	if (user()->id != $id &&
+		user()->g_id != FORUM_ADMIN &&
+		(user()->g_moderator != '1' || user()->g_mod_edit_users == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 		message(__('No permission'));
 
 	($hook = get_hook('pf_change_email_selected')) ? eval($hook) : null;
@@ -264,7 +266,7 @@ else if ($action == 'change_email')
 	{
 		($hook = get_hook('pf_change_email_normal_form_submitted')) ? eval($hook) : null;
 
-		if (forum_hash($_POST['req_password'], user()['salt']) !== user()['password'])
+		if (forum_hash($_POST['req_password'], user()->salt) !== user()->password)
 			$errors[] = __('Wrong password', 'profile');
 
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
@@ -285,7 +287,7 @@ else if ($action == 'change_email')
 			else if (config()->o_mailing_list != '')
 			{
 				$mail_subject = 'Alert - Banned e-mail detected';
-				$mail_message = 'User \''.user()['username'].'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.forum_link($forum_url['user'], $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.user()->username.'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.forum_link($forum_url['user'], $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 			}
@@ -316,7 +318,7 @@ else if ($action == 'change_email')
 			else if ((config()->o_mailing_list != '') && empty($errors))
 			{
 				$mail_subject = 'Alert - Duplicate e-mail detected';
-				$mail_message = 'User \''.user()['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link($forum_url['user'], $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.user()->username.'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link($forum_url['user'], $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 			}
@@ -355,14 +357,14 @@ else if ($action == 'change_email')
 			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Load the "activate e-mail" template
-			$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()['language'].'/mail_templates/activate_email.tpl'));
+			$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/activate_email.tpl'));
 
 			// The first row contains the subject
 			$first_crlf = strpos($mail_tpl, "\n");
 			$mail_subject = forum_trim(substr($mail_tpl, 8, $first_crlf-8));
 			$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
-			$mail_message = str_replace('<username>', user()['username'], $mail_message);
+			$mail_message = str_replace('<username>', user()->username, $mail_message);
 			$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
 			$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', forum_link($forum_url['change_email_key'], array($id, $new_email_key))), $mail_message);
 			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
@@ -378,7 +380,7 @@ else if ($action == 'change_email')
 	}
 
 	// Is this users own profile
-	$forum_page['own_profile'] = (user()['id'] == $id) ? true : false;
+	$forum_page['own_profile'] = (user()->id == $id) ? true : false;
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -415,8 +417,9 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 	($hook = get_hook('pf_delete_user_selected')) ? eval($hook) : null;
 
-	if (user()['g_id'] != FORUM_ADMIN)
+	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
+	}
 
 	if ($user['g_id'] == FORUM_ADMIN)
 		message(__('Cannot delete admin', 'profile'));
@@ -468,14 +471,14 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 else if ($action == 'delete_avatar')
 {
 	// Make sure we are allowed to delete this user's avatar
-	if (user()['id'] != $id &&
-		user()['g_id'] != FORUM_ADMIN &&
-		(user()['g_moderator'] != '1' || user()['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
+	if (user()->id != $id &&
+		user()->g_id != FORUM_ADMIN &&
+		(user()->g_moderator != '1' || user()->g_mod_edit_users == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 		message(__('No permission'));
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('delete_avatar'.$id.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('delete_avatar'.$id.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('pf_delete_avatar_selected')) ? eval($hook) : null;
@@ -493,8 +496,9 @@ else if ($action == 'delete_avatar')
 
 else if (isset($_POST['update_group_membership']))
 {
-	if (user()['g_id'] != FORUM_ADMIN)
+	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
+	}
 
 	($hook = get_hook('pf_change_group_form_submitted')) ? eval($hook) : null;
 
@@ -532,8 +536,9 @@ else if (isset($_POST['update_group_membership']))
 }
 else if (isset($_POST['update_forums']))
 {
-	if (user()['g_id'] != FORUM_ADMIN)
+	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
+	}
 
 	($hook = get_hook('pf_forum_moderators_form_submitted')) ? eval($hook) : null;
 
@@ -584,7 +589,7 @@ else if (isset($_POST['update_forums']))
 
 else if (isset($_POST['ban']))
 {
-	if (user()['g_id'] != FORUM_ADMIN && (user()['g_moderator'] != '1' || user()['g_mod_ban_users'] == '0'))
+	if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' || user()->g_mod_ban_users == '0'))
 		message(__('No permission'));
 
 	($hook = get_hook('pf_ban_user_selected')) ? eval($hook) : null;
@@ -596,9 +601,9 @@ else if (isset($_POST['ban']))
 else if (isset($_POST['form_sent']))
 {
 	// Make sure we are allowed to edit this user's profile
-	if (user()['id'] != $id &&
-		user()['g_id'] != FORUM_ADMIN &&
-		(user()['g_moderator'] != '1' || user()['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
+	if (user()->id != $id &&
+		user()->g_id != FORUM_ADMIN &&
+		(user()->g_moderator != '1' || user()->g_mod_edit_users == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 		message(__('No permission'));
 
 	($hook = get_hook('pf_change_details_form_submitted')) ? eval($hook) : null;
@@ -628,10 +633,9 @@ else if (isset($_POST['form_sent']))
 
 			($hook = get_hook('pf_change_details_identity_validation')) ? eval($hook) : null;
 
-			if (user()['is_admmod'])
-			{
+			if (user()->is_admmod) {
 				// Are we allowed to change usernames?
-				if (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && user()['g_mod_rename_users'] == '1'))
+				if (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_rename_users == '1'))
 				{
 					$form['username'] = forum_trim($_POST['req_username']);
 					$old_username = forum_trim($_POST['old_username']);
@@ -644,12 +648,11 @@ else if (isset($_POST['form_sent']))
 				}
 
 				// We only allow administrators to update the post count
-				if (user()['g_id'] == FORUM_ADMIN)
+				if (user()->g_id == FORUM_ADMIN)
 					$form['num_posts'] = intval($_POST['num_posts']);
 			}
 
-			if (user()['is_admmod'])
-			{
+			if (user()->is_admmod) {
 				if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 					require FORUM_ROOT.'include/email.php';
 
@@ -659,12 +662,13 @@ else if (isset($_POST['form_sent']))
 					$errors[] = __('Invalid e-mail');
 			}
 
-			if (user()['is_admmod'])
+			if (user()->is_admmod) {
 				$form['admin_note'] = forum_trim($_POST['admin_note']);
+			}
 
-			if (user()['g_id'] == FORUM_ADMIN)
+			if (user()->g_id == FORUM_ADMIN)
 				$form['title'] = forum_trim($_POST['title']);
-			else if (user()['g_set_title'] == '1')
+			else if (user()->g_set_title == '1')
 			{
 				$form['title'] = forum_trim($_POST['title']);
 
@@ -779,7 +783,7 @@ else if (isset($_POST['form_sent']))
 			if (substr_count($form['signature'], "\n") > (config()->p_sig_lines - 1))
 				$errors[] = sprintf(__('Sig too many lines', 'profile'), forum_number_format(config()->p_sig_lines));
 
-			if ($form['signature'] != '' && config()->p_sig_all_caps == '0' && check_is_all_caps($form['signature']) && !user()['is_admmod'])
+			if ($form['signature'] != '' && config()->p_sig_all_caps == '0' && check_is_all_caps($form['signature']) && !user()->is_admmod)
 				$form['signature'] = utf8_ucwords(utf8_strtolower($form['signature']));
 
 			// Validate BBCode syntax
@@ -1106,9 +1110,9 @@ if ($user['signature'] != '')
 
 
 // View or edit?
-if (user()['id'] != $id &&
-	user()['g_id'] != FORUM_ADMIN &&
-	(user()['g_moderator'] != '1' || user()['g_mod_edit_users'] == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
+if (user()->id != $id &&
+	user()->g_id != FORUM_ADMIN &&
+	(user()->g_moderator != '1' || user()->g_mod_edit_users == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
 {
 	// Setup user identification
 	$forum_page['user_ident'] = array();
@@ -1143,18 +1147,18 @@ if (user()['id'] != $id &&
 	$forum_page['user_info']['lastpost'] = '<li><span>'.
 		__('Last post', 'profile') . ': <strong> '.format_time($user['last_post']).'</strong></span></li>';
 
-	if (config()->o_show_post_count == '1' || user()['is_admmod'])
+	if (config()->o_show_post_count == '1' || user()->is_admmod)
 		$forum_page['user_info']['posts'] = '<li><span>'.
 			__('Posts', 'profile') . ': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
 
 	// Setup user address
 	$forum_page['user_contact'] = array();
 
-	if ($user['email_setting'] == '0' && !user()['is_guest'] && user()['g_send_email'] == '1')
+	if ($user['email_setting'] == '0' && !user()->is_guest && user()->g_send_email == '1')
 		$forum_page['user_contact']['email'] = '<li><span>'.
 			__('E-mail', 'profile') . ': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode((config()->o_censoring == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
 
-	if ($user['email_setting'] != '2' && !user()['is_guest'] && user()['g_send_email'] == '1')
+	if ($user['email_setting'] != '2' && !user()->is_guest && user()->g_send_email == '1')
 		$forum_page['user_contact']['forum-mail'] = '<li><span>'.
 			__('E-mail', 'profile') . ': <a href="'.forum_link($forum_url['email'], $id).'">'.
 				__('Send forum e-mail', 'profile') . '</a></span></li>';
@@ -1263,8 +1267,7 @@ if (user()['id'] != $id &&
 		$forum_page['sig_demo'] = $parsed_signature;
 
 	// Setup search links
-	if (user()['g_search'] == '1')
-	{
+	if (user()->g_search == '1') {
 		$forum_page['user_activity'] = array();
 		$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.
 			sprintf(__('View user posts', 'profile'), forum_htmlencode($user['username'])).'</a></li>';
@@ -1297,7 +1300,7 @@ else
 	);
 
 	// Is this users own profile
-	$forum_page['own_profile'] = (user()['id'] == $id) ? true : false;
+	$forum_page['own_profile'] = (user()->id == $id) ? true : false;
 
 	// Setup navigation menu
 	$forum_page['main_menu'] = array();
@@ -1316,7 +1319,7 @@ else
 		$forum_page['main_menu']['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_avatar'], $id).'"><span>'.
 			__('Section avatar', 'profile') . '</span></a></li>';
 
-	if (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && user()['g_mod_ban_users'] == '1' && !$forum_page['own_profile']))
+	if (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_ban_users == '1' && !$forum_page['own_profile']))
 		$forum_page['main_menu']['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.forum_link($forum_url['profile_admin'], $id).'"><span>'.
 			__('Section admin', 'profile') . '</span></a></li>';
 
@@ -1370,24 +1373,24 @@ else
 		$forum_page['user_info']['lastpost'] = '<li><span>'.
 			__('Last post', 'profile') . ': <strong> '.format_time($user['last_post']).'</strong></span></li>';
 
-		if (config()->o_show_post_count == '1' || user()['is_admmod'])
+		if (config()->o_show_post_count == '1' || user()->is_admmod)
 			$forum_page['user_info']['posts'] = '<li><span>'.
 				__('Posts', 'profile') . ': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
 		else
 			$forum_page['user_private']['posts'] = '<li><span>'.
 			__('Posts', 'profile') . ': <strong>'.forum_number_format($user['num_posts']).'</strong></span></li>';
 
-		if (user()['is_admmod'] && $user['admin_note'] != '')
+		if (user()->is_admmod && $user['admin_note'] != '')
 			$forum_page['user_private']['note'] = '<li><span>'.
 			__('Note', 'profile') . ': <strong>'.forum_htmlencode($user['admin_note']).'</strong></span></li>';
 
 		// Setup user address
 		$forum_page['user_contact'] = array();
 
-		if (($user['email_setting'] == '0' && !user()['is_guest']) && user()['g_send_email'] == '1')
+		if (($user['email_setting'] == '0' && !user()->is_guest) && user()->g_send_email == '1')
 			$forum_page['user_contact']['email'] = '<li><span>'.
 				__('E-mail', 'profile') . ': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode((config()->o_censoring == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
-		else if ($forum_page['own_profile'] || user()['is_admmod'])
+		else if ($forum_page['own_profile'] || user()->is_admmod)
 				$forum_page['user_private']['email'] = '<li><span>'.
 				__('E-mail', 'profile') . ': <a href="mailto:'.forum_htmlencode($user['email']).'" class="email">'.forum_htmlencode((config()->o_censoring == '1' ? censor_words($user['email']) : $user['email'])).'</a></span></li>';
 
@@ -1395,7 +1398,7 @@ else
 			$forum_page['user_contact']['forum-mail'] = '<li><span>'.
 				__('E-mail', 'profile') . ': <a href="'.forum_link($forum_url['email'], $id).'">'.
 					__('Send forum e-mail', 'profile') . '</a></span></li>';
-		else if (user()['id'] == $id || (user()['is_admmod'] && $user['email_setting'] == '2'))
+		else if (user()->id == $id || (user()->is_admmod && $user['email_setting'] == '2'))
 			$forum_page['user_private']['forum-mail'] = '<li><span>'.
 				__('E-mail', 'profile') . ': <a href="'.forum_link($forum_url['email'], $id).'">'.
 					__('Send forum e-mail', 'profile') . '</a></span></li>';
@@ -1485,7 +1488,7 @@ else
 		}
 
 
-		if (user()['is_admmod'])
+		if (user()->is_admmod)
 			$forum_page['user_private']['ip']= '<li><span>'.
 				__('IP', 'profile') . ': <a href="'.forum_link($forum_url['get_host'], forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
 
@@ -1515,7 +1518,7 @@ else
 
 		// Setup search links
 		$forum_page['user_activity'] = array();
-		if (user()['g_search'] == '1' || user()['is_admmod'])
+		if (user()->g_search == '1' || user()->is_admmod)
 		{
 			$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.(($forum_page['own_profile']) ?
 				__('View your posts', 'profile') :
@@ -1526,7 +1529,7 @@ else
 		}
 
 		// Subscriptions
-		if (($forum_page['own_profile'] || user()['g_id'] == FORUM_ADMIN) && config()->o_subscriptions == '1')
+		if (($forum_page['own_profile'] || user()->g_id == FORUM_ADMIN) && config()->o_subscriptions == '1')
 		{
 			// Topic subscriptions
 			$forum_page['user_activity']['search_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_subscriptions'], $id).'">'.(($forum_page['own_profile']) ?
@@ -1542,12 +1545,12 @@ else
 		// Setup user options
 		$forum_page['user_options'] = array();
 
-		if ($forum_page['own_profile'] || user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && user()['g_mod_change_passwords'] == '1'))
+		if ($forum_page['own_profile'] || user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_change_passwords == '1'))
 			$forum_page['user_options']['change_password'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_password'], $id).'">'.(($forum_page['own_profile']) ?
 				__('Change your password', 'profile') :
 				sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))).'</a></span>';
 
-		if (!user()['is_admmod'])
+		if (!user()->is_admmod)
 			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['change_email'], $id).'">'.(($forum_page['own_profile']) ?
 				__('Change your e-mail', 'profile') :
 				sprintf(__('Change user e-mail', 'profile'), forum_htmlencode($user['username']))).'</a></span>';
@@ -1579,11 +1582,11 @@ else
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 		);
 
-		if (user()['is_admmod'] && (user()['g_id'] == FORUM_ADMIN || user()['g_mod_rename_users'] == '1'))
+		if (user()->is_admmod && (user()->g_id == FORUM_ADMIN || user()->g_mod_rename_users == '1'))
 			$forum_page['hidden_fields']['old_username'] = '<input type="hidden" name="old_username" value="'.forum_htmlencode($user['username']).'" />';
 
 		// Does the form have required fields
-		$forum_page['has_required'] = (((user()['is_admmod'] && (user()['g_id'] == FORUM_ADMIN || user()['g_mod_rename_users'] == '1')) || user()['is_admmod']) ? true : false);
+		$forum_page['has_required'] = (((user()->is_admmod && (user()->g_id == FORUM_ADMIN || user()->g_mod_rename_users == '1')) || user()->is_admmod) ? true : false);
 
 		($hook = get_hook('pf_change_details_identity_pre_header_load')) ? eval($hook) : null;
 
@@ -1734,7 +1737,7 @@ else
 
 	else if ($section == 'admin')
 	{
-		if (user()['g_id'] != FORUM_ADMIN && (user()['g_moderator'] != '1' || user()['g_mod_ban_users'] == '0' || user()['id'] == $id))
+		if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' || user()->g_mod_ban_users == '0' || user()->id == $id))
 			message(__('Bad request'));
 
 		// Setup breadcrumbs
@@ -1756,11 +1759,11 @@ else
 		// Setup ban and delete options
 		$forum_page['user_management'] = array();
 
-		if (user()['g_moderator'] == '1')
+		if (user()->g_moderator == '1')
 			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
 				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id.'">'.
 					__('Ban user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
-		else if (user()['g_moderator'] != '1' && $user['g_id'] != FORUM_ADMIN )
+		else if (user()->g_moderator != '1' && $user['g_id'] != FORUM_ADMIN )
 		{
 			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
 				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link($forum_url['admin_bans']).'&amp;add_ban='.$id.'">'.
@@ -1774,7 +1777,7 @@ else
 
 		define('FORUM_PAGE', 'profile-admin');
 
-		if (user()['g_moderator'] != '1' && !$forum_page['own_profile']) {
+		if (user()->g_moderator != '1' && !$forum_page['own_profile']) {
 			($hook = get_hook('pf_change_details_admin_pre_group_membership')) ? eval($hook) : null;
 
 			$query = array(
@@ -1788,7 +1791,7 @@ else
 			$result_group = db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
-		if (user()['g_id'] == FORUM_ADMIN &&
+		if (user()->g_id == FORUM_ADMIN &&
 				($user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1')) {
 			($hook = get_hook('pf_change_details_admin_pre_mod_assignment_fieldset')) ? eval($hook) : null;
 

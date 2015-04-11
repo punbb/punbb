@@ -14,12 +14,12 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('ark_start')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN)
+if (user()->g_id != FORUM_ADMIN) {
 	message(__('No permission'));
+}
 
 // Add a rank
-if (isset($_POST['add_rank']))
-{
+if (isset($_POST['add_rank'])) {
 	$rank = forum_trim($_POST['new_rank']);
 	$min_posts = intval($_POST['new_min_posts']);
 

@@ -14,11 +14,12 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('ain_start')) ? eval($hook) : null;
 
-if (!user()['is_admmod'])
+if (!user()->is_admmod) {
 	message(__('No permission'));
+}
 
 // Show phpinfo() output
-if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && user()['g_id'] == FORUM_ADMIN)
+if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && user()->g_id == FORUM_ADMIN)
 {
 	($hook = get_hook('ain_phpinfo_selected')) ? eval($hook) : null;
 
@@ -32,8 +33,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'phpinfo' && user()['g_id'] == 
 
 
 // Generate check for updates text block
-if (user()['g_id'] == FORUM_ADMIN)
-{
+if (user()->g_id == FORUM_ADMIN) {
 	if (config()->o_check_for_updates == '1')
 		$punbb_updates = __('Check for updates enabled', 'admin_index');
 	else
@@ -136,8 +136,9 @@ $forum_page['crumbs'] = array(
 	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
-if (user()['g_id'] == FORUM_ADMIN)
+if (user()->g_id == FORUM_ADMIN) {
 	$forum_page['crumbs'][] = array(__('Start', 'admin_common'), forum_link($forum_url['admin_index']));
+}
 $forum_page['crumbs'][] = array(__('Information', 'admin_common'), forum_link($forum_url['admin_index']));
 
 ($hook = get_hook('ain_pre_header_load')) ? eval($hook) : null;

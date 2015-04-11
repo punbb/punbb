@@ -48,7 +48,7 @@ namespace punbb;
 					<p><span><?php echo $server_load ?> (<?php echo $num_online.' '.__('users online', 'admin_index')?>)</span></p>
 				</div>
 			</div>
-<?php ($hook = get_hook('ain_pre_environment')) ? eval($hook) : null; if (user()['g_id'] == FORUM_ADMIN): ?>
+<?php ($hook = get_hook('ain_pre_environment')) ? eval($hook) : null; if (user()->g_id == FORUM_ADMIN): ?>
 			<div class="ct-set group-item<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box">
 					<h3 class="ct-legend hn"><span><?php echo __('Environment', 'admin_index') ?></span></h3>

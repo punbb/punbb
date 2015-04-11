@@ -14,12 +14,12 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('afo_start')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN)
+if (user()->g_id != FORUM_ADMIN) {
 	message(__('No permission'));
+}
 
 // Add a "default" forum
-if (isset($_POST['add_forum']))
-{
+if (isset($_POST['add_forum'])) {
 	$add_to_cat = isset($_POST['add_to_cat']) ? intval($_POST['add_to_cat']) : 0;
 	if ($add_to_cat < 1)
 		message(__('Bad request'));

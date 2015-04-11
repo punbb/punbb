@@ -14,12 +14,12 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('aus_start')) ? eval($hook) : null;
 
-if (!user()['is_admmod'])
+if (!user()->is_admmod) {
 	message(__('No permission'));
+}
 
 // Show IP statistics for a certain user ID
-if (isset($_GET['ip_stats']))
-{
+if (isset($_GET['ip_stats'])) {
 	$ip_stats = intval($_GET['ip_stats']);
 	if ($ip_stats < 1)
 		message(__('Bad request'));
@@ -50,8 +50,9 @@ if (isset($_GET['ip_stats']))
 		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 	);
-	if (user()['g_id'] == FORUM_ADMIN)
+	if (user()->g_id == FORUM_ADMIN) {
 		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	}
 	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
@@ -98,8 +99,9 @@ else if (isset($_GET['show_users']))
 		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 	);
-	if (user()['g_id'] == FORUM_ADMIN)
+	if (user()->g_id == FORUM_ADMIN) {
 		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	}
 	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
@@ -140,8 +142,9 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	if (isset($_POST['delete_users_cancel']))
 		redirect(forum_link($forum_url['admin_users']), __('Cancel redirect', 'admin_common'));
 
-	if (user()['g_id'] != FORUM_ADMIN)
+	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
+	}
 
 	if (empty($_POST['users']))
 		message(__('No users selected', 'admin_users'));
@@ -212,7 +215,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 {
-	if (user()['g_id'] != FORUM_ADMIN && (user()['g_moderator'] != '1' || user()['g_mod_ban_users'] == '0'))
+	if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' || user()->g_mod_ban_users == '0'))
 		message(__('No permission'));
 
 	if (empty($_POST['users']))
@@ -290,7 +293,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 			$query = array(
 				'INSERT'	=> 'username, ip, email, message, expire, ban_creator',
 				'INTO'		=> 'bans',
-				'VALUES'	=> '\''.db()->escape($cur_user['username']).'\', \''.$ban_ip.'\', \''.db()->escape($cur_user['email']).'\', '.$ban_message.', '.$ban_expire.', '.user()['id']
+				'VALUES'	=> '\''.db()->escape($cur_user['username']).'\', \''.$ban_ip.'\', \''.db()->escape($cur_user['email']).'\', '.$ban_message.', '.$ban_expire.', '.user()->id
 			);
 
 			($hook = get_hook('aus_ban_users_qr_add_ban')) ? eval($hook) : null;
@@ -317,8 +320,9 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 	);
-	if (user()['g_id'] == FORUM_ADMIN)
+	if (user()->g_id == FORUM_ADMIN) {
 		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	}
 	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = __('Ban users', 'admin_users');
 
@@ -334,8 +338,9 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) || isset($_POST['change_group_cancel']))
 {
-	if (user()['g_id'] != FORUM_ADMIN)
+	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
+	}
 
 	// User pressed the cancel button
 	if (isset($_POST['change_group_cancel']))
@@ -543,18 +548,19 @@ else if (isset($_GET['find_user']))
 
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 	$forum_page['num_users'] = db()->result($result);
-	$forum_page['num_pages'] = ceil($forum_page['num_users'] / user()['disp_topics']);
+	$forum_page['num_pages'] = ceil($forum_page['num_users'] / user()->disp_topics);
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
-	$forum_page['start_from'] = user()['disp_topics'] * ($forum_page['page'] - 1);
-	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()['disp_topics']), ($forum_page['num_users']));
+	$forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
+	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($forum_page['num_users']));
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 	);
-	if (user()['g_id'] == FORUM_ADMIN)
+	if (user()->g_id == FORUM_ADMIN) {
 		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	}
 	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
 	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
@@ -602,8 +608,9 @@ $forum_page['crumbs'] = array(
 	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
-if (user()['g_id'] == FORUM_ADMIN)
+if (user()->g_id == FORUM_ADMIN) {
 	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+}
 $forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
 
 ($hook = get_hook('aus_search_form_pre_header_load')) ? eval($hook) : null;

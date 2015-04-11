@@ -16,8 +16,9 @@ require __DIR__ . '/vendor/pautoload.php';
 // by all moderators and admins.
 if (isset($_GET['get_host']))
 {
-	if (!user()['is_admmod'])
+	if (!user()->is_admmod) {
 		message(__('No permission'));
+	}
 
 	$_get_host = $_GET['get_host'];
 	if (!is_string($_get_host))
@@ -67,7 +68,7 @@ $query = array(
 	'JOINS'		=> array(
 		array(
 			'LEFT JOIN'		=> 'forum_perms AS fp',
-			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 		)
 	),
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fid
@@ -89,13 +90,15 @@ $mods_array = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderat
 
 ($hook = get_hook('mr_pre_permission_check')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN && (user()['g_moderator'] != '1' || !array_key_exists(user()['username'], $mods_array)))
+if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' ||
+	!array_key_exists(user()->username, $mods_array))) {
 	message(__('No permission'));
+}
 
 // Get topic/forum tracking data
-if (!user()['is_guest'])
+if (!user()->is_guest) {
 	$tracked_topics = get_tracked_topics();
-
+}
 
 // Did someone click a cancel button?
 if (isset($_POST['cancel']))
@@ -325,10 +328,10 @@ if (isset($_GET['tid']))
 
 
 	// Determine the post offset (based on $_GET['p'])
-	$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()['disp_posts']);
+	$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()->disp_posts);
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-	$forum_page['start_from'] = user()['disp_posts'] * ($forum_page['page'] - 1);
-	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()['disp_posts']), ($cur_topic['num_replies'] + 1));
+	$forum_page['start_from'] = user()->disp_posts * ($forum_page['page'] - 1);
+	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_posts), ($cur_topic['num_replies'] + 1));
 	$forum_page['items_info'] = generate_items_info(__('Posts', 'misc'), ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 	// Generate paging links
@@ -400,7 +403,7 @@ if (isset($_GET['tid']))
 		),
 		'WHERE'		=> 'p.topic_id='.$tid,
 		'ORDER BY'	=> 'p.id',
-		'LIMIT'		=> $forum_page['start_from'].','.user()['disp_posts']
+		'LIMIT'		=> $forum_page['start_from'].','.user()->disp_posts
 	);
 
 	($hook = get_hook('mr_post_actions_qr_get_posts')) ? eval($hook) : null;
@@ -566,7 +569,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 			),
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.redirect_url IS NULL AND f.id!='.$fid,
@@ -1060,11 +1063,11 @@ if ($cur_forum['num_topics'] == 0)
 	message(__('Bad request'));
 
 // Determine the topic offset (based on $_GET['p'])
-$forum_page['num_pages'] = ceil($cur_forum['num_topics'] / user()['disp_topics']);
+$forum_page['num_pages'] = ceil($cur_forum['num_topics'] / user()->disp_topics);
 
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
-$forum_page['start_from'] = user()['disp_topics'] * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + user()['disp_topics']), ($cur_forum['num_topics']));
+$forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
+$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($cur_forum['num_topics']));
 $forum_page['items_info'] = generate_items_info(__('Topics', 'misc'), ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
 
 // Select topics
@@ -1073,16 +1076,16 @@ $query = array(
 	'FROM'		=> 'topics AS t',
 	'WHERE'		=> 'forum_id='.$fid,
 	'ORDER BY'	=> 't.sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 't.posted' : 't.last_post').' DESC',
-	'LIMIT'		=>	$forum_page['start_from'].', '.user()['disp_topics']
+	'LIMIT'		=>	$forum_page['start_from'].', '.user()->disp_topics
 );
 
 // With "has posted" indication
-if (!user()['is_guest'] && config()->o_show_dot == '1')
+if (!user()->is_guest && config()->o_show_dot == '1')
 {
 	$query['SELECT'] .= ', p.poster_id AS has_posted';
 	$query['JOINS'][]	= array(
 		'LEFT JOIN'		=> 'posts AS p',
-		'ON'			=> '(p.poster_id='.user()['id'].' AND p.topic_id=t.id)'
+		'ON'			=> '(p.poster_id='.user()->id.' AND p.topic_id=t.id)'
 	);
 
 	// Must have same columns as in prev SELECT

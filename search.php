@@ -16,9 +16,9 @@ require __DIR__ . '/vendor/pautoload.php';
 require FORUM_ROOT.'include/search_functions.php';
 
 
-if (user()['g_read_board'] == '0')
+if (user()->g_read_board == '0')
 	message(__('No view'));
-else if (user()['g_search'] == '0')
+else if (user()->g_search == '0')
 	message(__('No search permission', 'search'));
 
 
@@ -108,9 +108,9 @@ if (isset($query))
 
 	// Work out the settings for pagination
 	if ($show_as == 'posts')
-		$forum_page['per_page'] = user()['disp_posts'];
+		$forum_page['per_page'] = user()->disp_posts;
 	else if ($show_as == 'topics')
-		$forum_page['per_page'] = user()['disp_topics'];
+		$forum_page['per_page'] = user()->disp_topics;
 	else if ($show_as == 'forums')
 		$forum_page['per_page'] = 0;	// Show all
 
@@ -139,7 +139,7 @@ if (isset($query))
 			__('Paging separator'), $search_id).'</p>';
 
 	// Get topic/forum tracking data
-	if (!user()['is_guest'])
+	if (!user()->is_guest)
 		$tracked_topics = get_tracked_topics();
 
 	// Navigation links for header and page numbering for title/meta description
@@ -194,7 +194,7 @@ $forum_page['frm-info'] = array(
 	'wildcard'	=> '<li><span>' . __('Wildcard info', 'search') . '</span></li>'
 );
 
-if (config()->o_search_all_forums == '1' || user()['is_admmod'])
+if (config()->o_search_all_forums == '1' || user()->is_admmod)
 	$forum_page['frm-info']['forums'] = '<li><span>' . __('Forum default info', 'search') . '</span></li>';
 else
 	$forum_page['frm-info']['forums'] = '<li><span>' . __('Forum require info', 'search') . '</span></li>';
@@ -230,7 +230,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 define('FORUM_PAGE', 'search');
 
 if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
-	!user()['is_admmod'])) || $advanced_search) {
+	!user()->is_admmod)) || $advanced_search) {
 
 	// Get the list of categories and forums
 	$query = array(
@@ -243,7 +243,7 @@ if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 			),
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.redirect_url IS NULL',

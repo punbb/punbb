@@ -13,8 +13,7 @@ require __DIR__ . '/vendor/pautoload.php';
 ($hook = get_hook('rg_start')) ? eval($hook) : null;
 
 // If we are logged in, we shouldn't be here
-if (!user()['is_guest'])
-{
+if (!user()->is_guest) {
 	header('Location: '.forum_link($forum_url['index']));
 	exit;
 }

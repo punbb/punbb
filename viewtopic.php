@@ -12,8 +12,9 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('vt_start')) ? eval($hook) : null;
 
-if (user()['g_read_board'] == '0')
+if (user()->g_read_board == '0') {
 	message(__('No view'));
+}
 
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -53,17 +54,16 @@ if ($pid)
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 	$num_posts = db()->result($result) + 1;
 
-	$_GET['p'] = ceil($num_posts / user()['disp_posts']);
+	$_GET['p'] = ceil($num_posts / user()->disp_posts);
 }
 
 // If action=new, we redirect to the first new post (if any)
 else if ($action == 'new')
 {
-	if (!user()['is_guest'])
-	{
+	if (!user()->is_guest) {
 		// We need to check if this topic has been viewed recently by the user
 		$tracked_topics = get_tracked_topics();
-		$last_viewed = isset($tracked_topics['topics'][$id]) ? $tracked_topics['topics'][$id] : user()['last_visit'];
+		$last_viewed = isset($tracked_topics['topics'][$id]) ? $tracked_topics['topics'][$id] : user()->last_visit;
 
 		($hook = get_hook('vt_find_new_post')) ? eval($hook) : null;
 
@@ -120,18 +120,18 @@ $query = array(
 		),
 		array(
 			'LEFT JOIN'		=> 'forum_perms AS fp',
-			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 		)
 	),
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$id.' AND t.moved_to IS NULL'
 );
 
-if (!user()['is_guest'] && config()->o_subscriptions == '1')
+if (!user()->is_guest && config()->o_subscriptions == '1')
 {
 	$query['SELECT'] .= ', s.user_id AS is_subscribed';
 	$query['JOINS'][] = array(
 		'LEFT JOIN'	=> 'subscriptions AS s',
-		'ON'		=> '(t.id=s.topic_id AND s.user_id='.user()['id'].')'
+		'ON'		=> '(t.id=s.topic_id AND s.user_id='.user()->id.')'
 	);
 }
 
@@ -148,18 +148,18 @@ if (!$cur_topic)
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_topic['moderators'] != '') ? unserialize($cur_topic['moderators']) : array();
-$forum_page['is_admmod'] = (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && array_key_exists(user()['username'], $mods_array))) ? true : false;
+$forum_page['is_admmod'] = (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && array_key_exists(user()->username, $mods_array))) ? true : false;
 
 // Can we or can we not post replies?
 if ($cur_topic['closed'] == '0' || $forum_page['is_admmod']) {
-	user()->may_post = (($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1' || $forum_page['is_admmod']) ? true : false;
+	user()->may_post = (($cur_topic['post_replies'] == '' && user()->g_post_replies == '1') || $cur_topic['post_replies'] == '1' || $forum_page['is_admmod']) ? true : false;
 }
 else {
 	user()->may_post = false;
 }
 
 // Add/update this topic in our list of tracked topics
-if (!user()['is_guest'])
+if (!user()->is_guest)
 {
 	$tracked_topics = get_tracked_topics();
 	$tracked_topics['topics'][$id] = time();
@@ -167,10 +167,10 @@ if (!user()['is_guest'])
 }
 
 // Determine the post offset (based on $_GET['p'])
-$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()['disp_posts']);
+$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()->disp_posts);
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
-$forum_page['start_from'] = user()['disp_posts'] * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + user()['disp_posts']), ($cur_topic['num_replies'] + 1));
+$forum_page['start_from'] = user()->disp_posts * ($forum_page['page'] - 1);
+$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_posts), ($cur_topic['num_replies'] + 1));
 $forum_page['items_info'] = generate_items_info(__('Posts', 'topic'), ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 ($hook = get_hook('vt_modify_page_details')) ? eval($hook) : null;
@@ -199,10 +199,10 @@ $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
 	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['topic'],
 		__('Paging separator'), array($id, sef_friendly($cur_topic['subject']))).'</p>';
 
-if (user()['may_post'])
+if (user()->may_post)
 	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link($forum_url['new_reply'], $id).'"><span>'.
 	__('Post reply', 'topic') . '</span></a></p>';
-else if (user()['is_guest'])
+else if (user()->is_guest)
 	$forum_page['page_post']['posting'] = '<p class="posting">'.
 		sprintf(__('Login to post', 'topic'), '<a href="'.forum_link($forum_url['login']).'">'.
 		__('login').'</a>', '<a href="'.forum_link($forum_url['register']).'">'.
@@ -221,13 +221,13 @@ $forum_page['main_head_options'] = array(
 		__('RSS topic feed', 'topic') . '</a></span>'
 );
 
-if (!user()['is_guest'] && config()->o_subscriptions == '1')
+if (!user()->is_guest && config()->o_subscriptions == '1')
 {
 	if ($cur_topic['is_subscribed'])
-		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['unsubscribe'], array($id, generate_form_token('unsubscribe'.$id.user()['id']))).'"><em>'.
+		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['unsubscribe'], array($id, generate_form_token('unsubscribe'.$id.user()->id))).'"><em>'.
 			__('Unsubscribe', 'topic') . '</em></a></span>';
 	else
-		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['subscribe'], array($id, generate_form_token('subscribe'.$id.user()['id']))).'" title="'.
+		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['subscribe'], array($id, generate_form_token('subscribe'.$id.user()->id))).'" title="'.
 			__('Subscribe info', 'topic') . '">'.
 			__('Subscribe', 'topic') . '</a></span>';
 }
@@ -277,8 +277,8 @@ define('FORUM_PAGE', 'viewtopic');
 
 // Display quick post if enabled
 if (config()->o_quickpost == '1' &&
-	!user()['is_guest'] &&
-	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1')) &&
+	!user()->is_guest &&
+	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && user()->g_post_replies == '1')) &&
 	($cur_topic['closed'] == '0' || $forum_page['is_admmod']))
 {
 	$view_show_qpost = 1;
@@ -308,7 +308,7 @@ $query = array(
 	'FROM'		=> 'posts AS p',
 	'WHERE'		=> 'p.topic_id='.$id,
 	'ORDER BY'	=> 'p.id',
-	'LIMIT'		=> $forum_page['start_from'].','.user()['disp_posts']
+	'LIMIT'		=> $forum_page['start_from'].','.user()->disp_posts
 );
 
 ($hook = get_hook('vt_qr_get_posts_id')) ? eval($hook) : null;

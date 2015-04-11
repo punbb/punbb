@@ -14,12 +14,12 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('acg_start')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN)
+if (user()->g_id != FORUM_ADMIN) {
 	message(__('No permission'));
+}
 
 // Add a new category
-if (isset($_POST['add_cat']))
-{
+if (isset($_POST['add_cat'])) {
 	$new_cat_name = forum_trim($_POST['new_cat_name']);
 	if ($new_cat_name == '')
 		message(__('Must name category', 'admin_categories'));

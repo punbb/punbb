@@ -35,7 +35,7 @@ namespace punbb;
 
 			foreach ($forum_page['languages'] as $temp)
 			{
-				if (user()['language'] == $temp)
+				if (user()->language == $temp)
 					echo "\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
 				else
 					echo "\t\t\t\t\t\t".'<option value="'.$temp.'">'.$temp.'</option>'."\n";

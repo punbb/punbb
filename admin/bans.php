@@ -14,8 +14,10 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('aba_start')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN && (user()['g_moderator'] != '1' || user()['g_mod_ban_users'] == '0'))
+if (user()->g_id != FORUM_ADMIN &&
+		(user()->g_moderator != '1' || user()->g_mod_ban_users == '0')) {
 	message(__('No permission'));
+}
 
 // Add/edit a ban (stage 1)
 if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
@@ -142,8 +144,9 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 	);
-	if (user()['g_id'] == FORUM_ADMIN)
+	if (user()->g_id == FORUM_ADMIN) {
 		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	}
 	$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), forum_link($forum_url['admin_bans']));
 	$forum_page['crumbs'][] = __('Ban advanced', 'admin_bans');
 
@@ -249,7 +252,7 @@ else if (isset($_POST['add_edit_ban']))
 		$query = array(
 			'INSERT'	=> 'username, ip, email, message, expire, ban_creator',
 			'INTO'		=> 'bans',
-			'VALUES'	=> $ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.user()['id']
+			'VALUES'	=> $ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.user()->id
 		);
 
 		($hook = get_hook('aba_add_edit_ban_qr_add_ban')) ? eval($hook) : null;
@@ -327,8 +330,9 @@ $forum_page['crumbs'] = array(
 	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
 );
-if (user()['g_id'] == FORUM_ADMIN)
+if (user()->g_id == FORUM_ADMIN) {
 	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+}
 $forum_page['crumbs'][] = array(__('Bans', 'admin_common'), forum_link($forum_url['admin_bans']));
 
 
@@ -340,10 +344,10 @@ $query = array(
 
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 $forum_page['num_bans'] = db()->result($result);
-$forum_page['num_pages'] = ceil($forum_page['num_bans'] / user()['disp_topics']);
+$forum_page['num_pages'] = ceil($forum_page['num_bans'] / user()->disp_topics);
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-$forum_page['start_from'] = user()['disp_topics'] * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + user()['disp_topics']), ($forum_page['num_bans']));
+$forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
+$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($forum_page['num_bans']));
 
 // Generate paging
 $forum_page['page_post']['paging'] =

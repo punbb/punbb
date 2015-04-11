@@ -41,7 +41,7 @@ if (!empty($posts_id))
 
 		if ($cur_post['poster_id'] > 1)
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
-				__('Topic byline', 'topic') : __('Reply byline', 'topic')), ((user()['g_view_users'] == '1') ? '<a title="'.
+				__('Topic byline', 'topic') : __('Reply byline', 'topic')), ((user()->g_view_users == '1') ? '<a title="'.
 				sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
 		else
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
@@ -64,7 +64,7 @@ if (!empty($posts_id))
 			// Generate author identification
 			if ($cur_post['poster_id'] > 1)
 			{
-				if (config()->o_avatars == '1' && user()['show_avatars'] != '0')
+				if (config()->o_avatars == '1' && user()->show_avatars != '0')
 				{
 					$forum_page['avatar_markup'] = generate_avatar_markup($cur_post['poster_id'], $cur_post['avatar'], $cur_post['avatar_width'], $cur_post['avatar_height'], $cur_post['username']);
 
@@ -72,7 +72,7 @@ if (!empty($posts_id))
 						$forum_page['author_ident']['avatar'] = '<li class="useravatar">'.$forum_page['avatar_markup'].'</li>';
 				}
 
-				$forum_page['author_ident']['username'] = '<li class="username">'.((user()['g_view_users'] == '1') ? '<a title="'.
+				$forum_page['author_ident']['username'] = '<li class="username">'.((user()->g_view_users == '1') ? '<a title="'.
 					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
 				$forum_page['author_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($cur_post).'</span></li>';
 
@@ -111,12 +111,12 @@ if (!empty($posts_id))
 					$forum_page['author_info']['registered'] = '<li><span>'.
 						__('Registered', 'topic') . ' <strong>'.format_time($cur_post['registered'], 1).'</strong></span></li>';
 
-					if (config()->o_show_post_count == '1' || user()['is_admmod'])
+					if (config()->o_show_post_count == '1' || user()->is_admmod)
 						$forum_page['author_info']['posts'] = '<li><span>'.
 							__('Posts info', 'topic') . ' <strong>'.forum_number_format($cur_post['num_posts']).'</strong></span></li>';
 				}
 
-				if (user()['is_admmod'])
+				if (user()->is_admmod)
 				{
 					if ($cur_post['admin_note'] != '')
 						$forum_page['author_info']['note'] = '<li><span>'.
@@ -126,7 +126,7 @@ if (!empty($posts_id))
 		}
 
 		// Generate IP information for moderators/administrators
-		if (user()['is_admmod'])
+		if (user()->is_admmod)
 			$forum_page['author_info']['ip'] = '<li><span>'.
 				__('IP', 'topic') . ' <a href="'.forum_link($forum_url['get_host'], $cur_post['id']).'">'.$cur_post['poster_ip'].'</a></span></li>';
 
@@ -144,16 +144,16 @@ if (!empty($posts_id))
 							forum_htmlencode((config()->o_censoring == '1') ? censor_words($cur_post['url']) : $cur_post['url']).'">'.
 							sprintf(__('Visit website', 'topic'), '<span>'.
 								sprintf(__('User possessive', 'topic'), forum_htmlencode($cur_post['username'])).'</span>').'</a></span>';
-					if ((($cur_post['email_setting'] == '0' && !user()['is_guest']) || user()['is_admmod']) && user()['g_send_email'] == '1')
+					if ((($cur_post['email_setting'] == '0' && !user()->is_guest) || user()->is_admmod) && user()->g_send_email == '1')
 						$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="mailto:'.forum_htmlencode($cur_post['email']).'">'.
 						__('E-mail', 'topic') . '<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
-					else if ($cur_post['email_setting'] == '1' && !user()['is_guest'] && user()['g_send_email'] == '1')
+					else if ($cur_post['email_setting'] == '1' && !user()->is_guest && user()->g_send_email == '1')
 						$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['email'], $cur_post['poster_id']).'">'.
 						__('E-mail', 'topic') . '<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
 				}
 				else
 				{
-					if ($cur_post['poster_email'] != '' && user()['is_admmod'] && user()['g_send_email'] == '1')
+					if ($cur_post['poster_email'] != '' && user()->is_admmod && user()->g_send_email == '1')
 						$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="mailto:'.forum_htmlencode($cur_post['poster_email']).'">'.
 						__('E-mail', 'topic') . '<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
 				}
@@ -166,7 +166,7 @@ if (!empty($posts_id))
 		}
 
 		// Generate the post options links
-		if (!user()['is_guest'])
+		if (!user()->is_guest)
 		{
 			$forum_page['post_actions']['report'] = '<span class="report-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['report'], $cur_post['id']).'">'.
 				__('Report', 'topic') . '<span> '.
@@ -176,20 +176,20 @@ if (!empty($posts_id))
 			{
 				if ($cur_topic['closed'] == '0')
 				{
-					if ($cur_post['poster_id'] == user()['id'])
+					if ($cur_post['poster_id'] == user()->id)
 					{
-						if (($forum_page['start_from'] + $forum_page['item_count']) == 1 && user()['g_delete_topics'] == '1')
+						if (($forum_page['start_from'] + $forum_page['item_count']) == 1 && user()->g_delete_topics == '1')
 							$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.
 								__('Delete topic', 'topic') . '</a></span>';
-						if (($forum_page['start_from'] + $forum_page['item_count']) > 1 && user()['g_delete_posts'] == '1')
+						if (($forum_page['start_from'] + $forum_page['item_count']) > 1 && user()->g_delete_posts == '1')
 							$forum_page['post_actions']['delete'] = '<span class="delete-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['delete'], $cur_post['id']).'">'.
 								__('Delete', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
-						if (user()['g_edit_posts'] == '1')
+						if (user()->g_edit_posts == '1')
 							$forum_page['post_actions']['edit'] = '<span class="edit-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['edit'], $cur_post['id']).'">'.
 								__('Edit', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 					}
 
-					if (($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1')
+					if (($cur_topic['post_replies'] == '' && user()->g_post_replies == '1') || $cur_topic['post_replies'] == '1')
 						$forum_page['post_actions']['quote'] = '<span class="quote-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['quote'], array($id, $cur_post['id'])).'">'.
 							__('Quote', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 				}
@@ -213,7 +213,7 @@ if (!empty($posts_id))
 		{
 			if ($cur_topic['closed'] == '0')
 			{
-				if (($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1')
+				if (($cur_topic['post_replies'] == '' && user()->g_post_replies == '1') || $cur_topic['post_replies'] == '1')
 					$forum_page['post_actions']['quote'] = '<span class="report-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['quote'], array($id, $cur_post['id'])).'">'.
 					__('Quote', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 			}
@@ -254,7 +254,7 @@ if (!empty($posts_id))
 		$forum_page['message']['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 		// Do signature parsing/caching
-		if ($cur_post['signature'] != '' && user()['show_sig'] != '0' &&
+		if ($cur_post['signature'] != '' && user()->show_sig != '0' &&
 				config()->o_signatures == '1')
 		{
 			if (!isset($signature_cache[$cur_post['poster_id']]))

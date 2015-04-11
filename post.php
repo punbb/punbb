@@ -14,8 +14,9 @@ require __DIR__ . '/vendor/pautoload.php';
 
 ($hook = get_hook('po_start')) ? eval($hook) : null;
 
-if (user()['g_read_board'] == '0')
+if (user()->g_read_board == '0') {
 	message(__('No view'));
+}
 
 $tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
 $fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
@@ -36,11 +37,11 @@ if ($tid)
 			),
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			),
 			array(
 				'LEFT JOIN'		=> 'subscriptions AS s',
-				'ON'			=> '(t.id=s.topic_id AND s.user_id='.user()['id'].')'
+				'ON'			=> '(t.id=s.topic_id AND s.user_id='.user()->id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$tid
@@ -56,7 +57,7 @@ else
 		'JOINS'		=> array(
 			array(
 				'LEFT JOIN'		=> 'forum_perms AS fp',
-				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()['g_id'].')'
+				'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 			)
 		),
 		'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fid
@@ -79,13 +80,13 @@ if ($cur_posting['redirect_url'] != '')
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_posting['moderators'] != '') ? unserialize($cur_posting['moderators']) : array();
-$forum_page['is_admmod'] = (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && array_key_exists(user()['username'], $mods_array))) ? true : false;
+$forum_page['is_admmod'] = (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && array_key_exists(user()->username, $mods_array))) ? true : false;
 
 ($hook = get_hook('po_pre_permission_check')) ? eval($hook) : null;
 
 // Do we have permission to post?
-if ((($tid && (($cur_posting['post_replies'] == '' && user()['g_post_replies'] == '0') || $cur_posting['post_replies'] == '0')) ||
-	($fid && (($cur_posting['post_topics'] == '' && user()['g_post_topics'] == '0') || $cur_posting['post_topics'] == '0')) ||
+if ((($tid && (($cur_posting['post_replies'] == '' && user()->g_post_replies == '0') || $cur_posting['post_replies'] == '0')) ||
+	($fid && (($cur_posting['post_topics'] == '' && user()->g_post_topics == '0') || $cur_posting['post_topics'] == '0')) ||
 	(isset($cur_posting['closed']) && $cur_posting['closed'] == '1')) &&
 	!$forum_page['is_admmod'])
 	message(__('No permission'));
@@ -102,12 +103,16 @@ if (isset($_POST['form_sent']))
 	($hook = get_hook('po_form_submitted')) ? eval($hook) : null;
 
 	// Make sure form_user is correct
-	if ((user()['is_guest'] && $_POST['form_user'] != 'Guest') || (!user()['is_guest'] && $_POST['form_user'] != user()['username']))
+	if ((user()->is_guest && $_POST['form_user'] != 'Guest') ||
+			(!user()->is_guest && $_POST['form_user'] != user()->username)) {
 		message(__('Bad request'));
+	}
 
 	// Flood protection
-	if (!isset($_POST['preview']) && user()['last_post'] != '' && (time() - user()['last_post']) < user()['g_post_flood'] && (time() - user()['last_post']) >= 0)
-		$errors[] = sprintf(__('Flood', 'post'), user()['g_post_flood']);
+	if (!isset($_POST['preview']) && user()->last_post != '' &&
+			(time() - user()->last_post) < user()->g_post_flood && (time() - user()->last_post) >= 0) {
+		$errors[] = sprintf(__('Flood', 'post'), user()->g_post_flood);
+	}
 
 	// If it's a new topic
 	if ($fid)
@@ -123,10 +128,9 @@ if (isset($_POST['form_sent']))
 	}
 
 	// If the user is logged in we get the username and e-mail from forum_user
-	if (!user()['is_guest'])
-	{
-		$username = user()['username'];
-		$email = user()['email'];
+	if (!user()->is_guest) {
+		$username = user()->username;
+		$email = user()->email;
 	}
 	// Otherwise it should be in $_POST
 	else
@@ -151,7 +155,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	// If we're an administrator or moderator, make sure the CSRF token in $_POST is valid
-	if (user()['is_admmod'] && (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== generate_form_token(get_current_url())))
+	if (user()->is_admmod && (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== generate_form_token(get_current_url())))
 		$errors[] = __('CSRF token mismatch', 'post');
 
 	// Clean up message from POST
@@ -188,10 +192,10 @@ if (isset($_POST['form_sent']))
 		if ($tid)
 		{
 			$post_info = array(
-				'is_guest'		=> user()['is_guest'],
+				'is_guest'		=> user()->is_guest,
 				'poster'		=> $username,
-				'poster_id'		=> user()['id'],	// Always 1 for guest posts
-				'poster_email'	=> (user()['is_guest'] && $email != '') ? $email : null,	// Always null for non-guest posts
+				'poster_id'		=> user()->id,	// Always 1 for guest posts
+				'poster_email'	=> (user()->is_guest && $email != '') ? $email : null,	// Always null for non-guest posts
 				'subject'		=> $cur_posting['subject'],
 				'message'		=> $message,
 				'hide_smilies'	=> $hide_smilies,
@@ -211,10 +215,10 @@ if (isset($_POST['form_sent']))
 		else if ($fid)
 		{
 			$post_info = array(
-				'is_guest'		=> user()['is_guest'],
+				'is_guest'		=> user()->is_guest,
 				'poster'		=> $username,
-				'poster_id'		=> user()['id'],	// Always 1 for guest posts
-				'poster_email'	=> (user()['is_guest'] && $email != '') ? $email : null,	// Always null for non-guest posts
+				'poster_id'		=> user()->id,	// Always 1 for guest posts
+				'poster_email'	=> (user()->is_guest && $email != '') ? $email : null,	// Always null for non-guest posts
 				'subject'		=> $subject,
 				'message'		=> $message,
 				'hide_smilies'	=> $hide_smilies,
@@ -298,7 +302,7 @@ $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
-	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!user()['is_guest']) ? forum_htmlencode(user()['username']) : 'Guest').'" />',
+	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!user()->is_guest) ? forum_htmlencode(user()->username) : 'Guest').'" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 );
 

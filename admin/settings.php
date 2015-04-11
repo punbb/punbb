@@ -14,8 +14,9 @@ require __DIR__ . '/../vendor/pautoload.php';
 
 ($hook = get_hook('aop_start')) ? eval($hook) : null;
 
-if (user()['g_id'] != FORUM_ADMIN)
+if (user()->g_id != FORUM_ADMIN) {
 	message(__('No permission'));
+}
 
 $section = isset($_GET['section']) ? $_GET['section'] : null;
 

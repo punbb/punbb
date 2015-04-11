@@ -118,7 +118,7 @@ if (isset($_POST['form_sent']) && empty($action))
 // Logout
 else if ($action == 'out')
 {
-	if (user()['is_guest'] || !isset($_GET['id']) || $_GET['id'] != user()['id'])
+	if (user()->is_guest || !isset($_GET['id']) || $_GET['id'] != user()->id)
 	{
 		header('Location: '.forum_link($forum_url['index']));
 		exit;
@@ -126,7 +126,7 @@ else if ($action == 'out')
 
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
-	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('logout'.user()['id'])))
+	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('logout'.user()->id)))
 		csrf_confirm_form();
 
 	($hook = get_hook('li_logout_selected')) ? eval($hook) : null;
@@ -134,19 +134,18 @@ else if ($action == 'out')
 	// Remove user from "users online" list.
 	$query = array(
 		'DELETE'	=> 'online',
-		'WHERE'		=> 'user_id='.user()['id']
+		'WHERE'		=> 'user_id='.user()->id
 	);
 
 	($hook = get_hook('li_logout_qr_delete_online_user')) ? eval($hook) : null;
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Update last_visit (make sure there's something to update it with)
-	if (isset(user()['logged']))
-	{
+	if (isset(user()->logged)) {
 		$query = array(
 			'UPDATE'	=> 'users',
-			'SET'		=> 'last_visit='.user()['logged'],
-			'WHERE'		=> 'id='.user()['id']
+			'SET'		=> 'last_visit='.user()->logged,
+			'WHERE'		=> 'id='.user()->id
 		);
 
 		($hook = get_hook('li_logout_qr_update_last_visit')) ? eval($hook) : null;
@@ -168,8 +167,9 @@ else if ($action == 'out')
 // New password
 else if ($action == 'forget' || $action == 'forget_2')
 {
-	if (!user()['is_guest'])
+	if (!user()->is_guest) {
 		header('Location: '.forum_link($forum_url['index']));
+	}
 
 	($hook = get_hook('li_forgot_pass_selected')) ? eval($hook) : null;
 
@@ -214,7 +214,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 				($hook = get_hook('li_forgot_pass_pre_email')) ? eval($hook) : null;
 
 				// Load the "activate password" template
-				$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()['language'].'/mail_templates/activate_password.tpl'));
+				$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/activate_password.tpl'));
 
 				// The first row contains the subject
 				$first_crlf = strpos($mail_tpl, "\n");
@@ -286,8 +286,9 @@ else if ($action == 'forget' || $action == 'forget_2')
 	include FORUM_ROOT . 'include/render.php';
 }
 
-if (!user()['is_guest'])
+if (!user()->is_guest) {
 	header('Location: '.forum_link($forum_url['index']));
+}
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -295,7 +296,7 @@ $forum_page['form_action'] = forum_link($forum_url['login']);
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
-	'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()['prev_url']).'" />',
+	'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()->prev_url).'" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 );
 

@@ -89,7 +89,7 @@ namespace punbb;
 				sprintf(__('Search replies', 'topic'), forum_number_format($cur_set['num_replies']), '<a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.forum_htmlencode($cur_set['forum_name']).'</a>').'</small>';
 
 			// Generate author identification
-			$forum_page['user_ident'] = ($cur_set['poster_id'] > 1 && user()['g_view_users'] == '1') ? '<strong class="username"><a title="'.
+			$forum_page['user_ident'] = ($cur_set['poster_id'] > 1 && user()->g_view_users == '1') ? '<strong class="username"><a title="'.
 				sprintf(__('Go to profile', 'search'), forum_htmlencode($cur_set['pposter'])).'" href="'.forum_link($forum_url['user'], $cur_set['poster_id']).'">'.forum_htmlencode($cur_set['pposter']).'</a></strong>' : '<strong class="username">'.forum_htmlencode($cur_set['pposter']).'</strong>';
 
 			// Generate the post actions links
@@ -157,7 +157,7 @@ namespace punbb;
 			// Assemble the Topic heading
 
 			// Should we display the dot or not? :)
-			if (!user()['is_guest'] && config()->o_show_dot == '1' && $cur_set['has_posted'] == user()['id'])
+			if (!user()->is_guest && config()->o_show_dot == '1' && $cur_set['has_posted'] == user()->id)
 			{
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">'.
 					__('You posted indicator', 'forum') . '</span>';
@@ -189,14 +189,14 @@ namespace punbb;
 
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> '.implode(' ', $forum_page['item_title']).'</h3>';
 
-			$forum_page['item_pages'] = ceil(($cur_set['num_replies'] + 1) / user()['disp_posts']);
+			$forum_page['item_pages'] = ceil(($cur_set['num_replies'] + 1) / user()->disp_posts);
 
 			if ($forum_page['item_pages'] > 1)
 				$forum_page['item_nav']['pages'] = '<span>'.
 				__('Pages', 'forum') . '&#160;</span>'.paginate($forum_page['item_pages'], -1, $forum_url['topic'], __('Page separator'), array($cur_set['tid'], sef_friendly($cur_set['subject'])));
 
 			// Does this topic contain posts we haven't read? If so, tag it accordingly.
-			if (!user()['is_guest'] && $cur_set['last_post'] > user()['last_visit'] && (!isset($tracked_topics['topics'][$cur_set['tid']]) || $tracked_topics['topics'][$cur_set['tid']] < $cur_set['last_post']) && (!isset($tracked_topics['forums'][$cur_set['forum_id']]) || $tracked_topics['forums'][$cur_set['forum_id']] < $cur_set['last_post']))
+			if (!user()->is_guest && $cur_set['last_post'] > user()->last_visit && (!isset($tracked_topics['topics'][$cur_set['tid']]) || $tracked_topics['topics'][$cur_set['tid']] < $cur_set['last_post']) && (!isset($tracked_topics['forums'][$cur_set['forum_id']]) || $tracked_topics['forums'][$cur_set['forum_id']] < $cur_set['last_post']))
 			{
 				$forum_page['item_nav']['new'] = '<em class="item-newposts"><a href="'.forum_link($forum_url['topic_new_posts'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'" title="'.
 					__('New posts info', 'forum') . '">'.
