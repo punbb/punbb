@@ -3171,6 +3171,8 @@ function redirect($destination_url, $message)
 // Display a simple error message
 function error()
 {
+	global $_PUNBB;
+
 	if (!headers_sent())
 	{
 		// if no HTTP responce code is set we send 503
@@ -3201,11 +3203,10 @@ function error()
 		$message = func_get_arg(0);
 
 	// Set a default title and gzip setting if the script failed before forum_config could be populated
-	//if (empty(config()))
-	//{
-	//	config()['o_board_title'] = 'PunBB';
-	//	config()['o_gzip'] = '0';
-	//}
+	if (empty(config())) {
+		$_PUNBB['config']['o_board_title'] = 'PunBB';
+		$_PUNBB['config']['o_gzip'] = '0';
+	}
 
 	// Empty all output buffers and stop buffering
 	while (@ob_end_clean());
