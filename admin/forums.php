@@ -56,9 +56,7 @@ if (isset($_POST['add_forum']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the quickjump cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_quickjump_cache();
 
 	// Add flash message
@@ -119,9 +117,7 @@ else if (isset($_GET['del_forum']))
 		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+		require FORUM_ROOT . 'include/cache.php';
 		generate_quickjump_cache();
 
 		// Add flash message
@@ -371,9 +367,7 @@ else if (isset($_GET['edit_forum']))
 		}
 
 		// Regenerate the quickjump cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+		require FORUM_ROOT . 'include/cache.php';
 		generate_quickjump_cache();
 
 		// Add flash message
@@ -396,9 +390,7 @@ else if (isset($_GET['edit_forum']))
 		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+		require FORUM_ROOT . 'include/cache.php';
 		generate_quickjump_cache();
 
 		flash()->add_info(__('Permissions reverted', 'admin_forums'));

@@ -97,13 +97,10 @@ if (defined('PUN') || !isset(config()['o_database_revision']) || config()['o_dat
 if (file_exists(FORUM_CACHE_DIR.'cache_hooks.php'))
 	include FORUM_CACHE_DIR.'cache_hooks.php';
 
-if (!defined('FORUM_HOOKS_LOADED'))
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+if (!defined('FORUM_HOOKS_LOADED')) {
+	require FORUM_ROOT . 'include/cache.php';
 	generate_hooks_cache();
-	require FORUM_CACHE_DIR.'cache_hooks.php';
+	require FORUM_CACHE_DIR . 'cache_hooks.php';
 }
 
 init_new_style_hooks();

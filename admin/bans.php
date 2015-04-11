@@ -268,9 +268,7 @@ else if (isset($_POST['add_edit_ban']))
 	}
 
 	// Regenerate the bans cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_bans_cache();
 
 	flash()->add_info((($_POST['mode'] == 'edit') ?
@@ -305,9 +303,7 @@ else if (isset($_GET['del_ban']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the bans cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_bans_cache();
 
 	flash()->add_info(__('Ban removed', 'admin_bans'));

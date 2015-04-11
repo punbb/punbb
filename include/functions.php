@@ -940,13 +940,10 @@ function censor_words($text)
 		if (file_exists(FORUM_CACHE_DIR.'cache_censors.php'))
 			include FORUM_CACHE_DIR.'cache_censors.php';
 
-		if (!defined('FORUM_CENSORS_LOADED'))
-		{
-			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				require FORUM_ROOT.'include/cache.php';
-
+		if (!defined('FORUM_CENSORS_LOADED')) {
+			require FORUM_ROOT . 'include/cache.php';
 			generate_censors_cache();
-			require FORUM_CACHE_DIR.'cache_censors.php';
+			require FORUM_CACHE_DIR . 'cache_censors.php';
 		}
 	}
 
@@ -1079,13 +1076,10 @@ function get_title($user)
 		if (file_exists(FORUM_CACHE_DIR.'cache_ranks.php'))
 			include FORUM_CACHE_DIR.'cache_ranks.php';
 
-		if (!defined('FORUM_RANKS_LOADED'))
-		{
-			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				require FORUM_ROOT.'include/cache.php';
-
+		if (!defined('FORUM_RANKS_LOADED')) {
+			require FORUM_ROOT . 'include/cache.php';
 			generate_ranks_cache();
-			require FORUM_CACHE_DIR.'cache_ranks.php';
+			require FORUM_CACHE_DIR . 'cache_ranks.php';
 		}
 	}
 
@@ -1694,11 +1688,8 @@ function check_bans()
 	}
 
 	// If we removed any expired bans during our run-through, we need to regenerate the bans cache
-	if ($bans_altered)
-	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+	if ($bans_altered) {
+		require FORUM_ROOT . 'include/cache.php';
 		generate_bans_cache();
 	}
 }
@@ -2043,14 +2034,10 @@ function delete_user($user_id, $delete_posts = false)
 
 	// If the user is a moderator or an administrator, we remove him/her from the moderator list in all forums
 	// and regenerate the bans cache (in case he/she created any bans)
-	if ($user['group_id'] == FORUM_ADMIN || $user['g_moderator'] == '1')
-	{
+	if ($user['group_id'] == FORUM_ADMIN || $user['g_moderator'] == '1') {
 		clean_forum_moderators();
-
 		// Regenerate the bans cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+		require FORUM_ROOT . 'include/cache.php';
 		generate_bans_cache();
 	}
 

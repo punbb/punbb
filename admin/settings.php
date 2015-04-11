@@ -237,11 +237,8 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Regenerate the config cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_config_cache();
-
 
 	// If changed sef - remove quick-jump cache
 	if (!empty(config()['o_sef']) && !empty($form['sef']))

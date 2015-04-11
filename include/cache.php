@@ -11,9 +11,11 @@
 namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
-if (!defined('FORUM'))
+if (!defined('FORUM')) {
 	exit;
+}
 
+if (!function_exists('write_cache_file')) {
 
 // Safe create or write of cache files
 // Use LOCK
@@ -77,7 +79,6 @@ function generate_config_cache()
 	// Output config as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_config.php',
 		'<?php'."\n\n".
-			'define(\'FORUM_CONFIG_LOADED\', 1);'."\n\n".
 			'return '.var_export($output, true).';'."\n\n"
 		))
 	{
@@ -605,4 +606,4 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 	}
 }
 
-define('FORUM_CACHE_FUNCTIONS_LOADED', 1);
+}

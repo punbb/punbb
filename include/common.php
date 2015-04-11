@@ -86,27 +86,22 @@ if (user()['g_id'] == FORUM_ADMIN)
 	// Regenerate cache only if automatic updates are enabled and if the cache is more than 12 hours old
 	if (config()['o_check_for_updates'] == '1' && (!defined('FORUM_UPDATES_LOADED') || $forum_updates['cached'] < (time() - 43200)))
 	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+		require FORUM_ROOT . 'include/cache.php';
 		generate_updates_cache();
-		require FORUM_CACHE_DIR.'cache_updates.php';
+		require FORUM_CACHE_DIR . 'cache_updates.php';
 	}
 }
 
 // Load cached bans
-if (file_exists(FORUM_CACHE_DIR.'cache_bans.php'))
+if (file_exists(FORUM_CACHE_DIR.'cache_bans.php')) {
 	include FORUM_CACHE_DIR.'cache_bans.php';
-
-if (!defined('FORUM_BANS_LOADED'))
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
-	generate_bans_cache();
-	require FORUM_CACHE_DIR.'cache_bans.php';
 }
 
+if (!defined('FORUM_BANS_LOADED')) {
+	require FORUM_ROOT . 'include/cache.php';
+	generate_bans_cache();
+	require FORUM_CACHE_DIR . 'cache_bans.php';
+}
 // Check if current user is banned
 check_bans();
 

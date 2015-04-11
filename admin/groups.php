@@ -210,9 +210,7 @@ else if (isset($_POST['add_edit_group']))
 	}
 
 	// Regenerate the quickjump cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_quickjump_cache();
 
 	// Add flash message
@@ -259,9 +257,7 @@ else if (isset($_POST['set_default_group']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the config cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_config_cache();
 
 	// Add flash message
@@ -346,9 +342,7 @@ else if (isset($_GET['del_group']))
 		clean_forum_moderators();
 
 		// Regenerate the quickjump cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require FORUM_ROOT.'include/cache.php';
-
+		require FORUM_ROOT . 'include/cache.php';
 		generate_quickjump_cache();
 
 		// Add flash message

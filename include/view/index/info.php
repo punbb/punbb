@@ -8,13 +8,10 @@ if (file_exists(FORUM_CACHE_DIR.'cache_stats.php'))
 	include FORUM_CACHE_DIR.'cache_stats.php';
 
 // Regenerate cache only if the cache is more than 30 minutes old
-if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800))
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800)) {
+	require FORUM_ROOT . 'include/cache.php';
 	generate_stats_cache();
-	require FORUM_CACHE_DIR.'cache_stats.php';
+	require FORUM_CACHE_DIR . 'cache_stats.php';
 }
 
 $stats_list['no_of_users'] =

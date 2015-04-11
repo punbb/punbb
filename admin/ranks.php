@@ -54,9 +54,7 @@ if (isset($_POST['add_rank']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_ranks_cache();
 
 	// Add flash message
@@ -107,8 +105,7 @@ else if (isset($_POST['update']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
+	require FORUM_ROOT . 'include/cache.php';
 
 	generate_ranks_cache();
 
@@ -137,9 +134,7 @@ else if (isset($_POST['remove']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+	require FORUM_ROOT . 'include/cache.php';
 	generate_ranks_cache();
 
 	// Add flash message
@@ -155,13 +150,10 @@ else if (isset($_POST['remove']))
 if (file_exists(FORUM_CACHE_DIR.'cache_ranks.php'))
 	include FORUM_CACHE_DIR.'cache_ranks.php';
 
-if (!defined('FORUM_RANKS_LOADED'))
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require FORUM_ROOT.'include/cache.php';
-
+if (!defined('FORUM_RANKS_LOADED')) {
+	require FORUM_ROOT . 'include/cache.php';
 	generate_ranks_cache();
-	require FORUM_CACHE_DIR.'cache_ranks.php';
+	require FORUM_CACHE_DIR . 'cache_ranks.php';
 }
 
 

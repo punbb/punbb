@@ -75,10 +75,8 @@ config(function () {
 		$_PUNBB['config'] = include FORUM_CACHE_DIR . 'cache_config.php';
 	}
 
-	if (!defined('FORUM_CONFIG_LOADED')) {
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED')) {
-			require FORUM_ROOT . 'include/cache.php';
-		}
+	if (empty($_PUNBB['config'])) {
+		require FORUM_ROOT . 'include/cache.php';
 		generate_config_cache();
 		$_PUNBB['config'] = include FORUM_CACHE_DIR . 'cache_config.php';
 	}

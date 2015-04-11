@@ -229,11 +229,7 @@ else if (isset($_POST['form_sent']))
 			else
 			{
 				// Remove cache file with forum stats
-				if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				{
-					require FORUM_ROOT.'include/cache.php';
-				}
-
+				require FORUM_ROOT . 'include/cache.php';
 				clean_stats_cache();
 			}
 
