@@ -4,8 +4,8 @@ namespace punbb;
 global $forum_url;
 
 $visit_links = array();
-if (user()['g_read_board'] == '1' && user()['g_search'] == '1') {
-	if (!user()['is_guest']) {
+if (user()->g_read_board == '1' && user()->g_search == '1') {
+	if (!user()->is_guest) {
 		$visit_links['newposts'] = '<span id="visit-new"'.(empty($visit_links) ?
 			' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_new']).
 			'" title="' . __('New posts title') . '">'.

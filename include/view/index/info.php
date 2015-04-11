@@ -3,9 +3,9 @@ namespace punbb;
 
 ($hook = get_hook('in_info_output_start')) ? eval($hook) : null;
 
-
-if (file_exists(FORUM_CACHE_DIR.'cache_stats.php'))
+if (file_exists(FORUM_CACHE_DIR.'cache_stats.php')) {
 	include FORUM_CACHE_DIR.'cache_stats.php';
+}
 
 // Regenerate cache only if the cache is more than 30 minutes old
 if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800)) {
@@ -17,7 +17,8 @@ if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800)) 
 $stats_list['no_of_users'] =
 	'<li class="st-users"><span>'.sprintf(__('No of users', 'index'), '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
 $stats_list['newest_user'] =
-	'<li class="st-users"><span>'.sprintf(__('Newest user', 'index'), '<strong>'.(user()['g_view_users'] == '1' ? '<a href="'.forum_link($forum_url['user'], $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
+	'<li class="st-users"><span>'.sprintf(__('Newest user', 'index'), '<strong>'.
+			(user()->g_view_users == '1' ? '<a href="'.forum_link($forum_url['user'], $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
 $stats_list['no_of_topics'] =
 	'<li class="st-activity"><span>'.sprintf(__('No of topics', 'index'), '<strong>'.forum_number_format($forum_stats['total_topics']).'</strong>').'</span></li>';
 $stats_list['no_of_posts'] =

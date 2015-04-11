@@ -75,7 +75,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 		$forum_page['item_title']['title'] = '<a href="'.forum_link($forum_url['forum'], array($cur_forum['fid'], sef_friendly($cur_forum['forum_name']))).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a>';
 
 		// Are there new posts since our last visit?
-		if (!user()['is_guest'] && $cur_forum['last_post'] > user()['last_visit'] && (empty($tracked_topics['forums'][$cur_forum['fid']]) || $cur_forum['last_post'] > $tracked_topics['forums'][$cur_forum['fid']]))
+		if (!user()->is_guest && $cur_forum['last_post'] > user()->last_visit && (empty($tracked_topics['forums'][$cur_forum['fid']]) || $cur_forum['last_post'] > $tracked_topics['forums'][$cur_forum['fid']]))
 		{
 			// There are new posts in this forum, but have we read all of them already?
 			foreach ($new_topics[$cur_forum['fid']] as $check_topic_id => $check_last_post)
@@ -109,7 +109,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 			$forum_page['item_mods'] = array();
 
 			foreach ($forum_page['mods_array'] as $mod_username => $mod_id)
-				$forum_page['item_mods'][] = (user()['g_view_users'] == '1') ? '<a href="'.forum_link($forum_url['user'], $mod_id).'">'.forum_htmlencode($mod_username).'</a>' : forum_htmlencode($mod_username);
+				$forum_page['item_mods'][] = (user()->g_view_users == '1') ? '<a href="'.forum_link($forum_url['user'], $mod_id).'">'.forum_htmlencode($mod_username).'</a>' : forum_htmlencode($mod_username);
 
 			($hook = get_hook('in_row_modify_modlist')) ? eval($hook) : null;
 

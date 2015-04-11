@@ -449,12 +449,12 @@ function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null,
 		return ($no_text ? '' : __('Never'));
 
 	if ($date_format == null)
-		$date_format = $forum_date_formats[user()['date_format']];
+		$date_format = $forum_date_formats[user()->date_format];
 
 	if ($time_format == null)
-		$time_format = $forum_time_formats[user()['time_format']];
+		$time_format = $forum_time_formats[user()->time_format];
 
-	$diff = (user()['timezone'] + user()['dst']) * 3600;
+	$diff = (user()->timezone + user()->dst) * 3600;
 	$timestamp += $diff;
 	$now = time();
 
@@ -503,18 +503,18 @@ function generate_navlinks()
 	$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['index']).'">'.
 		__('Index') . '</a></li>';
 
-	if (user()['g_read_board'] == '1' && user()['g_view_users'] == '1')
+	if (user()->g_read_board == '1' && user()->g_view_users == '1')
 		$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['users']).'">'.
 		__('User list') . '</a></li>';
 
-	if (config()->o_rules == '1' && (!user()['is_guest'] || user()['g_read_board'] == '1' ||
+	if (config()->o_rules == '1' && (!user()->is_guest || user()->g_read_board == '1' ||
 			config()->o_regs_allow == '1'))
 		$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['rules']).'">'.
 		__('Rules') . '</a></li>';
 
-	if (user()['is_guest'])
+	if (user()->is_guest)
 	{
-		if (user()['g_read_board'] == '1' && user()['g_search'] == '1')
+		if (user()->g_read_board == '1' && user()->g_search == '1')
 			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
 			__('Search') . '</a></li>';
 
@@ -525,26 +525,28 @@ function generate_navlinks()
 	}
 	else
 	{
-		if (!user()['is_admmod'])
+		if (!user()->is_admmod)
 		{
-			if (user()['g_read_board'] == '1' && user()['g_search'] == '1')
+			if (user()->g_read_board == '1' && user()->g_search == '1')
 				$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
 				__('Search') . '</a></li>';
 
-			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], user()['id']).'">'.
+			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.
+				forum_link($forum_url['user'], user()->id).'">'.
 				__('Profile') . '</a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array(user()['id'], generate_form_token('logout'.user()['id']))).'">'.
+			$links['logout'] = '<li id="navlogout"><a href="'.
+				forum_link($forum_url['logout'], array(user()->id, generate_form_token('logout'.user()->id))).'">'.
 				__('Logout') . '</a></li>';
 		}
 		else
 		{
 			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
 				__('Search') . '</a></li>';
-			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], user()['id']).'">'.
+			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], user()->id).'">'.
 				__('Profile') . '</a></li>';
 			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.
 				__('Admin') . '</a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array(user()['id'], generate_form_token('logout'.user()['id']))).'">'.
+			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array(user()->id, generate_form_token('logout'.user()->id))).'">'.
 				__('Logout') . '</a></li>';
 		}
 	}
@@ -895,8 +897,9 @@ function sef_friendly($str)
 {
 	static $lang_url_replace, $forum_reserved_strings;
 
-	if (!isset($lang_url_replace))
-		require FORUM_ROOT.'lang/'.user()['language'].'/url_replace.php';
+	if (!isset($lang_url_replace)) {
+		require FORUM_ROOT . 'lang/' . user()->language . '/url_replace.php';
+	}
 
 	if (!isset($forum_reserved_strings))
 	{
@@ -1223,9 +1226,9 @@ function validate_search_word($word)
 
 	if (!isset($stopwords))
 	{
-		if (file_exists(FORUM_ROOT.'lang/'.user()['language'].'/stopwords.txt'))
+		if (file_exists(FORUM_ROOT.'lang/'.user()->language.'/stopwords.txt'))
 		{
-			$stopwords = file(FORUM_ROOT.'lang/'.user()['language'].'/stopwords.txt');
+			$stopwords = file(FORUM_ROOT.'lang/'.user()->language.'/stopwords.txt');
 			$stopwords = array_map('forum_trim', $stopwords);
 			$stopwords = array_filter($stopwords);
 		}
@@ -1283,7 +1286,7 @@ function generate_form_token($target_url)
 	if ($return != null)
 		return $return;
 
-	return sha1(str_replace('&amp;', '&', $target_url).user()['csrf_token']);
+	return sha1(str_replace('&amp;', '&', $target_url).user()->csrf_token);
 }
 
 
@@ -1354,12 +1357,13 @@ function authenticate_user($user, $password, $password_is_hash = false)
 
 	($hook = get_hook('fn_authenticate_user_qr_get_user')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
-	$_PUNBB['user'] = db()->fetch_assoc($result);
+	$_PUNBB['user'] = (object)db()->fetch_assoc($result);
 
-	if (!isset(user()['id']) ||
-		($password_is_hash && $password != user()['password']) ||
-		(!$password_is_hash && forum_hash($password, user()['salt']) != user()['password']))
+	if (!isset(user()->id) ||
+			($password_is_hash && $password != user()->password) ||
+			(!$password_is_hash && forum_hash($password, user()->salt) != user()->password)) {
 		set_default_user();
+	}
 
 	($hook = get_hook('fn_authenticate_user_end')) ? eval($hook) : null;
 }
@@ -1397,11 +1401,12 @@ function cookie_login(&$user)
 		authenticate_user(intval($cookie['user_id']), $cookie['password_hash'], true);
 
 		// We now validate the cookie hash
-		if ($cookie['expire_hash'] !== sha1($user['salt'].$user['password'].forum_hash(intval($cookie['expiration_time']), $user['salt'])))
+		if ($cookie['expire_hash'] !== sha1($user->salt.$user->password.forum_hash(intval($cookie['expiration_time']), $user->salt))) {
 			set_default_user();
+		}
 
 		// If we got back the default user, the login failed
-		if ($user['id'] == '1')
+		if ($user->id == '1')
 		{
 			forum_setcookie($cookie_name, base64_encode('1|'.random_key(8, false, true).'|'.$expire.'|'.random_key(8, false, true)), $expire);
 			return;
@@ -1410,49 +1415,53 @@ function cookie_login(&$user)
 		// Send a new, updated cookie with a new expiration timestamp
 		$expire = (intval($cookie['expiration_time']) > $now + config()->o_timeout_visit) ?
 			$now + 1209600 : $now + config()->o_timeout_visit;
-		forum_setcookie($cookie_name, base64_encode($user['id'].'|'.$user['password'].'|'.$expire.'|'.sha1($user['salt'].$user['password'].forum_hash($expire, $user['salt']))), $expire);
+		forum_setcookie($cookie_name, base64_encode($user->id.'|'.$user->password.'|'.$expire.'|'.sha1($user->salt.$user->password.forum_hash($expire, $user->salt))), $expire);
 
 		// Set a default language if the user selected language no longer exists
-		if (!file_exists(FORUM_ROOT.'lang/'.$user['language'].'/common.php'))
-			$user['language'] = config()->o_default_lang;
+		if (!file_exists(FORUM_ROOT.'lang/'.$user->language.'/common.php')) {
+			$user->language = config()->o_default_lang;
+		}
 
 		// Set a default style if the user selected style no longer exists
-		if (!file_exists(FORUM_ROOT.'style/'.$user['style'].'/'.$user['style'].'.php'))
-			$user['style'] = config()->o_default_style;
+		if (!file_exists(FORUM_ROOT.'style/'.$user->style.'/'.$user->style.'.php'))
+			$user->style = config()->o_default_style;
 
-		if (!$user['disp_topics'])
-			$user['disp_topics'] = config()->o_disp_topics_default;
-		if (!$user['disp_posts'])
-			$user['disp_posts'] = config()->o_disp_posts_default;
+		if (!$user->disp_topics) {
+			$user->disp_topics = config()->o_disp_topics_default;
+		}
+		if (!$user->disp_posts) {
+			$user->disp_posts = config()->o_disp_posts_default;
+		}
 
 		// Check user has a valid date and time format
-		if (!isset($forum_time_formats[$user['time_format']]))
-			$user['time_format'] = 0;
-		if (!isset($forum_date_formats[$user['date_format']]))
-			$user['date_format'] = 0;
+		if (!isset($forum_time_formats[$user->time_format])) {
+			$user->time_format = 0;
+		}
+		if (!isset($forum_date_formats[$user->date_format])) {
+			$user->date_format = 0;
+		}
 
 		// Define this if you want this visit to affect the online list and the users last visit data
 		if (!defined('FORUM_QUIET_VISIT'))
 		{
 			// Update the online list
-			if (!$user['logged'])
-			{
-				$user['logged'] = $now;
-				$user['csrf_token'] = random_key(40, false, true);
-				$user['prev_url'] = get_current_url(255);
+			if (!$user->logged) {
+				$user->logged = $now;
+				$user->csrf_token = random_key(40, false, true);
+				$user->prev_url = get_current_url(255);
 
 				// REPLACE INTO avoids a user having two rows in the online table
 				$query = array(
 					'REPLACE'	=> 'user_id, ident, logged, csrf_token',
 					'INTO'		=> 'online',
-					'VALUES'	=> $user['id'].', \''.db()->escape($user['username']).'\', '.$user['logged'].', \''.$user['csrf_token'].'\'',
-					'UNIQUE'	=> 'user_id='.$user['id']
+					'VALUES'	=> $user->id.', \''.db()->escape($user->username).'\', '.$user->logged.', \''.$user->csrf_token.'\'',
+					'UNIQUE'	=> 'user_id='.$user->id
 				);
 
-				if ($user['prev_url'] != null)
+				if ($user->prev_url != null)
 				{
 					$query['REPLACE'] .= ', prev_url';
-					$query['VALUES'] .= ', \''.db()->escape($user['prev_url']).'\'';
+					$query['VALUES'] .= ', \''.db()->escape($user->prev_url).'\'';
 				}
 
 				($hook = get_hook('fn_cookie_login_qr_add_online_user')) ? eval($hook) : null;
@@ -1464,32 +1473,32 @@ function cookie_login(&$user)
 			else
 			{
 				// Special case: We've timed out, but no other user has browsed the forums since we timed out
-				if ($user['logged'] < ($now-config()->o_timeout_visit))
+				if ($user->logged < ($now-config()->o_timeout_visit))
 				{
 					$query = array(
 						'UPDATE'	=> 'users',
-						'SET'		=> 'last_visit='.$user['logged'],
-						'WHERE'		=> 'id='.$user['id']
+						'SET'		=> 'last_visit='.$user->logged,
+						'WHERE'		=> 'id='.$user->id
 					);
 
 					($hook = get_hook('fn_cookie_login_qr_update_user_visit')) ? eval($hook) : null;
 					db()->query_build($query) or error(__FILE__, __LINE__);
 
-					$user['last_visit'] = $user['logged'];
+					$user->last_visit = $user->logged;
 				}
 
 				// Now update the logged time and save the current URL in the online list
 				$query = array(
 					'UPDATE'	=> 'online',
 					'SET'		=> 'logged='.$now,
-					'WHERE'		=> 'user_id='.$user['id']
+					'WHERE'		=> 'user_id='.$user->id
 				);
 
 				$current_url = get_current_url(255);
 				if ($current_url != null && !defined('FORUM_REQUEST_AJAX'))
 					$query['SET'] .= ', prev_url=\''.db()->escape($current_url).'\'';
 
-				if ($user['idle'] == '1')
+				if ($user->idle == '1')
 					$query['SET'] .= ', idle=0';
 
 				($hook = get_hook('fn_cookie_login_qr_update_online_user')) ? eval($hook) : null;
@@ -1502,27 +1511,28 @@ function cookie_login(&$user)
 			}
 		}
 
-		$user['is_guest'] = false;
-		$user['is_admmod'] = $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1';
+		$user->is_guest = false;
+		$user->is_admmod = $user->g_id == FORUM_ADMIN || $user->g_moderator == '1';
 	}
-	else
+	else {
 		set_default_user();
+	}
 
 	($hook = get_hook('fn_cookie_login_end')) ? eval($hook) : null;
 }
 
 
 // Fill forum_user with default values (for guests)
-function set_default_user()
-{
+function set_default_user() {
 	global $_PUNBB;
 	global $db_type;
 
 	$remote_addr = get_remote_address();
 
 	$return = ($hook = get_hook('fn_set_default_user_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Fetch guest user
 	$query = array(
@@ -1543,32 +1553,33 @@ function set_default_user()
 
 	($hook = get_hook('fn_set_default_user_qr_get_default_user')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
-	$_PUNBB['user'] = db()->fetch_assoc($result);
+	$_PUNBB['user'] = (object)db()->fetch_assoc($result);
 
-	if (!$_PUNBB['user'])
-		exit('Unable to fetch guest information. The table \''.db()->prefix.'users\' must contain an entry with id = 1 that represents anonymous users.');
+	if (!$_PUNBB['user']) {
+		exit('Unable to fetch guest information. The table \''.
+			db()->prefix.'users\' must contain an entry with id = 1 that represents anonymous users.');
+	}
 
-	if (!defined('FORUM_QUIET_VISIT'))
-	{
+	if (!defined('FORUM_QUIET_VISIT')) {
 		// Update online list
-		if (!$_PUNBB['user']['logged'])
-		{
-			$_PUNBB['user']['logged'] = time();
-			$_PUNBB['user']['csrf_token'] = random_key(40, false, true);
-			$_PUNBB['user']['prev_url'] = get_current_url(255);
+		if (!$_PUNBB['user']->logged) {
+			$_PUNBB['user']->logged = time();
+			$_PUNBB['user']->csrf_token = random_key(40, false, true);
+			$_PUNBB['user']->prev_url = get_current_url(255);
 
 			// REPLACE INTO avoids a user having two rows in the online table
 			$query = array(
 				'REPLACE'	=> 'user_id, ident, logged, csrf_token',
 				'INTO'		=> 'online',
-				'VALUES'	=> '1, \''.db()->escape($remote_addr).'\', '.$_PUNBB['user']['logged'].', \''.$_PUNBB['user']['csrf_token'].'\'',
+				'VALUES'	=> '1, \''.db()->escape($remote_addr).'\', '.
+					$_PUNBB['user']->logged.', \''.
+					$_PUNBB['user']->csrf_token.'\'',
 				'UNIQUE'	=> 'user_id=1 AND ident=\''.db()->escape($remote_addr).'\''
 			);
 
-			if ($_PUNBB['user']['prev_url'] != null)
-			{
+			if ($_PUNBB['user']->prev_url != null) {
 				$query['REPLACE'] .= ', prev_url';
-				$query['VALUES'] .= ', \''.db()->escape($_PUNBB['user']['prev_url']).'\'';
+				$query['VALUES'] .= ', \''.db()->escape($_PUNBB['user']->prev_url).'\'';
 			}
 
 			($hook = get_hook('fn_set_default_user_qr_add_online_guest_user')) ? eval($hook) : null;
@@ -1591,14 +1602,14 @@ function set_default_user()
 		}
 	}
 
-	$_PUNBB['user']['disp_topics'] = config()->o_disp_topics_default;
-	$_PUNBB['user']['disp_posts'] = config()->o_disp_posts_default;
-	$_PUNBB['user']['timezone'] = config()->o_default_timezone;
-	$_PUNBB['user']['dst'] = config()->o_default_dst;
-	$_PUNBB['user']['language'] = config()->o_default_lang;
-	$_PUNBB['user']['style'] = config()->o_default_style;
-	$_PUNBB['user']['is_guest'] = true;
-	$_PUNBB['user']['is_admmod'] = false;
+	$_PUNBB['user']->disp_topics = config()->o_disp_topics_default;
+	$_PUNBB['user']->disp_posts = config()->o_disp_posts_default;
+	$_PUNBB['user']->timezone = config()->o_default_timezone;
+	$_PUNBB['user']->dst = config()->o_default_dst;
+	$_PUNBB['user']->language = config()->o_default_lang;
+	$_PUNBB['user']->style = config()->o_default_style;
+	$_PUNBB['user']->is_guest = true;
+	$_PUNBB['user']->is_admmod = false;
 
 	($hook = get_hook('fn_set_default_user_end')) ? eval($hook) : null;
 }
@@ -1614,7 +1625,7 @@ function check_bans()
 		return;
 
 	// Admins aren't affected
-	if (defined('FORUM_ADMIN') && user()['g_id'] == FORUM_ADMIN || !$forum_bans)
+	if (defined('FORUM_ADMIN') && user()->g_id == FORUM_ADMIN || !$forum_bans)
 		return;
 
 	// Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
@@ -1642,10 +1653,10 @@ function check_bans()
 			continue;
 		}
 
-		if ($cur_ban['username'] != '' && utf8_strtolower(user()['username']) == utf8_strtolower($cur_ban['username']))
+		if ($cur_ban['username'] != '' && utf8_strtolower(user()->username) == utf8_strtolower($cur_ban['username']))
 			$is_banned = true;
 
-		if ($cur_ban['email'] != '' && user()['email'] == $cur_ban['email'])
+		if ($cur_ban['email'] != '' && user()->email == $cur_ban['email'])
 			$is_banned = true;
 
 		if ($cur_ban['ip'] != '')
@@ -1673,7 +1684,7 @@ function check_bans()
 		{
 			$query = array(
 				'DELETE'	=> 'online',
-				'WHERE'		=> 'ident=\''.db()->escape(user()['username']).'\''
+				'WHERE'		=> 'ident=\''.db()->escape(user()->username).'\''
 			);
 
 			($hook = get_hook('fn_check_bans_qr_delete_online_user')) ? eval($hook) : null;
@@ -1896,7 +1907,7 @@ function add_user($user_info, &$new_uid)
 	if ($user_info['require_verification'])
 	{
 		// Load the "welcome" template
-		$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()['language'].'/mail_templates/welcome.tpl'));
+		$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/welcome.tpl'));
 
 		// The first row contains the subject
 		$first_crlf = strpos($mail_tpl, "\n");
@@ -2980,7 +2991,7 @@ function csrf_confirm_form()
 				'code'			=>	-3,
 				'message'		=>	__('CSRF token mismatch'),
 				'csrf_token'	=>	generate_form_token(get_current_url()),
-				'prev_url'		=>	forum_htmlencode(user()['prev_url']),
+				'prev_url'		=>	forum_htmlencode(user()->prev_url),
 		);
 
 		foreach ($_POST as $submitted_key => $submitted_val)
@@ -3010,7 +3021,8 @@ function csrf_confirm_form()
 
 	$forum_page['hidden_fields'] = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
-		'prev_url'		=> '<input type="hidden" name="prev_url" value="'.forum_htmlencode(user()['prev_url']).'" />'
+		'prev_url'		=> '<input type="hidden" name="prev_url" value="'.
+			forum_htmlencode(user()->prev_url).'" />'
 	);
 
 	foreach ($_POST as $submitted_key => $submitted_val)
@@ -3305,7 +3317,7 @@ function __($text, $domain = 'common', $language = null) {
 	global $_PUNBB;
 	if (empty($_PUNBB['lang'][$domain])) {
 		if (!$language) {
-			$language = user()['language'];
+			$language = user()->language;
 			if (!$language) {
 				$language = config()->o_default_lang;
 			}

@@ -60,8 +60,8 @@ $forum_date_formats = array(config()->o_date_format, 'Y-m-d', 'Y-d-m', 'd-m-Y', 
 $forum_page = array();
 
 // Attempt to load the common language file
-if (!file_exists(FORUM_ROOT.'lang/'.user()['language'].'/common.php')) {
-	error('There is no valid language pack \''.forum_htmlencode(user()['language']).'\' installed.<br />Please reinstall a language of that name.');
+if (!file_exists(FORUM_ROOT.'lang/'.user()->language.'/common.php')) {
+	error('There is no valid language pack \''.forum_htmlencode(user()->language).'\' installed.<br />Please reinstall a language of that name.');
 }
 
 // Setup the URL rewriting scheme
@@ -75,12 +75,11 @@ else
 ($hook = get_hook('co_modify_url_scheme')) ? eval($hook) : null;
 
 // Check if we are to display a maintenance message
-if (config()->o_maintenance && user()['g_id'] > FORUM_ADMIN && !defined('FORUM_TURN_OFF_MAINT'))
+if (config()->o_maintenance && user()->g_id > FORUM_ADMIN && !defined('FORUM_TURN_OFF_MAINT'))
 	maintenance_message();
 
 // Load cached updates info
-if (user()['g_id'] == FORUM_ADMIN)
-{
+if (user()->g_id == FORUM_ADMIN) {
 	if (file_exists(FORUM_CACHE_DIR.'cache_updates.php'))
 		include FORUM_CACHE_DIR.'cache_updates.php';
 
@@ -110,7 +109,7 @@ check_bans();
 update_users_online();
 
 // Check to see if we logged in without a cookie being set
-if (user()['is_guest'] && isset($_GET['login']))
+if (user()->is_guest && isset($_GET['login']))
 	message(__('No cookie'));
 
 // If we're an administrator or moderator, make sure the CSRF token in $_POST is valid (token in post.php is dealt with in post.php)

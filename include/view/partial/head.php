@@ -8,7 +8,7 @@ if (FORUM_PAGE == 'redirect') {
 		__('Title separator') . forum_htmlencode(config()->o_board_title).'</title>';
 
 	// Include stylesheets
-	require FORUM_ROOT.'style/'.user()['style'].'/'.user()['style'].'.php';
+	require FORUM_ROOT.'style/'.user()->style.'/'.user()->style.'.php';
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
@@ -20,7 +20,7 @@ if (FORUM_PAGE == 'redirect') {
 	echo implode("\n", $forum_head).assets()->render_css();
 }
 else if (FORUM_PAGE == 'maintenance') {
-	require FORUM_ROOT.'style/'.user()['style'].'/'.user()['style'].'.php';
+	require FORUM_ROOT.'style/'.user()->style.'/'.user()->style.'.php';
 	echo assets()->render_css();
 }
 else {
@@ -58,7 +58,7 @@ else {
 	if (!empty($forum_page['nav']))
 		$forum_head['nav'] = implode("\n", $forum_page['nav']);
 
-	if (user()['g_read_board'] == '1' && user()['g_search'] == '1')
+	if (user()->g_read_board == '1' && user()->g_search == '1')
 	{
 		$forum_head['search'] = '<link rel="search" type="text/html" href="'.forum_link($forum_url['search']).'" title="'.
 			__('Search') . '" />';
@@ -72,7 +72,7 @@ else {
 	ob_start();
 
 	// Include stylesheets
-	require FORUM_ROOT.'style/'.user()['style'].'/'.user()['style'].'.php';
+	require FORUM_ROOT.'style/'.user()->style.'/'.user()->style.'.php';
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;

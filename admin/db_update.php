@@ -125,11 +125,10 @@ if (!isset($base_url))
 // There's no forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
 if (file_exists(FORUM_ROOT.'style/'.config()->o_default_style.'/'.config()->o_default_style.'.php')) {
-	$_PUNBB['user']['style'] = config()->o_default_style;
+	user()->style = config()->o_default_style;
 }
-else
-{
-	$_PUNBB['user']['style'] = 'Oxygen';
+else {
+	user()->style = 'Oxygen';
 
 	$query = array(
 		'UPDATE'	=> 'config',

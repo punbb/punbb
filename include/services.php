@@ -98,10 +98,8 @@ assets(function () {
 user(function () {
 	global $_PUNBB;
 
-	// TODO convert to object for using user()->parameter1 = 'value1'
-
 	if (!isset($_PUNBB['user'])) {
-		$_PUNBB['user'] = array();
+		$_PUNBB['user'] = new \stdClass();
 		// Login and fetch user info
 		cookie_login($_PUNBB['user']);
 	}

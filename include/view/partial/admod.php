@@ -4,8 +4,7 @@ namespace punbb;
 $admod_links = array();
 
 // We only need to run this query for mods/admins if there will actually be reports to look at
-if (user()['is_admmod'] && config()->o_report_method != 1)
-{
+if (user()->is_admmod && config()->o_report_method != 1) {
 	$query = array(
 		'SELECT'	=> 'COUNT(r.id)',
 		'FROM'		=> 'reports AS r',
@@ -20,8 +19,7 @@ if (user()['is_admmod'] && config()->o_report_method != 1)
 		__('New reports') . '</a></li>';
 }
 
-if (user()['g_id'] == FORUM_ADMIN)
-{
+if (user()->g_id == FORUM_ADMIN) {
 	$alert_items = array();
 
 	// Warn the admin that maintenance mode is enabled
