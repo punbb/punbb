@@ -19,7 +19,7 @@ if (!user()['is_guest'])
 	exit;
 }
 
-if (config()['o_regs_allow'] == '0')
+if (config()->o_regs_allow == '0')
 	message(__('No new regs', 'profile'));
 
 $errors = array();
@@ -34,14 +34,14 @@ else if (isset($_GET['agree']) && !isset($_GET['req_agreement']))
 	redirect(forum_link($forum_url['index']), __('Reg cancel redirect', 'profile'));
 
 // Show the rules
-else if (config()['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
+else if (config()->o_rules == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
 {
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Register'), forum_link($forum_url['register'])),
 		__('Rules')
 	);
@@ -78,7 +78,7 @@ else if (isset($_POST['form_sent']))
 		$username = forum_trim($_POST['req_username']);
 		$email1 = strtolower(forum_trim($_POST['req_email1']));
 
-		if (config()['o_regs_verify'] == '1')
+		if (config()->o_regs_verify == '1')
 		{
 			$password1 = random_key(8, true);
 			$password2 = $password1;
@@ -86,7 +86,7 @@ else if (isset($_POST['form_sent']))
 		else
 		{
 			$password1 = forum_trim($_POST['req_password1']);
-			$password2 = (config()['o_mask_passwords'] == '1') ? forum_trim($_POST['req_password2']) : $password1;
+			$password2 = (config()->o_mask_passwords == '1') ? forum_trim($_POST['req_password2']) : $password1;
 		}
 
 		// Validate the username
@@ -107,7 +107,7 @@ else if (isset($_POST['form_sent']))
 
 		// Check if it's a banned e-mail address
 		$banned_email = is_banned_email($email1);
-		if ($banned_email && config()['p_allow_banned_email'] == '0')
+		if ($banned_email && config()->p_allow_banned_email == '0')
 			$errors[] = __('Banned e-mail', 'profile');
 
 		// Clean old unverified registrators - delete older than 72 hours
@@ -137,7 +137,7 @@ else if (isset($_POST['form_sent']))
 
 		if (!empty($dupe_list) && empty($errors))
 		{
-			if (config()['p_allow_dupe_email'] == '0')
+			if (config()->p_allow_dupe_email == '0')
 				$errors[] = __('Dupe e-mail', 'profile');
 		}
 
@@ -154,24 +154,24 @@ else if (isset($_POST['form_sent']))
 					message(__('Bad request'));
 			}
 			else
-				$language = config()['o_default_lang'];
+				$language = config()->o_default_lang;
 
-			$initial_group_id = (config()['o_regs_verify'] == '0') ?
-				config()['o_default_user_group'] : FORUM_UNVERIFIED;
+			$initial_group_id = (config()->o_regs_verify == '0') ?
+				config()->o_default_user_group : FORUM_UNVERIFIED;
 			$salt = random_key(12);
 			$password_hash = forum_hash($password1, $salt);
 
 			// Validate timezone and DST
-			$timezone = (isset($_POST['timezone'])) ? floatval($_POST['timezone']) : config()['o_default_timezone'];
+			$timezone = (isset($_POST['timezone'])) ? floatval($_POST['timezone']) : config()->o_default_timezone;
 
 			// Validate timezone — on error use default value
 			if (($timezone > 14.0) || ($timezone < -12.0)) {
-				$timezone = config()['o_default_timezone'];
+				$timezone = config()->o_default_timezone;
 			}
 
 			// DST
 			$dst = (isset($_POST['dst']) && intval($_POST['dst']) === 1) ?
-				1 : config()['o_default_dst'];
+				1 : config()->o_default_dst;
 
 
 			// Insert the new user into the database. We do this now to get the last inserted id for later use.
@@ -182,49 +182,49 @@ else if (isset($_POST['form_sent']))
 				'password'				=>	$password1,
 				'password_hash'			=>	$password_hash,
 				'email'					=>	$email1,
-				'email_setting'			=>	config()['o_default_email_setting'],
+				'email_setting'			=>	config()->o_default_email_setting,
 				'timezone'				=>	$timezone,
 				'dst'					=>	$dst,
 				'language'				=>	$language,
-				'style'					=>	config()['o_default_style'],
+				'style'					=>	config()->o_default_style,
 				'registered'			=>	time(),
 				'registration_ip'		=>	get_remote_address(),
-				'activate_key'			=>	(config()['o_regs_verify'] == '1') ? '\''.random_key(8, true).'\'' : 'NULL',
-				'require_verification'	=>	(config()['o_regs_verify'] == '1'),
-				'notify_admins'			=>	(config()['o_regs_report'] == '1')
+				'activate_key'			=>	(config()->o_regs_verify == '1') ? '\''.random_key(8, true).'\'' : 'NULL',
+				'require_verification'	=>	(config()->o_regs_verify == '1'),
+				'notify_admins'			=>	(config()->o_regs_report == '1')
 			);
 
 			($hook = get_hook('rg_register_pre_add_user')) ? eval($hook) : null;
 			add_user($user_info, $new_uid);
 
 			// If we previously found out that the e-mail was banned
-			if ($banned_email && config()['o_mailing_list'] != '')
+			if ($banned_email && config()->o_mailing_list != '')
 			{
 				$mail_subject = 'Alert - Banned e-mail detected';
 				$mail_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.forum_link($forum_url['user'], $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				($hook = get_hook('rg_register_banned_email')) ? eval($hook) : null;
 
-				forum_mail(config()['o_mailing_list'], $mail_subject, $mail_message);
+				forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 			}
 
 			// If we previously found out that the e-mail was a dupe
-			if (!empty($dupe_list) && config()['o_mailing_list'] != '')
+			if (!empty($dupe_list) && config()->o_mailing_list != '')
 			{
 				$mail_subject = 'Alert - Duplicate e-mail detected';
 				$mail_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link($forum_url['user'], $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				($hook = get_hook('rg_register_dupe_email')) ? eval($hook) : null;
 
-				forum_mail(config()['o_mailing_list'], $mail_subject, $mail_message);
+				forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 			}
 
 			($hook = get_hook('rg_register_pre_login_redirect')) ? eval($hook) : null;
 
 			// Must the user verify the registration or do we log him/her in right now?
-			if (config()['o_regs_verify'] == '1')
+			if (config()->o_regs_verify == '1')
 			{
-				message(sprintf(__('Reg e-mail', 'profile'), '<a href="mailto:'.forum_htmlencode(config()['o_admin_email']).'">'.forum_htmlencode(config()['o_admin_email']).'</a>'));
+				message(sprintf(__('Reg e-mail', 'profile'), '<a href="mailto:'.forum_htmlencode(config()->o_admin_email).'">'.forum_htmlencode(config()->o_admin_email).'</a>'));
 			}
 			else
 			{
@@ -233,7 +233,7 @@ else if (isset($_POST['form_sent']))
 				clean_stats_cache();
 			}
 
-			$expire = time() + config()['o_timeout_visit'];
+			$expire = time() + config()->o_timeout_visit;
 
 			forum_setcookie($cookie_name, base64_encode($new_uid.'|'.$password_hash.'|'.$expire.'|'.sha1($salt.$password_hash.forum_hash($expire, $salt))), $expire);
 
@@ -248,14 +248,14 @@ $forum_page['form_action'] = forum_link($forum_url['register']).'?action=registe
 
 // Setup form information
 $forum_page['frm_info'] = array();
-if (config()['o_regs_verify'] != '0')
+if (config()->o_regs_verify != '0')
 	$forum_page['frm_info']['email'] = '<p class="warn">'.
 		__('Reg e-mail info', 'profile') . '</p>';
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
-	sprintf(__('Register at', 'profile'), config()['o_board_title'])
+	array(config()->o_board_title, forum_link($forum_url['index'])),
+	sprintf(__('Register at', 'profile'), config()->o_board_title)
 );
 
 // Load JS for timezone detection

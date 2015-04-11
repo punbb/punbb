@@ -88,15 +88,14 @@ $sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'posted';
 //
 // Sends the proper headers for Basic HTTP Authentication
 //
-function http_authenticate_user()
-{
-	if (!user()['is_guest'])
+function http_authenticate_user() {
+	if (!user()['is_guest']) {
 		return;
-
-	header('WWW-Authenticate: Basic realm="'.config()['o_board_title'].' External Syndication"');
+	}
+	header('WWW-Authenticate: Basic realm="' .
+		config()->o_board_title . ' External Syndication"');
 	header('HTTP/1.0 401 Unauthorized');
 }
-
 
 //
 // Output $feed as RSS 2.0
@@ -118,10 +117,12 @@ function output_rss($feed)
 	echo "\t\t".'<description><![CDATA['.escape_cdata($feed['description']).']]></description>'."\n";
 	echo "\t\t".'<lastBuildDate>'.gmdate('r', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</lastBuildDate>'."\n";
 
-	if (config()['o_show_version'] == '1')
-		echo "\t\t".'<generator>PunBB '.config()['o_cur_version'].'</generator>'."\n";
-	else
+	if (config()->o_show_version == '1') {
+		echo "\t\t".'<generator>PunBB ' . config()->o_cur_version . '</generator>'."\n";
+	}
+	else {
 		echo "\t\t".'<generator>PunBB</generator>'."\n";
+	}
 
 	($hook = get_hook('ex_add_new_rss_info')) ? eval($hook) : null;
 
@@ -163,10 +164,12 @@ function output_atom($feed)
 	echo "\t".'<link rel="self" href="'.forum_htmlencode(get_current_url()).'" />'."\n";
 	echo "\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</updated>'."\n";
 
-	if (config()['o_show_version'] == '1')
-		echo "\t".'<generator version="'.config()['o_cur_version'].'">PunBB</generator>'."\n";
-	else
+	if (config()->o_show_version == '1') {
+		echo "\t".'<generator version="' . config()->o_cur_version . '">PunBB</generator>'."\n";
+	}
+	else {
 		echo "\t".'<generator>PunBB</generator>'."\n";
+	}
 
 	($hook = get_hook('ex_add_new_atom_info')) ? eval($hook) : null;
 
@@ -315,12 +318,13 @@ if ($action == 'feed')
 		if (!defined('FORUM_PARSER_LOADED'))
 			require FORUM_ROOT.'include/parser.php';
 
-		if (config()['o_censoring'] == '1')
+		if (config()->o_censoring == '1') {
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
+		}
 
 		// Setup the feed
 		$feed = array(
-			'title'		=>	config()['o_board_title'] .
+			'title'		=>	config()->o_board_title .
 				__('Title separator') . $cur_topic['subject'],
 			'link'			=>	forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
 			'description'	=>	sprintf(__('RSS description topic'), $cur_topic['subject']),
@@ -347,7 +351,7 @@ if ($action == 'feed')
 
 		while ($cur_post = db()->fetch_assoc($result))
 		{
-			if (config()['o_censoring'] == '1')
+			if (config()->o_censoring == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
 
 			$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
@@ -434,9 +438,9 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title'			=>	config()['o_board_title'].$forum_name,
+			'title'			=>	config()->o_board_title . $forum_name,
 			'link'			=>	forum_link($forum_url['index']),
-			'description'	=>	sprintf(__('RSS description'), config()['o_board_title']),
+			'description'	=>	sprintf(__('RSS description'), config()->o_board_title),
 			'items'			=>	array(),
 			'type'			=>	'topics'
 		);
@@ -471,8 +475,7 @@ if ($action == 'feed')
 		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 		while ($cur_topic = db()->fetch_assoc($result))
 		{
-			if (config()['o_censoring'] == '1')
-			{
+			if (config()->o_censoring == '1') {
 				$cur_topic['subject'] = censor_words($cur_topic['subject']);
 				$cur_topic['message'] = censor_words($cur_topic['message']);
 			}

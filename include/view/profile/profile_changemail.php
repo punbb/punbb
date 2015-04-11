@@ -38,7 +38,7 @@ namespace punbb;
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Password', 'profile') ?></span><small><?= __('Old password help', 'profile') ?></small></label><br />
-						<span class="fld-input"><input type="<?php echo(config()['o_mask_passwords'] == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password" size="35" value="<?php if (isset($_POST['req_password'])) echo forum_htmlencode($_POST['req_password']); ?>" required autocomplete="off" /></span>
+						<span class="fld-input"><input type="<?php echo(config()->o_mask_passwords == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password" size="35" value="<?php if (isset($_POST['req_password'])) echo forum_htmlencode($_POST['req_password']); ?>" required autocomplete="off" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('pf_change_email_normal_pre_fieldset_end')) ? eval($hook) : null; ?>

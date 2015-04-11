@@ -108,7 +108,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 		array(__('Prune topics', 'admin_prune'), forum_link($forum_url['admin_prune'])),
@@ -132,7 +132,7 @@ else
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
 		array(__('Prune topics', 'admin_common'), forum_link($forum_url['admin_prune']))

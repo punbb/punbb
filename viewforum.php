@@ -32,7 +32,7 @@ $query = array(
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$id
 );
 
-if (!user()['is_guest'] && config()['o_subscriptions'] == '1')
+if (!user()['is_guest'] && config()->o_subscriptions == '1')
 {
 	$query['SELECT'] .= ', fs.user_id AS is_subscribed';
 	$query['JOINS'][] = array(
@@ -130,7 +130,7 @@ if (!empty($topics_id))
 	);
 
 	// With "has posted" indication
-	if (!user()['is_guest'] && config()['o_show_dot'] == '1')
+	if (!user()['is_guest'] && config()->o_show_dot == '1')
 	{
 		$query['SELECT'] .= ', p.poster_id AS has_posted';
 		$query['JOINS'][]	= array(
@@ -176,7 +176,7 @@ if (!empty($topics))
 	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.
 	__('RSS forum feed', 'forum') . '</a></span>';
 
-if (!user()['is_guest'] && config()['o_subscriptions'] == '1')
+if (!user()['is_guest'] && config()->o_subscriptions == '1')
 {
 	if ($cur_forum['is_subscribed'])
 		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['forum_unsubscribe'], array($id, generate_form_token('forum_unsubscribe'.$id.user()['id']))).'"><em>'.
@@ -198,7 +198,7 @@ if (!user()['is_guest'] && !empty($topics))
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	$cur_forum['forum_name']
 );
 

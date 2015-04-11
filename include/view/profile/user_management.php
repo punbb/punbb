@@ -23,7 +23,7 @@ if (!empty($forum_page['user_management'])) {
 
 		while ($cur_group = db()->fetch_assoc($result_group))
 		{
-			if ($cur_group['g_id'] == $user['g_id'] || ($cur_group['g_id'] == config()['o_default_user_group'] && $user['g_id'] == ''))
+			if ($cur_group['g_id'] == $user['g_id'] || ($cur_group['g_id'] == config()->o_default_user_group && $user['g_id'] == ''))
 				echo "\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 			else
 				echo "\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";

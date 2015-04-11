@@ -58,8 +58,8 @@ function is_banned_email($email)
 function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_name = '')
 {
 	// Default sender address
-	$from_name = sprintf(__('Forum mailer'), config()['o_board_title']);
-	$from_email = config()['o_webmaster_email'];
+	$from_name = sprintf(__('Forum mailer'), config()->o_board_title);
+	$from_email = config()->o_webmaster_email;
 
 	($hook = get_hook('em_fn_forum_mail_start')) ? eval($hook) : null;
 
@@ -90,7 +90,7 @@ function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_nam
 
 	($hook = get_hook('em_fn_forum_mail_pre_send')) ? eval($hook) : null;
 
-	if (config()['o_smtp_host'] != '')
+	if (config()->o_smtp_host != '')
 		smtp_mail($to, $subject, $message, $headers);
 	else
 	{
@@ -136,23 +136,23 @@ function smtp_mail($to, $subject, $message, $headers = '')
 	$message = (substr($message, 0, 1) == '.' ? '.'.$message : $message);
 
 	// Are we using port 25 or a custom port?
-	if (strpos(config()['o_smtp_host'], ':') !== false)
-		list($smtp_host, $smtp_port) = explode(':', config()['o_smtp_host']);
+	if (strpos(config()->o_smtp_host, ':') !== false)
+		list($smtp_host, $smtp_port) = explode(':', config()->o_smtp_host);
 	else
 	{
-		$smtp_host = config()['o_smtp_host'];
+		$smtp_host = config()->o_smtp_host;
 		$smtp_port = 25;
 	}
 
-	if (config()['o_smtp_ssl'] == '1')
+	if (config()->o_smtp_ssl == '1')
 		$smtp_host = 'ssl://'.$smtp_host;
 
 	if (!($socket = fsockopen($smtp_host, $smtp_port, $errno, $errstr, 15)))
-		error('Could not connect to smtp host "'.config()['o_smtp_host'].'" ('.$errno.') ('.$errstr.').', __FILE__, __LINE__);
+		error('Could not connect to smtp host "'.config()->o_smtp_host.'" ('.$errno.') ('.$errstr.').', __FILE__, __LINE__);
 
 	server_parse($socket, '220');
 
-	if (config()['o_smtp_user'] != '' && config()['o_smtp_pass'] != '')
+	if (config()->o_smtp_user != '' && config()->o_smtp_pass != '')
 	{
 		fwrite($socket, 'EHLO '.$smtp_host."\r\n");
 		server_parse($socket, '250');
@@ -160,10 +160,10 @@ function smtp_mail($to, $subject, $message, $headers = '')
 		fwrite($socket, 'AUTH LOGIN'."\r\n");
 		server_parse($socket, '334');
 
-		fwrite($socket, base64_encode(config()['o_smtp_user'])."\r\n");
+		fwrite($socket, base64_encode(config()->o_smtp_user)."\r\n");
 		server_parse($socket, '334');
 
-		fwrite($socket, base64_encode(config()['o_smtp_pass'])."\r\n");
+		fwrite($socket, base64_encode(config()->o_smtp_pass)."\r\n");
 		server_parse($socket, '235');
 	}
 	else
@@ -172,7 +172,7 @@ function smtp_mail($to, $subject, $message, $headers = '')
 		server_parse($socket, '250');
 	}
 
-	fwrite($socket, 'MAIL FROM: <'.config()['o_webmaster_email'].'>'."\r\n");
+	fwrite($socket, 'MAIL FROM: <'.config()->o_webmaster_email.'>'."\r\n");
 	server_parse($socket, '250');
 
 	foreach ($recipients as $email)

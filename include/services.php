@@ -64,8 +64,6 @@ db(function () {
 config(function () {
 	global $_PUNBB;
 
-	// TODO convert to object for using config()->parameter1 = 'value1'
-
 	if (isset($_PUNBB['config'])) {
 		return $_PUNBB['config'];
 	}
@@ -109,29 +107,3 @@ user(function () {
 	}
 	return $_PUNBB['user'];
 });
-
-/*
-function test_object($serv = null) {
-	return service('test_object', $serv);
-}
-
-test_object(function () {
-	global $_PUNBB;
-
-	if (!isset($_PUNBB['test_object'])) {
-		$_PUNBB['test_object'] = new \stdClass();
-	}
-
-	return $_PUNBB['test_object'];
-});
-
-echo '<pre>';
-print_r(test_object());
-
-test_object()->parameter1 = 200;
-test_object()->parameter5 = 500;
-test_object()->test = rand(1, 100);
-
-print_r(test_object());
-die;
-*/

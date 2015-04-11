@@ -50,9 +50,9 @@ namespace punbb;
 	<div class="ct-box help-box">
 		<h3 class="hn"><span><?= __('Links info', 'help') ?></span></h3>
 		<div class="entry-content">
-			<code>[url=<?php echo $base_url.'/' ?>]<?php echo forum_htmlencode(config()['o_board_title']) ?>[/url]</code>
+			<code>[url=<?php echo $base_url.'/' ?>]<?php echo forum_htmlencode(config()->o_board_title) ?>[/url]</code>
 			<span><?= __('produces', 'help') ?></span>
-			<samp><a href="<?php echo $base_url.'/' ?>"><?php echo forum_htmlencode(config()['o_board_title']) ?></a></samp>
+			<samp><a href="<?php echo $base_url.'/' ?>"><?php echo forum_htmlencode(config()->o_board_title) ?></a></samp>
 		</div>
 		<div class="entry-content">
 			<code>[url]<?php echo $base_url.'/' ?>[/url]</code>

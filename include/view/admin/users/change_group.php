@@ -21,7 +21,7 @@ namespace punbb;
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="move_to_group">
 <?php
 	while ($cur_group = db()->fetch_assoc($result)) {
-		if ($cur_group['g_id'] == config()['o_default_user_group'])	// Pre-select the default Members group
+		if ($cur_group['g_id'] == config()->o_default_user_group)	// Pre-select the default Members group
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'" selected="selected">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";
 		else
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.forum_htmlencode($cur_group['g_title']).'</option>'."\n";

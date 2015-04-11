@@ -111,21 +111,21 @@ $query = array(
 
 $result = db()->query_build($query);
 while ($cur_config_item = db()->fetch_row($result)) {
-	$_PUNBB['config'][$cur_config_item[0]] = $cur_config_item[1];
+	config()->{$cur_config_item[0]} = $cur_config_item[1];
 }
 
 // Check the database revision and the current version
-if (!empty(config()['o_database_revision']) && config()['o_database_revision'] >= UPDATE_TO_DB_REVISION && version_compare(config()['o_cur_version'], UPDATE_TO, '>='))
+if (!empty(config()->o_database_revision) && config()->o_database_revision >= UPDATE_TO_DB_REVISION && version_compare(config()->o_cur_version, UPDATE_TO, '>='))
 	error('Your database is already as up-to-date as this script can make it.');
 
 // If $base_url isn't set, use o_base_url from config
 if (!isset($base_url))
-	$base_url = config()['o_base_url'];
+	$base_url = config()->o_base_url;
 
 // There's no forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
-if (file_exists(FORUM_ROOT.'style/'.config()['o_default_style'].'/'.config()['o_default_style'].'.php')) {
-	$_PUNBB['user']['style'] = config()['o_default_style'];
+if (file_exists(FORUM_ROOT.'style/'.config()->o_default_style.'/'.config()->o_default_style.'.php')) {
+	$_PUNBB['user']['style'] = config()->o_default_style;
 }
 else
 {
@@ -142,7 +142,7 @@ else
 
 // Make sure the default language exists
 // We default to English if the default language is invalid (a 1.2 to 1.3 upgrade most likely)
-if (!file_exists(FORUM_ROOT.'lang/'.config()['o_default_lang'].'/common.php'))
+if (!file_exists(FORUM_ROOT.'lang/'.config()->o_default_lang.'/common.php'))
 {
 	$query = array(
 		'UPDATE'	=> 'config',
@@ -417,7 +417,7 @@ function convert_avatars()
 				// Now check the width/height
 				list($width, $height, $type,) = @/**/getimagesize($avatar_file);
 				if (empty($width) || empty($height) ||
-						$width > config()['o_avatars_width'] || $height > config()['o_avatars_height'])
+						$width > config()->o_avatars_width || $height > config()->o_avatars_height)
 				{
 					@/**/unlink($avatar_file);
 				}
@@ -910,7 +910,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		if (!array_key_exists('o_check_for_versions', config()))
 		{
 			$o_check_for_versions = array_key_exists('o_check_for_updates', config()) ?
-				config()['o_check_for_updates'] : $check_for_updates;
+				config()->o_check_for_updates : $check_for_updates;
 			$new_config[] = '\'o_check_for_versions\', \''.$o_check_for_versions.'\'';
 		}
 
@@ -956,7 +956,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Increase visit timeout to 30 minutes (only if it hasn't been changed from the default)
-		if (config()['o_timeout_visit'] == '600')
+		if (config()->o_timeout_visit == '600')
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -968,7 +968,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Update redirect timeout
-		if (version_compare($cur_version, '1.4', '<') && config()['o_redirect_delay'] == '1')
+		if (version_compare($cur_version, '1.4', '<') && config()->o_redirect_delay == '1')
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -1114,7 +1114,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_edit_users = '.config()['p_mod_edit_users'],
+				'SET'		=> 'g_mod_edit_users = '.config()->p_mod_edit_users,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1135,7 +1135,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_rename_users = '.config()['p_mod_rename_users'],
+				'SET'		=> 'g_mod_rename_users = '.config()->p_mod_rename_users,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1156,7 +1156,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_change_passwords = '.config()['p_mod_change_passwords'],
+				'SET'		=> 'g_mod_change_passwords = '.config()->p_mod_change_passwords,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
@@ -1177,7 +1177,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_ban_users = '.config()['p_mod_ban_users'],
+				'SET'		=> 'g_mod_ban_users = '.config()->p_mod_ban_users,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 

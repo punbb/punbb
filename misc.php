@@ -21,15 +21,15 @@ $errors = array();
 // Show the forum rules?
 if ($action == 'rules')
 {
-	if (config()['o_rules'] == '0' ||
+	if (config()->o_rules == '0' ||
 			(user()['is_guest'] && user()['g_read_board'] == '0' &&
-				config()['o_regs_allow'] == '0')) {
+				config()->o_regs_allow == '0')) {
 		message(__('Bad request'));
 	}
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		__('Rules')
 	);
 
@@ -137,17 +137,17 @@ else if ($action == 'opensearch')
 
 	echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
 	echo '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">'."\n";
-	echo "\t".'<ShortName>'.forum_htmlencode(config()['o_board_title']).'</ShortName>'."\n";
-	echo "\t".'<Description>'.forum_htmlencode(config()['o_board_desc']).'</Description>'."\n";
+	echo "\t".'<ShortName>'.forum_htmlencode(config()->o_board_title).'</ShortName>'."\n";
+	echo "\t".'<Description>'.forum_htmlencode(config()->o_board_desc).'</Description>'."\n";
 	echo "\t".'<InputEncoding>utf-8</InputEncoding>'."\n";
 	echo "\t".'<OutputEncoding>utf-8</OutputEncoding>'."\n";
 	echo "\t".'<Image width="16" height="16" type="image/x-icon">'.$base_url.'/favicon.ico</Image>'."\n";
 	echo "\t".'<Url type="text/html" method="get" template="'.$base_url.'/search.php?action=search&amp;source=opensearch&amp;keywords={searchTerms}"/>'."\n";
 	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.forum_link($forum_url['opensearch']).'"/>'."\n";
-	echo "\t".'<Contact>'.forum_htmlencode(config()['o_admin_email']).'</Contact>'."\n";
+	echo "\t".'<Contact>'.forum_htmlencode(config()->o_admin_email).'</Contact>'."\n";
 
-	if (config()['o_show_version'] == '1')
-		echo "\t".'<Attribution>PunBB '.config()['o_cur_version'].'</Attribution>'."\n";
+	if (config()->o_show_version == '1')
+		echo "\t".'<Attribution>PunBB '.config()->o_cur_version.'</Attribution>'."\n";
 	else
 		echo "\t".'<Attribution>PunBB</Attribution>'."\n";
 
@@ -234,9 +234,9 @@ else if (isset($_GET['email']))
 
 			$mail_subject = str_replace('<mail_subject>', $subject, $mail_subject);
 			$mail_message = str_replace('<sender>', user()['username'], $mail_message);
-			$mail_message = str_replace('<board_title>', config()['o_board_title'], $mail_message);
+			$mail_message = str_replace('<board_title>', config()->o_board_title, $mail_message);
 			$mail_message = str_replace('<mail_message>', $message, $mail_message);
-			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()['o_board_title']), $mail_message);
+			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
 
 			($hook = get_hook('mi_email_new_replace_data')) ? eval($hook) : null;
 
@@ -278,7 +278,7 @@ else if (isset($_GET['email']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		sprintf(__('Send forum e-mail', 'misc'), forum_htmlencode($recipient_info['username']))
 	);
 
@@ -356,7 +356,7 @@ else if (isset($_GET['report']))
 			($hook = get_hook('mi_report_pre_reports_sent')) ? eval($hook) : null;
 
 			// Should we use the internal report handling?
-			if (config()['o_report_method'] == 0 || config()['o_report_method'] == 2)
+			if (config()->o_report_method == 0 || config()->o_report_method == 2)
 			{
 				$query = array(
 					'INSERT'	=> 'post_id, topic_id, forum_id, reported_by, created, message',
@@ -369,10 +369,10 @@ else if (isset($_GET['report']))
 			}
 
 			// Should we e-mail the report?
-			if (config()['o_report_method'] == 1 || config()['o_report_method'] == 2)
+			if (config()->o_report_method == 1 || config()->o_report_method == 2)
 			{
 				// We send it to the complete mailing-list in one swoop
-				if (config()['o_mailing_list'] != '')
+				if (config()->o_mailing_list != '')
 				{
 					$mail_subject = 'Report('.$topic_info['forum_id'].') - \''.$topic_info['subject'].'\'';
 					$mail_message = 'User \''.user()['username'].'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
@@ -382,7 +382,7 @@ else if (isset($_GET['report']))
 
 					($hook = get_hook('mi_report_modify_message')) ? eval($hook) : null;
 
-					forum_mail(config()['o_mailing_list'], $mail_subject, $mail_message);
+					forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 				}
 			}
 
@@ -415,7 +415,7 @@ else if (isset($_GET['report']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		__('Report post', 'misc')
 	);
 
@@ -434,7 +434,7 @@ else if (isset($_GET['report']))
 // Subscribe to a topic?
 else if (isset($_GET['subscribe']))
 {
-	if (user()['is_guest'] || config()['o_subscriptions'] != '1')
+	if (user()['is_guest'] || config()->o_subscriptions != '1')
 		message(__('No permission'));
 
 	$topic_id = intval($_GET['subscribe']);
@@ -504,7 +504,7 @@ else if (isset($_GET['subscribe']))
 // Unsubscribe from a topic?
 else if (isset($_GET['unsubscribe']))
 {
-	if (user()['is_guest'] || config()['o_subscriptions'] != '1')
+	if (user()['is_guest'] || config()->o_subscriptions != '1')
 		message(__('No permission'));
 
 	$topic_id = intval($_GET['unsubscribe']);
@@ -558,7 +558,7 @@ else if (isset($_GET['unsubscribe']))
 // Subscribe to a forum?
 else if (isset($_GET['forum_subscribe']))
 {
-	if (user()['is_guest'] || config()['o_subscriptions'] != '1')
+	if (user()['is_guest'] || config()->o_subscriptions != '1')
 		message(__('No permission'));
 
 	$forum_id = intval($_GET['forum_subscribe']);
@@ -628,7 +628,7 @@ else if (isset($_GET['forum_subscribe']))
 // Unsubscribe from a topic?
 else if (isset($_GET['forum_unsubscribe']))
 {
-	if (user()['is_guest'] || config()['o_subscriptions'] != '1')
+	if (user()['is_guest'] || config()->o_subscriptions != '1')
 		message(__('No permission'));
 
 	$forum_id = intval($_GET['forum_unsubscribe']);

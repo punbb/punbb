@@ -3192,8 +3192,8 @@ function error()
 
 	// Set a default title and gzip setting if the script failed before forum_config could be populated
 	if (empty(config())) {
-		$_PUNBB['config']['o_board_title'] = 'PunBB';
-		$_PUNBB['config']['o_gzip'] = '0';
+		config()->o_board_title = 'PunBB';
+		config()->o_gzip = '0';
 	}
 
 	// Empty all output buffers and stop buffering

@@ -49,7 +49,7 @@ namespace punbb;
 <?php
 
 $forum_page['checkboxes'] = array();
-if (config()['o_smilies'] == '1')
+if (config()->o_smilies == '1')
 {
 	if (isset($_POST['hide_smilies']) || $cur_post['hide_smilies'] == '1')
 		$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1" checked="checked" /></span> <label for="fld'.$forum_page['fld_count'].'">'.

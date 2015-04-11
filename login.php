@@ -83,7 +83,7 @@ if (isset($_POST['form_sent']) && empty($action))
 		{
 			$query = array(
 				'UPDATE'	=> 'users',
-				'SET'		=> 'group_id='.config()['o_default_user_group'],
+				'SET'		=> 'group_id='.config()->o_default_user_group,
 				'WHERE'		=> 'id='.$user_id
 			);
 
@@ -104,7 +104,7 @@ if (isset($_POST['form_sent']) && empty($action))
 		($hook = get_hook('li_login_qr_delete_online_user')) ? eval($hook) : null;
 		db()->query_build($query) or error(__FILE__, __LINE__);
 
-		$expire = ($save_pass) ? time() + 1209600 : time() + config()['o_timeout_visit'];
+		$expire = ($save_pass) ? time() + 1209600 : time() + config()->o_timeout_visit;
 		forum_setcookie($cookie_name, base64_encode($user_id.'|'.$form_password_hash.'|'.$expire.'|'.sha1($salt.$form_password_hash.forum_hash($expire, $salt))), $expire);
 
 		($hook = get_hook('li_login_pre_redirect')) ? eval($hook) : null;
@@ -223,7 +223,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 				// Do the generic replacements first (they apply to all e-mails sent out here)
 				$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
-				$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()['o_board_title']), $mail_message);
+				$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
 
 				($hook = get_hook('li_forgot_pass_new_general_replace_data')) ? eval($hook) : null;
 
@@ -235,7 +235,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 					($hook = get_hook('li_forgot_pass_pre_flood_check')) ? eval($hook) : null;
 
 					if ($cur_hit['group_id'] == FORUM_ADMIN)
-						message(sprintf(__('Email important', 'login'), '<a href="mailto:'.forum_htmlencode(config()['o_admin_email']).'">'.forum_htmlencode(config()['o_admin_email']).'</a>'));
+						message(sprintf(__('Email important', 'login'), '<a href="mailto:'.forum_htmlencode(config()->o_admin_email).'">'.forum_htmlencode(config()->o_admin_email).'</a>'));
 
 					if ($cur_hit['last_email_sent'] != '' && (time() - $cur_hit['last_email_sent']) < $forgot_pass_timeout && (time() - $cur_hit['last_email_sent']) >= 0)
 						message(sprintf(__('Email flood', 'login'), $forgot_pass_timeout));
@@ -261,7 +261,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 					forum_mail($email, $mail_subject, $cur_mail_message);
 				}
 
-				message(sprintf(__('Forget mail', 'login'), '<a href="mailto:'.forum_htmlencode(config()['o_admin_email']).'">'.forum_htmlencode(config()['o_admin_email']).'</a>'));
+				message(sprintf(__('Forget mail', 'login'), '<a href="mailto:'.forum_htmlencode(config()->o_admin_email).'">'.forum_htmlencode(config()->o_admin_email).'</a>'));
 			}
 			else
 				$errors[] = sprintf(__('No e-mail match', 'login'), forum_htmlencode($email));
@@ -274,7 +274,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		__('New password request', 'login')
 	);
 
@@ -301,8 +301,8 @@ $forum_page['hidden_fields'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
-	sprintf(__('Login info', 'login'), config()['o_board_title'])
+	array(config()->o_board_title, forum_link($forum_url['index'])),
+	sprintf(__('Login info', 'login'), config()->o_board_title)
 );
 
 ($hook = get_hook('li_login_pre_header_load')) ? eval($hook) : null;

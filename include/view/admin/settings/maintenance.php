@@ -23,7 +23,8 @@ namespace punbb;
 <?php ($hook = get_hook('aop_maintenance_pre_maintenance_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
-						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[maintenance]" value="1"<?php if (config()['o_maintenance'] == '1') echo ' checked="checked"' ?> /></span>
+						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[maintenance]" value="1"
+							<?php if (config()->o_maintenance == '1') echo ' checked="checked"' ?> /></span>
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><?php echo __('Maintenance mode label', 'admin_settings') ?></label>
 					</div>
 				</div>
@@ -31,7 +32,8 @@ namespace punbb;
 				<div class="txt-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="txt-box textarea">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo __('Maintenance message label', 'admin_settings') ?></span><small><?php echo __('Maintenance message help', 'admin_settings') ?></small></label>
-						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="form[maintenance_message]" rows="5" cols="55"><?php echo forum_htmlencode(config()['o_maintenance_message']) ?></textarea></span></div>
+						<div class="txt-input"><span class="fld-input"><textarea id="fld<?php echo $forum_page['fld_count'] ?>" name="form[maintenance_message]"
+							rows="5" cols="55"><?php echo forum_htmlencode(config()->o_maintenance_message) ?></textarea></span></div>
 					</div>
 				</div>
 <?php ($hook = get_hook('aop_maintenance_pre_maintenance_fieldset_end')) ? eval($hook) : null; ?>

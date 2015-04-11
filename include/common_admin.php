@@ -35,7 +35,7 @@ function generate_admin_menu($submenu)
 			$forum_page['admin_submenu']['users'] = '<li class="'.((FORUM_PAGE == 'admin-users') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_users']).'">'.
 				__('Searches', 'admin_common').'</a></li>';
 
-			if (config()['o_censoring'] == '1')
+			if (config()->o_censoring == '1')
 				$forum_page['admin_submenu']['censoring'] = '<li class="'.((FORUM_PAGE == 'admin-censoring') ? 'active' : 'normal').((empty($forum_page['admin_submenu'])) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['admin_censoring']).'">'.
 					__('Censoring', 'admin_common').'</a></li>';
 
@@ -223,8 +223,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 // call this function outside install/uninstall extension manifest section
 function forum_config_add($name, $value)
 {
-	if (!empty($name) && empty(config()[$name]))
-	{
+	if (!empty($name) && empty(config()->$name)) {
 		$query = array(
 			'INSERT'	=> 'conf_name, conf_value',
 			'INTO'		=> 'config',

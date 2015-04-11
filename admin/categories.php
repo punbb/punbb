@@ -152,7 +152,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()['o_board_title'], forum_link($forum_url['index'])),
+			array(config()->o_board_title, forum_link($forum_url['index'])),
 			array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 			array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
 			array(__('Categories', 'admin_common'), forum_link($forum_url['admin_categories'])),
@@ -251,7 +251,7 @@ $forum_page['hidden_fields'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 	array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
 	array(__('Categories', 'admin_common'), forum_link($forum_url['admin_categories']))

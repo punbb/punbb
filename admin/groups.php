@@ -67,7 +67,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
 		array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups'])),
@@ -179,7 +179,7 @@ else if (isset($_POST['add_edit_group']))
 			$moderator = '0';
 
 		// Make sure the default group isn't assigned moderator privileges
-		if ($moderator == '1' && config()['o_default_user_group'] == $group_id)
+		if ($moderator == '1' && config()->o_default_user_group == $group_id)
 			message(__('Moderator default group', 'admin_groups'));
 
 		$query = array(
@@ -281,7 +281,7 @@ else if (isset($_GET['del_group']))
 		redirect(forum_link($forum_url['admin_groups']), __('Cancel redirect', 'admin_common'));
 
 	// Make sure we don't remove the default group
-	if ($group_id == config()['o_default_user_group'])
+	if ($group_id == config()->o_default_user_group)
 		message(__('Cannot remove default group', 'admin_groups'));
 
 	($hook = get_hook('agr_del_group_selected')) ? eval($hook) : null;
@@ -358,7 +358,7 @@ else if (isset($_GET['del_group']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
 		array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups'])),
@@ -390,7 +390,7 @@ $forum_page['item_count'] = $forum_page['fld_count'] = $forum_page['group_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 	array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
 	array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups']))

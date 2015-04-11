@@ -12,8 +12,8 @@ define('FORUM_ROOT', './');
 require FORUM_ROOT.'include/essentials.php';
 
 // Bring in all the rewrite rules
-if (file_exists(FORUM_ROOT.'include/url/'.config()['o_sef'].'/rewrite_rules.php'))
-	require FORUM_ROOT.'include/url/'.config()['o_sef'].'/rewrite_rules.php';
+if (file_exists(FORUM_ROOT.'include/url/'.config()->o_sef.'/rewrite_rules.php'))
+	require FORUM_ROOT.'include/url/'.config()->o_sef.'/rewrite_rules.php';
 else
 	require FORUM_ROOT.'include/url/Default/rewrite_rules.php';
 

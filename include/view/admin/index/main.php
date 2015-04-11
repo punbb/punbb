@@ -22,7 +22,7 @@ namespace punbb;
 				<div class="ct-box">
 					<h3 class="ct-legend hn"><span><?php echo __('PunBB version', 'admin_index') ?></span></h3>
 					<ul class="data-list">
-						<li><span>PunBB <?php echo config()['o_cur_version'] ?></span></li>
+						<li><span>PunBB <?php echo config()->o_cur_version ?></span></li>
 						<li><span><?php echo __('Copyright message', 'admin_index') ?></span></li>
 <?php if (isset($punbb_updates)): ?>
 						<li><span><?php echo $punbb_updates ?></span></li>

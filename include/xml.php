@@ -167,7 +167,7 @@ function validate_manifest($xml_array, $folder_name)
 			$errors[] = __('extension/author error', 'admin_ext');
 		if (!isset($ext['minversion']) || $ext['minversion'] == '')
 			$errors[] = __('extension/minversion error', 'admin_ext');
-		if (isset($ext['minversion']) && version_compare(clean_version(config()['o_cur_version']), clean_version($ext['minversion']), '<'))
+		if (isset($ext['minversion']) && version_compare(clean_version(config()->o_cur_version), clean_version($ext['minversion']), '<'))
 			$errors[] = sprintf(__('extension/minversion error2', 'admin_ext'), $ext['minversion']);
 		if (!isset($ext['maxtestedon']) || $ext['maxtestedon'] == '')
 			$errors[] = __('extension/maxtestedon error', 'admin_ext');

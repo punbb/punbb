@@ -127,7 +127,7 @@ namespace punbb;
 				__('Uninstall', 'admin_ext').'</a></span>'
 		);
 
-		if (config()['o_check_for_versions'] == 1 && isset($forum_ext_last_versions[$id]) && version_compare($ext['version'], $forum_ext_last_versions[$id]['version'], '<'))
+		if (config()->o_check_for_versions == 1 && isset($forum_ext_last_versions[$id]) && version_compare($ext['version'], $forum_ext_last_versions[$id]['version'], '<'))
 			$forum_page['ext_actions']['latest_ver'] = '<span><a href="'.$forum_ext_last_versions[$id]['repo_url'].'/'.$id.'/'.$id.'.zip">'.
 			__('Download latest version', 'admin_ext').'</a></span>';
 

@@ -35,7 +35,7 @@ namespace punbb;
 
 if (user()['is_guest'])
 {
-	$forum_page['email_form_name'] = (config()['p_force_guest_email'] == '1') ? 'req_email' : 'email';
+	$forum_page['email_form_name'] = (config()->p_force_guest_email == '1') ? 'req_email' : 'email';
 
 	($hook = get_hook('po_pre_guest_info_fieldset')) ? eval($hook) : null;
 
@@ -51,9 +51,10 @@ if (user()['is_guest'])
 				</div>
 <?php ($hook = get_hook('po_pre_guest_email')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="sf-box text<?php if (config()['p_force_guest_email'] == '1') echo ' required' ?>">
+					<div class="sf-box text<?php if (config()->p_force_guest_email == '1') echo ' required' ?>">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Guest e-mail', 'post') ?></span></label><br />
-						<span class="fld-input"><input type="email" id="fld<?php echo $forum_page['fld_count'] ?>" name="<?php echo $forum_page['email_form_name'] ?>" value="<?php if (isset($_POST[$forum_page['email_form_name']])) echo forum_htmlencode($email); ?>" size="35" maxlength="80" <?php if (config()['p_force_guest_email'] == '1') echo 'required' ?> /></span>
+						<span class="fld-input"><input type="email" id="fld<?php echo $forum_page['fld_count'] ?>" name="<?php echo $forum_page['email_form_name'] ?>" value="<?php if (isset($_POST[$forum_page['email_form_name']])) echo forum_htmlencode($email); ?>" size="35" maxlength="80"
+							<?php if (config()->p_force_guest_email == '1') echo 'required' ?> /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('po_pre_guest_info_fieldset_end')) ? eval($hook) : null; ?>
@@ -100,12 +101,12 @@ if ($fid)
 <?php
 
 $forum_page['checkboxes'] = array();
-if (config()['o_smilies'] == '1')
+if (config()->o_smilies == '1')
 	$forum_page['checkboxes']['hide_smilies'] = '<div class="mf-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="hide_smilies" value="1"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' /></span> <label for="fld'.$forum_page['fld_count'].'">'.
 	__('Hide smilies', 'post') . '</label></div>';
 
 // Check/uncheck the checkbox for subscriptions depending on scenario
-if (!user()['is_guest'] && config()['o_subscriptions'] == '1')
+if (!user()['is_guest'] && config()->o_subscriptions == '1')
 {
 	$subscr_checked = false;
 

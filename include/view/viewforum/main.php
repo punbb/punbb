@@ -7,7 +7,7 @@ $forum_page['item_header']['subject']['title'] = '<strong class="subject-title">
 $forum_page['item_header']['info']['replies'] = '<strong class="info-replies">'.
 	__('replies', 'forum') . '</strong>';
 
-if (config()['o_topic_views'] == '1')
+if (config()->o_topic_views == '1')
 	$forum_page['item_header']['info']['views'] = '<strong class="info-views">'.
 	__('views', 'forum') . '</strong>';
 
@@ -31,9 +31,9 @@ if (!empty($topics))
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-subhead">
-		<p class="item-summary<?php echo (config()['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf(__('Forum subtitle', 'forum'), implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
+		<p class="item-summary<?php echo (config()->o_topic_views == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf(__('Forum subtitle', 'forum'), implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
 	</div>
-	<div id="forum<?php echo $id ?>" class="main-content main-forum<?php echo (config()['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>">
+	<div id="forum<?php echo $id ?>" class="main-content main-forum<?php echo (config()->o_topic_views == '1') ? ' forum-views' : ' forum-noview' ?>">
 <?php
 
 	($hook = get_hook('vf_pre_topic_loop_start')) ? eval($hook) : null;
@@ -49,7 +49,7 @@ if (!empty($topics))
 		// Start from scratch
 		$forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_status'] = $forum_page['item_nav'] = $forum_page['item_title'] = $forum_page['item_title_status'] = array();
 
-		if (config()['o_censoring'] == '1')
+		if (config()->o_censoring == '1')
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf(__('Topic starter', 'forum'), forum_htmlencode($cur_topic['poster'])).'</span>';
@@ -66,7 +66,7 @@ if (!empty($topics))
 
 			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><span class="label">' . __('No replies info', 'forum') . '</span></li>';
 
-			if (config()['o_topic_views'] == '1')
+			if (config()->o_topic_views == '1')
 				$forum_page['item_body']['info']['views'] = '<li class="info-views"><span class="label">' . __('No views info', 'forum') . '</span></li>';
 
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">' . __('No lastpost info', 'forum') . '</span></li>';
@@ -76,7 +76,7 @@ if (!empty($topics))
 			// Assemble the Topic heading
 
 			// Should we display the dot or not? :)
-			if (!user()['is_guest'] && config()['o_show_dot'] == '1' && $cur_topic['has_posted'] == user()['id'])
+			if (!user()['is_guest'] && config()->o_show_dot == '1' && $cur_topic['has_posted'] == user()['id'])
 			{
 				$forum_page['item_title']['posted'] = '<span class="posted-mark">' . __('You posted indicator', 'forum') . '</span>';
 				$forum_page['item_status']['posted'] = 'posted';
@@ -132,7 +132,7 @@ if (!empty($topics))
 			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><strong>'.forum_number_format($cur_topic['num_replies']).'</strong> <span class="label">'.(($cur_topic['num_replies'] == 1) ?
 				__('reply', 'forum') : __('replies', 'forum')).'</span></li>';
 
-			if (config()['o_topic_views'] == '1')
+			if (config()->o_topic_views == '1')
 				$forum_page['item_body']['info']['views'] = '<li class="info-views"><strong>'.forum_number_format($cur_topic['num_views']).'</strong> <span class="label">'.(($cur_topic['num_views'] == 1) ?
 					__('view', 'forum') : __('views', 'forum')).'</span></li>';
 

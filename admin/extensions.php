@@ -63,7 +63,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	// Get core amd major versions
 	if (!defined('FORUM_DISABLE_EXTENSIONS_VERSION_CHECK'))
 	{
-		list($forum_version_core, $forum_version_major) = explode('.', clean_version(config()['o_cur_version']));
+		list($forum_version_core, $forum_version_major) = explode('.', clean_version(config()->o_cur_version));
 		list($extension_maxtestedon_version_core, $extension_maxtestedon_version_major) = explode('.', clean_version($ext_data['extension']['maxtestedon']));
 
 		if (version_compare($forum_version_core.'.'.$forum_version_major, $extension_maxtestedon_version_core.'.'.$extension_maxtestedon_version_major, '>'))
@@ -108,7 +108,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
 		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
@@ -323,7 +323,7 @@ else if (isset($_GET['uninstall']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
 		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
@@ -546,7 +546,7 @@ if ($section == 'hotfixes')
 {
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
 		array(__('Manage hotfixes', 'admin_common'), forum_link($forum_url['admin_extensions_hotfixes']))
@@ -563,7 +563,7 @@ if ($section == 'hotfixes')
 // Extensions list
 else
 {
-	if (config()['o_check_for_versions'] == 1)
+	if (config()->o_check_for_versions == 1)
 	{
 		// Check for the new versions of the extensions istalled
 		$repository_urls = array(FORUM_PUN_EXTENSION_REPOSITORY_URL);
@@ -600,7 +600,7 @@ else
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
 		array(__('Manage extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage']))

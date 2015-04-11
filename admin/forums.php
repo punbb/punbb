@@ -145,7 +145,7 @@ else if (isset($_GET['del_forum']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()['o_board_title'], forum_link($forum_url['index'])),
+			array(config()->o_board_title, forum_link($forum_url['index'])),
 			array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 			array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
 			array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums'])),
@@ -416,7 +416,7 @@ else if (isset($_GET['edit_forum']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
 		array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums'])),
@@ -463,7 +463,7 @@ $forum_page['fld_count'] = $forum_page['group_count'] = $forum_page['item_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
 	array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
 	array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums']))

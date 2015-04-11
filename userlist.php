@@ -18,7 +18,7 @@ else if (user()['g_view_users'] == '0')
 	message(__('No permission'));
 
 // Miscellaneous setup
-$forum_page['show_post_count'] = (config()['o_show_post_count'] == '1' || user()['is_admmod']) ? true : false;
+$forum_page['show_post_count'] = (config()->o_show_post_count == '1' || user()['is_admmod']) ? true : false;
 
 $forum_page['username'] = '';
 if (isset($_GET['username']) && is_string($_GET['username'])) {
@@ -106,7 +106,7 @@ $forum_page['form_action'] = $base_url.'/userlist.php';
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	__('User list')
 );
 

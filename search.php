@@ -128,7 +128,7 @@ if (isset($query))
 	//
 
 	// Setup breadcrumbs and results header and footer
-	$forum_page['crumbs'][] = array(config()['o_board_title'], forum_link($forum_url['index']));
+	$forum_page['crumbs'][] = array(config()->o_board_title, forum_link($forum_url['index']));
 	$action = (isset($action)) ? $action : null;
 	generate_search_crumbs($action);
 
@@ -194,7 +194,7 @@ $forum_page['frm-info'] = array(
 	'wildcard'	=> '<li><span>' . __('Wildcard info', 'search') . '</span></li>'
 );
 
-if (config()['o_search_all_forums'] == '1' || user()['is_admmod'])
+if (config()->o_search_all_forums == '1' || user()['is_admmod'])
 	$forum_page['frm-info']['forums'] = '<li><span>' . __('Forum default info', 'search') . '</span></li>';
 else
 	$forum_page['frm-info']['forums'] = '<li><span>' . __('Forum require info', 'search') . '</span></li>';
@@ -209,7 +209,7 @@ $forum_page['frm-sort'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	__('Search')
 );
 
@@ -229,7 +229,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 
 define('FORUM_PAGE', 'search');
 
-if ((!$advanced_search && (config()['o_search_all_forums'] == '0' &&
+if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 	!user()['is_admmod'])) || $advanced_search) {
 
 	// Get the list of categories and forums

@@ -197,7 +197,7 @@ if (isset($_GET['tid']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()['o_board_title'], forum_link($forum_url['index'])),
+			array(config()->o_board_title, forum_link($forum_url['index'])),
 			array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 			array($cur_topic['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject'])))),
 			__('Delete posts', 'misc')
@@ -303,7 +303,7 @@ if (isset($_GET['tid']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()['o_board_title'], forum_link($forum_url['index'])),
+			array(config()->o_board_title, forum_link($forum_url['index'])),
 			array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 			array($cur_topic['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject'])))),
 			__('Split posts', 'misc')
@@ -352,7 +352,7 @@ if (isset($_GET['tid']))
 		__('Page').' 1" />';
 	}
 
-	if (config()['o_censoring'] == '1')
+	if (config()->o_censoring == '1')
 		$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 	// Setup form
@@ -360,7 +360,7 @@ if (isset($_GET['tid']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array($cur_topic['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject'])))),
 		__('Moderate topic', 'topic')
@@ -598,7 +598,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'][] = array(config()['o_board_title'], forum_link($forum_url['index']));
+	$forum_page['crumbs'][] = array(config()->o_board_title, forum_link($forum_url['index']));
 	$forum_page['crumbs'][] = array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))));
 	if ($action == 'single')
 		$forum_page['crumbs'][] = array($subject, forum_link($forum_url['topic'], array($topics, sef_friendly($subject))));
@@ -717,7 +717,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array(__('Moderate forum', 'misc'), forum_link($forum_url['moderate_forum'], $fid)),
 		__('Merge topics', 'misc')
@@ -851,7 +851,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()['o_board_title'], forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array(__('Moderate forum', 'misc'), forum_link($forum_url['moderate_forum'], $fid)),
 		$multi ? __('Delete topics', 'misc') : __('Delete topic', 'misc')
@@ -1077,7 +1077,7 @@ $query = array(
 );
 
 // With "has posted" indication
-if (!user()['is_guest'] && config()['o_show_dot'] == '1')
+if (!user()['is_guest'] && config()->o_show_dot == '1')
 {
 	$query['SELECT'] .= ', p.poster_id AS has_posted';
 	$query['JOINS'][]	= array(
@@ -1121,7 +1121,7 @@ $forum_page['form_action'] = forum_link($forum_url['moderate_forum'], $fid);
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()['o_board_title'], forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link($forum_url['index'])),
 	array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 	sprintf(__('Moderate forum head', 'misc'), forum_htmlencode($cur_forum['forum_name']))
 );

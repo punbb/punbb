@@ -2,7 +2,7 @@
 namespace punbb;
 
 // Check if the topic review is to be displayed
-if ($tid && config()['o_topic_review'] != '0') { ?>
+if ($tid && config()->o_topic_review != '0') { ?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?= __('Topic review', 'post') ?></span></h2>
 	</div>
