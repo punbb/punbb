@@ -58,11 +58,11 @@ function generate_config_file()
 
 $language = isset($_GET['lang']) ? $_GET['lang'] : (isset($_POST['req_language']) ? forum_trim($_POST['req_language']) : 'English');
 $language = preg_replace('#[\.\\\/]#', '', $language);
-if (!file_exists(FORUM_ROOT.'lang/'.$language.'/install.php'))
+if (!file_exists($_PUNBB['language']->path[$language] . '/install.php')) {
 	exit('The language pack you have chosen doesn\'t seem to exist or is corrupt. Please recheck and try again.');
+}
 
-if (isset($_POST['generate_config']))
-{
+if (isset($_POST['generate_config'])) {
 	header('Content-Type: text/x-delimtext; name="config.php"');
 	header('Content-disposition: attachment; filename=config.php');
 
@@ -415,8 +415,9 @@ else
 	if (utf8_strlen($base_url) == 0)
 		error(__('Missing base url', 'install'));
 
-	if (!file_exists(FORUM_ROOT.'lang/'.$default_lang.'/common.php'))
+	if (!file_exists($_PUNBB['language']->path[$default_lang] . '/common.php')) {
 		error(__('Invalid language', 'install'));
+	}
 
 	// Load the appropriate DB layer class
 	switch ($db_type)

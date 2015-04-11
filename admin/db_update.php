@@ -141,7 +141,7 @@ else {
 
 // Make sure the default language exists
 // We default to English if the default language is invalid (a 1.2 to 1.3 upgrade most likely)
-if (!file_exists(FORUM_ROOT.'lang/'.config()->o_default_lang.'/common.php'))
+if (!file_exists($_PUNBB['language']->path[config()->o_default_lang] . '/common.php'))
 {
 	$query = array(
 		'UPDATE'	=> 'config',

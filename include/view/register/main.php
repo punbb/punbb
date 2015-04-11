@@ -68,14 +68,7 @@ namespace punbb;
 <?php endif; ?>
 <?php ($hook = get_hook('rg_register_pre_email_confirm')) ? eval($hook) : null;
 
-		$languages = array();
-		$d = dir(FORUM_ROOT.'lang');
-		while (($entry = $d->read()) !== false)
-		{
-			if ($entry != '.' && $entry != '..' && is_dir(FORUM_ROOT.'lang/'.$entry) && file_exists(FORUM_ROOT.'lang/'.$entry.'/common.php'))
-				$languages[] = $entry;
-		}
-		$d->close();
+		$languages = get_language_packs();
 
 		($hook = get_hook('rg_register_pre_language')) ? eval($hook) : null;
 

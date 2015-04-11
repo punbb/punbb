@@ -357,7 +357,8 @@ else if ($action == 'change_email')
 			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Load the "activate e-mail" template
-			$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/activate_email.tpl'));
+			$mail_tpl = forum_trim(file_get_contents(
+				$_PUNBB['language']->path[user()->language] . '/mail_templates/activate_email.tpl'));
 
 			// The first row contains the subject
 			$first_crlf = strpos($mail_tpl, "\n");
@@ -742,7 +743,7 @@ else if (isset($_POST['form_sent']))
 			if (isset($form['language']))
 			{
 				$form['language'] = preg_replace('#[\.\\\/]#', '', $form['language']);
-				if (!file_exists(FORUM_ROOT.'lang/'.$form['language'].'/common.php'))
+				if (!file_exists($_PUNBB['language']->path[$form['language']] . '/common.php'))
 					message(__('Bad request'));
 			}
 
@@ -1607,14 +1608,7 @@ else
 		}
 		$forum_page['d']->close();
 
-		$forum_page['languages'] = array();
-		$forum_page['d'] = dir(FORUM_ROOT.'lang');
-		while (($forum_page['entry'] = $forum_page['d']->read()) !== false)
-		{
-			if ($forum_page['entry'] != '.' && $forum_page['entry'] != '..' && is_dir(FORUM_ROOT.'lang/'.$forum_page['entry']) && file_exists(FORUM_ROOT.'lang/'.$forum_page['entry'].'/common.php'))
-				$forum_page['languages'][] = $forum_page['entry'];
-		}
-		$forum_page['d']->close();
+		$forum_page['languages'] = get_language_packs();
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(

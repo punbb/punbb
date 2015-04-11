@@ -898,7 +898,7 @@ function sef_friendly($str)
 	static $lang_url_replace, $forum_reserved_strings;
 
 	if (!isset($lang_url_replace)) {
-		require FORUM_ROOT . 'lang/' . user()->language . '/url_replace.php';
+		require $_PUNBB['language']->path[user()->language] . '/url_replace.php';
 	}
 
 	if (!isset($forum_reserved_strings))
@@ -1163,15 +1163,17 @@ function get_style_packs()
 
 
 // Return a list of all language packs installed
-function get_language_packs()
-{
+function get_language_packs() {
+	global $_PUNBB;
+	return array_keys($_PUNBB['language']->path);
+	/*
 	$languages = array();
 
 	if ($handle = opendir(FORUM_ROOT.'lang'))
 	{
 		while (false !== ($dirname = readdir($handle)))
 		{
-			$dirname = FORUM_ROOT.'lang/'.$dirname;
+			$dirname = FORUM_ROOT.'langTMP/'.$dirname;
 			if (is_dir($dirname) && file_exists($dirname.'/common.php'))
 				$languages[] = basename($dirname);
 		}
@@ -1181,6 +1183,7 @@ function get_language_packs()
 	($hook = get_hook('fn_get_language_packs_end')) ? eval($hook) : null;
 
 	return $languages;
+	*/
 }
 
 
@@ -1226,9 +1229,9 @@ function validate_search_word($word)
 
 	if (!isset($stopwords))
 	{
-		if (file_exists(FORUM_ROOT.'lang/'.user()->language.'/stopwords.txt'))
+		if (file_exists($_PUNBB['language']->path[user()->language] . '/stopwords.txt'))
 		{
-			$stopwords = file(FORUM_ROOT.'lang/'.user()->language.'/stopwords.txt');
+			$stopwords = file($_PUNBB['language']->path[user()->language] .'/stopwords.txt');
 			$stopwords = array_map('forum_trim', $stopwords);
 			$stopwords = array_filter($stopwords);
 		}
@@ -1418,7 +1421,7 @@ function cookie_login(&$user)
 		forum_setcookie($cookie_name, base64_encode($user->id.'|'.$user->password.'|'.$expire.'|'.sha1($user->salt.$user->password.forum_hash($expire, $user->salt))), $expire);
 
 		// Set a default language if the user selected language no longer exists
-		if (!file_exists(FORUM_ROOT.'lang/'.$user->language.'/common.php')) {
+		if (!file_exists($_PUNBB['language']->path[$user->language] . '/common.php')) {
 			$user->language = config()->o_default_lang;
 		}
 
@@ -1907,7 +1910,8 @@ function add_user($user_info, &$new_uid)
 	if ($user_info['require_verification'])
 	{
 		// Load the "welcome" template
-		$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/welcome.tpl'));
+		$mail_tpl = forum_trim(file_get_contents(
+			$_PUNBB['language']->path[user()->language] . '/mail_templates/welcome.tpl'));
 
 		// The first row contains the subject
 		$first_crlf = strpos($mail_tpl, "\n");
@@ -2774,13 +2778,16 @@ function send_subscriptions($post_info, $new_pid)
 		foreach ($subscribers as $cur_subscriber)
 		{
 			// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
-			if (!isset($notification_emails[$cur_subscriber['language']]) && file_exists(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
+			if (!isset($notification_emails[$cur_subscriber['language']]) &&
+					file_exists($_PUNBB['language']->path[$cur_subscriber['language']] . '/mail_templates/new_reply.tpl'))
 			{
 				// Load the "new reply" template
-				$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
+				$mail_tpl = forum_trim(file_get_contents(
+					$_PUNBB['language']->path[$cur_subscriber['language']] . '/mail_templates/new_reply.tpl'));
 
 				// Load the "new reply full" template (with post included)
-				$mail_tpl_full = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
+				$mail_tpl_full = forum_trim(file_get_contents(
+					$_PUNBB['language']->path[$cur_subscriber['language']] . '/mail_templates/new_reply_full.tpl'));
 
 				// The first row contains the subject (it also starts with "Subject:")
 				$first_crlf = strpos($mail_tpl, "\n");
@@ -2887,13 +2894,16 @@ function send_forum_subscriptions($topic_info, $new_tid)
 		foreach ($subscribers as $cur_subscriber)
 		{
 			// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
-			if (!isset($notification_emails[$cur_subscriber['language']]) && file_exists(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_topic.tpl'))
+			if (!isset($notification_emails[$cur_subscriber['language']]) &&
+					file_exists($_PUNBB['language']->path[$cur_subscriber['language']] . '/mail_templates/new_topic.tpl'))
 			{
 				// Load the "new topic" template
-				$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_topic.tpl'));
+				$mail_tpl = forum_trim(file_get_contents(
+					$_PUNBB['language']->path[$cur_subscriber['language']] . '/mail_templates/new_topic.tpl'));
 
 				// Load the "new topic full" template (with first post included)
-				$mail_tpl_full = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_topic_full.tpl'));
+				$mail_tpl_full = forum_trim(file_get_contents(
+					$_PUNBB['language']->path[$cur_subscriber['language']] . '/mail_templates/new_topic_full.tpl'));
 
 				// The first row contains the subject (it also starts with "Subject:")
 				$first_crlf = strpos($mail_tpl, "\n");
@@ -3322,8 +3332,11 @@ function __($text, $domain = 'common', $language = null) {
 				$language = config()->o_default_lang;
 			}
 		}
+		// TODO if exists $_PUNBB['language']->domain[$language][value]
+		// 		include $_PUNBB['language']->domain[$language][value]
+		// else
 		$_PUNBB['lang'][$domain] = include FORUM_ROOT .
-			'lang/' . $language . '/' . $domain . '.php';
+			$_PUNBB['language']->path[$language] . '/' . $domain . '.php';
 	}
 
 	return $_PUNBB['lang'][$domain][$text];

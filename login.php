@@ -214,7 +214,8 @@ else if ($action == 'forget' || $action == 'forget_2')
 				($hook = get_hook('li_forgot_pass_pre_email')) ? eval($hook) : null;
 
 				// Load the "activate password" template
-				$mail_tpl = forum_trim(file_get_contents(FORUM_ROOT.'lang/'.user()->language.'/mail_templates/activate_password.tpl'));
+				$mail_tpl = forum_trim(file_get_contents(
+					$_PUNBB['language']->path[user()->language] . '/mail_templates/activate_password.tpl'));
 
 				// The first row contains the subject
 				$first_crlf = strpos($mail_tpl, "\n");

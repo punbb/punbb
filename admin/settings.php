@@ -43,14 +43,18 @@ if (isset($_POST['form_sent']))
 			$form['sef'] = preg_replace('#[\.\\\/]#', '', $form['sef']);
 
 			// Make sure default_lang, default_style, and sef exist
-			if (!file_exists(FORUM_ROOT.'style/'.$form['default_style'].'/'.$form['default_style'].'.php'))
+			if (!file_exists(FORUM_ROOT.'style/'.$form['default_style'].'/'.$form['default_style'].'.php')) {
 				message(__('Bad request'));
-			if (!file_exists(FORUM_ROOT.'lang/'.$form['default_lang'].'/common.php'))
+			}
+			if (!file_exists($_PUNBB['language']->path[$form['default_lang']] . '/common.php')) {
 				message(__('Bad request'));
-			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'/forum_urls.php'))
+			}
+			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'/forum_urls.php')) {
 				message(__('Bad request'));
-			if (!isset($form['default_dst']) || $form['default_dst'] != '1')
+			}
+			if (!isset($form['default_dst']) || $form['default_dst'] != '1') {
 				$form['default_dst'] = '0';
+			}
 
 			$form['timeout_visit'] = intval($form['timeout_visit']);
 			$form['timeout_online'] = intval($form['timeout_online']);
