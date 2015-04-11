@@ -104,6 +104,3 @@ user(function () {
 	}
 	return $_PUNBB['user'];
 });
-
-global $_PUNBB;
-print_r($_PUNBB['language']);

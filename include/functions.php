@@ -895,6 +895,7 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 // Make a string safe to use in a URL
 function sef_friendly($str)
 {
+	global $_PUNBB;
 	static $lang_url_replace, $forum_reserved_strings;
 
 	if (!isset($lang_url_replace)) {
@@ -1221,6 +1222,7 @@ function get_current_url($max_length = 0)
 // Checks if a word is a valid searchable word
 function validate_search_word($word)
 {
+	global $_PUNBB;
 	static $stopwords;
 
 	$return = ($hook = get_hook('fn_validate_search_word_start')) ? eval($hook) : null;
@@ -1375,6 +1377,7 @@ function authenticate_user($user, $password, $password_is_hash = false)
 // Attempt to login with the user ID and password hash from the cookie
 function cookie_login(&$user)
 {
+	global $_PUNBB;
 	global $db_type, $cookie_name, $cookie_path, $cookie_domain, $cookie_secure, $forum_time_formats, $forum_date_formats;
 
 	$now = time();
@@ -1889,6 +1892,7 @@ function get_tracked_topics()
 // Adds a new user. The username must be passed through validate_username() first.
 function add_user($user_info, &$new_uid)
 {
+	global $_PUNBB;
 	global $base_url, $forum_url;
 
 	$return = ($hook = get_hook('fn_add_user_start')) ? eval($hook) : null;
@@ -2711,6 +2715,7 @@ function clean_forum_moderators()
 // Send out subscription emails
 function send_subscriptions($post_info, $new_pid)
 {
+	global $_PUNBB;
 	global $forum_url;
 
 	$return = ($hook = get_hook('fn_send_subscriptions_start')) ? eval($hook) : null;
@@ -2840,6 +2845,7 @@ function send_subscriptions($post_info, $new_pid)
 // Send out subscription emails
 function send_forum_subscriptions($topic_info, $new_tid)
 {
+	global $_PUNBB;
 	global $forum_url;
 
 	$return = ($hook = get_hook('fn_send_forum_subscriptions_start')) ? eval($hook) : null;
@@ -3335,8 +3341,7 @@ function __($text, $domain = 'common', $language = null) {
 		// TODO if exists $_PUNBB['language']->domain[$language][value]
 		// 		include $_PUNBB['language']->domain[$language][value]
 		// else
-		$_PUNBB['lang'][$domain] = include FORUM_ROOT .
-			$_PUNBB['language']->path[$language] . '/' . $domain . '.php';
+		$_PUNBB['lang'][$domain] = include $_PUNBB['language']->path[$language] . '/' . $domain . '.php';
 	}
 
 	return $_PUNBB['lang'][$domain][$text];
