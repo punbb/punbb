@@ -1,4 +1,20 @@
 {
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-lang-English"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-lang-Russian"
+		}
+	],
+
+	"require": {
+		"punbb/lang-English": "dev-master",
+		"punbb/lang-Russian": "dev-master"
+	},
+
 	"autoload": {
 		"classmap": [
 			"include"
