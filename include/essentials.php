@@ -75,10 +75,6 @@ if (!defined('FORUM_CACHE_DIR'))
 // Start a transaction
 db()->start_transaction();
 
-// TODO fix
-global $forum_config;
-$forum_config = config();
-
 // If the request_uri is invalid try fix it
 forum_fix_request_uri();
 
