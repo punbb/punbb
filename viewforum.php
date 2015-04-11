@@ -65,7 +65,7 @@ $mods_array = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderat
 $forum_page['is_admmod'] = (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && array_key_exists(user()['username'], $mods_array))) ? true : false;
 
 // Sort out whether or not this user can post
-user()['may_post'] = (($cur_forum['post_topics'] == '' && user()['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $forum_page['is_admmod']) ? true : false;
+$_PUNBB['user']['may_post'] = (($cur_forum['post_topics'] == '' && user()['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $forum_page['is_admmod']) ? true : false;
 
 // Get topic/forum tracking data
 if (!user()['is_guest'])

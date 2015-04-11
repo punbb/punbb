@@ -64,6 +64,8 @@ db(function () {
 config(function () {
 	global $_PUNBB;
 
+	// TODO convert to object for using config()->parameter1 = 'value1'
+
 	if (isset($_PUNBB['config'])) {
 		return $_PUNBB['config'];
 	}
@@ -99,6 +101,9 @@ assets(function () {
 
 user(function () {
 	global $_PUNBB;
+
+	// TODO convert to object for using user()->parameter1 = 'value1'
+
 	if (!isset($_PUNBB['user'])) {
 		$_PUNBB['user'] = array();
 		// Login and fetch user info

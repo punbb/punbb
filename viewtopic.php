@@ -151,10 +151,12 @@ $mods_array = ($cur_topic['moderators'] != '') ? unserialize($cur_topic['moderat
 $forum_page['is_admmod'] = (user()['g_id'] == FORUM_ADMIN || (user()['g_moderator'] == '1' && array_key_exists(user()['username'], $mods_array))) ? true : false;
 
 // Can we or can we not post replies?
-if ($cur_topic['closed'] == '0' || $forum_page['is_admmod'])
-	user()['may_post'] = (($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1' || $forum_page['is_admmod']) ? true : false;
-else
-	user()['may_post'] = false;
+if ($cur_topic['closed'] == '0' || $forum_page['is_admmod']) {
+	$_PUNBB['user']['may_post'] = (($cur_topic['post_replies'] == '' && user()['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1' || $forum_page['is_admmod']) ? true : false;
+}
+else {
+	$_PUNBB['user']['may_post'] = false;
+}
 
 // Add/update this topic in our list of tracked topics
 if (!user()['is_guest'])

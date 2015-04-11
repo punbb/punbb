@@ -3171,7 +3171,7 @@ function redirect($destination_url, $message)
 // Display a simple error message
 function error()
 {
-	global $_PUNBB;
+	global $_PUNBB; // replace by throw exception
 
 	if (!headers_sent())
 	{
