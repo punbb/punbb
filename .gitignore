@@ -7,7 +7,6 @@ cache/
 img/avatars/
 db.sqlite
 test.php
-extensions/
 .htaccess
 
 *.sublime-*
