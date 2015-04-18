@@ -1139,10 +1139,10 @@ function get_scheme_packs()
 	return $schemes;
 }
 
-
 // Return a list of all styles installed
-function get_style_packs()
-{
+function get_style_packs() {
+	return array_keys(PUNBB::get('theme')->path);
+	/*
 	$styles = array();
 
 	if ($handle = opendir(FORUM_ROOT.'style'))
@@ -1160,12 +1160,11 @@ function get_style_packs()
 	($hook = get_hook('fn_get_style_packs_end')) ? eval($hook) : null;
 
 	return $styles;
+	*/
 }
-
 
 // Return a list of all language packs installed
 function get_language_packs() {
-	global $_PUNBB;
 	return array_keys(PUNBB::get('language')->path);
 	/*
 	$languages = array();

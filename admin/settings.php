@@ -43,7 +43,8 @@ if (isset($_POST['form_sent']))
 			$form['sef'] = preg_replace('#[\.\\\/]#', '', $form['sef']);
 
 			// Make sure default_lang, default_style, and sef exist
-			if (!file_exists(FORUM_ROOT.'style/'.$form['default_style'].'/'.$form['default_style'].'.php')) {
+			if (!file_exists(PUNBB::get('theme')->path[$form['default_style']] .
+						'/' . $form['default_style'] . '.php')) {
 				message(__('Bad request'));
 			}
 			if (!file_exists(PUNBB::get('language')->path[$form['default_lang']] . '/common.php')) {

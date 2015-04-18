@@ -762,7 +762,8 @@ else if (isset($_POST['form_sent']))
 			if (isset($form['style']))
 			{
 				$form['style'] = preg_replace('#[\.\\\/]#', '', $form['style']);
-				if (!file_exists(FORUM_ROOT.'style/'.$form['style'].'/'.$form['style'].'.php'))
+				if (!file_exists(PUNBB::get('theme')->path[$form['style']] .
+							'/' . $form['style'] . '.php'))
 					message(__('Bad request'));
 			}
 			break;
@@ -1599,15 +1600,7 @@ else
 
 	else if ($section == 'settings')
 	{
-		$forum_page['styles'] = array();
-		$forum_page['d'] = dir(FORUM_ROOT.'style');
-		while (($forum_page['entry'] = $forum_page['d']->read()) !== false)
-		{
-			if ($forum_page['entry'] != '.' && $forum_page['entry'] != '..' && is_dir(FORUM_ROOT.'style/'.$forum_page['entry']) && file_exists(FORUM_ROOT.'style/'.$forum_page['entry'].'/'.$forum_page['entry'].'.php'))
-				$forum_page['styles'][] = $forum_page['entry'];
-		}
-		$forum_page['d']->close();
-
+		$forum_page['styles'] = get_style_packs();
 		$forum_page['languages'] = get_language_packs();
 
 		// Setup breadcrumbs

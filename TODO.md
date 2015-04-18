@@ -100,19 +100,19 @@
 
 Блоки основного контента:
 
-    style/some-template1/login/main.php
-    style/some-template1/...
+    /login/main.php
+    /...
 
 Общие макеты:
     
-    style/some-template1/layout/main.php
-    style/some-template1/layout/admin.php
-    style/some-template1/layout/...
+    /layout/main.php
+    /layout/admin.php
+    /layout/...
 
 Хелперы:
 
-    style/some-template1/helper/main_menu.php    
-    style/some-template1/helper/...
+    /helper/main_menu.php    
+    /helper/...
 
 Стандартные шаблоны:
 
@@ -124,7 +124,7 @@
 
 Проверяется подключаемый шаблон в папке текущей темы, например login/main
     
-    style/template1/login/main.php
+    /login/main.php
     
 если такого файла нет, берется стандартный
 
@@ -155,3 +155,5 @@
     mi_pre_email_errors
     mi_pre_report_errors
     po_pre_post_errors
+    fn_get_style_packs_end
+    fn_get_language_packs_end

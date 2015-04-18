@@ -124,7 +124,8 @@ if (!isset($base_url))
 
 // There's no forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
-if (file_exists(FORUM_ROOT.'style/'.config()->o_default_style.'/'.config()->o_default_style.'.php')) {
+if (file_exists(PUNBB::get('theme')->path[config()->o_default_style] .
+			'/' . config()->o_default_style . '.php')) {
 	user()->style = config()->o_default_style;
 }
 else {
@@ -463,7 +464,8 @@ switch ($stage)
 <head>
 	<meta charset="utf-8" />
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="<?= PUNBB::get('theme')->url['Oxygen'] ?>/Oxygen.min.css" />
 	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
@@ -2173,7 +2175,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 <head>
 	<meta charset="utf-8" />
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="<?= PUNBB::get('theme')->url['Oxygen'] ?>/Oxygen.min.css" />
 	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>

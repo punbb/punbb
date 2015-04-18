@@ -32,3 +32,8 @@ class PUNBB {
 	}
 
 }
+
+if (!defined('FORUM_ROOT')) {
+	define('FORUM_ROOT', dirname(__DIR__) . '/');
+	define('FORUM_WEB', '/');
+}

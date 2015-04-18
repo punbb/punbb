@@ -8,7 +8,7 @@ if (FORUM_PAGE == 'redirect') {
 		__('Title separator') . forum_htmlencode(config()->o_board_title).'</title>';
 
 	// Include stylesheets
-	require FORUM_ROOT.'style/'.user()->style.'/'.user()->style.'.php';
+	require PUNBB::get('theme')->path[user()->style] . '/' . user()->style . '.php';
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
@@ -20,7 +20,7 @@ if (FORUM_PAGE == 'redirect') {
 	echo implode("\n", $forum_head).assets()->render_css();
 }
 else if (FORUM_PAGE == 'maintenance') {
-	require FORUM_ROOT.'style/'.user()->style.'/'.user()->style.'.php';
+	require PUNBB::get('theme')->path[user()->style] . '/' . user()->style . '.php';
 	echo assets()->render_css();
 }
 else {
@@ -72,7 +72,7 @@ else {
 	ob_start();
 
 	// Include stylesheets
-	require FORUM_ROOT.'style/'.user()->style.'/'.user()->style.'.php';
+	require PUNBB::get('theme')->path[user()->style] . '/' . user()->style . '.php';
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
