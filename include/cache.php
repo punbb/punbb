@@ -15,7 +15,7 @@ if (!defined('FORUM')) {
 	exit;
 }
 
-if (!function_exists('write_cache_file')) {
+if (!function_exists('punbb\\write_cache_file')) {
 
 // Safe create or write of cache files
 // Use LOCK
@@ -117,7 +117,13 @@ function generate_bans_cache()
 		$output[] = $cur_ban;
 
 	// Output ban list as PHP code
-	if (!write_cache_file(FORUM_CACHE_DIR.'cache_bans.php', '<?php'."\n\n".'define(\'FORUM_BANS_LOADED\', 1);'."\n\n".'$forum_bans = '.var_export($output, true).';'."\n\n".'?>'))
+	if (!write_cache_file(FORUM_CACHE_DIR.'cache_bans.php',
+			'<?php'."
+			namespace punbb;
+			".
+			'define(\'FORUM_BANS_LOADED\', 1);'."\n\n".
+			'$forum_bans = '.var_export($output, true).';'
+		))
 	{
 		error('Unable to write bans cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
@@ -148,7 +154,13 @@ function generate_ranks_cache()
 		$output[] = $cur_rank;
 
 	// Output ranks list as PHP code
-	if (!write_cache_file(FORUM_CACHE_DIR.'cache_ranks.php', '<?php'."\n\n".'define(\'FORUM_RANKS_LOADED\', 1);'."\n\n".'$forum_ranks = '.var_export($output, true).';'."\n\n".'?>'))
+	if (!write_cache_file(FORUM_CACHE_DIR.'cache_ranks.php',
+		'<?php' . "
+		namespace punbb;
+		" .
+		'define(\'FORUM_RANKS_LOADED\', 1);'."\n\n".
+		'$forum_ranks = '.var_export($output, true).';'
+	))
 	{
 		error('Unable to write ranks cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
@@ -207,7 +219,13 @@ function generate_stats_cache()
 	$stats['cached'] = time();
 
 	// Output ranks list as PHP code
-	if (!write_cache_file(FORUM_CACHE_DIR.'cache_stats.php', '<?php'."\n\n".'if (!defined(\'FORUM_STATS_LOADED\')) define(\'FORUM_STATS_LOADED\', 1);'."\n\n".'$forum_stats = '.var_export($stats, true).';'."\n\n".'?>'))
+	if (!write_cache_file(FORUM_CACHE_DIR.'cache_stats.php',
+		'<?php' . "
+		namespace punbb;
+		" .
+		'if (!defined(\'FORUM_STATS_LOADED\')) define(\'FORUM_STATS_LOADED\', 1);'."\n\n".
+		'$forum_stats = '.var_export($stats, true).';'
+	))
 	{
 		error('Unable to write stats cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
@@ -296,7 +314,10 @@ function generate_quickjump_cache($group_id = false)
 	// Loop through the groups in $groups and output the cache for each of them
 	foreach ($groups as $group_id)
 	{
-		$output = '<?php'."\n\n".'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);'."\n".'$forum_id = isset($forum_id) ? $forum_id : 0;'."\n\n".'?>';
+		$output = '<?php' . "
+		namespace punbb;
+		" .
+		'if (!defined(\'FORUM\')) exit;'."\n".'define(\'FORUM_QJ_LOADED\', 1);'."\n".'$forum_id = isset($forum_id) ? $forum_id : 0;'."\n\n".'?>';
 		$output .= '<form id="qjump" method="get" accept-charset="utf-8" action="'.$base_url.'/viewforum.php">'."\n\t".'<div class="frm-fld frm-select">'."\n\t\t".
 		'<label for="qjump-select"><span><?= __(\'Jump to\') ?>'.'</span></label><br />'."\n\t\t".'<span class="frm-input"><select id="qjump-select" name="id">'."\n";
 
@@ -477,7 +498,13 @@ function generate_hooks_cache()
 	}
 
 	// Output hooks as PHP code
-	if (!write_cache_file(FORUM_CACHE_DIR.'cache_hooks.php', '<?php'."\n\n".'define(\'FORUM_HOOKS_LOADED\', 1);'."\n\n".'$forum_hooks = '.var_export($output, true).';'."\n\n".'?>'))
+	if (!write_cache_file(FORUM_CACHE_DIR.'cache_hooks.php',
+		'<?php' . "
+		namespace punbb;
+		" .
+		'define(\'FORUM_HOOKS_LOADED\', 1);'."\n\n".
+		'$forum_hooks = '.var_export($output, true).';'
+	))
 	{
 		error('Unable to write hooks cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
