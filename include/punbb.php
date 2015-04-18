@@ -21,15 +21,11 @@ class PUNBB {
 	}
 
 	static function get($name) {
-		var_dump(self::$values);
-
 		return self::$values[$name];
 	}
 
 	static function set($name, $value) {
 		return self::$values[$name] = $value;
-
-		var_dump(self::$values);
 	}
 
 }
