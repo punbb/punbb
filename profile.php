@@ -358,7 +358,7 @@ else if ($action == 'change_email')
 
 			// Load the "activate e-mail" template
 			$mail_tpl = forum_trim(file_get_contents(
-				$_PUNBB['language']->path[user()->language] . '/mail_templates/activate_email.tpl'));
+				PUNBB::get('language')->path[user()->language] . '/mail_templates/activate_email.tpl'));
 
 			// The first row contains the subject
 			$first_crlf = strpos($mail_tpl, "\n");
@@ -743,7 +743,7 @@ else if (isset($_POST['form_sent']))
 			if (isset($form['language']))
 			{
 				$form['language'] = preg_replace('#[\.\\\/]#', '', $form['language']);
-				if (!file_exists($_PUNBB['language']->path[$form['language']] . '/common.php'))
+				if (!file_exists(PUNBB::get('language')->path[$form['language']] . '/common.php'))
 					message(__('Bad request'));
 			}
 

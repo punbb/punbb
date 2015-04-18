@@ -228,7 +228,7 @@ else if (isset($_GET['email']))
 		{
 			// Load the "form e-mail" template
 			$mail_tpl = forum_trim(file_get_contents(
-				$_PUNBB['language']->path[user()->language] . '/mail_templates/form_email.tpl'));
+				PUNBB::get('language')->path[user()->language] . '/mail_templates/form_email.tpl'));
 
 			// The first row contains the subject
 			$first_crlf = strpos($mail_tpl, "\n");

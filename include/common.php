@@ -60,7 +60,7 @@ $forum_date_formats = array(config()->o_date_format, 'Y-m-d', 'Y-d-m', 'd-m-Y', 
 $forum_page = array();
 
 // Attempt to load the common language file
-if (!file_exists($_PUNBB['language']->path[user()->language] . '/common.php')) {
+if (!file_exists(PUNBB::get('language')->path[user()->language] . '/common.php')) {
 	error('There is no valid language pack \''.forum_htmlencode(user()->language).'\' installed.<br />Please reinstall a language of that name.');
 }
 

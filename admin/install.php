@@ -58,7 +58,7 @@ function generate_config_file()
 
 $language = isset($_GET['lang']) ? $_GET['lang'] : (isset($_POST['req_language']) ? forum_trim($_POST['req_language']) : 'English');
 $language = preg_replace('#[\.\\\/]#', '', $language);
-if (!file_exists($_PUNBB['language']->path[$language] . '/install.php')) {
+if (!file_exists(PUNBB::get('language')->path[$language] . '/install.php')) {
 	exit('The language pack you have chosen doesn\'t seem to exist or is corrupt. Please recheck and try again.');
 }
 
@@ -415,7 +415,7 @@ else
 	if (utf8_strlen($base_url) == 0)
 		error(__('Missing base url', 'install'));
 
-	if (!file_exists($_PUNBB['language']->path[$default_lang] . '/common.php')) {
+	if (!file_exists(PUNBB::get('language')->path[$default_lang] . '/common.php')) {
 		error(__('Invalid language', 'install'));
 	}
 

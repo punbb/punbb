@@ -149,7 +149,7 @@ else if (isset($_POST['form_sent']))
 			if (isset($_POST['language']))
 			{
 				$language = preg_replace('#[\.\\\/]#', '', $_POST['language']);
-				if (!file_exists($_PUNBB['language']->path[$language] . '/common.php')) {
+				if (!file_exists(PUNBB::get('language')->path[$language] . '/common.php')) {
 					message(__('Bad request'));
 				}
 			}
