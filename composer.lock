@@ -1,0 +1,87 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "700ed530ff30de125df62551c7c831ee",
+    "packages": [
+        {
+            "name": "punbb/lang-English",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/punbb-lang-English.git",
+                "reference": "33903483a30295fbc6d87d3480af177083845dcb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/punbb-lang-English/zipball/33903483a30295fbc6d87d3480af177083845dcb",
+                "reference": "33903483a30295fbc6d87d3480af177083845dcb",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "init.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Your Name",
+                    "email": "your@name.com"
+                }
+            ],
+            "description": "PUNBB English language definitions",
+            "support": {
+                "source": "https://github.com/rivetweb/punbb-lang-English/tree/master",
+                "issues": "https://github.com/rivetweb/punbb-lang-English/issues"
+            },
+            "time": "2015-04-11 15:28:55"
+        },
+        {
+            "name": "punbb/lang-Russian",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/punbb-lang-Russian.git",
+                "reference": "7e46a959650081517113bc1c24e0fddef4f94bfc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/punbb-lang-Russian/zipball/7e46a959650081517113bc1c24e0fddef4f94bfc",
+                "reference": "7e46a959650081517113bc1c24e0fddef4f94bfc",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "init.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Your Name",
+                    "email": "your@name.com"
+                }
+            ],
+            "description": "PUNBB Russian language definitions",
+            "support": {
+                "source": "https://github.com/rivetweb/punbb-lang-Russian/tree/master",
+                "issues": "https://github.com/rivetweb/punbb-lang-Russian/issues"
+            },
+            "time": "2015-04-11 15:28:27"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "punbb/lang-english": 20,
+        "punbb/lang-russian": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

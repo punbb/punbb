@@ -13,5 +13,3 @@ extensions/
 *.sublime-*
 /style/Oxygenwrap/
 /style/ExampleTwig/
-/vendor/
-composer.lock
