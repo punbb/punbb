@@ -21,6 +21,9 @@ class PUNBB {
 	}
 
 	static function get($name) {
+		if (!isset(self::$values[$name])) {
+			self::$values[$name] = new \stdClass();
+		}
 		return self::$values[$name];
 	}
 

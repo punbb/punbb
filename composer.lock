@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-lang-English.git",
-                "reference": "34ca572957936fb7af44e5a56efe35cceb130673"
+                "reference": "b80212c0364e0710c87f1959be44e94c1b9533ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-lang-English/zipball/34ca572957936fb7af44e5a56efe35cceb130673",
-                "reference": "34ca572957936fb7af44e5a56efe35cceb130673",
+                "url": "https://api.github.com/repos/rivetweb/punbb-lang-English/zipball/b80212c0364e0710c87f1959be44e94c1b9533ea",
+                "reference": "b80212c0364e0710c87f1959be44e94c1b9533ea",
                 "shasum": ""
             },
             "type": "library",
@@ -37,7 +37,7 @@
                 "source": "https://github.com/rivetweb/punbb-lang-English/tree/master",
                 "issues": "https://github.com/rivetweb/punbb-lang-English/issues"
             },
-            "time": "2015-04-18 10:38:54"
+            "time": "2015-04-18 11:06:25"
         },
         {
             "name": "punbb/lang-Russian",
@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-lang-Russian.git",
-                "reference": "d3254d6c2437dd96767b0484d5d4a192205706e3"
+                "reference": "4850fc67d23be7122e51ce197c88f849dad85f1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-lang-Russian/zipball/d3254d6c2437dd96767b0484d5d4a192205706e3",
-                "reference": "d3254d6c2437dd96767b0484d5d4a192205706e3",
+                "url": "https://api.github.com/repos/rivetweb/punbb-lang-Russian/zipball/4850fc67d23be7122e51ce197c88f849dad85f1b",
+                "reference": "4850fc67d23be7122e51ce197c88f849dad85f1b",
                 "shasum": ""
             },
             "type": "library",
@@ -70,7 +70,7 @@
                 "source": "https://github.com/rivetweb/punbb-lang-Russian/tree/master",
                 "issues": "https://github.com/rivetweb/punbb-lang-Russian/issues"
             },
-            "time": "2015-04-18 10:39:11"
+            "time": "2015-04-18 11:06:43"
         }
     ],
     "packages-dev": [],

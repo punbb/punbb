@@ -3330,8 +3330,8 @@ function send_json($params)
 }
 
 function __($text, $domain = 'common', $language = null) {
-	global $_PUNBB;
-	if (empty($_PUNBB['lang'][$domain])) {
+	$translations = PUNBB::get('translations');
+	if (empty($translations->{$domain})) {
 		if (!$language) {
 			$language = user()->language;
 			if (!$language) {
@@ -3341,10 +3341,10 @@ function __($text, $domain = 'common', $language = null) {
 		// TODO if exists PUNBB::get('language')->domain[$language][value]
 		// 		include PUNBB::get('language')->domain[$language][value]
 		// else
-		$_PUNBB['lang'][$domain] = include PUNBB::get('language')->path[$language] . '/' . $domain . '.php';
+		$translations->{$domain} = include PUNBB::get('language')->path[$language] . '/' . $domain . '.php';
 	}
 
-	return $_PUNBB['lang'][$domain][$text];
+	return $translations->{$domain}[$text];
 }
 
 // TMP
