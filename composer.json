@@ -8,11 +8,16 @@
 			"type": "vcs",
 			"url": "https://github.com/rivetweb/punbb-lang-Russian"
 		}
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-style-Oxygen"
+		}
 	],
 
 	"require": {
 		"punbb/lang-English": "dev-master",
-		"punbb/lang-Russian": "dev-master"
+		"punbb/lang-Russian": "dev-master",
+		"punbb/style-Oxygen": "dev-master",
 	},
 
 	"autoload": {
