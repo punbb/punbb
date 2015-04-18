@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "700ed530ff30de125df62551c7c831ee",
+    "hash": "77d1d73417df8eb404da1eb8beacea0f",
     "packages": [
         {
             "name": "punbb/lang-English",
@@ -71,6 +71,38 @@
                 "issues": "https://github.com/rivetweb/punbb-lang-Russian/issues"
             },
             "time": "2015-04-18 11:09:06"
+        },
+        {
+            "name": "punbb/style-Oxygen",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/punbb-style-Oxygen.git",
+                "reference": "41ad8b669d146bf3f35f462ea25316570a872475"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/punbb-style-Oxygen/zipball/41ad8b669d146bf3f35f462ea25316570a872475",
+                "reference": "41ad8b669d146bf3f35f462ea25316570a872475",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "init.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Your Name",
+                    "email": "your@name.com"
+                }
+            ],
+            "description": "PUNBB Oxygen theme",
+            "support": {
+                "source": "https://github.com/rivetweb/punbb-style-Oxygen/tree/master"
+            },
+            "time": "2015-04-18 13:40:45"
         }
     ],
     "packages-dev": [],
@@ -78,7 +110,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "punbb/lang-english": 20,
-        "punbb/lang-russian": 20
+        "punbb/lang-russian": 20,
+        "punbb/style-oxygen": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
