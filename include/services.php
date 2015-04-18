@@ -1,41 +1,44 @@
 <?php
 namespace punbb;
 
-function service($name, $serv = null) {
-	global $_PUNBB;
+class PUNBB {
 
-	// get service
-	if ($serv === null) {
-		$v = $_PUNBB['service'][$name];
-		return is_callable($v)? call_user_func($v) : $v;
+	private static $services;
+
+	static function service($name, $serv = null) {
+		// get service
+		if ($serv === null) {
+			$v = self::$services[$name];
+			return is_callable($v)? call_user_func($v) : $v;
+		}
+
+		// set service
+		//if (!isset(self::$services[$name])) {
+		self::$services[$name] = $serv;
+		//}
+		return self::$services[$name]; // remove this?
 	}
 
-	// set service
-	if (!isset($_PUNBB['service'][$name])) {
-		$_PUNBB['service'][$name] = $serv;
-	}
-
-	return $_PUNBB['service'][$name]; // remove this?
 }
 
 function flash($serv = null) {
-	return service('flash', $serv);
+	return PUNBB::service('flash', $serv);
 }
 
 function db($serv = null) {
-	return service('db', $serv);
+	return PUNBB::service('db', $serv);
 }
 
 function config($serv = null) {
-	return service('config', $serv);
+	return PUNBB::service('config', $serv);
 }
 
 function user($serv = null) {
-	return service('user', $serv);
+	return PUNBB::service('user', $serv);
 }
 
 function assets($serv = null) {
-	return service('assets', $serv);
+	return PUNBB::service('assets', $serv);
 }
 
 // configure
