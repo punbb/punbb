@@ -3098,10 +3098,8 @@ function message($message, $link = '', $heading = '') {
 
 }
 
-
 // Display a message when board is in maintenance mode
-function maintenance_message()
-{
+function maintenance_message() {
 	global $base_url;
 
 	$return = ($hook = get_hook('fn_maintenance_message_start')) ? eval($hook) : null;
@@ -3128,10 +3126,8 @@ function maintenance_message()
 	template()->render();
 }
 
-
 // Display $message and redirect user to $destination_url
-function redirect($destination_url, $message)
-{
+function redirect($destination_url, $message) {
 	global $base_url;
 
 	define('FORUM_PAGE', 'redirect');
@@ -3182,8 +3178,9 @@ function redirect($destination_url, $message)
 
 // Display a simple error message
 function error() {
-	if (!headers_sent())
-	{
+	global $forum_layout;
+
+	if (!headers_sent()) {
 		// if no HTTP responce code is set we send 503
 		if (!defined('FORUM_HTTP_RESPONSE_CODE_SET'))
 			header('HTTP/1.1 503 Service Temporarily Unavailable');
@@ -3228,56 +3225,17 @@ function error() {
 	while (@ob_end_clean());
 
 	// "Restart" output buffering if we are using ob_gzhandler (since the gzip header is already sent)
-	if (!empty(config()->o_gzip) && extension_loaded('zlib') && !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false || strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate') !== false))
+	if (!empty(config()->o_gzip) && extension_loaded('zlib') && !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false || strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate') !== false)) {
 		ob_start('ob_gzhandler');
-
-?>
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-	<meta charset="utf-8" />
-	<title>Error - <?php echo forum_htmlencode(config()->o_board_title) ?></title>
-	<style>
-		strong	{ font-weight: bold; }
-		body	{ margin: 50px; font: 85%/150% verdana, arial, sans-serif; color: #222; max-width: 55em; }
-		h1		{ color: #a00000; font-weight: normal; font-size: 1.45em; }
-		code	{ font-family: monospace, sans-serif; }
-		.error_line { color: #999; font-size: .95em; }
-	</style>
-</head>
-<body>
-	<h1><?php echo forum_htmlencode(__('Forum error header')) ?></h1>
-<?php
-	if (isset($message))
-		echo '<p>'.$message.'</p>'."\n";
-	else
-		echo '<p>'.forum_htmlencode(__('Forum error description')).'</p>'."\n";
-
-	if ($num_args > 1)
-	{
-		if (defined('FORUM_DEBUG'))
-		{
-			$db_error = isset($GLOBALS['forum_db']) ? $GLOBALS['forum_db']->error() : array();
-			if (!empty($db_error['error_msg']))
-			{
-				echo '<p><strong>'.forum_htmlencode(__('Forum error db reported')).'</strong> '.forum_htmlencode($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '').'.</p>'."\n";
-
-				if ($db_error['error_sql'] != '')
-					echo '<p><strong>'.forum_htmlencode(__('Forum error db query')).'</strong> <code>'.forum_htmlencode($db_error['error_sql']).'</code></p>'."\n";
-			}
-
-			if (isset($file) && isset($line))
-				echo '<p class="error_line">'.forum_htmlencode(sprintf(__('Forum error location'), $line, $file)).'</p>'."\n";
-		}
 	}
-?>
-</body>
-</html>
-<?php
-	// If a database connection was established (before this error) we close it
-	if (isset($GLOBALS['forum_db']))
-		$GLOBALS['forum_db']->close();
 
+	$forum_layout = 'layout/error';
+	template()->render();
+
+	// If a database connection was established (before this error) we close it
+	if (isset($GLOBALS['forum_db'])) {
+		$GLOBALS['forum_db']->close();
+	}
 	exit;
 }
 
