@@ -14,7 +14,7 @@
 		},
 		{
 			"type": "vcs",
-			"url": "https://github.com/rivetweb/punbb-template-Twig"
+			"url": "https://github.com/rivetweb/punbb-style-ExampleTwig"
 		}
 	],
 
@@ -22,7 +22,7 @@
 		"punbb/lang-English": "dev-master",
 		"punbb/lang-Russian": "dev-master",
 		"punbb/style-Oxygen": "dev-master",
-		"punbb/template-Twig": "dev-master"
+		"punbb/style-ExampleTwig": "dev-master"
 	},
 
 	"autoload": {
