@@ -8,7 +8,7 @@
  */
 namespace punbb;
 
-global $forum_layout, $forum_page;
+global $forum_page;
 
 // Make sure no one attempts to run this script "directly"
 if (!defined('FORUM'))
@@ -30,32 +30,31 @@ if (!defined('FORUM_HEADER')) {
 	// ob_start();
 
 	// Init the main template
-	if (substr(FORUM_PAGE, 0, 5) == 'admin')
-	{
-		$forum_layout = 'layout/admin';
+	if (substr(FORUM_PAGE, 0, 5) == 'admin') {
+		$template = 'layout/admin';
 	}
-	else if (FORUM_PAGE == 'help')
-	{
-		$forum_layout = 'layout/help';
+	else if (FORUM_PAGE == 'help') {
+		$template = 'layout/help';
 	}
-	else
-	{
-		$forum_layout = 'layout/main';
+	else {
+		$template = 'layout/main';
 	}
 
 	// Forum page id and classes
-	if (!defined('FORUM_PAGE_TYPE'))
-	{
-		if (substr(FORUM_PAGE, 0, 5) == 'admin')
+	if (!defined('FORUM_PAGE_TYPE')) {
+		if (substr(FORUM_PAGE, 0, 5) == 'admin') {
 			define('FORUM_PAGE_TYPE', 'admin-page');
-		else
-		{
-			if (!empty($forum_page['page_post']))
+		}
+		else {
+			if (!empty($forum_page['page_post'])) {
 				define('FORUM_PAGE_TYPE', 'paged-page');
-			else if (!empty($forum_page['main_menu']))
+			}
+			else if (!empty($forum_page['main_menu'])) {
 				define('FORUM_PAGE_TYPE', 'menu-page');
-			else
+			}
+			else {
 				define('FORUM_PAGE_TYPE', 'basic-page');
+			}
 		}
 	}
 

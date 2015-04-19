@@ -33,7 +33,7 @@ class PhpTemplate {
 		extract($GLOBALS, EXTR_SKIP | EXTR_REFS);
 
 		include 'header.php';
-		include view($forum_layout);
+		include view($template);
 		include 'footer.php';
 	}
 

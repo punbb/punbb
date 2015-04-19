@@ -3121,9 +3121,8 @@ function maintenance_message() {
 	define('FORUM_HEADER', 1);
 	define('FORUM_PAGE', 'maintenance');
 
-	$forum_layout = 'layout/maintenance';
-
 	template()->render([
+		'template' => 'layout/maintenance',
 		'main_view' => 'partial/maintenance'
 	]);
 }
@@ -3171,9 +3170,8 @@ function redirect($destination_url, $message) {
 
 	define('FORUM_HEADER', 1);
 
-	$forum_layout = 'layout/redirect';
-
 	template()->render([
+		'template' => 'layout/redirect',
 		'main_view' => 'partial/redirect'
 	]);
 }
@@ -3181,8 +3179,6 @@ function redirect($destination_url, $message) {
 
 // Display a simple error message
 function error() {
-	global $forum_layout;
-
 	if (!headers_sent()) {
 		// if no HTTP responce code is set we send 503
 		if (!defined('FORUM_HTTP_RESPONSE_CODE_SET'))
@@ -3232,8 +3228,9 @@ function error() {
 		ob_start('ob_gzhandler');
 	}
 
-	$forum_layout = 'layout/error';
-	template()->render();
+	template()->render([
+		'template' => 'layout/error'
+	]);
 
 	// If a database connection was established (before this error) we close it
 	if (isset($GLOBALS['forum_db'])) {
