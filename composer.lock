@@ -110,12 +110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-template-Twig.git",
-                "reference": "9e1579cd1b36a454dc8b6e3b27a8a47383c87f7f"
+                "reference": "e3377ac70701ed9f18e29181e9245932a2463d52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-template-Twig/zipball/9e1579cd1b36a454dc8b6e3b27a8a47383c87f7f",
-                "reference": "9e1579cd1b36a454dc8b6e3b27a8a47383c87f7f",
+                "url": "https://api.github.com/repos/rivetweb/punbb-template-Twig/zipball/e3377ac70701ed9f18e29181e9245932a2463d52",
+                "reference": "e3377ac70701ed9f18e29181e9245932a2463d52",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-template-Twig/tree/master"
             },
-            "time": "2015-04-19 06:59:28"
+            "time": "2015-04-19 07:48:49"
         },
         {
             "name": "twig/twig",
