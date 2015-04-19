@@ -92,16 +92,10 @@ PUNBB::setService('user', function () {
 	return $_PUNBB['user'];
 });
 
-PUNBB::setService('template', function () {
-	$f = PUNBB::getService('template');
-	//if (!empty($f)) {
-		//var_dump($f());
-	//}
-	//else {
+// init default template engine
+if (empty(PUNBB::getService('template'))) {
+	PUNBB::setService('template', function () {
 		$template = new PhpTemplate();
-	//}
-
-	//var_dump($template);
-
-	return PUNBB::set('template', $template);
-});
+		return PUNBB::set('template', $template);
+	});
+}
