@@ -49,8 +49,9 @@ else if (config()->o_rules == '1' && !isset($_GET['agree']) && !isset($_POST['fo
 
 	define('FORUM_PAGE', 'rules-register');
 
-	$forum_main_view = 'register/rules';
-	template()->render();
+	template()->render([
+		'main_view' => 'register/rules'
+	]);
 }
 
 else if (isset($_POST['form_sent']))
@@ -267,5 +268,6 @@ assets()->add_js('PUNBB.timezone.detect_on_register_form();', array('type' => 'i
 
 define('FORUM_PAGE', 'register');
 
-$forum_main_view = 'register/main';
-template()->render();
+template()->render([
+	'main_view' => 'register/main'
+]);

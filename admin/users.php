@@ -61,8 +61,9 @@ if (isset($_GET['ip_stats'])) {
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-iresults');
 
-	$forum_main_view = 'admin/users/stats';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/users/stats'
+	]);
 }
 
 
@@ -131,8 +132,9 @@ else if (isset($_GET['show_users']))
 		}
 	}
 
-	$forum_main_view = 'admin/users/show';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/users/show'
+	]);
 }
 
 
@@ -208,8 +210,9 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
 
-	$forum_main_view = 'admin/users/delete';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/users/delete'
+	]);
 }
 
 
@@ -331,8 +334,9 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	define('FORUM_PAGE_SECTION', 'users');
 	define('FORUM_PAGE', 'admin-users');
 
-	$forum_main_view = 'admin/users/ban_users';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/users/ban_users'
+	]);
 }
 
 
@@ -422,8 +426,9 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	($hook = get_hook('aus_change_group_qr_get_groups')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_main_view = 'admin/users/change_group';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/users/change_group'
+	]);
 }
 
 
@@ -592,8 +597,9 @@ else if (isset($_GET['find_user']))
 	($hook = get_hook('aus_find_user_qr_find_users')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_main_view = 'admin/users/find';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/users/find'
+	]);
 }
 
 
@@ -627,5 +633,6 @@ $query = array(
 ($hook = get_hook('aus_search_form_qr_get_groups')) ? eval($hook) : null;
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-$forum_main_view = 'admin/users/search';
-template()->render();
+template()->render([
+	'main_view' => 'admin/users/search'
+]);

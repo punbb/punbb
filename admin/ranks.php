@@ -173,5 +173,6 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-ranks');
 
-$forum_main_view = 'admin/ranks/main';
-template()->render();
+template()->render([
+	'main_view' => 'admin/ranks/main'
+]);

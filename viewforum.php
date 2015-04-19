@@ -217,5 +217,6 @@ define('FORUM_ALLOW_INDEX', 1);
 define('FORUM_PAGE', 'viewforum');
 $forum_id = $id;
 
-$forum_main_view = 'viewforum/main';
-template()->render();
+template()->render([
+	'main_view' => 'viewforum/main'
+]);

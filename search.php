@@ -179,8 +179,9 @@ if (isset($query))
 	else
 		define('FORUM_PAGE', 'searchforums');
 
-	$forum_main_view = 'search/search_forums';
-	template()->render();
+	template()->render([
+		'main_view' => 'search/search_forums'
+	]);
 }
 
 //
@@ -260,5 +261,6 @@ if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 	}
 }
 
-$forum_main_view = 'search/main';
-template()->render();
+template()->render([
+	'main_view' => 'search/main'
+]);

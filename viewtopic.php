@@ -346,5 +346,6 @@ if (!empty($posts_id))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 }
 
-$forum_main_view = 'viewtopic/main';
-template()->render();
+template()->render([
+	'main_view' => 'viewtopic/main'
+]);

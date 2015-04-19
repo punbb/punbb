@@ -121,8 +121,9 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-prune');
 
-	$forum_main_view = 'admin/prune/comply';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/prune/comply'
+	]);
 }
 
 
@@ -159,6 +160,7 @@ else
 	($hook = get_hook('apr_qr_get_forum_list')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_main_view = 'admin/prune/main';
-	template()->render();
+	template()->render([
+		'main_view' => 'admin/prune/main'
+	]);
 }

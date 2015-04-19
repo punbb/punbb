@@ -282,7 +282,7 @@ if (!$section || $section == 'setup')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-setup');
 
-	$forum_main_view = 'admin/settings/setup';
+	$main_view = 'admin/settings/setup';
 }
 
 else if ($section == 'features')
@@ -303,7 +303,7 @@ else if ($section == 'features')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-features');
 
-	$forum_main_view = 'admin/settings/features';
+	$main_view = 'admin/settings/features';
 }
 else if ($section == 'announcements')
 {
@@ -323,7 +323,7 @@ else if ($section == 'announcements')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-announcements');
 
-	$forum_main_view = 'admin/settings/announcements';
+	$main_view = 'admin/settings/announcements';
 }
 else if ($section == 'registration')
 {
@@ -343,7 +343,7 @@ else if ($section == 'registration')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-registration');
 
-	$forum_main_view = 'admin/settings/registration';
+	$main_view = 'admin/settings/registration';
 }
 
 else if ($section == 'maintenance')
@@ -364,7 +364,7 @@ else if ($section == 'maintenance')
 	define('FORUM_PAGE_SECTION', 'management');
 	define('FORUM_PAGE', 'admin-settings-maintenance');
 
-	$forum_main_view = 'admin/settings/maintenance';
+	$main_view = 'admin/settings/maintenance';
 }
 
 else if ($section == 'email')
@@ -385,13 +385,14 @@ else if ($section == 'email')
 	define('FORUM_PAGE_SECTION', 'settings');
 	define('FORUM_PAGE', 'admin-settings-email');
 
-	$forum_main_view = 'admin/settings/email';
+	$main_view = 'admin/settings/email';
 }
-else
-{
+else {
 	($hook = get_hook('aop_new_section')) ? eval($hook) : null;
 }
 
 ($hook = get_hook('aop_end')) ? eval($hook) : null;
 
-template()->render();
+template()->render([
+	'main_view' => $main_view
+]);

@@ -145,5 +145,6 @@ $forum_page['crumbs'][] = array(__('Censoring', 'admin_common'), forum_link($for
 define('FORUM_PAGE_SECTION', 'settings');
 define('FORUM_PAGE', 'admin-censoring');
 
-$forum_main_view = 'admin/censoring/main';
-template()->render();
+template()->render([
+	'main_view' => 'admin/censoring/main'
+]);

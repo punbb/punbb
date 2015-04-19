@@ -37,8 +37,9 @@ if ($action == 'rules')
 
 	define('FORUM_PAGE', 'rules');
 
-	$forum_main_view = 'misc/rules';
-	template()->render();
+	template()->render([
+		'main_view' => 'misc/rules'
+	]);
 }
 
 
@@ -289,8 +290,9 @@ else if (isset($_GET['email']))
 
 	define('FORUM_PAGE', 'formemail');
 
-	$forum_main_view = 'misc/email';
-	template()->render();
+	template()->render([
+		'main_view' => 'misc/email'
+	]);
 }
 
 
@@ -431,8 +433,9 @@ else if (isset($_GET['report']))
 
 	define('FORUM_PAGE', 'report');
 
-	$forum_main_view = 'misc/report';
-	template()->render();
+	template()->render([
+		'main_view' => 'misc/report'
+	]);
 }
 
 

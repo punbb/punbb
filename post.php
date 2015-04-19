@@ -365,5 +365,6 @@ if ($tid && config()->o_topic_review != '0') {
 	}
 }
 
-$forum_main_view = 'post/main';
-template()->render();
+template()->render([
+	'main_view' => 'post/main'
+]);

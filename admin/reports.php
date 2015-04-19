@@ -135,5 +135,6 @@ while ($cur_report = db()->fetch_assoc($result)) {
 	$zapped_reports[] = $cur_report;
 }
 
-$forum_main_view = 'admin/reports/main';
-template()->render();
+template()->render([
+	'main_view' => 'admin/reports/main'
+]);

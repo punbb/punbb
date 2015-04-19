@@ -3048,8 +3048,9 @@ function csrf_confirm_form()
 
 	define('FORUM_PAGE', 'dialogue');
 
-	$forum_main_view = 'partial/confirm_form';
-	template()->render();
+	template()->render([
+		'main_view' => 'partial/confirm_form'
+	]);
 }
 
 
@@ -3058,7 +3059,6 @@ function message($message, $link = '', $heading = '') {
 	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page, $forum_updates;
 
 	// FIX for render from function
-	global $forum_main_view;
 	$GLOBALS['message'] = $message;
 	$GLOBALS['ling'] = $link;
 	$GLOBALS['heading'] = $heading;
@@ -3092,8 +3092,9 @@ function message($message, $link = '', $heading = '') {
 
 		define('FORUM_PAGE', 'message');
 
-		$forum_main_view = 'partial/message';
-		template()->render();
+		template()->render([
+			'main_view' => 'partial/message'
+		]);
 	}
 
 }
@@ -3122,8 +3123,9 @@ function maintenance_message() {
 
 	$forum_layout = 'layout/maintenance';
 
-	$forum_main_view = 'partial/maintenance';
-	template()->render();
+	template()->render([
+		'main_view' => 'partial/maintenance'
+	]);
 }
 
 // Display $message and redirect user to $destination_url
@@ -3171,8 +3173,9 @@ function redirect($destination_url, $message) {
 
 	$forum_layout = 'layout/redirect';
 
-	$forum_main_view = 'partial/redirect';
-	template()->render();
+	template()->render([
+		'main_view' => 'partial/redirect'
+	]);
 }
 
 

@@ -148,5 +148,6 @@ define('FORUM_PAGE', 'admin-information');
 
 $forum_page['item_count'] = 0;
 
-$forum_main_view = 'admin/index/main';
-template()->render();
+template()->render([
+	'main_view' => 'admin/index/main'
+]);

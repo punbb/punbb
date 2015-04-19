@@ -177,5 +177,6 @@ $forum_page['crumbs'] = array(
 
 define('FORUM_PAGE', 'postdelete');
 
-$forum_main_view = 'delete/main';
-template()->render();
+template()->render([
+	'main_view' => 'delete/main'
+]);
