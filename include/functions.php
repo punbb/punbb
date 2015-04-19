@@ -895,7 +895,6 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 // Make a string safe to use in a URL
 function sef_friendly($str)
 {
-	global $_PUNBB;
 	static $lang_url_replace, $forum_reserved_strings;
 
 	if (!isset($lang_url_replace)) {
@@ -1221,7 +1220,6 @@ function get_current_url($max_length = 0)
 // Checks if a word is a valid searchable word
 function validate_search_word($word)
 {
-	global $_PUNBB;
 	static $stopwords;
 
 	$return = ($hook = get_hook('fn_validate_search_word_start')) ? eval($hook) : null;
@@ -3184,10 +3182,7 @@ function redirect($destination_url, $message)
 
 
 // Display a simple error message
-function error()
-{
-	global $_PUNBB; // replace by throw exception
-
+function error() {
 	if (!headers_sent())
 	{
 		// if no HTTP responce code is set we send 503
@@ -3195,6 +3190,13 @@ function error()
 			header('HTTP/1.1 503 Service Temporarily Unavailable');
 		header('Content-type: text/html; charset=utf-8');
 	}
+
+	// TMP for debugging
+	echo '<pre>';
+	print_r(func_get_args());
+	debug_print_backtrace();
+	echo '</pre>';
+	die;
 
 	/*
 		Parse input parameters. Possible function signatures:
