@@ -3054,8 +3054,7 @@ function csrf_confirm_form()
 
 
 // Display a message
-function message($message, $link = '', $heading = '')
-{
+function message($message, $link = '', $heading = '') {
 	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page, $forum_updates;
 
 	// FIX for render from function
