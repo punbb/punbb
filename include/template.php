@@ -11,7 +11,6 @@ function view($name) {
 		// use default
 		$fname =  FORUM_ROOT . 'include/view/' . $name . '.php';
 	}
-
 	return $fname;
 }
 
@@ -25,4 +24,13 @@ function helper($name, $vars = array()) {
 		$fname = FORUM_ROOT . 'include/view/helper/' . $name . '.php';
 	}
 	include $fname;
+}
+
+class PhpTemplate {
+
+	function render($name) {
+		extract($GLOBALS, EXTR_SKIP | EXTR_REFS);
+		include view($name);
+	}
+
 }

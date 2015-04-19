@@ -21,6 +21,10 @@ function assets($serv = null) {
 	return PUNBB::service('assets', $serv);
 }
 
+function template($serv = null) {
+	return PUNBB::service('template', $serv);
+}
+
 // configure
 
 db(function () {
@@ -86,4 +90,12 @@ user(function () {
 		cookie_login($_PUNBB['user']);
 	}
 	return $_PUNBB['user'];
+});
+
+template(function () {
+	$template = PUNBB::get('template');
+	if (empty((array)$template)) {
+		$template = new PhpTemplate();
+	}
+	return PUNBB::set('template', $template);
 });
