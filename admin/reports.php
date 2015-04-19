@@ -136,4 +136,4 @@ while ($cur_report = db()->fetch_assoc($result)) {
 }
 
 $forum_main_view = 'admin/reports/main';
-template()->render($forum_layout);
+template()->render();

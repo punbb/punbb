@@ -62,7 +62,7 @@ if (isset($_GET['ip_stats'])) {
 	define('FORUM_PAGE', 'admin-iresults');
 
 	$forum_main_view = 'admin/users/stats';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -132,7 +132,7 @@ else if (isset($_GET['show_users']))
 	}
 
 	$forum_main_view = 'admin/users/show';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -209,7 +209,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	define('FORUM_PAGE', 'admin-users');
 
 	$forum_main_view = 'admin/users/delete';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -332,7 +332,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	define('FORUM_PAGE', 'admin-users');
 
 	$forum_main_view = 'admin/users/ban_users';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -423,7 +423,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/users/change_group';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -593,7 +593,7 @@ else if (isset($_GET['find_user']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/users/find';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -628,4 +628,4 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/users/search';
-template()->render($forum_layout);
+template()->render();

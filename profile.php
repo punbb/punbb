@@ -130,7 +130,7 @@ if ($action == 'change_pass')
 			define('FORUM_PAGE', 'profile-changepass');
 
 			$forum_main_view = 'profile/profile_changepass';
-			template()->render($forum_layout);
+			template()->render();
 		}
 	}
 
@@ -221,7 +221,7 @@ if ($action == 'change_pass')
 	define('FORUM_PAGE', 'profile-changepass');
 
 	$forum_main_view = 'profile/profile_changepass2';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -407,7 +407,7 @@ else if ($action == 'change_email')
 	define('FORUM_PAGE', 'profile-changemail');
 
 	$forum_main_view = 'profile/profile_changemail';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isset($_POST['cancel']))
@@ -465,7 +465,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	define('FORUM_PAGE', 'dialogue');
 
 	$forum_main_view = 'profile/dialogue';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -1291,7 +1291,7 @@ if (user()->id != $id &&
 	define('FORUM_PAGE', 'profile');
 
 	$forum_main_view = 'profile/profile';
-	template()->render($forum_layout);
+	template()->render();
 }
 else
 {
@@ -1564,7 +1564,7 @@ else
 		define('FORUM_PAGE', 'profile-about');
 
 		$forum_main_view = 'profile/profile_about';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 	else if ($section == 'identity')
@@ -1595,7 +1595,7 @@ else
 		define('FORUM_PAGE', 'profile-identity');
 
 		$forum_main_view = 'profile/profile_identity';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 	else if ($section == 'settings')
@@ -1624,7 +1624,7 @@ else
 		define('FORUM_PAGE', 'profile-settings');
 
 		$forum_main_view = 'profile/profile_settings';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 	else if ($section == 'signature' && config()->o_signatures == '1')
@@ -1667,7 +1667,7 @@ else
 		define('FORUM_PAGE', 'profile-signature');
 
 		$forum_main_view = 'profile/profile_signature';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 	else if ($section == 'avatar' && config()->o_avatars == '1')
@@ -1719,7 +1719,7 @@ else
 		define('FORUM_PAGE', 'profile-avatar');
 
 		$forum_main_view = 'profile/profile_avatar';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 	else if ($section == 'admin')
@@ -1800,7 +1800,7 @@ else
 		}
 
 		$forum_main_view = 'profile/profile_admin';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 	($hook = get_hook('pf_change_details_new_section')) ? eval($hook) : null;

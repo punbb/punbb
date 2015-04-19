@@ -28,11 +28,11 @@ function helper($name, $vars = array()) {
 
 class PhpTemplate {
 
-	function render($name) {
+	function render() {
 		extract($GLOBALS, EXTR_SKIP | EXTR_REFS);
-		require FORUM_ROOT . 'header.php';
-		include view($name);
-		require FORUM_ROOT . 'footer.php';
+		include 'header.php';
+		include view($forum_layout);
+		include 'footer.php';
 	}
 
 }

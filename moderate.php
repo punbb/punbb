@@ -211,7 +211,7 @@ if (isset($_GET['tid']))
 		define('FORUM_PAGE', 'dialogue');
 
 		$forum_main_view = 'moderate/dialogue';
-		template()->render($forum_layout);
+		template()->render();
 	}
 	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
 	{
@@ -317,7 +317,7 @@ if (isset($_GET['tid']))
 		define('FORUM_PAGE', 'dialogue');
 
 		$forum_main_view = 'moderate/dialogue2';
-		template()->render($forum_layout);
+		template()->render();
 	}
 
 
@@ -410,7 +410,7 @@ if (isset($_GET['tid']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'moderate/modtopic';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -619,7 +619,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	define('FORUM_PAGE', 'dialogue');
 
 	$forum_main_view = 'moderate/dialogue3';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -731,7 +731,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	define('FORUM_PAGE', 'dialogue');
 
 	$forum_main_view = 'moderate/dialogue4';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -865,7 +865,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	define('FORUM_PAGE', 'dialogue');
 
 	$forum_main_view = 'moderate/dialogue5';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -1143,4 +1143,4 @@ $forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['ma
 define('FORUM_PAGE', 'modforum');
 
 $forum_main_view = 'moderate/modforum';
-template()->render($forum_layout);
+template()->render();

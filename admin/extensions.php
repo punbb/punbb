@@ -246,7 +246,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 				define('FORUM_PAGE', 'admin-extensions-manage');
 
 			$forum_main_view = 'admin/ext/install_notices';
-			template()->render($forum_layout);
+			template()->render();
 		}
 		else
 		{
@@ -275,7 +275,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		define('FORUM_PAGE', 'admin-extensions-manage');
 
 	$forum_main_view = 'admin/ext/install';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -380,7 +380,7 @@ else if (isset($_GET['uninstall']))
 			define('FORUM_PAGE', 'admin-extensions-manage');
 
 			$forum_main_view = 'admin/ext/uninstall_notices';
-			template()->render($forum_layout);
+			template()->render();
 		}
 		else
 		{
@@ -409,7 +409,7 @@ else if (isset($_GET['uninstall']))
 			define('FORUM_PAGE', 'admin-extensions-manage');
 
 		$forum_main_view = 'admin/ext/uninstall';
-		template()->render($forum_layout);
+		template()->render();
 	}
 }
 
@@ -559,7 +559,7 @@ if ($section == 'hotfixes')
 	define('FORUM_PAGE', 'admin-extensions-hotfixes');
 
 	$forum_main_view = 'admin/ext/hotfixes';
-	template()->render($forum_layout);
+	template()->render();
 }
 // Extensions list
 else
@@ -613,5 +613,5 @@ else
 	define('FORUM_PAGE', 'admin-extensions-manage');
 
 	$forum_main_view = 'admin/ext/manage';
-	template()->render($forum_layout);
+	template()->render();
 }

@@ -347,4 +347,4 @@ if (!empty($posts_id))
 }
 
 $forum_main_view = 'viewtopic/main';
-template()->render($forum_layout);
+template()->render();

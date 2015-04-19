@@ -31,4 +31,4 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE', 'help');
 
 $forum_main_view = 'help/main';
-template()->render($forum_layout);
+template()->render();

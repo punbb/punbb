@@ -206,4 +206,4 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE', 'postedit');
 
 $forum_main_view = 'edit/main';
-template()->render($forum_layout);
+template()->render();

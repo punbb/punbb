@@ -158,7 +158,7 @@ else if (isset($_GET['del_forum']))
 		define('FORUM_PAGE', 'admin-forums');
 
 		$forum_main_view = 'admin/forums/delete';
-		template()->render($forum_layout);
+		template()->render();
 	}
 }
 
@@ -455,7 +455,7 @@ else if (isset($_GET['edit_forum']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/forums/edit';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 // Setup the form
@@ -504,4 +504,4 @@ while ($cur_forum = db()->fetch_assoc($result)) {
 }
 
 $forum_main_view = 'admin/forums/main';
-template()->render($forum_layout);
+template()->render();

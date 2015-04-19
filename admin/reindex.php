@@ -195,4 +195,4 @@ define('FORUM_PAGE_SECTION', 'management');
 define('FORUM_PAGE', 'admin-reindex');
 
 $forum_main_view = 'admin/reindex/main';
-template()->render($forum_layout);
+template()->render();

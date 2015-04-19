@@ -122,7 +122,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	define('FORUM_PAGE', 'admin-prune');
 
 	$forum_main_view = 'admin/prune/comply';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -160,5 +160,5 @@ else
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/prune/main';
-	template()->render($forum_layout);
+	template()->render();
 }

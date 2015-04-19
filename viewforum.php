@@ -218,4 +218,4 @@ define('FORUM_PAGE', 'viewforum');
 $forum_id = $id;
 
 $forum_main_view = 'viewforum/main';
-template()->render($forum_layout);
+template()->render();

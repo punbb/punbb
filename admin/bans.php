@@ -156,7 +156,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	define('FORUM_PAGE', 'admin-bans');
 
 	$forum_main_view = 'admin/bans/edit';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -397,4 +397,4 @@ if ($forum_page['num_bans'] > 0) {
 }
 
 $forum_main_view = 'admin/bans/main';
-template()->render($forum_layout);
+template()->render();

@@ -146,4 +146,4 @@ define('FORUM_PAGE_SECTION', 'settings');
 define('FORUM_PAGE', 'admin-censoring');
 
 $forum_main_view = 'admin/censoring/main';
-template()->render($forum_layout);
+template()->render();

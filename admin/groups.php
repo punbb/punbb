@@ -81,7 +81,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	define('FORUM_PAGE', 'admin-groups');
 
 	$forum_main_view = 'admin/groups/edit';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -382,7 +382,7 @@ else if (isset($_GET['del_group']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/groups/delete';
-	template()->render($forum_layout);
+	template()->render();
 }
 
 
@@ -429,4 +429,4 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/groups/main';
-template()->render($forum_layout);
+template()->render();
