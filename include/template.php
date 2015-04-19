@@ -9,7 +9,7 @@ function view($name) {
 	$fname = PUNBB::get('theme')->path[user()->style] . '/' . $name . '.php';
 	if (!file_exists($fname)) {
 		// use default
-		$fname =  FORUM_ROOT . 'include/view/' . $name . '.php';
+		$fname =  __DIR__ . '/view/' . $name . '.php';
 	}
 	return $fname;
 }
@@ -21,7 +21,7 @@ function helper($name, $vars = array()) {
 	$fname = PUNBB::get('theme')->path[user()->style] . '/helper/' . $name . '.php';
 	if (!file_exists($fname)) {
 		// use default
-		$fname = FORUM_ROOT . 'include/view/helper/' . $name . '.php';
+		$fname = __DIR__ . '/view/helper/' . $name . '.php';
 	}
 	include $fname;
 }
