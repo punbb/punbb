@@ -28,8 +28,10 @@ function helper($name, $vars = array()) {
 
 class PhpTemplate {
 
-	function render() {
+	function render($vars = array()) {
+		$GLOBALS = array_merge($GLOBALS, $vars);
 		extract($GLOBALS, EXTR_SKIP | EXTR_REFS);
+
 		include 'header.php';
 		include view($forum_layout);
 		include 'footer.php';

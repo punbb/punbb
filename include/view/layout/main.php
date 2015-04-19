@@ -38,7 +38,7 @@ namespace punbb;
 				<?php helper('main_menu') ?>
 				<?php helper('pagepost_top') ?>
 
-				<?php include view($forum_main_view) ?>
+				<?php include view($main_view) ?>
 
 				<?php helper('pagepost_end') ?>
 				<?php helper('crumbs_end') ?>

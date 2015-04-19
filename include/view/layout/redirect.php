@@ -16,7 +16,7 @@ namespace punbb;
 <div id="brd-wrap" class="brd-page">
 	<div id="brd-redirect" class="brd">
 
-		<?php include view($forum_main_view) ?>
+		<?php include view($main_view) ?>
 
 		<?php include view('partial/debug') ?>
 

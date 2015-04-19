@@ -40,7 +40,7 @@ namespace punbb;
 			<?php helper('pagepost_top') ?>
 			<?php helper('admin_menu') ?>
 
-			<?php include view($forum_main_view) ?>
+			<?php include view($main_view) ?>
 
 			<?php helper('pagepost_end') ?>
 			<?php helper('crumbs_end') ?>

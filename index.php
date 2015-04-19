@@ -73,5 +73,6 @@ $query = array(
 ($hook = get_hook('in_qr_get_cats_and_forums')) ? eval($hook) : null;
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-$forum_main_view = 'index/main';
-template()->render();
+template()->render([
+	'main_view' => 'index/main'
+]);

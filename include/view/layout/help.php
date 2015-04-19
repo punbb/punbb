@@ -16,7 +16,7 @@ namespace punbb;
 <div <?php helper('page_attrs') ?> class="brd-page">
 	<div id="brd-wrap" class="brd">
 
-		<?php include view($forum_main_view) ?>
+		<?php include view($main_view) ?>
 
 	</div>
 </div>
