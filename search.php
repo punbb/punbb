@@ -180,7 +180,7 @@ if (isset($query))
 		define('FORUM_PAGE', 'searchforums');
 
 	$forum_main_view = 'search/search_forums';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 //
@@ -261,4 +261,4 @@ if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 }
 
 $forum_main_view = 'search/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

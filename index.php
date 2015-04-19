@@ -74,4 +74,4 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'index/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

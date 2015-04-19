@@ -174,4 +174,4 @@ define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-ranks');
 
 $forum_main_view = 'admin/ranks/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

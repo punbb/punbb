@@ -30,7 +30,9 @@ class PhpTemplate {
 
 	function render($name) {
 		extract($GLOBALS, EXTR_SKIP | EXTR_REFS);
+		require FORUM_ROOT . 'header.php';
 		include view($name);
+		require FORUM_ROOT . 'footer.php';
 	}
 
 }

@@ -284,7 +284,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	define ('FORUM_PAGE', 'reqpass');
 
 	$forum_main_view = 'login/reqpass';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 if (!user()->is_guest) {
@@ -312,4 +312,4 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE', 'login');
 
 $forum_main_view = 'login/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

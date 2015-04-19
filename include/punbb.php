@@ -6,18 +6,20 @@ class PUNBB {
 	private static $services;
 	private static $values;
 
-	static function service($name, $serv = null) {
-		// get service
-		if ($serv === null) {
-			$v = self::$services[$name];
-			return is_callable($v)? call_user_func($v) : $v;
-		}
+	static function service($name) {
+		$f = self::getService($name);
+		return is_callable($f)? call_user_func($f) : $f;
+	}
 
-		// set service
-		//if (!isset(self::$services[$name])) {
-		self::$services[$name] = $serv;
-		//}
-		return self::$services[$name]; // remove this?
+	static function getService($name) {
+		if (!isset(self::$services[$name])) {
+			return null;
+		}
+		return self::$services[$name];
+	}
+
+	static function setService($name, $f) {
+		return self::$services[$name] = $f;
 	}
 
 	static function get($name) {

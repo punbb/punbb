@@ -149,4 +149,4 @@ define('FORUM_PAGE', 'admin-information');
 $forum_page['item_count'] = 0;
 
 $forum_main_view = 'admin/index/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

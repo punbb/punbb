@@ -62,7 +62,7 @@ if (isset($_GET['ip_stats'])) {
 	define('FORUM_PAGE', 'admin-iresults');
 
 	$forum_main_view = 'admin/users/stats';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 
@@ -132,7 +132,7 @@ else if (isset($_GET['show_users']))
 	}
 
 	$forum_main_view = 'admin/users/show';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 
@@ -209,7 +209,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	define('FORUM_PAGE', 'admin-users');
 
 	$forum_main_view = 'admin/users/delete';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 
@@ -332,7 +332,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	define('FORUM_PAGE', 'admin-users');
 
 	$forum_main_view = 'admin/users/ban_users';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 
@@ -423,7 +423,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/users/change_group';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 
@@ -593,7 +593,7 @@ else if (isset($_GET['find_user']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$forum_main_view = 'admin/users/find';
-	include FORUM_ROOT . 'include/render.php';
+	template()->render($forum_layout);
 }
 
 
@@ -628,4 +628,4 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'admin/users/search';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

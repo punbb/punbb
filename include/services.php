@@ -1,33 +1,33 @@
 <?php
 namespace punbb;
 
-function flash($serv = null) {
-	return PUNBB::service('flash', $serv);
+function flash() {
+	return PUNBB::service('flash');
 }
 
-function db($serv = null) {
-	return PUNBB::service('db', $serv);
+function db() {
+	return PUNBB::service('db');
 }
 
-function config($serv = null) {
-	return PUNBB::service('config', $serv);
+function config() {
+	return PUNBB::service('config');
 }
 
-function user($serv = null) {
-	return PUNBB::service('user', $serv);
+function user() {
+	return PUNBB::service('user');
 }
 
-function assets($serv = null) {
-	return PUNBB::service('assets', $serv);
+function assets() {
+	return PUNBB::service('assets');
 }
 
-function template($serv = null) {
-	return PUNBB::service('template', $serv);
+function template() {
+	return PUNBB::service('template');
 }
 
 // configure
 
-db(function () {
+PUNBB::setService('db', function () {
 	global $_PUNBB;
 	// TODO fix
 	global $db_type;
@@ -48,7 +48,7 @@ db(function () {
 	return $_PUNBB['db'];
 });
 
-config(function () {
+PUNBB::setService('config', function () {
 	global $_PUNBB;
 
 	if (isset($_PUNBB['config'])) {
@@ -69,7 +69,7 @@ config(function () {
 	return $_PUNBB['config'];
 });
 
-flash(function () {
+PUNBB::setService('flash', function () {
 	global $_PUNBB;
 	if (!isset($_PUNBB['flash'])) {
 		$_PUNBB['flash'] = new FlashMessenger();
@@ -77,12 +77,12 @@ flash(function () {
 	return $_PUNBB['flash'];
 });
 
-assets(function () {
+PUNBB::setService('assets', function () {
 	// Create the loader adapter object
 	return Loader::singleton();
 });
 
-user(function () {
+PUNBB::setService('user', function () {
 	global $_PUNBB;
 	if (!isset($_PUNBB['user'])) {
 		$_PUNBB['user'] = new \stdClass();
@@ -92,10 +92,16 @@ user(function () {
 	return $_PUNBB['user'];
 });
 
-template(function () {
-	$template = PUNBB::get('template');
-	if (empty((array)$template)) {
+PUNBB::setService('template', function () {
+	$f = PUNBB::getService('template');
+	//if (!empty($f)) {
+		//var_dump($f());
+	//}
+	//else {
 		$template = new PhpTemplate();
-	}
+	//}
+
+	//var_dump($template);
+
 	return PUNBB::set('template', $template);
 });

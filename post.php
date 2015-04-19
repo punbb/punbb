@@ -366,4 +366,4 @@ if ($tid && config()->o_topic_review != '0') {
 }
 
 $forum_main_view = 'post/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

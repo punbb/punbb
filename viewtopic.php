@@ -347,4 +347,4 @@ if (!empty($posts_id))
 }
 
 $forum_main_view = 'viewtopic/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

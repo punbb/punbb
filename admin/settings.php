@@ -394,4 +394,4 @@ else
 
 ($hook = get_hook('aop_end')) ? eval($hook) : null;
 
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);

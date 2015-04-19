@@ -155,4 +155,4 @@ if (!empty($where_sql))
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 $forum_main_view = 'userlist/main';
-include FORUM_ROOT . 'include/render.php';
+template()->render($forum_layout);
