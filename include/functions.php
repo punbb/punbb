@@ -895,6 +895,7 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 // Make a string safe to use in a URL
 function sef_friendly($str)
 {
+	global $_PUNBB;
 	static $lang_url_replace, $forum_reserved_strings;
 
 	if (!isset($lang_url_replace)) {
@@ -1220,6 +1221,7 @@ function get_current_url($max_length = 0)
 // Checks if a word is a valid searchable word
 function validate_search_word($word)
 {
+	global $_PUNBB;
 	static $stopwords;
 
 	$return = ($hook = get_hook('fn_validate_search_word_start')) ? eval($hook) : null;
@@ -1332,6 +1334,8 @@ function forum_clear_cache()
 // $password can be either a plaintext password or a password hash including salt ($password_is_hash must be set accordingly)
 function authenticate_user($user, $password, $password_is_hash = false)
 {
+	global $_PUNBB;
+
 	$return = ($hook = get_hook('fn_authenticate_user_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -1357,7 +1361,7 @@ function authenticate_user($user, $password, $password_is_hash = false)
 
 	($hook = get_hook('fn_authenticate_user_qr_get_user')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
-	PUNBB::set('user', (object)db()->fetch_assoc($result));
+	$_PUNBB['user'] = (object)db()->fetch_assoc($result);
 
 	if (!isset(user()->id) ||
 			($password_is_hash && $password != user()->password) ||
@@ -1372,6 +1376,7 @@ function authenticate_user($user, $password, $password_is_hash = false)
 // Attempt to login with the user ID and password hash from the cookie
 function cookie_login(&$user)
 {
+	global $_PUNBB;
 	global $db_type, $cookie_name, $cookie_path, $cookie_domain, $cookie_secure, $forum_time_formats, $forum_date_formats;
 
 	$now = time();
@@ -1524,6 +1529,7 @@ function cookie_login(&$user)
 
 // Fill forum_user with default values (for guests)
 function set_default_user() {
+	global $_PUNBB;
 	global $db_type;
 
 	$remote_addr = get_remote_address();
@@ -1552,33 +1558,33 @@ function set_default_user() {
 
 	($hook = get_hook('fn_set_default_user_qr_get_default_user')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
-	PUNBB::set('user', (object)db()->fetch_assoc($result));
+	$_PUNBB['user'] = (object)db()->fetch_assoc($result);
 
-	if (!PUNBB::get('user')) {
+	if (!$_PUNBB['user']) {
 		exit('Unable to fetch guest information. The table \''.
 			db()->prefix.'users\' must contain an entry with id = 1 that represents anonymous users.');
 	}
 
 	if (!defined('FORUM_QUIET_VISIT')) {
 		// Update online list
-		if (!PUNBB::get('user')->logged) {
-			PUNBB::get('user')->logged = time();
-			PUNBB::get('user')->csrf_token = random_key(40, false, true);
-			PUNBB::get('user')->prev_url = get_current_url(255);
+		if (!$_PUNBB['user']->logged) {
+			$_PUNBB['user']->logged = time();
+			$_PUNBB['user']->csrf_token = random_key(40, false, true);
+			$_PUNBB['user']->prev_url = get_current_url(255);
 
 			// REPLACE INTO avoids a user having two rows in the online table
 			$query = array(
 				'REPLACE'	=> 'user_id, ident, logged, csrf_token',
 				'INTO'		=> 'online',
 				'VALUES'	=> '1, \''.db()->escape($remote_addr).'\', '.
-					PUNBB::get('user')->logged.', \''.
-					PUNBB::get('user')->csrf_token.'\'',
+					$_PUNBB['user']->logged.', \''.
+					$_PUNBB['user']->csrf_token.'\'',
 				'UNIQUE'	=> 'user_id=1 AND ident=\''.db()->escape($remote_addr).'\''
 			);
 
-			if (PUNBB::get('user')->prev_url != null) {
+			if ($_PUNBB['user']->prev_url != null) {
 				$query['REPLACE'] .= ', prev_url';
-				$query['VALUES'] .= ', \''.db()->escape(PUNBB::get('user')->prev_url).'\'';
+				$query['VALUES'] .= ', \''.db()->escape($_PUNBB['user']->prev_url).'\'';
 			}
 
 			($hook = get_hook('fn_set_default_user_qr_add_online_guest_user')) ? eval($hook) : null;
@@ -1601,14 +1607,14 @@ function set_default_user() {
 		}
 	}
 
-	PUNBB::get('user')->disp_topics = config()->o_disp_topics_default;
-	PUNBB::get('user')->disp_posts = config()->o_disp_posts_default;
-	PUNBB::get('user')->timezone = config()->o_default_timezone;
-	PUNBB::get('user')->dst = config()->o_default_dst;
-	PUNBB::get('user')->language = config()->o_default_lang;
-	PUNBB::get('user')->style = config()->o_default_style;
-	PUNBB::get('user')->is_guest = true;
-	PUNBB::get('user')->is_admmod = false;
+	$_PUNBB['user']->disp_topics = config()->o_disp_topics_default;
+	$_PUNBB['user']->disp_posts = config()->o_disp_posts_default;
+	$_PUNBB['user']->timezone = config()->o_default_timezone;
+	$_PUNBB['user']->dst = config()->o_default_dst;
+	$_PUNBB['user']->language = config()->o_default_lang;
+	$_PUNBB['user']->style = config()->o_default_style;
+	$_PUNBB['user']->is_guest = true;
+	$_PUNBB['user']->is_admmod = false;
 
 	($hook = get_hook('fn_set_default_user_end')) ? eval($hook) : null;
 }
@@ -1885,6 +1891,7 @@ function get_tracked_topics()
 // Adds a new user. The username must be passed through validate_username() first.
 function add_user($user_info, &$new_uid)
 {
+	global $_PUNBB;
 	global $base_url, $forum_url;
 
 	$return = ($hook = get_hook('fn_add_user_start')) ? eval($hook) : null;
@@ -2707,6 +2714,7 @@ function clean_forum_moderators()
 // Send out subscription emails
 function send_subscriptions($post_info, $new_pid)
 {
+	global $_PUNBB;
 	global $forum_url;
 
 	$return = ($hook = get_hook('fn_send_subscriptions_start')) ? eval($hook) : null;
@@ -2836,6 +2844,7 @@ function send_subscriptions($post_info, $new_pid)
 // Send out subscription emails
 function send_forum_subscriptions($topic_info, $new_tid)
 {
+	global $_PUNBB;
 	global $forum_url;
 
 	$return = ($hook = get_hook('fn_send_forum_subscriptions_start')) ? eval($hook) : null;
@@ -3177,6 +3186,8 @@ function redirect($destination_url, $message)
 // Display a simple error message
 function error()
 {
+	global $_PUNBB; // replace by throw exception
+
 	if (!headers_sent())
 	{
 		// if no HTTP responce code is set we send 503

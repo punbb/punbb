@@ -77,12 +77,13 @@ PUNBB::setService('assets', function () {
 });
 
 PUNBB::setService('user', function () {
-	$user = PUNBB::get('user');
-	if (empty((array)$user)) {
+	global $_PUNBB;
+	if (!isset($_PUNBB['user'])) {
+		$_PUNBB['user'] = new \stdClass();
 		// Login and fetch user info
-		cookie_login($user);
+		cookie_login($_PUNBB['user']);
 	}
-	return PUNBB::set('user', $user);
+	return $_PUNBB['user'];
 });
 
 // init default template engine
