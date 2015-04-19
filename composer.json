@@ -11,18 +11,13 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/rivetweb/punbb-style-Oxygen"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/rivetweb/punbb-style-ExampleTwig"
 		}
 	],
 
 	"require": {
 		"punbb/lang-English": "dev-master",
 		"punbb/lang-Russian": "dev-master",
-		"punbb/style-Oxygen": "dev-master",
-		"punbb/style-ExampleTwig": "dev-master"
+		"punbb/style-Oxygen": "dev-master"
 	},
 
 	"autoload": {
