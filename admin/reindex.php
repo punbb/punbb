@@ -13,7 +13,7 @@ namespace punbb;
 // Tell common.php that we don't want output buffering
 define('FORUM_DISABLE_BUFFERING', 1);
 
-require __DIR__ . '/../vendor/pautoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 ($hook = get_hook('ari_start')) ? eval($hook) : null;
 

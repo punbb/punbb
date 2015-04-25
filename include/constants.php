@@ -1,6 +1,17 @@
 <?php
 namespace punbb;
 
+// TMP for debuging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', dirname(__DIR__) . '/.dev/errors.log');
+
+if (!defined('FORUM_ROOT')) {
+	define('FORUM_ROOT', dirname(__DIR__) . '/');
+	define('FORUM_WEB', '/');
+}
+
 // Define the version and database revision that this code was written for
 define('FORUM_VERSION', '1.4.3');
 define('FORUM_DB_REVISION', 5);

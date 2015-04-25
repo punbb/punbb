@@ -10,7 +10,7 @@ namespace punbb;
 
 define('FORUM_SKIP_CSRF_CONFIRM', 1);
 
-require __DIR__ . '/vendor/pautoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 ($hook = get_hook('po_start')) ? eval($hook) : null;
 

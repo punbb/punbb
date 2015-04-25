@@ -10,7 +10,7 @@
  */
 namespace punbb;
 
-require __DIR__ . '/../vendor/pautoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 if (!defined('FORUM_XML_FUNCTIONS_LOADED'))
 	require FORUM_ROOT.'include/xml.php';

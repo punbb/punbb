@@ -11,7 +11,7 @@ namespace punbb;
 if (isset($_GET['action']))
 	define('FORUM_QUIET_VISIT', 1);
 
-require __DIR__ . '/vendor/pautoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 ($hook = get_hook('mi_start')) ? eval($hook) : null;
 

@@ -10,7 +10,7 @@
  */
 namespace punbb;
 
-require __DIR__ . '/../vendor/pautoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 ($hook = get_hook('aop_start')) ? eval($hook) : null;
 
