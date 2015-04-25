@@ -15,15 +15,6 @@ if (!defined('FORUM_ROOT')) {
 
 	require __DIR__ . '/autoload.php';
 
-	/*
-	"autoload": {
-		"files": [
-			"include/common.php" <- this not work for global variables now
-		]
-	}
-	*/
-	require FORUM_ROOT . 'include/common.php';
-
 	// include for admin area
 	if (substr($_SERVER['SCRIPT_NAME'],
 				1, strpos($_SERVER['SCRIPT_NAME'], '/', 1) - 1) == 'admin') {
