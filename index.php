@@ -74,5 +74,6 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
-	'main_view' => 'index/main'
+	'main_view' => 'index/main',
+	'forum_page' => $forum_page
 ]);
