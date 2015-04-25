@@ -5,18 +5,20 @@ namespace punbb;
 // $forum_url
 // $forum_page
 
-$assets = assets();
+$config = config();
 $user = user();
+$assets = assets();
+$fstyles = PUNBB::get('theme')->path[$user->style] . '/' . $user->style . '.php';
 
 if (FORUM_PAGE == 'redirect') {
 	$head['refresh'] = '<meta http-equiv="refresh" content="'.
-		config()->o_redirect_delay . ';URL=' .
+		$config->o_redirect_delay . ';URL=' .
 		str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url) . '" />';
 	$head['title'] = '<title>' . __('Redirecting') .
-		__('Title separator') . forum_htmlencode(config()->o_board_title) . '</title>';
+		__('Title separator') . forum_htmlencode($config->o_board_title) . '</title>';
 
 	// Include stylesheets
-	require PUNBB::get('theme')->path[$user->style] . '/' . $user->style . '.php';
+	require $fstyles;
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
@@ -28,7 +30,7 @@ if (FORUM_PAGE == 'redirect') {
 	echo implode("\n", $head) . $assets->render_css();
 }
 else if (FORUM_PAGE == 'maintenance') {
-	require PUNBB::get('theme')->path[$user->style] . '/' . $user->style . '.php';
+	require $fstyles;
 	echo $assets->render_css();
 }
 else {
@@ -39,7 +41,7 @@ else {
 	else {
 		$head['descriptions'] = '<meta name="description" content="' .
 			generate_crumbs(true). __('Title separator') .
-			forum_htmlencode(config()->o_board_desc) . '" />';
+			forum_htmlencode($config->o_board_desc) . '" />';
 	}
 
 	// Should we output a MicroID? http://microid.org/
@@ -82,7 +84,7 @@ else {
 		$head['opensearch'] =
 			'<link rel="search" type="application/opensearchdescription+xml" href="' .
 			forum_link($forum_url['opensearch']) . '" title="' .
-			forum_htmlencode(config()->o_board_title) . '" />';
+			forum_htmlencode($config->o_board_title) . '" />';
 	}
 
 	$head['author'] = '<link rel="author" type="text/html" href="' .
@@ -90,7 +92,7 @@ else {
 
 	ob_start();
 	// Include stylesheets
-	require PUNBB::get('theme')->path[$user->style] . '/' . $user->style . '.php';
+	require $fstyles;
 
 	$head_temp = forum_trim(ob_get_contents());
 	$num_temp = 0;
