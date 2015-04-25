@@ -9,9 +9,15 @@
 namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
-if (!defined('FORUM'))
+if (!defined('FORUM')) {
 	exit;
+}
 
+// exit if not admin area
+if (substr($_SERVER['SCRIPT_NAME'],
+			1, strpos($_SERVER['SCRIPT_NAME'], '/', 1) - 1) != 'admin') {
+	return;
+}
 
 //
 // Display the admin navigation menu

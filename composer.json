@@ -34,7 +34,8 @@
 
 			"include/services.php",
 			"include/essentials.php",
-			"include/common.php"
+			"include/common.php",
+			"include/common_admin.php"
 		]
 	}
 }

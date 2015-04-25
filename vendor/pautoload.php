@@ -14,10 +14,4 @@ if (!defined('FORUM_ROOT')) {
 	define('FORUM_WEB', '/');
 
 	require __DIR__ . '/autoload.php';
-
-	// include for admin area
-	if (substr($_SERVER['SCRIPT_NAME'],
-				1, strpos($_SERVER['SCRIPT_NAME'], '/', 1) - 1) == 'admin') {
-		require FORUM_ROOT . 'include/common_admin.php';
-	}
 }
