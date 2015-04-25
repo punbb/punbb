@@ -45,7 +45,7 @@ namespace punbb;
 			</div>
 
 			<?php
-			if (!empty($view_show_qpost)) {
+			if (!empty($show_qpost)) {
 				include view('viewtopic/qpost');
 			}
 			?>
