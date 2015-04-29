@@ -197,7 +197,7 @@ if (!empty($posts_id))
 			else
 			{
 				if (($forum_page['start_from'] + $forum_page['item_count']) == 1)
-					$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link(['delete', $cur_topic['first_post_id']).'">'.
+					$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('delete', $cur_topic['first_post_id']).'">'.
 					__('Delete topic', 'topic') . '</a></span>';
 				else
 					$forum_page['post_actions']['delete'] = '<span class="delete-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('delete', $cur_post['id']).'">'.

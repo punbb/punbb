@@ -360,15 +360,15 @@ $forum_page['page_post']['paging'] =
 if ($forum_page['page'] < $forum_page['num_pages'])
 {
 	$forum_page['nav']['last'] =
-		'<link rel="last" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], $forum_page['num_pages']).'" title="'.
+		'<link rel="last" href="'.forum_sublink('admin_bans', $forum_url['page'], $forum_page['num_pages']).'" title="'.
 		__('Page') . ' '.$forum_page['num_pages'].'" />';
 	$forum_page['nav']['next'] =
-		'<link rel="next" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] + 1)).'" title="'.
+		'<link rel="next" href="'.forum_sublink('admin_bans', $forum_url['page'], ($forum_page['page'] + 1)).'" title="'.
 		__('Page').' '.($forum_page['page'] + 1).'" />';
 }
 if ($forum_page['page'] > 1)
 {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['admin_bans'], $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('admin_bans', $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.
 	__('Page') . ' '.($forum_page['page'] - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('admin_bans').'" title="'.
 	__('Page').' 1" />';

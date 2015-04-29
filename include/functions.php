@@ -789,9 +789,14 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 {
 	global $forum_url, $base_url;
 
+	if (isset($forum_url[$link])) {
+		$link = $forum_url[$link];
+	}
+
 	$return = ($hook = get_hook('fn_forum_sublink_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return $return;
+	}
 
 	if ($sublink == $forum_url['page'] && $subarg == 1)
 		return forum_link($link, $args);

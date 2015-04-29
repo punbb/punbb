@@ -166,13 +166,13 @@ $forum_page['items_info'] = generate_items_info(__('Posts', 'topic'), ($forum_pa
 
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages']) {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['topic'], $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_topic['subject']))).'" title="'.
+	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('topic', $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page') . ' ' . $forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['topic'], $forum_url['page'], ($forum_page['page'] + 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('topic', $forum_url['page'], ($forum_page['page'] + 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
 }
 if ($forum_page['page'] > 1) {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['topic'], $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('topic', $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('topic', array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page').' 1" />';
@@ -240,7 +240,7 @@ if ($forum_page['is_admmod']) {
 	);
 
 	if ($cur_topic['num_replies'] != 0) {
-		$forum_page['main_foot_options']['moderate_topic'] = '<span><a class="mod-option" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], $forum_page['page'], array($cur_topic['forum_id'], $id)).'">'.
+		$forum_page['main_foot_options']['moderate_topic'] = '<span><a class="mod-option" href="'.forum_sublink('moderate_topic', $forum_url['page'], $forum_page['page'], array($cur_topic['forum_id'], $id)).'">'.
 		__('Moderate topic', 'topic') . '</a></span>';
 	}
 }

@@ -344,14 +344,14 @@ if (isset($_GET['tid']))
 	// Navigation links for header and page numbering for title/meta description
 	if ($forum_page['page'] < $forum_page['num_pages'])
 	{
-		$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], $forum_page['num_pages'], array($fid, $tid)).'" title="'.
+		$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('moderate_topic', $forum_url['page'], $forum_page['num_pages'], array($fid, $tid)).'" title="'.
 			__('Page') . ' ' . $forum_page['num_pages'].'" />';
-		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], ($forum_page['page'] + 1), array($fid, $tid)).'" title="'.
+		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($forum_page['page'] + 1), array($fid, $tid)).'" title="'.
 			__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
 	}
 	if ($forum_page['page'] > 1)
 	{
-		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['moderate_topic'], $forum_url['page'], ($forum_page['page'] - 1), array($fid, $tid)).'" title="'.
+		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($forum_page['page'] - 1), array($fid, $tid)).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
 		$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('moderate_topic', array($fid, $tid)).'" title="'.
 		__('Page').' 1" />';
@@ -1111,14 +1111,14 @@ $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
 // Navigation links for header and page numbering for title/meta description
 if ($forum_page['page'] < $forum_page['num_pages'])
 {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['num_pages'], $fid).'" title="'.
+	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('moderate_forum', $forum_url['page'], $forum_page['num_pages'], $fid).'" title="'.
 		__('Page') . ' ' . $forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], ($forum_page['page'] + 1), $fid).'" title="'.
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($forum_page['page'] + 1), $fid).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
 }
 if ($forum_page['page'] > 1)
 {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], ($forum_page['page'] - 1), $fid).'" title="'.
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($forum_page['page'] - 1), $fid).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('moderate_forum', $fid).'" title="'.
 		__('Page') . ' 1" />';
