@@ -1036,73 +1036,19 @@ function get_title($user)
 	return $user_title;
 }
 
-
 // Return a list of all URL schemes installed
-function get_scheme_packs()
-{
-	$schemes = array();
-
-	if ($handle = opendir(FORUM_ROOT.'include/url'))
-	{
-		while (false !== ($dirname = readdir($handle)))
-		{
-			$dirname = FORUM_ROOT.'include/url/'.$dirname;
-			if (is_dir($dirname) && file_exists($dirname.'/forum_urls.php'))
-				$schemes[] = basename($dirname);
-		}
-		closedir($handle);
-	}
-
-	($hook = get_hook('fn_get_scheme_packs_end')) ? eval($hook) : null;
-
-	return $schemes;
+function get_scheme_packs() {
+	return array_keys(PUNBB::get('urls')->path);
 }
 
 // Return a list of all styles installed
 function get_style_packs() {
 	return array_keys(PUNBB::get('theme')->path);
-	/*
-	$styles = array();
-
-	if ($handle = opendir(FORUM_ROOT.'style'))
-	{
-		while (false !== ($dirname = readdir($handle)))
-		{
-			$dirname = FORUM_ROOT.'style/'.$dirname;
-			$tempname = basename($dirname);
-			if (is_dir($dirname) && file_exists($dirname.'/'.$tempname.'.php'))
-				$styles[] = $tempname;
-		}
-		closedir($handle);
-	}
-
-	($hook = get_hook('fn_get_style_packs_end')) ? eval($hook) : null;
-
-	return $styles;
-	*/
 }
 
 // Return a list of all language packs installed
 function get_language_packs() {
 	return array_keys(PUNBB::get('language')->path);
-	/*
-	$languages = array();
-
-	if ($handle = opendir(FORUM_ROOT.'lang'))
-	{
-		while (false !== ($dirname = readdir($handle)))
-		{
-			$dirname = FORUM_ROOT.'langTMP/'.$dirname;
-			if (is_dir($dirname) && file_exists($dirname.'/common.php'))
-				$languages[] = basename($dirname);
-		}
-		closedir($handle);
-	}
-
-	($hook = get_hook('fn_get_language_packs_end')) ? eval($hook) : null;
-
-	return $languages;
-	*/
 }
 
 

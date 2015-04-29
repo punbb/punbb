@@ -79,16 +79,18 @@ if (!file_exists(PUNBB::get('language')->path[user()->language] . '/common.php')
 		'\' installed.<br />Please reinstall a language of that name.');
 }
 
-// TODO move to extension
 global $forum_url, $forum_reserved_strings, $forum_rewrite_rules;
 // Setup the URL rewriting scheme
-if (config()->o_sef != 'Default' &&
-		file_exists(FORUM_ROOT . 'include/url/' . config()->o_sef . '/forum_urls.php')) {
-	require FORUM_ROOT . 'include/url/' . config()->o_sef . '/forum_urls.php';
+$fname_rewrites = PUNBB::get('urls')->path[config()->o_sef] . '/forum_urls.php';
+if (config()->o_sef != 'Default' && file_exists($fname_rewrites)) {
+	$forum_url = require $fname_rewrites;
 }
 else {
-	require FORUM_ROOT . 'include/url/Default/forum_urls.php';
+	$forum_url = PUNBB::get('urls')->path['Default'] . '/forum_urls.php';
 }
+
+var_dump($forum_url);
+
 // A good place to modify the URL scheme
 ($hook = get_hook('co_modify_url_scheme')) ? eval($hook) : null;
 

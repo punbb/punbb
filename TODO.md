@@ -124,31 +124,3 @@
 если такого файла нет, берется стандартный
 
     include/view/login/main.php
-
-## Удалены некоторые хуки для шаблонов
-
-    fn_redirect_pre_template_loaded
-    fn_redirect_template_loaded
-    fn_maintenance_message_pre_template_loaded
-    fn_maintenance_message_template_loaded
-    hd_pre_template_loaded
-    hd_template_loaded
-    hd_gen_elements
-    hd_visit_elements
-    hd_main_elements
-    hd_end
-    pf_change_pass_key_pre_errors
-    pf_change_pass_normal_pre_errors
-    pf_change_email_pre_errors
-    pf_change_details_identity_pre_errors
-    pf_change_details_signature_pre_errors
-    pf_change_details_avatar_pre_errors
-    rg_pre_register_errors
-    aex_install_ext_pre_errors
-    li_pre_login_errors
-    li_forgot_pass_pre_new_password_errors
-    mi_pre_email_errors
-    mi_pre_report_errors
-    po_pre_post_errors
-    fn_get_style_packs_end
-    fn_get_language_packs_end
