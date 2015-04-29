@@ -754,9 +754,12 @@ function get_hook($hook_id)
 
 
 // Generate a hyperlink with parameters and anchor
-function forum_link($link, $args = null)
-{
-	global $base_url;
+function forum_link($link, $args = null) {
+	global $base_url, $forum_url;
+
+	if (isset($forum_url[$link])) {
+		$link = $forum_url[$link];
+	}
 
 	$return = ($hook = get_hook('fn_forum_link_start')) ? eval($hook) : null;
 	if ($return != null)

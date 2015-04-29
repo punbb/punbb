@@ -47,7 +47,7 @@ if (isset($_POST['add_word']))
 
 	($hook = get_hook('acs_add_word_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), __('Censor word added', 'admin_censoring'));
+	redirect(forum_link('admin_censoring'), __('Censor word added', 'admin_censoring'));
 }
 
 
@@ -83,7 +83,7 @@ else if (isset($_POST['update']))
 
 	($hook = get_hook('acs_update_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), __('Censor word updated', 'admin_censoring'));
+	redirect(forum_link('admin_censoring'), __('Censor word updated', 'admin_censoring'));
 }
 
 
@@ -111,7 +111,7 @@ else if (isset($_POST['remove']))
 
 	($hook = get_hook('acs_remove_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_censoring']), __('Censor word removed', 'admin_censoring'));
+	redirect(forum_link('admin_censoring'), __('Censor word removed', 'admin_censoring'));
 }
 
 
@@ -131,13 +131,13 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Settings', 'admin_common'), forum_link($forum_url['admin_settings_setup']));
+	$forum_page['crumbs'][] = array(__('Settings', 'admin_common'), forum_link('admin_settings_setup'));
 }
-$forum_page['crumbs'][] = array(__('Censoring', 'admin_common'), forum_link($forum_url['admin_censoring']));
+$forum_page['crumbs'][] = array(__('Censoring', 'admin_common'), forum_link('admin_censoring'));
 
 
 ($hook = get_hook('acs_pre_header_load')) ? eval($hook) : null;

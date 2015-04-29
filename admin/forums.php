@@ -64,7 +64,7 @@ if (isset($_POST['add_forum'])) {
 
 	($hook = get_hook('afo_add_forum_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_forums']), __('Forum added', 'admin_forums'));
+	redirect(forum_link('admin_forums'), __('Forum added', 'admin_forums'));
 }
 
 
@@ -77,7 +77,7 @@ else if (isset($_GET['del_forum']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_forum_cancel']))
-		redirect(forum_link($forum_url['admin_forums']), __('Cancel redirect', 'admin_common'));
+		redirect(forum_link('admin_forums'), __('Cancel redirect', 'admin_common'));
 
 	($hook = get_hook('afo_del_forum_form_submitted')) ? eval($hook) : null;
 
@@ -125,7 +125,7 @@ else if (isset($_GET['del_forum']))
 
 		($hook = get_hook('afo_del_forum_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']), __('Forum deleted', 'admin_forums'));
+		redirect(forum_link('admin_forums'), __('Forum deleted', 'admin_forums'));
 	}
 	else	// If the user hasn't confirmed the delete
 	{
@@ -145,10 +145,10 @@ else if (isset($_GET['del_forum']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link($forum_url['index'])),
-			array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-			array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
-			array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums'])),
+			array(config()->o_board_title, forum_link('index')),
+			array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+			array(__('Start', 'admin_common'), forum_link('admin_index')),
+			array(__('Forums', 'admin_common'), forum_link('admin_forums')),
 			__('Delete forum', 'admin_forums')
 		);
 
@@ -220,7 +220,7 @@ else if (isset($_POST['update_positions']))
 
 	($hook = get_hook('afo_update_positions_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_forums']), __('Forums updated', 'admin_forums'));
+	redirect(forum_link('admin_forums'), __('Forums updated', 'admin_forums'));
 }
 
 
@@ -376,7 +376,7 @@ else if (isset($_GET['edit_forum']))
 
 		($hook = get_hook('afo_save_forum_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums_forum'], $forum_id), __('Forum updated', 'admin_forums'));
+		redirect(forum_link('admin_forums_forum', $forum_id), __('Forum updated', 'admin_forums'));
 	}
 	else if (isset($_POST['revert_perms']))
 	{
@@ -398,7 +398,7 @@ else if (isset($_GET['edit_forum']))
 
 		($hook = get_hook('afo_revert_perms_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_forums']).'?edit_forum='.$forum_id, __('Permissions reverted', 'admin_forums'));
+		redirect(forum_link('admin_forums').'?edit_forum='.$forum_id, __('Permissions reverted', 'admin_forums'));
 	}
 
 	$forum_page['form_info'] = array();
@@ -407,7 +407,8 @@ else if (isset($_GET['edit_forum']))
 
 	$forum_page['form_info']['read'] = '<li><span>'.__('Forum perms read info', 'admin_forums').'</span></li>';
 	$forum_page['form_info']['restore'] = '<li><span>'.__('Forum perms restore info', 'admin_forums').'</span></li>';
-	$forum_page['form_info']['groups'] = '<li><span>'. sprintf(__('Forum perms groups info', 'admin_forums'), '<a href="'.forum_link($forum_url['admin_groups']).'">'.
+	$forum_page['form_info']['groups'] = '<li><span>'. sprintf(__('Forum perms groups info', 'admin_forums'), '<a href="'.
+		forum_link('admin_groups').'">'.
 		__('User groups', 'admin_forums').'</a>').'</span></li>';
 	$forum_page['form_info']['admins'] = '<li><span>'.
 		__('Forum perms admins info', 'admin_forums').'</span></li>';
@@ -417,10 +418,10 @@ else if (isset($_GET['edit_forum']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Start', 'admin_common'), forum_link('admin_index')),
+		array(__('Forums', 'admin_common'), forum_link('admin_forums')),
 		__('Edit forum', 'admin_forums')
 	);
 
@@ -465,10 +466,10 @@ $forum_page['fld_count'] = $forum_page['group_count'] = $forum_page['item_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-	array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
-	array(__('Forums', 'admin_common'), forum_link($forum_url['admin_forums']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+	array(__('Start', 'admin_common'), forum_link('admin_index')),
+	array(__('Forums', 'admin_common'), forum_link('admin_forums'))
 );
 
 ($hook = get_hook('afo_pre_header_load')) ? eval($hook) : null;

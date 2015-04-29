@@ -42,7 +42,7 @@ if (isset($_POST['add_cat'])) {
 
 	($hook = get_hook('acg_add_cat_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_categories']), __('Category added', 'admin_categories'));
+	redirect(forum_link('admin_categories'), __('Category added', 'admin_categories'));
 }
 
 
@@ -55,7 +55,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_cat_cancel']))
-		redirect(forum_link($forum_url['admin_categories']), __('Cancel redirect', 'admin_common'));
+		redirect(forum_link('admin_categories'), __('Cancel redirect', 'admin_common'));
 
 	($hook = get_hook('acg_del_cat_form_submitted')) ? eval($hook) : null;
 
@@ -124,7 +124,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		($hook = get_hook('acg_del_cat_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_categories']), __('Category deleted', 'admin_categories'));
+		redirect(forum_link('admin_categories'), __('Category deleted', 'admin_categories'));
 	}
 	else	// If the user hasn't comfirmed the delete
 	{
@@ -143,7 +143,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 
 		// Setup the form
-		$forum_page['form_action'] = forum_link($forum_url['admin_categories']);
+		$forum_page['form_action'] = forum_link('admin_categories');
 
 		$forum_page['hidden_fields'] = array(
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
@@ -152,10 +152,10 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link($forum_url['index'])),
-			array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-			array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
-			array(__('Categories', 'admin_common'), forum_link($forum_url['admin_categories'])),
+			array(config()->o_board_title, forum_link('index')),
+			array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+			array(__('Start', 'admin_common'), forum_link('admin_index')),
+			array(__('Categories', 'admin_common'), forum_link('admin_categories')),
 			__('Delete category', 'admin_categories')
 		);
 
@@ -222,7 +222,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 
 	($hook = get_hook('acg_update_cats_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_categories']), __('Categories updated', 'admin_categories'));
+	redirect(forum_link('admin_categories'), __('Categories updated', 'admin_categories'));
 }
 
 
@@ -244,7 +244,7 @@ while ($cur_cat = db()->fetch_assoc($result))
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link($forum_url['admin_categories']).'?action=foo';
+$forum_page['form_action'] = forum_link('admin_categories').'?action=foo';
 
 $forum_page['hidden_fields'] = array(
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
@@ -252,10 +252,10 @@ $forum_page['hidden_fields'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-	array(__('Start', 'admin_common'), forum_link($forum_url['admin_index'])),
-	array(__('Categories', 'admin_common'), forum_link($forum_url['admin_categories']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+	array(__('Start', 'admin_common'), forum_link('admin_index')),
+	array(__('Categories', 'admin_common'), forum_link('admin_categories'))
 );
 
 ($hook = get_hook('acg_pre_header_load')) ? eval($hook) : null;

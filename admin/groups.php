@@ -68,10 +68,10 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
-		array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Users', 'admin_common'), forum_link('admin_users')),
+		array(__('Groups', 'admin_common'), forum_link('admin_groups')),
 		$mode == 'edit' ? __('Edit group heading', 'admin_groups') : __('Add group heading', 'admin_groups')
 	);
 
@@ -220,7 +220,7 @@ else if (isset($_POST['add_edit_group']))
 
 	($hook = get_hook('agr_add_edit_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_groups']), (($_POST['mode'] == 'edit') ? __('Group edited', 'admin_groups') : __('Group added', 'admin_groups')));
+	redirect(forum_link('admin_groups'), (($_POST['mode'] == 'edit') ? __('Group edited', 'admin_groups') : __('Group added', 'admin_groups')));
 }
 
 
@@ -267,7 +267,7 @@ else if (isset($_POST['set_default_group']))
 
 	($hook = get_hook('agr_set_default_group_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_groups']), __('Default group set', 'admin_groups'));
+	redirect(forum_link('admin_groups'), __('Default group set', 'admin_groups'));
 }
 
 
@@ -280,7 +280,7 @@ else if (isset($_GET['del_group']))
 
 	// User pressed the cancel button
 	if (isset($_POST['del_group_cancel']))
-		redirect(forum_link($forum_url['admin_groups']), __('Cancel redirect', 'admin_common'));
+		redirect(forum_link('admin_groups'), __('Cancel redirect', 'admin_common'));
 
 	// Make sure we don't remove the default group
 	if ($group_id == config()->o_default_user_group)
@@ -352,7 +352,7 @@ else if (isset($_GET['del_group']))
 
 		($hook = get_hook('agr_del_group_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_groups']), __('Group removed', 'admin_groups'));
+		redirect(forum_link('admin_groups'), __('Group removed', 'admin_groups'));
 	}
 
 	// Setup the form
@@ -360,10 +360,10 @@ else if (isset($_GET['del_group']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
-		array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Users', 'admin_common'), forum_link('admin_users')),
+		array(__('Groups', 'admin_common'), forum_link('admin_groups')),
 		__('Remove group', 'admin_groups')
 	);
 
@@ -393,10 +393,10 @@ $forum_page['item_count'] = $forum_page['fld_count'] = $forum_page['group_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-	array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
-	array(__('Groups', 'admin_common'), forum_link($forum_url['admin_groups']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+	array(__('Users', 'admin_common'), forum_link('admin_users')),
+	array(__('Groups', 'admin_common'), forum_link('admin_groups'))
 );
 
 ($hook = get_hook('agr_pre_header_load')) ? eval($hook) : null;

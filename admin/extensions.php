@@ -109,10 +109,11 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
-		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Extensions', 'admin_common'), forum_link('admin_extensions_manage')),
+		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ?
+			forum_link('admin_extensions_hotfixes') : forum_link('admin_extensions_manage')),
 		(strpos($id, 'hotfix_') === 0) ? __('Install hotfix', 'admin_ext') :
 			__('Install extension', 'admin_ext')
 	);
@@ -260,9 +261,9 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 			($hook = get_hook('aex_install_comply_pre_redirect')) ? eval($hook) : null;
 
 			if (strpos($id, 'hotfix_') === 0)
-				redirect(forum_link($forum_url['admin_extensions_hotfixes']), __('Hotfix installed', 'admin_ext'));
+				redirect(forum_link('admin_extensions_hotfixes'), __('Hotfix installed', 'admin_ext'));
 			else
-				redirect(forum_link($forum_url['admin_extensions_manage']), __('Extension installed', 'admin_ext'));
+				redirect(forum_link('admin_extensions_manage'), __('Extension installed', 'admin_ext'));
 		}
 	}
 
@@ -286,7 +287,7 @@ else if (isset($_GET['uninstall']))
 {
 	// User pressed the cancel button
 	if (isset($_POST['uninstall_cancel']))
-		redirect(forum_link($forum_url['admin_extensions_manage']), __('Cancel redirect', 'admin_common'));
+		redirect(forum_link('admin_extensions_manage'), __('Cancel redirect', 'admin_common'));
 
 	($hook = get_hook('aex_uninstall_selected')) ? eval($hook) : null;
 
@@ -326,10 +327,11 @@ else if (isset($_GET['uninstall']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
-		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ? forum_link($forum_url['admin_extensions_hotfixes']) : forum_link($forum_url['admin_extensions_manage'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Extensions', 'admin_common'), forum_link('admin_extensions_manage')),
+		array((strpos($id, 'hotfix_') === 0) ? __('Manage hotfixes', 'admin_common') : __('Manage extensions', 'admin_common'), (strpos($id, 'hotfix_') === 0) ?
+			forum_link('admin_extensions_hotfixes') : forum_link('admin_extensions_manage')),
 		(strpos($id, 'hotfix_') === 0) ? __('Uninstall hotfix', 'admin_ext') : __('Uninstall extension', 'admin_ext')
 	);
 
@@ -396,9 +398,9 @@ else if (isset($_GET['uninstall']))
 			($hook = get_hook('aex_uninstall_comply_pre_redirect')) ? eval($hook) : null;
 
 			if (strpos($id, 'hotfix_') === 0)
-				redirect(forum_link($forum_url['admin_extensions_hotfixes']), __('Hotfix uninstalled', 'admin_ext'));
+				redirect(forum_link('admin_extensions_hotfixes'), __('Hotfix uninstalled', 'admin_ext'));
 			else
-				redirect(forum_link($forum_url['admin_extensions_manage']), __('Extension uninstalled', 'admin_ext'));
+				redirect(forum_link('admin_extensions_manage'), __('Extension uninstalled', 'admin_ext'));
 		}
 	}
 	else	// If the user hasn't confirmed the uninstall
@@ -524,9 +526,9 @@ else if (isset($_GET['flip']))
 	($hook = get_hook('aex_flip_pre_redirect')) ? eval($hook) : null;
 
 	if ($section == 'hotfixes')
-		redirect(forum_link($forum_url['admin_extensions_hotfixes']), ($disable ? __('Hotfix disabled', 'admin_ext') : __('Hotfix enabled', 'admin_ext')));
+		redirect(forum_link('admin_extensions_hotfixes'), ($disable ? __('Hotfix disabled', 'admin_ext') : __('Hotfix enabled', 'admin_ext')));
 	else
-		redirect(forum_link($forum_url['admin_extensions_manage']), ($disable ? __('Extension disabled', 'admin_ext') : __('Extension enabled', 'admin_ext')));
+		redirect(forum_link('admin_extensions_manage'), ($disable ? __('Extension disabled', 'admin_ext') : __('Extension enabled', 'admin_ext')));
 }
 
 ($hook = get_hook('aex_new_action')) ? eval($hook) : null;
@@ -551,10 +553,10 @@ if ($section == 'hotfixes')
 {
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
-		array(__('Manage hotfixes', 'admin_common'), forum_link($forum_url['admin_extensions_hotfixes']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Extensions', 'admin_common'), forum_link('admin_extensions_manage')),
+		array(__('Manage hotfixes', 'admin_common'), forum_link('admin_extensions_hotfixes'))
 	);
 
 	($hook = get_hook('aex_section_hotfixes_pre_header_load')) ? eval($hook) : null;
@@ -606,10 +608,10 @@ else
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage'])),
-		array(__('Manage extensions', 'admin_common'), forum_link($forum_url['admin_extensions_manage']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Extensions', 'admin_common'), forum_link('admin_extensions_manage')),
+		array(__('Manage extensions', 'admin_common'), forum_link('admin_extensions_manage'))
 	);
 
 	($hook = get_hook('aex_section_manage_pre_header_load')) ? eval($hook) : null;
