@@ -133,13 +133,13 @@ else
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Start', 'admin_common'), forum_link($forum_url['admin_index']));
+	$forum_page['crumbs'][] = array(__('Start', 'admin_common'), forum_link('admin_index'));
 }
-$forum_page['crumbs'][] = array(__('Information', 'admin_common'), forum_link($forum_url['admin_index']));
+$forum_page['crumbs'][] = array(__('Information', 'admin_common'), forum_link('admin_index'));
 
 ($hook = get_hook('ain_pre_header_load')) ? eval($hook) : null;
 

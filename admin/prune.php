@@ -58,7 +58,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 		($hook = get_hook('apr_prune_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_prune']), __('Prune done', 'admin_prune'));
+		redirect(forum_link('admin_prune'), __('Prune done', 'admin_prune'));
 	}
 
 
@@ -109,10 +109,10 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
-		array(__('Prune topics', 'admin_prune'), forum_link($forum_url['admin_prune'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Management', 'admin_common'), forum_link('admin_reports')),
+		array(__('Prune topics', 'admin_prune'), forum_link('admin_prune')),
 		__('Confirm prune heading', 'admin_prune')
 	);
 
@@ -134,10 +134,10 @@ else
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
-		array(__('Prune topics', 'admin_common'), forum_link($forum_url['admin_prune']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Management', 'admin_common'), forum_link('admin_reports')),
+		array(__('Prune topics', 'admin_common'), forum_link('admin_prune'))
 	);
 
 	($hook = get_hook('apr_pre_header_load')) ? eval($hook) : null;
