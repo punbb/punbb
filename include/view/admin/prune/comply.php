@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php printf(__('Prune details head', 'admin_prune'), ($forum == 'all forums') ? __('All forums', 'admin_prune') : $forum ) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_prune']) ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_prune') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_prune']).'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_prune').'?action=foo') ?>" />
 				<input type="hidden" name="prune_days" value="<?php echo $prune_days ?>" />
 				<input type="hidden" name="prune_sticky" value="<?php echo intval($_POST['prune_sticky']) ?>" />
 				<input type="hidden" name="prune_from" value="<?php echo $prune_from ?>" />

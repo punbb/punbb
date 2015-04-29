@@ -30,10 +30,10 @@ namespace punbb;
 ?>
 		<h2 class="hn"><span><?php printf(__('Users found', 'admin_users'), $forum_page['num_users']) ?></span></h2>
 	</div>
-	<form id="aus-find-user-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
+	<form id="aus-find-user-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_users') ?>?action=modify_users">
 	<div class="main-content main-forum">
 		<div class="hidden">
-			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_users']).'?action=modify_users') ?>" />
+			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_users').'?action=modify_users') ?>" />
 		</div>
 		<table>
 			<thead>
@@ -64,12 +64,12 @@ namespace punbb;
 			($hook = get_hook('aus_find_user_pre_row_generation')) ? eval($hook) : null;
 
 			$forum_page['table_row'] = array();
-			$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['user'], $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></span><span class="usermail"><a href="mailto:'.forum_htmlencode($user_data['email']).'">'.forum_htmlencode($user_data['email']).'</a></span>'.(($user_data['admin_note'] != '') ? '<span class="usernote">'.
+			$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link('user', $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></span><span class="usermail"><a href="mailto:'.forum_htmlencode($user_data['email']).'">'.forum_htmlencode($user_data['email']).'</a></span>'.(($user_data['admin_note'] != '') ? '<span class="usernote">'.
 				__('Admin note', 'admin_users').' '.forum_htmlencode($user_data['admin_note']).'</span>' : '').'</td>';
 			$forum_page['table_row']['title'] = '<td class="tc'.count($forum_page['table_row']).'">'.$user_title.'</td>';
 			$forum_page['table_row']['posts'] = '<td class="tc'.count($forum_page['table_row']).'">'.forum_number_format($user_data['num_posts']).'</td>';
-			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link($forum_url['admin_users']).'?ip_stats='.$user_data['id'].'">'.
-				__('View IP stats', 'admin_users').'</a></span> <span><a href="'.forum_link($forum_url['search_user_posts'], $user_data['id']).'">'.
+			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"><span><a href="'.forum_link('admin_users').'?ip_stats='.$user_data['id'].'">'.
+				__('View IP stats', 'admin_users').'</a></span> <span><a href="'.forum_link('search_user_posts', $user_data['id']).'">'.
 				__('Show posts', 'admin_users').'</a></span></td>';
 			$forum_page['table_row']['select'] = '<td class="tc'.count($forum_page['table_row']).'"><input type="checkbox" name="users['.$user_data['id'].']" value="1" /></td>';
 

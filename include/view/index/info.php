@@ -18,7 +18,7 @@ $stats_list['no_of_users'] =
 	'<li class="st-users"><span>'.sprintf(__('No of users', 'index'), '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
 $stats_list['newest_user'] =
 	'<li class="st-users"><span>'.sprintf(__('Newest user', 'index'), '<strong>'.
-			(user()->g_view_users == '1' ? '<a href="'.forum_link($forum_url['user'], $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
+			(user()->g_view_users == '1' ? '<a href="'.forum_link('user', $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
 $stats_list['no_of_topics'] =
 	'<li class="st-activity"><span>'.sprintf(__('No of topics', 'index'), '<strong>'.forum_number_format($forum_stats['total_topics']).'</strong>').'</span></li>';
 $stats_list['no_of_posts'] =
@@ -52,7 +52,7 @@ if (config()->o_users_online == '1')
 
 		if ($forum_user_online['user_id'] > 1)
 		{
-			$users[] = ($forum_user['g_view_users'] == '1') ? '<a href="'.forum_link($forum_url['user'], $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
+			$users[] = ($forum_user['g_view_users'] == '1') ? '<a href="'.forum_link('user', $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
 			++$forum_page['num_users'];
 		}
 		else

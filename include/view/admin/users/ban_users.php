@@ -11,9 +11,9 @@ namespace punbb;
 		<div class="ct-box">
 			<p><?php echo __('Mass ban info', 'admin_users') ?></p>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_users') ?>?action=modify_users">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_users']).'?action=modify_users') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_users').'?action=modify_users') ?>" />
 				<input type="hidden" name="users" value="<?php echo implode(',', $users) ?>" />
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

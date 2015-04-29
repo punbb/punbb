@@ -78,32 +78,32 @@ namespace punbb;
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_set['pid'] == $cur_set['first_post_id']) ?
 				__('Topic byline', 'topic') : __('Reply byline', 'topic')), '<strong>'.forum_htmlencode($cur_set['pposter']).'</strong>').'</span>';
 			$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.
-				__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_set['pid']).'">'.format_time($cur_set['pposted']).'</a></span>';
+				__('Permalink post', 'topic') . '" href="'.forum_link('post', $cur_set['pid']).'">'.format_time($cur_set['pposted']).'</a></span>';
 
 			($hook = get_hook('se_results_posts_row_pre_item_ident_merge')) ? eval($hook) : null;
 
 			// Generate the topic title
 			$forum_page['item_subject'] = '<a class="permalink" rel="bookmark" title="'.
-				__('Permalink topic', 'topic') . '" href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.sprintf((($cur_set['pid'] == $cur_set['first_post_id']) ?
+				__('Permalink topic', 'topic') . '" href="'.forum_link('topic', array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.sprintf((($cur_set['pid'] == $cur_set['first_post_id']) ?
 				__('Topic title', 'topic') : __('Reply title', 'topic')), forum_htmlencode($cur_set['subject'])).'</a> <small>'.
-				sprintf(__('Search replies', 'topic'), forum_number_format($cur_set['num_replies']), '<a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.forum_htmlencode($cur_set['forum_name']).'</a>').'</small>';
+				sprintf(__('Search replies', 'topic'), forum_number_format($cur_set['num_replies']), '<a href="'.forum_link('forum', array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.forum_htmlencode($cur_set['forum_name']).'</a>').'</small>';
 
 			// Generate author identification
 			$forum_page['user_ident'] = ($cur_set['poster_id'] > 1 && user()->g_view_users == '1') ? '<strong class="username"><a title="'.
-				sprintf(__('Go to profile', 'search'), forum_htmlencode($cur_set['pposter'])).'" href="'.forum_link($forum_url['user'], $cur_set['poster_id']).'">'.forum_htmlencode($cur_set['pposter']).'</a></strong>' : '<strong class="username">'.forum_htmlencode($cur_set['pposter']).'</strong>';
+				sprintf(__('Go to profile', 'search'), forum_htmlencode($cur_set['pposter'])).'" href="'.forum_link('user', $cur_set['poster_id']).'">'.forum_htmlencode($cur_set['pposter']).'</a></strong>' : '<strong class="username">'.forum_htmlencode($cur_set['pposter']).'</strong>';
 
 			// Generate the post actions links
 			$forum_page['post_actions'] = array();
-			$forum_page['post_actions']['forum'] = '<span><a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.
+			$forum_page['post_actions']['forum'] = '<span><a href="'.forum_link('forum', array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.
 				__('Go to forum', 'search') . '<span>: '.forum_htmlencode($cur_set['forum_name']).'</span></a></span>';
 
 			if ($cur_set['pid'] != $cur_set['first_post_id'])
 				$forum_page['post_actions']['topic'] = '<span><a class="permalink" rel="bookmark" title="'.
-				__('Permalink topic', 'topic') . '" href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.
+				__('Permalink topic', 'topic') . '" href="'.forum_link('topic', array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.
 					__('Go to topic', 'search') . '<span>: '.forum_htmlencode($cur_set['subject']).'</span></a></span>';
 
 			$forum_page['post_actions']['post'] = '<span><a class="permalink" rel="bookmark" title="'.
-				__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_set['pid']).'">'.
+				__('Permalink post', 'topic') . '" href="'.forum_link('post', $cur_set['pid']).'">'.
 					__('Go to post', 'search') . '<span> '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 
 			$forum_page['message'] = parse_message($cur_set['message'], $cur_set['hide_smilies']);
@@ -183,7 +183,7 @@ namespace punbb;
 			if (!empty($forum_page['item_title_status']))
 				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf(__('Item status', 'forum'), implode(', ', $forum_page['item_title_status'])).'</span>';
 
-			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.forum_htmlencode($cur_set['subject']).'</a>';
+			$forum_page['item_title']['link'] = '<a href="'.forum_link('topic', array($cur_set['tid'], sef_friendly($cur_set['subject']))).'">'.forum_htmlencode($cur_set['subject']).'</a>';
 
 			($hook = get_hook('se_results_topics_row_pre_item_title_merge')) ? eval($hook) : null;
 
@@ -198,7 +198,7 @@ namespace punbb;
 			// Does this topic contain posts we haven't read? If so, tag it accordingly.
 			if (!user()->is_guest && $cur_set['last_post'] > user()->last_visit && (!isset($tracked_topics['topics'][$cur_set['tid']]) || $tracked_topics['topics'][$cur_set['tid']] < $cur_set['last_post']) && (!isset($tracked_topics['forums'][$cur_set['forum_id']]) || $tracked_topics['forums'][$cur_set['forum_id']] < $cur_set['last_post']))
 			{
-				$forum_page['item_nav']['new'] = '<em class="item-newposts"><a href="'.forum_link($forum_url['topic_new_posts'], array($cur_set['tid'], sef_friendly($cur_set['subject']))).'" title="'.
+				$forum_page['item_nav']['new'] = '<em class="item-newposts"><a href="'.forum_link('topic_new_posts', array($cur_set['tid'], sef_friendly($cur_set['subject']))).'" title="'.
 					__('New posts info', 'forum') . '">'.
 					__('New posts', 'forum') . '</a></em>';
 				$forum_page['item_status']['new'] = 'new';
@@ -223,11 +223,11 @@ namespace punbb;
 			$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 
 			$forum_page['item_body']['info']['forum'] = '<li class="info-forum"><span class="label">'.
-				__('Posted in', 'search') . '</span><a href="'.forum_link($forum_url['forum'], array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.$cur_set['forum_name'].'</a></li>';
+				__('Posted in', 'search') . '</span><a href="'.forum_link('forum', array($cur_set['forum_id'], sef_friendly($cur_set['forum_name']))).'">'.$cur_set['forum_name'].'</a></li>';
 			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><strong>'.forum_number_format($cur_set['num_replies']).'</strong> <span class="label">'.(($cur_set['num_replies'] == 1) ?
 					__('Reply', 'forum') : __('Replies', 'forum')).'</span></li>';
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.
-				__('Last post', 'forum') . '</span> <strong><a href="'.forum_link($forum_url['post'], $cur_set['last_post_id']).'">'.format_time($cur_set['last_post']).'</a></strong> <cite>'.
+				__('Last post', 'forum') . '</span> <strong><a href="'.forum_link('post', $cur_set['last_post_id']).'">'.format_time($cur_set['last_post']).'</a></strong> <cite>'.
 				sprintf(__('by poster', 'forum'), forum_htmlencode($cur_set['last_poster'])).'</cite></li>';
 
 			($hook = get_hook('se_results_topics_row_pre_display')) ? eval($hook) : null;
@@ -315,7 +315,7 @@ namespace punbb;
 			else
 			{
 				// Setup the title and link to the forum
-				$forum_page['item_title']['title'] = '<a href="'.forum_link($forum_url['forum'], array($cur_set['fid'], sef_friendly($cur_set['forum_name']))).'"><span>'.forum_htmlencode($cur_set['forum_name']).'</span></a>';
+				$forum_page['item_title']['title'] = '<a href="'.forum_link('forum', array($cur_set['fid'], sef_friendly($cur_set['forum_name']))).'"><span>'.forum_htmlencode($cur_set['forum_name']).'</span></a>';
 
 				($hook = get_hook('se_results_forums_row_redirect_pre_item_title_merge')) ? eval($hook) : null;
 
@@ -338,7 +338,7 @@ namespace punbb;
 
 				if ($cur_set['last_post'] != '')
 					$forum_page['item_body']['info']['lastpost'] =
-					'<li class="info-lastpost"><span class="label">' . __('Last post', 'index') . '</span> <strong><a href="'.forum_link($forum_url['post'], $cur_set['last_post_id']).'">'.format_time($cur_set['last_post']).'</a></strong> <cite>'.
+					'<li class="info-lastpost"><span class="label">' . __('Last post', 'index') . '</span> <strong><a href="'.forum_link('post', $cur_set['last_post_id']).'">'.format_time($cur_set['last_post']).'</a></strong> <cite>'.
 					sprintf(__('Last poster', 'index'), forum_htmlencode($cur_set['last_poster'])).'</cite></li>';
 				else
 					$forum_page['item_body']['info']['lastpost'] =

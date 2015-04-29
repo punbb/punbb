@@ -70,9 +70,9 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at'])) {
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Management', 'admin_common'), forum_link('admin_reports')),
 		__('Rebuilding index title', 'admin_reindex')
 	);
 
@@ -155,8 +155,8 @@ body {
 	db()->end_transaction();
 	db()->close();
 
-	exit('<script type="text/javascript">window.location="'.forum_link($forum_url['admin_reindex']).$query_str.'"</script><br />'.
-		__('Javascript redirect', 'admin_reindex') . ' <a href="'.forum_link($forum_url['admin_reindex']).$query_str.'">'.
+	exit('<script type="text/javascript">window.location="'.forum_link('admin_reindex').$query_str.'"</script><br />'.
+		__('Javascript redirect', 'admin_reindex') . ' <a href="'.forum_link('admin_reindex').$query_str.'">'.
 		__('Click to continue', 'admin_reindex') . '</a>.');
 }
 
@@ -183,10 +183,10 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-	array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports'])),
-	array(__('Rebuild index', 'admin_common'), forum_link($forum_url['admin_reindex']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+	array(__('Management', 'admin_common'), forum_link('admin_reports')),
+	array(__('Rebuild index', 'admin_common'), forum_link('admin_reindex'))
 );
 
 ($hook = get_hook('ari_pre_header_load')) ? eval($hook) : null;

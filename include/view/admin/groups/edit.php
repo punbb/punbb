@@ -11,9 +11,9 @@ namespace punbb;
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php echo __('Required warn', 'admin_common') ?></p>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_groups']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_groups') ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_groups'])) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_groups')) ?>" />
 				<input type="hidden" name="mode" value="<?php echo $mode ?>" />
 <?php if ($mode == 'edit'): ?>				<input type="hidden" name="group_id" value="<?php echo $group_id ?>" />
 <?php endif; if ($mode == 'add'): ?>				<input type="hidden" name="base_group" value="<?php echo $base_group ?>" />

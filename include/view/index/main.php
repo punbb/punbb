@@ -72,7 +72,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 	else
 	{
 		// Setup the title and link to the forum
-		$forum_page['item_title']['title'] = '<a href="'.forum_link($forum_url['forum'], array($cur_forum['fid'], sef_friendly($cur_forum['forum_name']))).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a>';
+		$forum_page['item_title']['title'] = '<a href="'.forum_link('forum', array($cur_forum['fid'], sef_friendly($cur_forum['forum_name']))).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a>';
 
 		// Are there new posts since our last visit?
 		if (!user()->is_guest && $cur_forum['last_post'] > user()->last_visit && (empty($tracked_topics['forums'][$cur_forum['fid']]) || $cur_forum['last_post'] > $tracked_topics['forums'][$cur_forum['fid']]))
@@ -85,7 +85,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 					$forum_page['item_status']['new'] = 'new';
 					$forum_page['item_title']['status'] =
 						'<small>' . sprintf(__('Forum has new', 'index'),
-							'<a href="'.forum_link($forum_url['search_new_results'], $cur_forum['fid']).
+							'<a href="'.forum_link('search_new_results', $cur_forum['fid']).
 							'" title="' . __('New posts title', 'index') . '">' .
 							__('Forum new posts', 'index').'</a>').'</small>';
 
@@ -109,7 +109,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 			$forum_page['item_mods'] = array();
 
 			foreach ($forum_page['mods_array'] as $mod_username => $mod_id)
-				$forum_page['item_mods'][] = (user()->g_view_users == '1') ? '<a href="'.forum_link($forum_url['user'], $mod_id).'">'.forum_htmlencode($mod_username).'</a>' : forum_htmlencode($mod_username);
+				$forum_page['item_mods'][] = (user()->g_view_users == '1') ? '<a href="'.forum_link('user', $mod_id).'">'.forum_htmlencode($mod_username).'</a>' : forum_htmlencode($mod_username);
 
 			($hook = get_hook('in_row_modify_modlist')) ? eval($hook) : null;
 
@@ -135,7 +135,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 		if ($cur_forum['last_post'] != '')
 			$forum_page['item_body']['info']['lastpost'] =
 				'<li class="info-lastpost"><span class="label">' . __('Last post', 'index') .
-				'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_forum['last_post_id']).'">'.format_time($cur_forum['last_post']).
+				'</span> <strong><a href="'.forum_link('post', $cur_forum['last_post_id']).'">'.format_time($cur_forum['last_post']).
 				'</a></strong> <cite>'.sprintf(__('Last poster', 'index'), forum_htmlencode($cur_forum['last_poster'])).'</cite></li>';
 		else
 			$forum_page['item_body']['info']['lastpost'] =

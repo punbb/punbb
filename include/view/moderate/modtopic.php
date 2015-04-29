@@ -24,13 +24,13 @@ include view('moderate/posts_start');
 		if ($cur_post['poster_id'] > 1)
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
 				__('Topic byline', 'topic') : __('Reply byline', 'topic')), ((user()->g_view_users == '1') ? '<a title="'.
-					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
+					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link('user', $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
 		else
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
 				__('Topic byline', 'topic') : __('Reply byline', 'topic')), '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</span>';
 
 		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.
-			__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
+			__('Permalink post', 'topic') . '" href="'.forum_link('post', $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 		if ($cur_post['edited'] != '')
 			$forum_page['post_ident']['edited'] = '<span class="post-edit">'.
@@ -45,7 +45,7 @@ include view('moderate/posts_start');
 
 		// Generate author identification
 		$forum_page['author_ident']['username'] = '<li class="username">'.(($cur_post['poster_id'] > '1') ? '<a title="'.
-			sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
+			sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link('user', $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
 		$forum_page['author_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($cur_post).'</span></li>';
 
 		// Give the post some class

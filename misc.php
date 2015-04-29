@@ -29,7 +29,7 @@ if ($action == 'rules')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link('index')),
 		__('Rules')
 	);
 
@@ -73,7 +73,7 @@ else if ($action == 'markread')
 
 	($hook = get_hook('mi_markread_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['index']), __('Mark read redirect', 'misc'));
+	redirect(forum_link('index'), __('Mark read redirect', 'misc'));
 }
 
 
@@ -125,7 +125,7 @@ else if ($action == 'markforumread')
 
 	($hook = get_hook('mi_markforumread_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($forum_name))),
+	redirect(forum_link('forum', array($fid, sef_friendly($forum_name))),
 		__('Mark forum read redirect', 'misc'));
 }
 
@@ -146,7 +146,7 @@ else if ($action == 'opensearch')
 	echo "\t".'<OutputEncoding>utf-8</OutputEncoding>'."\n";
 	echo "\t".'<Image width="16" height="16" type="image/x-icon">'.$base_url.'/favicon.ico</Image>'."\n";
 	echo "\t".'<Url type="text/html" method="get" template="'.$base_url.'/search.php?action=search&amp;source=opensearch&amp;keywords={searchTerms}"/>'."\n";
-	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.forum_link($forum_url['opensearch']).'"/>'."\n";
+	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.forum_link('opensearch').'"/>'."\n";
 	echo "\t".'<Contact>'.forum_htmlencode(config()->o_admin_email).'</Contact>'."\n";
 
 	if (config()->o_show_version == '1')
@@ -154,7 +154,7 @@ else if ($action == 'opensearch')
 	else
 		echo "\t".'<Attribution>PunBB</Attribution>'."\n";
 
-	echo "\t".'<moz:SearchForm>'.forum_link($forum_url['search']).'</moz:SearchForm>'."\n";
+	echo "\t".'<moz:SearchForm>'.forum_link('search').'</moz:SearchForm>'."\n";
 	echo '</OpenSearchDescription>'."\n";
 
 	exit;
@@ -269,7 +269,7 @@ else if (isset($_GET['email']))
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link($forum_url['email'], $recipient_id);
+	$forum_page['form_action'] = forum_link('email', $recipient_id);
 
 	$forum_page['hidden_fields'] = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -282,7 +282,7 @@ else if (isset($_GET['email']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link('index')),
 		sprintf(__('Send forum e-mail', 'misc'), forum_htmlencode($recipient_info['username']))
 	);
 
@@ -312,7 +312,7 @@ else if (isset($_GET['report']))
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link($forum_url['post'], $post_id), __('Cancel redirect'));
+		redirect(forum_link('post', $post_id), __('Cancel redirect'));
 
 
 	if (isset($_POST['form_sent']))
@@ -382,7 +382,7 @@ else if (isset($_GET['report']))
 				if (config()->o_mailing_list != '')
 				{
 					$mail_subject = 'Report('.$topic_info['forum_id'].') - \''.$topic_info['subject'].'\'';
-					$mail_message = 'User \''.user()->username.'\' has reported the following message:'."\n".forum_link($forum_url['post'], $post_id)."\n\n".'Reason:'."\n".$reason;
+					$mail_message = 'User \''.user()->username.'\' has reported the following message:'."\n".forum_link('post', $post_id)."\n\n".'Reason:'."\n".$reason;
 
 					if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 						require FORUM_ROOT.'include/email.php';
@@ -407,13 +407,13 @@ else if (isset($_GET['report']))
 
 			($hook = get_hook('mi_report_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link($forum_url['post'], $post_id), __('Report redirect', 'misc'));
+			redirect(forum_link('post', $post_id), __('Report redirect', 'misc'));
 		}
 	}
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link($forum_url['report'], $post_id);
+	$forum_page['form_action'] = forum_link('report', $post_id);
 
 	$forum_page['hidden_fields'] = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -422,7 +422,7 @@ else if (isset($_GET['report']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
+		array(config()->o_board_title, forum_link('index')),
 		__('Report post', 'misc')
 	);
 
@@ -505,7 +505,7 @@ else if (isset($_GET['subscribe']))
 
 	($hook = get_hook('mi_subscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['topic'], array($topic_id, sef_friendly($subject))),
+	redirect(forum_link('topic', array($topic_id, sef_friendly($subject))),
 		__('Subscribe redirect', 'misc'));
 }
 
@@ -562,7 +562,7 @@ else if (isset($_GET['unsubscribe']))
 
 	($hook = get_hook('mi_unsubscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['topic'], array($topic_id, sef_friendly($subject))), __('Unsubscribe redirect', 'misc'));
+	redirect(forum_link('topic', array($topic_id, sef_friendly($subject))), __('Unsubscribe redirect', 'misc'));
 }
 
 
@@ -632,7 +632,7 @@ else if (isset($_GET['forum_subscribe']))
 
 	($hook = get_hook('mi_forum_subscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))),
+	redirect(forum_link('forum', array($forum_id, sef_friendly($forum_name))),
 		__('Subscribe redirect', 'misc'));
 }
 
@@ -689,7 +689,7 @@ else if (isset($_GET['forum_unsubscribe']))
 
 	($hook = get_hook('mi_forum_unsubscribe_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['forum'], array($forum_id, sef_friendly($forum_name))),
+	redirect(forum_link('forum', array($forum_id, sef_friendly($forum_name))),
 		__('Unsubscribe redirect', 'misc'));
 }
 

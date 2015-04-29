@@ -14,7 +14,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 // If we are logged in, we shouldn't be here
 if (!user()->is_guest) {
-	header('Location: '.forum_link($forum_url['index']));
+	header('Location: '.forum_link('index'));
 	exit;
 }
 
@@ -26,11 +26,11 @@ $errors = array();
 
 // User pressed the cancel button
 if (isset($_GET['cancel']))
-	redirect(forum_link($forum_url['index']), __('Reg cancel redirect', 'profile'));
+	redirect(forum_link('index'), __('Reg cancel redirect', 'profile'));
 
 // User pressed agree but failed to tick checkbox
 else if (isset($_GET['agree']) && !isset($_GET['req_agreement']))
-	redirect(forum_link($forum_url['index']), __('Reg cancel redirect', 'profile'));
+	redirect(forum_link('index'), __('Reg cancel redirect', 'profile'));
 
 // Show the rules
 else if (config()->o_rules == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
@@ -40,8 +40,8 @@ else if (config()->o_rules == '1' && !isset($_GET['agree']) && !isset($_POST['fo
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Register'), forum_link($forum_url['register'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Register'), forum_link('register')),
 		__('Rules')
 	);
 
@@ -202,7 +202,7 @@ else if (isset($_POST['form_sent']))
 			if ($banned_email && config()->o_mailing_list != '')
 			{
 				$mail_subject = 'Alert - Banned e-mail detected';
-				$mail_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.forum_link($forum_url['user'], $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.forum_link('user', $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				($hook = get_hook('rg_register_banned_email')) ? eval($hook) : null;
 
@@ -213,7 +213,7 @@ else if (isset($_POST['form_sent']))
 			if (!empty($dupe_list) && config()->o_mailing_list != '')
 			{
 				$mail_subject = 'Alert - Duplicate e-mail detected';
-				$mail_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link($forum_url['user'], $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link('user', $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				($hook = get_hook('rg_register_dupe_email')) ? eval($hook) : null;
 
@@ -238,14 +238,14 @@ else if (isset($_POST['form_sent']))
 
 			forum_setcookie($cookie_name, base64_encode($new_uid.'|'.$password_hash.'|'.$expire.'|'.sha1($salt.$password_hash.forum_hash($expire, $salt))), $expire);
 
-			redirect(forum_link($forum_url['index']), __('Reg complete', 'profile'));
+			redirect(forum_link('index'), __('Reg complete', 'profile'));
 		}
 	}
 }
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link($forum_url['register']).'?action=register';
+$forum_page['form_action'] = forum_link('register').'?action=register';
 
 // Setup form information
 $forum_page['frm_info'] = array();
@@ -255,7 +255,7 @@ if (config()->o_regs_verify != '0')
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link('index')),
 	sprintf(__('Register at', 'profile'), config()->o_board_title)
 );
 

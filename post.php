@@ -236,7 +236,7 @@ if (isset($_POST['form_sent']))
 
 		($hook = get_hook('po_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['post'], $new_pid), __('Post redirect', 'post'));
+		redirect(forum_link('post', $new_pid), __('Post redirect', 'post'));
 	}
 }
 
@@ -297,7 +297,7 @@ if ($tid && isset($_GET['qid']))
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = ($tid ? forum_link($forum_url['new_reply'], $tid) : forum_link($forum_url['new_topic'], $fid));
+$forum_page['form_action'] = ($tid ? forum_link('new_reply', $tid) : forum_link('new_topic', $fid));
 $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
@@ -309,20 +309,20 @@ $forum_page['hidden_fields'] = array(
 // Setup help
 $forum_page['text_options'] = array();
 if (config()->p_message_bbcode == '1')
-	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.
+	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'bbcode').'" title="'.
 	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 if (config()->p_message_img_tag == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.
+	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'img').'" title="'.
 	sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 if (config()->o_smilies == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.
+	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'smilies').'" title="'.
 	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 // Setup breadcrumbs
-$forum_page['crumbs'][] = array(config()->o_board_title, forum_link($forum_url['index']));
-$forum_page['crumbs'][] = array($cur_posting['forum_name'], forum_link($forum_url['forum'], array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
+$forum_page['crumbs'][] = array(config()->o_board_title, forum_link('index'));
+$forum_page['crumbs'][] = array($cur_posting['forum_name'], forum_link('forum', array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
 if ($tid)
-	$forum_page['crumbs'][] = array($cur_posting['subject'], forum_link($forum_url['topic'], array($tid, sef_friendly($cur_posting['subject']))));
+	$forum_page['crumbs'][] = array($cur_posting['subject'], forum_link('topic', array($tid, sef_friendly($cur_posting['subject']))));
 $forum_page['crumbs'][] = $tid ?
 	__('Post reply', 'post') : __('Post new topic', 'post');
 

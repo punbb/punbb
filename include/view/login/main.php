@@ -9,8 +9,8 @@ namespace punbb;
 	</div>
 	<div class="main-content main-frm">
 		<div class="content-head">
-			<p class="hn"><?php printf(__('Login options', 'login'), '<a href="'.forum_link($forum_url['register']).'">'.
-				__('register', 'login') . '</a>', '<a href="'.forum_link($forum_url['request_password']).'">'.
+			<p class="hn"><?php printf(__('Login options', 'login'), '<a href="'.forum_link('register').'">'.
+				__('register', 'login') . '</a>', '<a href="'.forum_link('request_password').'">'.
 				__('Obtain pass', 'login') . '</a>') ?></p>
 		</div>
 

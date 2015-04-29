@@ -42,13 +42,13 @@ if (!empty($posts_id))
 		if ($cur_post['poster_id'] > 1)
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
 				__('Topic byline', 'topic') : __('Reply byline', 'topic')), ((user()->g_view_users == '1') ? '<a title="'.
-				sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
+				sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link('user', $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>')).'</span>';
 		else
 			$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['id'] == $cur_topic['first_post_id']) ?
 				__('Topic byline', 'topic') : __('Reply byline', 'topic')), '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</span>';
 
 		$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.
-			__('Permalink post', 'topic') . '" href="'.forum_link($forum_url['post'], $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
+			__('Permalink post', 'topic') . '" href="'.forum_link('post', $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 		if ($cur_post['edited'] != '')
 			$forum_page['post_ident']['edited'] = '<span class="post-edit">'.
@@ -73,7 +73,7 @@ if (!empty($posts_id))
 				}
 
 				$forum_page['author_ident']['username'] = '<li class="username">'.((user()->g_view_users == '1') ? '<a title="'.
-					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link($forum_url['user'], $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
+					sprintf(__('Go to profile', 'topic'), forum_htmlencode($cur_post['username'])).'" href="'.forum_link('user', $cur_post['poster_id']).'">'.forum_htmlencode($cur_post['username']).'</a>' : '<strong>'.forum_htmlencode($cur_post['username']).'</strong>').'</li>';
 				$forum_page['author_ident']['usertitle'] = '<li class="usertitle"><span>'.get_title($cur_post).'</span></li>';
 
 				if ($cur_post['is_online'] == $cur_post['poster_id'])
@@ -128,7 +128,7 @@ if (!empty($posts_id))
 		// Generate IP information for moderators/administrators
 		if (user()->is_admmod)
 			$forum_page['author_info']['ip'] = '<li><span>'.
-				__('IP', 'topic') . ' <a href="'.forum_link($forum_url['get_host'], $cur_post['id']).'">'.$cur_post['poster_ip'].'</a></span></li>';
+				__('IP', 'topic') . ' <a href="'.forum_link('get_host', $cur_post['id']).'">'.$cur_post['poster_ip'].'</a></span></li>';
 
 		// Generate author contact details
 		if (config()->o_show_user_info == '1')
@@ -148,7 +148,7 @@ if (!empty($posts_id))
 						$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="mailto:'.forum_htmlencode($cur_post['email']).'">'.
 						__('E-mail', 'topic') . '<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
 					else if ($cur_post['email_setting'] == '1' && !user()->is_guest && user()->g_send_email == '1')
-						$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['email'], $cur_post['poster_id']).'">'.
+						$forum_page['post_contacts']['email'] = '<span class="user-email'.(empty($forum_page['post_contacts']) ? ' first-item' : '').'"><a href="'.forum_link('email', $cur_post['poster_id']).'">'.
 						__('E-mail', 'topic') . '<span>&#160;'.forum_htmlencode($cur_post['username']).'</span></a></span>';
 				}
 				else
@@ -168,7 +168,7 @@ if (!empty($posts_id))
 		// Generate the post options links
 		if (!user()->is_guest)
 		{
-			$forum_page['post_actions']['report'] = '<span class="report-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['report'], $cur_post['id']).'">'.
+			$forum_page['post_actions']['report'] = '<span class="report-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('report', $cur_post['id']).'">'.
 				__('Report', 'topic') . '<span> '.
 					__('Post', 'topic') . ' ' . forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 
@@ -179,33 +179,33 @@ if (!empty($posts_id))
 					if ($cur_post['poster_id'] == user()->id)
 					{
 						if (($forum_page['start_from'] + $forum_page['item_count']) == 1 && user()->g_delete_topics == '1')
-							$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.
+							$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('delete', $cur_topic['first_post_id']).'">'.
 								__('Delete topic', 'topic') . '</a></span>';
 						if (($forum_page['start_from'] + $forum_page['item_count']) > 1 && user()->g_delete_posts == '1')
-							$forum_page['post_actions']['delete'] = '<span class="delete-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['delete'], $cur_post['id']).'">'.
+							$forum_page['post_actions']['delete'] = '<span class="delete-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('delete', $cur_post['id']).'">'.
 								__('Delete', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 						if (user()->g_edit_posts == '1')
-							$forum_page['post_actions']['edit'] = '<span class="edit-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['edit'], $cur_post['id']).'">'.
+							$forum_page['post_actions']['edit'] = '<span class="edit-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('edit', $cur_post['id']).'">'.
 								__('Edit', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 					}
 
 					if (($cur_topic['post_replies'] == '' && user()->g_post_replies == '1') || $cur_topic['post_replies'] == '1')
-						$forum_page['post_actions']['quote'] = '<span class="quote-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['quote'], array($id, $cur_post['id'])).'">'.
+						$forum_page['post_actions']['quote'] = '<span class="quote-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('quote', array($id, $cur_post['id'])).'">'.
 							__('Quote', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 				}
 			}
 			else
 			{
 				if (($forum_page['start_from'] + $forum_page['item_count']) == 1)
-					$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.
+					$forum_page['post_actions']['delete'] = '<span class="delete-topic'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link(['delete', $cur_topic['first_post_id']).'">'.
 					__('Delete topic', 'topic') . '</a></span>';
 				else
-					$forum_page['post_actions']['delete'] = '<span class="delete-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['delete'], $cur_post['id']).'">'.
+					$forum_page['post_actions']['delete'] = '<span class="delete-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('delete', $cur_post['id']).'">'.
 					__('Delete', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 
-				$forum_page['post_actions']['edit'] = '<span class="edit-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['edit'], $cur_post['id']).'">'.
+				$forum_page['post_actions']['edit'] = '<span class="edit-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('edit', $cur_post['id']).'">'.
 					__('Edit', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
-				$forum_page['post_actions']['quote'] = '<span class="quote-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['quote'], array($id, $cur_post['id'])).'">'.
+				$forum_page['post_actions']['quote'] = '<span class="quote-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('quote', array($id, $cur_post['id'])).'">'.
 					__('Quote', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 			}
 		}
@@ -214,7 +214,7 @@ if (!empty($posts_id))
 			if ($cur_topic['closed'] == '0')
 			{
 				if (($cur_topic['post_replies'] == '' && user()->g_post_replies == '1') || $cur_topic['post_replies'] == '1')
-					$forum_page['post_actions']['quote'] = '<span class="report-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link($forum_url['quote'], array($id, $cur_post['id'])).'">'.
+					$forum_page['post_actions']['quote'] = '<span class="report-post'.(empty($forum_page['post_actions']) ? ' first-item' : '').'"><a href="'.forum_link('quote', array($id, $cur_post['id'])).'">'.
 					__('Quote', 'topic') . '<span> ' . __('Post', 'topic') . ' '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 			}
 		}

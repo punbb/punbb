@@ -42,20 +42,20 @@ if (isset($_POST['mark_as_read']))
 
 	($hook = get_hook('arp_mark_as_read_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link($forum_url['admin_reports']), __('Reports marked read', 'admin_reports'));
+	redirect(forum_link('admin_reports'), __('Reports marked read', 'admin_reports'));
 }
 
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Management', 'admin_common'), forum_link($forum_url['admin_reports']));
+	$forum_page['crumbs'][] = array(__('Management', 'admin_common'), forum_link('admin_reports'));
 }
-$forum_page['crumbs'][] = array(__('Reports', 'admin_common'), forum_link($forum_url['admin_reports']));
+$forum_page['crumbs'][] = array(__('Reports', 'admin_common'), forum_link('admin_reports'));
 
 ($hook = get_hook('arp_pre_header_load')) ? eval($hook) : null;
 

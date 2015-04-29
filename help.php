@@ -24,7 +24,7 @@ if (!$section) {
 }
 
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['help'])),
+	array(config()->o_board_title, forum_link('help')),
 	__('Help', 'help')
 );
 

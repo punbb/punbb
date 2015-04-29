@@ -14,7 +14,7 @@ namespace punbb;
 			</div>
 <?php ($hook = get_hook('acg_pre_add_cat_fieldset')) ? eval($hook) : null; ?>
 			<div class="ct-box">
-				<p><?php printf(__('Add category info', 'admin_categories'), '<a href="'.forum_link($forum_url['admin_forums']).'">'.
+				<p><?php printf(__('Add category info', 'admin_categories'), '<a href="'.forum_link('admin_forums').'">'.
 					__('Add category info link text', 'admin_categories') . '</a>') ?></p>
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

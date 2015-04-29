@@ -74,12 +74,12 @@ else if ($action == 'new') {
 		$first_new_post_id = db()->result($result);
 
 		if ($first_new_post_id) {
-			header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['post'], $first_new_post_id)));
+			header('Location: '.str_replace('&amp;', '&', forum_link('post', $first_new_post_id)));
 			exit;
 		}
 	}
 
-	header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['topic_last_post'], $id)));
+	header('Location: '.str_replace('&amp;', '&', forum_link('topic_last_post', $id)));
 	exit;
 }
 // If action=last, we redirect to the last post
@@ -95,7 +95,7 @@ else if ($action == 'last') {
 	$last_post_id = db()->result($result);
 
 	if ($last_post_id) {
-		header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['post'], $last_post_id)));
+		header('Location: '.str_replace('&amp;', '&', forum_link('post', $last_post_id)));
 		exit;
 	}
 }
@@ -174,7 +174,7 @@ if ($forum_page['page'] < $forum_page['num_pages']) {
 if ($forum_page['page'] > 1) {
 	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($forum_url['topic'], $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link($forum_url['topic'], array($id, sef_friendly($cur_topic['subject']))).'" title="'.
+	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('topic', array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page').' 1" />';
 }
 
@@ -188,13 +188,13 @@ $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
 		__('Paging separator'), array($id, sef_friendly($cur_topic['subject']))).'</p>';
 
 if (user()->may_post) {
-	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link($forum_url['new_reply'], $id).'"><span>'.
+	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link('new_reply', $id).'"><span>'.
 	__('Post reply', 'topic') . '</span></a></p>';
 	}
 else if (user()->is_guest) {
 	$forum_page['page_post']['posting'] = '<p class="posting">'.
-		sprintf(__('Login to post', 'topic'), '<a href="'.forum_link($forum_url['login']).'">'.
-		__('login').'</a>', '<a href="'.forum_link($forum_url['register']).'">'.
+		sprintf(__('Login to post', 'topic'), '<a href="'.forum_link('login').'">'.
+		__('login').'</a>', '<a href="'.forum_link('register').'">'.
 		__('register').'</a>').'</p>';
 }
 else if ($cur_topic['closed'] == '1') {
@@ -209,17 +209,17 @@ else {
 // Setup main options
 $forum_page['main_title'] = __('Topic options', 'topic');
 $forum_page['main_head_options'] = array(
-	'rss' => '<span class="feed first-item"><a class="feed" href="'.forum_link($forum_url['topic_rss'], $id).'">'.
+	'rss' => '<span class="feed first-item"><a class="feed" href="'.forum_link('topic_rss', $id).'">'.
 		__('RSS topic feed', 'topic') . '</a></span>'
 );
 
 if (!user()->is_guest && config()->o_subscriptions == '1') {
 	if ($cur_topic['is_subscribed']) {
-		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['unsubscribe'], array($id, generate_form_token('unsubscribe'.$id.user()->id))).'"><em>'.
+		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link('unsubscribe', array($id, generate_form_token('unsubscribe'.$id.user()->id))).'"><em>'.
 			__('Unsubscribe', 'topic') . '</em></a></span>';
 	}
 	else {
-		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link($forum_url['subscribe'], array($id, generate_form_token('subscribe'.$id.user()->id))).'" title="'.
+		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link('subscribe', array($id, generate_form_token('subscribe'.$id.user()->id))).'" title="'.
 			__('Subscribe info', 'topic') . '">'.
 			__('Subscribe', 'topic') . '</a></span>';
 	}
@@ -227,15 +227,15 @@ if (!user()->is_guest && config()->o_subscriptions == '1') {
 
 if ($forum_page['is_admmod']) {
 	$forum_page['main_foot_options'] = array(
-		'move' => '<span class="first-item"><a class="mod-option" href="'.forum_link($forum_url['move'], array($cur_topic['forum_id'], $id)).'">'.
+		'move' => '<span class="first-item"><a class="mod-option" href="'.forum_link('move', array($cur_topic['forum_id'], $id)).'">'.
 			__('Move', 'topic') . '</a></span>',
-		'delete' => '<span><a class="mod-option" href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.
+		'delete' => '<span><a class="mod-option" href="'.forum_link('delete', $cur_topic['first_post_id']).'">'.
 			__('Delete topic', 'topic') . '</a></span>',
-		'close' => (($cur_topic['closed'] == '1') ? '<span><a class="mod-option" href="'.forum_link($forum_url['open'], array($cur_topic['forum_id'], $id, generate_form_token('open'.$id))).'">'.
-			__('Open', 'topic') . '</a></span>' : '<span><a class="mod-option" href="'.forum_link($forum_url['close'], array($cur_topic['forum_id'], $id, generate_form_token('close'.$id))).'">'.
+		'close' => (($cur_topic['closed'] == '1') ? '<span><a class="mod-option" href="'.forum_link('open', array($cur_topic['forum_id'], $id, generate_form_token('open'.$id))).'">'.
+			__('Open', 'topic') . '</a></span>' : '<span><a class="mod-option" href="'.forum_link('close', array($cur_topic['forum_id'], $id, generate_form_token('close'.$id))).'">'.
 			__('Close', 'topic') . '</a></span>'),
-		'sticky' => (($cur_topic['sticky'] == '1') ? '<span><a class="mod-option" href="'.forum_link($forum_url['unstick'], array($cur_topic['forum_id'], $id, generate_form_token('unstick'.$id))).'">'.
-			__('Unstick', 'topic') . '</a></span>' : '<span><a class="mod-option" href="'.forum_link($forum_url['stick'], array($cur_topic['forum_id'], $id, generate_form_token('stick'.$id))).'">'.
+		'sticky' => (($cur_topic['sticky'] == '1') ? '<span><a class="mod-option" href="'.forum_link('unstick', array($cur_topic['forum_id'], $id, generate_form_token('unstick'.$id))).'">'.
+			__('Unstick', 'topic') . '</a></span>' : '<span><a class="mod-option" href="'.forum_link('stick', array($cur_topic['forum_id'], $id, generate_form_token('stick'.$id))).'">'.
 			__('Stick', 'topic') . '</a></span>')
 	);
 
@@ -247,14 +247,14 @@ if ($forum_page['is_admmod']) {
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array($cur_topic['forum_name'], forum_link($forum_url['forum'], array($cur_topic['forum_id'], sef_friendly($cur_topic['forum_name'])))),
+	array(config()->o_board_title, forum_link('index')),
+	array($cur_topic['forum_name'], forum_link('forum', array($cur_topic['forum_id'], sef_friendly($cur_topic['forum_name'])))),
 	$cur_topic['subject']
 );
 
 // Setup main heading
 $forum_page['main_title'] = (($cur_topic['closed'] == '1') ?
-	__('Topic closed', 'topic') . ' ' : '').'<a class="permalink" href="'.forum_link($forum_url['topic'], array($id, sef_friendly($cur_topic['subject']))).'" rel="bookmark" title="'.
+	__('Topic closed', 'topic') . ' ' : '').'<a class="permalink" href="'.forum_link('topic', array($id, sef_friendly($cur_topic['subject']))).'" rel="bookmark" title="'.
 	__('Permalink topic', 'topic') . '">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 if ($forum_page['num_pages'] > 1) {

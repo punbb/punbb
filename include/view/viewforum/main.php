@@ -57,7 +57,7 @@ if (!empty($topics))
 		if ($cur_topic['moved_to'] != null)
 		{
 			$forum_page['item_status']['moved'] = 'moved';
-			$forum_page['item_title']['link'] = '<span class="item-status"><em class="moved">'.sprintf(__('Item status', 'forum'), __('Moved', 'forum')).'</em></span> <a href="'.forum_link($forum_url['topic'], array($cur_topic['moved_to'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
+			$forum_page['item_title']['link'] = '<span class="item-status"><em class="moved">'.sprintf(__('Item status', 'forum'), __('Moved', 'forum')).'</em></span> <a href="'.forum_link('topic', array($cur_topic['moved_to'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 			// Combine everything to produce the Topic heading
 			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span>'.$forum_page['item_title']['link'].'</h3>';
@@ -99,7 +99,7 @@ if (!empty($topics))
 			if (!empty($forum_page['item_title_status']))
 				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf(__('Item status', 'forum'), implode(', ', $forum_page['item_title_status'])).'</span>';
 
-			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
+			$forum_page['item_title']['link'] = '<a href="'.forum_link('topic', array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 			($hook = get_hook('vf_topic_loop_normal_topic_pre_item_title_merge')) ? eval($hook) : null;
 
@@ -116,7 +116,7 @@ if (!empty($topics))
 			// Does this topic contain posts we haven't read? If so, tag it accordingly.
 			if (!user()->is_guest && $cur_topic['last_post'] > user()->last_visit && (!isset($tracked_topics['topics'][$cur_topic['id']]) || $tracked_topics['topics'][$cur_topic['id']] < $cur_topic['last_post']) && (!isset($tracked_topics['forums'][$id]) || $tracked_topics['forums'][$id] < $cur_topic['last_post']))
 			{
-				$forum_page['item_nav']['new'] = '<em class="item-newposts"><a href="'.forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.
+				$forum_page['item_nav']['new'] = '<em class="item-newposts"><a href="'.forum_link('topic_new_posts', array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.
 					__('New posts', 'forum') . '</a></em>';
 				$forum_page['item_status']['new'] = 'new';
 			}
@@ -137,7 +137,7 @@ if (!empty($topics))
 					__('view', 'forum') : __('views', 'forum')).'</span></li>';
 
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.
-				__('Last post', 'forum') . '</span> <strong><a href="'.forum_link($forum_url['post'], $cur_topic['last_post_id']).'">'.format_time($cur_topic['last_post']).'</a></strong> <cite>'.
+				__('Last post', 'forum') . '</span> <strong><a href="'.forum_link('post', $cur_topic['last_post_id']).'">'.format_time($cur_topic['last_post']).'</a></strong> <cite>'.
 				sprintf(__('by poster', 'forum'), forum_htmlencode($cur_topic['last_poster'])).'</cite></li>';
 		}
 

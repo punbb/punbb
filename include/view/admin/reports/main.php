@@ -12,9 +12,9 @@ if (!empty($unread_reports))
 		<h2 class="hn"><span><?php echo __('New reports heading', 'admin_reports') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form id="arp-new-report-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_reports']) ?>?action=zap">
+		<form id="arp-new-report-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_reports') ?>?action=zap">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_reports']).'?action=zap') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_reports').'?action=zap') ?>" />
 			</div>
 <?php
 
@@ -22,11 +22,11 @@ if (!empty($unread_reports))
 
 	foreach ($unread_reports as $cur_report)
 	{
-		$reporter = ($cur_report['reporter'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_report['reported_by']).'">'.forum_htmlencode($cur_report['reporter']).'</a>' : __('Deleted user', 'admin_reports');
-		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.forum_link($forum_url['forum'], array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : __('Deleted forum', 'admin_reports');
-		$topic = ($cur_report['subject'] != '') ? '<a href="'.forum_link($forum_url['topic'], array($cur_report['topic_id'], sef_friendly($cur_report['subject']))).'">'.forum_htmlencode($cur_report['subject']).'</a>' : __('Deleted topic', 'admin_reports');
+		$reporter = ($cur_report['reporter'] != '') ? '<a href="'.forum_link('user', $cur_report['reported_by']).'">'.forum_htmlencode($cur_report['reporter']).'</a>' : __('Deleted user', 'admin_reports');
+		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.forum_link('forum', array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : __('Deleted forum', 'admin_reports');
+		$topic = ($cur_report['subject'] != '') ? '<a href="'.forum_link('topic', array($cur_report['topic_id'], sef_friendly($cur_report['subject']))).'">'.forum_htmlencode($cur_report['subject']).'</a>' : __('Deleted topic', 'admin_reports');
 		$message = str_replace("\n", '<br />', forum_htmlencode($cur_report['message']));
-		$post_id = ($cur_report['pid'] != '') ? '<a href="'.forum_link($forum_url['post'], $cur_report['pid']).'">'.sprintf(__('Post', 'admin_reports'), $cur_report['pid']).'</a>' : __('Deleted post', 'admin_reports');
+		$post_id = ($cur_report['pid'] != '') ? '<a href="'.forum_link('post, $cur_report['pid']).'">'.sprintf(__('Post', 'admin_reports'), $cur_report['pid']).'</a>' : __('Deleted post', 'admin_reports');
 
 		($hook = get_hook('arp_new_report_pre_display')) ? eval($hook) : null;
 
@@ -70,12 +70,12 @@ if (!empty($zapped_reports))
 
 	foreach ($zapped_reports as $cur_report)
 	{
-		$reporter = ($cur_report['reporter'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_report['reported_by']).'">'.forum_htmlencode($cur_report['reporter']).'</a>' : __('Deleted user', 'admin_reports');
-		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.forum_link($forum_url['forum'], array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : __('Deleted forum', 'admin_reports');
-		$topic = ($cur_report['subject'] != '') ? '<a href="'.forum_link($forum_url['topic'], array($cur_report['topic_id'], sef_friendly($cur_report['subject']))).'">'.forum_htmlencode($cur_report['subject']).'</a>' : __('Deleted topic', 'admin_reports');
+		$reporter = ($cur_report['reporter'] != '') ? '<a href="'.forum_link('user', $cur_report['reported_by']).'">'.forum_htmlencode($cur_report['reporter']).'</a>' : __('Deleted user', 'admin_reports');
+		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.forum_link('forum', array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : __('Deleted forum', 'admin_reports');
+		$topic = ($cur_report['subject'] != '') ? '<a href="'.forum_link('topic', array($cur_report['topic_id'], sef_friendly($cur_report['subject']))).'">'.forum_htmlencode($cur_report['subject']).'</a>' : __('Deleted topic', 'admin_reports');
 		$message = str_replace("\n", '<br />', forum_htmlencode($cur_report['message']));
-		$post_id = ($cur_report['pid'] != '') ? '<a href="'.forum_link($forum_url['post'], $cur_report['pid']).'">'.sprintf(__('Post', 'admin_reports'), $cur_report['pid']).'</a>' : __('Deleted post', 'admin_reports');
-		$zapped_by = ($cur_report['zapped_by'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_report['zapped_by_id']).'">'.forum_htmlencode($cur_report['zapped_by']).'</a>' : __('Deleted user', 'admin_reports');
+		$post_id = ($cur_report['pid'] != '') ? '<a href="'.forum_link('post', $cur_report['pid']).'">'.sprintf(__('Post', 'admin_reports'), $cur_report['pid']).'</a>' : __('Deleted post', 'admin_reports');
+		$zapped_by = ($cur_report['zapped_by'] != '') ? '<a href="'.forum_link('user', $cur_report['zapped_by_id']).'">'.forum_htmlencode($cur_report['zapped_by']).'</a>' : __('Deleted user', 'admin_reports');
 
 		($hook = get_hook('arp_report_pre_display')) ? eval($hook) : null;
 

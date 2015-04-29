@@ -289,7 +289,7 @@ function create_search_cache($keywords, $author, $search_in = false, $forum = ar
 	db()->close();
 
 	// Redirect the user to the cached result page
-	header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['search_results'], $search_id)));
+	header('Location: '.str_replace('&amp;', '&', forum_link('search_results', $search_id)));
 	exit;
 }
 
@@ -783,7 +783,7 @@ function no_search_results($action = 'search')
 {
 	global $forum_page, $forum_url;
 
-	$forum_page['search_again'] = '<a href="'.forum_link($forum_url['search']).'">'.
+	$forum_page['search_again'] = '<a href="'.forum_link('search').'">'.
 		__('Perform new search', 'search') . '</a>';
 
 	$return = ($hook = get_hook('sf_fn_no_search_results_start')) ? eval($hook) : null;
@@ -843,15 +843,15 @@ function generate_search_crumbs($action = null)
 		case 'show_new':
 			$forum_page['crumbs'][] = __('Topics with new', 'search');
 			$forum_page['items_info'] = generate_items_info(__('Topics found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
-			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'],
+			$forum_page['main_foot_options']['mark_all'] = '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('mark_read',
 					generate_form_token('markread'.user()->id)).'">'.
 				__('Mark all as read').'</a></span>';
 
 			// Add link for show all topics, not only new (updated)
 			if ($search_id != -1)
-				$forum_page['main_head_options']['show_all'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['forum'], $search_set[0]['forum_id']).'">'.
+				$forum_page['main_head_options']['show_all'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('forum', $search_set[0]['forum_id']).'">'.
 				__('All Topics', 'search') . '</a></span>';
 
 			break;
@@ -859,46 +859,46 @@ function generate_search_crumbs($action = null)
 		case 'show_recent':
 			$forum_page['crumbs'][] = __('Recently active topics', 'search');
 			$forum_page['items_info'] = generate_items_info(__('Topics found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
 			break;
 
 		case 'show_unanswered':
 			$forum_page['crumbs'][] = __('Unanswered topics', 'search');
 			$forum_page['items_info'] = generate_items_info(__('Topics found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
 			break;
 
 		case 'show_user_posts':
 			$forum_page['crumbs'][] = sprintf(__('Posts by', 'search'), $search_set[0]['pposter'], ($forum_page['start_from'] + 1), $num_hits);
 			$forum_page['items_info'] = generate_items_info(__('Posts found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['user_topics'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_topics'], $search_id).'">'.
+			$forum_page['main_head_options']['user_topics'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search_user_topics', $search_id).'">'.
 				sprintf(__('Topics by', 'search'), forum_htmlencode($search_set[0]['pposter'])).'</a></span>';
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
 			break;
 
 		case 'show_user_topics':
 			$forum_page['crumbs'][] = sprintf(__('Topics by', 'search'), $search_set[0]['poster']);
 			$forum_page['items_info'] = generate_items_info(__('Topics found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['user_posts'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_posts'], $search_id).'">'.
+			$forum_page['main_head_options']['user_posts'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search_user_posts', $search_id).'">'.
 				sprintf(__('Posts by', 'search'), forum_htmlencode($search_set[0]['poster'])).'</a></span>';
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
 			break;
 
 		case 'show_subscriptions':
 			$forum_page['crumbs'][] = __('Subscriptions', 'search');
 			$forum_page['items_info'] = generate_items_info(__('Topics found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
 			break;
 
 		case 'show_forum_subscriptions':
 			$forum_page['crumbs'][] = __('Forum subscriptions', 'search');
 			$forum_page['items_info'] = generate_items_info(__('Forums found', 'search'), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['defined_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('User defined search', 'search') . '</a></span>';
 			break;
 
@@ -906,7 +906,7 @@ function generate_search_crumbs($action = null)
 			$forum_page['crumbs'][] = __('Search results', 'search');
 			$forum_page['items_info'] = generate_items_info((($show_as == 'topics') ?
 				__('Topics found', 'search') : __('Posts found', 'search')), ($forum_page['start_from'] + 1), $num_hits);
-			$forum_page['main_head_options']['new_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$forum_page['main_head_options']['new_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search').'">'.
 				__('Perform new search', 'search') . '</a></span>';
 			break;
 	}

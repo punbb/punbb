@@ -71,7 +71,7 @@ if (((user()->g_delete_posts == '0' && !$cur_post['is_topic']) ||
 
 // User pressed the cancel button
 if (isset($_POST['cancel']))
-	redirect(forum_link($forum_url['post'], $id), __('Cancel redirect'));
+	redirect(forum_link('post', $id), __('Cancel redirect'));
 
 // User pressed the delete button
 else if (isset($_POST['delete']))
@@ -79,7 +79,7 @@ else if (isset($_POST['delete']))
 	($hook = get_hook('dl_form_submitted')) ? eval($hook) : null;
 
 	if (!isset($_POST['req_confirm']))
-		redirect(forum_link($forum_url['post'], $id), __('No confirm redirect'));
+		redirect(forum_link('post', $id), __('No confirm redirect'));
 
 	if ($cur_post['is_topic'])
 	{
@@ -90,7 +90,7 @@ else if (isset($_POST['delete']))
 
 		($hook = get_hook('dl_topic_deleted_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name']))),
+		redirect(forum_link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name']))),
 			__('Topic del redirect', 'delete'));
 	}
 	else
@@ -117,12 +117,12 @@ else if (isset($_POST['delete']))
 
 		if (isset($prev_post['id']))
 		{
-			redirect(forum_link($forum_url['post'], $prev_post['id']),
+			redirect(forum_link('post', $prev_post['id']),
 				__('Post del redirect', 'delete'));
 		}
 		else
 		{
-			redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))),
+			redirect(forum_link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject']))),
 				__('Post del redirect', 'delete'));
 		}
 	}
@@ -136,7 +136,7 @@ $cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smili
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link($forum_url['delete'], $id);
+$forum_page['form_action'] = forum_link('delete', $id);
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -153,7 +153,7 @@ $forum_page['frm_info'] = array(
 $forum_page['post_ident'] = array();
 $forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['is_topic']) ?
 	__('Topic byline', 'delete') : __('Reply byline', 'delete')), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
-$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" href="'.forum_link($forum_url['post'], $cur_post['tid']).'">'.format_time($cur_post['posted']).'</a></span>';
+$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" href="'.forum_link('post', $cur_post['tid']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 ($hook = get_hook('dl_pre_item_ident_merge')) ? eval($hook) : null;
 
@@ -167,9 +167,9 @@ $forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array($cur_post['forum_name'], forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
-	array($cur_post['subject'], forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
+	array(config()->o_board_title, forum_link('index')),
+	array($cur_post['forum_name'], forum_link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
+	array($cur_post['subject'], forum_link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
 	(($cur_post['is_topic']) ? __('Delete topic', 'delete') : __('Delete post', 'delete'))
 );
 

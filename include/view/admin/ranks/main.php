@@ -8,12 +8,12 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo __('Rank head', 'admin_ranks') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_ranks']) ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_ranks') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_ranks']).'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_ranks').'?action=foo') ?>" />
 			</div>
 			<div class="ct-box" id="info-ranks-intro">
-				<p><?php printf(__('Add rank intro', 'admin_ranks'), '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.
+				<p><?php printf(__('Add rank intro', 'admin_ranks'), '<a class="nowrap" href="'.forum_link('admin_settings_features').'">'.
 					__('Settings', 'admin_common').' &rarr; '.
 					__('Features', 'admin_common').'</a>') ?></p>
 			</div>
@@ -51,9 +51,9 @@ if (!empty($forum_ranks))
 	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_ranks']) ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_ranks') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_ranks']).'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_ranks').'?action=foo') ?>" />
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?php echo __('Existing ranks legend', 'admin_ranks') ?></span></legend>

@@ -128,7 +128,7 @@ if (isset($query))
 	//
 
 	// Setup breadcrumbs and results header and footer
-	$forum_page['crumbs'][] = array(config()->o_board_title, forum_link($forum_url['index']));
+	$forum_page['crumbs'][] = array(config()->o_board_title, forum_link('index'));
 	$action = (isset($action)) ? $action : null;
 	generate_search_crumbs($action);
 
@@ -210,7 +210,7 @@ $forum_page['frm-sort'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
+	array(config()->o_board_title, forum_link('index')),
 	__('Search')
 );
 
@@ -219,7 +219,7 @@ $advanced_search = isset($_GET['advanced']) ? true : false;
 // Show link for advanced form
 if (!$advanced_search)
 {
-	$forum_page['main_head_options']['advanced_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_advanced']).'">'.
+	$forum_page['main_head_options']['advanced_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('search_advanced').'">'.
 		__('Advanced search', 'search') . '</a></span>';
 }
 

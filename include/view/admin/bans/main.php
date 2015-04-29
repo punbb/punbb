@@ -52,7 +52,7 @@ if ($forum_page['num_bans'] > 0)
 	while ($cur_ban = db()->fetch_assoc($result))
 	{
 		$forum_page['ban_info'] = array();
-		$forum_page['ban_creator'] = ($cur_ban['ban_creator_username'] != '') ? '<a href="'.forum_link($forum_url['user'], $cur_ban['ban_creator']).'">'.forum_htmlencode($cur_ban['ban_creator_username']).'</a>' :
+		$forum_page['ban_creator'] = ($cur_ban['ban_creator_username'] != '') ? '<a href="'.forum_link('user', $cur_ban['ban_creator']).'">'.forum_htmlencode($cur_ban['ban_creator_username']).'</a>' :
 			__('Unknown', 'admin_common');
 
 		if ($cur_ban['username'] != '')
@@ -82,8 +82,8 @@ if ($forum_page['num_bans'] > 0)
 				<div class="ct-box">
 					<div class="ct-legend">
 						<h3><span><?php printf(__('Current ban head', 'admin_bans'), $forum_page['ban_creator']) ?></span></h3>
-						<p><?php printf(__('Edit or remove', 'admin_bans'), '<a href="'.forum_link($forum_url['admin_bans']).'&amp;edit_ban='.$cur_ban['id'].'">'.
-							__('Edit ban', 'admin_bans') . '</a>', '<a href="'.forum_link($forum_url['admin_bans']).'&amp;del_ban='.$cur_ban['id'].'&amp;csrf_token='.generate_form_token('del_ban'.$cur_ban['id']).'">'.
+						<p><?php printf(__('Edit or remove', 'admin_bans'), '<a href="'.forum_link('admin_bans').'&amp;edit_ban='.$cur_ban['id'].'">'.
+							__('Edit ban', 'admin_bans') . '</a>', '<a href="'.forum_link('admin_bans').'&amp;del_ban='.$cur_ban['id'].'&amp;csrf_token='.generate_form_token('del_ban'.$cur_ban['id']).'">'.
 							__('Remove ban', 'admin_bans') . '</a>') ?></p>
 					</div>
 <?php if (!empty($forum_page['ban_info'])): ?>

@@ -15,9 +15,9 @@ namespace punbb;
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php echo __('Required warn', 'admin_common') ?></p>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_prune']) ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_prune') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_prune']).'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_prune').'?action=foo') ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 <?php ($hook = get_hook('apr_pre_prune_fieldset')) ? eval($hook) : null; ?>

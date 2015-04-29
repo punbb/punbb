@@ -11,49 +11,49 @@ if ($return != null) {
 echo '<ul>';
 
 // Index should always be displayed
-$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['index']).'">'.
+$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link('index').'">'.
 	__('Index') . '</a></li>';
 
 if (user()->g_read_board == '1' && user()->g_view_users == '1')
-	$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['users']).'">'.
+	$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link('users').'">'.
 	__('User list') . '</a></li>';
 
 if (config()->o_rules == '1' && (!user()->is_guest || user()->g_read_board == '1' ||
 		config()->o_regs_allow == '1'))
-	$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['rules']).'">'.
+	$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link('rules').'">'.
 	__('Rules') . '</a></li>';
 
 if (user()->is_guest) {
 	if (user()->g_read_board == '1' && user()->g_search == '1')
-		$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+		$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link('search').'">'.
 		__('Search') . '</a></li>';
 
-	$links['register'] = '<li id="navregister"'.((FORUM_PAGE == 'register') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['register']).'">'.
+	$links['register'] = '<li id="navregister"'.((FORUM_PAGE == 'register') ? ' class="isactive"' : '').'><a href="'.forum_link('register').'">'.
 		__('Register') . '</a></li>';
-	$links['login'] = '<li id="navlogin"'.((FORUM_PAGE == 'login') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['login']).'">'.
+	$links['login'] = '<li id="navlogin"'.((FORUM_PAGE == 'login') ? ' class="isactive"' : '').'><a href="'.forum_link('login').'">'.
 		__('Login') . '</a></li>';
 }
 else {
 	if (!user()->is_admmod) {
 		if (user()->g_read_board == '1' && user()->g_search == '1')
-			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link('search').'">'.
 			__('Search') . '</a></li>';
 
 		$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.
-			forum_link($forum_url['user'], user()->id).'">'.
+			forum_link('user', user()->id).'">'.
 			__('Profile') . '</a></li>';
 		$links['logout'] = '<li id="navlogout"><a href="'.
-			forum_link($forum_url['logout'], array(user()->id, generate_form_token('logout'.user()->id))).'">'.
+			forum_link('logout', array(user()->id, generate_form_token('logout'.user()->id))).'">'.
 			__('Logout') . '</a></li>';
 	}
 	else {
-		$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.
+		$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link('search').'">'.
 			__('Search') . '</a></li>';
-		$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], user()->id).'">'.
+		$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link('user', user()->id).'">'.
 			__('Profile') . '</a></li>';
-		$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.
+		$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link('admin_index').'">'.
 			__('Admin') . '</a></li>';
-		$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array(user()->id, generate_form_token('logout'.user()->id))).'">'.
+		$links['logout'] = '<li id="navlogout"><a href="'.forum_link('logout', array(user()->id, generate_form_token('logout'.user()->id))).'">'.
 			__('Logout') . '</a></li>';
 	}
 }

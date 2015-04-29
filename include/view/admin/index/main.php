@@ -54,7 +54,7 @@ namespace punbb;
 					<h3 class="ct-legend hn"><span><?php echo __('Environment', 'admin_index') ?></span></h3>
 					<ul class="data-list">
 						<li><span><?php echo __('Operating system', 'admin_index') ?>: <?php echo PHP_OS ?></span></li>
-						<li><span>PHP: <?php echo PHP_VERSION ?> - <a href="<?php echo forum_link($forum_url['admin_index']) ?>?action=phpinfo"><?php echo __('Show info', 'admin_index') ?></a></span></li>
+						<li><span>PHP: <?php echo PHP_VERSION ?> - <a href="<?php echo forum_link('admin_index') ?>?action=phpinfo"><?php echo __('Show info', 'admin_index') ?></a></span></li>
 						<li><span><?php echo __('Accelerator', 'admin_index') ?>: <?php echo $php_accelerator ?></span></li>
 					</ul>
 				</div>

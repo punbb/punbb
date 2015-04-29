@@ -8,13 +8,13 @@ namespace punbb;
 		<h2 class="hn"><span><?= __('Censored word head', 'admin_censoring') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_censoring']) ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_censoring') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_censoring']).'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_censoring').'?action=foo') ?>" />
 			</div>
 			<div class="ct-box" id="info-censored-intro">
 				<p><?= __('Add censored word intro', 'admin_censoring'); if (user()->g_id == FORUM_ADMIN) printf(' '.
-					__('Add censored word extra', 'admin_censoring'), '<a class="nowrap" href="'.forum_link($forum_url['admin_settings_features']).'">'.
+					__('Add censored word extra', 'admin_censoring'), '<a class="nowrap" href="'.forum_link('admin_settings_features').'">'.
 					__('Settings', 'admin_common').' &rarr; '.
 					__('Features', 'admin_common').'</a>') ?></p>
 			</div>
@@ -52,9 +52,9 @@ if (!empty($forum_censors))
 	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_censoring']) ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_censoring') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link($forum_url['admin_censoring']).'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_censoring').'?action=foo') ?>" />
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?= __('Edit censored word legend', 'admin_censoring') ?></span></legend>

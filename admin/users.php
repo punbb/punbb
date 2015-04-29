@@ -47,13 +47,13 @@ if (isset($_GET['ip_stats'])) {
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link('admin_users'));
 	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
 	($hook = get_hook('aus_ip_stats_pre_header_load')) ? eval($hook) : null;
@@ -97,13 +97,13 @@ else if (isset($_GET['show_users']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link('admin_users'));
 	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
 	($hook = get_hook('aus_show_users_pre_header_load')) ? eval($hook) : null;
@@ -142,7 +142,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 {
 	// User pressed the cancel button
 	if (isset($_POST['delete_users_cancel']))
-		redirect(forum_link($forum_url['admin_users']), __('Cancel redirect', 'admin_common'));
+		redirect(forum_link('admin_users'), __('Cancel redirect', 'admin_common'));
 
 	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
@@ -190,7 +190,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), __('Users deleted', 'admin_users'));
+		redirect(forum_link('admin_users'), __('Users deleted', 'admin_users'));
 	}
 
 	// Setup form
@@ -198,10 +198,10 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
-		array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Users', 'admin_common'), forum_link('admin_users')),
+		array(__('Searches', 'admin_common'), forum_link('admin_users')),
 		__('Delete users', 'admin_users')
 	);
 
@@ -312,7 +312,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 		($hook = get_hook('aus_ban_users_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), __('Users banned', 'admin_users'));
+		redirect(forum_link('admin_users'), __('Users banned', 'admin_users'));
 	}
 
 	// Setup form
@@ -320,13 +320,13 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link('admin_users'));
 	$forum_page['crumbs'][] = __('Ban users', 'admin_users');
 
 	($hook = get_hook('aus_ban_users_pre_header_load')) ? eval($hook) : null;
@@ -348,7 +348,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 	// User pressed the cancel button
 	if (isset($_POST['change_group_cancel']))
-		redirect(forum_link($forum_url['admin_users']), __('Cancel redirect', 'admin_common'));
+		redirect(forum_link('admin_users'), __('Cancel redirect', 'admin_common'));
 
 	if (empty($_POST['users']))
 		message(__('No users selected', 'admin_users'));
@@ -397,7 +397,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 		($hook = get_hook('aus_change_group_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['admin_users']), __('User groups updated', 'admin_users'));
+		redirect(forum_link('admin_users'), __('User groups updated', 'admin_users'));
 	}
 
 	// Setup form
@@ -405,10 +405,10 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index'])),
-		array(__('Users', 'admin_common'), forum_link($forum_url['admin_users'])),
-		array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users'])),
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
+		array(__('Users', 'admin_common'), forum_link('admin_users')),
+		array(__('Searches', 'admin_common'), forum_link('admin_users')),
 		__('Change group', 'admin_users')
 	);
 
@@ -560,13 +560,13 @@ else if (isset($_GET['find_user']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link($forum_url['index'])),
-		array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+		array(config()->o_board_title, forum_link('index')),
+		array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link('admin_users'));
 	$forum_page['crumbs'][] = __('User search results', 'admin_users');
 
 	// Generate paging
@@ -611,13 +611,13 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link($forum_url['index'])),
-	array(__('Forum administration', 'admin_common'), forum_link($forum_url['admin_index']))
+	array(config()->o_board_title, forum_link('index')),
+	array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link($forum_url['admin_users']));
+	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
 }
-$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link($forum_url['admin_users']));
+$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), forum_link('admin_users'));
 
 ($hook = get_hook('aus_search_form_pre_header_load')) ? eval($hook) : null;
 
