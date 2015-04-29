@@ -51,7 +51,7 @@ if (isset($_GET['get_host']))
 
 	($hook = get_hook('mr_view_ip_pre_output')) ? eval($hook) : null;
 
-	message(sprintf(__('Hostname lookup', 'misc'), $ip, @gethostbyaddr($ip), '<a href="'.forum_link('admin_users').'?show_users='.$ip.'">'.
+	message(sprintf(__('Hostname lookup', 'misc'), $ip, @gethostbyaddr($ip), '<a href="'.link('admin_users').'?show_users='.$ip.'">'.
 		__('Show more users', 'misc') . '</a>'));
 }
 
@@ -102,7 +102,7 @@ if (!user()->is_guest) {
 
 // Did someone click a cancel button?
 if (isset($_POST['cancel']))
-	redirect(forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name']))),
+	redirect(link('forum', array($fid, sef_friendly($cur_forum['forum_name']))),
 		__('Cancel redirect'));
 
 // All topic moderation features require a topic id in GET
@@ -130,7 +130,7 @@ if (isset($_GET['tid']))
 
 	// User pressed the cancel button
 	if (isset($_POST['delete_posts_cancel']))
-		redirect(forum_link('topic', array($tid, sef_friendly($cur_topic['subject']))),
+		redirect(link('topic', array($tid, sef_friendly($cur_topic['subject']))),
 			__('Cancel redirect'));
 
 	// Delete one or more posts
@@ -147,7 +147,7 @@ if (isset($_GET['tid']))
 		if (isset($_POST['delete_posts_comply']))
 		{
 			if (!isset($_POST['req_confirm']))
-				redirect(forum_link('topic', array($tid, sef_friendly($cur_topic['subject']))),
+				redirect(link('topic', array($tid, sef_friendly($cur_topic['subject']))),
 					__('No confirm redirect'));
 
 			($hook = get_hook('mr_confirm_delete_posts_form_submitted')) ? eval($hook) : null;
@@ -185,13 +185,13 @@ if (isset($_GET['tid']))
 
 			($hook = get_hook('mr_confirm_delete_posts_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link('topic', array($tid, sef_friendly($cur_topic['subject']))),
+			redirect(link('topic', array($tid, sef_friendly($cur_topic['subject']))),
 				__('Delete posts redirect', 'misc'));
 		}
 
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('moderate_topic', array($fid, $tid));
+		$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
 
 		$forum_page['hidden_fields'] = array(
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
@@ -200,9 +200,9 @@ if (isset($_GET['tid']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
-			array($cur_topic['subject'], forum_link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
+			array(config()->o_board_title, link('index')),
+			array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
+			array($cur_topic['subject'], link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
 			__('Delete posts', 'misc')
 		);
 
@@ -227,7 +227,7 @@ if (isset($_GET['tid']))
 		if (isset($_POST['split_posts_comply']))
 		{
 			if (!isset($_POST['req_confirm']))
-				redirect(forum_link('topic', array($tid, sef_friendly($cur_topic['subject']))),
+				redirect(link('topic', array($tid, sef_friendly($cur_topic['subject']))),
 					__('No confirm redirect'));
 
 			($hook = get_hook('mr_confirm_split_posts_form_submitted')) ? eval($hook) : null;
@@ -292,13 +292,13 @@ if (isset($_GET['tid']))
 
 			($hook = get_hook('mr_confirm_split_posts_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link('topic', array($new_tid, sef_friendly($new_subject))),
+			redirect(link('topic', array($new_tid, sef_friendly($new_subject))),
 				__('Split posts redirect', 'misc'));
 		}
 
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('moderate_topic', array($fid, $tid));
+		$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
 
 		$forum_page['hidden_fields'] = array(
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
@@ -307,9 +307,9 @@ if (isset($_GET['tid']))
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
-			array($cur_topic['subject'], forum_link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
+			array(config()->o_board_title, link('index')),
+			array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
+			array($cur_topic['subject'], link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
 			__('Split posts', 'misc')
 		);
 
@@ -353,7 +353,7 @@ if (isset($_GET['tid']))
 	{
 		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($forum_page['page'] - 1), array($fid, $tid)).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
-		$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('moderate_topic', array($fid, $tid)).'" title="'.
+		$forum_page['nav']['first'] = '<link rel="first" href="'.link('moderate_topic', array($fid, $tid)).'" title="'.
 		__('Page').' 1" />';
 	}
 
@@ -361,13 +361,13 @@ if (isset($_GET['tid']))
 		$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 	// Setup form
-	$forum_page['form_action'] = forum_link('moderate_topic', array($fid, $tid));
+	$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
-		array($cur_topic['subject'], forum_link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
+		array(config()->o_board_title, link('index')),
+		array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
+		array($cur_topic['subject'], link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
 		__('Moderate topic', 'topic')
 	);
 
@@ -515,7 +515,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 		($hook = get_hook('mr_confirm_move_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('forum', array($move_to_forum, sef_friendly($move_to_forum_name))), $forum_page['redirect_msg']);
+		redirect(link('forum', array($move_to_forum, sef_friendly($move_to_forum_name))), $forum_page['redirect_msg']);
 	}
 
 	if (isset($_POST['move_topics']))
@@ -596,7 +596,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link('moderate_forum', $fid);
+	$forum_page['form_action'] = link('moderate_forum', $fid);
 
 	$forum_page['hidden_fields'] = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
@@ -604,12 +604,12 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'][] = array(config()->o_board_title, forum_link('index'));
-	$forum_page['crumbs'][] = array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name']))));
+	$forum_page['crumbs'][] = array(config()->o_board_title, link('index'));
+	$forum_page['crumbs'][] = array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name']))));
 	if ($action == 'single')
-		$forum_page['crumbs'][] = array($subject, forum_link('topic', array($topics, sef_friendly($subject))));
+		$forum_page['crumbs'][] = array($subject, link('topic', array($topics, sef_friendly($subject))));
 	else
-		$forum_page['crumbs'][] = array(__('Moderate forum', 'misc'), forum_link('moderate_forum', $fid));
+		$forum_page['crumbs'][] = array(__('Moderate forum', 'misc'), link('moderate_forum', $fid));
 	$forum_page['crumbs'][] = ($action == 'single') ?
 		__('Move topic', 'misc') : __('Move topics', 'misc');
 
@@ -709,13 +709,13 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 		($hook = get_hook('mr_confirm_merge_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name']))),
+		redirect(link('forum', array($fid, sef_friendly($cur_forum['forum_name']))),
 			__('Merge topics redirect', 'misc'));
 	}
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link('moderate_forum', $fid);
+	$forum_page['form_action'] = link('moderate_forum', $fid);
 
 	$forum_page['hidden_fields'] = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
@@ -724,9 +724,9 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
-		array(__('Moderate forum', 'misc'), forum_link('moderate_forum', $fid)),
+		array(config()->o_board_title, link('index')),
+		array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
+		array(__('Moderate forum', 'misc'), link('moderate_forum', $fid)),
 		__('Merge topics', 'misc')
 	);
 
@@ -753,7 +753,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	if (isset($_POST['delete_topics_comply']))
 	{
 		if (!isset($_POST['req_confirm']))
-			redirect(forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name']))),
+			redirect(link('forum', array($fid, sef_friendly($cur_forum['forum_name']))),
 				__('Cancel redirect'));
 
 		($hook = get_hook('mr_confirm_delete_topics_form_submitted')) ? eval($hook) : null;
@@ -842,7 +842,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 		($hook = get_hook('mr_confirm_delete_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name']))), $multi ?
+		redirect(link('forum', array($fid, sef_friendly($cur_forum['forum_name']))), $multi ?
 			__('Delete topics redirect', 'misc') :
 			__('Delete topic redirect'));
 	}
@@ -850,7 +850,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] =0;
-	$forum_page['form_action'] = forum_link('moderate_forum', $fid);
+	$forum_page['form_action'] = link('moderate_forum', $fid);
 
 	$forum_page['hidden_fields'] = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
@@ -859,9 +859,9 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
-		array(__('Moderate forum', 'misc'), forum_link('moderate_forum', $fid)),
+		array(config()->o_board_title, link('index')),
+		array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
+		array(__('Moderate forum', 'misc'), link('moderate_forum', $fid)),
 		$multi ? __('Delete topics', 'misc') : __('Delete topic', 'misc')
 	);
 
@@ -911,7 +911,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 
 		($hook = get_hook('mr_open_close_multi_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('moderate_forum', $fid), $forum_page['redirect_msg']);
+		redirect(link('moderate_forum', $fid), $forum_page['redirect_msg']);
 	}
 	// Or just one in $_GET
 	else
@@ -958,7 +958,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 
 		($hook = get_hook('mr_open_close_single_topic_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('topic', array($topic_id, sef_friendly($subject))), $forum_page['redirect_msg']);
+		redirect(link('topic', array($topic_id, sef_friendly($subject))), $forum_page['redirect_msg']);
 	}
 }
 
@@ -1006,7 +1006,7 @@ else if (isset($_GET['stick']))
 
 	($hook = get_hook('mr_stick_topic_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('topic', array($stick, sef_friendly($subject))),
+	redirect(link('topic', array($stick, sef_friendly($subject))),
 		__('Stick topic redirect', 'misc'));
 }
 
@@ -1054,7 +1054,7 @@ else if (isset($_GET['unstick']))
 
 	($hook = get_hook('mr_unstick_topic_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('topic', array($unstick, sef_friendly($subject))),
+	redirect(link('topic', array($unstick, sef_friendly($subject))),
 		__('Unstick topic redirect', 'misc'));
 }
 
@@ -1120,18 +1120,18 @@ if ($forum_page['page'] > 1)
 {
 	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($forum_page['page'] - 1), $fid).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('moderate_forum', $fid).'" title="'.
+	$forum_page['nav']['first'] = '<link rel="first" href="'.link('moderate_forum', $fid).'" title="'.
 		__('Page') . ' 1" />';
 }
 
 // Setup form
 $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link('moderate_forum', $fid);
+$forum_page['form_action'] = link('moderate_forum', $fid);
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
-	array($cur_forum['forum_name'], forum_link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
+	array(config()->o_board_title, link('index')),
+	array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 	sprintf(__('Moderate forum head', 'misc'), forum_htmlencode($cur_forum['forum_name']))
 );
 

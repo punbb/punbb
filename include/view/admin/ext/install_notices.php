@@ -15,7 +15,7 @@ namespace punbb;
 					<li><span><?= $cur_notice ?></span></li>
 				<?php } ?>
 			</ul>
-			<p><a href="<?= forum_link('admin_extensions_manage') ?>"><?= __('Manage extensions', 'admin_common') ?></a></p>
+			<p><a href="<?= link('admin_extensions_manage') ?>"><?= __('Manage extensions', 'admin_common') ?></a></p>
 		</div>
 	</div>
 <?php

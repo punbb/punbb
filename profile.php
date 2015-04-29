@@ -57,7 +57,7 @@ if ($action == 'change_pass')
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link('profile_about', $id), __('Cancel redirect'));
+		redirect(link('profile_about', $id), __('Cancel redirect'));
 
 	if (isset($_GET['key']))
 	{
@@ -106,7 +106,7 @@ if ($action == 'change_pass')
 
 					($hook = get_hook('pf_change_pass_key_pre_redirect')) ? eval($hook) : null;
 
-					redirect(forum_link('index'), __('Pass updated', 'profile'));
+					redirect(link('index'), __('Pass updated', 'profile'));
 				}
 			}
 
@@ -115,12 +115,12 @@ if ($action == 'change_pass')
 
 			// Setup form
 			$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-			$forum_page['form_action'] = forum_link('change_password_key', array($id, $key));
+			$forum_page['form_action'] = link('change_password_key', array($id, $key));
 
 			// Setup breadcrumbs
 			$forum_page['crumbs'] = array(
-				array(config()->o_board_title, forum_link('index')),
-				array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), forum_link('profile_about', $id)),
+				array(config()->o_board_title, link('index')),
+				array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), link('profile_about', $id)),
 				($forum_page['own_profile']) ? __('Change your password', 'profile') :
 				sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))
 			);
@@ -193,7 +193,7 @@ if ($action == 'change_pass')
 
 			($hook = get_hook('pf_change_pass_normal_pre_redirect')) ? eval($hook) : null;
 
-			redirect(forum_link('profile_about', $id), __('Pass updated redirect', 'profile'));
+			redirect(link('profile_about', $id), __('Pass updated redirect', 'profile'));
 		}
 	}
 
@@ -202,7 +202,7 @@ if ($action == 'change_pass')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link('change_password', $id);
+	$forum_page['form_action'] = link('change_password', $id);
 
 	$forum_page['hidden_fields'] = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -211,8 +211,8 @@ if ($action == 'change_pass')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('profile_about', $id)),
+		array(config()->o_board_title, link('index')),
+		array(sprintf(__('Users profile', 'profile'), $user['username']), link('profile_about', $id)),
 		($forum_page['own_profile']) ? __('Change your password', 'profile') :
 		sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))
 	);
@@ -239,7 +239,7 @@ else if ($action == 'change_email')
 
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link('profile_about', $id), __('Cancel redirect'));
+		redirect(link('profile_about', $id), __('Cancel redirect'));
 
 	if (isset($_GET['key']))
 	{
@@ -289,7 +289,7 @@ else if ($action == 'change_email')
 			else if (config()->o_mailing_list != '')
 			{
 				$mail_subject = 'Alert - Banned e-mail detected';
-				$mail_message = 'User \''.user()->username.'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.forum_link('user', $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.user()->username.'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.link('user', $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 			}
@@ -320,7 +320,7 @@ else if ($action == 'change_email')
 			else if ((config()->o_mailing_list != '') && empty($errors))
 			{
 				$mail_subject = 'Alert - Duplicate e-mail detected';
-				$mail_message = 'User \''.user()->username.'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.forum_link('user', $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.user()->username.'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.link('user', $id)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 			}
@@ -341,7 +341,7 @@ else if ($action == 'change_email')
 				($hook = get_hook('pf_change_email_key_qr_update_email')) ? eval($hook) : null;
 				db()->query_build($query) or error(__FILE__, __LINE__);
 
-				redirect(forum_link('profile_about', $id), __('E-mail updated redirect', 'profile'));
+				redirect(link('profile_about', $id), __('E-mail updated redirect', 'profile'));
 			}
 
 			// We have a confirmed e-mail so we going to send an activation link
@@ -369,7 +369,7 @@ else if ($action == 'change_email')
 
 			$mail_message = str_replace('<username>', user()->username, $mail_message);
 			$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
-			$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', forum_link('change_email_key', array($id, $new_email_key))), $mail_message);
+			$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', link('change_email_key', array($id, $new_email_key))), $mail_message);
 			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
 
 			($hook = get_hook('pf_change_email_normal_pre_activation_email_sent')) ? eval($hook) : null;
@@ -387,7 +387,7 @@ else if ($action == 'change_email')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link('change_email', $id);
+	$forum_page['form_action'] = link('change_email', $id);
 
 	$forum_page['hidden_fields'] = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -399,8 +399,8 @@ else if ($action == 'change_email')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), forum_link('profile_about', $id)),
+		array(config()->o_board_title, link('index')),
+		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), link('profile_about', $id)),
 		($forum_page['own_profile']) ? __('Change your e-mail', 'profile') : sprintf(__('Change user e-mail', 'profile'), forum_htmlencode($user['username']))
 	);
 
@@ -417,7 +417,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 {
 	// User pressed the cancel button
 	if (isset($_POST['cancel']))
-		redirect(forum_link('profile_admin', $id), __('Cancel redirect'));
+		redirect(link('profile_admin', $id), __('Cancel redirect'));
 
 	($hook = get_hook('pf_delete_user_selected')) ? eval($hook) : null;
 
@@ -443,12 +443,12 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 		($hook = get_hook('pf_delete_user_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('index'), __('User delete redirect', 'profile'));
+		redirect(link('index'), __('User delete redirect', 'profile'));
 	}
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link('delete_user', $id);
+	$forum_page['form_action'] = link('delete_user', $id);
 
 	// Setup form information
 	$forum_page['frm_info'] = array(
@@ -458,8 +458,8 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section admin', 'profile')), forum_link('profile_admin', $id)),
+		array(config()->o_board_title, link('index')),
+		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section admin', 'profile')), link('profile_admin', $id)),
 		__('Delete user', 'profile')
 	);
 
@@ -495,7 +495,7 @@ else if ($action == 'delete_avatar')
 
 	($hook = get_hook('pf_delete_avatar_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('profile_avatar', $id), __('Avatar deleted redirect', 'profile'));
+	redirect(link('profile_avatar', $id), __('Avatar deleted redirect', 'profile'));
 }
 
 
@@ -537,7 +537,7 @@ else if (isset($_POST['update_group_membership']))
 
 	($hook = get_hook('pf_change_group_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('profile_admin', $id), __('Group membership redirect', 'profile'));
+	redirect(link('profile_admin', $id), __('Group membership redirect', 'profile'));
 }
 else if (isset($_POST['update_forums']))
 {
@@ -588,7 +588,7 @@ else if (isset($_POST['update_forums']))
 
 	($hook = get_hook('pf_forum_moderators_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('profile_admin', $id), __('Moderate forums redirect', 'profile'));
+	redirect(link('profile_admin', $id), __('Moderate forums redirect', 'profile'));
 }
 
 
@@ -599,7 +599,7 @@ else if (isset($_POST['ban']))
 
 	($hook = get_hook('pf_ban_user_selected')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_bans').'&amp;add_ban='.$id, __('Ban redirect', 'profile'));
+	redirect(link('admin_bans').'&amp;add_ban='.$id, __('Ban redirect', 'profile'));
 }
 
 
@@ -1099,7 +1099,7 @@ else if (isset($_POST['form_sent']))
 
 		($hook = get_hook('pf_change_details_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('profile_'.$section, $id), __('Profile redirect', 'profile'));
+		redirect(link('profile_'.$section, $id), __('Profile redirect', 'profile'));
 	}
 }
 
@@ -1166,7 +1166,7 @@ if (user()->id != $id &&
 
 	if ($user['email_setting'] != '2' && !user()->is_guest && user()->g_send_email == '1')
 		$forum_page['user_contact']['forum-mail'] = '<li><span>'.
-			__('E-mail', 'profile') . ': <a href="'.forum_link('email', $id).'">'.
+			__('E-mail', 'profile') . ': <a href="'.link('email', $id).'">'.
 				__('Send forum e-mail', 'profile') . '</a></span></li>';
 
 	if ($user['url'] != '')
@@ -1275,15 +1275,15 @@ if (user()->id != $id &&
 	// Setup search links
 	if (user()->g_search == '1') {
 		$forum_page['user_activity'] = array();
-		$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link('search_user_posts', $id).'">'.
+		$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.link('search_user_posts', $id).'">'.
 			sprintf(__('View user posts', 'profile'), forum_htmlencode($user['username'])).'</a></li>';
-		$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link('search_user_topics', $id).'">'.
+		$forum_page['user_activity']['search_topics'] = '<li><a href="'.link('search_user_topics', $id).'">'.
 			sprintf(__('View user topics', 'profile'), forum_htmlencode($user['username'])).'</a></li>';
 	}
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
+		array(config()->o_board_title, link('index')),
 		sprintf(__('Users profile', 'profile'), $user['username'])
 	);
 
@@ -1302,7 +1302,7 @@ else
 {
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
+		array(config()->o_board_title, link('index')),
 		sprintf(__('Users profile', 'profile'), $user['username'])
 	);
 
@@ -1311,23 +1311,23 @@ else
 
 	// Setup navigation menu
 	$forum_page['main_menu'] = array();
-	$forum_page['main_menu']['about'] = '<li class="first-item'.(($section == 'about') ? ' active' : '').'"><a href="'.forum_link('profile_about', $id).'"><span>'.
+	$forum_page['main_menu']['about'] = '<li class="first-item'.(($section == 'about') ? ' active' : '').'"><a href="'.link('profile_about', $id).'"><span>'.
 		__('Section about', 'profile') . '</span></a></li>';
-	$forum_page['main_menu']['identity'] = '<li'.(($section == 'identity') ? ' class="active"' : '').'><a href="'.forum_link('profile_identity', $id).'"><span>'.
+	$forum_page['main_menu']['identity'] = '<li'.(($section == 'identity') ? ' class="active"' : '').'><a href="'.link('profile_identity', $id).'"><span>'.
 		__('Section identity', 'profile') . '</span></a></li>';
-	$forum_page['main_menu']['settings'] = '<li'.(($section == 'settings') ? ' class="active"' : '').'><a href="'.forum_link('profile_settings', $id).'"><span>'.
+	$forum_page['main_menu']['settings'] = '<li'.(($section == 'settings') ? ' class="active"' : '').'><a href="'.link('profile_settings', $id).'"><span>'.
 		__('Section settings', 'profile') . '</span></a></li>';
 
 	if (config()->o_signatures == '1')
-		$forum_page['main_menu']['signature'] = '<li'.(($section == 'signature') ? ' class="active"' : '').'><a href="'.forum_link('profile_signature', $id).'"><span>'.
+		$forum_page['main_menu']['signature'] = '<li'.(($section == 'signature') ? ' class="active"' : '').'><a href="'.link('profile_signature', $id).'"><span>'.
 			__('Section signature', 'profile') . '</span></a></li>';
 
 	if (config()->o_avatars == '1')
-		$forum_page['main_menu']['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.forum_link('profile_avatar', $id).'"><span>'.
+		$forum_page['main_menu']['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.link('profile_avatar', $id).'"><span>'.
 			__('Section avatar', 'profile') . '</span></a></li>';
 
 	if (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_ban_users == '1' && !$forum_page['own_profile']))
-		$forum_page['main_menu']['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.forum_link('profile_admin', $id).'"><span>'.
+		$forum_page['main_menu']['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.link('profile_admin', $id).'"><span>'.
 			__('Section admin', 'profile') . '</span></a></li>';
 
 	($hook = get_hook('pf_change_details_modify_main_menu')) ? eval($hook) : null;
@@ -1337,8 +1337,8 @@ else
 	{
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('user', $id)),
+			array(config()->o_board_title, link('index')),
+			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			sprintf(__('Section about', 'profile'))
 		);
 
@@ -1403,11 +1403,11 @@ else
 
 		if ($user['email_setting'] != '2')
 			$forum_page['user_contact']['forum-mail'] = '<li><span>'.
-				__('E-mail', 'profile') . ': <a href="'.forum_link('email', $id).'">'.
+				__('E-mail', 'profile') . ': <a href="'.link('email', $id).'">'.
 					__('Send forum e-mail', 'profile') . '</a></span></li>';
 		else if (user()->id == $id || (user()->is_admmod && $user['email_setting'] == '2'))
 			$forum_page['user_private']['forum-mail'] = '<li><span>'.
-				__('E-mail', 'profile') . ': <a href="'.forum_link('email', $id).'">'.
+				__('E-mail', 'profile') . ': <a href="'.link('email', $id).'">'.
 					__('Send forum e-mail', 'profile') . '</a></span></li>';
 
 		// Website
@@ -1497,7 +1497,7 @@ else
 
 		if (user()->is_admmod)
 			$forum_page['user_private']['ip']= '<li><span>'.
-				__('IP', 'profile') . ': <a href="'.forum_link('get_host', forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
+				__('IP', 'profile') . ': <a href="'.link('get_host', forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
 
 		// Setup user messaging
 		if ($user['jabber'] !='')
@@ -1527,10 +1527,10 @@ else
 		$forum_page['user_activity'] = array();
 		if (user()->g_search == '1' || user()->is_admmod)
 		{
-			$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link('search_user_posts', $id).'">'.(($forum_page['own_profile']) ?
+			$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.link('search_user_posts', $id).'">'.(($forum_page['own_profile']) ?
 				__('View your posts', 'profile') :
 				sprintf(__('View user posts', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
-			$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link('search_user_topics', $id).'">'.(($forum_page['own_profile']) ?
+			$forum_page['user_activity']['search_topics'] = '<li><a href="'.link('search_user_topics', $id).'">'.(($forum_page['own_profile']) ?
 				__('View your topics', 'profile') :
 				sprintf(__('View user topics', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
 		}
@@ -1539,12 +1539,12 @@ else
 		if (($forum_page['own_profile'] || user()->g_id == FORUM_ADMIN) && config()->o_subscriptions == '1')
 		{
 			// Topic subscriptions
-			$forum_page['user_activity']['search_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link('search_subscriptions', $id).'">'.(($forum_page['own_profile']) ?
+			$forum_page['user_activity']['search_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.link('search_subscriptions', $id).'">'.(($forum_page['own_profile']) ?
 				__('View your subscriptions', 'profile') :
 				sprintf(__('View user subscriptions', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
 
 			// Forum subscriptions
-			$forum_page['user_activity']['search_forum_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link('search_forum_subscriptions', $id).'">'.(($forum_page['own_profile']) ?
+			$forum_page['user_activity']['search_forum_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.link('search_forum_subscriptions', $id).'">'.(($forum_page['own_profile']) ?
 				__('View your forum subscriptions', 'profile') :
 				sprintf(__('View user forum subscriptions', 'profile'), forum_htmlencode($user['username']))).'</a></li>';
 		}
@@ -1553,12 +1553,12 @@ else
 		$forum_page['user_options'] = array();
 
 		if ($forum_page['own_profile'] || user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_change_passwords == '1'))
-			$forum_page['user_options']['change_password'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('change_password', $id).'">'.(($forum_page['own_profile']) ?
+			$forum_page['user_options']['change_password'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.link('change_password', $id).'">'.(($forum_page['own_profile']) ?
 				__('Change your password', 'profile') :
 				sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username']))).'</a></span>';
 
 		if (!user()->is_admmod)
-			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('change_email', $id).'">'.(($forum_page['own_profile']) ?
+			$forum_page['user_options']['change_email'] = '<span'.(empty($forum_page['user_options']) ? ' class="first-item"' : '').'><a href="'.link('change_email', $id).'">'.(($forum_page['own_profile']) ?
 				__('Change your e-mail', 'profile') :
 				sprintf(__('Change user e-mail', 'profile'), forum_htmlencode($user['username']))).'</a></span>';
 
@@ -1577,13 +1577,13 @@ else
 	{
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('user', $id)),
+			array(config()->o_board_title, link('index')),
+			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section identity', 'profile')
 		);
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('profile_identity', $id);
+		$forum_page['form_action'] = link('profile_identity', $id);
 
 		$forum_page['hidden_fields'] = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -1612,14 +1612,14 @@ else
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('user', $id)),
+			array(config()->o_board_title, link('index')),
+			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section settings', 'profile')
 		);
 
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('profile_settings', $id);
+		$forum_page['form_action'] = link('profile_settings', $id);
 
 		$forum_page['hidden_fields'] = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -1644,14 +1644,14 @@ else
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('user', $id)),
+			array(config()->o_board_title, link('index')),
+			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section signature', 'profile')
 		);
 
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('profile_signature', $id);
+		$forum_page['form_action'] = link('profile_signature', $id);
 
 		$forum_page['hidden_fields'] = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -1661,13 +1661,13 @@ else
 		// Setup help
 		$forum_page['text_options'] = array();
 		if (config()->p_sig_bbcode == '1')
-			$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'bbcode').'" title="'.
+			$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'bbcode').'" title="'.
 			sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 		if (config()->p_sig_img_tag == '1')
-			$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'img').'" title="'.
+			$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'img').'" title="'.
 			sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 		if (config()->o_smilies_sig == '1')
-			$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'smilies').'" title="'.
+			$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'smilies').'" title="'.
 			sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 		($hook = get_hook('pf_change_details_signature_pre_header_load')) ? eval($hook) : null;
@@ -1685,14 +1685,14 @@ else
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('user', $id)),
+			array(config()->o_board_title, link('index')),
+			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section avatar', 'profile')
 		);
 
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('profile_avatar', $id);
+		$forum_page['form_action'] = link('profile_avatar', $id);
 
 		$forum_page['hidden_fields'] = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -1739,14 +1739,14 @@ else
 
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
-			array(config()->o_board_title, forum_link('index')),
-			array(sprintf(__('Users profile', 'profile'), $user['username']), forum_link('user', $id)),
+			array(config()->o_board_title, link('index')),
+			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section admin', 'profile')
 		);
 
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = forum_link('profile_admin', $id);
+		$forum_page['form_action'] = link('profile_admin', $id);
 
 		$forum_page['hidden_fields'] = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -1758,15 +1758,15 @@ else
 
 		if (user()->g_moderator == '1')
 			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
-				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link('admin_bans').'&amp;add_ban='.$id.'">'.
+				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.link('admin_bans').'&amp;add_ban='.$id.'">'.
 					__('Ban user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		else if (user()->g_moderator != '1' && $user['g_id'] != FORUM_ADMIN )
 		{
 			$forum_page['user_management']['ban'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
-				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link('admin_bans').'&amp;add_ban='.$id.'">'.
+				__('Ban user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.link('admin_bans').'&amp;add_ban='.$id.'">'.
 					__('Ban user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 			$forum_page['user_management']['delete'] = '<div class="ct-set set'.++$forum_page['item_count'].'">'."\n\t\t\t\t".'<div class="ct-box">'."\n\t\t\t\t\t".'<h3 class="ct-legend hn">'.
-				__('Delete user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.forum_link('delete_user', $id).'">'.
+				__('Delete user', 'profile') . '</h3>'."\n\t\t\t\t".'<p><a href="'.link('delete_user', $id).'">'.
 					__('Delete user info', 'profile') . '</a></p>'."\n\t\t\t\t".'</div>'."\n\t\t\t".'</div>';
 		}
 

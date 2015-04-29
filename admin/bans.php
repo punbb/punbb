@@ -141,13 +141,13 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
+		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), forum_link('admin_bans'));
+	$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), link('admin_bans'));
 	$forum_page['crumbs'][] = __('Ban advanced', 'admin_bans');
 
 	($hook = get_hook('aba_add_edit_ban_pre_header_load')) ? eval($hook) : null;
@@ -280,7 +280,7 @@ else if (isset($_POST['add_edit_ban']))
 
 	($hook = get_hook('aba_add_edit_ban_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_bans'), (($_POST['mode'] == 'edit') ?
+	redirect(link('admin_bans'), (($_POST['mode'] == 'edit') ?
 		__('Ban edited', 'admin_bans') : __('Ban added', 'admin_bans')));
 }
 
@@ -314,13 +314,13 @@ else if (isset($_GET['del_ban']))
 
 	($hook = get_hook('aba_del_ban_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_bans'), __('Ban removed', 'admin_bans'));
+	redirect(link('admin_bans'), __('Ban removed', 'admin_bans'));
 }
 
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link('admin_bans').'&amp;action=more';
+$forum_page['form_action'] = link('admin_bans').'&amp;action=more';
 
 $forum_page['hidden_fields'] = array(
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
@@ -328,13 +328,13 @@ $forum_page['hidden_fields'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
-	array(__('Forum administration', 'admin_common'), forum_link('admin_index'))
+	array(config()->o_board_title, link('index')),
+	array(__('Forum administration', 'admin_common'), link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), forum_link('admin_users'));
+	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
 }
-$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), forum_link('admin_bans'));
+$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), link('admin_bans'));
 
 
 // Fetch user count
@@ -370,7 +370,7 @@ if ($forum_page['page'] > 1)
 {
 	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('admin_bans', $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.
 	__('Page') . ' '.($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('admin_bans').'" title="'.
+	$forum_page['nav']['first'] = '<link rel="first" href="'.link('admin_bans').'" title="'.
 	__('Page').' 1" />';
 }
 

@@ -48,7 +48,7 @@ else {
 	if (strpos(FORUM_PAGE, 'profile') === 0) {
 		$head['microid'] = '<meta name="microid" content="mailto+http:sha1:' .
 			sha1(sha1('mailto:' . $user->email) .
-			sha1(forum_link('user', $id))) . '" />';
+			sha1(link('user', $id))) . '" />';
 	}
 
 	$head['title'] = '<title>' . generate_crumbs(true) . '</title>';
@@ -56,21 +56,21 @@ else {
 	// Should we output feed links?
 	if (FORUM_PAGE == 'index') 	{
 		$head['rss'] = '<link rel="alternate" type="application/rss+xml" href="' .
-			forum_link('index_rss').'" title="RSS" />';
+			link('index_rss').'" title="RSS" />';
 		$head['atom'] = '<link rel="alternate" type="application/atom+xml" href="' .
-			forum_link('index_atom').'" title="ATOM" />';
+			link('index_atom').'" title="ATOM" />';
 	}
 	else if (FORUM_PAGE == 'viewforum') {
 		$head['rss'] = '<link rel="alternate" type="application/rss+xml" href="' .
-			forum_link('forum_rss', $id) . '" title="RSS" />';
+			link('forum_rss', $id) . '" title="RSS" />';
 		$head['atom'] = '<link rel="alternate" type="application/atom+xml" href="' .
-			forum_link('forum_atom', $id) . '" title="ATOM" />';
+			link('forum_atom', $id) . '" title="ATOM" />';
 	}
 	else if (FORUM_PAGE == 'viewtopic') {
 		$head['rss'] = '<link rel="alternate" type="application/rss+xml" href="' .
-			forum_link('topic_rss', $id) . '" title="RSS" />';
+			link('topic_rss', $id) . '" title="RSS" />';
 		$head['atom'] = '<link rel="alternate" type="application/atom+xml" href="' .
-			forum_link('topic_atom', $id) . '" title="ATOM" />';
+			link('topic_atom', $id) . '" title="ATOM" />';
 	}
 
 	// If there are other page navigation links (first, next, prev and last)
@@ -80,15 +80,15 @@ else {
 
 	if ($user->g_read_board == '1' && $user->g_search == '1') {
 		$head['search'] = '<link rel="search" type="text/html" href="' .
-			forum_link('search') . '" title="' . __('Search') . '" />';
+			link('search') . '" title="' . __('Search') . '" />';
 		$head['opensearch'] =
 			'<link rel="search" type="application/opensearchdescription+xml" href="' .
-			forum_link('opensearch') . '" title="' .
+			link('opensearch') . '" title="' .
 			forum_htmlencode($config->o_board_title) . '" />';
 	}
 
 	$head['author'] = '<link rel="author" type="text/html" href="' .
-		forum_link('users') . '" title="' . __('User list') . '" />';
+		link('users') . '" title="' . __('User list') . '" />';
 
 	ob_start();
 	// Include stylesheets

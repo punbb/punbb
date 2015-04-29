@@ -16,7 +16,7 @@ namespace punbb;
 		<div id="rules-content" class="ct-box user-box">
 			<?= config()->o_rules_message ?>
 		</div>
-		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link('register') ?>">
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo link('register') ?>">
 <?php ($hook = get_hook('rg_rules_pre_group')) ? eval($hook) : null; ?>
 			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 <?php ($hook = get_hook('rg_rules_pre_agree_checkbox')) ? eval($hook) : null; ?>

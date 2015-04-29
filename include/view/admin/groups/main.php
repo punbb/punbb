@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo __('Add group heading', 'admin_groups') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_groups') ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_groups') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_groups').'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_groups').'?action=foo') ?>" />
 			</div>
 <?php ($hook = get_hook('agr_pre_add_group_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -45,9 +45,9 @@ while ($cur_group = db()->fetch_assoc($result_groups))
 		<h2 class="hn"><span><?php echo __('Default group heading', 'admin_groups') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_groups') ?>?action=foo">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_groups') ?>?action=foo">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_groups').'?action=foo') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_groups').'?action=foo') ?>" />
 			</div>
 <?php ($hook = get_hook('agr_pre_default_group_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -99,13 +99,13 @@ $forum_page['item_num'] = 0;
 while ($cur_group = db()->fetch_assoc($result))
 {
 	$forum_page['group_options'] = array(
-		'edit' => '<span class="first-item"><a href="'.forum_link('admin_groups').'?edit_group='.$cur_group['g_id'].'">'.__('Edit group', 'admin_groups').'</a></span>'
+		'edit' => '<span class="first-item"><a href="'.link('admin_groups').'?edit_group='.$cur_group['g_id'].'">'.__('Edit group', 'admin_groups').'</a></span>'
 	);
 
 	if ($cur_group['g_id'] > FORUM_GUEST)
 	{
 		if ($cur_group['g_id'] != config()->o_default_user_group)
-			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'><a href="'.forum_link('admin_groups').'?del_group='.$cur_group['g_id'].'">'.__('Remove group', 'admin_groups').'</a></span>';
+			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'><a href="'.link('admin_groups').'?del_group='.$cur_group['g_id'].'">'.__('Remove group', 'admin_groups').'</a></span>';
 		else
 			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'>'.__('Cannot remove default', 'admin_groups').'</span>';
 	}

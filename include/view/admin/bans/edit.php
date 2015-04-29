@@ -11,9 +11,9 @@ namespace punbb;
 		<div class="ct-box warn-box">
 			<p class="warn"><?= __('Ban IP warning', 'admin_bans') ?></p>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_bans') ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_bans') ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_bans')) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_bans')) ?>" />
 				<input type="hidden" name="mode" value="<?php echo $mode ?>" />
 <?php if ($mode == 'edit'): ?>
 				<input type="hidden" name="ban_id" value="<?php echo $ban_id ?>" />
@@ -40,7 +40,7 @@ namespace punbb;
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('IP-addresses to ban label', 'admin_bans') ?></span> <small><?= __('IP-addresses help', 'admin_bans'); if ($ban_user != '' && isset($user_id)) echo ' '.
-							__('IP-addresses help stats', 'admin_bans') . '<a href="'.forum_link('admin_users').'?ip_stats='.$user_id.'">'.
+							__('IP-addresses help stats', 'admin_bans') . '<a href="'.link('admin_users').'?ip_stats='.$user_id.'">'.
 							__('IP-addresses help link', 'admin_bans') . '</a>' ?></small></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="ban_ip" size="40" maxlength="255" value="<?php if (isset($ban_ip)) echo $ban_ip; ?>" /></span>
 					</div>

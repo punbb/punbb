@@ -13,7 +13,7 @@ namespace punbb;
 			<p class="important"><?php echo __('Reindex warning', 'admin_reindex') ?></p>
 			<p class="warn"><?php echo __('Empty index warning', 'admin_reindex') ?></p>
 		</div>
-		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link('admin_reindex') ?>">
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo link('admin_reindex') ?>">
 			<div class="hidden">
 				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token('reindex'.user()->id) ?>" />
 			</div>

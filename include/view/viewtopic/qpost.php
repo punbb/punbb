@@ -4,7 +4,7 @@ namespace punbb;
 ($hook = get_hook('vt_qpost_output_start')) ? eval($hook) : null;
 
 // Setup form
-$forum_page['form_action'] = forum_link('new_reply', $id);
+$forum_page['form_action'] = link('new_reply', $id);
 $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
@@ -19,11 +19,11 @@ if (!user()->is_guest && config()->o_subscriptions == '1' && (user()->auto_notif
 // Setup help
 $forum_page['main_head_options'] = array();
 if (config()->p_message_bbcode == '1')
-	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'bbcode').'" title="'.sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
+	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'bbcode').'" title="'.sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 if (config()->p_message_img_tag == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'img').'" title="'.sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
+	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'img').'" title="'.sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 if (config()->o_smilies == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'smilies').'" title="'.sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
+	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'smilies').'" title="'.sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 ($hook = get_hook('vt_quickpost_pre_display')) ? eval($hook) : null;
 

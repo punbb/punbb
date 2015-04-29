@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo __('Add forum head', 'admin_forums') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_forums') ?>?action=adddel">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_forums') ?>?action=adddel">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_forums').'?action=adddel') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_forums').'?action=adddel') ?>" />
 			</div>
 <?php ($hook = get_hook('afo_pre_add_forum_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
@@ -62,9 +62,9 @@ if (!empty($forums))
 		<h2 class="hn"><span><?php echo __('Edit forums head', 'admin_forums') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_forums') ?>?action=edit">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_forums') ?>?action=edit">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_forums').'?action=edit') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_forums').'?action=edit') ?>" />
 			</div>
 
 <?php
@@ -95,7 +95,7 @@ if (!empty($forums))
 
 ?>
 				<fieldset id="forum<?php echo $cur_forum['fid'] ?>" class="mf-set set<?php echo ++$forum_page['item_count'] ?><?php echo ($forum_page['item_count'] == 1) ? ' mf-head' : ' mf-extra' ?>">
-					<legend><span><?php printf(__('Edit or delete', 'admin_forums'), '<a href="'.forum_link('admin_forums').'?edit_forum='.$cur_forum['fid'].'">'.__('Edit', 'admin_forums').'</a>', '<a href="'.forum_link('admin_forums').'?del_forum='.$cur_forum['fid'].'">'.
+					<legend><span><?php printf(__('Edit or delete', 'admin_forums'), '<a href="'.link('admin_forums').'?edit_forum='.$cur_forum['fid'].'">'.__('Edit', 'admin_forums').'</a>', '<a href="'.link('admin_forums').'?del_forum='.$cur_forum['fid'].'">'.
 						__('Delete', 'admin_forums').'</a>') ?></span></legend>
 					<div class="mf-box">
 <?php ($hook = get_hook('afo_pre_edit_cur_forum_name')) ? eval($hook) : null; ?>

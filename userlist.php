@@ -89,7 +89,7 @@ if ($forum_page['page'] > 1)
 {
 	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('users_browse', $forum_url['page'], ($forum_page['page'] - 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' '.($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('users_browse', array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+	$forum_page['nav']['first'] = '<link rel="first" href="'.link('users_browse', array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' 1" />';
 }
 
@@ -98,7 +98,7 @@ if (empty($_GET))
 	$forum_page['main_head_options'] = array();
 else
 	$forum_page['main_head_options'] = array(
-		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link('users').'">'.
+		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.link('users').'">'.
 			__('Perform new search', 'userlist') . '</a></span>'
 	);
 
@@ -108,7 +108,7 @@ $forum_page['form_action'] = $base_url.'/userlist.php';
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
+	array(config()->o_board_title, link('index')),
 	__('User list')
 );
 

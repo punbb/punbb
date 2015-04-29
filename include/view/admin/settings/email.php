@@ -5,9 +5,9 @@ namespace punbb;
 
 ?>
 	<div class="main-content frm parted">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_settings_email') ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_settings_email') ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_settings_email')) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_settings_email')) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 			<div class="content-head">

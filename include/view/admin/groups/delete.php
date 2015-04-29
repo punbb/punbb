@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php printf(__('Remove group head', 'admin_groups'), forum_htmlencode($group_info['title']), $group_info['num_members']) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_groups') ?>?del_group=<?php echo $group_id ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_groups') ?>?del_group=<?php echo $group_id ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_groups').'?del_group='.$group_id) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_groups').'?del_group='.$group_id) ?>" />
 			</div>
 <?php ($hook = get_hook('agr_del_group_pre_del_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group set<?php echo ++$forum_page['group_count'] ?>">

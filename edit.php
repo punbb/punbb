@@ -156,7 +156,7 @@ if (isset($_POST['form_sent']))
 
 		($hook = get_hook('ed_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link('post', $id), __('Edit redirect', 'post'));
+		redirect(link('post', $id), __('Edit redirect', 'post'));
 	}
 }
 
@@ -171,7 +171,7 @@ if (!empty($errors))
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link('edit', $id);
+$forum_page['form_action'] = link('edit', $id);
 $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
@@ -182,21 +182,21 @@ $forum_page['hidden_fields'] = array(
 // Setup help
 $forum_page['main_head_options'] = array();
 if (config()->p_message_bbcode == '1')
-	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'bbcode').'" title="'.
+	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'bbcode').'" title="'.
 	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 if (config()->p_message_img_tag == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'img').'" title="'.
+	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'img').'" title="'.
 	sprintf(__('Help page'), __('Images')).'">'.__('Images').'</a></span>';
 if (config()->o_smilies == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.forum_link('help', 'smilies').'" title="'.
+	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'smilies').'" title="'.
 	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
-	array($cur_post['forum_name'], forum_link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
-	array($cur_post['subject'], forum_link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
+	array(config()->o_board_title, link('index')),
+	array($cur_post['forum_name'], link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
+	array($cur_post['subject'], link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
 	(($id == $cur_post['first_post_id']) ?
 		__('Edit topic', 'post') : __('Edit reply', 'post'))
 );

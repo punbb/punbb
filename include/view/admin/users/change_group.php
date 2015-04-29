@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo __('Change group head', 'admin_users') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_users') ?>?action=modify_users">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_users') ?>?action=modify_users">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_users').'?action=modify_users') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_users').'?action=modify_users') ?>" />
 				<input type="hidden" name="users" value="<?php echo implode(',', $users) ?>" />
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

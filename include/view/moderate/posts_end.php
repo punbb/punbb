@@ -11,7 +11,7 @@ $forum_page['mod_options'] = array(
 		__('Delete posts', 'misc') . '" /></span>',
 	'split_posts'	=> '<span class="submit"><input type="submit" name="split_posts" value="'.
 		__('Split posts', 'misc') . '" /></span>',
-	'del_topic'		=> '<span><a href="'.forum_link('delete', $cur_topic['first_post_id']).'">'.
+	'del_topic'		=> '<span><a href="'.link('delete', $cur_topic['first_post_id']).'">'.
 		__('Delete whole topic', 'misc') . '</a></span>'
 );
 

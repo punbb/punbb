@@ -134,7 +134,7 @@ if (!empty($founded_user_datas))
 		($hook = get_hook('ul_results_row_pre_data')) ? eval($hook) : null;
 
 		$forum_page['table_row'] = array();
-		$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><a href="'.forum_link('user', $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></td>';
+		$forum_page['table_row']['username'] = '<td class="tc'.count($forum_page['table_row']).'"><a href="'.link('user', $user_data['id']).'">'.forum_htmlencode($user_data['username']).'</a></td>';
 		$forum_page['table_row']['title'] = '<td class="tc'.count($forum_page['table_row']).'">'.get_title($user_data).'</td>';
 
 		if ($forum_page['show_post_count'])

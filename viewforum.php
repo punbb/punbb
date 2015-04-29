@@ -93,7 +93,7 @@ if ($forum_page['page'] > 1)
 {
 	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('forum', $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
 		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.forum_link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+	$forum_page['nav']['first'] = '<link rel="first" href="'.link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
 	__('Page') . ' 1" />';
 }
 
@@ -160,12 +160,12 @@ $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
 		__('Paging separator'), array($id, sef_friendly($cur_forum['forum_name']))).'</p>';
 
 if (user()->may_post)
-	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.forum_link('new_topic', $id).'"><span>'.
+	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.link('new_topic', $id).'"><span>'.
 	__('Post topic', 'forum') . '</span></a></p>';
 else if (user()->is_guest)
 	$forum_page['page_post']['posting'] = '<p class="posting">'.
-	sprintf(__('Login to post', 'forum'), '<a href="'.forum_link('login').'">'.
-		__('login').'</a>', '<a href="'.forum_link('register').'">'.__('register').'</a>').'</p>';
+	sprintf(__('Login to post', 'forum'), '<a href="'.link('login').'">'.
+		__('login').'</a>', '<a href="'.link('register').'">'.__('register').'</a>').'</p>';
 else
 	$forum_page['page_post']['posting'] = '<p class="posting">'.
 	__('No permission', 'forum') . '</p>';
@@ -174,22 +174,22 @@ else
 $forum_page['main_head_options'] = $forum_page['main_foot_options'] = array();
 
 if (!empty($topics))
-	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.forum_link('forum_rss', $id).'">'.
+	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.link('forum_rss', $id).'">'.
 	__('RSS forum feed', 'forum') . '</a></span>';
 
 if (!user()->is_guest && config()->o_subscriptions == '1')
 {
 	if ($cur_forum['is_subscribed'])
-		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.forum_link('forum_unsubscribe', array($id, generate_form_token('forum_unsubscribe'.$id.user()->id))).'"><em>'.
+		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.link('forum_unsubscribe', array($id, generate_form_token('forum_unsubscribe'.$id.user()->id))).'"><em>'.
 		__('Unsubscribe', 'forum') . '</em></a></span>';
 	else
-		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.forum_link('forum_subscribe', array($id, generate_form_token('forum_subscribe'.$id.user()->id))).'" title="'.
+		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.link('forum_subscribe', array($id, generate_form_token('forum_subscribe'.$id.user()->id))).'" title="'.
 		__('Subscribe info', 'forum') . '">' . __('Subscribe', 'forum') . '</a></span>';
 }
 
 if (!user()->is_guest && !empty($topics))
 {
-	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.forum_link('mark_forum_read', array($id, generate_form_token('markforumread'.$id.user()->id))).'">'.
+	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.link('mark_forum_read', array($id, generate_form_token('markforumread'.$id.user()->id))).'">'.
 		__('Mark forum read', 'forum') . '</a></span>';
 
 	if ($forum_page['is_admmod'])
@@ -199,12 +199,12 @@ if (!user()->is_guest && !empty($topics))
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
+	array(config()->o_board_title, link('index')),
 	$cur_forum['forum_name']
 );
 
 // Setup main header
-$forum_page['main_title'] = '<a class="permalink" href="'.forum_link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" rel="bookmark" title="'.
+$forum_page['main_title'] = '<a class="permalink" href="'.link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" rel="bookmark" title="'.
 	__('Permalink forum', 'forum') . '">'.forum_htmlencode($cur_forum['forum_name']).'</a>';
 
 if ($forum_page['num_pages'] > 1)

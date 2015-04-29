@@ -15,7 +15,7 @@ if (user()->is_admmod && config()->o_report_method != 1) {
 	$result_header = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	if (db()->result($result_header))
-		$admod_links['reports'] = '<li id="reports"><a href="'.forum_link('admin_reports').'">'.
+		$admod_links['reports'] = '<li id="reports"><a href="'.link('admin_reports').'">'.
 		__('New reports') . '</a></li>';
 }
 
@@ -34,13 +34,13 @@ if (user()->g_id == FORUM_ADMIN) {
 				__('Updates') . '</strong> ' . __('Updates failed') . '</p>';
 		else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']))
 			$alert_items['update_version_hotfix'] = '<p><strong>'.
-			__('Updates') . '</strong> '.sprintf(__('Updates version n hf'), $forum_updates['version'], forum_link('admin_extensions_hotfixes')).'</p>';
+			__('Updates') . '</strong> '.sprintf(__('Updates version n hf'), $forum_updates['version'], link('admin_extensions_hotfixes')).'</p>';
 		else if (isset($forum_updates['version']))
 			$alert_items['update_version'] = '<p><strong>'.
 			__('Updates') . '</strong> '.sprintf(__('Updates version'), $forum_updates['version']).'</p>';
 		else if (isset($forum_updates['hotfix']))
 			$alert_items['update_hotfix'] = '<p><strong>'.
-			__('Updates') . '</strong> '.sprintf(__('Updates hf'), forum_link('admin_extensions_hotfixes')).'</p>';
+			__('Updates') . '</strong> '.sprintf(__('Updates hf'), link('admin_extensions_hotfixes')).'</p>';
 	}
 
 	// Warn the admin that their version of the database is newer than the version supported by the code
@@ -51,7 +51,7 @@ if (user()->g_id == FORUM_ADMIN) {
 
 	if (!empty($alert_items))
 		$admod_links['alert'] =
-			'<li id="alert"><a href="'.forum_link('admin_index').'">'.
+			'<li id="alert"><a href="'.link('admin_index').'">'.
 			__('New alerts').'</a></li>';
 
 	($hook = get_hook('hd_alert')) ? eval($hook) : null;

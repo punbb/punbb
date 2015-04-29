@@ -260,7 +260,7 @@ if (isset($_POST['form_sent']))
 
 	($hook = get_hook('aop_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_settings_'.$section), __('Settings updated', 'admin_settings'));
+	redirect(link('admin_settings_'.$section), __('Settings updated', 'admin_settings'));
 }
 
 
@@ -271,10 +271,10 @@ if (!$section || $section == 'setup')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-		array(__('Settings', 'admin_common'), forum_link('admin_settings_setup')),
-		array(__('Setup', 'admin_common'), forum_link('admin_settings_setup'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index')),
+		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
+		array(__('Setup', 'admin_common'), link('admin_settings_setup'))
 	);
 
 	($hook = get_hook('aop_setup_pre_header_load')) ? eval($hook) : null;
@@ -292,10 +292,10 @@ else if ($section == 'features')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-		array(__('Settings', 'admin_common'), forum_link('admin_settings_setup')),
-		array(__('Features', 'admin_common'), forum_link('admin_settings_features'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index')),
+		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
+		array(__('Features', 'admin_common'), link('admin_settings_features'))
 	);
 
 	($hook = get_hook('aop_features_pre_header_load')) ? eval($hook) : null;
@@ -312,10 +312,10 @@ else if ($section == 'announcements')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-		array(__('Settings', 'admin_common'), forum_link('admin_settings_setup')),
-		array(__('Announcements', 'admin_common'), forum_link('admin_settings_announcements'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index')),
+		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
+		array(__('Announcements', 'admin_common'), link('admin_settings_announcements'))
 	);
 
 	($hook = get_hook('aop_announcements_pre_header_load')) ? eval($hook) : null;
@@ -332,10 +332,10 @@ else if ($section == 'registration')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-		array(__('Settings', 'admin_common'), forum_link('admin_settings_setup')),
-		array(__('Registration', 'admin_common'), forum_link('admin_settings_registration'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index')),
+		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
+		array(__('Registration', 'admin_common'), link('admin_settings_registration'))
 	);
 
 	($hook = get_hook('aop_registration_pre_header_load')) ? eval($hook) : null;
@@ -353,10 +353,10 @@ else if ($section == 'maintenance')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-		array(__('Management', 'admin_common'), forum_link('admin_reports')),
-		array(__('Maintenance mode', 'admin_common'), forum_link('admin_settings_maintenance'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index')),
+		array(__('Management', 'admin_common'), link('admin_reports')),
+		array(__('Maintenance mode', 'admin_common'), link('admin_settings_maintenance'))
 	);
 
 	($hook = get_hook('aop_maintenance_pre_header_load')) ? eval($hook) : null;
@@ -374,10 +374,10 @@ else if ($section == 'email')
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
-		array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-		array(__('Settings', 'admin_common'), forum_link('admin_settings_setup')),
-		array(__('E-mail', 'admin_common'), forum_link('admin_settings_email'))
+		array(config()->o_board_title, link('index')),
+		array(__('Forum administration', 'admin_common'), link('admin_index')),
+		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
+		array(__('E-mail', 'admin_common'), link('admin_settings_email'))
 	);
 
 	($hook = get_hook('aop_email_pre_header_load')) ? eval($hook) : null;

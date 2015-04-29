@@ -21,7 +21,7 @@ namespace punbb;
 			</ul>
 		</div>
 <?php endif; ?>
-		<form id="afocus" class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link('search') ?>">
+		<form id="afocus" class="frm-form" method="get" accept-charset="utf-8" action="<?php echo link('search') ?>">
 			<div class="hidden">
 				<input type="hidden" name="action" value="search" />
 			</div>

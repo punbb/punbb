@@ -8,9 +8,9 @@ namespace punbb;
 		<div class="content-head">
 			<h2 class="hn"><span><?php echo __('Announcements head', 'admin_settings') ?></span></h2>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link('admin_settings_announcements') ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo link('admin_settings_announcements') ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_settings_announcements')) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_settings_announcements')) ?>" />
 				<input type="hidden" name="form_sent" value="1" />
 			</div>
 <?php ($hook = get_hook('aop_announcements_pre_announcement_fieldset')) ? eval($hook) : null; ?>

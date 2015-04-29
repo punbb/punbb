@@ -120,7 +120,7 @@ else if ($action == 'out')
 {
 	if (user()->is_guest || !isset($_GET['id']) || $_GET['id'] != user()->id)
 	{
-		header('Location: '.forum_link('index'));
+		header('Location: '.link('index'));
 		exit;
 	}
 
@@ -160,7 +160,7 @@ else if ($action == 'out')
 
 	($hook = get_hook('li_logout_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('index'), __('Logout redirect', 'login'));
+	redirect(link('index'), __('Logout redirect', 'login'));
 }
 
 
@@ -168,7 +168,7 @@ else if ($action == 'out')
 else if ($action == 'forget' || $action == 'forget_2')
 {
 	if (!user()->is_guest) {
-		header('Location: '.forum_link('index'));
+		header('Location: '.link('index'));
 	}
 
 	($hook = get_hook('li_forgot_pass_selected')) ? eval($hook) : null;
@@ -177,7 +177,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	{
 		// User pressed the cancel button
 		if (isset($_POST['cancel']))
-			redirect(forum_link('index'), __('New password cancel redirect', 'login'));
+			redirect(link('index'), __('New password cancel redirect', 'login'));
 
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
@@ -255,7 +255,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 					// Do the user specific replacements to the template
 					$cur_mail_message = str_replace('<username>', $cur_hit['username'], $mail_message);
-					$cur_mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', forum_link('change_password_key', array($cur_hit['id'], $new_password_key))), $cur_mail_message);
+					$cur_mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', link('change_password_key', array($cur_hit['id'], $new_password_key))), $cur_mail_message);
 
 					($hook = get_hook('li_forgot_pass_new_user_replace_data')) ? eval($hook) : null;
 
@@ -271,11 +271,11 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link('request_password');
+	$forum_page['form_action'] = link('request_password');
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
-		array(config()->o_board_title, forum_link('index')),
+		array(config()->o_board_title, link('index')),
 		__('New password request', 'login')
 	);
 
@@ -289,12 +289,12 @@ else if ($action == 'forget' || $action == 'forget_2')
 }
 
 if (!user()->is_guest) {
-	header('Location: '.forum_link('index'));
+	header('Location: '.link('index'));
 }
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link('login');
+$forum_page['form_action'] = link('login');
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -304,7 +304,7 @@ $forum_page['hidden_fields'] = array(
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
+	array(config()->o_board_title, link('index')),
 	sprintf(__('Login info', 'login'), config()->o_board_title)
 );
 

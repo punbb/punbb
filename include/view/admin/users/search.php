@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo __('Search head', 'admin_users') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link('admin_users') ?>">
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo link('admin_users') ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_users').'?action=find_user') ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_users').'?action=find_user') ?>" />
 			</div>
 			<div class="content-head">
 				<h3 class="hn"><span><?php echo __('User search head', 'admin_users') ?></span></h3>
@@ -235,7 +235,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 		<h2 class="hn"><span><?php echo __('IP search head', 'admin_users') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link('admin_users') ?>">
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo link('admin_users') ?>">
 <?php ($hook = get_hook('aus_search_form_pre_ip_search_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?php echo __('IP search legend', 'admin_users') ?></strong></legend>

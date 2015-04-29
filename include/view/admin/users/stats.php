@@ -49,10 +49,10 @@ namespace punbb;
 			($hook = get_hook('aus_ip_stats_pre_row_generation')) ? eval($hook) : null;
 
 			$forum_page['table_row'] = array();
-			$forum_page['table_row']['ip'] = '<td class="tc'.count($forum_page['table_row']).'"><a href="'.forum_link('get_host', $cur_ip['poster_ip']).'">'.$cur_ip['poster_ip'].'</a></td>';
+			$forum_page['table_row']['ip'] = '<td class="tc'.count($forum_page['table_row']).'"><a href="'.link('get_host', $cur_ip['poster_ip']).'">'.$cur_ip['poster_ip'].'</a></td>';
 			$forum_page['table_row']['lastused'] = '<td class="tc'.count($forum_page['table_row']).'">'.format_time($cur_ip['last_used']).'</td>';
 			$forum_page['table_row']['timesfound'] = '<td class="tc'.count($forum_page['table_row']).'">'.$cur_ip['used_times'].'</td>';
-			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"><a href="'.forum_link('admin_users').'?show_users='.$cur_ip['poster_ip'].'">'.
+			$forum_page['table_row']['actions'] = '<td class="tc'.count($forum_page['table_row']).'"><a href="'.link('admin_users').'?show_users='.$cur_ip['poster_ip'].'">'.
 				__('Find more users', 'admin_users').'</a></td>';
 
 			($hook = get_hook('aus_ip_stats_pre_row_output')) ? eval($hook) : null;

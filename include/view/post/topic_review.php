@@ -22,7 +22,7 @@ if ($tid && config()->o_topic_review != '0') { ?>
 				$forum_page['post_ident']['byline'] = '<span class="post-byline">'.
 					sprintf(__('Post byline', 'post'), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
 				$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" rel="bookmark" title="'.
-					__('Permalink post', 'post') . '" href="'.forum_link('post', $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
+					__('Permalink post', 'post') . '" href="'.link('post', $cur_post['id']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 				($hook = get_hook('po_topic_review_row_pre_display')) ? eval($hook) : null;
 

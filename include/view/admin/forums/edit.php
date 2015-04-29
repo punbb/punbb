@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php printf(__('Edit forum head', 'admin_forums'), forum_htmlencode($cur_forum['forum_name'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form method="post" class="frm-form" accept-charset="utf-8" action="<?php echo forum_link('admin_forums') ?>?edit_forum=<?php echo $forum_id ?>">
+		<form method="post" class="frm-form" accept-charset="utf-8" action="<?php echo link('admin_forums') ?>?edit_forum=<?php echo $forum_id ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(forum_link('admin_forums').'?edit_forum='.$forum_id) ?>" />
+				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token(link('admin_forums').'?edit_forum='.$forum_id) ?>" />
 			</div>
 			<div class="content-head">
 				<h3 class="hn"><span><?php echo __('Edit forum details head', 'admin_forums') ?></span></h3>

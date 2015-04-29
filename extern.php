@@ -326,7 +326,7 @@ if ($action == 'feed')
 		$feed = array(
 			'title'		=>	config()->o_board_title .
 				__('Title separator') . $cur_topic['subject'],
-			'link'			=>	forum_link('topic', array($tid, sef_friendly($cur_topic['subject']))),
+			'link'			=>	link('topic', array($tid, sef_friendly($cur_topic['subject']))),
 			'description'	=>	sprintf(__('RSS description topic'), $cur_topic['subject']),
 			'items'			=>	array(),
 			'type'			=>	'posts'
@@ -360,7 +360,7 @@ if ($action == 'feed')
 				'id'			=>	$cur_post['id'],
 				'title'			=>	$cur_topic['first_post_id'] == $cur_post['id'] ?
 					$cur_topic['subject'] : __('RSS reply') . $cur_topic['subject'],
-				'link'			=>	forum_link('post', $cur_post['id']),
+				'link'			=>	link('post', $cur_post['id']),
 				'description'	=>	$cur_post['message'],
 				'author'		=>	array(
 					'name'	=> $cur_post['poster'],
@@ -373,7 +373,7 @@ if ($action == 'feed')
 					$item['author']['email'] = $cur_post['email'];
 				}
 
-				$item['author']['uri'] = forum_link('user', $cur_post['poster_id']);
+				$item['author']['uri'] = link('user', $cur_post['poster_id']);
 			}
 			else if ($cur_post['poster_email'] != '' && !user()->is_guest) {
 				$item['author']['email'] = $cur_post['poster_email'];
@@ -440,7 +440,7 @@ if ($action == 'feed')
 		// Setup the feed
 		$feed = array(
 			'title'			=>	config()->o_board_title . $forum_name,
-			'link'			=>	forum_link('index'),
+			'link'			=>	link('index'),
 			'description'	=>	sprintf(__('RSS description'), config()->o_board_title),
 			'items'			=>	array(),
 			'type'			=>	'topics'
@@ -486,7 +486,7 @@ if ($action == 'feed')
 			$item = array(
 				'id'			=>	$cur_topic['id'],
 				'title'			=>	$cur_topic['subject'],
-				'link'			=>	forum_link('topic_new_posts', array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
+				'link'			=>	link('topic_new_posts', array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
 				'description'	=>	$cur_topic['message'],
 				'author'		=>	array(
 					'name'			=> $cur_topic['poster']
@@ -500,7 +500,7 @@ if ($action == 'feed')
 					$item['author']['email'] = $cur_topic['email'];
 				}
 
-				$item['author']['uri'] = forum_link('user', $cur_topic['poster_id']);
+				$item['author']['uri'] = link('user', $cur_topic['poster_id']);
 			}
 			else if ($cur_topic['poster_email'] != '' && !user()->is_guest) {
 				$item['author']['email'] = $cur_topic['poster_email'];
@@ -541,7 +541,7 @@ else if ($action == 'online' || $action == 'online_full')
 		if ($forum_user_online['user_id'] > 1)
 		{
 			$users[] = user()->g_view_users == '1'?
-				'<a href="'.forum_link('user', $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
+				'<a href="'.link('user', $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
 			++$num_users;
 		}
 		else
@@ -611,7 +611,7 @@ else if ($action == 'stats')
 	($hook = get_hook('ex_pre_stats_output')) ? eval($hook) : null;
 
 	echo sprintf(__('No of users', 'index'), forum_number_format($stats['total_users'])).'<br />'."\n";
-	echo sprintf(__('Newest user', 'index'), '<a href="'.forum_link('user', $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>').'<br />'."\n";
+	echo sprintf(__('Newest user', 'index'), '<a href="'.link('user', $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>').'<br />'."\n";
 	echo sprintf(__('No of topics', 'index'), forum_number_format($stats['total_topics'])).'<br />'."\n";
 	echo sprintf(__('No of posts', 'index'), forum_number_format($stats['total_posts'])).'<br />'."\n";
 

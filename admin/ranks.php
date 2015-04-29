@@ -62,7 +62,7 @@ if (isset($_POST['add_rank'])) {
 
 	($hook = get_hook('ark_add_rank_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_ranks'), __('Rank added', 'admin_ranks'));
+	redirect(link('admin_ranks'), __('Rank added', 'admin_ranks'));
 }
 
 
@@ -114,7 +114,7 @@ else if (isset($_POST['update']))
 
 	($hook = get_hook('ark_update_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_ranks'), __('Rank updated', 'admin_ranks'));
+	redirect(link('admin_ranks'), __('Rank updated', 'admin_ranks'));
 }
 
 
@@ -142,7 +142,7 @@ else if (isset($_POST['remove']))
 
 	($hook = get_hook('ark_remove_pre_redirect')) ? eval($hook) : null;
 
-	redirect(forum_link('admin_ranks'), __('Rank removed', 'admin_ranks'));
+	redirect(link('admin_ranks'), __('Rank removed', 'admin_ranks'));
 }
 
 
@@ -162,10 +162,10 @@ $forum_page['fld_count'] = $forum_page['item_count'] = $forum_page['group_count'
 
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
-	array(config()->o_board_title, forum_link('index')),
-	array(__('Forum administration', 'admin_common'), forum_link('admin_index')),
-	array(__('Users', 'admin_common'), forum_link('admin_users')),
-	array(__('Ranks', 'admin_common'), forum_link('admin_ranks'))
+	array(config()->o_board_title, link('index')),
+	array(__('Forum administration', 'admin_common'), link('admin_index')),
+	array(__('Users', 'admin_common'), link('admin_users')),
+	array(__('Ranks', 'admin_common'), link('admin_ranks'))
 );
 
 ($hook = get_hook('ark_pre_header_load')) ? eval($hook) : null;
