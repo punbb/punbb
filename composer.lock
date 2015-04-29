@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5203b33c57ae1e7775e9dcca345a500d",
+    "hash": "cfc65cd39581b4302ec3905f8ae96ff5",
     "packages": [
         {
             "name": "punbb/lang-English",
@@ -103,6 +103,38 @@
                 "source": "https://github.com/rivetweb/punbb-style-Oxygen/tree/master"
             },
             "time": "2015-04-18 14:37:20"
+        },
+        {
+            "name": "punbb/urls-Default",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/punbb-urls-Default.git",
+                "reference": "5c2d2e20aefc2f0aaca22db82d1f0dde468b0223"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/punbb-urls-Default/zipball/5c2d2e20aefc2f0aaca22db82d1f0dde468b0223",
+                "reference": "5c2d2e20aefc2f0aaca22db82d1f0dde468b0223",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "init.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Your Name",
+                    "email": "your@name.com"
+                }
+            ],
+            "description": "PUNBB Default url rewrites",
+            "support": {
+                "source": "https://github.com/rivetweb/punbb-urls-Default/tree/master"
+            },
+            "time": "2015-04-29 11:21:21"
         }
     ],
     "packages-dev": [],
@@ -111,7 +143,8 @@
     "stability-flags": {
         "punbb/lang-english": 20,
         "punbb/lang-russian": 20,
-        "punbb/style-oxygen": 20
+        "punbb/style-oxygen": 20,
+        "punbb/urls-default": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

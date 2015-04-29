@@ -22,7 +22,7 @@
 		"punbb/lang-English": "dev-master",
 		"punbb/lang-Russian": "dev-master",
 		"punbb/style-Oxygen": "dev-master",
-		"punbb/urls-Default": "dev-master",
+		"punbb/urls-Default": "dev-master"
 	},
 
 	"autoload": {

@@ -813,36 +813,42 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 
 
 // Make a string safe to use in a URL
-function sef_friendly($str)
-{
-	static $lang_url_replace, $forum_reserved_strings;
+function sef_friendly($str) {
+	static $lang_url_replace;
+	static $forum_reserved_strings;
 
 	if (!isset($lang_url_replace)) {
 		require PUNBB::get('language')->path[user()->language] . '/url_replace.php';
 	}
 
-	if (!isset($forum_reserved_strings))
-	{
+	if (!isset($forum_reserved_strings)) 	{
 		// Bring in any reserved strings
-		if (file_exists(FORUM_ROOT.'include/url/'.config()->o_sef.'/reserved_strings.php'))
-			require FORUM_ROOT.'include/url/'.config()->o_sef.'/reserved_strings.php';
-		else
-			require FORUM_ROOT.'include/url/Default/reserved_strings.php';
+		$fname = PUNBB::get('urls')->path[config()->o_sef] . '/reserved_strings.php';
+		if (file_exists($fname)) {
+			$forum_reserved_strings = require $fname;
+		}
+		else {
+			$forum_reserved_strings = require PUNBB::get('urls')->path['Default'] . '/reserved_strings.php';
+		}
 	}
 
 	$return = ($hook = get_hook('fn_sef_friendly_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return $return;
+	}
 
 	$str = strtr($str, $lang_url_replace);
 	$str = strtolower(utf8_decode($str));
 	$str = forum_trim(preg_replace(array('/[^a-z0-9\s]/', '/[\s]+/'), array('', '-'), $str), '-');
 
-	foreach ($forum_reserved_strings as $match => $replace)
-		if ($str == $match)
+	foreach ($forum_reserved_strings as $match => $replace) {
+		if ($str == $match) {
 			return $replace;
-		else if ($match != '')
+		}
+		else if ($match != '') {
 			$str = str_replace($match, $replace, $str);
+		}
+	}
 
 	return $str;
 }

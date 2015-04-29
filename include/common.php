@@ -79,17 +79,15 @@ if (!file_exists(PUNBB::get('language')->path[user()->language] . '/common.php')
 		'\' installed.<br />Please reinstall a language of that name.');
 }
 
-global $forum_url, $forum_reserved_strings, $forum_rewrite_rules;
+global $forum_url, $forum_rewrite_rules;
 // Setup the URL rewriting scheme
 $fname_rewrites = PUNBB::get('urls')->path[config()->o_sef] . '/forum_urls.php';
 if (config()->o_sef != 'Default' && file_exists($fname_rewrites)) {
 	$forum_url = require $fname_rewrites;
 }
 else {
-	$forum_url = PUNBB::get('urls')->path['Default'] . '/forum_urls.php';
+	$forum_url = require PUNBB::get('urls')->path['Default'] . '/forum_urls.php';
 }
-
-var_dump($forum_url);
 
 // A good place to modify the URL scheme
 ($hook = get_hook('co_modify_url_scheme')) ? eval($hook) : null;
