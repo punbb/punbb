@@ -8,3 +8,4 @@ img/avatars/
 db.sqlite
 test.php
 .htaccess
+/nbproject/private/

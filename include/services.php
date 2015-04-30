@@ -2,55 +2,47 @@
 namespace punbb;
 
 function flash() {
-	return PUNBB::service('flash');
+	return PUNBB::raw('flash');
 }
 
 function db() {
-	return PUNBB::service('db');
+	return PUNBB::raw('db');
 }
 
 function config() {
-	return PUNBB::service('config');
+	return PUNBB::raw('config');
 }
 
 function user() {
-	return PUNBB::service('user');
+	return PUNBB::raw('user');
 }
 
 function assets() {
-	return PUNBB::service('assets');
+	return PUNBB::raw('assets');
 }
 
 function template() {
-	return PUNBB::service('template');
+	return PUNBB::raw('template');
 }
 
 // configure
 
-PUNBB::setService('db', function () {
+PUNBB::set('db', function () {
 	// TODO fix
 	global $db_type, $db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect;
-
-	$db = PUNBB::get('db');
-	if (empty((array)$db)) {
-		// Create the database adapter object (and open/connect to/select db)
-		$classname = 'punbb\\DBLayer_' . $db_type;
-		$db = new $classname(
-			$db_host,
-			$db_username,
-			$db_password,
-			$db_name,
-			$db_prefix,
-			$p_connect);
-	}
-	return PUNBB::set('db', $db);
+	// Create the database adapter object (and open/connect to/select db)
+	$classname = 'punbb\\DBLayer_' . $db_type;
+	$db = new $classname(
+		$db_host,
+		$db_username,
+		$db_password,
+		$db_name,
+		$db_prefix,
+		$p_connect);
+	return $db;
 });
 
-PUNBB::setService('config', function () {
-	$config = PUNBB::get('config');
-	if (!empty((array)$config)) {
-		return $config;
-	}
+PUNBB::set('config', function () {
 	// Load cached config
 	if (file_exists(FORUM_CACHE_DIR . 'cache_config.php')) {
 		$config = (object)include FORUM_CACHE_DIR . 'cache_config.php';
@@ -60,23 +52,19 @@ PUNBB::setService('config', function () {
 		generate_config_cache();
 		$config = (object)include FORUM_CACHE_DIR . 'cache_config.php';
 	}
-	return PUNBB::set('config', $config);
+	return $config;
 });
 
-PUNBB::setService('flash', function () {
-	$flash = PUNBB::get('flash');
-	if (empty((array)$flash)) {
-		$flash = new FlashMessenger();
-	}
-	return PUNBB::set('flash', $flash);
+PUNBB::set('flash', function () {
+	return new FlashMessenger();
 });
 
-PUNBB::setService('assets', function () {
-	// Create the loader adapter object
+PUNBB::set('assets', function () {
 	return Loader::singleton();
 });
 
-PUNBB::setService('user', function () {
+PUNBB::set('user', function () {
+	// TODO fix
 	global $_PUNBB;
 	if (!isset($_PUNBB['user'])) {
 		$_PUNBB['user'] = new \stdClass();
@@ -87,9 +75,8 @@ PUNBB::setService('user', function () {
 });
 
 // init default template engine
-if (empty(PUNBB::getService('template'))) {
-	PUNBB::setService('template', function () {
-		$template = new PhpTemplate();
-		return PUNBB::set('template', $template);
+if (empty(PUNBB::raw('template'))) {
+	PUNBB::set('template', function () {
+		return new PhpTemplate();
 	});
 }
