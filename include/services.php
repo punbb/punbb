@@ -74,6 +74,10 @@ PUNBB::set('user', function () {
 	return $_PUNBB['user'];
 });
 
+PUNBB::set('translations', function () {
+	return new \stdClass();
+});
+
 // init default template engine
 if (empty(PUNBB::raw('template'))) {
 	PUNBB::set('template', function () {
