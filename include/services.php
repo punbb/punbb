@@ -2,27 +2,27 @@
 namespace punbb;
 
 function flash() {
-	return PUNBB::raw('flash');
+	return PUNBB::get('flash');
 }
 
 function db() {
-	return PUNBB::raw('db');
+	return PUNBB::get('db');
 }
 
 function config() {
-	return PUNBB::raw('config');
+	return PUNBB::get('config');
 }
 
 function user() {
-	return PUNBB::raw('user');
+	return PUNBB::get('user');
 }
 
 function assets() {
-	return PUNBB::raw('assets');
+	return PUNBB::get('assets');
 }
 
 function template() {
-	return PUNBB::raw('template');
+	return PUNBB::get('template');
 }
 
 // configure
