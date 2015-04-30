@@ -7,7 +7,7 @@ class PUNBB {
 	private static $values;
 
 	// set service value
-	static function set($name, $value) {
+	static function set($name, $f) {
 		return self::$services[$name] = $f;
 	}
 
