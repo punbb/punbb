@@ -9,8 +9,6 @@
 
 rewrites - сервис, url('url_id')
 
-### вынос глобальных переменных в PUNBB::get PUNBB::set - глобальный "репозитарий"
-
 ### расширения
 
 - расширения в виде пакетов composer вида punbb-extensionname
