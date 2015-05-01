@@ -50,7 +50,7 @@ if (isset($_POST['form_sent']))
 			if (!file_exists(language()->path[$form['default_lang']] . '/common.php')) {
 				message(__('Bad request'));
 			}
-			if (!file_exists(PUNBB::get('urls')->path[$form['sef']] . '/forum_urls.php')) {
+			if (!file_exists(rewrite()->path[$form['sef']] . '/forum_urls.php')) {
 				message(__('Bad request'));
 			}
 			if (!isset($form['default_dst']) || $form['default_dst'] != '1') {

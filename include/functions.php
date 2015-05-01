@@ -831,12 +831,12 @@ function sef_friendly($str) {
 
 	if (!isset($forum_reserved_strings)) 	{
 		// Bring in any reserved strings
-		$fname = PUNBB::get('urls')->path[config()->o_sef] . '/reserved_strings.php';
+		$fname = rewrite()->path[config()->o_sef] . '/reserved_strings.php';
 		if (file_exists($fname)) {
 			$forum_reserved_strings = require $fname;
 		}
 		else {
-			$forum_reserved_strings = require PUNBB::get('urls')->path['Default'] . '/reserved_strings.php';
+			$forum_reserved_strings = require rewrite()->path['Default'] . '/reserved_strings.php';
 		}
 	}
 
@@ -1052,7 +1052,7 @@ function get_title($user)
 
 // Return a list of all URL schemes installed
 function get_scheme_packs() {
-	return array_keys(PUNBB::get('urls')->path);
+	return array_keys(rewrite()->path);
 }
 
 // Return a list of all styles installed

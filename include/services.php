@@ -33,6 +33,10 @@ function language() {
 	return PUNBB::get('language');
 }
 
+function rewrite() {
+	return PUNBB::get('rewrite');
+}
+
 // configure
 
 PUNBB::set('db', function () {

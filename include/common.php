@@ -81,12 +81,12 @@ if (!file_exists(language()->path[user()->language] . '/common.php')) {
 
 global $forum_url, $forum_rewrite_rules;
 // Setup the URL rewriting scheme
-$fname_rewrites = PUNBB::get('urls')->path[config()->o_sef] . '/forum_urls.php';
+$fname_rewrites = rewrite()->path[config()->o_sef] . '/forum_urls.php';
 if (config()->o_sef != 'Default' && file_exists($fname_rewrites)) {
 	$forum_url = require $fname_rewrites;
 }
 else {
-	$forum_url = require PUNBB::get('urls')->path['Default'] . '/forum_urls.php';
+	$forum_url = require rewrite()->path['Default'] . '/forum_urls.php';
 }
 
 // A good place to modify the URL scheme

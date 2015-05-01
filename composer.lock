@@ -110,12 +110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-urls-Default.git",
-                "reference": "c917a83a9d666614e437687d52e73aa5ebe9eb4a"
+                "reference": "7744dd4abfaa5e65c5f49f40f35677ac42f06516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-urls-Default/zipball/c917a83a9d666614e437687d52e73aa5ebe9eb4a",
-                "reference": "c917a83a9d666614e437687d52e73aa5ebe9eb4a",
+                "url": "https://api.github.com/repos/rivetweb/punbb-urls-Default/zipball/7744dd4abfaa5e65c5f49f40f35677ac42f06516",
+                "reference": "7744dd4abfaa5e65c5f49f40f35677ac42f06516",
                 "shasum": ""
             },
             "type": "library",
@@ -134,7 +134,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-urls-Default/tree/master"
             },
-            "time": "2015-04-30 09:10:12"
+            "time": "2015-05-01 08:14:29"
         }
     ],
     "packages-dev": [],

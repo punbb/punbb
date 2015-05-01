@@ -12,12 +12,12 @@ define('FORUM_ROOT', './');
 require FORUM_ROOT . 'include/essentials.php';
 
 // Bring in all the rewrite rules
-$fname = PUNBB::get('urls')->path[config()->o_sef] . '/rewrite_rules.php';
+$fname = rewrite()->path[config()->o_sef] . '/rewrite_rules.php';
 if (file_exists($fname)) {
 	$forum_rewrite_rules = require $fname;
 }
 else {
-	$forum_rewrite_rules = PUNBB::get('urls')->path['Default'] . '/rewrite_rules.php';
+	$forum_rewrite_rules = rewrite()->path['Default'] . '/rewrite_rules.php';
 }
 
 // Allow extensions to create their own rewrite rules/modify existing rules
