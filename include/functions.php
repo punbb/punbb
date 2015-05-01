@@ -28,11 +28,10 @@ if (!function_exists('apache_request_headers')) {
             return $out;
         }
 }
-function forum_htmlencode($str)
-{
+
+function forum_htmlencode($str) {
 	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
-
 
 // Trim whitespace including non-breaking space
 function forum_trim($str, $charlist = " \t\n\r\0\x0B\xC2\xA0")
