@@ -3168,7 +3168,7 @@ function send_json($params)
 }
 
 function __($text, $domain = 'common', $language = null) {
-	$translations = PUNBB::get('translations');
+	$translations = translations();
 	if (empty($translations->{$domain})) {
 		if (!$language) {
 			$language = user()->language;

@@ -33,6 +33,10 @@ function language() {
 	return PUNBB::get('language');
 }
 
+function translations() {
+	return PUNBB::get('translations');
+}
+
 function rewrite() {
 	return PUNBB::get('rewrite');
 }
