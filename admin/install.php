@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+return; // TODO
 
 define('MIN_PHP_VERSION', '5.0.0');
 define('MIN_MYSQL_VERSION', '4.1.2');
