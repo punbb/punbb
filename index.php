@@ -38,9 +38,9 @@ if (!user()->is_guest) {
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$new_topics = array();
-	while ($cur_topic = db()->fetch_assoc($result))
+	while ($cur_topic = db()->fetch_assoc($result)) {
 		$new_topics[$cur_topic['forum_id']][$cur_topic['id']] = $cur_topic['last_post'];
-
+	}
 	$tracked_topics = get_tracked_topics();
 }
 
@@ -74,6 +74,5 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
-	'main_view' => 'index/main',
-	'forum_page' => $forum_page
+	'main_view' => 'index/main'
 ]);

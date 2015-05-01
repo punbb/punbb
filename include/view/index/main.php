@@ -5,14 +5,14 @@ namespace punbb;
 
 $forum_page['cur_category'] = $forum_page['cat_count'] = $forum_page['item_count'] = 0;
 
-while ($cur_forum = db()->fetch_assoc($result))
-{
+while ($cur_forum = db()->fetch_assoc($result)) {
 	($hook = get_hook('in_forum_loop_start')) ? eval($hook) : null;
 
 	++$forum_page['item_count'];
 
-	if ($cur_forum['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
-	{
+	if ($cur_forum['cid'] != $forum_page['cur_category'])	{
+		// A new category since last iteration?
+
 		if ($forum_page['cur_category'] != 0) {
 			include view('index/category_end');
 		}
@@ -41,8 +41,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 	$forum_page['item_status'] = $forum_page['item_subject'] = $forum_page['item_body'] = $forum_page['item_title'] = array();
 
 	// Is this a redirect forum?
-	if ($cur_forum['redirect_url'] != '')
-	{
+	if ($cur_forum['redirect_url'] != '') {
 		$forum_page['item_body']['subject']['title'] =
 			'<h3 class="hn"><a class="external" href="'.forum_htmlencode($cur_forum['redirect_url']).'" title="'.
 				sprintf(__('Link to', 'index'), forum_htmlencode($cur_forum['redirect_url'])).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a></h3>';
@@ -69,8 +68,7 @@ while ($cur_forum = db()->fetch_assoc($result))
 
 		($hook = get_hook('in_redirect_row_pre_display')) ? eval($hook) : null;
 	}
-	else
-	{
+	else {
 		// Setup the title and link to the forum
 		$forum_page['item_title']['title'] = '<a href="'.link('forum', array($cur_forum['fid'], sef_friendly($cur_forum['forum_name']))).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a>';
 
@@ -152,12 +150,10 @@ while ($cur_forum = db()->fetch_assoc($result))
 	include view('index/topic');
 }
 // Did we output any categories and forums?
-if ($forum_page['cur_category'] > 0)
-{
+if ($forum_page['cur_category'] > 0) {
 	include view('index/category_end');
 }
-else
-{
+else {
 	include view('index/empty');
 }
 

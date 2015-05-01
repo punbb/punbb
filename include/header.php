@@ -8,11 +8,10 @@
  */
 namespace punbb;
 
-global $forum_page;
-
 // Make sure no one attempts to run this script "directly"
-if (!defined('FORUM'))
+if (!defined('FORUM')) {
 	exit;
+}
 
 if (!defined('FORUM_HEADER')) {
 	define('FORUM_HEADER', 1);

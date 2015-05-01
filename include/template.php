@@ -31,6 +31,7 @@ class PhpTemplate {
 	function render($vars = array()) {
 		$GLOBALS = array_merge($GLOBALS, $vars);
 		extract($GLOBALS, EXTR_SKIP | EXTR_REFS);
+		//extract($vars, EXTR_SKIP | EXTR_REFS);
 
 		include 'header.php';
 		include view($template);
