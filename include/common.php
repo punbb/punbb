@@ -73,7 +73,7 @@ $forum_page = array();
 
 // TODO error - use triger_error or throw new exception
 // Attempt to load the common language file
-if (!file_exists(PUNBB::get('language')->path[user()->language] . '/common.php')) {
+if (!file_exists(language()->path[user()->language] . '/common.php')) {
 	error('There is no valid language pack \'' .
 		forum_htmlencode(user()->language) .
 		'\' installed.<br />Please reinstall a language of that name.');

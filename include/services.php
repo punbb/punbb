@@ -29,6 +29,10 @@ function theme() {
 	return PUNBB::get('theme');
 }
 
+function language() {
+	return PUNBB::get('language');
+}
+
 // configure
 
 PUNBB::set('db', function () {

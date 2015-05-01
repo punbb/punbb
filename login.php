@@ -215,7 +215,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 				// Load the "activate password" template
 				$mail_tpl = forum_trim(file_get_contents(
-					PUNBB::get('language')->path[user()->language] . '/mail_templates/activate_password.tpl'));
+					language()->path[user()->language] . '/mail_templates/activate_password.tpl'));
 
 				// The first row contains the subject
 				$first_crlf = strpos($mail_tpl, "\n");

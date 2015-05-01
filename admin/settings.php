@@ -47,7 +47,7 @@ if (isset($_POST['form_sent']))
 						'/' . $form['default_style'] . '.php')) {
 				message(__('Bad request'));
 			}
-			if (!file_exists(PUNBB::get('language')->path[$form['default_lang']] . '/common.php')) {
+			if (!file_exists(language()->path[$form['default_lang']] . '/common.php')) {
 				message(__('Bad request'));
 			}
 			if (!file_exists(PUNBB::get('urls')->path[$form['sef']] . '/forum_urls.php')) {
