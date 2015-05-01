@@ -25,6 +25,10 @@ function template() {
 	return PUNBB::get('template');
 }
 
+function theme() {
+	return PUNBB::get('theme');
+}
+
 // configure
 
 PUNBB::set('db', function () {

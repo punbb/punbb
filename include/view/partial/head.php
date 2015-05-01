@@ -8,7 +8,7 @@ namespace punbb;
 $config = config();
 $user = user();
 $assets = assets();
-$fstyles = PUNBB::get('theme')->path[$user->style] . '/' . $user->style . '.php';
+$fstyles = theme()->path[$user->style] . '/' . $user->style . '.php';
 
 if (FORUM_PAGE == 'redirect') {
 	$head['refresh'] = '<meta http-equiv="refresh" content="'.

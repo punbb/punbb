@@ -16,61 +16,63 @@ namespace punbb;
 	$forum_page['ext_item'] = array();
 	$forum_page['ext_error'] = array();
 
-	$d = dir(FORUM_ROOT.'extensions');
-	while (($entry = $d->read()) !== false)
-	{
-		if ($entry{0} != '.' && is_dir(FORUM_ROOT.'extensions/'.$entry))
+	$d = is_dir(FORUM_ROOT.'extensions')? dir(FORUM_ROOT.'extensions') : null;
+	if ($d) {
+		while (($entry = $d->read()) !== false)
 		{
-			if (preg_match('/[^0-9a-z_]/', $entry))
+			if ($entry{0} != '.' && is_dir(FORUM_ROOT.'extensions/'.$entry))
 			{
-				$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
-					sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'</span></h3>'."\n\t\t\t\t".'<p>'.
-					__('Illegal ID', 'admin_ext') . '</p>'."\n\t\t\t".'</div>';
-				++$num_failed;
-				continue;
-			}
-			else if (!file_exists(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml'))
-			{
-				$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
-					sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'<span></h3>'."\n\t\t\t\t".'<p>'.
-					__('Missing manifest', 'admin_ext') . '</p>'."\n\t\t\t".'</div>';
-				++$num_failed;
-				continue;
-			}
-
-			// Parse manifest.xml into an array
-			$ext_data = is_readable(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml') ? xml_to_array(file_get_contents(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml')) : '';
-			if (empty($ext_data))
-			{
-				$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
-					sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'<span></h3>'."\n\t\t\t\t".'<p>'.
-					__('Failed parse manifest', 'admin_ext') . '</p>'."\n\t\t\t".'</div>';
-				++$num_failed;
-				continue;
-			}
-
-			// Validate manifest
-			$errors = validate_manifest($ext_data, $entry);
-			if (!empty($errors))
-			{
-				$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
-				sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'</span></h3>'."\n\t\t\t\t".'<p>'.implode(' ', $errors).'</p>'."\n\t\t\t".'</div>';
-				++$num_failed;
-			}
-			else
-			{
-				if (!array_key_exists($entry, $inst_exts) || version_compare($inst_exts[$entry]['version'], $ext_data['extension']['version'], '!='))
+				if (preg_match('/[^0-9a-z_]/', $entry))
 				{
-					$forum_page['ext_item'][] = '<div class="ct-box info-box extension available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($ext_data['extension']['title']).' <em>'.$ext_data['extension']['version'].'</em></h3>'."\n\t\t\t".'<ul class="data-list">'."\n\t\t\t\t".'<li><span>'.
-					sprintf(__('Extension by', 'admin_ext'), forum_htmlencode($ext_data['extension']['author'])).'</span></li>'.(($ext_data['extension']['description'] != '') ? "\n\t\t\t\t".'<li><span>'.forum_htmlencode($ext_data['extension']['description']).'</span></li>' : '')."\n\t\t\t".'</ul>'."\n\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install='.urlencode($entry).'">'.(isset($inst_exts[$entry]['version']) ?
-						__('Upgrade extension', 'admin_ext') :
-						__('Install extension', 'admin_ext')).'</a></span></p>'."\n\t\t".'</div>';
-					++$num_exts;
+					$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
+						sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'</span></h3>'."\n\t\t\t\t".'<p>'.
+						__('Illegal ID', 'admin_ext') . '</p>'."\n\t\t\t".'</div>';
+					++$num_failed;
+					continue;
+				}
+				else if (!file_exists(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml'))
+				{
+					$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
+						sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'<span></h3>'."\n\t\t\t\t".'<p>'.
+						__('Missing manifest', 'admin_ext') . '</p>'."\n\t\t\t".'</div>';
+					++$num_failed;
+					continue;
+				}
+
+				// Parse manifest.xml into an array
+				$ext_data = is_readable(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml') ? xml_to_array(file_get_contents(FORUM_ROOT.'extensions/'.$entry.'/manifest.xml')) : '';
+				if (empty($ext_data))
+				{
+					$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
+						sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'<span></h3>'."\n\t\t\t\t".'<p>'.
+						__('Failed parse manifest', 'admin_ext') . '</p>'."\n\t\t\t".'</div>';
+					++$num_failed;
+					continue;
+				}
+
+				// Validate manifest
+				$errors = validate_manifest($ext_data, $entry);
+				if (!empty($errors))
+				{
+					$forum_page['ext_error'][] = '<div class="ext-error databox db'.++$forum_page['item_num'].'">'."\n\t\t\t\t".'<h3 class="legend"><span>'.
+					sprintf(__('Extension loading error', 'admin_ext'), forum_htmlencode($entry)).'</span></h3>'."\n\t\t\t\t".'<p>'.implode(' ', $errors).'</p>'."\n\t\t\t".'</div>';
+					++$num_failed;
+				}
+				else
+				{
+					if (!array_key_exists($entry, $inst_exts) || version_compare($inst_exts[$entry]['version'], $ext_data['extension']['version'], '!='))
+					{
+						$forum_page['ext_item'][] = '<div class="ct-box info-box extension available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($ext_data['extension']['title']).' <em>'.$ext_data['extension']['version'].'</em></h3>'."\n\t\t\t".'<ul class="data-list">'."\n\t\t\t\t".'<li><span>'.
+						sprintf(__('Extension by', 'admin_ext'), forum_htmlencode($ext_data['extension']['author'])).'</span></li>'.(($ext_data['extension']['description'] != '') ? "\n\t\t\t\t".'<li><span>'.forum_htmlencode($ext_data['extension']['description']).'</span></li>' : '')."\n\t\t\t".'</ul>'."\n\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install='.urlencode($entry).'">'.(isset($inst_exts[$entry]['version']) ?
+							__('Upgrade extension', 'admin_ext') :
+							__('Install extension', 'admin_ext')).'</a></span></p>'."\n\t\t".'</div>';
+						++$num_exts;
+					}
 				}
 			}
 		}
+		$d->close();
 	}
-	$d->close();
 
 	($hook = get_hook('aex_section_install_pre_display_available_ext_list')) ? eval($hook) : null;
 

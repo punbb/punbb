@@ -763,12 +763,11 @@ else if (isset($_POST['form_sent']))
 			if (!isset($form['show_sig']) || $form['show_sig'] != '1') $form['show_sig'] = '0';
 
 			// Make sure we got a valid style string
-			if (isset($form['style']))
-			{
+			if (isset($form['style'])) {
 				$form['style'] = preg_replace('#[\.\\\/]#', '', $form['style']);
-				if (!file_exists(PUNBB::get('theme')->path[$form['style']] .
-							'/' . $form['style'] . '.php'))
+				if (!file_exists(theme()->path[$form['style']] . '/' . $form['style'] . '.php')) {
 					message(__('Bad request'));
+				}
 			}
 			break;
 		}

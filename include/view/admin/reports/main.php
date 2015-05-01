@@ -26,7 +26,7 @@ if (!empty($unread_reports))
 		$forum = ($cur_report['forum_name'] != '') ? '<a href="'.link('forum', array($cur_report['forum_id'], sef_friendly($cur_report['forum_name']))).'">'.forum_htmlencode($cur_report['forum_name']).'</a>' : __('Deleted forum', 'admin_reports');
 		$topic = ($cur_report['subject'] != '') ? '<a href="'.link('topic', array($cur_report['topic_id'], sef_friendly($cur_report['subject']))).'">'.forum_htmlencode($cur_report['subject']).'</a>' : __('Deleted topic', 'admin_reports');
 		$message = str_replace("\n", '<br />', forum_htmlencode($cur_report['message']));
-		$post_id = ($cur_report['pid'] != '') ? '<a href="'.link('post, $cur_report['pid']).'">'.sprintf(__('Post', 'admin_reports'), $cur_report['pid']).'</a>' : __('Deleted post', 'admin_reports');
+		$post_id = ($cur_report['pid'] != '') ? '<a href="'.link('post', $cur_report['pid']).'">'.sprintf(__('Post', 'admin_reports'), $cur_report['pid']).'</a>' : __('Deleted post', 'admin_reports');
 
 		($hook = get_hook('arp_new_report_pre_display')) ? eval($hook) : null;
 

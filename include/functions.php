@@ -1057,7 +1057,7 @@ function get_scheme_packs() {
 
 // Return a list of all styles installed
 function get_style_packs() {
-	return array_keys(PUNBB::get('theme')->path);
+	return array_keys(theme()->path);
 }
 
 // Return a list of all language packs installed
