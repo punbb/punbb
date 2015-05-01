@@ -10,7 +10,6 @@ $item_header['info']['lastpost'] = '<strong class="info-lastpost">' . __('last p
 ($hook = get_hook('in_forum_pre_cat_head')) ? eval($hook) : null;
 
 $cur_category = $cur_forum['cid'];
-
 ?>
 
 <div class="main-head">

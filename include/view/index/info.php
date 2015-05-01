@@ -3,10 +3,9 @@ namespace punbb;
 
 ($hook = get_hook('in_info_output_start')) ? eval($hook) : null;
 
-if (file_exists(FORUM_CACHE_DIR.'cache_stats.php')) {
-	include FORUM_CACHE_DIR.'cache_stats.php';
+if (file_exists(FORUM_CACHE_DIR . 'cache_stats.php')) {
+	include FORUM_CACHE_DIR . 'cache_stats.php';
 }
-
 // Regenerate cache only if the cache is more than 30 minutes old
 if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800)) {
 	require FORUM_ROOT . 'include/cache.php';
