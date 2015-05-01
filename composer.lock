@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-db-mysqli-innodb.git",
-                "reference": "d187fc7c0c5212b8bf2a1bfd9c7a1846eebf4366"
+                "reference": "9bf9c44db3466e3d3214106a7e29b711068acff5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-db-mysqli-innodb/zipball/d187fc7c0c5212b8bf2a1bfd9c7a1846eebf4366",
-                "reference": "d187fc7c0c5212b8bf2a1bfd9c7a1846eebf4366",
+                "url": "https://api.github.com/repos/rivetweb/punbb-db-mysqli-innodb/zipball/9bf9c44db3466e3d3214106a7e29b711068acff5",
+                "reference": "9bf9c44db3466e3d3214106a7e29b711068acff5",
                 "shasum": ""
             },
             "type": "library",
@@ -39,7 +39,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-db-mysqli-innodb/tree/master"
             },
-            "time": "2015-05-01 09:03:24"
+            "time": "2015-05-01 09:08:15"
         },
         {
             "name": "punbb/lang-English",

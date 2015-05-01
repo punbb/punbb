@@ -6,5 +6,5 @@ return array(
 	'username' => 'root',
 	'password' => '',
 	'prefix' => 'punbb_',
-	'p_connect' = false
+	'p_connect' => false
 );

@@ -28,10 +28,7 @@ forum_unregister_globals();
 // Ignore any user abort requests
 ignore_user_abort(true);
 
-global
-	$db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $p_connect,
-	$base_url,
-	$cookie_name, $cookie_domain, $cookie_path, $cookie_secure;
+global $base_url, $cookie_name, $cookie_domain, $cookie_path, $cookie_secure;
 // Attempt to load the configuration file config.php
 if (file_exists(FORUM_ROOT . 'config.php')) {
 	include FORUM_ROOT . 'config.php';
