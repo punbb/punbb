@@ -43,21 +43,6 @@ function rewrite() {
 
 // configure
 
-PUNBB::set('db', function () {
-	// TODO fix
-	global $db_type, $db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect;
-	// Create the database adapter object (and open/connect to/select db)
-	$classname = 'punbb\\DBLayer_' . $db_type;
-	$db = new $classname(
-		$db_host,
-		$db_username,
-		$db_password,
-		$db_name,
-		$db_prefix,
-		$p_connect);
-	return $db;
-});
-
 PUNBB::set('config', function () {
 	// Load cached config
 	if (file_exists(FORUM_CACHE_DIR . 'cache_config.php')) {

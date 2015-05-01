@@ -4,8 +4,43 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cfc65cd39581b4302ec3905f8ae96ff5",
+    "hash": "47c9a313a213575cd48fb406cbde8644",
     "packages": [
+        {
+            "name": "punbb/db-mysqli-innodb",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/punbb-db-mysqli-innodb.git",
+                "reference": "cc92b8860e820c8d294e57a49540919ac2208ccd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/punbb-db-mysqli-innodb/zipball/cc92b8860e820c8d294e57a49540919ac2208ccd",
+                "reference": "cc92b8860e820c8d294e57a49540919ac2208ccd",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ],
+                "files": [
+                    "init.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Your Name",
+                    "email": "your@name.com"
+                }
+            ],
+            "description": "PUNBB Default db layer",
+            "support": {
+                "source": "https://github.com/rivetweb/punbb-db-mysqli-innodb/tree/master"
+            },
+            "time": "2015-05-01 08:39:33"
+        },
         {
             "name": "punbb/lang-English",
             "version": "dev-master",
@@ -141,6 +176,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "punbb/db-mysqli-innodb": 20,
         "punbb/lang-english": 20,
         "punbb/lang-russian": 20,
         "punbb/style-oxygen": 20,
