@@ -11,6 +11,12 @@ rewrites - сервис, url('url_id')
 
 ### расширения
 
+на основе composer:
+- установщик 
+- установка расширений
+- обновление расширений
+https://getcomposer.org/doc/articles/scripts.md#command-events
+
 - расширения в виде пакетов composer вида punbb-extensionname
 - пример composer.json файла 
 {
