@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('pf_change_email_normal_output_start')) ? eval($hook) : null;
 
 ?>
@@ -13,9 +15,10 @@ namespace punbb;
 			<?php echo $forum_page['frm_info']."\n" ?>
 		</div>
 
-		<?php template()->helper('errors', array(
-			'errors_title' => __('Change e-mail errors', 'profile')
-		)) ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('Change e-mail errors', 'profile'),
+			'errors' => $errors
+		]) ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

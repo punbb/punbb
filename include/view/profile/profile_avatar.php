@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('pf_change_details_avatar_output_start')) ? eval($hook) : null;
 
 ?>
@@ -10,9 +12,10 @@ namespace punbb;
 	</div>
 	<div class="main-content main-frm">
 
-		<?php template()->helper('errors', array(
-			'errors_title' => __('Profile update errors', 'profile')
-		)) ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('Profile update errors', 'profile'),
+			'errors' => $errors
+		]) ?>
 
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>" enctype="multipart/form-data">
 			<div class="hidden">

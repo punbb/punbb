@@ -1,8 +1,6 @@
 <?php
 namespace punbb;
 
-global $errors;
-
 if (!empty($errors)) { ?>
 	<div class="ct-box error-box">
 		<h2 class="warn hn"><?= $errors_title ?></h2>

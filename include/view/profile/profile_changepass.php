@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('pf_change_pass_key_output_start')) ? eval($hook) : null;
 
 ?>
@@ -10,9 +12,10 @@ namespace punbb;
 			sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<?php template()->helper('errors', array(
-			'errors_title' => __('Change pass errors', 'profile')
-		)) ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('Change pass errors', 'profile'),
+			'errors' => $errors
+		]) ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

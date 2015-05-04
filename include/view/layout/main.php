@@ -34,13 +34,19 @@ namespace punbb;
 			<div class="hr"><hr /></div>
 			<div id="brd-main">
 				<?php template()->helper('main_title') ?>
+
 				<?php template()->helper('crumbs_top') ?>
-				<?php template()->helper('main_menu') ?>
+
+				<?php template()->helper('main_menu', [
+					'main_menu' => $main_menu
+				]) ?>
+
 				<?php template()->helper('pagepost_top') ?>
 
 				<?php include template()->view($main_view) ?>
 
 				<?php template()->helper('pagepost_end') ?>
+
 				<?php template()->helper('crumbs_end') ?>
 			</div>
 

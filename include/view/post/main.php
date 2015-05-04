@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('po_main_output_start')) ? eval($hook) : null;
 
 ?>
@@ -22,7 +24,10 @@ namespace punbb;
 			implode(' ', $forum_page['text_options'])).'</p>'."\n";
 	}
 
-	helper('errors', ['errors_title' => __('Post errors', 'post')]);
+	template()->helper('errors', [
+		'errors_title' => __('Post errors', 'post'),
+		'errors' => $errors
+	]);
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

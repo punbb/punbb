@@ -15,13 +15,13 @@ require __DIR__ . '/vendor/autoload.php';
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 $section = isset($_GET['section']) ? $_GET['section'] : 'about';	// Default to section "about"
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($id < 2)
+if ($id < 2) {
 	message(__('Bad request'));
+}
 
 $errors = array();
 
-if ($action != 'change_pass' || !isset($_GET['key']))
-{
+if ($action != 'change_pass' || !isset($_GET['key'])) {
 	if (user()->g_read_board == '0') {
 		message(__('No view'));
 	}
@@ -1298,8 +1298,7 @@ if (user()->id != $id &&
 		'main_view' => 'profile/profile'
 	]);
 }
-else
-{
+else {
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
 		array(config()->o_board_title, link('index')),
@@ -1310,31 +1309,33 @@ else
 	$forum_page['own_profile'] = (user()->id == $id) ? true : false;
 
 	// Setup navigation menu
-	$forum_page['main_menu'] = array();
-	$forum_page['main_menu']['about'] = '<li class="first-item'.(($section == 'about') ? ' active' : '').'"><a href="'.link('profile_about', $id).'"><span>'.
+	$main_menu = array();
+	$main_menu['about'] = '<li class="first-item'.(($section == 'about') ? ' active' : '').'"><a href="'.link('profile_about', $id).'"><span>'.
 		__('Section about', 'profile') . '</span></a></li>';
-	$forum_page['main_menu']['identity'] = '<li'.(($section == 'identity') ? ' class="active"' : '').'><a href="'.link('profile_identity', $id).'"><span>'.
+	$main_menu['identity'] = '<li'.(($section == 'identity') ? ' class="active"' : '').'><a href="'.link('profile_identity', $id).'"><span>'.
 		__('Section identity', 'profile') . '</span></a></li>';
-	$forum_page['main_menu']['settings'] = '<li'.(($section == 'settings') ? ' class="active"' : '').'><a href="'.link('profile_settings', $id).'"><span>'.
+	$main_menu['settings'] = '<li'.(($section == 'settings') ? ' class="active"' : '').'><a href="'.link('profile_settings', $id).'"><span>'.
 		__('Section settings', 'profile') . '</span></a></li>';
 
-	if (config()->o_signatures == '1')
-		$forum_page['main_menu']['signature'] = '<li'.(($section == 'signature') ? ' class="active"' : '').'><a href="'.link('profile_signature', $id).'"><span>'.
+	if (config()->o_signatures == '1') {
+		$main_menu['signature'] = '<li'.(($section == 'signature') ? ' class="active"' : '').'><a href="'.link('profile_signature', $id).'"><span>'.
 			__('Section signature', 'profile') . '</span></a></li>';
+	}
 
-	if (config()->o_avatars == '1')
-		$forum_page['main_menu']['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.link('profile_avatar', $id).'"><span>'.
+	if (config()->o_avatars == '1') {
+		$main_menu['avatar'] = '<li'.(($section == 'avatar') ? ' class="active"' : '').'><a href="'.link('profile_avatar', $id).'"><span>'.
 			__('Section avatar', 'profile') . '</span></a></li>';
+	}
 
-	if (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_ban_users == '1' && !$forum_page['own_profile']))
-		$forum_page['main_menu']['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.link('profile_admin', $id).'"><span>'.
+	if (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && user()->g_mod_ban_users == '1' && !$forum_page['own_profile'])) {
+		$main_menu['admin'] = '<li'.(($section == 'admin') ? ' class="active"' : '').'><a href="'.link('profile_admin', $id).'"><span>'.
 			__('Section admin', 'profile') . '</span></a></li>';
+	}
 
 	($hook = get_hook('pf_change_details_modify_main_menu')) ? eval($hook) : null;
 	// End navigation menu
 
-	if ($section == 'about')
-	{
+	if ($section == 'about') {
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array(config()->o_board_title, link('index')),
@@ -1569,12 +1570,11 @@ else
 		define('FORUM_PAGE', 'profile-about');
 
 		template()->render([
-			'main_view' => 'profile/profile_about'
+			'main_view' => 'profile/profile_about',
+			'main_menu' => $main_menu
 		]);
 	}
-
-	else if ($section == 'identity')
-	{
+	else if ($section == 'identity') {
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array(config()->o_board_title, link('index')),

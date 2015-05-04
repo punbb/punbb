@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('aex_install_output_start')) ? eval($hook) : null;
 ?>
 	<div class="main-subhead">
@@ -8,9 +10,10 @@ namespace punbb;
 	</div>
 	<div class="main-content main-frm">
 
-		<?php template()->helper('errors', array(
-			'errors_title' => __('Install ext errors', 'admin_ext')
-		)) ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('Install ext errors', 'admin_ext'),
+			'errors' => $errors
+		]) ?>
 
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id ?>">
 			<div class="hidden">

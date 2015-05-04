@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('mi_report_output_start')) ? eval($hook) : null;
 
 ?>
@@ -12,7 +14,10 @@ namespace punbb;
 			<p class="important"><?= __('Required warn') ?></p>
 		</div>
 
-		<?php template()->helper('errors', ['errors_title' => __('Report errors', 'misc')]) ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('Report errors', 'misc'),
+			'errors' => $errors
+		]) ?>
 
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">

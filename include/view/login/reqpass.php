@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('li_forgot_pass_output_start')) ? eval($hook) : null;
 
 ?>
@@ -12,7 +14,10 @@ namespace punbb;
 			<p class="important"><?= __('New password info', 'login') ?></p>
 		</div>
 
-		<?php template()->helper('errors', ['errors_title' => __('New password errors', 'login')]); ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('New password errors', 'login'),
+			'errors' => $errors
+		]) ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

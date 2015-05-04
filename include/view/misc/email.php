@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('mi_email_output_start')) ? eval($hook) : null;
 
 ?>
@@ -12,7 +14,10 @@ namespace punbb;
 			<p class="important"><?= __('E-mail disclosure note', 'misc') ?></p>
 		</div>
 
-	<?php template()->helper('errors', ['errors_title' => __('Form e-mail errors', 'misc')]) ?>
+	<?php template()->helper('errors', [
+		'errors_title' => __('Form e-mail errors', 'misc'),
+		'errors' => $errors
+	]) ?>
 
 	<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

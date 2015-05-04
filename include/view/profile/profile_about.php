@@ -6,7 +6,8 @@ namespace punbb;
 ?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php printf((user()->id == $id) ?
-			__('Profile welcome', 'profile') : __('Profile welcome user', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
+			__('Profile welcome', 'profile') : __('Profile welcome user', 'profile'),
+			forum_htmlencode(user()->username)) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<p class="content-options options"><?php echo implode(' ', $forum_page['user_options']) ?></p>

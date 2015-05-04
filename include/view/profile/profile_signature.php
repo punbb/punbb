@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('pf_change_details_signature_output_start')) ? eval($hook) : null;
 
 ?>
@@ -15,9 +17,10 @@ namespace punbb;
 			sprintf(__('You may use'), implode(' ', $forum_page['text_options'])).'</p>'."\n";
 	?>
 
-		<?php template()->helper('errors', array(
-			'errors_title' => __('Profile update errors', 'profile')
-		)) ?>
+		<?php template()->helper('errors', [
+			'errors_title' => __('Profile update errors', 'profile'),
+			'errors' => $errors
+		]) ?>
 
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">

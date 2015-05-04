@@ -1,6 +1,8 @@
 <?php
 namespace punbb;
 
+global $errors;
+
 ($hook = get_hook('rg_register_output_start')) ? eval($hook) : null;
 
 ?>
@@ -18,9 +20,10 @@ namespace punbb;
 	endif;
 ?>
 
-	<?php template()->helper('errors', array(
-		'errors_title' => __('Register errors', 'profile')
-	)) ?>
+	<?php template()->helper('errors', [
+		'errors_title' => __('Register errors', 'profile'),
+		'errors' => $errors
+	]) ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>
