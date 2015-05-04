@@ -12,7 +12,7 @@ namespace punbb;
 			<p class="important"><?= __('Required warn') ?></p>
 		</div>
 
-		<?php helper('errors', ['errors_title' => __('Report errors', 'misc')]) ?>
+		<?php template()->helper('errors', ['errors_title' => __('Report errors', 'misc')]) ?>
 
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">

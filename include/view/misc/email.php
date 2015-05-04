@@ -12,7 +12,7 @@ namespace punbb;
 			<p class="important"><?= __('E-mail disclosure note', 'misc') ?></p>
 		</div>
 
-	<?php helper('errors', ['errors_title' => __('Form e-mail errors', 'misc')]) ?>
+	<?php template()->helper('errors', ['errors_title' => __('Form e-mail errors', 'misc')]) ?>
 
 	<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

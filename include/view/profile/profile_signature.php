@@ -15,7 +15,7 @@ namespace punbb;
 			sprintf(__('You may use'), implode(' ', $forum_page['text_options'])).'</p>'."\n";
 	?>
 
-		<?php helper('errors', array(
+		<?php template()->helper('errors', array(
 			'errors_title' => __('Profile update errors', 'profile')
 		)) ?>
 

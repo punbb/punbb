@@ -14,7 +14,7 @@ namespace punbb;
 				__('Obtain pass', 'login') . '</a>') ?></p>
 		</div>
 
-		<?php helper('errors', ['errors_title' => __('Login errors', 'login')]); ?>
+		<?php template()->helper('errors', ['errors_title' => __('Login errors', 'login')]); ?>
 
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>

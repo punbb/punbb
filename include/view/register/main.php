@@ -18,7 +18,7 @@ namespace punbb;
 	endif;
 ?>
 
-	<?php helper('errors', array(
+	<?php template()->helper('errors', array(
 		'errors_title' => __('Register errors', 'profile')
 	)) ?>
 

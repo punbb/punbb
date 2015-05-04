@@ -16,7 +16,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 ($hook = get_hook('mr_topic_actions_output_start')) ? eval($hook) : null;
 
-	include view('moderate/topics_start');
+	include template()->view('moderate/topics_start');
 
 	$forum_page['item_count'] = 0;
 
@@ -150,10 +150,10 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 		($hook = get_hook('mr_topic_actions_row_pre_display')) ? eval($hook) : null;
 
-		include view('moderate/topic');
+		include template()->view('moderate/topic');
 	}
 
-	include view('moderate/topics_end');
+	include template()->view('moderate/topics_end');
 
 $forum_id = $fid;
 

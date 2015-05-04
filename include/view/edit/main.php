@@ -9,7 +9,7 @@ namespace punbb;
 			__('Edit topic', 'post') : __('Edit reply', 'post') ?></span></h2>
 	</div>
 
-	<?php include view('edit/preview') ?>
+	<?php include template()->view('edit/preview') ?>
 
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo ($id != $cur_post['first_post_id']) ?

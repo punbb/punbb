@@ -3,7 +3,7 @@ namespace punbb;
 
 ($hook = get_hook('mr_post_actions_output_start')) ? eval($hook) : null;
 
-include view('moderate/posts_start');
+include template()->view('moderate/posts_start');
 
 	$forum_page['item_count'] = 0;	// Keep track of post numbers
 
@@ -78,10 +78,10 @@ include view('moderate/posts_start');
 
 		($hook = get_hook('mr_post_actions_row_pre_display')) ? eval($hook) : null;
 
-		include view('moderate/post');
+		include template()->view('moderate/post');
 	}
 
-	include view('moderate/posts_end');
+	include template()->view('moderate/posts_end');
 
 	$forum_id = $fid;
 

@@ -10,7 +10,7 @@ namespace punbb;
 			sprintf(__('Change user password', 'profile'), forum_htmlencode($user['username'])) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<?php helper('errors', array(
+		<?php template()->helper('errors', array(
 			'errors_title' => __('Change pass errors', 'profile')
 		)) ?>
 

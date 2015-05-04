@@ -12,13 +12,13 @@ namespace punbb;
 <?php
 
 if (!$section || $section == 'bbcode') {
-	include view('help/bbcode');
+	include template()->view('help/bbcode');
 }
 else if ($section == 'img') {
-	include view('help/img');
+	include template()->view('help/img');
 }
 else if ($section == 'smilies') {
-	include view('help/smilies');
+	include template()->view('help/smilies');
 }
 
 ($hook = get_hook('he_new_section')) ? eval($hook) : null;

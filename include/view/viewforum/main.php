@@ -179,9 +179,8 @@ if (!empty($topics))
 <?php
 
 }
-else
-{
-	include view('viewforum/empty');
+else {
+	include template()->view('viewforum/empty');
 }
 
 ($hook = get_hook('vf_end')) ? eval($hook) : null;

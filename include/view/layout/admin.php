@@ -1,63 +1,63 @@
 <?php
 namespace punbb;
 ?><!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="oldie ie6" <?php helper('local') ?>> <![endif]-->
-<!--[if IE 7 ]>    <html class="oldie ie7" <?php helper('local') ?>> <![endif]-->
-<!--[if IE 8 ]>    <html class="oldie ie8" <?php helper('local') ?>> <![endif]-->
-<!--[if gt IE 8]><!--> <html <?php helper('local') ?>> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html class="oldie ie6" <?php template()->helper('local') ?>> <![endif]-->
+<!--[if IE 7 ]>    <html class="oldie ie7" <?php template()->helper('local') ?>> <![endif]-->
+<!--[if IE 8 ]>    <html class="oldie ie8" <?php template()->helper('local') ?>> <![endif]-->
+<!--[if gt IE 8]><!--> <html <?php template()->helper('local') ?>> <!--<![endif]-->
 <head>
 <meta charset="utf-8" />
-<?php include view('partial/head') ?>
+<?php include template()->view('partial/head') ?>
 </head>
 <body>
 
-<?php helper('messages') ?>
+<?php template()->helper('messages') ?>
 
 <div id="brd-wrap" class="brd">
-	<div <?php helper('page_attrs') ?>>
+	<div <?php template()->helper('page_attrs') ?>>
 
 		<div id="brd-head" class="gen-content">
-			<?php helper('skip_content') ?>
-			<?php helper('title') ?>
-			<?php helper('description') ?>
+			<?php template()->helper('skip_content') ?>
+			<?php template()->helper('title') ?>
+			<?php template()->helper('description') ?>
 		</div>
 
 		<div id="brd-navlinks" class="gen-content">
-			<?php helper('navlinks') ?>
-			<?php include view('partial/admod') ?>
+			<?php template()->helper('navlinks') ?>
+			<?php include template()->view('partial/admod') ?>
 		</div>
 
 		<div id="brd-visit" class="gen-content">
-			<?php helper('welcome') ?>
-			<?php helper('visit_links') ?>
+			<?php template()->helper('welcome') ?>
+			<?php template()->helper('visit_links') ?>
 		</div>
 
 		<div class="hr"><hr /></div>
 
 		<div id="brd-main">
-			<?php helper('main_title') ?>
-			<?php helper('crumbs_top') ?>
-			<?php helper('pagepost_top') ?>
-			<?php helper('admin_menu') ?>
+			<?php template()->helper('main_title') ?>
+			<?php template()->helper('crumbs_top') ?>
+			<?php template()->helper('pagepost_top') ?>
+			<?php template()->helper('admin_menu') ?>
 
-			<?php include view($main_view) ?>
+			<?php include template()->view($main_view) ?>
 
-			<?php helper('pagepost_end') ?>
-			<?php helper('crumbs_end') ?>
+			<?php template()->helper('pagepost_end') ?>
+			<?php template()->helper('crumbs_end') ?>
 		</div>
 
 		<div class="hr"><hr /></div>
 
 		<div id="brd-about">
-			<?php include view('partial/about') ?>
+			<?php include template()->view('partial/about') ?>
 		</div>
 
-		<?php include view('partial/debug') ?>
+		<?php include template()->view('partial/debug') ?>
 
 	</div>
 </div>
 
-<?php include view('partial/javascript') ?>
+<?php include template()->view('partial/javascript') ?>
 
 </body>
 </html>

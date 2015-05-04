@@ -25,7 +25,7 @@ $stats_list['no_of_posts'] =
 
 ($hook = get_hook('in_stats_pre_info_output')) ? eval($hook) : null;
 
-include view('index/stat');
+include template()->view('index/stat');
 
 ($hook = get_hook('in_stats_end')) ? eval($hook) : null;
 ($hook = get_hook('in_users_online_start')) ? eval($hook) : null;
@@ -69,7 +69,7 @@ if (config()->o_users_online == '1')
 
 	($hook = get_hook('in_users_online_pre_online_info_output')) ? eval($hook) : null;
 
-	include view('index/online');
+	include template()->view('index/online');
 
 	($hook = get_hook('in_users_online_end')) ? eval($hook) : null;
 }

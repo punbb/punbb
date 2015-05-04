@@ -13,7 +13,7 @@ namespace punbb;
 			<?php echo $forum_page['frm_info']."\n" ?>
 		</div>
 
-		<?php helper('errors', array(
+		<?php template()->helper('errors', array(
 			'errors_title' => __('Change e-mail errors', 'profile')
 		)) ?>
 

@@ -10,7 +10,7 @@ namespace punbb;
 	</div>
 	<div class="main-content main-frm">
 
-		<?php helper('errors', array(
+		<?php template()->helper('errors', array(
 			'errors_title' => __('Profile update errors', 'profile')
 		)) ?>
 

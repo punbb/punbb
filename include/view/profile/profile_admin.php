@@ -15,7 +15,7 @@ namespace punbb;
 			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 		<?php
 
-		include view('profile/user_management');
+		include template()->view('profile/user_management');
 
 		($hook = get_hook('pf_change_details_admin_pre_mod_assignment')) ? eval($hook) : null;
 

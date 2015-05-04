@@ -9,21 +9,21 @@ while ($cur_forum = db()->fetch_assoc($result)) {
 	if ($cur_forum['cid'] != $cur_category)	{
 		// A new category since last iteration?
 		if ($cur_category != 0) {
-			include view('index/category_end');
+			include template()->view('index/category_end');
 		}
 		$cat_count++;
 		$item_count = 1;
 
-		include view('index/category_start');
+		include template()->view('index/category_start');
 	}
 
-	include view('index/topic');
+	include template()->view('index/topic');
 }
 
 // Did we output any categories and forums?
 if ($cur_category > 0) {
-	include view('index/category_end');
+	include template()->view('index/category_end');
 }
 else {
-	include view('index/empty');
+	include template()->view('index/empty');
 }

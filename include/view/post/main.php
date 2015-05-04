@@ -9,7 +9,7 @@ namespace punbb;
 			__('Post reply', 'post') : __('Post new topic', 'post') ?></span></h2>
 	</div>
 
-	<?php include view('post/preview') ?>
+	<?php include template()->view('post/preview') ?>
 
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo ($tid) ?
@@ -159,7 +159,7 @@ if (!empty($forum_page['checkboxes']))
 	</div>
 <?php
 
-include view('post/topic_review');
+include template()->view('post/topic_review');
 
 $forum_id = $cur_posting['id'];
 

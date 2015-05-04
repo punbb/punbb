@@ -1,24 +1,24 @@
 <?php
 namespace punbb;
 ?><!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="oldie ie6" <?php helper('local') ?>> <![endif]-->
-<!--[if IE 7 ]>    <html class="oldie ie7" <?php helper('local') ?>> <![endif]-->
-<!--[if IE 8 ]>    <html class="oldie ie8" <?php helper('local') ?>> <![endif]-->
-<!--[if gt IE 8]><!--> <html <?php helper('local') ?>> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html class="oldie ie6" <?php template()->helper('local') ?>> <![endif]-->
+<!--[if IE 7 ]>    <html class="oldie ie7" <?php template()->helper('local') ?>> <![endif]-->
+<!--[if IE 8 ]>    <html class="oldie ie8" <?php template()->helper('local') ?>> <![endif]-->
+<!--[if gt IE 8]><!--> <html <?php template()->helper('local') ?>> <!--<![endif]-->
 <head>
 <meta charset="utf-8" />
-<?php include view('partial/head') ?>
+<?php include template()->view('partial/head') ?>
 </head>
 <body>
 <div id="brd-wrap" class="brd-page">
 	<div id="brd-maint" class="brd">
 
-		<?php include view($main_view) ?>
+		<?php include template()->view($main_view) ?>
 
 	</div>
 </div>
 
-<?php include view('partial/javascript') ?>
+<?php include template()->view('partial/javascript') ?>
 
 </body>
 </html>
