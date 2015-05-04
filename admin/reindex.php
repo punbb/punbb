@@ -81,7 +81,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at'])) {
 <html lang="<?= __('lang_identifier') ?>" dir="<?= __('lang_direction') ?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo generate_crumbs(true) ?></title>
+<title><?php template()->helper('crumbs', ['reverse' => true]) ?></title>
 <style type="text/css">
 body {
 	font: 68.75% Verdana, Arial, Helvetica, sans-serif;

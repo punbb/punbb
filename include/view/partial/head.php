@@ -40,8 +40,8 @@ else {
 	}
 	else {
 		$head['descriptions'] = '<meta name="description" content="' .
-			generate_crumbs(true). __('Title separator') .
-			forum_htmlencode($config->o_board_desc) . '" />';
+			template()->helper('crumbs', ['reverse' => true], true) .
+			__('Title separator') . forum_htmlencode($config->o_board_desc) . '" />';
 	}
 
 	// Should we output a MicroID? http://microid.org/
@@ -51,7 +51,7 @@ else {
 			sha1(link('user', $id))) . '" />';
 	}
 
-	$head['title'] = '<title>' . generate_crumbs(true) . '</title>';
+	$head['title'] = '<title>' . template()->helper('crumbs', ['reverse' => true], true) . '</title>';
 
 	// Should we output feed links?
 	if (FORUM_PAGE == 'index') 	{

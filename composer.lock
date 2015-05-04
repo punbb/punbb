@@ -145,12 +145,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-template-Default.git",
-                "reference": "dc2fe47e5adf3b0086cabde3a7ed271600a3ef0f"
+                "reference": "9b6309dfde5184915f2ac1b32e6f3635c8efb92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-template-Default/zipball/dc2fe47e5adf3b0086cabde3a7ed271600a3ef0f",
-                "reference": "dc2fe47e5adf3b0086cabde3a7ed271600a3ef0f",
+                "url": "https://api.github.com/repos/rivetweb/punbb-template-Default/zipball/9b6309dfde5184915f2ac1b32e6f3635c8efb92e",
+                "reference": "9b6309dfde5184915f2ac1b32e6f3635c8efb92e",
                 "shasum": ""
             },
             "type": "library",
@@ -172,7 +172,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-template-Default/tree/master"
             },
-            "time": "2015-05-04 12:04:07"
+            "time": "2015-05-04 12:32:08"
         },
         {
             "name": "punbb/urls-Default",
