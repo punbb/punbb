@@ -3,11 +3,6 @@ namespace punbb;
 
 global $forum_page;
 
-$return = ($hook = get_hook('fn_generate_crumbs_start')) ? eval($hook) : null;
-if ($return != null) {
-	return $return;
-}
-
 if (empty($crumbs)) {
 	$crumbs[0] = config()->o_board_title;
 }
@@ -47,7 +42,5 @@ else {
 		}
 	}
 }
-
-($hook = get_hook('fn_generate_crumbs_end')) ? eval($hook) : null;
 
 echo $crumbs;
