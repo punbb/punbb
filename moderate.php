@@ -376,8 +376,12 @@ if (isset($_GET['tid']))
 	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
 		__('Select all', 'misc') . '</span></span>';
 
-	if ($forum_page['num_pages'] > 1)
-		$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	if ($forum_page['num_pages'] > 1) {
+		$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	}
+	else {
+		$main_head_pages = '';
+	}
 
 	($hook = get_hook('mr_post_actions_pre_header_load')) ? eval($hook) : null;
 
@@ -411,6 +415,7 @@ if (isset($_GET['tid']))
 	template()->render([
 		'main_view' => 'moderate/modtopic',
 		'main_title' => sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']))
+		'main_head_pages' => $main_head_pages
 	]);
 }
 
@@ -1129,8 +1134,12 @@ $forum_page['crumbs'] = array(
 );
 
 // Setup main heading
-if ($forum_page['num_pages'] > 1)
-	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+if ($forum_page['num_pages'] > 1) {
+	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+}
+else {
+	$main_head_pages = '';
+}
 
 $forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.
 	__('Select all', 'misc') . '</span></span>';
@@ -1142,5 +1151,6 @@ $forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['ma
 define('FORUM_PAGE', 'modforum');
 
 template()->render([
-	'main_view' => 'moderate/modforum'
+	'main_view' => 'moderate/modforum',
+	'main_head_pages' => $main_head_pages
 ]);

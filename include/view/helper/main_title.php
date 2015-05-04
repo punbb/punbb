@@ -11,7 +11,7 @@ global $forum_page;
 		<?= forum_htmlencode(is_array($last_crumb = end($forum_page['crumbs'])) ?
 			reset($last_crumb) : $last_crumb) ?>
 	<?php } ?>
-	<?php if (isset($forum_page['main_head_pages'])) { ?>
-		<small><?= $forum_page['main_head_pages'] ?></small>
+	<?php if (isset($main_head_pages)) { ?>
+		<small><?= $main_head_pages ?></small>
 	<?php } ?>
 </h1>

@@ -204,7 +204,10 @@ $forum_page['crumbs'] = array(
 );
 
 if ($forum_page['num_pages'] > 1) {
-	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+}
+else {
+	$main_head_pages = '';
 }
 
 ($hook = get_hook('vf_pre_header_load')) ? eval($hook) : null;
@@ -219,5 +222,6 @@ template()->render([
 	'main_title' => '<a class="permalink" href="' .
 		link('forum', array($id, sef_friendly($cur_forum['forum_name']))) .
 		'" rel="bookmark" title="' . __('Permalink forum', 'forum') . '">' .
-		forum_htmlencode($cur_forum['forum_name']) . '</a>'
+		forum_htmlencode($cur_forum['forum_name']) . '</a>',
+	'main_head_pages' => $main_head_pages
 ]);

@@ -112,9 +112,12 @@ $forum_page['crumbs'] = array(
 	__('User list')
 );
 
-// Setup main heading
-if ($forum_page['num_pages'] > 1)
-	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+if ($forum_page['num_pages'] > 1) {
+	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+}
+else {
+	$main_head_pages = '';
+}
 
 ($hook = get_hook('ul_pre_header_load')) ? eval($hook) : null;
 
@@ -155,5 +158,6 @@ if (!empty($where_sql))
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
-	'main_view' => 'userlist/main'
+	'main_view' => 'userlist/main',
+	'main_head_pages' => $main_head_pages
 ]);

@@ -161,8 +161,12 @@ if (isset($query))
 		}
 
 		// Setup main heading
-		if ($forum_page['num_pages'] > 1)
-			$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+		if ($forum_page['num_pages'] > 1) {
+			$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+		}
+		else {
+			$main_head_pages = '';
+		}
 	}
 
 	($hook = get_hook('se_results_pre_header_load')) ? eval($hook) : null;
@@ -180,7 +184,8 @@ if (isset($query))
 
 	template()->render([
 		'main_view' => 'search/search_forums',
-		'main_title' => __('Search options', 'search')
+		'main_title' => __('Search options', 'search'),
+		'main_head_pages' => $main_head_pages
 	]);
 }
 

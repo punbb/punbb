@@ -256,7 +256,10 @@ $main_title = (($cur_topic['closed'] == '1') ?
 	__('Permalink topic', 'topic') . '">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 if ($forum_page['num_pages'] > 1) {
-	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+}
+else {
+	$main_head_pages = '';
 }
 
 ($hook = get_hook('vt_pre_header_load')) ? eval($hook) : null;
@@ -340,5 +343,6 @@ if (!empty($posts_id)) {
 template()->render([
 	'main_view' => 'viewtopic/main',
 	'show_qpost' => $show_qpost,
-	'main_title' => $main_title
+	'main_title' => $main_title,
+	'main_head_pages' => $main_head_pages
 ]);
