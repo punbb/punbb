@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "47c9a313a213575cd48fb406cbde8644",
+    "hash": "593a64ed560ae5d5babd3b3f9917cb04",
     "packages": [
         {
             "name": "punbb/db-mysqli-innodb",
@@ -140,6 +140,41 @@
             "time": "2015-04-30 09:09:53"
         },
         {
+            "name": "punbb/template-Default",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/punbb-template-Default.git",
+                "reference": "d3e28aa95c2a21e38803ee146b095a86f15eeaef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/punbb-template-Default/zipball/d3e28aa95c2a21e38803ee146b095a86f15eeaef",
+                "reference": "d3e28aa95c2a21e38803ee146b095a86f15eeaef",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ],
+                "files": [
+                    "init.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Your Name",
+                    "email": "your@name.com"
+                }
+            ],
+            "description": "PUNBB Default template engine",
+            "support": {
+                "source": "https://github.com/rivetweb/punbb-template-Default/tree/master"
+            },
+            "time": "2015-05-04 11:55:46"
+        },
+        {
             "name": "punbb/urls-Default",
             "version": "dev-master",
             "source": {
@@ -180,7 +215,8 @@
         "punbb/lang-english": 20,
         "punbb/lang-russian": 20,
         "punbb/style-oxygen": 20,
-        "punbb/urls-default": 20
+        "punbb/urls-default": 20,
+        "punbb/template-default": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
