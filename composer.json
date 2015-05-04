@@ -19,6 +19,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/rivetweb/punbb-urls-Default"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-template-Default"
 		}
 	],
 
@@ -27,7 +31,8 @@
 		"punbb/lang-English": "dev-master",
 		"punbb/lang-Russian": "dev-master",
 		"punbb/style-Oxygen": "dev-master",
-		"punbb/urls-Default": "dev-master"
+		"punbb/urls-Default": "dev-master",
+		"punbb/template-Default": "dev-master"
 	},
 
 	"autoload": {
