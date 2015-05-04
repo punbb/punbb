@@ -161,7 +161,7 @@ if (!defined('FORUM_RANKS_LOADED')) {
 $forum_page['fld_count'] = $forum_page['item_count'] = $forum_page['group_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index')),
 	array(__('Users', 'admin_common'), link('admin_users')),
@@ -174,5 +174,6 @@ define('FORUM_PAGE_SECTION', 'users');
 define('FORUM_PAGE', 'admin-ranks');
 
 template()->render([
-	'main_view' => 'admin/ranks/main'
+	'main_view' => 'admin/ranks/main',
+	'crumbs' => $crumbs
 ]);

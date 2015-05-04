@@ -128,7 +128,7 @@ if (isset($query))
 	//
 
 	// Setup breadcrumbs and results header and footer
-	$forum_page['crumbs'][] = array(config()->o_board_title, link('index'));
+	$crumbs[] = array(config()->o_board_title, link('index'));
 	$action = (isset($action)) ? $action : null;
 	generate_search_crumbs($action);
 
@@ -185,7 +185,8 @@ if (isset($query))
 	template()->render([
 		'main_view' => 'search/search_forums',
 		'main_title' => __('Search options', 'search'),
-		'main_head_pages' => $main_head_pages
+		'main_head_pages' => $main_head_pages,
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -214,7 +215,7 @@ $forum_page['frm-sort'] = array(
 );
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	__('Search')
 );
@@ -267,5 +268,6 @@ if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 }
 
 template()->render([
-	'main_view' => 'search/main'
+	'main_view' => 'search/main',
+	'crumbs' => $crumbs
 ]);

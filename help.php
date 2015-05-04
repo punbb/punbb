@@ -23,7 +23,7 @@ if (!$section) {
 	message(__('Bad request'));
 }
 
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('help')),
 	__('Help', 'help')
 );
@@ -31,5 +31,6 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE', 'help');
 
 template()->render([
-	'main_view' => 'help/main'
+	'main_view' => 'help/main',
+	'crumbs' => $crumbs
 ]);

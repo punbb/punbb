@@ -144,7 +144,7 @@ else if (isset($_GET['del_forum']))
 
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(__('Forum administration', 'admin_common'), link('admin_index')),
 			array(__('Start', 'admin_common'), link('admin_index')),
@@ -158,7 +158,8 @@ else if (isset($_GET['del_forum']))
 		define('FORUM_PAGE', 'admin-forums');
 
 		template()->render([
-			'main_view' => 'admin/forums/delete'
+			'main_view' => 'admin/forums/delete',
+			'crumbs' => $crumbs
 		]);
 	}
 }
@@ -417,7 +418,7 @@ else if (isset($_GET['edit_forum']))
 	$forum_page['item_count'] = $forum_page['group_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Start', 'admin_common'), link('admin_index')),
@@ -457,7 +458,8 @@ else if (isset($_GET['edit_forum']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	template()->render([
-		'main_view' => 'admin/forums/edit'
+		'main_view' => 'admin/forums/edit',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -465,7 +467,7 @@ else if (isset($_GET['edit_forum']))
 $forum_page['fld_count'] = $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index')),
 	array(__('Start', 'admin_common'), link('admin_index')),
@@ -507,5 +509,6 @@ while ($cur_forum = db()->fetch_assoc($result)) {
 }
 
 template()->render([
-	'main_view' => 'admin/forums/main'
+	'main_view' => 'admin/forums/main',
+	'crumbs' => $crumbs
 ]);

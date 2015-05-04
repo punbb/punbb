@@ -319,12 +319,12 @@ if (config()->o_smilies == '1')
 	sprintf(__('Help page'), __('Smilies')).'">'.__('Smilies').'</a></span>';
 
 // Setup breadcrumbs
-$forum_page['crumbs'][] = array(config()->o_board_title, link('index'));
-$forum_page['crumbs'][] = array($cur_posting['forum_name'], link('forum', array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
-if ($tid)
-	$forum_page['crumbs'][] = array($cur_posting['subject'], link('topic', array($tid, sef_friendly($cur_posting['subject']))));
-$forum_page['crumbs'][] = $tid ?
-	__('Post reply', 'post') : __('Post new topic', 'post');
+$crumbs[] = array(config()->o_board_title, link('index'));
+$crumbs[] = array($cur_posting['forum_name'], link('forum', array($cur_posting['id'], sef_friendly($cur_posting['forum_name']))));
+if ($tid) {
+	$crumbs[] = array($cur_posting['subject'], link('topic', array($tid, sef_friendly($cur_posting['subject']))));
+}
+$crumbs[] = $tid? __('Post reply', 'post') : __('Post new topic', 'post');
 
 ($hook = get_hook('po_pre_header_load')) ? eval($hook) : null;
 
@@ -366,5 +366,6 @@ if ($tid && config()->o_topic_review != '0') {
 }
 
 template()->render([
-	'main_view' => 'post/main'
+	'main_view' => 'post/main',
+	'crumbs' => $crumbs
 ]);

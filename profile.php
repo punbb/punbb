@@ -117,8 +117,7 @@ if ($action == 'change_pass')
 			$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 			$forum_page['form_action'] = link('change_password_key', array($id, $key));
 
-			// Setup breadcrumbs
-			$forum_page['crumbs'] = array(
+			$crumbs = array(
 				array(config()->o_board_title, link('index')),
 				array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), link('profile_about', $id)),
 				($forum_page['own_profile']) ? __('Change your password', 'profile') :
@@ -130,7 +129,8 @@ if ($action == 'change_pass')
 			define('FORUM_PAGE', 'profile-changepass');
 
 			template()->render([
-				'main_view' => 'profile/profile_changepass'
+				'main_view' => 'profile/profile_changepass',
+				'crumbs' => $crumbs
 			]);
 		}
 	}
@@ -210,7 +210,7 @@ if ($action == 'change_pass')
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(sprintf(__('Users profile', 'profile'), $user['username']), link('profile_about', $id)),
 		($forum_page['own_profile']) ? __('Change your password', 'profile') :
@@ -222,7 +222,8 @@ if ($action == 'change_pass')
 	define('FORUM_PAGE', 'profile-changepass');
 
 	template()->render([
-		'main_view' => 'profile/profile_changepass2'
+		'main_view' => 'profile/profile_changepass2',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -398,7 +399,7 @@ else if ($action == 'change_email')
 	$forum_page['frm_info'] = '<p class="important"><span>' . __('E-mail info', 'profile') . '</span></p>';
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section about', 'profile')), link('profile_about', $id)),
 		($forum_page['own_profile']) ? __('Change your e-mail', 'profile') : sprintf(__('Change user e-mail', 'profile'), forum_htmlencode($user['username']))
@@ -409,7 +410,8 @@ else if ($action == 'change_email')
 	define('FORUM_PAGE', 'profile-changemail');
 
 	template()->render([
-		'main_view' => 'profile/profile_changemail'
+		'main_view' => 'profile/profile_changemail',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -457,7 +459,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(sprintf(__('Users profile', 'profile'), $user['username'], __('Section admin', 'profile')), link('profile_admin', $id)),
 		__('Delete user', 'profile')
@@ -468,7 +470,8 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	define('FORUM_PAGE', 'dialogue');
 
 	template()->render([
-		'main_view' => 'profile/dialogue'
+		'main_view' => 'profile/dialogue',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -1282,7 +1285,7 @@ if (user()->id != $id &&
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		sprintf(__('Users profile', 'profile'), $user['username'])
 	);
@@ -1295,12 +1298,13 @@ if (user()->id != $id &&
 	define('FORUM_PAGE', 'profile');
 
 	template()->render([
-		'main_view' => 'profile/profile'
+		'main_view' => 'profile/profile',
+		'crumbs' => $crumbs
 	]);
 }
 else {
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		sprintf(__('Users profile', 'profile'), $user['username'])
 	);
@@ -1337,7 +1341,7 @@ else {
 
 	if ($section == 'about') {
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			sprintf(__('Section about', 'profile'))
@@ -1571,12 +1575,13 @@ else {
 
 		template()->render([
 			'main_view' => 'profile/profile_about',
-			'main_menu' => $main_menu
+			'main_menu' => $main_menu,
+			'crumbs' => $crumbs
 		]);
 	}
 	else if ($section == 'identity') {
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section identity', 'profile')
@@ -1601,7 +1606,8 @@ else {
 		define('FORUM_PAGE', 'profile-identity');
 
 		template()->render([
-			'main_view' => 'profile/profile_identity'
+			'main_view' => 'profile/profile_identity',
+			'crumbs' => $crumbs
 		]);
 	}
 
@@ -1611,7 +1617,7 @@ else {
 		$forum_page['languages'] = get_language_packs();
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section settings', 'profile')
@@ -1631,19 +1637,18 @@ else {
 		define('FORUM_PAGE', 'profile-settings');
 
 		template()->render([
-			'main_view' => 'profile/profile_settings'
+			'main_view' => 'profile/profile_settings',
+			'crumbs' => $crumbs
 		]);
 	}
-
-	else if ($section == 'signature' && config()->o_signatures == '1')
-	{
+	else if ($section == 'signature' && config()->o_signatures == '1') {
 		$forum_page['sig_info'][] = '<li>' . __('Signature info', 'profile') . '</li>';
 
 		if ($user['signature'] != '')
 			$forum_page['sig_demo'] = $parsed_signature;
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section signature', 'profile')
@@ -1675,16 +1680,15 @@ else {
 		define('FORUM_PAGE', 'profile-signature');
 
 		template()->render([
-			'main_view' => 'profile/profile_signature'
+			'main_view' => 'profile/profile_signature',
+			'crumbs' => $crumbs
 		]);
 	}
-
-	else if ($section == 'avatar' && config()->o_avatars == '1')
-	{
+	else if ($section == 'avatar' && config()->o_avatars == '1') {
 		$forum_page['avatar_markup'] = generate_avatar_markup($id, $user['avatar'], $user['avatar_width'], $user['avatar_height'], $user['username'], TRUE);
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section avatar', 'profile')
@@ -1703,8 +1707,7 @@ else {
 		// Setup form information
 		$forum_page['frm_info'] = array();
 
-		if (!empty($forum_page['avatar_markup']))
-		{
+		if (!empty($forum_page['avatar_markup'])) {
 			$forum_page['frm_info']['avatar_replace'] = '<li><span>'.
 				__('Avatar info replace', 'profile') . '</span></li>';
 			$forum_page['frm_info']['avatar_type'] = '<li><span>'.
@@ -1713,8 +1716,7 @@ else {
 				sprintf(__('Avatar info size', 'profile'), config()->o_avatars_width, config()->o_avatars_height, forum_number_format(config()->o_avatars_size), forum_number_format(ceil(config()->o_avatars_size / 1024))).'</span></li>';
 			$forum_page['avatar_demo'] = $forum_page['avatar_markup'];
 		}
-		else
-		{
+		else {
 			$forum_page['frm_info']['avatar_none'] = '<li><span>'.
 				__('Avatar info none', 'profile') . '</span></li>';
 			$forum_page['frm_info']['avatar_info'] = '<li><span>'.
@@ -1728,17 +1730,18 @@ else {
 		define('FORUM_PAGE', 'profile-avatar');
 
 		template()->render([
-			'main_view' => 'profile/profile_avatar'
+			'main_view' => 'profile/profile_avatar',
+			'crumbs' => $crumbs
 		]);
 	}
-
-	else if ($section == 'admin')
-	{
-		if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' || user()->g_mod_ban_users == '0' || user()->id == $id))
+	else if ($section == 'admin') {
+		if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' ||
+				user()->g_mod_ban_users == '0' || user()->id == $id)) {
 			message(__('Bad request'));
+		}
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(sprintf(__('Users profile', 'profile'), $user['username']), link('user', $id)),
 			__('Section admin', 'profile')
@@ -1810,7 +1813,8 @@ else {
 		}
 
 		template()->render([
-			'main_view' => 'profile/profile_admin'
+			'main_view' => 'profile/profile_admin',
+			'crumbs' => $crumbs
 		]);
 	}
 

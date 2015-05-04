@@ -5,7 +5,7 @@ namespace punbb;
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo end($forum_page['crumbs']) ?> "<?php echo forum_htmlencode($ext_data['title']) ?>"</span></h2>
+		<h2 class="hn"><span><?php echo end($crumbs) ?> "<?php echo forum_htmlencode($ext_data['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $base_url ?>/admin/extensions.php?section=manage&amp;uninstall=<?php echo $id ?>">

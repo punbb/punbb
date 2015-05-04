@@ -108,7 +108,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Extensions', 'admin_common'), link('admin_extensions_manage')),
@@ -247,7 +247,8 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 				define('FORUM_PAGE', 'admin-extensions-manage');
 
 			template()->render([
-				'main_view' => 'admin/ext/install_notices'
+				'main_view' => 'admin/ext/install_notices',
+				'crumbs' => $crumbs
 			]);
 		}
 		else
@@ -277,7 +278,8 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		define('FORUM_PAGE', 'admin-extensions-manage');
 
 	template()->render([
-		'main_view' => 'admin/ext/install'
+		'main_view' => 'admin/ext/install',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -304,8 +306,7 @@ else if (isset($_GET['uninstall']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 	$ext_data = db()->fetch_assoc($result);
 
-	if (!$ext_data)
-	{
+	if (!$ext_data) {
 		message(__('Bad request'));
 	}
 
@@ -326,7 +327,7 @@ else if (isset($_GET['uninstall']))
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Extensions', 'admin_common'), link('admin_extensions_manage')),
@@ -384,7 +385,8 @@ else if (isset($_GET['uninstall']))
 			define('FORUM_PAGE', 'admin-extensions-manage');
 
 			template()->render([
-				'main_view' => 'admin/ext/uninstall_notices'
+				'main_view' => 'admin/ext/uninstall_notices',
+				'crumbs' => $crumbs
 			]);
 		}
 		else
@@ -414,12 +416,11 @@ else if (isset($_GET['uninstall']))
 			define('FORUM_PAGE', 'admin-extensions-manage');
 
 		template()->render([
-			'main_view' => 'admin/ext/uninstall'
+			'main_view' => 'admin/ext/uninstall',
+			'crumbs' => $crumbs
 		]);
 	}
 }
-
-
 // Enable or disable an extension
 else if (isset($_GET['flip']))
 {
@@ -544,15 +545,14 @@ $query = array(
 
 ($hook = get_hook('aex_qr_get_all_extensions')) ? eval($hook) : null;
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
-while ($cur_ext = db()->fetch_assoc($result))
+while ($cur_ext = db()->fetch_assoc($result)) {
 	$inst_exts[$cur_ext['id']] = $cur_ext;
-
+}
 
 // Hotfixes list
-if ($section == 'hotfixes')
-{
+if ($section == 'hotfixes') {
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Extensions', 'admin_common'), link('admin_extensions_manage')),
@@ -565,7 +565,8 @@ if ($section == 'hotfixes')
 	define('FORUM_PAGE', 'admin-extensions-hotfixes');
 
 	template()->render([
-		'main_view' => 'admin/ext/hotfixes'
+		'main_view' => 'admin/ext/hotfixes',
+		'crumbs' => $crumbs
 	]);
 }
 // Extensions list
@@ -607,7 +608,7 @@ else
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Extensions', 'admin_common'), link('admin_extensions_manage')),
@@ -620,6 +621,7 @@ else
 	define('FORUM_PAGE', 'admin-extensions-manage');
 
 	template()->render([
-		'main_view' => 'admin/ext/manage'
+		'main_view' => 'admin/ext/manage',
+		'crumbs' => $crumbs
 	]);
 }

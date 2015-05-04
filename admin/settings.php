@@ -270,7 +270,7 @@ if (!$section || $section == 'setup')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
@@ -291,7 +291,7 @@ else if ($section == 'features')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
@@ -311,7 +311,7 @@ else if ($section == 'announcements')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
@@ -331,7 +331,7 @@ else if ($section == 'registration')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
@@ -352,7 +352,7 @@ else if ($section == 'maintenance')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Management', 'admin_common'), link('admin_reports')),
@@ -373,7 +373,7 @@ else if ($section == 'email')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Settings', 'admin_common'), link('admin_settings_setup')),
@@ -394,5 +394,6 @@ else {
 ($hook = get_hook('aop_end')) ? eval($hook) : null;
 
 template()->render([
-	'main_view' => $main_view
+	'main_view' => $main_view,
+	'crumbs' => $crumbs
 ]);

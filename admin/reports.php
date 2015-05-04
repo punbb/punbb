@@ -48,14 +48,14 @@ if (isset($_POST['mark_as_read']))
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Management', 'admin_common'), link('admin_reports'));
+	$crumbs[] = array(__('Management', 'admin_common'), link('admin_reports'));
 }
-$forum_page['crumbs'][] = array(__('Reports', 'admin_common'), link('admin_reports'));
+$crumbs[] = array(__('Reports', 'admin_common'), link('admin_reports'));
 
 ($hook = get_hook('arp_pre_header_load')) ? eval($hook) : null;
 
@@ -136,5 +136,6 @@ while ($cur_report = db()->fetch_assoc($result)) {
 }
 
 template()->render([
-	'main_view' => 'admin/reports/main'
+	'main_view' => 'admin/reports/main',
+	'crumbs' => $crumbs
 ]);

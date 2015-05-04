@@ -5,8 +5,7 @@ namespace punbb;
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo end($forum_page['crumbs']).' '.
-			__('To new forum', 'misc') ?></span></h2>
+		<h2 class="hn"><span><?= end($crumbs) . ' ' . __('To new forum', 'misc') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">

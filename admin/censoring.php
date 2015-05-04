@@ -130,14 +130,14 @@ if (!defined('FORUM_CENSORS_LOADED')) {
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Settings', 'admin_common'), link('admin_settings_setup'));
+	$crumbs[] = array(__('Settings', 'admin_common'), link('admin_settings_setup'));
 }
-$forum_page['crumbs'][] = array(__('Censoring', 'admin_common'), link('admin_censoring'));
+$crumbs[] = array(__('Censoring', 'admin_common'), link('admin_censoring'));
 
 
 ($hook = get_hook('acs_pre_header_load')) ? eval($hook) : null;
@@ -146,5 +146,6 @@ define('FORUM_PAGE_SECTION', 'settings');
 define('FORUM_PAGE', 'admin-censoring');
 
 template()->render([
-	'main_view' => 'admin/censoring/main'
+	'main_view' => 'admin/censoring/main',
+	'crumbs' => $crumbs
 ]);

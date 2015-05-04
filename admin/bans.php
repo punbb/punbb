@@ -139,16 +139,15 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	// Setup the form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
-	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+		$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), link('admin_bans'));
-	$forum_page['crumbs'][] = __('Ban advanced', 'admin_bans');
+	$crumbs[] = array(__('Bans', 'admin_common'), link('admin_bans'));
+	$crumbs[] = __('Ban advanced', 'admin_bans');
 
 	($hook = get_hook('aba_add_edit_ban_pre_header_load')) ? eval($hook) : null;
 
@@ -156,7 +155,8 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	define('FORUM_PAGE', 'admin-bans');
 
 	template()->render([
-		'main_view' => 'admin/bans/edit'
+		'main_view' => 'admin/bans/edit',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -326,16 +326,14 @@ $forum_page['hidden_fields'] = array(
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 );
 
-// Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+	$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 }
-$forum_page['crumbs'][] = array(__('Bans', 'admin_common'), link('admin_bans'));
-
+$crumbs[] = array(__('Bans', 'admin_common'), link('admin_bans'));
 
 // Fetch user count
 $query = array(
@@ -398,5 +396,6 @@ if ($forum_page['num_bans'] > 0) {
 }
 
 template()->render([
-	'main_view' => 'admin/bans/main'
+	'main_view' => 'admin/bans/main',
+	'crumbs' => $crumbs
 ]);

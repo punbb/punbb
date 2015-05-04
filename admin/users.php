@@ -46,15 +46,15 @@ if (isset($_GET['ip_stats'])) {
 	$forum_page['num_users'] = count($founded_ips);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+		$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), link('admin_users'));
-	$forum_page['crumbs'][] = __('User search results', 'admin_users');
+	$crumbs[] = array(__('Searches', 'admin_common'), link('admin_users'));
+	$crumbs[] = __('User search results', 'admin_users');
 
 	($hook = get_hook('aus_ip_stats_pre_header_load')) ? eval($hook) : null;
 
@@ -62,7 +62,8 @@ if (isset($_GET['ip_stats'])) {
 	define('FORUM_PAGE', 'admin-iresults');
 
 	template()->render([
-		'main_view' => 'admin/users/stats'
+		'main_view' => 'admin/users/stats',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -96,15 +97,15 @@ else if (isset($_GET['show_users']))
 	$forum_page['num_users'] = count($users);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+		$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), link('admin_users'));
-	$forum_page['crumbs'][] = __('User search results', 'admin_users');
+	$crumbs[] = array(__('Searches', 'admin_common'), link('admin_users'));
+	$crumbs[] = __('User search results', 'admin_users');
 
 	($hook = get_hook('aus_show_users_pre_header_load')) ? eval($hook) : null;
 
@@ -133,13 +134,12 @@ else if (isset($_GET['show_users']))
 	}
 
 	template()->render([
-		'main_view' => 'admin/users/show'
+		'main_view' => 'admin/users/show',
+		'crumbs' => $crumbs
 	]);
 }
-
-
-else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) || isset($_POST['delete_users_cancel']))
-{
+else if (isset($_POST['delete_users']) ||
+		isset($_POST['delete_users_comply']) || isset($_POST['delete_users_cancel'])) {
 	// User pressed the cancel button
 	if (isset($_POST['delete_users_cancel']))
 		redirect(link('admin_users'), __('Cancel redirect', 'admin_common'));
@@ -197,7 +197,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Users', 'admin_common'), link('admin_users')),
@@ -211,18 +211,19 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	define('FORUM_PAGE', 'admin-users');
 
 	template()->render([
-		'main_view' => 'admin/users/delete'
+		'main_view' => 'admin/users/delete',
+		'crumbs' => $crumbs
 	]);
 }
-
-
-else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
-{
-	if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' || user()->g_mod_ban_users == '0'))
+else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply'])) {
+	if (user()->g_id != FORUM_ADMIN && (user()->g_moderator != '1' ||
+			user()->g_mod_ban_users == '0')) {
 		message(__('No permission'));
+	}
 
-	if (empty($_POST['users']))
+	if (empty($_POST['users'])) {
 		message(__('No users selected', 'admin_users'));
+	}
 
 	($hook = get_hook('aus_ban_users_selected')) ? eval($hook) : null;
 
@@ -319,15 +320,15 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+		$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), link('admin_users'));
-	$forum_page['crumbs'][] = __('Ban users', 'admin_users');
+	$crumbs[] = array(__('Searches', 'admin_common'), link('admin_users'));
+	$crumbs[] = __('Ban users', 'admin_users');
 
 	($hook = get_hook('aus_ban_users_pre_header_load')) ? eval($hook) : null;
 
@@ -335,13 +336,12 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	define('FORUM_PAGE', 'admin-users');
 
 	template()->render([
-		'main_view' => 'admin/users/ban_users'
+		'main_view' => 'admin/users/ban_users',
+		'crumbs' => $crumbs
 	]);
 }
-
-
-else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) || isset($_POST['change_group_cancel']))
-{
+else if (isset($_POST['change_group']) ||
+		isset($_POST['change_group_comply']) || isset($_POST['change_group_cancel'])) {
 	if (user()->g_id != FORUM_ADMIN) {
 		message(__('No permission'));
 	}
@@ -404,7 +404,7 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Users', 'admin_common'), link('admin_users')),
@@ -427,13 +427,11 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	template()->render([
-		'main_view' => 'admin/users/change_group'
+		'main_view' => 'admin/users/change_group',
+		'crumbs' => $crumbs
 	]);
 }
-
-
-else if (isset($_GET['find_user']))
-{
+else if (isset($_GET['find_user'])) {
 	$form = isset($_GET['form']) ? $_GET['form'] : array();
 
 	// trim() all elements in $form
@@ -559,15 +557,15 @@ else if (isset($_GET['find_user']))
 	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($forum_page['num_users']));
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index'))
 	);
 	if (user()->g_id == FORUM_ADMIN) {
-		$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+		$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 	}
-	$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), link('admin_users'));
-	$forum_page['crumbs'][] = __('User search results', 'admin_users');
+	$crumbs[] = array(__('Searches', 'admin_common'), link('admin_users'));
+	$crumbs[] = __('User search results', 'admin_users');
 
 	// Generate paging
 	$forum_page['page_post']['paging'] =
@@ -598,26 +596,25 @@ else if (isset($_GET['find_user']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	template()->render([
-		'main_view' => 'admin/users/find'
+		'main_view' => 'admin/users/find',
+		'crumbs' => $crumbs
 	]);
 }
 
-
 ($hook = get_hook('aus_new_action')) ? eval($hook) : null;
-
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Users', 'admin_common'), link('admin_users'));
+	$crumbs[] = array(__('Users', 'admin_common'), link('admin_users'));
 }
-$forum_page['crumbs'][] = array(__('Searches', 'admin_common'), link('admin_users'));
+$crumbs[] = array(__('Searches', 'admin_common'), link('admin_users'));
 
 ($hook = get_hook('aus_search_form_pre_header_load')) ? eval($hook) : null;
 
@@ -634,5 +631,6 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
-	'main_view' => 'admin/users/search'
+	'main_view' => 'admin/users/search',
+	'crumbs' => $crumbs
 ]);

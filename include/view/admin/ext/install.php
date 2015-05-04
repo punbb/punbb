@@ -6,7 +6,7 @@ global $errors;
 ($hook = get_hook('aex_install_output_start')) ? eval($hook) : null;
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo end($forum_page['crumbs']) ?> "<?php echo forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
+		<h2 class="hn"><span><?php echo end($crumbs) ?> "<?php echo forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
 

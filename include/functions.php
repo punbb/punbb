@@ -2864,7 +2864,7 @@ function csrf_confirm_form()
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		__('Confirm action')
 	);
@@ -2888,7 +2888,8 @@ function csrf_confirm_form()
 	define('FORUM_PAGE', 'dialogue');
 
 	template()->render([
-		'main_view' => 'partial/confirm_form'
+		'main_view' => 'partial/confirm_form',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -2922,7 +2923,7 @@ function message($message, $link = '', $heading = '') {
 			$heading = __('Forum message');
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			__('Forum message')
 		);
@@ -2932,7 +2933,8 @@ function message($message, $link = '', $heading = '') {
 		define('FORUM_PAGE', 'message');
 
 		template()->render([
-			'main_view' => 'partial/message'
+			'main_view' => 'partial/message',
+			'crumbs' => $crumbs
 		]);
 	}
 

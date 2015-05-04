@@ -132,14 +132,14 @@ else
 	$php_accelerator = __('Not applicable', 'admin_index');
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index'))
 );
 if (user()->g_id == FORUM_ADMIN) {
-	$forum_page['crumbs'][] = array(__('Start', 'admin_common'), link('admin_index'));
+	$crumbs[] = array(__('Start', 'admin_common'), link('admin_index'));
 }
-$forum_page['crumbs'][] = array(__('Information', 'admin_common'), link('admin_index'));
+$crumbs[] = array(__('Information', 'admin_common'), link('admin_index'));
 
 ($hook = get_hook('ain_pre_header_load')) ? eval($hook) : null;
 
@@ -149,5 +149,6 @@ define('FORUM_PAGE', 'admin-information');
 $forum_page['item_count'] = 0;
 
 template()->render([
-	'main_view' => 'admin/index/main'
+	'main_view' => 'admin/index/main',
+	'crumbs' => $crumbs
 ]);

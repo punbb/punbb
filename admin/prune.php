@@ -108,7 +108,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Management', 'admin_common'), link('admin_reports')),
@@ -122,18 +122,16 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	define('FORUM_PAGE', 'admin-prune');
 
 	template()->render([
-		'main_view' => 'admin/prune/comply'
+		'main_view' => 'admin/prune/comply',
+		'crumbs' => $crumbs
 	]);
 }
-
-
-else
-{
+else {
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Management', 'admin_common'), link('admin_reports')),
@@ -161,6 +159,7 @@ else
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	template()->render([
-		'main_view' => 'admin/prune/main'
+		'main_view' => 'admin/prune/main',
+		'crumbs' => $crumbs
 	]);
 }

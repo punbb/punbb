@@ -39,7 +39,7 @@ else if (config()->o_rules == '1' && !isset($_GET['agree']) && !isset($_POST['fo
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Register'), link('register')),
 		__('Rules')
@@ -50,7 +50,8 @@ else if (config()->o_rules == '1' && !isset($_GET['agree']) && !isset($_POST['fo
 	define('FORUM_PAGE', 'rules-register');
 
 	template()->render([
-		'main_view' => 'register/rules'
+		'main_view' => 'register/rules',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -254,7 +255,7 @@ if (config()->o_regs_verify != '0')
 		__('Reg e-mail info', 'profile') . '</p>';
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	sprintf(__('Register at', 'profile'), config()->o_board_title)
 );
@@ -263,11 +264,11 @@ $forum_page['crumbs'] = array(
 assets()->add_js($base_url.'/include/js/min/punbb.timezone.min.js');
 assets()->add_js('PUNBB.timezone.detect_on_register_form();', array('type' => 'inline'));
 
-
 ($hook = get_hook('rg_register_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'register');
 
 template()->render([
-	'main_view' => 'register/main'
+	'main_view' => 'register/main',
+	'crumbs' => $crumbs
 ]);

@@ -166,7 +166,7 @@ else
 $forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array($cur_post['forum_name'], link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
 	array($cur_post['subject'], link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
@@ -178,5 +178,6 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE', 'postdelete');
 
 template()->render([
-	'main_view' => 'delete/main'
+	'main_view' => 'delete/main',
+	'crumbs' => $crumbs
 ]);

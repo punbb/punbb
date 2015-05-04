@@ -198,7 +198,7 @@ if (!user()->is_guest && !empty($topics))
 }
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	$cur_forum['forum_name']
 );
@@ -223,5 +223,6 @@ template()->render([
 		link('forum', array($id, sef_friendly($cur_forum['forum_name']))) .
 		'" rel="bookmark" title="' . __('Permalink forum', 'forum') . '">' .
 		forum_htmlencode($cur_forum['forum_name']) . '</a>',
-	'main_head_pages' => $main_head_pages
+	'main_head_pages' => $main_head_pages,
+	'crumbs' => $crumbs
 ]);

@@ -245,7 +245,7 @@ if ($forum_page['is_admmod']) {
 }
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array($cur_topic['forum_name'], link('forum', array($cur_topic['forum_id'], sef_friendly($cur_topic['forum_name'])))),
 	$cur_topic['subject']
@@ -344,5 +344,6 @@ template()->render([
 	'main_view' => 'viewtopic/main',
 	'show_qpost' => $show_qpost,
 	'main_title' => $main_title,
-	'main_head_pages' => $main_head_pages
+	'main_head_pages' => $main_head_pages,
+	'crumbs' => $crumbs
 ]);

@@ -199,7 +199,7 @@ if (isset($_GET['tid']))
 		);
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 			array($cur_topic['subject'], link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
@@ -211,7 +211,8 @@ if (isset($_GET['tid']))
 		define('FORUM_PAGE', 'dialogue');
 
 		template()->render([
-			'main_view' => 'moderate/dialogue'
+			'main_view' => 'moderate/dialogue',
+			'crumbs' => $crumbs
 		]);
 	}
 	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
@@ -306,7 +307,7 @@ if (isset($_GET['tid']))
 		);
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 			array($cur_topic['subject'], link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
@@ -318,7 +319,8 @@ if (isset($_GET['tid']))
 		define('FORUM_PAGE', 'dialogue');
 
 		template()->render([
-			'main_view' => 'moderate/dialogue2'
+			'main_view' => 'moderate/dialogue2',
+			'crumbs' => $crumbs
 		]);
 	}
 
@@ -364,7 +366,7 @@ if (isset($_GET['tid']))
 	$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array($cur_topic['subject'], link('topic', array($tid, sef_friendly($cur_topic['subject'])))),
@@ -415,10 +417,10 @@ if (isset($_GET['tid']))
 	template()->render([
 		'main_view' => 'moderate/modtopic',
 		'main_title' => sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']))
-		'main_head_pages' => $main_head_pages
+		'main_head_pages' => $main_head_pages,
+		'crumbs' => $crumbs
 	]);
 }
-
 
 // Move one or more topics
 if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
@@ -607,13 +609,15 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'][] = array(config()->o_board_title, link('index'));
-	$forum_page['crumbs'][] = array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name']))));
-	if ($action == 'single')
-		$forum_page['crumbs'][] = array($subject, link('topic', array($topics, sef_friendly($subject))));
-	else
-		$forum_page['crumbs'][] = array(__('Moderate forum', 'misc'), link('moderate_forum', $fid));
-	$forum_page['crumbs'][] = ($action == 'single') ?
+	$crumbs[] = array(config()->o_board_title, link('index'));
+	$crumbs[] = array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name']))));
+	if ($action == 'single') {
+		$crumbs[] = array($subject, link('topic', array($topics, sef_friendly($subject))));
+	}
+	else {
+		$crumbs[] = array(__('Moderate forum', 'misc'), link('moderate_forum', $fid));
+	}
+	$crumbs[] = ($action == 'single')?
 		__('Move topic', 'misc') : __('Move topics', 'misc');
 
 	($hook = get_hook('mr_move_topics_pre_header_load')) ? eval($hook) : null;
@@ -622,7 +626,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	template()->render([
 		'main_view' => 'moderate/dialogue3',
-		'main_title' => end($forum_page['crumbs']) . ' ' . __('To new forum', 'misc')
+		'main_title' => end($crumbs) . ' ' . __('To new forum', 'misc'),
+		'crumbs' => $crumbs
 	]);
 }
 // Merge topics
@@ -721,7 +726,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array(__('Moderate forum', 'misc'), link('moderate_forum', $fid)),
@@ -733,7 +738,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	define('FORUM_PAGE', 'dialogue');
 
 	template()->render([
-		'main_view' => 'moderate/dialogue4'
+		'main_view' => 'moderate/dialogue4',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -856,7 +862,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	);
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array(__('Moderate forum', 'misc'), link('moderate_forum', $fid)),
@@ -868,7 +874,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	define('FORUM_PAGE', 'dialogue');
 
 	template()->render([
-		'main_view' => 'moderate/dialogue5'
+		'main_view' => 'moderate/dialogue5',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -1127,7 +1134,7 @@ $forum_page['fld_count'] = 0;
 $forum_page['form_action'] = link('moderate_forum', $fid);
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array($cur_forum['forum_name'], link('forum', array($fid, sef_friendly($cur_forum['forum_name'])))),
 	sprintf(__('Moderate forum head', 'misc'), forum_htmlencode($cur_forum['forum_name']))
@@ -1152,5 +1159,6 @@ define('FORUM_PAGE', 'modforum');
 
 template()->render([
 	'main_view' => 'moderate/modforum',
-	'main_head_pages' => $main_head_pages
+	'main_head_pages' => $main_head_pages,
+	'crumbs' => $crumbs
 ]);

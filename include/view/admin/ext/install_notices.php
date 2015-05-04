@@ -5,7 +5,7 @@ namespace punbb;
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?= end($forum_page['crumbs']) ?> "<?= forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
+		<h2 class="hn"><span><?= end($crumbs) ?> "<?= forum_htmlencode($ext_data['extension']['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">

@@ -67,7 +67,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Users', 'admin_common'), link('admin_users')),
@@ -81,7 +81,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	define('FORUM_PAGE', 'admin-groups');
 
 	template()->render([
-		'main_view' => 'admin/groups/edit'
+		'main_view' => 'admin/groups/edit',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -359,7 +360,7 @@ else if (isset($_GET['del_group']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Users', 'admin_common'), link('admin_users')),
@@ -383,7 +384,8 @@ else if (isset($_GET['del_group']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	template()->render([
-		'main_view' => 'admin/groups/delete'
+		'main_view' => 'admin/groups/delete',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -392,7 +394,7 @@ else if (isset($_GET['del_group']))
 $forum_page['item_count'] = $forum_page['fld_count'] = $forum_page['group_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index')),
 	array(__('Users', 'admin_common'), link('admin_users')),
@@ -431,5 +433,6 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
-	'main_view' => 'admin/groups/main'
+	'main_view' => 'admin/groups/main',
+	'crumbs' => $crumbs
 ]);

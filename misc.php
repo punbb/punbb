@@ -28,7 +28,7 @@ if ($action == 'rules')
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		__('Rules')
 	);
@@ -38,7 +38,8 @@ if ($action == 'rules')
 	define('FORUM_PAGE', 'rules');
 
 	template()->render([
-		'main_view' => 'misc/rules'
+		'main_view' => 'misc/rules',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -281,7 +282,7 @@ else if (isset($_GET['email']))
 	$forum_page['main_head'] = sprintf(__('Send forum e-mail', 'misc'), forum_htmlencode($recipient_info['username']));
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		sprintf(__('Send forum e-mail', 'misc'), forum_htmlencode($recipient_info['username']))
 	);
@@ -291,7 +292,8 @@ else if (isset($_GET['email']))
 	define('FORUM_PAGE', 'formemail');
 
 	template()->render([
-		'main_view' => 'misc/email'
+		'main_view' => 'misc/email',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -420,21 +422,21 @@ else if (isset($_GET['report']))
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
 	);
 
-	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		__('Report post', 'misc')
 	);
 
 	// Setup main heading
-	$forum_page['main_head'] = end($forum_page['crumbs']);
+	$forum_page['main_head'] = end($crumbs);
 
 	($hook = get_hook('mi_report_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'report');
 
 	template()->render([
-		'main_view' => 'misc/report'
+		'main_view' => 'misc/report',
+		'crumbs' => $crumbs
 	]);
 }
 

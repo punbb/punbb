@@ -274,7 +274,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	$forum_page['form_action'] = link('request_password');
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		__('New password request', 'login')
 	);
@@ -284,7 +284,8 @@ else if ($action == 'forget' || $action == 'forget_2')
 	define ('FORUM_PAGE', 'reqpass');
 
 	template()->render([
-		'main_view' => 'login/reqpass'
+		'main_view' => 'login/reqpass',
+		'crumbs' => $crumbs
 	]);
 }
 
@@ -303,7 +304,7 @@ $forum_page['hidden_fields'] = array(
 );
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	sprintf(__('Login info', 'login'), config()->o_board_title)
 );
@@ -313,5 +314,6 @@ $forum_page['crumbs'] = array(
 define('FORUM_PAGE', 'login');
 
 template()->render([
-	'main_view' => 'login/main'
+	'main_view' => 'login/main',
+	'crumbs' => $crumbs
 ]);

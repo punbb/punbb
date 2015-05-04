@@ -107,7 +107,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 $forum_page['form_action'] = $base_url.'/userlist.php';
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	__('User list')
 );
@@ -159,5 +159,6 @@ $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
 	'main_view' => 'userlist/main',
-	'main_head_pages' => $main_head_pages
+	'main_head_pages' => $main_head_pages,
+	'crumbs' => $crumbs
 ]);

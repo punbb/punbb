@@ -69,7 +69,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at'])) {
 	}
 
 	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
+	$crumbs = array(
 		array(config()->o_board_title, link('index')),
 		array(__('Forum administration', 'admin_common'), link('admin_index')),
 		array(__('Management', 'admin_common'), link('admin_reports')),
@@ -173,8 +173,7 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 $first_id = db()->result($result);
 
-if (is_null($first_id) || $first_id === false)
-{
+if (is_null($first_id) || $first_id === false) {
 	unset($first_id);
 }
 
@@ -182,7 +181,7 @@ if (is_null($first_id) || $first_id === false)
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index')),
 	array(__('Management', 'admin_common'), link('admin_reports')),
@@ -195,5 +194,6 @@ define('FORUM_PAGE_SECTION', 'management');
 define('FORUM_PAGE', 'admin-reindex');
 
 template()->render([
-	'main_view' => 'admin/reindex/main'
+	'main_view' => 'admin/reindex/main',
+	'crumbs' => $crumbs
 ]);

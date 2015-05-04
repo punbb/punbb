@@ -151,7 +151,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		);
 
 		// Setup breadcrumbs
-		$forum_page['crumbs'] = array(
+		$crumbs = array(
 			array(config()->o_board_title, link('index')),
 			array(__('Forum administration', 'admin_common'), link('admin_index')),
 			array(__('Start', 'admin_common'), link('admin_index')),
@@ -165,7 +165,8 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		define('FORUM_PAGE', 'admin-categories');
 
 		template()->render([
-			'main_view' => 'admin/categories/edit'
+			'main_view' => 'admin/categories/edit',
+			'crumbs' => $crumbs
 		]);
 	}
 }
@@ -251,7 +252,7 @@ $forum_page['hidden_fields'] = array(
 );
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
+$crumbs = array(
 	array(config()->o_board_title, link('index')),
 	array(__('Forum administration', 'admin_common'), link('admin_index')),
 	array(__('Start', 'admin_common'), link('admin_index')),
@@ -264,5 +265,6 @@ define('FORUM_PAGE_SECTION', 'start');
 define('FORUM_PAGE', 'admin-categories');
 
 template()->render([
-	'main_view' => 'admin/categories/main'
+	'main_view' => 'admin/categories/main',
+	'crumbs' => $crumbs
 ]);
