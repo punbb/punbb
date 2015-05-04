@@ -44,9 +44,6 @@ if (!user()->is_guest) {
 	$tracked_topics = get_tracked_topics();
 }
 
-// Setup main heading
-$forum_page['main_title'] = forum_htmlencode(config()->o_board_title);
-
 ($hook = get_hook('in_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_ALLOW_INDEX', 1);
@@ -74,5 +71,6 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
-	'main_view' => 'index/main'
+	'main_view' => 'index/main',
+	'main_title' => forum_htmlencode(config()->o_board_title)
 ]);

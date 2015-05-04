@@ -203,12 +203,9 @@ $forum_page['crumbs'] = array(
 	$cur_forum['forum_name']
 );
 
-// Setup main header
-$forum_page['main_title'] = '<a class="permalink" href="'.link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" rel="bookmark" title="'.
-	__('Permalink forum', 'forum') . '">'.forum_htmlencode($cur_forum['forum_name']).'</a>';
-
-if ($forum_page['num_pages'] > 1)
+if ($forum_page['num_pages'] > 1) {
 	$forum_page['main_head_pages'] = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+}
 
 ($hook = get_hook('vf_pre_header_load')) ? eval($hook) : null;
 
@@ -218,5 +215,9 @@ define('FORUM_PAGE', 'viewforum');
 $forum_id = $id;
 
 template()->render([
-	'main_view' => 'viewforum/main'
+	'main_view' => 'viewforum/main',
+	'main_title' => '<a class="permalink" href="' .
+		link('forum', array($id, sef_friendly($cur_forum['forum_name']))) .
+		'" rel="bookmark" title="' . __('Permalink forum', 'forum') . '">' .
+		forum_htmlencode($cur_forum['forum_name']) . '</a>'
 ]);

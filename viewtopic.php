@@ -206,8 +206,7 @@ else {
 		__('No permission', 'topic') . '</p>';
 }
 
-// Setup main options
-$forum_page['main_title'] = __('Topic options', 'topic');
+$main_title = __('Topic options', 'topic');
 $forum_page['main_head_options'] = array(
 	'rss' => '<span class="feed first-item"><a class="feed" href="'.link('topic_rss', $id).'">'.
 		__('RSS topic feed', 'topic') . '</a></span>'
@@ -252,8 +251,7 @@ $forum_page['crumbs'] = array(
 	$cur_topic['subject']
 );
 
-// Setup main heading
-$forum_page['main_title'] = (($cur_topic['closed'] == '1') ?
+$main_title = (($cur_topic['closed'] == '1') ?
 	__('Topic closed', 'topic') . ' ' : '').'<a class="permalink" href="'.link('topic', array($id, sef_friendly($cur_topic['subject']))).'" rel="bookmark" title="'.
 	__('Permalink topic', 'topic') . '">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
@@ -341,5 +339,6 @@ if (!empty($posts_id)) {
 
 template()->render([
 	'main_view' => 'viewtopic/main',
-	'show_qpost' => $show_qpost
+	'show_qpost' => $show_qpost,
+	'main_title' => $main_title
 ]);

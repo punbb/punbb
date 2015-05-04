@@ -371,9 +371,6 @@ if (isset($_GET['tid']))
 		__('Moderate topic', 'topic')
 	);
 
-	// Setup main heading
-	$forum_page['main_title'] = sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']));
-
 	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
 		__('Select all', 'misc') . '</span></span>';
 	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
@@ -412,7 +409,8 @@ if (isset($_GET['tid']))
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	template()->render([
-		'main_view' => 'moderate/modtopic'
+		'main_view' => 'moderate/modtopic',
+		'main_title' => sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']))
 	]);
 }
 
@@ -613,20 +611,15 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	$forum_page['crumbs'][] = ($action == 'single') ?
 		__('Move topic', 'misc') : __('Move topics', 'misc');
 
-	//Setup main heading
-	$forum_page['main_title'] = end($forum_page['crumbs']).' '.
-		__('To new forum', 'misc');
-
 	($hook = get_hook('mr_move_topics_pre_header_load')) ? eval($hook) : null;
 
 	define('FORUM_PAGE', 'dialogue');
 
 	template()->render([
-		'main_view' => 'moderate/dialogue3'
+		'main_view' => 'moderate/dialogue3',
+		'main_title' => end($forum_page['crumbs']) . ' ' . __('To new forum', 'misc')
 	]);
 }
-
-
 // Merge topics
 else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 {

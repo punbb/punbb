@@ -33,7 +33,7 @@ namespace punbb;
 
 			<div class="hr"><hr /></div>
 			<div id="brd-main">
-				<?php template()->helper('main_title') ?>
+				<?php template()->helper('main_title', ['main_title' => $main_title]) ?>
 
 				<?php template()->helper('crumbs_top') ?>
 
