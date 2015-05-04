@@ -35,7 +35,7 @@ namespace punbb;
 			<div id="brd-main">
 				<?php template()->helper('main_title', ['main_title' => $main_title]) ?>
 
-				<?php template()->helper('crumbs_top') ?>
+				<?php template()->helper('crumbs_top', ['crumbs' => $crumbs]) ?>
 
 				<?php template()->helper('main_menu', [
 					'main_menu' => $main_menu
@@ -47,7 +47,7 @@ namespace punbb;
 
 				<?php template()->helper('pagepost_end') ?>
 
-				<?php template()->helper('crumbs_end') ?>
+				<?php template()->helper('crumbs_end', ['crumbs' => $crumbs]) ?>
 			</div>
 
 			<?php
