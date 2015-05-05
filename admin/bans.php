@@ -349,7 +349,7 @@ $forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($forum_page['num_bans']));
 
 // Generate paging
-$forum_page['page_post']['paging'] =
+$page_post['paging'] =
 	'<p class="paging"><span class="pages">' . __('Pages') .
 	'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_bans'],
 		__('Paging separator'), null, true).'</p>';
@@ -397,5 +397,6 @@ if ($forum_page['num_bans'] > 0) {
 
 template()->render([
 	'main_view' => 'admin/bans/main',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page_post' => $page_post
 ]);

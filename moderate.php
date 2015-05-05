@@ -339,7 +339,7 @@ if (isset($_GET['tid']))
 	$forum_page['items_info'] = generate_items_info(__('Posts', 'misc'), ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 	// Generate paging links
-	$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+	$page_post['paging'] = '<p class="paging"><span class="pages">'.
 		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_topic'],
 		__('Paging separator'), array($fid, $tid)).'</p>';
 
@@ -418,7 +418,8 @@ if (isset($_GET['tid']))
 		'main_view' => 'moderate/modtopic',
 		'main_title' => sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']))
 		'main_head_pages' => $main_head_pages,
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'page_post' => $page_post
 	]);
 }
 
@@ -1109,7 +1110,7 @@ if (!user()->is_guest && config()->o_show_dot == '1')
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 // Generate paging links
-$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+$page_post['paging'] = '<p class="paging"><span class="pages">'.
 	__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_forum'],
 		__('Paging separator'), $fid).'</p>';
 
@@ -1160,5 +1161,6 @@ define('FORUM_PAGE', 'modforum');
 template()->render([
 	'main_view' => 'moderate/modforum',
 	'main_head_pages' => $main_head_pages,
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page_post' => $page_post
 ]);

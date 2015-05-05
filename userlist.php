@@ -73,7 +73,7 @@ else
 	$forum_page['items_info'] = __('Users', 'userlist');
 
 // Generate paging links
-$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+$page_post['paging'] = '<p class="paging"><span class="pages">'.
 	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['users_browse'],
 		__('Paging separator'), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'</p>';
 
@@ -160,5 +160,6 @@ $result = db()->query_build($query) or error(__FILE__, __LINE__);
 template()->render([
 	'main_view' => 'userlist/main',
 	'main_head_pages' => $main_head_pages,
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page_post' => $page_post
 ]);

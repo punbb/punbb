@@ -133,14 +133,16 @@ if (isset($query))
 	generate_search_crumbs($action);
 
 	// Generate paging links
-	if ($show_as == 'posts' || $show_as == 'topics')
-		$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+	if ($show_as == 'posts' || $show_as == 'topics') {
+		$page_post['paging'] = '<p class="paging"><span class="pages">'.
 		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $url_type,
 			__('Paging separator'), $search_id).'</p>';
+	}
 
 	// Get topic/forum tracking data
-	if (!user()->is_guest)
+	if (!user()->is_guest) {
 		$tracked_topics = get_tracked_topics();
+	}
 
 	// Navigation links for header and page numbering for title/meta description
 	if ($show_as == 'posts' || $show_as == 'topics')
@@ -186,7 +188,8 @@ if (isset($query))
 		'main_view' => 'search/search_forums',
 		'main_title' => __('Search options', 'search'),
 		'main_head_pages' => $main_head_pages,
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'page_post' => $page_post
 	]);
 }
 

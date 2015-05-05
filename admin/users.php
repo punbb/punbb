@@ -568,7 +568,7 @@ else if (isset($_GET['find_user'])) {
 	$crumbs[] = __('User search results', 'admin_users');
 
 	// Generate paging
-	$forum_page['page_post']['paging'] =
+	$page_post['paging'] =
 		'<p class="paging"><span class="pages">' .
 		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str),
 			__('Paging separator'), null, true).'</p>';
@@ -597,7 +597,8 @@ else if (isset($_GET['find_user'])) {
 
 	template()->render([
 		'main_view' => 'admin/users/find',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'page_post' => $page_post
 	]);
 }
 
@@ -632,5 +633,6 @@ $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 template()->render([
 	'main_view' => 'admin/users/search',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page_post' => $page_post
 ]);

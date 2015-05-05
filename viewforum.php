@@ -155,19 +155,19 @@ if (!empty($topics_id))
 }
 
 // Generate paging/posting links
-$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+$page_post['paging'] = '<p class="paging"><span class="pages">'.
 	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['forum'],
 		__('Paging separator'), array($id, sef_friendly($cur_forum['forum_name']))).'</p>';
 
 if (user()->may_post)
-	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.link('new_topic', $id).'"><span>'.
+	$page_post['posting'] = '<p class="posting"><a class="newpost" href="'.link('new_topic', $id).'"><span>'.
 	__('Post topic', 'forum') . '</span></a></p>';
 else if (user()->is_guest)
-	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	$page_post['posting'] = '<p class="posting">'.
 	sprintf(__('Login to post', 'forum'), '<a href="'.link('login').'">'.
 		__('login').'</a>', '<a href="'.link('register').'">'.__('register').'</a>').'</p>';
 else
-	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	$page_post['posting'] = '<p class="posting">'.
 	__('No permission', 'forum') . '</p>';
 
 // Setup main options
@@ -224,5 +224,6 @@ template()->render([
 		'" rel="bookmark" title="' . __('Permalink forum', 'forum') . '">' .
 		forum_htmlencode($cur_forum['forum_name']) . '</a>',
 	'main_head_pages' => $main_head_pages,
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page_post' => $page_post
 ]);

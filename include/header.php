@@ -45,7 +45,7 @@ if (!defined('FORUM_HEADER')) {
 			define('FORUM_PAGE_TYPE', 'admin-page');
 		}
 		else {
-			if (!empty($forum_page['page_post'])) {
+			if (!empty($page_post)) {
 				define('FORUM_PAGE_TYPE', 'paged-page');
 			}
 			else if (!empty($main_menu)) {

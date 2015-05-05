@@ -183,26 +183,26 @@ if (config()->o_censoring == '1') {
 }
 
 // Generate paging and posting links
-$forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.
+$page_post['paging'] = '<p class="paging"><span class="pages">'.
 	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['topic'],
 		__('Paging separator'), array($id, sef_friendly($cur_topic['subject']))).'</p>';
 
 if (user()->may_post) {
-	$forum_page['page_post']['posting'] = '<p class="posting"><a class="newpost" href="'.link('new_reply', $id).'"><span>'.
+	$page_post['posting'] = '<p class="posting"><a class="newpost" href="'.link('new_reply', $id).'"><span>'.
 	__('Post reply', 'topic') . '</span></a></p>';
 	}
 else if (user()->is_guest) {
-	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	$page_post['posting'] = '<p class="posting">'.
 		sprintf(__('Login to post', 'topic'), '<a href="'.link('login').'">'.
 		__('login').'</a>', '<a href="'.link('register').'">'.
 		__('register').'</a>').'</p>';
 }
 else if ($cur_topic['closed'] == '1') {
-	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	$page_post['posting'] = '<p class="posting">'.
 		__('Topic closed info', 'topic') . '</p>';
 }
 else {
-	$forum_page['page_post']['posting'] = '<p class="posting">'.
+	$page_post['posting'] = '<p class="posting">'.
 		__('No permission', 'topic') . '</p>';
 }
 
@@ -345,5 +345,6 @@ template()->render([
 	'show_qpost' => $show_qpost,
 	'main_title' => $main_title,
 	'main_head_pages' => $main_head_pages,
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page_post' => $page_post
 ]);

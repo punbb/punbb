@@ -41,11 +41,11 @@ namespace punbb;
 					'main_menu' => $main_menu
 				]) ?>
 
-				<?php template()->helper('pagepost_top') ?>
+				<?php template()->helper('pagepost_top', ['page_post' => $page_post]) ?>
 
 				<?php include template()->view($main_view) ?>
 
-				<?php template()->helper('pagepost_end') ?>
+				<?php template()->helper('pagepost_end', ['page_post' => $page_post]) ?>
 
 				<?php template()->helper('crumbs_end', ['crumbs' => $crumbs]) ?>
 			</div>
