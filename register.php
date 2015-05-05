@@ -224,15 +224,12 @@ else if (isset($_POST['form_sent']))
 			($hook = get_hook('rg_register_pre_login_redirect')) ? eval($hook) : null;
 
 			// Must the user verify the registration or do we log him/her in right now?
-			if (config()->o_regs_verify == '1')
-			{
+			if (config()->o_regs_verify == '1') {
 				message(sprintf(__('Reg e-mail', 'profile'), '<a href="mailto:'.forum_htmlencode(config()->o_admin_email).'">'.forum_htmlencode(config()->o_admin_email).'</a>'));
 			}
-			else
-			{
+			else {
 				// Remove cache file with forum stats
-				require FORUM_ROOT . 'include/cache.php';
-				clean_stats_cache();
+				cache()->clean('stats_cache');
 			}
 
 			$expire = time() + config()->o_timeout_visit;

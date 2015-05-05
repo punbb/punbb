@@ -106,13 +106,10 @@ if (defined('PUN') || !isset(config()->o_database_revision) ||
 
 // Load hooks
 global $forum_hooks;
-if (file_exists(FORUM_CACHE_DIR . 'cache_hooks.php')) {
-	include FORUM_CACHE_DIR . 'cache_hooks.php';
-}
-if (!defined('FORUM_HOOKS_LOADED')) {
-	require FORUM_ROOT . 'include/cache.php';
-	generate_hooks_cache();
-	require FORUM_CACHE_DIR . 'cache_hooks.php';
+$cached = cache()->get('cache_hooks');
+if (!$cached) {
+	cache()->generate('hooks_cache');
+	$cached = cache()->get('cache_hooks');
 }
 
 init_new_style_hooks();

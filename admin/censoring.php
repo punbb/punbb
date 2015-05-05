@@ -39,8 +39,7 @@ if (isset($_POST['add_word']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	require FORUM_ROOT . 'include/cache.php';
-	generate_censors_cache();
+	cache()->generate('censors_cache');
 
 	// Add flash message
 	flash()->add_info(__('Censor word added', 'admin_censoring'));
@@ -74,9 +73,7 @@ else if (isset($_POST['update']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	require FORUM_ROOT . 'include/cache.php';
-
-	generate_censors_cache();
+	cache()->generate('censors_cache');
 
 	// Add flash message
 	flash()->add_info(__('Censor word updated', 'admin_censoring'));
@@ -103,8 +100,7 @@ else if (isset($_POST['remove']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	require FORUM_ROOT . 'include/cache.php';
-	generate_censors_cache();
+	cache()->generate('censors_cache');
 
 	// Add flash message
 	flash()->add_info(__('Censor word removed', 'admin_censoring'));
@@ -114,17 +110,12 @@ else if (isset($_POST['remove']))
 	redirect(link('admin_censoring'), __('Censor word removed', 'admin_censoring'));
 }
 
-
 // Load the cached censors
-if (file_exists(FORUM_CACHE_DIR.'cache_censors.php'))
-	include FORUM_CACHE_DIR.'cache_censors.php';
-
-if (!defined('FORUM_CENSORS_LOADED')) {
-	require FORUM_ROOT . 'include/cache.php';
-	generate_censors_cache();
-	require FORUM_CACHE_DIR . 'cache_censors.php';
+$cached = cache()->get('cache_censors');
+if (!$cached) {
+	cache()->generate('censors_cache');
+	$cached = cache()->get('cache_censors');
 }
-
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;

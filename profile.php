@@ -437,8 +437,7 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 		delete_user($id, isset($_POST['delete_posts']));
 
 		// Remove cache file with forum stats
-		require FORUM_ROOT . 'include/cache.php';
-		clean_stats_cache();
+		cache()->clean('stats_cache');
 
 		// Add flash message
 		flash()->add_info(__('User delete redirect', 'profile'));
@@ -1092,8 +1091,7 @@ else if (isset($_POST['form_sent']))
 				}
 
 				// Regenerate the bans cache
-				require FORUM_ROOT . 'include/cache.php';
-				generate_bans_cache();
+				cache()->generate('bans_cache');
 			}
 		}
 

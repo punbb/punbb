@@ -100,28 +100,22 @@ if (config()->o_maintenance && user()->g_id > FORUM_ADMIN &&
 
 // Load cached updates info
 if (user()->g_id == FORUM_ADMIN) {
-	if (file_exists(FORUM_CACHE_DIR . 'cache_updates.php')) {
-		include FORUM_CACHE_DIR . 'cache_updates.php';
-	}
+	$cached = cache()->get('cache_updates');
 	// Regenerate cache only if automatic updates are enabled and if the cache is more than 12 hours old
 	if (config()->o_check_for_updates == '1' &&
-			(!defined('FORUM_UPDATES_LOADED') ||
+			(!$cached ||
 				$forum_updates['cached'] < (time() - 43200))) {
-		require FORUM_ROOT . 'include/cache.php';
-		generate_updates_cache();
-		require FORUM_CACHE_DIR . 'cache_updates.php';
+		cache()->generate('updates_cache');
+		$cached = cache()->get('cache_updates');
 	}
 }
 
 global $forum_bans;
 // Load cached bans
-if (file_exists(FORUM_CACHE_DIR . 'cache_bans.php')) {
-	include FORUM_CACHE_DIR . 'cache_bans.php';
-}
-if (!defined('FORUM_BANS_LOADED')) {
-	require FORUM_ROOT . 'include/cache.php';
-	generate_bans_cache();
-	require FORUM_CACHE_DIR . 'cache_bans.php';
+$cached = cache()->get('cache_bans');
+if (!$cached) {
+	cache()->generate('bans_cache');
+	$cached = cache()->get('cache_bans');
 }
 // Check if current user is banned
 check_bans();

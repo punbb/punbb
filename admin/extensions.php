@@ -232,12 +232,10 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		forum_clear_cache();
 
 		// Regenerate the hooks cache
-		require FORUM_ROOT . 'include/cache.php';
-		generate_hooks_cache();
+		cache()->generate('hooks_cache');
 
 		// Display notices if there are any
-		if (!empty($notices))
-		{
+		if (!empty($notices)) {
 			($hook = get_hook('aex_install_notices_pre_header_load')) ? eval($hook) : null;
 
 			define('FORUM_PAGE_SECTION', 'extensions');
@@ -373,12 +371,10 @@ else if (isset($_GET['uninstall']))
 		forum_clear_cache();
 
 		// Regenerate the hooks cache
-		require FORUM_ROOT . 'include/cache.php';
-		generate_hooks_cache();
+		cache()->generate('hooks_cache');
 
 		// Display notices if there are any
-		if (!empty($notices))
-		{
+		if (!empty($notices)) {
 			($hook = get_hook('aex_uninstall_notices_pre_header_load')) ? eval($hook) : null;
 
 			define('FORUM_PAGE_SECTION', 'extensions');
@@ -515,8 +511,7 @@ else if (isset($_GET['flip']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the hooks cache
-	require FORUM_ROOT . 'include/cache.php';
-	generate_hooks_cache();
+	cache()->generate('hooks_cache');
 
 	// Add flash message
 	if ($section == 'hotfixes')
@@ -601,9 +596,9 @@ else
 		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;
 
 		if ($update_new_versions_cache) {
-			require_once FORUM_ROOT . 'include/cache.php';
-			generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension);
-			include FORUM_CACHE_DIR . 'cache_ext_version_notifications.php';
+			cache()->generate('generate_ext_versions_cache',
+				$inst_exts, $repository_urls, $repository_url_by_extension);
+			cache()->get('cache_ext_version_notifications');
 		}
 	}
 

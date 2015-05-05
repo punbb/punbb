@@ -185,8 +185,7 @@ else if (isset($_POST['delete_users']) ||
 		}
 
 		// Remove cache file with forum stats
-		require FORUM_ROOT . 'include/cache.php';
-		clean_stats_cache();
+		cache()->clean('stats_cache');
 
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
@@ -305,8 +304,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply'])) {
 		}
 
 		// Regenerate the bans cache
-		require FORUM_ROOT . 'include/cache.php';
-		generate_bans_cache();
+		cache()->generate('bans_cache');
 
 		// Add flash message
 		flash()->add_info(__('Users banned', 'admin_users'));

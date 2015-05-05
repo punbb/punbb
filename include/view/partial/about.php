@@ -7,14 +7,10 @@ $user = user();
 // Display the "Jump to" drop list
 if ($user->g_read_board == '1' && $config->o_quickjump == '1') {
 	// Load cached quickjump
-	if (file_exists(FORUM_CACHE_DIR . 'cache_quickjump_' . $user->g_id . '.php')) {
-		include FORUM_CACHE_DIR . 'cache_quickjump_' . $user->g_id . '.php';
-	}
-
-	if (!defined('FORUM_QJ_LOADED')) {
-		require FORUM_ROOT . 'include/cache.php';
-		generate_quickjump_cache($user->g_id);
-		require FORUM_CACHE_DIR . 'cache_quickjump_' . $user->g_id . '.php';
+	$cached = cache()->get('cache_quickjump_' . $user->g_id);
+	if (!$cached) {
+		cache()->generate('quickjump_cache', $user->g_id);
+		$cached = cache()->get('cache_quickjump_' . $user->g_id);
 	}
 }
 

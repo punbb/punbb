@@ -116,8 +116,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Regenerate the quickjump cache
-		require FORUM_ROOT . 'include/cache.php';
-		generate_quickjump_cache();
+		cache()->generate('quickjump_cache');
 
 		// Add flash message
 		flash()->add_info(__('Category deleted', 'admin_categories'));
@@ -215,8 +214,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 	}
 
 	// Regenerate the quickjump cache
-	require FORUM_ROOT.'include/cache.php';
-	generate_quickjump_cache();
+	cache()->generate('quickjump_cache');
 
 	// Add flash message
 	flash()->add_info(__('Categories updated', 'admin_categories'));

@@ -213,8 +213,7 @@ else if (isset($_POST['add_edit_group']))
 	}
 
 	// Regenerate the quickjump cache
-	require FORUM_ROOT . 'include/cache.php';
-	generate_quickjump_cache();
+	cache()->generate('quickjump_cache');
 
 	// Add flash message
 	flash()->add_info((($_POST['mode'] == 'edit') ? __('Group edited', 'admin_groups') : __('Group added', 'admin_groups')));
@@ -260,8 +259,7 @@ else if (isset($_POST['set_default_group']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the config cache
-	require FORUM_ROOT . 'include/cache.php';
-	generate_config_cache();
+	cache()->generate('config_cache');
 
 	// Add flash message
 	flash()->add_info(__('Default group set', 'admin_groups'));
@@ -345,8 +343,7 @@ else if (isset($_GET['del_group']))
 		clean_forum_moderators();
 
 		// Regenerate the quickjump cache
-		require FORUM_ROOT . 'include/cache.php';
-		generate_quickjump_cache();
+		cache()->generate('quickjump_cache');
 
 		// Add flash message
 		flash()->add_info(__('Group removed', 'admin_groups'));

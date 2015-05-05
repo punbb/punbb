@@ -41,19 +41,24 @@ function rewrite() {
 	return PUNBB::get('rewrite');
 }
 
+function cache() {
+	return PUNBB::get('cache');
+}
+
 // configure
+
+PUNBB::set('cache', function () {
+	return new Cache();
+});
 
 PUNBB::set('config', function () {
 	// Load cached config
-	if (file_exists(FORUM_CACHE_DIR . 'cache_config.php')) {
-		$config = (object)include FORUM_CACHE_DIR . 'cache_config.php';
-	}
+	$config = cache()->get('cache_config');
 	if (empty($config)) {
-		require FORUM_ROOT . 'include/cache.php';
-		generate_config_cache();
-		$config = (object)include FORUM_CACHE_DIR . 'cache_config.php';
+		cache()->generate('config_cache');
+		$config = cache()->get('cache_config');
 	}
-	return $config;
+	return (object)$config;
 });
 
 PUNBB::set('flash', function () {

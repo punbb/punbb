@@ -831,15 +831,12 @@ function censor_words($text)
 		return $return;
 
 	// If not already loaded in a previous call, load the cached censors
-	if (!defined('FORUM_CENSORS_LOADED'))
-	{
-		if (file_exists(FORUM_CACHE_DIR.'cache_censors.php'))
-			include FORUM_CACHE_DIR.'cache_censors.php';
+	if (empty($forum_censors)) {
+		$cached = cache()->get('cache_censors');
 
-		if (!defined('FORUM_CENSORS_LOADED')) {
-			require FORUM_ROOT . 'include/cache.php';
-			generate_censors_cache();
-			require FORUM_CACHE_DIR . 'cache_censors.php';
+		if (!$cached) {
+			cache()->generate('censors_cache');
+			$cached = cache()->get('cache_censors');
 		}
 	}
 
@@ -967,15 +964,11 @@ function get_title($user)
 	}
 
 	// If not already loaded in a previous call, load the cached ranks
-	if (config()->o_ranks == '1' && !defined('FORUM_RANKS_LOADED'))
-	{
-		if (file_exists(FORUM_CACHE_DIR.'cache_ranks.php'))
-			include FORUM_CACHE_DIR.'cache_ranks.php';
-
-		if (!defined('FORUM_RANKS_LOADED')) {
-			require FORUM_ROOT . 'include/cache.php';
-			generate_ranks_cache();
-			require FORUM_CACHE_DIR . 'cache_ranks.php';
+	if (config()->o_ranks == '1' && empty($forum_ranks)) {
+		$cached = cache()->get('cache_ranks');
+		if (!$cached) {
+			cache()->generate('ranks_cache');
+			$cached = cache()->get('cache_ranks');
 		}
 	}
 
@@ -1543,8 +1536,7 @@ function check_bans()
 
 	// If we removed any expired bans during our run-through, we need to regenerate the bans cache
 	if ($bans_altered) {
-		require FORUM_ROOT . 'include/cache.php';
-		generate_bans_cache();
+		cache()->generate('bans_cache');
 	}
 }
 
@@ -1893,8 +1885,7 @@ function delete_user($user_id, $delete_posts = false)
 	if ($user['group_id'] == FORUM_ADMIN || $user['g_moderator'] == '1') {
 		clean_forum_moderators();
 		// Regenerate the bans cache
-		require FORUM_ROOT . 'include/cache.php';
-		generate_bans_cache();
+		cache()->generate('bans_cache');
 	}
 
 	($hook = get_hook('fn_delete_user_end')) ? eval($hook) : null;

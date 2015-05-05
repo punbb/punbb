@@ -3,14 +3,11 @@ namespace punbb;
 
 ($hook = get_hook('in_info_output_start')) ? eval($hook) : null;
 
-if (file_exists(FORUM_CACHE_DIR . 'cache_stats.php')) {
-	include FORUM_CACHE_DIR . 'cache_stats.php';
-}
+$cached = cache()->get('cache_stats');
 // Regenerate cache only if the cache is more than 30 minutes old
-if (!defined('FORUM_STATS_LOADED') || $forum_stats['cached'] < (time() - 1800)) {
-	require FORUM_ROOT . 'include/cache.php';
-	generate_stats_cache();
-	require FORUM_CACHE_DIR . 'cache_stats.php';
+if (!$cached || $forum_stats['cached'] < (time() - 1800)) {
+	cache()->generate('stats_cache');
+	$cached = cache()->get('cache_stats');
 }
 
 $stats_list['no_of_users'] =
@@ -30,8 +27,7 @@ include template()->view('index/stat');
 ($hook = get_hook('in_stats_end')) ? eval($hook) : null;
 ($hook = get_hook('in_users_online_start')) ? eval($hook) : null;
 
-if (config()->o_users_online == '1')
-{
+if (config()->o_users_online == '1') {
 	// Fetch users online info and generate strings for output
 	$query = array(
 		'SELECT'	=> 'o.user_id, o.ident',
