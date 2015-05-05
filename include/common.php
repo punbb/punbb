@@ -110,13 +110,6 @@ if (user()->g_id == FORUM_ADMIN) {
 	}
 }
 
-global $forum_bans;
-// Load cached bans
-$cached = cache()->get('cache_bans');
-if (!$cached) {
-	cache()->generate('bans_cache');
-	$cached = cache()->get('cache_bans');
-}
 // Check if current user is banned
 check_bans();
 

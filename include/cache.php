@@ -49,8 +49,14 @@ class Cache {
 		return true;
 	}
 
-	function get($key) {
+	function get($key, $generator = null) {
 		$file = FORUM_CACHE_DIR . $key . '.php';
+		if (file_exists($file)) {
+			return include $file;
+		}
+		if ($generator != '') {
+			$this->generate($generator);
+		}
 		if (file_exists($file)) {
 			return include $file;
 		}

@@ -947,20 +947,20 @@ function validate_username($username, $exclude_id = null)
 // $user must contain the elements 'username', 'title', 'posts', 'g_id' and 'g_user_title'
 function get_title($user)
 {
-	global $forum_bans;
+	$cached_forum_bans = cache()->get('cache_bans', 'bans_cache');
 	static $ban_list, $forum_ranks;
 
 	$return = ($hook = get_hook('fn_get_title_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return $return;
+	}
 
 	// If not already built in a previous call, build an array of lowercase banned usernames
-	if (empty($ban_list))
-	{
+	if (empty($ban_list)) {
 		$ban_list = array();
-
-		foreach ($forum_bans as $cur_ban)
+		foreach ($cached_forum_bans as $cur_ban) {
 			$ban_list[] = utf8_strtolower($cur_ban['username']);
+		}
 	}
 
 	// If not already loaded in a previous call, load the cached ranks
@@ -1453,15 +1453,16 @@ function set_default_user() {
 // Check whether the connecting user is banned (and delete any expired bans while we're at it)
 function check_bans()
 {
-	global $forum_bans;
+	$cached_forum_bans = cache()->get('cache_bans', 'bans_cache');
 
 	$return = ($hook = get_hook('fn_check_bans_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
 
 	// Admins aren't affected
-	if (defined('FORUM_ADMIN') && user()->g_id == FORUM_ADMIN || !$forum_bans)
+	if (defined('FORUM_ADMIN') && user()->g_id == FORUM_ADMIN || !$cached_forum_bans) {
 		return;
+	}
 
 	// Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
 	// 192.168.0.5 from matching e.g. 192.168.0.50
@@ -1471,11 +1472,9 @@ function check_bans()
 	$bans_altered = false;
 	$is_banned = false;
 
-	foreach ($forum_bans as $cur_ban)
-	{
+	foreach ($cached_forum_bans as $cur_ban) {
 		// Has this ban expired?
-		if ($cur_ban['expire'] != '' && $cur_ban['expire'] <= time())
-		{
+		if ($cur_ban['expire'] != '' && $cur_ban['expire'] <= time()) {
 			$query = array(
 				'DELETE'	=> 'bans',
 				'WHERE'		=> 'id='.$cur_ban['id']

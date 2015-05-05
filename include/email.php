@@ -34,18 +34,19 @@ function is_valid_email($email)
 //
 function is_banned_email($email)
 {
-	global $forum_bans;
+	$cached = cache()->get('cache_bans', 'bans_cache');
 
 	$return = ($hook = get_hook('em_fn_is_banned_email_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return $return;
+	}
 
-	foreach ($forum_bans as $cur_ban)
-	{
+	foreach ($cached as $cur_ban) {
 		if ($cur_ban['email'] != '' &&
-			($email == $cur_ban['email'] ||
-			(strpos($cur_ban['email'], '@') === false && stristr($email, '@'.$cur_ban['email']))))
+				($email == $cur_ban['email'] ||
+				(strpos($cur_ban['email'], '@') === false && stristr($email, '@'.$cur_ban['email'])))) {
 			return true;
+		}
 	}
 
 	return false;
