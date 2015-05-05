@@ -15,19 +15,18 @@ if (!defined('FORUM')) {
 	exit;
 }
 
-if (!function_exists('punbb\\write_cache_file')) {
+if (function_exists('punbb\\write_cache_file')) {
+	return;
+}
 
 // Safe create or write of cache files
 // Use LOCK
-function write_cache_file($file, $content)
-{
+function write_cache_file($file, $content) {
 	// Open
 	$handle = @fopen($file, 'r+b'); // @ - file may not exist
-	if (!$handle)
-	{
+	if (!$handle) {
 		$handle = fopen($file, 'wb');
-		if (!$handle)
-		{
+		if (!$handle) {
 			return false;
 		}
 	}
@@ -37,12 +36,10 @@ function write_cache_file($file, $content)
 	ftruncate($handle, 0);
 
 	// Write
-	if (fwrite($handle, $content) === false)
-	{
+	if (fwrite($handle, $content) === false) {
 		// Unlock and close
 		flock($handle, LOCK_UN);
 		fclose($handle);
-
 		return false;
 	}
 
@@ -53,15 +50,14 @@ function write_cache_file($file, $content)
 	return true;
 }
 
-
 //
 // Generate the config cache PHP script
 //
-function generate_config_cache()
-{
+function generate_config_cache() {
 	$return = ($hook = get_hook('ch_fn_generate_config_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Get the forum config from the DB
 	$query = array(
@@ -86,15 +82,14 @@ function generate_config_cache()
 	}
 }
 
-
 //
 // Generate the bans cache PHP script
 //
-function generate_bans_cache()
-{
+function generate_bans_cache() {
 	$return = ($hook = get_hook('ch_fn_generate_bans_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Get the ban list from the DB
 	$query = array(
@@ -129,15 +124,14 @@ function generate_bans_cache()
 	}
 }
 
-
 //
 // Generate the ranks cache PHP script
 //
-function generate_ranks_cache()
-{
+function generate_ranks_cache() {
 	$return = ($hook = get_hook('ch_fn_generate_ranks_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Get the rank list from the DB
 	$query = array(
@@ -166,17 +160,16 @@ function generate_ranks_cache()
 	}
 }
 
-
 //
 // Generate the forum stats cache PHP script
 //
-function generate_stats_cache()
-{
+function generate_stats_cache() {
 	$stats = array();
 
 	$return = ($hook = get_hook('ch_fn_generate_stats_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Collect some statistics from the database
 	$query = array(
@@ -233,28 +226,24 @@ function generate_stats_cache()
 	unset($stats);
 }
 
-
 //
 // Clean stats cache PHP scripts
 //
-function clean_stats_cache()
-{
+function clean_stats_cache() {
 	$cache_file = FORUM_CACHE_DIR.'cache_stats.php';
-	if (file_exists($cache_file))
-	{
+	if (file_exists($cache_file)) {
 		unlink($cache_file);
 	}
 }
 
-
 //
 // Generate the censor cache PHP script
 //
-function generate_censors_cache()
-{
+function generate_censors_cache() {
 	$return = ($hook = get_hook('ch_fn_generate_censors_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Get the censor list from the DB
 	$query = array(
@@ -267,8 +256,9 @@ function generate_censors_cache()
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$output = array();
-	while ($cur_censor = db()->fetch_assoc($result))
+	while ($cur_censor = db()->fetch_assoc($result)) {
 		$output[] = $cur_censor;
+	}
 
 	// Output censors list as PHP code
 	if (!write_cache_file(FORUM_CACHE_DIR.'cache_censors.php', '<?php'."\n\n".'define(\'FORUM_CENSORS_LOADED\', 1);'."\n\n".'$forum_censors = '.var_export($output, true).';'."\n\n".'?>'))
@@ -277,17 +267,16 @@ function generate_censors_cache()
 	}
 }
 
-
 //
 // Generate quickjump cache PHP scripts
 //
-function generate_quickjump_cache($group_id = false)
-{
+function generate_quickjump_cache($group_id = false) {
 	global $forum_url, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	$groups = array();
 
@@ -395,15 +384,14 @@ function generate_quickjump_cache($group_id = false)
 	}
 }
 
-
 //
 // Clean quickjump cache PHP scripts
 //
-function clean_quickjump_cache($group_id = false)
-{
+function clean_quickjump_cache($group_id = false) {
 	$return = ($hook = get_hook('ch_fn_clean_quickjump_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	$groups = array();
 
@@ -439,13 +427,10 @@ function clean_quickjump_cache($group_id = false)
 	}
 }
 
-
-
 //
 // Generate the hooks cache PHP script
 //
-function generate_hooks_cache()
-{
+function generate_hooks_cache() {
 	global $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_hooks_cache_start')) ? eval($hook) : null;
@@ -510,15 +495,14 @@ function generate_hooks_cache()
 	}
 }
 
-
 //
 // Generate the updates cache PHP script
 //
-function generate_updates_cache()
-{
+function generate_updates_cache() {
 	$return = ($hook = get_hook('ch_fn_generate_updates_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
 	// Get a list of installed hotfix extensions
 	$query = array(
@@ -568,8 +552,7 @@ function generate_updates_cache()
 	}
 }
 
-function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension)
-{
+function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_url_by_extension) {
 	$forum_ext_last_versions = array();
 	$forum_ext_repos = array();
 
@@ -632,6 +615,4 @@ function generate_ext_versions_cache($inst_exts, $repository_urls, $repository_u
 	{
 		error('Unable to write configuration cache file to cache directory.<br />Please make sure PHP has write access to the directory \'cache\'.', __FILE__, __LINE__);
 	}
-}
-
 }
