@@ -1,8 +1,6 @@
 <?php
 namespace punbb;
 
-global $forum_page;
-
 if (empty($crumbs)) {
 	$crumbs[0] = config()->o_board_title;
 }
@@ -15,8 +13,8 @@ if ($reverse) {
 		$result .= (is_array($crumbs[$i])?
 			forum_htmlencode($crumbs[$i][0]) :
 			forum_htmlencode($crumbs[$i])) .
-			((isset($forum_page['page']) && $i == ($num_crumbs - 1))?
-				' (' .	__('Page') . ' ' . forum_number_format($forum_page['page']) . ')' : '') .
+			((isset($page) && $i == ($num_crumbs - 1))?
+				' (' .	__('Page') . ' ' . forum_number_format($page) . ')' : '') .
 			($i > 0 ? __('Title separator') : '');
 	}
 }

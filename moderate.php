@@ -212,7 +212,8 @@ if (isset($_GET['tid']))
 
 		template()->render([
 			'main_view' => 'moderate/dialogue',
-			'crumbs' => $crumbs
+			'crumbs' => $crumbs,
+			'page' => $page
 		]);
 	}
 	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
@@ -320,7 +321,8 @@ if (isset($_GET['tid']))
 
 		template()->render([
 			'main_view' => 'moderate/dialogue2',
-			'crumbs' => $crumbs
+			'crumbs' => $crumbs,
+			'page' => $page
 		]);
 	}
 
@@ -333,34 +335,33 @@ if (isset($_GET['tid']))
 
 	// Determine the post offset (based on $_GET['p'])
 	$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()->disp_posts);
-	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-	$forum_page['start_from'] = user()->disp_posts * ($forum_page['page'] - 1);
+	$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
+	$forum_page['start_from'] = user()->disp_posts * ($page - 1);
 	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_posts), ($cur_topic['num_replies'] + 1));
 	$forum_page['items_info'] = generate_items_info(__('Posts', 'misc'), ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 	// Generate paging links
 	$page_post['paging'] = '<p class="paging"><span class="pages">'.
-		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_topic'],
+		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $page, $forum_url['moderate_topic'],
 		__('Paging separator'), array($fid, $tid)).'</p>';
 
 	// Navigation links for header and page numbering for title/meta description
-	if ($forum_page['page'] < $forum_page['num_pages'])
-	{
+	if ($page < $forum_page['num_pages']) {
 		$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('moderate_topic', $forum_url['page'], $forum_page['num_pages'], array($fid, $tid)).'" title="'.
 			__('Page') . ' ' . $forum_page['num_pages'].'" />';
-		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($forum_page['page'] + 1), array($fid, $tid)).'" title="'.
-			__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
+		$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($page + 1), array($fid, $tid)).'" title="'.
+			__('Page') . ' ' . ($page + 1).'" />';
 	}
-	if ($forum_page['page'] > 1)
-	{
-		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($forum_page['page'] - 1), array($fid, $tid)).'" title="'.
-		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
+	if ($page > 1) {
+		$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_topic', $forum_url['page'], ($page - 1), array($fid, $tid)).'" title="'.
+		__('Page') . ' ' . ($page - 1).'" />';
 		$forum_page['nav']['first'] = '<link rel="first" href="'.link('moderate_topic', array($fid, $tid)).'" title="'.
 		__('Page').' 1" />';
 	}
 
-	if (config()->o_censoring == '1')
+	if (config()->o_censoring == '1') {
 		$cur_topic['subject'] = censor_words($cur_topic['subject']);
+	}
 
 	// Setup form
 	$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
@@ -379,7 +380,7 @@ if (isset($_GET['tid']))
 		__('Select all', 'misc') . '</span></span>';
 
 	if ($forum_page['num_pages'] > 1) {
-		$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+		$main_head_pages = sprintf(__('Page info'), $page, $forum_page['num_pages']);
 	}
 	else {
 		$main_head_pages = '';
@@ -419,7 +420,8 @@ if (isset($_GET['tid']))
 		'main_title' => sprintf(__('Moderate topic head', 'misc'), forum_htmlencode($cur_topic['subject']))
 		'main_head_pages' => $main_head_pages,
 		'crumbs' => $crumbs,
-		'page_post' => $page_post
+		'page_post' => $page_post,
+		'page' => $page
 	]);
 }
 
@@ -628,7 +630,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	template()->render([
 		'main_view' => 'moderate/dialogue3',
 		'main_title' => end($crumbs) . ' ' . __('To new forum', 'misc'),
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'page' => $page
 	]);
 }
 // Merge topics
@@ -740,7 +743,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	template()->render([
 		'main_view' => 'moderate/dialogue4',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'page' => $page
 	]);
 }
 
@@ -876,7 +880,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	template()->render([
 		'main_view' => 'moderate/dialogue5',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'page' => $page
 	]);
 }
 
@@ -1077,8 +1082,8 @@ if ($cur_forum['num_topics'] == 0)
 // Determine the topic offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil($cur_forum['num_topics'] / user()->disp_topics);
 
-$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
-$forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
+$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+$forum_page['start_from'] = user()->disp_topics * ($page - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($cur_forum['num_topics']));
 $forum_page['items_info'] = generate_items_info(__('Topics', 'misc'), ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
 
@@ -1111,21 +1116,19 @@ $result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 // Generate paging links
 $page_post['paging'] = '<p class="paging"><span class="pages">'.
-	__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['moderate_forum'],
+	__('Pages') . '</span> '.paginate($forum_page['num_pages'], $page, $forum_url['moderate_forum'],
 		__('Paging separator'), $fid).'</p>';
 
 // Navigation links for header and page numbering for title/meta description
-if ($forum_page['page'] < $forum_page['num_pages'])
-{
+if ($page < $forum_page['num_pages']) {
 	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('moderate_forum', $forum_url['page'], $forum_page['num_pages'], $fid).'" title="'.
 		__('Page') . ' ' . $forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($forum_page['page'] + 1), $fid).'" title="'.
-		__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($page + 1), $fid).'" title="'.
+		__('Page') . ' ' . ($page + 1).'" />';
 }
-if ($forum_page['page'] > 1)
-{
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($forum_page['page'] - 1), $fid).'" title="'.
-		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
+if ($page > 1) {
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('moderate_forum', $forum_url['page'], ($page - 1), $fid).'" title="'.
+		__('Page') . ' ' . ($page - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.link('moderate_forum', $fid).'" title="'.
 		__('Page') . ' 1" />';
 }
@@ -1143,7 +1146,7 @@ $crumbs = array(
 
 // Setup main heading
 if ($forum_page['num_pages'] > 1) {
-	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	$main_head_pages = sprintf(__('Page info'), $page, $forum_page['num_pages']);
 }
 else {
 	$main_head_pages = '';
@@ -1162,5 +1165,6 @@ template()->render([
 	'main_view' => 'moderate/modforum',
 	'main_head_pages' => $main_head_pages,
 	'crumbs' => $crumbs,
-	'page_post' => $page_post
+	'page_post' => $page_post,
+	'page' => $page
 ]);

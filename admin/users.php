@@ -552,8 +552,8 @@ else if (isset($_GET['find_user'])) {
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 	$forum_page['num_users'] = db()->result($result);
 	$forum_page['num_pages'] = ceil($forum_page['num_users'] / user()->disp_topics);
-	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
-	$forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
+	$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+	$forum_page['start_from'] = user()->disp_topics * ($page - 1);
 	$forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($forum_page['num_users']));
 
 	// Setup breadcrumbs
@@ -570,7 +570,7 @@ else if (isset($_GET['find_user'])) {
 	// Generate paging
 	$page_post['paging'] =
 		'<p class="paging"><span class="pages">' .
-		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str),
+		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $page, $forum_url['admin_users'].'?find_user=&amp;'.implode('&amp;', $query_str),
 			__('Paging separator'), null, true).'</p>';
 
 	($hook = get_hook('aus_find_user_pre_header_load')) ? eval($hook) : null;
@@ -598,7 +598,8 @@ else if (isset($_GET['find_user'])) {
 	template()->render([
 		'main_view' => 'admin/users/find',
 		'crumbs' => $crumbs,
-		'page_post' => $page_post
+		'page_post' => $page_post,
+		'page' => $page
 	]);
 }
 
@@ -634,5 +635,6 @@ $result = db()->query_build($query) or error(__FILE__, __LINE__);
 template()->render([
 	'main_view' => 'admin/users/search',
 	'crumbs' => $crumbs,
-	'page_post' => $page_post
+	'page_post' => $page_post,
+	'page' => $page
 ]);

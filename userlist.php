@@ -51,8 +51,9 @@ $query = array(
 	'WHERE'		=> 'u.id > 1 AND u.group_id != '.FORUM_UNVERIFIED
 );
 
-if (!empty($where_sql))
+if (!empty($where_sql)) {
 	$query['WHERE'] .= ' AND '.implode(' AND ', $where_sql);
+}
 
 ($hook = get_hook('ul_qr_get_user_count')) ? eval($hook) : null;
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
@@ -60,8 +61,8 @@ $forum_page['num_users'] = db()->result($result);
 
 // Determine the user offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil($forum_page['num_users'] / 50);
-$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-$forum_page['start_from'] = 50 * ($forum_page['page'] - 1);
+$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
+$forum_page['start_from'] = 50 * ($page - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + 50), ($forum_page['num_users']));
 
 $forum_page['users_searched'] = ((user()->g_search_users == '1' && $forum_page['username'] != '') || $forum_page['show_group'] > -1);
@@ -74,21 +75,19 @@ else
 
 // Generate paging links
 $page_post['paging'] = '<p class="paging"><span class="pages">'.
-	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['users_browse'],
+	__('Pages').'</span> '.paginate($forum_page['num_pages'], $page, $forum_url['users_browse'],
 		__('Paging separator'), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'</p>';
 
 // Navigation links for header and page numbering for title/meta description
-if ($forum_page['page'] < $forum_page['num_pages'])
-{
+if ($page < $forum_page['num_pages']) {
 	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('users_browse', $forum_url['page'], $forum_page['num_pages'], array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' '.$forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('users_browse', $forum_url['page'], ($forum_page['page'] + 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
-		__('Page').' '.($forum_page['page'] + 1).'" />';
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('users_browse', $forum_url['page'], ($page + 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+		__('Page').' '.($page + 1).'" />';
 }
-if ($forum_page['page'] > 1)
-{
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('users_browse', $forum_url['page'], ($forum_page['page'] - 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
-		__('Page').' '.($forum_page['page'] - 1).'" />';
+if ($page > 1) {
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('users_browse', $forum_url['page'], ($page - 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+		__('Page').' '.($page - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.link('users_browse', array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' 1" />';
 }
@@ -113,7 +112,7 @@ $crumbs = array(
 );
 
 if ($forum_page['num_pages'] > 1) {
-	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	$main_head_pages = sprintf(__('Page info'), $page, $forum_page['num_pages']);
 }
 else {
 	$main_head_pages = '';
@@ -161,5 +160,6 @@ template()->render([
 	'main_view' => 'userlist/main',
 	'main_head_pages' => $main_head_pages,
 	'crumbs' => $crumbs,
-	'page_post' => $page_post
+	'page_post' => $page_post,
+	'page' => $page
 ]);

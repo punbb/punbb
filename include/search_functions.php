@@ -749,28 +749,29 @@ function get_search_results($query, &$search_set)
 
 	// Work out the settings for pagination
 	$forum_page['num_pages'] = ($forum_page['per_page'] == 0) ? 1 : ceil($num_hits / $forum_page['per_page']);
-	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+	$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 
-	// Determine the topic or post offset (based on $forum_page['page'])
-	$forum_page['start_from'] = $forum_page['per_page'] * ($forum_page['page'] - 1);
+	// Determine the topic or post offset (based on $page)
+	$forum_page['start_from'] = $forum_page['per_page'] * ($page - 1);
 	$forum_page['finish_at'] = ($forum_page['per_page'] == 0) ? $num_hits : min(($forum_page['start_from'] + $forum_page['per_page']), $num_hits);
 
 	// Fill $search_set with out search hits
 	$search_set = array();
 	$row_num = 0;
 
-	foreach ($search_results as $row)
-	{
-		if ($forum_page['start_from'] <= $row_num && $forum_page['finish_at'] > $row_num)
+	foreach ($search_results as $row) {
+		if ($forum_page['start_from'] <= $row_num && $forum_page['finish_at'] > $row_num) {
 			$search_set[] = $row;
+		}
 		++$row_num;
 	}
 
 	db()->free_result($result);
 
 	$return = ($hook = get_hook('sf_fn_get_search_results_end')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return $return;
+	}
 
 	return $num_hits;
 }

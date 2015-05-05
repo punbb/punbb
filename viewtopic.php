@@ -157,23 +157,23 @@ if (!user()->is_guest) {
 
 // Determine the post offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / user()->disp_posts);
-$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
-$forum_page['start_from'] = user()->disp_posts * ($forum_page['page'] - 1);
+$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+$forum_page['start_from'] = user()->disp_posts * ($page - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_posts), ($cur_topic['num_replies'] + 1));
 $forum_page['items_info'] = generate_items_info(__('Posts', 'topic'), ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 ($hook = get_hook('vt_modify_page_details')) ? eval($hook) : null;
 
 // Navigation links for header and page numbering for title/meta description
-if ($forum_page['page'] < $forum_page['num_pages']) {
+if ($page < $forum_page['num_pages']) {
 	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('topic', $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page') . ' ' . $forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('topic', $forum_url['page'], ($forum_page['page'] + 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
-		__('Page') . ' ' . ($forum_page['page'] + 1).'" />';
+	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('topic', $forum_url['page'], ($page + 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
+		__('Page') . ' ' . ($page + 1).'" />';
 }
-if ($forum_page['page'] > 1) {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('topic', $forum_url['page'], ($forum_page['page'] - 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
-		__('Page') . ' ' . ($forum_page['page'] - 1).'" />';
+if ($page > 1) {
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('topic', $forum_url['page'], ($page - 1), array($id, sef_friendly($cur_topic['subject']))).'" title="'.
+		__('Page') . ' ' . ($page - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.link('topic', array($id, sef_friendly($cur_topic['subject']))).'" title="'.
 		__('Page').' 1" />';
 }
@@ -184,7 +184,7 @@ if (config()->o_censoring == '1') {
 
 // Generate paging and posting links
 $page_post['paging'] = '<p class="paging"><span class="pages">'.
-	__('Pages').'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['topic'],
+	__('Pages').'</span> '.paginate($forum_page['num_pages'], $page, $forum_url['topic'],
 		__('Paging separator'), array($id, sef_friendly($cur_topic['subject']))).'</p>';
 
 if (user()->may_post) {
@@ -239,7 +239,7 @@ if ($forum_page['is_admmod']) {
 	);
 
 	if ($cur_topic['num_replies'] != 0) {
-		$forum_page['main_foot_options']['moderate_topic'] = '<span><a class="mod-option" href="'.forum_sublink('moderate_topic', $forum_url['page'], $forum_page['page'], array($cur_topic['forum_id'], $id)).'">'.
+		$forum_page['main_foot_options']['moderate_topic'] = '<span><a class="mod-option" href="'.forum_sublink('moderate_topic', $forum_url['page'], $page, array($cur_topic['forum_id'], $id)).'">'.
 		__('Moderate topic', 'topic') . '</a></span>';
 	}
 }
@@ -256,7 +256,7 @@ $main_title = (($cur_topic['closed'] == '1') ?
 	__('Permalink topic', 'topic') . '">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 if ($forum_page['num_pages'] > 1) {
-	$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+	$main_head_pages = sprintf(__('Page info'), $page, $forum_page['num_pages']);
 }
 else {
 	$main_head_pages = '';
@@ -346,5 +346,6 @@ template()->render([
 	'main_title' => $main_title,
 	'main_head_pages' => $main_head_pages,
 	'crumbs' => $crumbs,
-	'page_post' => $page_post
+	'page_post' => $page_post,
+	'page' => $page
 ]);

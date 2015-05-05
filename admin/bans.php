@@ -344,30 +344,28 @@ $query = array(
 $result = db()->query_build($query) or error(__FILE__, __LINE__);
 $forum_page['num_bans'] = db()->result($result);
 $forum_page['num_pages'] = ceil($forum_page['num_bans'] / user()->disp_topics);
-$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-$forum_page['start_from'] = user()->disp_topics * ($forum_page['page'] - 1);
+$page = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
+$forum_page['start_from'] = user()->disp_topics * ($page - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + user()->disp_topics), ($forum_page['num_bans']));
 
 // Generate paging
 $page_post['paging'] =
 	'<p class="paging"><span class="pages">' . __('Pages') .
-	'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_bans'],
+	'</span> '.paginate($forum_page['num_pages'], $page, $forum_url['admin_bans'],
 		__('Paging separator'), null, true).'</p>';
 
 // Navigation links for header and page numbering for title/meta description
-if ($forum_page['page'] < $forum_page['num_pages'])
-{
+if ($page < $forum_page['num_pages']) {
 	$forum_page['nav']['last'] =
 		'<link rel="last" href="'.forum_sublink('admin_bans', $forum_url['page'], $forum_page['num_pages']).'" title="'.
 		__('Page') . ' '.$forum_page['num_pages'].'" />';
 	$forum_page['nav']['next'] =
-		'<link rel="next" href="'.forum_sublink('admin_bans', $forum_url['page'], ($forum_page['page'] + 1)).'" title="'.
-		__('Page').' '.($forum_page['page'] + 1).'" />';
+		'<link rel="next" href="'.forum_sublink('admin_bans', $forum_url['page'], ($page + 1)).'" title="'.
+		__('Page').' '.($page + 1).'" />';
 }
-if ($forum_page['page'] > 1)
-{
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('admin_bans', $forum_url['page'], ($forum_page['page'] - 1)).'" title="'.
-	__('Page') . ' '.($forum_page['page'] - 1).'" />';
+if ($page > 1) {
+	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('admin_bans', $forum_url['page'], ($page - 1)).'" title="'.
+	__('Page') . ' '.($page - 1).'" />';
 	$forum_page['nav']['first'] = '<link rel="first" href="'.link('admin_bans').'" title="'.
 	__('Page').' 1" />';
 }
@@ -398,5 +396,6 @@ if ($forum_page['num_bans'] > 0) {
 template()->render([
 	'main_view' => 'admin/bans/main',
 	'crumbs' => $crumbs,
-	'page_post' => $page_post
+	'page_post' => $page_post,
+	'page' => $page
 ]);

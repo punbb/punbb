@@ -135,7 +135,7 @@ if (isset($query))
 	// Generate paging links
 	if ($show_as == 'posts' || $show_as == 'topics') {
 		$page_post['paging'] = '<p class="paging"><span class="pages">'.
-		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $url_type,
+		__('Pages') . '</span> '.paginate($forum_page['num_pages'], $page, $url_type,
 			__('Paging separator'), $search_id).'</p>';
 	}
 
@@ -147,24 +147,23 @@ if (isset($query))
 	// Navigation links for header and page numbering for title/meta description
 	if ($show_as == 'posts' || $show_as == 'topics')
 	{
-		if ($forum_page['page'] < $forum_page['num_pages'])
-		{
+		if ($page < $forum_page['num_pages']) {
 			$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.
 				__('Page').' '.$forum_page['num_pages'].'" />';
-			$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] + 1), $search_id).'" title="'.
-				__('Page').' '.($forum_page['page'] + 1).'" />';
+			$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($page + 1), $search_id).'" title="'.
+				__('Page').' '.($page + 1).'" />';
 		}
-		if ($forum_page['page'] > 1)
+		if ($page > 1)
 		{
-			$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($forum_page['page'] - 1), $search_id).'" title="'.
-				__('Page').' '.($forum_page['page'] - 1).'" />';
+			$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($page - 1), $search_id).'" title="'.
+				__('Page').' '.($page - 1).'" />';
 			$forum_page['nav']['first'] = '<link rel="first" href="'.link($url_type, $search_id).'" title="'.
 				__('Page').' 1" />';
 		}
 
 		// Setup main heading
 		if ($forum_page['num_pages'] > 1) {
-			$main_head_pages = sprintf(__('Page info'), $forum_page['page'], $forum_page['num_pages']);
+			$main_head_pages = sprintf(__('Page info'), $page, $forum_page['num_pages']);
 		}
 		else {
 			$main_head_pages = '';
@@ -189,7 +188,8 @@ if (isset($query))
 		'main_title' => __('Search options', 'search'),
 		'main_head_pages' => $main_head_pages,
 		'crumbs' => $crumbs,
-		'page_post' => $page_post
+		'page_post' => $page_post,
+		'page' => $page
 	]);
 }
 
@@ -272,5 +272,6 @@ if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 
 template()->render([
 	'main_view' => 'search/main',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'page' => $page
 ]);
