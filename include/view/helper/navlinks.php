@@ -25,6 +25,7 @@ $user = user();
 	<?php } ?>
 
 	<?php if ($user->is_guest) { ?>
+
 		<?php if ($user->g_read_board == '1' && $user->g_search == '1') { ?>
 			<li id="navsearch" <?= FORUM_PAGE == 'search'? ' class="isactive"' : '' ?>>
 				<a href="<?= link('search') ?>"><?= __('Search') ?></a>
@@ -39,43 +40,56 @@ $user = user();
 
 	<?php } else { ?>
 
-		<?php if (!$user->is_admmod) {
-		if ($user->g_read_board == '1' && $user->g_search == '1')
-			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.link('search').'">'.
-			__('Search') . '</a></li>';
+		<?php if (!$user->is_admmod) { ?>
 
-		$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.
-			link('user', $user->id).'">'.
-			__('Profile') . '</a></li>';
-		$links['logout'] = '<li id="navlogout"><a href="'.
-			link('logout', array($user->id, generate_form_token('logout'.$user->id))).'">'.
-			__('Logout') . '</a></li>';
-	}
-	else {
-		$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.link('search').'">'.
-			__('Search') . '</a></li>';
-		$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.link('user', $user->id).'">'.
-			__('Profile') . '</a></li>';
-		$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.link('admin_index').'">'.
-			__('Admin') . '</a></li>';
-		$links['logout'] = '<li id="navlogout"><a href="'.link('logout', array($user->id, generate_form_token('logout'.$user->id))).'">'.
-			__('Logout') . '</a></li>';
-	}
-}
+			<?php if ($user->g_read_board == '1' && $user->g_search == '1') { ?>
+				<li id="navsearch"<?= FORUM_PAGE == 'search'? ' class="isactive"' : ''?>>
+					<a href="<?= link('search') ?>"><?= __('Search') ?></a>
+				</li>
+			<?php } ?>
 
-// Are there any additional navlinks we should insert into the array before imploding it?
-if ($config->o_additional_navlinks != '' &&
-		preg_match_all('#([0-9]+)\s*=\s*(.*?)\n#s',
-			$config->o_additional_navlinks."\n", $extra_links)) {
-	// Insert any additional links into the $links array (at the correct index)
-	$num_links = count($extra_links[1]);
-	for ($i = 0; $i < $num_links; ++$i) {
-		array_insert($links, (int)$extra_links[1][$i],
-			'<li id="navextra' . ($i + 1) . '">' . $extra_links[2][$i] . '</li>');
-	}
-}
+			<li id="navprofile"<?= substr(FORUM_PAGE, 0, 7) == 'profile'? ' class="isactive"' : '' ?>>
+				<a href="<?= link('user', $user->id) ?>"><?= __('Profile') ?></a>
+			</li>
+			<li id="navlogout">
+				<a href="<?= link('logout', [$user->id,
+					generate_form_token('logout' . $user->id)]) ?>"><?= __('Logout') ?></a>
+			</li>
 
-echo implode("\n\t\t", $links);
+		<?php } else { ?>
+
+			<li id="navsearch" <?= FORUM_PAGE == 'search'? ' class="isactive"' : '' ?>>
+				<a href="<?= link('search') ?>"><?= __('Search') ?></a>
+			</li>
+
+			<li id="navprofile" <?= substr(FORUM_PAGE, 0, 7) == 'profile'? ' class="isactive"' : '' ?>>
+				<a href="<?= link('user', $user->id) ?>"><?= __('Profile') ?></a>
+			</li>
+			<li id="navadmin" <?= substr(FORUM_PAGE, 0, 5) == 'admin'? ' class="isactive"' : '' ?>>
+				<a href="<?= link('admin_index') ?>"><?= __('Admin') ?></a>
+			</li>
+			<li id="navlogout"><a href="<?= link('logout', [$user->id,
+				generate_form_token('logout' . $user->id)])?>"><?= __('Logout') ?></a>
+			</li>
+
+		<?php } ?>
+
+	<?php } ?>
+
+	<?php
+	// ???
+	// Are there any additional navlinks we should insert into the array before imploding it?
+	if ($config->o_additional_navlinks != '' &&
+			preg_match_all('#([0-9]+)\s*=\s*(.*?)\n#s',
+				$config->o_additional_navlinks . "\n", $extra_links) &&
+			count($extra_links[1])) {
+		foreach ($extra_links[1] as $i => $v) { ?>
+			<li id="navextra<?= $i + 1 ?>">
+				<?= $extra_links[2][$i] ?>
+			</li>
+		<?php }
+	}
+
 ?>
 
 </ul>
