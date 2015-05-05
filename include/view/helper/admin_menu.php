@@ -68,7 +68,7 @@ if (!function_exists('generate_admin_menu')) {
 						((empty($admin_submenu)) ? ' first-item' : '').'"><a href="'.link('admin_settings_email').'">'.
 						__('E-mail', 'admin_common').'</a></li>';
 					$admin_submenu['settings-registration'] = '<li class="'.((FORUM_PAGE == 'admin-settings-registration') ? 'active' : 'normal').
-						((empty($admin_submenu) ? ' first-item' : '').'"><a href="'.link('admin_settings_registration').'">'.
+						((empty($admin_submenu)) ? ' first-item' : '').'"><a href="'.link('admin_settings_registration').'">'.
 						__('Registration', 'admin_common').'</a></li>';
 					$admin_submenu['censoring'] = '<li class="'.((FORUM_PAGE == 'admin-censoring') ? 'active' : 'normal').
 						((empty($admin_submenu)) ? ' first-item' : '').'"><a href="'.link('admin_censoring').'">'.
