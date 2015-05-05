@@ -1,7 +1,6 @@
 <?php
 namespace punbb;
 
-global $forum_url;
 ?>
 
 <p id="brd-title">
