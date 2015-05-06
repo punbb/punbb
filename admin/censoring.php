@@ -39,7 +39,7 @@ if (isset($_POST['add_word']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	cache()->generate('censors_cache');
+	fn::generate_censors_cache();
 
 	// Add flash message
 	flash()->add_info(__('Censor word added', 'admin_censoring'));
@@ -73,7 +73,7 @@ else if (isset($_POST['update']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	cache()->generate('censors_cache');
+	fn::generate_censors_cache();
 
 	// Add flash message
 	flash()->add_info(__('Censor word updated', 'admin_censoring'));
@@ -100,7 +100,7 @@ else if (isset($_POST['remove']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the censor cache
-	cache()->generate('censors_cache');
+	fn::generate_censors_cache();
 
 	// Add flash message
 	flash()->add_info(__('Censor word removed', 'admin_censoring'));
@@ -111,11 +111,7 @@ else if (isset($_POST['remove']))
 }
 
 // Load the cached censors
-$cached = cache()->get('cache_censors');
-if (!$cached) {
-	cache()->generate('censors_cache');
-	$cached = cache()->get('cache_censors');
-}
+$cached = cache()->get('cache_censors', 'punbb\\fn::generate_censors_cache');
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;

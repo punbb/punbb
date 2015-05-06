@@ -105,7 +105,7 @@ if (user()->g_id == FORUM_ADMIN) {
 	if (config()->o_check_for_updates == '1' &&
 			(!$cached ||
 				$forum_updates['cached'] < (time() - 43200))) {
-		cache()->generate('updates_cache');
+		fn::generate_updates_cache();
 		$cached = cache()->get('cache_updates');
 	}
 }

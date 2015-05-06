@@ -32,9 +32,8 @@ function is_valid_email($email)
 //
 // Check if $email is banned
 //
-function is_banned_email($email)
-{
-	$cached = cache()->get('cache_bans', 'bans_cache');
+function is_banned_email($email) {
+	$cached = cache()->get('cache_bans', 'punbb\\fn::generate_bans_cache');
 
 	$return = ($hook = get_hook('em_fn_is_banned_email_start')) ? eval($hook) : null;
 	if ($return != null) {

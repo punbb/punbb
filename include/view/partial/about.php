@@ -6,7 +6,8 @@ $user = user();
 
 // Display the "Jump to" drop list
 if ($user->g_read_board == '1' && $config->o_quickjump == '1') {
-	$cached = cache()->get('cache_quickjump_' . $user->g_id, 'quickjump_cache', $user->g_id);
+	$cached = cache()->get('cache_quickjump_' . $user->g_id,
+		'punbb\\fn::generate_quickjump_cache', [$user->g_id]);
 }
 
 ?>

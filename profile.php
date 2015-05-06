@@ -1091,7 +1091,7 @@ else if (isset($_POST['form_sent']))
 				}
 
 				// Regenerate the bans cache
-				cache()->generate('bans_cache');
+				fn::generate_bans_cache();
 			}
 		}
 

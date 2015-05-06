@@ -243,7 +243,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Regenerate the config cache
-	cache()->generate('config_cache');
+	fn::generate_config_cache();
 
 	// If changed sef - remove quick-jump cache
 	if (!empty(config()->o_sef) && !empty($form['sef'])) {

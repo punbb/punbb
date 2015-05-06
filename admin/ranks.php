@@ -54,7 +54,7 @@ if (isset($_POST['add_rank'])) {
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
-	cache()->generate('ranks_cache');
+	fn::generate_ranks_cache();
 
 	// Add flash message
 	flash()->add_info(__('Rank added', 'admin_ranks'));
@@ -104,7 +104,7 @@ else if (isset($_POST['update']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
-	cache()->generate('ranks_cache');
+	fn::generate_ranks_cache();
 
 	// Add flash message
 	flash()->add_info(__('Rank updated', 'admin_ranks'));
@@ -131,7 +131,7 @@ else if (isset($_POST['remove']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the ranks cache
-	cache()->generate('ranks_cache');
+	fn::generate_ranks_cache();
 
 	// Add flash message
 	flash()->add_info(__('Rank removed', 'admin_ranks'));
@@ -142,11 +142,7 @@ else if (isset($_POST['remove']))
 }
 
 // Load the cached ranks
-$cached = cache()->get('cache_ranks');
-if (!$cached) {
-	cache()->generate('ranks_cache');
-	$cached = cache()->get('cache_ranks');
-}
+$cached = cache()->get('cache_ranks', 'punbb\\fn::generate_ranks_cache');
 
 // Setup the form
 $forum_page['fld_count'] = $forum_page['item_count'] = $forum_page['group_count'] = 0;

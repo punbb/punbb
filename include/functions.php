@@ -706,7 +706,7 @@ function get_hook($hook_id) {
 
 	static $cached_forum_hooks = null;
 	if ($cached_forum_hooks === null) {
-		$cached_forum_hooks = cache()->get('cache_hooks', 'hooks_cache');
+		$cached_forum_hooks = cache()->get('cache_hooks', 'punbb\\fn::generate_hooks_cache');
 	}
 
 	return !defined('FORUM_DISABLE_HOOKS') && isset($cached_forum_hooks[$hook_id])?
@@ -836,9 +836,8 @@ function censor_words($text)
 	// If not already loaded in a previous call, load the cached censors
 	if (empty($forum_censors)) {
 		$cached = cache()->get('cache_censors');
-
 		if (!$cached) {
-			cache()->generate('censors_cache');
+			fn::generate_censors_cache();
 			$cached = cache()->get('cache_censors');
 		}
 	}
@@ -950,7 +949,7 @@ function validate_username($username, $exclude_id = null)
 // $user must contain the elements 'username', 'title', 'posts', 'g_id' and 'g_user_title'
 function get_title($user)
 {
-	$cached_forum_bans = cache()->get('cache_bans', 'bans_cache');
+	$cached_forum_bans = cache()->get('cache_bans', 'punbb\\fn::generate_bans_cache');
 	static $ban_list;
 
 	$return = ($hook = get_hook('fn_get_title_start')) ? eval($hook) : null;
@@ -968,7 +967,7 @@ function get_title($user)
 
 	// If not already loaded in a previous call, load the cached ranks
 	if (config()->o_ranks == '1' && empty($cached_forum_ranks)) {
-		$cached_forum_ranks = cache()->get('cache_ranks', 'ranks_cache');
+		$cached_forum_ranks = cache()->get('cache_ranks', 'punbb\\fn::generate_ranks_cache');
 	}
 
 	// If the user has a custom title
@@ -1459,7 +1458,7 @@ function set_default_user() {
 // Check whether the connecting user is banned (and delete any expired bans while we're at it)
 function check_bans()
 {
-	$cached_forum_bans = cache()->get('cache_bans', 'bans_cache');
+	$cached_forum_bans = cache()->get('cache_bans', 'punbb\\fn::generate_bans_cache');
 
 	$return = ($hook = get_hook('fn_check_bans_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -1541,7 +1540,7 @@ function check_bans()
 
 	// If we removed any expired bans during our run-through, we need to regenerate the bans cache
 	if ($bans_altered) {
-		cache()->generate('bans_cache');
+		fn::generate_bans_cache();
 	}
 }
 
@@ -1890,7 +1889,7 @@ function delete_user($user_id, $delete_posts = false)
 	if ($user['group_id'] == FORUM_ADMIN || $user['g_moderator'] == '1') {
 		clean_forum_moderators();
 		// Regenerate the bans cache
-		cache()->generate('bans_cache');
+		fn::generate_bans_cache();
 	}
 
 	($hook = get_hook('fn_delete_user_end')) ? eval($hook) : null;

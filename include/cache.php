@@ -60,20 +60,13 @@ class Cache {
 		if (file_exists($file)) {
 			return $this->values[$key] = include $file;
 		}
-		if ($generator != '') {
-			$this->generate($generator);
+		if (is_callable($generator)) {
+			call_user_func_array($generator, $args);
 		}
 		if (file_exists($file)) {
 			return $this->values[$key] = include $file;
 		}
 		return null;
-	}
-
-	function generate() {
-		$args = func_get_args();
-		$f = array_shift($args);
-		$fn = 'punbb\\fn::generate_' . $f;
-		call_user_func_array($fn, $args);
 	}
 
 }

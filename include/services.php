@@ -53,11 +53,7 @@ PUNBB::set('cache', function () {
 
 PUNBB::set('config', function () {
 	// Load cached config
-	$config = cache()->get('cache_config');
-	if (empty($config)) {
-		cache()->generate('config_cache');
-		$config = cache()->get('cache_config');
-	}
+	$config = cache()->get('cache_config', 'punbb\\fn::generate_config_cache');
 	return (object)$config;
 });
 

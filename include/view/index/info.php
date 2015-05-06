@@ -6,7 +6,7 @@ namespace punbb;
 $cached_forum_stats = cache()->get('cache_stats');
 // Regenerate cache only if the cache is more than 30 minutes old
 if (!$cached_forum_stats || $cached_forum_stats['cached'] < (time() - 1800)) {
-	cache()->generate('stats_cache');
+	fn::generate_stats_cache();
 	$cached_forum_stats = cache()->get('cache_stats');
 }
 

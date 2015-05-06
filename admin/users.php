@@ -304,7 +304,7 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply'])) {
 		}
 
 		// Regenerate the bans cache
-		cache()->generate('bans_cache');
+		fn::generate_bans_cache();
 
 		// Add flash message
 		flash()->add_info(__('Users banned', 'admin_users'));

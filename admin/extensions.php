@@ -232,7 +232,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		forum_clear_cache();
 
 		// Regenerate the hooks cache
-		cache()->generate('hooks_cache');
+		fn::generate_hooks_cache();
 
 		// Display notices if there are any
 		if (!empty($notices)) {
@@ -371,7 +371,7 @@ else if (isset($_GET['uninstall']))
 		forum_clear_cache();
 
 		// Regenerate the hooks cache
-		cache()->generate('hooks_cache');
+		fn::generate_hooks_cache();
 
 		// Display notices if there are any
 		if (!empty($notices)) {
@@ -511,7 +511,7 @@ else if (isset($_GET['flip']))
 	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Regenerate the hooks cache
-	cache()->generate('hooks_cache');
+	fn::generate_hooks_cache();
 
 	// Add flash message
 	if ($section == 'hotfixes')
@@ -596,7 +596,7 @@ else
 		($hook = get_hook('aex_before_update_checking')) ? eval($hook) : null;
 
 		if ($update_new_versions_cache) {
-			cache()->generate('generate_ext_versions_cache',
+			fn::generate_ext_versions_cache(
 				$inst_exts, $repository_urls, $repository_url_by_extension);
 			cache()->get('cache_ext_version_notifications');
 		}
