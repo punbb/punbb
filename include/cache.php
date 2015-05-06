@@ -65,20 +65,22 @@ class Cache {
 
 	function generate() {
 		$args = func_get_args();
-		$fn = array_shift($args);
-		if (!function_exists('punbb\\' . $fn)) {
-			include FORUM_ROOT . 'include/cache/generate_' . $fn . '.php';
+		$f = array_shift($args);
+		$fn = 'punbb\\generate_' . $f;
+		if (!function_exists($fn)) {
+			include FORUM_ROOT . 'include/cache/generate_' . $f . '.php';
 		}
-		call_user_func_array('punbb\\generate_' . $fn, $args);
+		call_user_func_array($fn, $args);
 	}
 
 	function clean() {
 		$args = func_get_args();
-		$fn = array_shift($args);
-		if (!function_exists('punbb\\' . $fn)) {
-			include FORUM_ROOT . 'include/cache/clean_' . $fn . '.php';
+		$f = array_shift($args);
+		$fn = 'punbb\\clean_' . $f;
+		if (!function_exists($fn)) {
+			include FORUM_ROOT . 'include/cache/clean_' . $f . '.php';
 		}
-		call_user_func_array('punbb\\clean_' . $fn, $args);
+		call_user_func_array($fn, $args);
 	}
 
 }

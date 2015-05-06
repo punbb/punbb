@@ -705,7 +705,7 @@ function get_hook($hook_id) {
 	}
 
 	static $cached_forum_hooks = null;
-	if (empty($cached_forum_hooks)) {
+	if ($cached_forum_hooks === null) {
 		$cached_forum_hooks = cache()->get('cache_hooks', 'hooks_cache');
 	}
 
