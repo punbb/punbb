@@ -16,6 +16,9 @@ if (!defined('FORUM')) {
 }
 
 class Cache {
+
+	private $values = array();
+
 	// Safe create or write of cache files
 	// Use LOCK
 	function set($key, $content) {
@@ -51,14 +54,17 @@ class Cache {
 
 	function get($key, $generator = null) {
 		$file = FORUM_CACHE_DIR . $key . '.php';
+		if (isset($this->values[$key])) {
+			return $this->values[$key];
+		}
 		if (file_exists($file)) {
-			return include $file;
+			return $this->values[$key] = include $file;
 		}
 		if ($generator != '') {
 			$this->generate($generator);
 		}
 		if (file_exists($file)) {
-			return include $file;
+			return $this->values[$key] = include $file;
 		}
 		return null;
 	}

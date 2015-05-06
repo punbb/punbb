@@ -45,8 +45,9 @@ namespace punbb;
 		</form>
 <?php
 
-if (!empty($forum_ranks))
-{
+$cached_forum_ranks = cache()->get('cache_ranks');
+
+if (!empty($cached_forum_ranks)) {
 	// Reset fieldset counter
 	$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
@@ -59,10 +60,7 @@ if (!empty($forum_ranks))
 				<legend class="group-legend"><span><?php echo __('Existing ranks legend', 'admin_ranks') ?></span></legend>
 <?php
 
-	foreach ($forum_ranks as $rank_key => $cur_rank)
-	{
-
-	?>
+	foreach ($cached_forum_ranks as $rank_key => $cur_rank) { ?>
 <?php ($hook = get_hook('ark_pre_edit_cur_rank_fieldset')) ? eval($hook) : null; ?>
 				<fieldset class="mf-set mf-extra set<?php echo ++$forum_page['item_count'] ?>">
 					<legend><span><?php echo __('Existing rank', 'admin_ranks') ?></span></legend>

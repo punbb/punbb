@@ -951,7 +951,7 @@ function validate_username($username, $exclude_id = null)
 function get_title($user)
 {
 	$cached_forum_bans = cache()->get('cache_bans', 'bans_cache');
-	static $ban_list, $forum_ranks;
+	static $ban_list;
 
 	$return = ($hook = get_hook('fn_get_title_start')) ? eval($hook) : null;
 	if ($return != null) {
@@ -967,37 +967,40 @@ function get_title($user)
 	}
 
 	// If not already loaded in a previous call, load the cached ranks
-	if (config()->o_ranks == '1' && empty($forum_ranks)) {
-		$cached = cache()->get('cache_ranks');
-		if (!$cached) {
-			cache()->generate('ranks_cache');
-			$cached = cache()->get('cache_ranks');
-		}
+	if (config()->o_ranks == '1' && empty($cached_forum_ranks)) {
+		$cached_forum_ranks = cache()->get('cache_ranks', 'ranks_cache');
 	}
 
 	// If the user has a custom title
-	if ($user['title'] != '')
-		$user_title = forum_htmlencode(config()->o_censoring == '1' ? censor_words($user['title']) : $user['title']);
+	if ($user['title'] != '') {
+		$user_title = forum_htmlencode(config()->o_censoring == '1'?
+			censor_words($user['title']) : $user['title']);
+	}
 	// If the user is banned
-	else if (in_array(utf8_strtolower($user['username']), $ban_list))
+	else if (in_array(utf8_strtolower($user['username']), $ban_list)) {
 		$user_title = __('Banned');
+	}
 	// If the user group has a default user title
-	else if ($user['g_user_title'] != '')
+	else if ($user['g_user_title'] != '') {
 		$user_title = forum_htmlencode($user['g_user_title']);
+	}
 	// If the user is a guest
-	else if ($user['g_id'] == FORUM_GUEST)
+	else if ($user['g_id'] == FORUM_GUEST) {
 		$user_title = __('Guest');
-	else
-	{
+	}
+	else {
 		// Are there any ranks?
-		if (config()->o_ranks == '1' && !empty($forum_ranks))
-			foreach ($forum_ranks as $cur_rank)
+		if (config()->o_ranks == '1' && !empty($cached_forum_ranks)) {
+			foreach ($cached_forum_ranks as $cur_rank) {
 				if (intval($user['num_posts']) >= $cur_rank['min_posts'])
 					$user_title = forum_htmlencode($cur_rank['rank']);
+			}
+		}
 
 		// If the user didn't "reach" any rank (or if ranks are disabled), we assign the default
-		if (!isset($user_title))
+		if (!isset($user_title)) {
 			$user_title = __('Member');
+		}
 	}
 
 	($hook = get_hook('fn_get_title_end')) ? eval($hook) : null;
