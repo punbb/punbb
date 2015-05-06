@@ -2,70 +2,70 @@
 namespace punbb;
 
 function flash() {
-	return PUNBB::get('flash');
+	return service::get('flash');
 }
 
 function db() {
-	return PUNBB::get('db');
+	return service::get('db');
 }
 
 function config() {
-	return PUNBB::get('config');
+	return service::get('config');
 }
 
 function user() {
-	return PUNBB::get('user');
+	return service::get('user');
 }
 
 function assets() {
-	return PUNBB::get('assets');
+	return service::get('assets');
 }
 
 function template() {
-	return PUNBB::get('template');
+	return service::get('template');
 }
 
 function theme() {
-	return PUNBB::get('theme');
+	return service::get('theme');
 }
 
 function language() {
-	return PUNBB::get('language');
+	return service::get('language');
 }
 
 function translations() {
-	return PUNBB::get('translations');
+	return service::get('translations');
 }
 
 function rewrite() {
-	return PUNBB::get('rewrite');
+	return service::get('rewrite');
 }
 
 function cache() {
-	return PUNBB::get('cache');
+	return service::get('cache');
 }
 
 // configure
 
-PUNBB::set('cache', function () {
+service::set('cache', function () {
 	return new Cache();
 });
 
-PUNBB::set('config', function () {
+service::set('config', function () {
 	// Load cached config
 	$config = cache()->get('cache_config', 'punbb\\fn::generate_config_cache');
 	return (object)$config;
 });
 
-PUNBB::set('flash', function () {
+service::set('flash', function () {
 	return new FlashMessenger();
 });
 
-PUNBB::set('assets', function () {
+service::set('assets', function () {
 	return Loader::singleton();
 });
 
-PUNBB::set('user', function () {
+service::set('user', function () {
 	// TODO fix
 	global $_PUNBB;
 	if (!isset($_PUNBB['user'])) {
@@ -76,6 +76,6 @@ PUNBB::set('user', function () {
 	return $_PUNBB['user'];
 });
 
-PUNBB::set('translations', function () {
+service::set('translations', function () {
 	return new \stdClass();
 });
