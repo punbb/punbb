@@ -229,7 +229,7 @@ else if (isset($_POST['form_sent']))
 			}
 			else {
 				// Remove cache file with forum stats
-				cache()->clean('stats_cache');
+				fn::clean_stats_cache();
 			}
 
 			$expire = time() + config()->o_timeout_visit;

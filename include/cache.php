@@ -52,7 +52,7 @@ class Cache {
 		return true;
 	}
 
-	function get($key, $generator = null) {
+	function get($key, $generator = null, $args = null) {
 		$file = FORUM_CACHE_DIR . $key . '.php';
 		if (isset($this->values[$key])) {
 			return $this->values[$key];
@@ -73,13 +73,6 @@ class Cache {
 		$args = func_get_args();
 		$f = array_shift($args);
 		$fn = 'punbb\\fn::generate_' . $f;
-		call_user_func_array($fn, $args);
-	}
-
-	function clean() {
-		$args = func_get_args();
-		$f = array_shift($args);
-		$fn = 'punbb\\fn::clean_' . $f;
 		call_user_func_array($fn, $args);
 	}
 

@@ -91,7 +91,7 @@ if (isset($_POST['form_sent']) && empty($action))
 			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Remove cache file with forum stats
-			cache()->clean('stats_cache');
+			fn::clean_stats_cache();
 		}
 
 		// Remove this user's guest entry from the online list

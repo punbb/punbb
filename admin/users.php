@@ -185,7 +185,7 @@ else if (isset($_POST['delete_users']) ||
 		}
 
 		// Remove cache file with forum stats
-		cache()->clean('stats_cache');
+		fn::clean_stats_cache();
 
 		($hook = get_hook('aus_delete_users_pre_redirect')) ? eval($hook) : null;
 
