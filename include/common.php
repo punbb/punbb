@@ -99,12 +99,12 @@ if (config()->o_maintenance && user()->g_id > FORUM_ADMIN &&
 }
 
 // Load cached updates info
+// !TODO
 if (user()->g_id == FORUM_ADMIN) {
 	$cached = cache()->get('cache_updates');
 	// Regenerate cache only if automatic updates are enabled and if the cache is more than 12 hours old
 	if (config()->o_check_for_updates == '1' &&
-			(!$cached ||
-				$forum_updates['cached'] < (time() - 43200))) {
+			(!$cached || $cached['cached'] < (time() - 43200))) {
 		fn::generate_updates_cache();
 		$cached = cache()->get('cache_updates');
 	}

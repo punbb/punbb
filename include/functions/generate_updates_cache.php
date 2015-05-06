@@ -53,9 +53,9 @@ function generate_updates_cache() {
 
 	// Output update status as PHP code
 	if (!cache()->set('cache_updates',
-		'<?php' .
-		"\n\n" .
-		'$forum_updates = '.var_export($output, true).';'."\n\nreturn 1;"
+		'<?php
+
+		return '.var_export($output, true).';'
 	)) {
 		error('Unable to write updates cache file to cache directory.<br />
 			Please make sure PHP has write access to the directory \'cache\'.',

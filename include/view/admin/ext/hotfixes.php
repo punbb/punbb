@@ -3,6 +3,9 @@ namespace punbb;
 
 ($hook = get_hook('aex_section_hotfixes_output_start')) ? eval($hook) : null;
 
+//!TODO
+$cached_forum_updates = null;
+
 ?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?= __('Hotfixes available', 'admin_ext') ?></span></h2>
@@ -17,16 +20,14 @@ namespace punbb;
 	$forum_page['ext_error'] = array();
 
 	// Loop through any available hotfixes
-	if (isset($forum_updates['hotfix']))
-	{
+	if (isset($cached_forum_updates['hotfix'])) {
 		// If there's only one hotfix, add one layer of arrays so we can foreach over it
-		if (!is_array(current($forum_updates['hotfix'])))
-			$forum_updates['hotfix'] = array($forum_updates['hotfix']);
+		if (!is_array(current($cached_forum_updates['hotfix']))) {
+			$cached_forum_updates['hotfix'] = array($cached_forum_updates['hotfix']);
+		}
 
-		foreach ($forum_updates['hotfix'] as $hotfix)
-		{
-			if (!array_key_exists($hotfix['attributes']['id'], $inst_exts))
-			{
+		foreach ($cached_forum_updates['hotfix'] as $hotfix) {
+			if (!array_key_exists($hotfix['attributes']['id'], $inst_exts)) {
 				$forum_page['ext_item'][] = '<div class="ct-box info-box hotfix available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($hotfix['content']).'</h3>'."\n\t\t\t".'<ul>'."\n\t\t\t\t".'<li><span>'.
 					sprintf(__('Extension by', 'admin_ext'), 'PunBB').'</span></li>'."\n\t\t\t\t".'<li><span>'.
 					__('Hotfix description', 'admin_ext') . '</span></li>'."\n\t\t\t".'</ul>'."\n\t\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.

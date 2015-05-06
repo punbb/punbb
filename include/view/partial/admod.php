@@ -3,6 +3,9 @@ namespace punbb;
 
 $admod_links = array();
 
+// !TODO
+$cached_forum_updates = null;
+
 // We only need to run this query for mods/admins if there will actually be reports to look at
 if (user()->is_admmod && config()->o_report_method != 1) {
 	$query = array(
@@ -27,18 +30,17 @@ if (user()->g_id == FORUM_ADMIN) {
 		$alert_items['maintenance'] = '<p id="maint-alert" class="warn">'.
 		__('Maintenance alert') . '</p>';
 
-	if (config()->o_check_for_updates == '1')
-	{
-		if ($forum_updates['fail'])
+	if (config()->o_check_for_updates == '1') {
+		if ($cached_forum_updates['fail'])
 			$alert_items['update_fail'] = '<p><strong>'.
 				__('Updates') . '</strong> ' . __('Updates failed') . '</p>';
-		else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']))
+		else if (isset($cached_forum_updates['version']) && isset($cached_forum_updates['hotfix']))
 			$alert_items['update_version_hotfix'] = '<p><strong>'.
-			__('Updates') . '</strong> '.sprintf(__('Updates version n hf'), $forum_updates['version'], link('admin_extensions_hotfixes')).'</p>';
-		else if (isset($forum_updates['version']))
+			__('Updates') . '</strong> '.sprintf(__('Updates version n hf'), $cached_forum_updates['version'], link('admin_extensions_hotfixes')).'</p>';
+		else if (isset($cached_forum_updates['version']))
 			$alert_items['update_version'] = '<p><strong>'.
-			__('Updates') . '</strong> '.sprintf(__('Updates version'), $forum_updates['version']).'</p>';
-		else if (isset($forum_updates['hotfix']))
+			__('Updates') . '</strong> '.sprintf(__('Updates version'), $cached_forum_updates['version']).'</p>';
+		else if (isset($cached_forum_updates['hotfix']))
 			$alert_items['update_hotfix'] = '<p><strong>'.
 			__('Updates') . '</strong> '.sprintf(__('Updates hf'), link('admin_extensions_hotfixes')).'</p>';
 	}

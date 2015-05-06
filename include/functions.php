@@ -2796,26 +2796,25 @@ function send_forum_subscriptions($topic_info, $new_tid)
 
 // Display a form that the user can use to confirm that they want to undertake an action.
 // Used when the CSRF token from the request does not match the token stored in the database.
-function csrf_confirm_form()
-{
-	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page, $forum_updates;
+function csrf_confirm_form() {
+	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page;
 
 	// If we've disabled the CSRF check for this page, we have nothing to do here.
-	if (defined('FORUM_DISABLE_CSRF_CONFIRM'))
+	if (defined('FORUM_DISABLE_CSRF_CONFIRM')) {
 		return;
+	}
 
 	// User pressed the cancel button
-	if (isset($_POST['confirm_cancel']))
+	if (isset($_POST['confirm_cancel'])) {
 		redirect(forum_htmlencode($_POST['prev_url']), __('Cancel redirect'));
+	}
 
 	// A helper function for csrf_confirm_form. It takes a multi-dimensional array and returns it as a
 	// single-dimensional array suitable for use in hidden fields.
-	function _csrf_confirm_form($key, $values)
-	{
+	function _csrf_confirm_form($key, $values) {
 		$fields = array();
 
-		if (is_array($values))
-		{
+		if (is_array($values)) {
 			foreach ($values as $cur_key => $cur_values)
 				$fields = array_merge($fields, _csrf_confirm_form($key.'['.$cur_key.']', $cur_values));
 
@@ -2828,11 +2827,11 @@ function csrf_confirm_form()
 	}
 
 	$return = ($hook = get_hook('fn_csrf_confirm_form_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return;
+	}
 
-	if (defined('FORUM_REQUEST_AJAX'))
-	{
+	if (defined('FORUM_REQUEST_AJAX')) {
 		$json_data = array(
 				'code'			=>	-3,
 				'message'		=>	__('CSRF token mismatch'),
@@ -2840,8 +2839,7 @@ function csrf_confirm_form()
 				'prev_url'		=>	forum_htmlencode(user()->prev_url),
 		);
 
-		foreach ($_POST as $submitted_key => $submitted_val)
-		{
+		foreach ($_POST as $submitted_key => $submitted_val) {
 			if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url')
 			{
 				$hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
@@ -2887,10 +2885,9 @@ function csrf_confirm_form()
 	]);
 }
 
-
 // Display a message
 function message($message, $link = '', $heading = '') {
-	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page, $forum_updates;
+	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page;
 
 	// FIX for render from function
 	$GLOBALS['message'] = $message;
@@ -2899,8 +2896,7 @@ function message($message, $link = '', $heading = '') {
 
 	($hook = get_hook('fn_message_start')) ? eval($hook) : null;
 
-	if (defined('FORUM_REQUEST_AJAX'))
-	{
+	if (defined('FORUM_REQUEST_AJAX')) {
 		$json_data = array(
 			'code'		=> -1,
 			'message'	=> $message
@@ -2911,10 +2907,10 @@ function message($message, $link = '', $heading = '') {
 		send_json($json_data);
 	}
 
-	if (!defined('FORUM_HEADER'))
-	{
-		if ($heading == '')
+	if (!defined('FORUM_HEADER')) {
+		if ($heading == '') {
 			$heading = __('Forum message');
+		}
 
 		// Setup breadcrumbs
 		$crumbs = array(
