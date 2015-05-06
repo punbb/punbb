@@ -692,8 +692,7 @@ function get_saved_queries()
 //
 
 // Return all code blocks that hook into $hook_id
-function get_hook($hook_id)
-{
+function get_hook($hook_id) {
 	if (!defined('FORUM_DISABLE_HOOKS') && defined('FORUM_NEW_HOOKS_STYLE')) {
 		global $forum_new_hooks;
 		if (!empty($forum_new_hooks[$hook_id])) {
@@ -705,9 +704,13 @@ function get_hook($hook_id)
 		}
 	}
 
-	global $forum_hooks;
+	static $cached_forum_hooks = null;
+	if (empty($cached_forum_hooks)) {
+		$cached_forum_hooks = cache()->get('cache_hooks', 'hooks_cache');
+	}
 
-	return !defined('FORUM_DISABLE_HOOKS') && isset($forum_hooks[$hook_id]) ? implode("\n", $forum_hooks[$hook_id]) : false;
+	return !defined('FORUM_DISABLE_HOOKS') && isset($cached_forum_hooks[$hook_id])?
+		implode("\n", $cached_forum_hooks[$hook_id]) : false;
 }
 
 

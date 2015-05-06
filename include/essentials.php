@@ -105,13 +105,6 @@ if (defined('PUN') || !isset(config()->o_database_revision) ||
 }
 
 // Load hooks
-global $forum_hooks;
-$cached = cache()->get('cache_hooks');
-if (!$cached) {
-	cache()->generate('hooks_cache');
-	$cached = cache()->get('cache_hooks');
-}
-
 init_new_style_hooks();
 
 // A good place to add common functions for your extension
