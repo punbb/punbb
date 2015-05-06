@@ -72,20 +72,14 @@ class Cache {
 	function generate() {
 		$args = func_get_args();
 		$f = array_shift($args);
-		$fn = 'punbb\\generate_' . $f;
-		if (!function_exists($fn)) {
-			include FORUM_ROOT . 'include/cache/generate_' . $f . '.php';
-		}
+		$fn = 'punbb\\fn::generate_' . $f;
 		call_user_func_array($fn, $args);
 	}
 
 	function clean() {
 		$args = func_get_args();
 		$f = array_shift($args);
-		$fn = 'punbb\\clean_' . $f;
-		if (!function_exists($fn)) {
-			include FORUM_ROOT . 'include/cache/clean_' . $f . '.php';
-		}
+		$fn = 'punbb\\fn::clean_' . $f;
 		call_user_func_array($fn, $args);
 	}
 
