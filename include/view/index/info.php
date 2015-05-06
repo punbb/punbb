@@ -3,22 +3,28 @@ namespace punbb;
 
 ($hook = get_hook('in_info_output_start')) ? eval($hook) : null;
 
-$cached = cache()->get('cache_stats');
+$cached_forum_stats = cache()->get('cache_stats');
 // Regenerate cache only if the cache is more than 30 minutes old
-if (!$cached || $forum_stats['cached'] < (time() - 1800)) {
+if (!$cached_forum_stats || $cached_forum_stats['cached'] < (time() - 1800)) {
 	cache()->generate('stats_cache');
-	$cached = cache()->get('cache_stats');
+	$cached_forum_stats = cache()->get('cache_stats');
 }
 
 $stats_list['no_of_users'] =
-	'<li class="st-users"><span>'.sprintf(__('No of users', 'index'), '<strong>'.forum_number_format($forum_stats['total_users']).'</strong>').'</span></li>';
+	'<li class="st-users"><span>'.sprintf(__('No of users', 'index'),
+		'<strong>' . forum_number_format($cached_forum_stats['total_users']).'</strong>').'</span></li>';
 $stats_list['newest_user'] =
 	'<li class="st-users"><span>'.sprintf(__('Newest user', 'index'), '<strong>'.
-			(user()->g_view_users == '1' ? '<a href="'.link('user', $forum_stats['last_user']['id']).'">'.forum_htmlencode($forum_stats['last_user']['username']).'</a>' : forum_htmlencode($forum_stats['last_user']['username'])).'</strong>').'</span></li>';
+			(user()->g_view_users == '1' ?
+				'<a href="'.link('user', $cached_forum_stats['last_user']['id']).'">' .
+				forum_htmlencode($cached_forum_stats['last_user']['username']).'</a>' :
+				forum_htmlencode($cached_forum_stats['last_user']['username'])).'</strong>').'</span></li>';
 $stats_list['no_of_topics'] =
-	'<li class="st-activity"><span>'.sprintf(__('No of topics', 'index'), '<strong>'.forum_number_format($forum_stats['total_topics']).'</strong>').'</span></li>';
+	'<li class="st-activity"><span>'.sprintf(__('No of topics', 'index'), '<strong>' .
+			forum_number_format($cached_forum_stats['total_topics']).'</strong>').'</span></li>';
 $stats_list['no_of_posts'] =
-	'<li class="st-activity"><span>'.sprintf(__('No of posts', 'index'), '<strong>'.forum_number_format($forum_stats['total_posts']).'</strong>').'</span></li>';
+	'<li class="st-activity"><span>'.sprintf(__('No of posts', 'index'), '<strong>' .
+			forum_number_format($cached_forum_stats['total_posts']).'</strong>').'</span></li>';
 
 ($hook = get_hook('in_stats_pre_info_output')) ? eval($hook) : null;
 

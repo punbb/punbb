@@ -2371,8 +2371,7 @@ function delete_post($post_id, $topic_id, $forum_id)
 
 
 // Update posts, topics, last_post, last_post_id and last_poster for a forum
-function sync_forum($forum_id)
-{
+function sync_forum($forum_id) {
 	$return = ($hook = get_hook('fn_sync_forum_start')) ? eval($hook) : null;
 	if ($return != null)
 		return;
@@ -2386,10 +2385,10 @@ function sync_forum($forum_id)
 
 	($hook = get_hook('fn_sync_forum_qr_get_forum_stats')) ? eval($hook) : null;
 	$result = db()->query_build($query) or error(__FILE__, __LINE__);
-	$forum_stats = db()->fetch_assoc($result);
+	$res_forum_stats = db()->fetch_assoc($result);
 
 	// $num_posts is only the sum of all replies (we have to add the topic posts)
-	$forum_stats['num_posts'] = $forum_stats['num_posts'] + $forum_stats['num_topics'];
+	$res_forum_stats['num_posts'] = $res_forum_stats['num_posts'] + $res_forum_stats['num_topics'];
 
 
 	// Get last_post, last_post_id and last_poster for forum (if any)
@@ -2415,7 +2414,7 @@ function sync_forum($forum_id)
 	// Now update the forum
 	$query = array(
 		'UPDATE'	=> 'forums',
-		'SET'		=> 'num_topics='.$forum_stats['num_topics'].', num_posts='.$forum_stats['num_posts'].', last_post='.$last_post_info['last_post'].', last_post_id='.$last_post_info['last_post_id'].', last_poster='.$last_post_info['last_poster'],
+		'SET'		=> 'num_topics='.$res_forum_stats['num_topics'].', num_posts='.$res_forum_stats['num_posts'].', last_post='.$last_post_info['last_post'].', last_post_id='.$last_post_info['last_post_id'].', last_poster='.$last_post_info['last_poster'],
 		'WHERE'		=> 'id='.$forum_id
 	);
 
