@@ -1,7 +1,7 @@
 <?php
 namespace punbb;
 
-class PUNBB {
+class service {
 
 	private static $services;
 	private static $values;

@@ -113,12 +113,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-style-Oxygen.git",
-                "reference": "11a221fe227d7f24906d95793f3a738345ac72bf"
+                "reference": "7be182af76cd811a1f9d92a3a911c18ded0555c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-style-Oxygen/zipball/11a221fe227d7f24906d95793f3a738345ac72bf",
-                "reference": "11a221fe227d7f24906d95793f3a738345ac72bf",
+                "url": "https://api.github.com/repos/rivetweb/punbb-style-Oxygen/zipball/7be182af76cd811a1f9d92a3a911c18ded0555c8",
+                "reference": "7be182af76cd811a1f9d92a3a911c18ded0555c8",
                 "shasum": ""
             },
             "type": "library",
@@ -137,7 +137,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-style-Oxygen/tree/master"
             },
-            "time": "2015-05-06 08:50:40"
+            "time": "2015-05-06 08:56:17"
         },
         {
             "name": "punbb/template-Default",
