@@ -52,7 +52,7 @@ class Cache {
 		return true;
 	}
 
-	function get($key, $generator = null, $args = null) {
+	function get($key, $generator = null, $args = []) {
 		$file = FORUM_CACHE_DIR . $key . '.php';
 		if (isset($this->values[$key])) {
 			return $this->values[$key];
