@@ -20,10 +20,10 @@ global $errors;
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>
 		</div>
-		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>" autocomplete="off">
+		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>" autocomplete="off">
 			<div class="hidden">
 				<input type="hidden" name="form_sent" value="1" />
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
+				<input type="hidden" name="csrf_token" value="<?= generate_form_token($form_action) ?>" />
 			</div>
 <?php ($hook = get_hook('pf_change_pass_key_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

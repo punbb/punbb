@@ -270,7 +270,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = link('request_password');
+	$form_action = link('request_password');
 
 	// Setup breadcrumbs
 	$crumbs = array(
@@ -284,7 +284,8 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	template()->render([
 		'main_view' => 'login/reqpass',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'form_action' => $form_action
 	]);
 }
 
@@ -294,12 +295,13 @@ if (!user()->is_guest) {
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = link('login');
+$form_action = link('login');
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()->prev_url).'" />',
-	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+		generate_form_token($form_action) . '" />'
 );
 
 // Setup breadcrumbs
@@ -314,5 +316,6 @@ define('FORUM_PAGE', 'login');
 
 template()->render([
 	'main_view' => 'login/main',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'form_action' => $form_action
 ]);

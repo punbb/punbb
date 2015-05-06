@@ -191,10 +191,11 @@ if (isset($_GET['tid']))
 
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
+		$form_action = link('moderate_topic', array($fid, $tid));
 
 		$forum_page['hidden_fields'] = array(
-			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+				generate_form_token($form_action) . '" />',
 			'posts'			=> '<input type="hidden" name="posts" value="'.implode(',', $posts).'" />'
 		);
 
@@ -213,7 +214,8 @@ if (isset($_GET['tid']))
 		template()->render([
 			'main_view' => 'moderate/dialogue',
 			'crumbs' => $crumbs,
-			'page' => $page
+			'page' => $page,
+			'form_action' => $form_action
 		]);
 	}
 	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
@@ -300,10 +302,11 @@ if (isset($_GET['tid']))
 
 		// Setup form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-		$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
+		$form_action = link('moderate_topic', array($fid, $tid));
 
 		$forum_page['hidden_fields'] = array(
-			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+				generate_form_token($form_action) . '" />',
 			'posts'			=> '<input type="hidden" name="posts" value="'.implode(',', $posts).'" />'
 		);
 
@@ -322,7 +325,8 @@ if (isset($_GET['tid']))
 		template()->render([
 			'main_view' => 'moderate/dialogue2',
 			'crumbs' => $crumbs,
-			'page' => $page
+			'page' => $page,
+			'form_action' => $form_action
 		]);
 	}
 
@@ -364,7 +368,7 @@ if (isset($_GET['tid']))
 	}
 
 	// Setup form
-	$forum_page['form_action'] = link('moderate_topic', array($fid, $tid));
+	$form_action = link('moderate_topic', array($fid, $tid));
 
 	// Setup breadcrumbs
 	$crumbs = array(
@@ -421,7 +425,8 @@ if (isset($_GET['tid']))
 		'main_head_pages' => $main_head_pages,
 		'crumbs' => $crumbs,
 		'page_post' => $page_post,
-		'page' => $page
+		'page' => $page,
+		'form_action' => $form_action
 	]);
 }
 
@@ -604,10 +609,11 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = link('moderate_forum', $fid);
+	$form_action = link('moderate_forum', $fid);
 
 	$forum_page['hidden_fields'] = array(
-		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+			generate_form_token($form_action) . '" />',
 		'topics'		=> '<input type="hidden" name="topics" value="'.($action == 'single' ? $topics : implode(',', $topics)).'" />'
 	);
 
@@ -631,7 +637,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		'main_view' => 'moderate/dialogue3',
 		'main_title' => end($crumbs) . ' ' . __('To new forum', 'misc'),
 		'crumbs' => $crumbs,
-		'page' => $page
+		'page' => $page,
+		'form_action' => $form_action
 	]);
 }
 // Merge topics
@@ -722,10 +729,11 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = link('moderate_forum', $fid);
+	$form_action = link('moderate_forum', $fid);
 
 	$forum_page['hidden_fields'] = array(
-		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+			generate_form_token($form_action) . '" />',
 		'topics'		=> '<input type="hidden" name="topics" value="'.implode(',', $topics).'" />'
 	);
 
@@ -744,7 +752,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	template()->render([
 		'main_view' => 'moderate/dialogue4',
 		'crumbs' => $crumbs,
-		'page' => $page
+		'page' => $page,
+		'form_action' => $form_action
 	]);
 }
 
@@ -859,10 +868,11 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] =0;
-	$forum_page['form_action'] = link('moderate_forum', $fid);
+	$form_action = link('moderate_forum', $fid);
 
 	$forum_page['hidden_fields'] = array(
-		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+			generate_form_token($form_action) . '" />',
 		'topics'		=> '<input type="hidden" name="topics" value="'.implode(',', $topics).'" />'
 	);
 
@@ -881,10 +891,10 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	template()->render([
 		'main_view' => 'moderate/dialogue5',
 		'crumbs' => $crumbs,
-		'page' => $page
+		'page' => $page,
+		'form_action' => $form_action
 	]);
 }
-
 
 // Open or close one or more topics
 else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
@@ -1135,7 +1145,7 @@ if ($page > 1) {
 
 // Setup form
 $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = link('moderate_forum', $fid);
+$form_action = link('moderate_forum', $fid);
 
 // Setup breadcrumbs
 $crumbs = array(
@@ -1166,5 +1176,6 @@ template()->render([
 	'main_head_pages' => $main_head_pages,
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
-	'page' => $page
+	'page' => $page,
+	'form_action' => $form_action
 ]);

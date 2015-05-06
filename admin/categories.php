@@ -142,10 +142,11 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 
 		// Setup the form
-		$forum_page['form_action'] = link('admin_categories');
+		$form_action = link('admin_categories');
 
 		$forum_page['hidden_fields'] = array(
-			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+				generate_form_token($form_action).'" />',
 			'cat_to_delete'	=> '<input type="hidden" name="cat_to_delete" value="'.$cat_to_delete.'" />'
 		);
 
@@ -165,7 +166,8 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		template()->render([
 			'main_view' => 'admin/categories/edit',
-			'crumbs' => $crumbs
+			'crumbs' => $crumbs,
+			'form_action' => $form_action
 		]);
 	}
 }
@@ -243,10 +245,11 @@ while ($cur_cat = db()->fetch_assoc($result))
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = link('admin_categories').'?action=foo';
+$form_action = link('admin_categories') . '?action=foo';
 
 $forum_page['hidden_fields'] = array(
-	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+		generate_form_token($form_action).'" />'
 );
 
 // Setup breadcrumbs
@@ -264,5 +267,6 @@ define('FORUM_PAGE', 'admin-categories');
 
 template()->render([
 	'main_view' => 'admin/categories/main',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'form_action' => $form_action
 ]);

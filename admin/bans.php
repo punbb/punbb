@@ -318,10 +318,11 @@ else if (isset($_GET['del_ban']))
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = link('admin_bans').'&amp;action=more';
+$form_action = link('admin_bans') . '&amp;action=more';
 
 $forum_page['hidden_fields'] = array(
-	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+		generate_form_token($form_action) . '" />'
 );
 
 $crumbs = array(
@@ -395,5 +396,6 @@ template()->render([
 	'main_view' => 'admin/bans/main',
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
-	'page' => $page
+	'page' => $page,
+	'form_action' => $form_action
 ]);

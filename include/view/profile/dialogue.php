@@ -14,9 +14,9 @@ namespace punbb;
 				<?php echo implode("\n\t\t\t\t", $forum_page['frm_info'])."\n" ?>
 			</ul>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
+				<input type="hidden" name="csrf_token" value="<?= generate_form_token($form_action) ?>" />
 			</div>
 <?php ($hook = get_hook('pf_delete_user_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

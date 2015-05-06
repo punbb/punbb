@@ -11,8 +11,8 @@ namespace punbb;
 	<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 </div>
 
-<form id="mr-post-actions-form" class="newform" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+<form id="mr-post-actions-form" class="newform" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 	<div class="main-content main-topic">
 		<div class="hidden">
-			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
+			<input type="hidden" name="csrf_token" value="<?= generate_form_token($form_action) ?>" />
 		</div>

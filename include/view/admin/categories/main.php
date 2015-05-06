@@ -8,7 +8,7 @@ namespace punbb;
 		<h2 class="hn"><span><?= __('Add category head', 'admin_categories') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
@@ -48,15 +48,13 @@ namespace punbb;
 // Reset counter
 $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
-if (!empty($cat_list))
-{
+if (!empty($cat_list)) { ?>
 
-?>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?= __('Del category head', 'admin_categories') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
@@ -99,15 +97,14 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 		<h2 class="hn"><span><?= __('Edit categories head', 'admin_categories') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 <?php
 
 	($hook = get_hook('acg_edit_cat_fieldsets_start')) ? eval($hook) : null;
-	foreach ($cat_list as $cur_category)
-	{
+	foreach ($cat_list as $cur_category) {
 		$forum_page['item_count'] = 0;
 		($hook = get_hook('acg_pre_edit_cur_cat_fieldset')) ? eval($hook) : null;
 

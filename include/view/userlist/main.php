@@ -14,7 +14,7 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form id="afocus" method="get" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
+		<form id="afocus" method="get" accept-charset="utf-8" action="<?= $form_action ?>">
 		<div class="frm-form">
 <?php ($hook = get_hook('ul_search_fieldset_start')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

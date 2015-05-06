@@ -1,8 +1,6 @@
 <?php
 namespace punbb;
 
-($hook = get_hook('fn_csrf_confirm_form_pre_header_load')) ? eval($hook) : null;
-
 ?>
 <div id="brd-main" class="main">
 	<div class="main-head">
@@ -12,7 +10,8 @@ namespace punbb;
 		<div class="ct-box info-box">
 			<p><?= __('CSRF token mismatch') ?></p>
 		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_htmlencode($forum_page['form_action']) ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?=
+				forum_htmlencode($form_action) ?>">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
@@ -24,5 +23,3 @@ namespace punbb;
 	</div>
 </div>
 <?php
-
-($hook = get_hook('fn_csrf_confirm_form_end')) ? eval($hook) : null;

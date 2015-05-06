@@ -13,10 +13,7 @@ if (user()->is_admmod && config()->o_report_method != 1) {
 		'FROM'		=> 'reports AS r',
 		'WHERE'		=> 'r.zapped IS NULL',
 	);
-
-	($hook = get_hook('hd_qr_get_unread_reports_count')) ? eval($hook) : null;
 	$result_header = db()->query_build($query) or error(__FILE__, __LINE__);
-
 	if (db()->result($result_header))
 		$admod_links['reports'] = '<li id="reports"><a href="'.link('admin_reports').'">'.
 		__('New reports') . '</a></li>';
@@ -55,8 +52,6 @@ if (user()->g_id == FORUM_ADMIN) {
 		$admod_links['alert'] =
 			'<li id="alert"><a href="'.link('admin_index').'">'.
 			__('New alerts').'</a></li>';
-
-	($hook = get_hook('hd_alert')) ? eval($hook) : null;
 }
 
 echo (!empty($admod_links)) ?

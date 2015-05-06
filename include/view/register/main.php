@@ -28,10 +28,10 @@ global $errors;
 		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?= __('Required warn') ?></p>
 		</div>
-		<form class="frm-form frm-suggest-username" id="afocus" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>" autocomplete="off">
+		<form class="frm-form frm-suggest-username" id="afocus" method="post" accept-charset="utf-8" action="<?= $form_action ?>" autocomplete="off">
 			<div class="hidden">
 				<input type="hidden" name="form_sent" value="1" />
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
+				<input type="hidden" name="csrf_token" value="<?= generate_form_token($form_action) ?>" />
 				<input type="hidden" name="timezone" id="register_timezone" value="<?php echo forum_htmlencode(config()->o_default_timezone) ?>" />
 				<input type="hidden" name="dst" id="register_dst" value="<?php echo forum_htmlencode(config()->o_default_dst) ?>" />
 			</div>

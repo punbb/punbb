@@ -171,12 +171,13 @@ if (!empty($errors))
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = link('edit', $id);
+$form_action = link('edit', $id);
 $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
-	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+		generate_form_token($form_action) . '" />'
 );
 
 // Setup help
@@ -207,5 +208,6 @@ define('FORUM_PAGE', 'postedit');
 
 template()->render([
 	'main_view' => 'edit/main',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'form_action' => $form_action
 ]);

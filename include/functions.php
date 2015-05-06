@@ -2861,10 +2861,11 @@ function csrf_confirm_form() {
 		__('Confirm action')
 	);
 
-	$forum_page['form_action'] = get_current_url();
+	$form_action = get_current_url();
 
 	$forum_page['hidden_fields'] = array(
-		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />',
+		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+			generate_form_token($form_action) . '" />',
 		'prev_url'		=> '<input type="hidden" name="prev_url" value="'.
 			forum_htmlencode(user()->prev_url).'" />'
 	);
@@ -2881,7 +2882,8 @@ function csrf_confirm_form() {
 
 	template()->render([
 		'main_view' => 'partial/confirm_form',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'form_action' => $form_action
 	]);
 }
 

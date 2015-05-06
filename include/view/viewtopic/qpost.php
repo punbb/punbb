@@ -4,13 +4,14 @@ namespace punbb;
 ($hook = get_hook('vt_qpost_output_start')) ? eval($hook) : null;
 
 // Setup form
-$forum_page['form_action'] = link('new_reply', $id);
+$form_action = link('new_reply', $id);
 $forum_page['form_attributes'] = array();
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!user()->is_guest) ? forum_htmlencode(user()->username) : 'Guest').'" />',
-	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+		generate_form_token($form_action) . '" />'
 );
 
 if (!user()->is_guest && config()->o_subscriptions == '1' && (user()->auto_notify == '1' || $cur_topic['is_subscribed']))
@@ -37,7 +38,7 @@ if (config()->o_smilies == '1')
 	<div id="req-msg" class="req-warn ct-box error-box">
 		<p class="important"><?= __('Required warn', 'topic') ?></p>
 	</div>
-	<form class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
+	<form class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?= $form_action ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 		<div class="hidden">
 			<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 		</div>

@@ -17,7 +17,7 @@ global $errors;
 			'errors' => $errors
 		]) ?>
 
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>" enctype="multipart/form-data">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>" enctype="multipart/form-data">
 			<div class="hidden">
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
