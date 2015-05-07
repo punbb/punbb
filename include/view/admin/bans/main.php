@@ -13,7 +13,7 @@ namespace punbb;
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+				<?= implode("\n", $hidden_fields) ?>
 			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><strong><?= __('New ban legend', 'admin_bans') ?></strong></legend>

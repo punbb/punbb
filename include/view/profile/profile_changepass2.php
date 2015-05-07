@@ -19,7 +19,7 @@ namespace punbb;
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>" autocomplete="off">
 			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+				<?= implode("\n", $hidden_fields) ?>
 			</div>
 <?php ($hook = get_hook('pf_change_pass_normal_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

@@ -174,7 +174,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 $form_action = link('edit', $id);
 $forum_page['form_attributes'] = array();
 
-$forum_page['hidden_fields'] = array(
+$hidden_fields = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 		generate_form_token($form_action) . '" />'
@@ -209,5 +209,6 @@ define('FORUM_PAGE', 'postedit');
 template()->render([
 	'main_view' => 'edit/main',
 	'crumbs' => $crumbs,
-	'form_action' => $form_action
+	'form_action' => $form_action,
+	'hidden_fields' => $hidden_fields
 ]);

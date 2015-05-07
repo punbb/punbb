@@ -297,7 +297,7 @@ if (!user()->is_guest) {
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 $form_action = link('login');
 
-$forum_page['hidden_fields'] = array(
+$hidden_fields = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()->prev_url).'" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
@@ -317,5 +317,6 @@ define('FORUM_PAGE', 'login');
 template()->render([
 	'main_view' => 'login/main',
 	'crumbs' => $crumbs,
-	'form_action' => $form_action
+	'form_action' => $form_action,
+	'hidden_fields' => $hidden_fields
 ]);

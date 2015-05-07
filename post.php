@@ -300,7 +300,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'
 $form_action = ($tid ? link('new_reply', $tid) : link('new_topic', $fid));
 $forum_page['form_attributes'] = array();
 
-$forum_page['hidden_fields'] = array(
+$hidden_fields = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!user()->is_guest) ? forum_htmlencode(user()->username) : 'Guest').'" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
@@ -369,5 +369,6 @@ if ($tid && config()->o_topic_review != '0') {
 template()->render([
 	'main_view' => 'post/main',
 	'crumbs' => $crumbs,
-	'form_action' => $form_action
+	'form_action' => $form_action,
+	'hidden_fields' => $hidden_fields
 ]);

@@ -193,7 +193,7 @@ if (isset($_GET['tid']))
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('moderate_topic', array($fid, $tid));
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 				generate_form_token($form_action) . '" />',
 			'posts'			=> '<input type="hidden" name="posts" value="'.implode(',', $posts).'" />'
@@ -215,7 +215,8 @@ if (isset($_GET['tid']))
 			'main_view' => 'moderate/dialogue',
 			'crumbs' => $crumbs,
 			'page' => $page,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
 	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
@@ -304,7 +305,7 @@ if (isset($_GET['tid']))
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('moderate_topic', array($fid, $tid));
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 				generate_form_token($form_action) . '" />',
 			'posts'			=> '<input type="hidden" name="posts" value="'.implode(',', $posts).'" />'
@@ -326,10 +327,10 @@ if (isset($_GET['tid']))
 			'main_view' => 'moderate/dialogue2',
 			'crumbs' => $crumbs,
 			'page' => $page,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
-
 
 	// Show the moderate topic view
 
@@ -611,7 +612,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 	$form_action = link('moderate_forum', $fid);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />',
 		'topics'		=> '<input type="hidden" name="topics" value="'.($action == 'single' ? $topics : implode(',', $topics)).'" />'
@@ -638,7 +639,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		'main_title' => end($crumbs) . ' ' . __('To new forum', 'misc'),
 		'crumbs' => $crumbs,
 		'page' => $page,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
 // Merge topics
@@ -731,7 +733,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 	$form_action = link('moderate_forum', $fid);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />',
 		'topics'		=> '<input type="hidden" name="topics" value="'.implode(',', $topics).'" />'
@@ -753,10 +755,10 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		'main_view' => 'moderate/dialogue4',
 		'crumbs' => $crumbs,
 		'page' => $page,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
-
 
 // Delete one or more topics
 else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
@@ -870,7 +872,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] =0;
 	$form_action = link('moderate_forum', $fid);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />',
 		'topics'		=> '<input type="hidden" name="topics" value="'.implode(',', $topics).'" />'
@@ -892,7 +894,8 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		'main_view' => 'moderate/dialogue5',
 		'crumbs' => $crumbs,
 		'page' => $page,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
 

@@ -205,7 +205,7 @@ if ($action == 'change_pass')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 	$form_action = link('change_password', $id);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />'
@@ -226,10 +226,10 @@ if ($action == 'change_pass')
 	template()->render([
 		'main_view' => 'profile/profile_changepass2',
 		'crumbs' => $crumbs,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
-
 
 else if ($action == 'change_email')
 {
@@ -393,7 +393,7 @@ else if ($action == 'change_email')
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 	$form_action = link('change_email', $id);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />'
@@ -416,7 +416,8 @@ else if ($action == 'change_email')
 	template()->render([
 		'main_view' => 'profile/profile_changemail',
 		'crumbs' => $crumbs,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
 
@@ -1594,14 +1595,15 @@ else {
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('profile_identity', $id);
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 				generate_form_token($form_action) . '" />'
 		);
 
-		if (user()->is_admmod && (user()->g_id == FORUM_ADMIN || user()->g_mod_rename_users == '1'))
-			$forum_page['hidden_fields']['old_username'] = '<input type="hidden" name="old_username" value="'.forum_htmlencode($user['username']).'" />';
+		if (user()->is_admmod && (user()->g_id == FORUM_ADMIN || user()->g_mod_rename_users == '1')) {
+			$hidden_fields['old_username'] = '<input type="hidden" name="old_username" value="'.forum_htmlencode($user['username']).'" />';
+		}
 
 		// Does the form have required fields
 		$forum_page['has_required'] = (((user()->is_admmod && (user()->g_id == FORUM_ADMIN || user()->g_mod_rename_users == '1')) || user()->is_admmod) ? true : false);
@@ -1613,12 +1615,12 @@ else {
 		template()->render([
 			'main_view' => 'profile/profile_identity',
 			'crumbs' => $crumbs,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
 
-	else if ($section == 'settings')
-	{
+	else if ($section == 'settings') {
 		$forum_page['styles'] = get_style_packs();
 		$forum_page['languages'] = get_language_packs();
 
@@ -1633,7 +1635,7 @@ else {
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('profile_settings', $id);
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 				generate_form_token($form_action) . '" />'
@@ -1646,7 +1648,8 @@ else {
 		template()->render([
 			'main_view' => 'profile/profile_settings',
 			'crumbs' => $crumbs,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
 	else if ($section == 'signature' && config()->o_signatures == '1') {
@@ -1666,7 +1669,7 @@ else {
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('profile_signature', $id);
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 				generate_form_token($form_action) . '" />'
@@ -1691,7 +1694,8 @@ else {
 		template()->render([
 			'main_view' => 'profile/profile_signature',
 			'crumbs' => $crumbs,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
 	else if ($section == 'avatar' && config()->o_avatars == '1') {
@@ -1708,7 +1712,7 @@ else {
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('profile_avatar', $id);
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 			'max_file_size'	=> '<input type="hidden" name="MAX_FILE_SIZE" value="'.config()->o_avatars_size.'" />',
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
@@ -1743,7 +1747,8 @@ else {
 		template()->render([
 			'main_view' => 'profile/profile_avatar',
 			'crumbs' => $crumbs,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
 	else if ($section == 'admin') {
@@ -1763,7 +1768,7 @@ else {
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$form_action = link('profile_admin', $id);
 
-		$forum_page['hidden_fields'] = array(
+		$hidden_fields = array(
 			'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 			'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 				generate_form_token($form_action) . '" />'
@@ -1828,7 +1833,8 @@ else {
 		template()->render([
 			'main_view' => 'profile/profile_admin',
 			'crumbs' => $crumbs,
-			'form_action' => $form_action
+			'form_action' => $form_action,
+			'hidden_fields' => $hidden_fields
 		]);
 	}
 

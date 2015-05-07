@@ -7,15 +7,17 @@ namespace punbb;
 $form_action = link('new_reply', $id);
 $forum_page['form_attributes'] = array();
 
-$forum_page['hidden_fields'] = array(
+$hidden_fields = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'form_user'		=> '<input type="hidden" name="form_user" value="'.((!user()->is_guest) ? forum_htmlencode(user()->username) : 'Guest').'" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 		generate_form_token($form_action) . '" />'
 );
 
-if (!user()->is_guest && config()->o_subscriptions == '1' && (user()->auto_notify == '1' || $cur_topic['is_subscribed']))
-	$forum_page['hidden_fields']['subscribe'] = '<input type="hidden" name="subscribe" value="1" />';
+if (!user()->is_guest && config()->o_subscriptions == '1' &&
+		(user()->auto_notify == '1' || $cur_topic['is_subscribed'])) {
+	$hidden_fields['subscribe'] = '<input type="hidden" name="subscribe" value="1" />';
+}
 
 // Setup help
 $forum_page['main_head_options'] = array();
@@ -40,7 +42,7 @@ if (config()->o_smilies == '1')
 	</div>
 	<form class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?= $form_action ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 		<div class="hidden">
-			<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+			<?= implode("\n", $hidden_fields) ?>
 		</div>
 <?php ($hook = get_hook('vt_quickpost_pre_fieldset')) ? eval($hook) : null; ?>
 		<fieldset class="frm-group group1">

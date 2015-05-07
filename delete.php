@@ -138,7 +138,7 @@ $cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smili
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 $form_action = link('delete', $id);
 
-$forum_page['hidden_fields'] = array(
+$hidden_fields = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 		generate_form_token($form_action) . '" />'
@@ -181,5 +181,6 @@ define('FORUM_PAGE', 'postdelete');
 template()->render([
 	'main_view' => 'delete/main',
 	'crumbs' => $crumbs,
-	'form_action' => $form_action
+	'form_action' => $form_action,
+	'hidden_fields' => $hidden_fields
 ]);

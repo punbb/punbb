@@ -2840,11 +2840,9 @@ function csrf_confirm_form() {
 		);
 
 		foreach ($_POST as $submitted_key => $submitted_val) {
-			if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url')
-			{
-				$hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
-				foreach ($hidden_fields as $field_key => $field_val)
-				{
+			if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url') {
+				$_hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
+				foreach ($_hidden_fields as $field_key => $field_val) {
 					$json_data['post_data'][$field_key] = forum_htmlencode($field_val);
 				}
 			}
@@ -2863,27 +2861,30 @@ function csrf_confirm_form() {
 
 	$form_action = get_current_url();
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />',
 		'prev_url'		=> '<input type="hidden" name="prev_url" value="'.
 			forum_htmlencode(user()->prev_url).'" />'
 	);
 
-	foreach ($_POST as $submitted_key => $submitted_val)
-		if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url')
-		{
-			$hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
-			foreach ($hidden_fields as $field_key => $field_val)
-				$forum_page['hidden_fields'][$field_key] = '<input type="hidden" name="'.forum_htmlencode($field_key).'" value="'.forum_htmlencode($field_val).'" />';
+	foreach ($_POST as $submitted_key => $submitted_val) {
+		if ($submitted_key != 'csrf_token' && $submitted_key != 'prev_url') {
+			$_hidden_fields = _csrf_confirm_form($submitted_key, $submitted_val);
+			foreach ($_hidden_fields as $field_key => $field_val) {
+				$hidden_fields[$field_key] = '<input type="hidden" name="' .
+					forum_htmlencode($field_key) . '" value="' . forum_htmlencode($field_val) . '" />';
+			}
 		}
+	}
 
 	define('FORUM_PAGE', 'dialogue');
 
 	template()->render([
 		'main_view' => 'partial/confirm_form',
 		'crumbs' => $crumbs,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
 

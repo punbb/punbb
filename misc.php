@@ -272,7 +272,7 @@ else if (isset($_GET['email']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 	$form_action = link('email', $recipient_id);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 		'redirect_url'	=> '<input type="hidden" name="redirect_url" value="'.forum_htmlencode(user()->prev_url).'" />',
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
@@ -295,14 +295,13 @@ else if (isset($_GET['email']))
 	template()->render([
 		'main_view' => 'misc/email',
 		'crumbs' => $crumbs,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
 
-
 // Report a post?
-else if (isset($_GET['report']))
-{
+else if (isset($_GET['report'])) {
 	if (user()->is_guest) {
 		message(__('No permission'));
 	}
@@ -419,7 +418,7 @@ else if (isset($_GET['report']))
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 	$form_action = link('report', $post_id);
 
-	$forum_page['hidden_fields'] = array(
+	$hidden_fields = array(
 		'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
 		'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
 			generate_form_token($form_action) . '" />'
@@ -440,7 +439,8 @@ else if (isset($_GET['report']))
 	template()->render([
 		'main_view' => 'misc/report',
 		'crumbs' => $crumbs,
-		'form_action' => $form_action
+		'form_action' => $form_action,
+		'hidden_fields' => $hidden_fields
 	]);
 }
 

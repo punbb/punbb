@@ -34,12 +34,11 @@ global $errors;
 		</div>
 		<form id="afocus" class="frm-form frm-ctrl-submit" method="post" accept-charset="utf-8" action="<?= $form_action ?>"<?php if (!empty($forum_page['form_attributes'])) echo ' '.implode(' ', $forum_page['form_attributes']) ?>>
 			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+				<?= implode("\n", $hidden_fields) ?>
 			</div>
 <?php
 
-if (user()->is_guest)
-{
+if (user()->is_guest) {
 	$forum_page['email_form_name'] = (config()->p_force_guest_email == '1') ? 'req_email' : 'email';
 
 	($hook = get_hook('po_pre_guest_info_fieldset')) ? eval($hook) : null;

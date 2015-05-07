@@ -10,7 +10,7 @@ namespace punbb;
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+				<?= implode("\n", $hidden_fields) ?>
 			</div>
 <?php ($hook = get_hook('mr_delete_topics_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">

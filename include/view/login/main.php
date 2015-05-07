@@ -26,7 +26,7 @@ global $errors;
 		</div>
 		<form id="afocus" class="frm-form" method="post" accept-charset="utf-8" action="<?= $form_action ?>">
 			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
+				<?= implode("\n", $hidden_fields) ?>
 			</div>
 <?php ($hook = get_hook('li_login_pre_login_group')) ? eval($hook) : null; ?>
 			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
