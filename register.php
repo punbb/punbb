@@ -243,7 +243,7 @@ else if (isset($_POST['form_sent']))
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = link('register').'?action=register';
+$form_action = link('register') . '?action=register';
 
 // Setup form information
 $forum_page['frm_info'] = array();
@@ -267,5 +267,6 @@ define('FORUM_PAGE', 'register');
 
 template()->render([
 	'main_view' => 'register/main',
-	'crumbs' => $crumbs
+	'crumbs' => $crumbs,
+	'form_action' => $form_action
 ]);

@@ -103,7 +103,7 @@ else
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = $base_url.'/userlist.php';
+$form_action = $base_url . '/userlist.php';
 
 // Setup breadcrumbs
 $crumbs = array(
@@ -161,5 +161,6 @@ template()->render([
 	'main_head_pages' => $main_head_pages,
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
-	'page' => $page
+	'page' => $page,
+	'form_action' => $form_action
 ]);
