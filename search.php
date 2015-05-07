@@ -148,16 +148,16 @@ if (isset($query))
 	if ($show_as == 'posts' || $show_as == 'topics')
 	{
 		if ($page < $forum_page['num_pages']) {
-			$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.
+			$nav['last'] = '<link rel="last" href="'.forum_sublink($url_type, $forum_url['page'], $forum_page['num_pages'], $search_id).'" title="'.
 				__('Page').' '.$forum_page['num_pages'].'" />';
-			$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($page + 1), $search_id).'" title="'.
+			$nav['next'] = '<link rel="next" href="'.forum_sublink($url_type, $forum_url['page'], ($page + 1), $search_id).'" title="'.
 				__('Page').' '.($page + 1).'" />';
 		}
 		if ($page > 1)
 		{
-			$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($page - 1), $search_id).'" title="'.
+			$nav['prev'] = '<link rel="prev" href="'.forum_sublink($url_type, $forum_url['page'], ($page - 1), $search_id).'" title="'.
 				__('Page').' '.($page - 1).'" />';
-			$forum_page['nav']['first'] = '<link rel="first" href="'.link($url_type, $search_id).'" title="'.
+			$nav['first'] = '<link rel="first" href="'.link($url_type, $search_id).'" title="'.
 				__('Page').' 1" />';
 		}
 
@@ -189,7 +189,8 @@ if (isset($query))
 		'main_head_pages' => $main_head_pages,
 		'crumbs' => $crumbs,
 		'page_post' => $page_post,
-		'page' => $page
+		'page' => $page,
+		'nav' => $nav
 	]);
 }
 

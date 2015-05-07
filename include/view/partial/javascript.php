@@ -1,7 +1,7 @@
 <?php
 namespace punbb;
 
-$forum_javascript_commonjs_urls = '
+$javascript_commonjs_urls = '
 	if (typeof PUNBB === \'undefined\' || !PUNBB) {
 		var PUNBB = {};
 	}
@@ -16,7 +16,7 @@ $forum_javascript_commonjs_urls = '
 	};';
 
 
-assets()->add_js($forum_javascript_commonjs_urls, array(
+assets()->add_js($javascript_commonjs_urls, array(
 	'type' => 'inline',
 	'weight' => 50,
 	'group' => FORUM_JS_GROUP_SYSTEM

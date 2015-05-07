@@ -83,16 +83,16 @@ $forum_page['items_info'] = generate_items_info(__('Topics', 'forum'), ($forum_p
 
 // Navigation links for header and page numbering for title/meta description
 if ($page < $forum_page['num_pages']) {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('forum', $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+	$nav['last'] = '<link rel="last" href="'.forum_sublink('forum', $forum_url['page'], $forum_page['num_pages'], array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
 		__('Page') . ' ' . $forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('forum', $forum_url['page'], ($page + 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+	$nav['next'] = '<link rel="next" href="'.forum_sublink('forum', $forum_url['page'], ($page + 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
 		__('Page') . ' ' . ($page + 1).'" />';
 }
 if ($page > 1)
 {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('forum', $forum_url['page'], ($page - 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+	$nav['prev'] = '<link rel="prev" href="'.forum_sublink('forum', $forum_url['page'], ($page - 1), array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
 		__('Page') . ' ' . ($page - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
+	$nav['first'] = '<link rel="first" href="'.link('forum', array($id, sef_friendly($cur_forum['forum_name']))).'" title="'.
 	__('Page') . ' 1" />';
 }
 
@@ -225,5 +225,6 @@ template()->render([
 	'main_head_pages' => $main_head_pages,
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
-	'page' => $page
+	'page' => $page,
+	'nav' => $nav
 ]);

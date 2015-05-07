@@ -80,15 +80,15 @@ $page_post['paging'] = '<p class="paging"><span class="pages">'.
 
 // Navigation links for header and page numbering for title/meta description
 if ($page < $forum_page['num_pages']) {
-	$forum_page['nav']['last'] = '<link rel="last" href="'.forum_sublink('users_browse', $forum_url['page'], $forum_page['num_pages'], array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+	$nav['last'] = '<link rel="last" href="'.forum_sublink('users_browse', $forum_url['page'], $forum_page['num_pages'], array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' '.$forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] = '<link rel="next" href="'.forum_sublink('users_browse', $forum_url['page'], ($page + 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+	$nav['next'] = '<link rel="next" href="'.forum_sublink('users_browse', $forum_url['page'], ($page + 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' '.($page + 1).'" />';
 }
 if ($page > 1) {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('users_browse', $forum_url['page'], ($page - 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+	$nav['prev'] = '<link rel="prev" href="'.forum_sublink('users_browse', $forum_url['page'], ($page - 1), array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' '.($page - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.link('users_browse', array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
+	$nav['first'] = '<link rel="first" href="'.link('users_browse', array($forum_page['show_group'], $forum_page['sort_by'], $forum_page['sort_dir'], ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'" title="'.
 		__('Page').' 1" />';
 }
 
@@ -162,5 +162,6 @@ template()->render([
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
 	'page' => $page,
-	'form_action' => $form_action
+	'form_action' => $form_action,
+	'nav' => $nav
 ]);

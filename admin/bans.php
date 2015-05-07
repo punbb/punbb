@@ -355,17 +355,17 @@ $page_post['paging'] =
 
 // Navigation links for header and page numbering for title/meta description
 if ($page < $forum_page['num_pages']) {
-	$forum_page['nav']['last'] =
+	$nav['last'] =
 		'<link rel="last" href="'.forum_sublink('admin_bans', $forum_url['page'], $forum_page['num_pages']).'" title="'.
 		__('Page') . ' '.$forum_page['num_pages'].'" />';
-	$forum_page['nav']['next'] =
+	$nav['next'] =
 		'<link rel="next" href="'.forum_sublink('admin_bans', $forum_url['page'], ($page + 1)).'" title="'.
 		__('Page').' '.($page + 1).'" />';
 }
 if ($page > 1) {
-	$forum_page['nav']['prev'] = '<link rel="prev" href="'.forum_sublink('admin_bans', $forum_url['page'], ($page - 1)).'" title="'.
+	$nav['prev'] = '<link rel="prev" href="'.forum_sublink('admin_bans', $forum_url['page'], ($page - 1)).'" title="'.
 	__('Page') . ' '.($page - 1).'" />';
-	$forum_page['nav']['first'] = '<link rel="first" href="'.link('admin_bans').'" title="'.
+	$nav['first'] = '<link rel="first" href="'.link('admin_bans').'" title="'.
 	__('Page').' 1" />';
 }
 
@@ -398,5 +398,6 @@ template()->render([
 	'page_post' => $page_post,
 	'page' => $page,
 	'form_action' => $form_action,
-	'hidden_fields' => $hidden_fields
+	'hidden_fields' => $hidden_fields,
+	'nav' => $nav
 ]);

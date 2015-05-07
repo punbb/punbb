@@ -1,10 +1,6 @@
 <?php
 namespace punbb;
 
-// globals:
-// $forum_url
-// $forum_page
-
 $config = config();
 $user = user();
 $assets = assets();
@@ -74,8 +70,8 @@ else {
 	}
 
 	// If there are other page navigation links (first, next, prev and last)
-	if (!empty($forum_page['nav'])) {
-		$head['nav'] = implode("\n", $forum_page['nav']);
+	if (!empty($nav)) {
+		$head['nav'] = implode("\n", $nav);
 	}
 
 	if ($user->g_read_board == '1' && $user->g_search == '1') {
