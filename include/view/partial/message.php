@@ -1,8 +1,6 @@
 <?php
 namespace punbb;
 
-($hook = get_hook('fn_message_output_start')) ? eval($hook) : null;
-
 ?>
 <div class="main-head">
 	<?php if (!empty($forum_page['main_head_options'])) { ?>
@@ -23,6 +21,3 @@ namespace punbb;
 		<?php } ?>
 	</p>
 </div>
-<?php
-
-($hook = get_hook('fn_message_output_end')) ? eval($hook) : null;
