@@ -2892,22 +2892,11 @@ function csrf_confirm_form() {
 
 // Display a message
 function message($message, $link = '', $heading = '') {
-	global $forum_url, $tpl_main, $forum_page;
-
-	// FIX for render from function
-	$GLOBALS['message'] = $message;
-	$GLOBALS['ling'] = $link;
-	$GLOBALS['heading'] = $heading;
-
-	($hook = get_hook('fn_message_start')) ? eval($hook) : null;
-
 	if (defined('FORUM_REQUEST_AJAX')) {
 		$json_data = array(
 			'code'		=> -1,
 			'message'	=> $message
 		);
-
-		($hook = get_hook('fn_message_pre_send_json')) ? eval($hook) : null;
 
 		send_json($json_data);
 	}
@@ -2923,13 +2912,14 @@ function message($message, $link = '', $heading = '') {
 			__('Forum message')
 		);
 
-		($hook = get_hook('fn_message_pre_header_load')) ? eval($hook) : null;
-
 		define('FORUM_PAGE', 'message');
 
 		template()->render([
 			'main_view' => 'partial/message',
-			'crumbs' => $crumbs
+			'crumbs' => $crumbs,
+			'message' => $message,
+			'link' => $link,
+			'heading' => $heading
 		]);
 	}
 
