@@ -2797,7 +2797,7 @@ function send_forum_subscriptions($topic_info, $new_tid)
 // Display a form that the user can use to confirm that they want to undertake an action.
 // Used when the CSRF token from the request does not match the token stored in the database.
 function csrf_confirm_form() {
-	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page;
+	global $forum_url, $base_url, $tpl_main, $forum_page;
 
 	// If we've disabled the CSRF check for this page, we have nothing to do here.
 	if (defined('FORUM_DISABLE_CSRF_CONFIRM')) {
@@ -2890,7 +2890,7 @@ function csrf_confirm_form() {
 
 // Display a message
 function message($message, $link = '', $heading = '') {
-	global $forum_url, $base_url, $forum_start, $tpl_main, $forum_page;
+	global $forum_url, $base_url, $tpl_main, $forum_page;
 
 	// FIX for render from function
 	$GLOBALS['message'] = $message;

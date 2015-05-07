@@ -17,10 +17,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
 	define('FORUM_REQUEST_AJAX', 1);
 }
 
-global $forum_start;
-// Record the start time (will be used to calculate the generation time for the page)
-list($usec, $sec) = explode(' ', microtime());
-$forum_start = ((float)$usec + (float)$sec);
+app();
 
 // Reverse the effect of register_globals
 forum_unregister_globals();

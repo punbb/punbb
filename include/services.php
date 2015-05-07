@@ -1,6 +1,10 @@
 <?php
 namespace punbb;
 
+function app() {
+	return service::get('app');
+}
+
 function flash() {
 	return service::get('flash');
 }
@@ -46,6 +50,16 @@ function cache() {
 }
 
 // configure
+
+service::set('app', function () {
+	$app = new \stdClass();
+
+	// Record the start time (will be used to calculate the generation time for the page)
+	list($usec, $sec) = explode(' ', microtime());
+	$app->forum_start = (float)$usec + (float)$sec;
+
+	return $app;
+});
 
 service::set('cache', function () {
 	return new Cache();
