@@ -1,5 +1,5 @@
 <?php
 
 return array(
-	'base_url' = 'http://user.punbb'
+	'base_url' => 'http://user.punbb'
 );
