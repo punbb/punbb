@@ -5,7 +5,7 @@ namespace punbb;
 // Generate quickjump cache PHP scripts
 //
 function generate_quickjump_cache($group_id = false) {
-	global $forum_url, $base_url;
+	global $forum_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
 	if ($return != null) {
@@ -47,7 +47,7 @@ function generate_quickjump_cache($group_id = false) {
 		"\n\n" .
 		'?>';
 		$output .= '<form id="qjump" method="get" accept-charset="utf-8" action="' .
-			$base_url . '/viewforum.php">' .
+			app()->base_url . '/viewforum.php">' .
 		"\n\t" .
 		'<div class="frm-fld frm-select">' .
 		"\n\t\t".

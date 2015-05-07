@@ -117,12 +117,14 @@ while ($cur_config_item = db()->fetch_row($result)) {
 }
 
 // Check the database revision and the current version
-if (!empty(config()->o_database_revision) && config()->o_database_revision >= UPDATE_TO_DB_REVISION && version_compare(config()->o_cur_version, UPDATE_TO, '>='))
+if (!empty(config()->o_database_revision) && config()->o_database_revision >= UPDATE_TO_DB_REVISION && version_compare(config()->o_cur_version, UPDATE_TO, '>=')) {
 	error('Your database is already as up-to-date as this script can make it.');
+}
 
-// If $base_url isn't set, use o_base_url from config
-if (!isset($base_url))
-	$base_url = config()->o_base_url;
+// If base url isn't set, use o_base_url from config
+if (empty(app()->base_url)) {
+	app()->base_url = config()->o_base_url;
+}
 
 // There's no forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
@@ -467,7 +469,7 @@ switch ($stage)
 	<title>PunBB Database Update</title>
 	<link rel="stylesheet" type="text/css"
 		href="<?= theme()->url['Oxygen'] ?>/Oxygen.min.css" />
-	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
+	<script type="text/javascript" src="<?= app()->base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
 <div id="brd-update" class="brd-page">
@@ -2139,7 +2141,17 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		if (array_key_exists('o_base_url', config()))
 		{
 			// Generate new config file
-			$new_config = "<?php\n\n\$db_type = '$db_type';\n\$db_host = '$db_host';\n\$db_name = '".addslashes($db_name)."';\n\$db_username = '".addslashes($db_username)."';\n\$db_password = '".addslashes($db_password)."';\n\$db_prefix = '".addslashes($db_prefix)."';\n\$p_connect = ".($p_connect ? 'true' : 'false').";\n\n\$base_url = '$base_url';\n\n\$cookie_name = '$cookie_name';\n\$cookie_domain = '$cookie_domain';\n\$cookie_path = '$cookie_path';\n\$cookie_secure = $cookie_secure;\n\ndefine('FORUM', 1);";
+			$new_config = "<?php
+			return; // TODO
+			\$db_type = '$db_type';
+			\$db_host = '$db_host';
+			\$db_name = '" . addslashes($db_name) . "';
+			\$db_username = '" . addslashes($db_username) . "';
+			\$db_password = '".addslashes($db_password)."';
+			\$db_prefix = '".addslashes($db_prefix)."';
+			\$p_connect = ".($p_connect ? 'true' : 'false').";
+
+			\base_url = 'base_url';\n\n\$cookie_name = '$cookie_name';\n\$cookie_domain = '$cookie_domain';\n\$cookie_path = '$cookie_path';\n\$cookie_secure = $cookie_secure;\n\ndefine('FORUM', 1);";
 
 			// Attempt to write config.php and display it if writing fails
 			$written = false;
@@ -2178,7 +2190,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	<title>PunBB Database Update</title>
 	<link rel="stylesheet" type="text/css"
 		href="<?= theme()->url['Oxygen'] ?>/Oxygen.min.css" />
-	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
+	<script type="text/javascript" src="<?= app()->base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
 <div id="brd-update" class="brd-page">
@@ -2199,9 +2211,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		<div class="ct-box info-box">
 			<p>Your forum database was updated successfully.</p>
 <?php if (isset($new_config) && !$written): ?>
-			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> once config.php has been updated.</p>
+			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?= app()->base_url ?>/index.php">go to the forum index</a> once config.php has been updated.</p>
 <?php else: ?>
-			<p>You may <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> now.</p>
+			<p>You may <a href="<?= app()->base_url ?>/index.php">go to the forum index</a> now.</p>
 <?php endif; ?>		</div>
 <?php if (isset($new_config) && !$written): ?>
 		<form class="frm-form" action="foo">

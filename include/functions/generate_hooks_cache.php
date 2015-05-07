@@ -5,8 +5,6 @@ namespace punbb;
 // Generate the hooks cache PHP script
 //
 function generate_hooks_cache() {
-	global $base_url;
-
 	// Get the hooks from the DB
 	$query = array(
 		'SELECT'	=> 'eh.id, eh.code, eh.extension_id, e.dependencies',

@@ -7,8 +7,8 @@ $javascript_commonjs_urls = '
 	}
 
 	PUNBB.env = {
-		base_url: "'.forum_htmlencode($base_url).'/",
-		base_js_url: "'.forum_htmlencode($base_url).'/include/js/",
+		base_url: "'.forum_htmlencode(app()->base_url).'/",
+		base_js_url: "'.forum_htmlencode(app()->base_url).'/include/js/",
 		user_lang: "'.forum_htmlencode(user()->language).'",
 		user_style: "'.forum_htmlencode(user()->style).'",
 		user_is_guest: "'.forum_htmlencode((user()->is_guest == 1) ? "1" : "0").'",
@@ -21,7 +21,7 @@ assets()->add_js($javascript_commonjs_urls, array(
 	'weight' => 50,
 	'group' => FORUM_JS_GROUP_SYSTEM
 ));
-assets()->add_js($base_url.'/include/js/min/punbb.common.min.js', array(
+assets()->add_js(app()->base_url . '/include/js/min/punbb.common.min.js', array(
 	'weight' => 55,
 	'async' => false,
 	'group' => FORUM_JS_GROUP_SYSTEM

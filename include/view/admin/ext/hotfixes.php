@@ -30,7 +30,8 @@ $cached_forum_updates = null;
 			if (!array_key_exists($hotfix['attributes']['id'], $inst_exts)) {
 				$forum_page['ext_item'][] = '<div class="ct-box info-box hotfix available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($hotfix['content']).'</h3>'."\n\t\t\t".'<ul>'."\n\t\t\t\t".'<li><span>'.
 					sprintf(__('Extension by', 'admin_ext'), 'PunBB').'</span></li>'."\n\t\t\t\t".'<li><span>'.
-					__('Hotfix description', 'admin_ext') . '</span></li>'."\n\t\t\t".'</ul>'."\n\t\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.
+					__('Hotfix description', 'admin_ext') . '</span></li>'."\n\t\t\t".'</ul>'."\n\t\t\t\t".'<p class="options"><span class="first-item"><a href="'.
+						app()->base_url . '/admin/extensions.php?install_hotfix='.urlencode($hotfix['attributes']['id']).'">'.
 					__('Install hotfix', 'admin_ext') . '</a></span></p>'."\n\t\t".'</div>';
 				++$num_exts;
 			}
@@ -72,9 +73,9 @@ $cached_forum_updates = null;
 				continue;
 
 		$forum_page['ext_actions'] = array(
-			'flip'		=> '<span class="first-item"><a href="'.$base_url.'/admin/extensions.php?section=hotfixes&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ?
+			'flip'		=> '<span class="first-item"><a href="' . app()->base_url . '/admin/extensions.php?section=hotfixes&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ?
 				__('Disable', 'admin_ext') : __('Enable', 'admin_ext')).'</a></span>',
-			'uninstall'	=> '<span><a href="'.$base_url.'/admin/extensions.php?section=hotfixese&amp;uninstall='.$id.'">'.
+			'uninstall'	=> '<span><a href="' . app()->base_url . '/admin/extensions.php?section=hotfixese&amp;uninstall='.$id.'">'.
 				__('Uninstall', 'admin_ext').'</a></span>'
 		);
 

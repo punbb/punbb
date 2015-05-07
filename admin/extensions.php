@@ -126,7 +126,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		$ext_info = array(
 			'id'			=> $id,
 			'path'			=> FORUM_ROOT.'extensions/'.$id,
-			'url'			=> $base_url.'/extensions/'.$id,
+			'url'			=> app()->base_url . '/extensions/'.$id,
 			'dependencies'	=> array()
 		);
 
@@ -135,7 +135,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 			$ext_info['dependencies'][$dependency] = array(
 				'id'	=> $dependency,
 				'path'	=> FORUM_ROOT.'extensions/'.$dependency,
-				'url'	=> $base_url.'/extensions/'.$dependency,
+				'url'	=> app()->base_url . '/extensions/'.$dependency,
 			);
 		}
 
@@ -342,7 +342,7 @@ else if (isset($_GET['uninstall']))
 		$ext_info = array(
 			'id'			=> $id,
 			'path'			=> FORUM_ROOT.'extensions/'.$id,
-			'url'			=> $base_url.'/extensions/'.$id
+			'url'			=> app()->base_url . '/extensions/'.$id
 		);
 
 		$notices = array();

@@ -490,8 +490,6 @@ function format_time($timestamp, $type = FORUM_FT_DATETIME, $date_format = null,
 // Outputs markup to display a user's avatar
 function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_height, $username = NULL, $drop_cache = FALSE)
 {
-	global $base_url;
-
 	$avatar_markup = $avatar_filename = '';
 
 	$return = ($hook = get_hook('fn_generate_avatar_markup_start')) ? eval($hook) : null;
@@ -535,7 +533,7 @@ function generate_avatar_markup($user_id, $avatar_type, $avatar_width, $avatar_h
 			$alt_attr = forum_htmlencode($username);
 		}
 
-		$avatar_markup = '<img src="'.$base_url.'/'.$path.'" width="'.$avatar_width.'" height="'.$avatar_height.'" alt="'.$alt_attr.'" />';
+		$avatar_markup = '<img src="' . app()->base_url . '/'.$path.'" width="'.$avatar_width.'" height="'.$avatar_height.'" alt="'.$alt_attr.'" />';
 	}
 
 	($hook = get_hook('fn_generate_avatar_markup_end')) ? eval($hook) : null;
@@ -716,7 +714,7 @@ function get_hook($hook_id) {
 
 // Generate a hyperlink with parameters and anchor
 function link($link, $args = null) {
-	global $base_url, $forum_url;
+	global $forum_url;
 
 	if (isset($forum_url[$link])) {
 		$link = $forum_url[$link];
@@ -728,15 +726,17 @@ function link($link, $args = null) {
 	}
 
 	$gen_link = $link;
-	if ($args == null)
-		$gen_link = $base_url.'/'.$link;
-	else if (!is_array($args))
-		$gen_link = $base_url.'/'.str_replace('$1', $args, $link);
-	else
-	{
-		for ($i = 0; isset($args[$i]); ++$i)
+	if ($args == null) {
+		$gen_link = app()->base_url . '/' . $link;
+	}
+	else if (!is_array($args)) {
+		$gen_link = app()->base_url . '/' . str_replace('$1', $args, $link);
+	}
+	else {
+		for ($i = 0; isset($args[$i]); ++$i) {
 			$gen_link = str_replace('$'.($i + 1), $args[$i], $gen_link);
-		$gen_link = $base_url.'/'.$gen_link;
+		}
+		$gen_link = app()->base_url . '/' . $gen_link;
 	}
 
 	($hook = get_hook('fn_forum_link_end')) ? eval($hook) : null;
@@ -748,7 +748,7 @@ function link($link, $args = null) {
 // Generate a hyperlink with parameters and anchor and a subsection such as a subpage
 function forum_sublink($link, $sublink, $subarg, $args = null)
 {
-	global $forum_url, $base_url;
+	global $forum_url;
 
 	if (isset($forum_url[$link])) {
 		$link = $forum_url[$link];
@@ -772,9 +772,9 @@ function forum_sublink($link, $sublink, $subarg, $args = null)
 	}
 
 	if (isset($forum_url['insertion_find']))
-		$gen_link = $base_url.'/'.str_replace($forum_url['insertion_find'], str_replace('$1', str_replace('$1', $subarg, $sublink), $forum_url['insertion_replace']), $gen_link);
+		$gen_link = app()->base_url . '/' . str_replace($forum_url['insertion_find'], str_replace('$1', str_replace('$1', $subarg, $sublink), $forum_url['insertion_replace']), $gen_link);
 	else
-		$gen_link = $base_url.'/'.$gen_link.str_replace('$1', $subarg, $sublink);
+		$gen_link = app()->base_url . '/' . $gen_link . str_replace('$1', $subarg, $sublink);
 
 	($hook = get_hook('fn_forum_sublink_end')) ? eval($hook) : null;
 
@@ -1725,7 +1725,7 @@ function get_tracked_topics()
 function add_user($user_info, &$new_uid)
 {
 	global $_PUNBB;
-	global $base_url, $forum_url;
+	global $forum_url;
 
 	$return = ($hook = get_hook('fn_add_user_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -1755,7 +1755,7 @@ function add_user($user_info, &$new_uid)
 		$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
 		$mail_subject = str_replace('<board_title>', config()->o_board_title, $mail_subject);
-		$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
+		$mail_message = str_replace('<base_url>', app()->base_url . '/', $mail_message);
 		$mail_message = str_replace('<username>', $user_info['username'], $mail_message);
 		$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', link('change_password_key', array($new_uid, substr($user_info['activate_key'], 1, -1)))), $mail_message);
 		$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
@@ -1769,7 +1769,9 @@ function add_user($user_info, &$new_uid)
 	if ($user_info['notify_admins'] && config()->o_mailing_list != '')
 	{
 		$mail_subject = 'Alert - New registration';
-		$mail_message = 'User \''.$user_info['username'].'\' registered in the forums at '.$base_url.'/'."\n\n".'User profile: '.link('user', $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+		$mail_message = 'User \''.$user_info['username'].'\' registered in the forums at ' .
+			app()->base_url . '/' . "\nn" .
+			'User profile: '.link('user', $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 		forum_mail(config()->o_mailing_list, $mail_subject, $mail_message);
 	}
@@ -2797,7 +2799,7 @@ function send_forum_subscriptions($topic_info, $new_tid)
 // Display a form that the user can use to confirm that they want to undertake an action.
 // Used when the CSRF token from the request does not match the token stored in the database.
 function csrf_confirm_form() {
-	global $forum_url, $base_url, $tpl_main, $forum_page;
+	global $forum_url, $tpl_main, $forum_page;
 
 	// If we've disabled the CSRF check for this page, we have nothing to do here.
 	if (defined('FORUM_DISABLE_CSRF_CONFIRM')) {
@@ -2890,7 +2892,7 @@ function csrf_confirm_form() {
 
 // Display a message
 function message($message, $link = '', $heading = '') {
-	global $forum_url, $base_url, $tpl_main, $forum_page;
+	global $forum_url, $tpl_main, $forum_page;
 
 	// FIX for render from function
 	$GLOBALS['message'] = $message;
@@ -2935,8 +2937,6 @@ function message($message, $link = '', $heading = '') {
 
 // Display a message when board is in maintenance mode
 function maintenance_message() {
-	global $base_url;
-
 	$return = ($hook = get_hook('fn_maintenance_message_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -2963,21 +2963,19 @@ function maintenance_message() {
 
 // Display $message and redirect user to $destination_url
 function redirect($destination_url, $message) {
-	global $base_url;
-
 	define('FORUM_PAGE', 'redirect');
 
 	($hook = get_hook('fn_redirect_start')) ? eval($hook) : null;
 
 	// Prefix with base_url (unless it's there already)
-	if (strpos($destination_url, 'http://') !== 0 && strpos($destination_url, 'https://') !== 0 && strpos($destination_url, '/') !== 0)
-		$destination_url = $base_url.'/'.$destination_url;
+	if (strpos($destination_url, 'http://') !== 0 && strpos($destination_url, 'https://') !== 0 && strpos($destination_url, '/') !== 0) {
+		$destination_url = app()->base_url . '/' . $destination_url;
+	}
 
 	// Do a little spring cleaning
 	$destination_url = preg_replace('/([\r\n])|(%0[ad])|(;[\s]*data[\s]*:)/i', '', $destination_url);
 
-	if (defined('FORUM_REQUEST_AJAX'))
-	{
+	if (defined('FORUM_REQUEST_AJAX')) {
 		$json_data = array(
 			'code'		=> -2,
 			'message'	=> $message,

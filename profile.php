@@ -372,7 +372,7 @@ else if ($action == 'change_email')
 			$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
 			$mail_message = str_replace('<username>', user()->username, $mail_message);
-			$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
+			$mail_message = str_replace('<base_url>', app()->base_url . '/', $mail_message);
 			$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', link('change_email_key', array($id, $new_email_key))), $mail_message);
 			$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
 

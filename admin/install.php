@@ -39,9 +39,10 @@ forum_remove_bad_characters();
 //
 function generate_config_file()
 {
-	global $base_url, $cookie_name;
+	return; // TODO
+	global $cookie_name;
 
-	$config_body = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.addslashes($db_name)."';\n".'$db_username = \''.addslashes($db_username)."';\n".'$db_password = \''.addslashes($db_password)."';\n".'$db_prefix = \''.addslashes($db_prefix)."';\n".'$p_connect = false;'."\n\n".'$base_url = \''.$base_url.'\';'."\n\n".'$cookie_name = '."'".$cookie_name."';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n\ndefine('FORUM', 1);";
+	$config_body = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.addslashes($db_name)."';\n".'$db_username = \''.addslashes($db_username)."';\n".'$db_password = \''.addslashes($db_password)."';\n".'$db_prefix = \''.addslashes($db_prefix)."';\n".'$p_connect = false;'."\n\n".'base_url = \''.app()->base_url.'\';'."\n\n".'$cookie_name = '."'".$cookie_name."';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n\ndefine('FORUM', 1);";
 
 	// Add forum options
 	$config_body .= "\n\n// Enable DEBUG mode by removing // from the following line\n//define('FORUM_DEBUG', 1);";
@@ -72,7 +73,7 @@ if (isset($_POST['generate_config'])) {
 	$db_username = $_POST['db_username'];
 	$db_password = $_POST['db_password'];
 	$db_prefix = $_POST['db_prefix'];
-	$base_url = $_POST['base_url'];
+	app()->base_url = $_POST['base_url'];
 	$cookie_name = $_POST['cookie_name'];
 
 	echo generate_config_file();
@@ -113,8 +114,9 @@ if (!isset($_POST['form_sent']))
 
 	// Make an educated guess regarding base_url
 	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).substr(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), 0, -6);
-	if (substr($base_url_guess, -1) == '/')
+	if (substr($base_url_guess, -1) == '/') {
 		$base_url_guess = substr($base_url_guess, 0, -1);
+	}
 
 	// Check for available language packs
 	$languages = get_language_packs();
@@ -292,7 +294,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set3">
 				<div class="sf-box text required">
 					<label for="fld10"><span><?php echo __('Base URL', 'install') ?></span> <small><?php echo __('Base URL help', 'install') ?></small></label><br />
-					<span class="fld-input"><input id="fld10" type="url" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" required /></span>
+					<span class="fld-input"><input id="fld10" type="url" name="req_base_url" value="<?= app()->base_url ?>" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 <?php
@@ -380,9 +382,9 @@ else
 
 	// Make sure base_url doesn't end with a slash
 	if (substr($_POST['req_base_url'], -1) == '/')
-		$base_url = substr($_POST['req_base_url'], 0, -1);
+		app()->base_url = substr($_POST['req_base_url'], 0, -1);
 	else
-		$base_url = $_POST['req_base_url'];
+		app()->base_url = $_POST['req_base_url'];
 
 	// Validate form
 	if (utf8_strlen($db_name) == 0)
@@ -413,7 +415,7 @@ else
 	$board_title = 'My PunBB forum';
 	$board_descrip = 'Unfortunately no one can be told what PunBB is — you have to see it for yourself';
 
-	if (utf8_strlen($base_url) == 0)
+	if (utf8_strlen(app()->base_url) == 0)
 		error(__('Missing base url', 'install'));
 
 	if (!file_exists(language()->path[$default_lang] . '/common.php')) {
@@ -1938,7 +1940,7 @@ if (!$written)
 					<input type="hidden" name="db_username" value="<?php echo forum_htmlencode($db_username) ?>" />
 					<input type="hidden" name="db_password" value="<?php echo forum_htmlencode($db_password) ?>" />
 					<input type="hidden" name="db_prefix" value="<?php echo forum_htmlencode($db_prefix) ?>" />
-					<input type="hidden" name="base_url" value="<?php echo forum_htmlencode($base_url) ?>" />
+					<input type="hidden" name="base_url" value="<?= forum_htmlencode(app()->base_url) ?>" />
 					<input type="hidden" name="cookie_name" value="<?php echo forum_htmlencode($cookie_name) ?>" />
 					</div>
 					<div class="frm-buttons">

@@ -15,9 +15,9 @@ global $errors;
 			'errors' => $errors
 		]) ?>
 
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= app()->base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($base_url.'/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id) ?>" />
+				<input type="hidden" name="csrf_token" value="<?= generate_form_token(app()->base_url . '/admin/extensions.php'.(isset($_GET['install']) ? '?install=' : '?install_hotfix=').$id) ?>" />
 			</div>
 			<div class="ct-group data-group">
 				<div class="ct-set data-set set1">

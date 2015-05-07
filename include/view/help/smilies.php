@@ -23,9 +23,10 @@ $smiley_groups = array();
 foreach ($smilies as $smiley_text => $smiley_img)
 	$smiley_groups[$smiley_img][] = $smiley_text;
 
-foreach ($smiley_groups as $smiley_img => $smiley_texts)
+foreach ($smiley_groups as $smiley_img => $smiley_texts) {
 	echo "\t\t\t\t".'<p>'.implode(' '.__('and').' ', $smiley_texts).' <span>'.
-		__('produces', 'help') . '</span> <img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.$smiley_texts[0].'" /></p>'."\n";
+		__('produces', 'help') . '</span> <img src="' . app()->base_url . '/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.$smiley_texts[0].'" /></p>'."\n";
+}
 
 ?>
 		</div>

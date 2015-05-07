@@ -63,7 +63,8 @@ namespace punbb;
 					if (!array_key_exists($entry, $inst_exts) || version_compare($inst_exts[$entry]['version'], $ext_data['extension']['version'], '!='))
 					{
 						$forum_page['ext_item'][] = '<div class="ct-box info-box extension available">'."\n\t\t\t".'<h3 class="ct-legend hn">'.forum_htmlencode($ext_data['extension']['title']).' <em>'.$ext_data['extension']['version'].'</em></h3>'."\n\t\t\t".'<ul class="data-list">'."\n\t\t\t\t".'<li><span>'.
-						sprintf(__('Extension by', 'admin_ext'), forum_htmlencode($ext_data['extension']['author'])).'</span></li>'.(($ext_data['extension']['description'] != '') ? "\n\t\t\t\t".'<li><span>'.forum_htmlencode($ext_data['extension']['description']).'</span></li>' : '')."\n\t\t\t".'</ul>'."\n\t\t\t".'<p class="options"><span class="first-item"><a href="'.$base_url.'/admin/extensions.php?install='.urlencode($entry).'">'.(isset($inst_exts[$entry]['version']) ?
+						sprintf(__('Extension by', 'admin_ext'), forum_htmlencode($ext_data['extension']['author'])).'</span></li>'.(($ext_data['extension']['description'] != '') ? "\n\t\t\t\t".'<li><span>'.forum_htmlencode($ext_data['extension']['description']).'</span></li>' : '')."\n\t\t\t".'</ul>'."\n\t\t\t".'<p class="options"><span class="first-item"><a href="'.
+							app()->base_url . '/admin/extensions.php?install='.urlencode($entry).'">'.(isset($inst_exts[$entry]['version']) ?
 							__('Upgrade extension', 'admin_ext') :
 							__('Install extension', 'admin_ext')).'</a></span></p>'."\n\t\t".'</div>';
 						++$num_exts;
@@ -123,9 +124,11 @@ namespace punbb;
 			continue;
 
 		$forum_page['ext_actions'] = array(
-			'flip'		=> '<span class="first-item"><a href="'.$base_url.'/admin/extensions.php?section=manage&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ?
+			'flip'		=> '<span class="first-item"><a href="' .
+				app()->base_url . '/admin/extensions.php?section=manage&amp;flip='.$id.'&amp;csrf_token='.generate_form_token('flip'.$id).'">'.($ext['disabled'] != '1' ?
 				__('Disable', 'admin_ext') : __('Enable', 'admin_ext')).'</a></span>',
-			'uninstall'	=> '<span><a href="'.$base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.
+			'uninstall'	=> '<span><a href="' .
+				app()->base_url . '/admin/extensions.php?section=manage&amp;uninstall='.$id.'">'.
 				__('Uninstall', 'admin_ext').'</a></span>'
 		);
 

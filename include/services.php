@@ -52,7 +52,7 @@ function cache() {
 // configure
 
 service::set('app', function () {
-	$app = new \stdClass();
+	$app = (object)require FORUM_ROOT . 'include/config/application.php';
 
 	// Record the start time (will be used to calculate the generation time for the page)
 	list($usec, $sec) = explode(' ', microtime());

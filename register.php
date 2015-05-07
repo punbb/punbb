@@ -258,7 +258,7 @@ $crumbs = array(
 );
 
 // Load JS for timezone detection
-assets()->add_js($base_url.'/include/js/min/punbb.timezone.min.js');
+assets()->add_js(app()->base_url . '/include/js/min/punbb.timezone.min.js');
 assets()->add_js('PUNBB.timezone.detect_on_register_form();', array('type' => 'inline'));
 
 ($hook = get_hook('rg_register_pre_header_load')) ? eval($hook) : null;

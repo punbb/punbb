@@ -25,7 +25,7 @@ forum_unregister_globals();
 // Ignore any user abort requests
 ignore_user_abort(true);
 
-global $base_url, $cookie_name, $cookie_domain, $cookie_path, $cookie_secure;
+global $cookie_name, $cookie_domain, $cookie_path, $cookie_secure;
 // Attempt to load the configuration file config.php
 if (file_exists(FORUM_ROOT . 'config.php')) {
 	include FORUM_ROOT . 'config.php';
@@ -83,7 +83,7 @@ db()->start_transaction();
 // If the request_uri is invalid try fix it
 forum_fix_request_uri();
 
-if (!isset($base_url)) {
+if (empty(app()->base_url)) {
 	// Make an educated guess regarding base_url
 	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')?
 		'https://' : 'http://') . preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']) .
@@ -91,14 +91,15 @@ if (!isset($base_url)) {
 	if (substr($base_url_guess, -1) == '/') {
 		$base_url_guess = substr($base_url_guess, 0, -1);
 	}
-	$base_url = $base_url_guess;
+	app()->base_url = $base_url_guess;
 }
 
 // Verify that we are running the proper database schema revision
 if (defined('PUN') || !isset(config()->o_database_revision) ||
 		config()->o_database_revision < FORUM_DB_REVISION ||
 		version_compare(config()->o_cur_version, FORUM_VERSION, '<')) {
-	error('Your PunBB database is out-of-date and must be upgraded in order to continue.<br />Please run <a href="'.$base_url.'/admin/db_update.php">db_update.php</a> in order to complete the upgrade process.');
+	error('Your PunBB database is out-of-date and must be upgraded in order to continue.<br />Please run <a href="' .
+		app()->base_url . '/admin/db_update.php">db_update.php</a> in order to complete the upgrade process.');
 }
 
 // Load hooks

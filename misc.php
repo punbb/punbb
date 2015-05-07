@@ -145,8 +145,8 @@ else if ($action == 'opensearch')
 	echo "\t".'<Description>'.forum_htmlencode(config()->o_board_desc).'</Description>'."\n";
 	echo "\t".'<InputEncoding>utf-8</InputEncoding>'."\n";
 	echo "\t".'<OutputEncoding>utf-8</OutputEncoding>'."\n";
-	echo "\t".'<Image width="16" height="16" type="image/x-icon">'.$base_url.'/favicon.ico</Image>'."\n";
-	echo "\t".'<Url type="text/html" method="get" template="'.$base_url.'/search.php?action=search&amp;source=opensearch&amp;keywords={searchTerms}"/>'."\n";
+	echo "\t".'<Image width="16" height="16" type="image/x-icon">' . app()->base_url . '/favicon.ico</Image>'."\n";
+	echo "\t".'<Url type="text/html" method="get" template="' . app()->base_url . '/search.php?action=search&amp;source=opensearch&amp;keywords={searchTerms}"/>'."\n";
 	echo "\t".'<Url type="application/opensearchdescription+xml" rel="self" template="'.link('opensearch').'"/>'."\n";
 	echo "\t".'<Contact>'.forum_htmlencode(config()->o_admin_email).'</Contact>'."\n";
 

@@ -829,7 +829,7 @@ function do_clickable($text, $unicode = FALSE)
 //
 function do_smilies($text)
 {
-	global $base_url, $smilies;
+	global $smilies;
 
 	$return = ($hook = get_hook('ps_do_smilies_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -840,7 +840,8 @@ function do_smilies($text)
 	foreach ($smilies as $smiley_text => $smiley_img)
 	{
 		if (strpos($text, $smiley_text) !== false)
-			$text = preg_replace("#(?<=[>\s])".preg_quote($smiley_text, '#')."(?=\W)#m", '<img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />', $text);
+			$text = preg_replace("#(?<=[>\s])".preg_quote($smiley_text, '#')."(?=\W)#m", '<img src="' .
+				app()->base_url . '/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />', $text);
 	}
 
 	$return = ($hook = get_hook('ps_do_smilies_end')) ? eval($hook) : null;

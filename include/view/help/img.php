@@ -9,8 +9,8 @@ namespace punbb;
 	<div class="ct-box help-box">
 		<p class="hn"><?= __('Image info', 'help') ?></p>
 		<div class="entry-content">
-			<code>[img=PunBB bbcode test]<?php echo $base_url ?>/img/test.png[/img]</code>
-			<samp><img src="<?php echo $base_url ?>/img/test.png" alt="PunBB bbcode test" /></samp>
+			<code>[img=PunBB bbcode test]<?= app()->base_url ?>/img/test.png[/img]</code>
+			<samp><img src="<?= app()->base_url ?>/img/test.png" alt="PunBB bbcode test" /></samp>
 		</div>
 	</div>
 	<?php ($hook = get_hook('he_new_img_section')) ? eval($hook) : null; ?>

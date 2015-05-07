@@ -8,9 +8,9 @@ namespace punbb;
 		<h2 class="hn"><span><?php echo end($crumbs) ?> "<?php echo forum_htmlencode($ext_data['title']) ?>"</span></h2>
 	</div>
 	<div class="main-content main-frm">
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $base_url ?>/admin/extensions.php?section=manage&amp;uninstall=<?php echo $id ?>">
+		<form class="frm-form" method="post" accept-charset="utf-8" action="<?= app()->base_url ?>/admin/extensions.php?section=manage&amp;uninstall=<?php echo $id ?>">
 			<div class="hidden">
-				<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($base_url.'/admin/extensions.php?section=manage&amp;uninstall='.$id) ?>" />
+				<input type="hidden" name="csrf_token" value="<?= generate_form_token(app()->base_url . '/admin/extensions.php?section=manage&amp;uninstall='.$id) ?>" />
 			</div>
 			<div class="ct-group data-group">
 				<div class="ct-set data-set set1">

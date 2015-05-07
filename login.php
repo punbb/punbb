@@ -222,7 +222,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 				$mail_message = forum_trim(substr($mail_tpl, $first_crlf));
 
 				// Do the generic replacements first (they apply to all e-mails sent out here)
-				$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
+				$mail_message = str_replace('<base_url>', app()->base_url . '/', $mail_message);
 				$mail_message = str_replace('<board_mailer>', sprintf(__('Forum mailer'), config()->o_board_title), $mail_message);
 
 				($hook = get_hook('li_forgot_pass_new_general_replace_data')) ? eval($hook) : null;
