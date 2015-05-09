@@ -82,7 +82,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 	template()->render([
 		'main_view' => 'admin/groups/edit',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'mode' => $mode
 	]);
 }
 

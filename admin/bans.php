@@ -156,10 +156,10 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 	template()->render([
 		'main_view' => 'admin/bans/edit',
-		'crumbs' => $crumbs
+		'crumbs' => $crumbs,
+		'mode' => $mode
 	]);
 }
-
 
 // Add/edit a ban (stage 2)
 else if (isset($_POST['add_edit_ban']))
