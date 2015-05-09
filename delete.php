@@ -8,24 +8,19 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
+namespace punbb;
 
-
-if (!defined('FORUM_ROOT'))
-	define('FORUM_ROOT', './');
-require FORUM_ROOT.'include/common.php';
+require __DIR__ . '/vendor/autoload.php';
 
 ($hook = get_hook('dl_start')) ? eval($hook) : null;
 
-if ($forum_user['g_read_board'] == '0')
-	message($lang_common['No view']);
-
-// Load the delete.php language file
-require FORUM_ROOT.'lang/'.$forum_user['language'].'/delete.php';
+if (user()->g_read_board == '0') {
+	message(__('No view'));
+}
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
-	message($lang_common['Bad request']);
-
+	message(__('Bad request'));
 
 // Fetch some info about the post, the topic and the forum
 $query = array(
@@ -42,41 +37,41 @@ $query = array(
 		),
 		array(
 			'LEFT JOIN'		=> 'forum_perms AS fp',
-			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+			'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 		)
 	),
 	'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id
 );
 
 ($hook = get_hook('dl_qr_get_post_info')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-$cur_post = $forum_db->fetch_assoc($result);
+$result = db()->query_build($query) or error(__FILE__, __LINE__);
+$cur_post = db()->fetch_assoc($result);
 
 if (!$cur_post)
-	message($lang_common['Bad request']);
+	message(__('Bad request'));
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_post['moderators'] != '') ? unserialize($cur_post['moderators']) : array();
-$forum_page['is_admmod'] = ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && array_key_exists($forum_user['username'], $mods_array))) ? true : false;
+$forum_page['is_admmod'] = (user()->g_id == FORUM_ADMIN || (user()->g_moderator == '1' && array_key_exists(user()->username, $mods_array))) ? true : false;
 
 $cur_post['is_topic'] = ($id == $cur_post['first_post_id']) ? true : false;
 
 ($hook = get_hook('dl_pre_permission_check')) ? eval($hook) : null;
 
 // Do we have permission to delete this post?
-if ((($forum_user['g_delete_posts'] == '0' && !$cur_post['is_topic']) ||
-	($forum_user['g_delete_topics'] == '0' && $cur_post['is_topic']) ||
-	$cur_post['poster_id'] != $forum_user['id'] ||
-	$cur_post['closed'] == '1') &&
-	!$forum_page['is_admmod'])
-	message($lang_common['No permission']);
-
+if (((user()->g_delete_posts == '0' && !$cur_post['is_topic']) ||
+		(user()->g_delete_topics == '0' && $cur_post['is_topic']) ||
+		$cur_post['poster_id'] != user()->id ||
+		$cur_post['closed'] == '1') &&
+		!$forum_page['is_admmod']) {
+	message(__('No permission'));
+}
 
 ($hook = get_hook('dl_post_selected')) ? eval($hook) : null;
 
 // User pressed the cancel button
 if (isset($_POST['cancel']))
-	redirect(forum_link($forum_url['post'], $id), $lang_common['Cancel redirect']);
+	redirect(link('post', $id), __('Cancel redirect'));
 
 // User pressed the delete button
 else if (isset($_POST['delete']))
@@ -84,18 +79,19 @@ else if (isset($_POST['delete']))
 	($hook = get_hook('dl_form_submitted')) ? eval($hook) : null;
 
 	if (!isset($_POST['req_confirm']))
-		redirect(forum_link($forum_url['post'], $id), $lang_common['No confirm redirect']);
+		redirect(link('post', $id), __('No confirm redirect'));
 
 	if ($cur_post['is_topic'])
 	{
 		// Delete the topic and all of it's posts
 		delete_topic($cur_post['tid'], $cur_post['fid']);
 
-		$forum_flash->add_info($lang_delete['Topic del redirect']);
+		flash()->add_info(__('Topic del redirect', 'delete'));
 
 		($hook = get_hook('dl_topic_deleted_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name']))), $lang_delete['Topic del redirect']);
+		redirect(link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name']))),
+			__('Topic del redirect', 'delete'));
 	}
 	else
 	{
@@ -112,133 +108,75 @@ else if (isset($_POST['delete']))
 		);
 
 		($hook = get_hook('dl_post_deleted_get_prev_post_id')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$prev_post = $forum_db->fetch_assoc($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$prev_post = db()->fetch_assoc($result);
 
-		$forum_flash->add_info($lang_delete['Post del redirect']);
+		flash()->add_info(__('Post del redirect', 'delete'));
 
 		($hook = get_hook('dl_post_deleted_pre_redirect')) ? eval($hook) : null;
 
 		if (isset($prev_post['id']))
 		{
-			redirect(forum_link($forum_url['post'], $prev_post['id']), $lang_delete['Post del redirect']);
+			redirect(link('post', $prev_post['id']),
+				__('Post del redirect', 'delete'));
 		}
 		else
 		{
-			redirect(forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject']))), $lang_delete['Post del redirect']);
+			redirect(link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject']))),
+				__('Post del redirect', 'delete'));
 		}
 	}
 }
 
-// Run the post through the parser
-if (!defined('FORUM_PARSER_LOADED'))
-	require FORUM_ROOT.'include/parser.php';
-
-$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+$cur_post['message'] = bbcode()->parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link($forum_url['delete'], $id);
+$form_action = link('delete', $id);
 
-$forum_page['hidden_fields'] = array(
+$hidden_fields = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
-	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="'.generate_form_token($forum_page['form_action']).'" />'
+	'csrf_token'	=> '<input type="hidden" name="csrf_token" value="' .
+		generate_form_token($form_action) . '" />'
 );
 
 // Setup form information
 $forum_page['frm_info'] = array(
-	'<li><span>'.$lang_delete['Forum'].':<strong> '.forum_htmlencode($cur_post['forum_name']).'</strong></span></li>',
-	'<li><span>'.$lang_delete['Topic'].':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>'
+	'<li><span>'.__('Forum', 'delete').':<strong> '.forum_htmlencode($cur_post['forum_name']).'</strong></span></li>',
+	'<li><span>'.__('Topic', 'delete').':<strong> '.forum_htmlencode($cur_post['subject']).'</strong></span></li>'
 );
 
 // Generate the post heading
 $forum_page['post_ident'] = array();
-$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['is_topic']) ? $lang_delete['Topic byline'] : $lang_delete['Reply byline']), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
-$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" href="'.forum_link($forum_url['post'], $cur_post['tid']).'">'.format_time($cur_post['posted']).'</a></span>';
+$forum_page['post_ident']['byline'] = '<span class="post-byline">'.sprintf((($cur_post['is_topic']) ?
+	__('Topic byline', 'delete') : __('Reply byline', 'delete')), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
+$forum_page['post_ident']['link'] = '<span class="post-link"><a class="permalink" href="'.link('post', $cur_post['tid']).'">'.format_time($cur_post['posted']).'</a></span>';
 
 ($hook = get_hook('dl_pre_item_ident_merge')) ? eval($hook) : null;
 
 // Generate the post title
 if ($cur_post['is_topic'])
-	$forum_page['item_subject'] = sprintf($lang_delete['Topic title'], $cur_post['subject']);
+	$forum_page['item_subject'] = sprintf(__('Topic title', 'delete'), $cur_post['subject']);
 else
-	$forum_page['item_subject'] = sprintf($lang_delete['Reply title'], $cur_post['subject']);
+	$forum_page['item_subject'] = sprintf(__('Reply title', 'delete'), $cur_post['subject']);
 
 $forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
 // Setup breadcrumbs
-$forum_page['crumbs'] = array(
-	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	array($cur_post['forum_name'], forum_link($forum_url['forum'], array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
-	array($cur_post['subject'], forum_link($forum_url['topic'], array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
-	(($cur_post['is_topic']) ? $lang_delete['Delete topic'] : $lang_delete['Delete post'])
+$crumbs = array(
+	array(config()->o_board_title, link('index')),
+	array($cur_post['forum_name'], link('forum', array($cur_post['fid'], sef_friendly($cur_post['forum_name'])))),
+	array($cur_post['subject'], link('topic', array($cur_post['tid'], sef_friendly($cur_post['subject'])))),
+	(($cur_post['is_topic']) ? __('Delete topic', 'delete') : __('Delete post', 'delete'))
 );
 
 ($hook = get_hook('dl_pre_header_load')) ? eval($hook) : null;
 
-define ('FORUM_PAGE', 'postdelete');
-require FORUM_ROOT.'header.php';
+define('FORUM_PAGE', 'postdelete');
 
-// START SUBST - <!-- forum_main -->
-ob_start();
-
-($hook = get_hook('dl_main_output_start')) ? eval($hook) : null;
-
-?>
-	<div class="main-content main-frm">
-		<div class="ct-box info-box">
-			<ul class="info-list">
-				<?php echo implode("\n\t\t\t\t", $forum_page['frm_info'])."\n" ?>
-			</ul>
-		</div>
-<?php ($hook = get_hook('dl_pre_post_display')) ? eval($hook) : null; ?>
-		<div class="post singlepost">
-			<div class="posthead">
-				<h3 class="hn post-ident"><?php echo implode(' ', $forum_page['post_ident']) ?></h3>
-<?php ($hook = get_hook('dl_new_post_head_option')) ? eval($hook) : null; ?>
-			</div>
-			<div class="postbody">
-				<div class="post-entry">
-					<h4 class="entry-title hn"><?php echo $forum_page['item_subject'] ?></h4>
-					<div class="entry-content">
-						<?php echo $cur_post['message']."\n" ?>
-					</div>
-<?php ($hook = get_hook('dl_new_post_entry_data')) ? eval($hook) : null; ?>
-				</div>
-			</div>
-		</div>
-		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
-			<div class="hidden">
-				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
-			</div>
-<?php ($hook = get_hook('dl_pre_confirm_delete_fieldset')) ? eval($hook) : null; ?>
-			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo ($cur_post['is_topic']) ? $lang_delete['Delete topic'] : $lang_delete['Delete post'] ?></strong></legend>
-<?php ($hook = get_hook('dl_pre_confirm_delete_checkbox')) ? eval($hook) : null; ?>
-				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="sf-box checkbox">
-						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_confirm" value="1" checked="checked" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_delete['Please confirm'] ?></span> <?php printf(((($cur_post['is_topic'])) ? $lang_delete['Delete topic label'] : $lang_delete['Delete post label']), forum_htmlencode($cur_post['poster']), format_time($cur_post['posted'])) ?></label>
-					</div>
-				</div>
-<?php ($hook = get_hook('dl_pre_confirm_delete_fieldset_end')) ? eval($hook) : null; ?>
-			</fieldset>
-<?php ($hook = get_hook('dl_confirm_delete_fieldset_end')) ? eval($hook) : null; ?>
-			<div class="frm-buttons">
-				<span class="submit primary caution"><input type="submit" name="delete" value="<?php echo ($cur_post['is_topic']) ? $lang_delete['Delete topic'] : $lang_delete['Delete post'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" formnovalidate /></span>
-			</div>
-		</form>
-	</div>
-<?php
-
-$forum_id = $cur_post['fid'];
-
-($hook = get_hook('dl_end')) ? eval($hook) : null;
-
-$tpl_temp = forum_trim(ob_get_contents());
-$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_main -->
-
-require FORUM_ROOT.'footer.php';
+template()->render([
+	'main_view' => 'delete/main',
+	'crumbs' => $crumbs,
+	'form_action' => $form_action,
+	'hidden_fields' => $hidden_fields
+]);

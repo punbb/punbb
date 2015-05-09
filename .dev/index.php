@@ -14,8 +14,8 @@
 		<meta charset="utf-8">
 		<title>PunBB for developers</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="<?php echo $base_url ?>/.dev/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="<?php echo $base_url ?>/.dev/css/style.css" rel="stylesheet">
+		<link href="<?= app()->base_url ?>/.dev/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?= app()->base_url ?>/.dev/css/style.css" rel="stylesheet">
 	</head>
   	<body>
 		<div class="navbar navbar-fixed-top">
@@ -26,17 +26,17 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="<?php echo $base_url ?>/.dev/">PunBB <small>1.4.3</small></a>
+					<a class="brand" href="<?= app()->base_url ?>/.dev/">PunBB <small>1.4.3</small></a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li class="active"><a href="<?php echo $base_url ?>/.dev/">Home</a></li>
+							<li class="active"><a href="<?= app()->base_url ?>/.dev/">Home</a></li>
                             <li class="dropdown">
-                                <a href="<?php echo $base_url ?>/.dev/tests/" class="dropdown-toggle" data-toggle="dropdown">Tests
+                                <a href="<?= app()->base_url ?>/.dev/tests/" class="dropdown-toggle" data-toggle="dropdown">Tests
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="<?php echo $base_url ?>/.dev/tests/LanguageTest/">Language test</a></li>
-                                    <li><a href="<?php echo $base_url ?>/.dev/tests/UnitTests/">Unit tests</a></li>
+                                    <li><a href="<?= app()->base_url ?>/.dev/tests/LanguageTest/">Language test</a></li>
+                                    <li><a href="<?= app()->base_url ?>/.dev/tests/UnitTests/">Unit tests</a></li>
                                 </ul>
                             </li>
 						</ul>
@@ -61,7 +61,7 @@
         		<p>&copy; PunBB 2012</p>
       		</footer>
     	</div> <!-- /container -->
-   	<script src="<?php echo $base_url ?>/.dev/bootstrap/js/jquery.min.js"></script>
-	<script src="<?php echo $base_url ?>/.dev/bootstrap/js/bootstrap.min.js"></script>
+   	<script src="<?= app()->base_url ?>/.dev/bootstrap/js/jquery.min.js"></script>
+	<script src="<?= app()->base_url ?>/.dev/bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>

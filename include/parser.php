@@ -6,63 +6,76 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
-if (!defined('FORUM'))
+if (!defined('FORUM')) {
 	exit;
-
-// Load the IDNA class for international url handling
-if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
-{
-	require FORUM_ROOT.'include/idna/idna_convert.class.php';
 }
 
+class BbcodeParser {
 
-// Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
-$smilies = array(':)' => 'smile.png', '=)' => 'smile.png', ':|' => 'neutral.png', '=|' => 'neutral.png', ':(' => 'sad.png', '=(' => 'sad.png', ':D' => 'big_smile.png', '=D' => 'big_smile.png', ':o' => 'yikes.png', ':O' => 'yikes.png', ';)' => 'wink.png', ':/' => 'hmm.png', ':P' => 'tongue.png', ':p' => 'tongue.png', ':lol:' => 'lol.png', ':mad:' => 'mad.png', ':rolleyes:' => 'roll.png', ':cool:' => 'cool.png');
+	function __construct() {
+		global $smilies;
 
-($hook = get_hook('ps_start')) ? eval($hook) : null;
+		// Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
+		$smilies = [
+			':)' => 'smile.png',
+			'=)' => 'smile.png',
+			':|' => 'neutral.png',
+			'=|' => 'neutral.png',
+			':(' => 'sad.png',
+			'=(' => 'sad.png',
+			':D' => 'big_smile.png',
+			'=D' => 'big_smile.png',
+			':o' => 'yikes.png',
+			':O' => 'yikes.png',
+			';)' => 'wink.png',
+			':/' => 'hmm.png',
+			':P' => 'tongue.png',
+			':p' => 'tongue.png',
+			':lol:' => 'lol.png',
+			':mad:' => 'mad.png',
+			':rolleyes:' => 'roll.png',
+			':cool:' => 'cool.png'
+		];
 
+		($hook = get_hook('ps_start')) ? eval($hook) : null;
+	}
 
 //
 // Make sure all BBCodes are lower case and do a little cleanup
 //
-function preparse_bbcode($text, &$errors, $is_signature = false)
-{
-	global $forum_config;
-
+function preparse_bbcode($text, &$errors, $is_signature = false) {
 	$return = ($hook = get_hook('ps_preparse_bbcode_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	if ($is_signature)
-	{
-		global $lang_profile;
-
-		if (preg_match('#\[quote(=(&quot;|"|\'|)(.*)\\1)?\]|\[/quote\]|\[code\]|\[/code\]|\[list(=([1a\*]))?\]|\[/list\]#i', $text))
-			$errors[] = $lang_profile['Signature quote/code/list'];
+	if ($is_signature) {
+		if (preg_match('#\[quote(=(&quot;|"|\'|)(.*)\\1)?\]|\[/quote\]|\[code\]|\[/code\]|\[list(=([1a\*]))?\]|\[/list\]#i', $text)) {
+			$errors[] = __('Signature quote/code/list', 'profile');
+		}
 	}
 
-	if ($forum_config['p_sig_bbcode'] == '1' && $is_signature || $forum_config['p_message_bbcode'] == '1' && !$is_signature)
-	{
+	if (config()->p_sig_bbcode == '1' && $is_signature ||
+				config()->p_message_bbcode == '1' && !$is_signature) {
 		// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
 		if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
 		{
-			list($inside, $outside) = split_text($text, '[code]', '[/code]', $errors);
+			list($inside, $outside) = $this->split_text($text, '[code]', '[/code]', $errors);
 			$text = implode("\x1", $outside);
 		}
 
 		// Tidy up lists
 		$pattern = array('%\[list(?:=([1a*]))?+\]((?:(?>.*?(?=\[list(?:=[1a*])?+\]|\[/list\]))|(?R))*)\[/list\]%ise');
-		$replace = array('preparse_list_tag(\'$2\', \'$1\', $errors)');
+		$replace = array('bbcode()->preparse_list_tag(\'$2\', \'$1\', $errors)');
 		$text = preg_replace($pattern, $replace, $text);
 
 		$text = str_replace('*'."\0".']', '*]', $text);
 
-		if ($forum_config['o_make_links'] == '1')
+		if (config()->o_make_links == '1')
 		{
-			$text = do_clickable($text, defined('FORUM_SUPPORT_PCRE_UNICODE'));
+			$text = $this->do_clickable($text, defined('FORUM_SUPPORT_PCRE_UNICODE'));
 		}
 
 		// If we split up the message before we have to concatenate it together again (code tags)
@@ -82,11 +95,13 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 		}
 
 		$temp_text = false;
-		if (empty($errors))
-			$temp_text = preparse_tags($text, $errors, $is_signature);
+		if (empty($errors)) {
+			$temp_text = $this->preparse_tags($text, $errors, $is_signature);
+		}
 
-		if ($temp_text !== false)
+		if ($temp_text !== false) {
 			$text = $temp_text;
+		}
 
 		// Remove empty tags
 		while ($new_text = preg_replace('/\[(b|u|i|h|colou?r|quote|code|img|url|email|list)(?:\=[^\]]*)?\]\[\/\1\]/', '', $text))
@@ -112,8 +127,6 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 //
 function preparse_tags($text, &$errors, $is_signature = false)
 {
-	global $lang_common, $forum_config;
-
 	// Start off by making some arrays of bbcode tags and what we need to do with each one
 
 	// List of all the tags
@@ -123,7 +136,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// and tags we need to check are closed (the same as above, added it just in case)
 	$tags_closed = $tags;
 	// Tags we can nest and the depth they can be nested to (only quotes )
-	$tags_nested = array('quote' => $forum_config['o_quote_depth'], 'list' => 5, '*' => 5);
+	$tags_nested = array('quote' => config()->o_quote_depth, 'list' => 5, '*' => 5);
 	// Tags to ignore the contents of completely (just code)
 	$tags_ignore = array('code');
 	// Block tags, block tags can only go within another block tag, they cannot be in a normal tag
@@ -273,7 +286,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (strlen(substr($current, $equalpos)) == 2)
 			{
 				// Empty tag argument
-				$errors[] = sprintf($lang_common['BBCode error 6'], $current_tag);
+				$errors[] = sprintf(__('BBCode error 6'), $current_tag);
 				return false;
 			}
 			$current = strtolower(substr($current, 0, $equalpos)).substr($current, $equalpos);
@@ -316,7 +329,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		// Check the current tag is allowed here
 		if (!in_array($current_tag, $limit_bbcode) && $current_tag != $open_tags[$opened_tag])
 		{
-			$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
+			$errors[] = sprintf(__('BBCode error 3'), $current_tag, $open_tags[$opened_tag]);
 			return false;
 		}
 
@@ -329,7 +342,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				//We tried to close a tag which is not open
 				if (in_array($current_tag, $tags_opened))
 				{
-					$errors[] = sprintf($lang_common['BBCode error 1'], $current_tag);
+					$errors[] = sprintf(__('BBCode error 1'), $current_tag);
 					return false;
 				}
 			}
@@ -363,7 +376,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 								if (!in_array($temp_tag, $tags_fix))
 								{
 									// We couldn't fix nesting
-									$errors[] = sprintf($lang_common['BBCode error 5'], array_pop($temp_opened));
+									$errors[] = sprintf(__('BBCode error 5'), array_pop($temp_opened));
 									return false;
 								}
 								array_push($temp_opened, $temp_tag);
@@ -397,7 +410,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 						else
 						{
 							// We couldn't fix nesting
-							$errors[] = sprintf($lang_common['BBCode error 1'], $current_tag);
+							$errors[] = sprintf(__('BBCode error 1'), $current_tag);
 							return false;
 						}
 					}
@@ -437,7 +450,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (in_array($current_tag, $tags_block) && !in_array($open_tags[$opened_tag], $tags_block) && $opened_tag != 0)
 			{
 				// We tried to open a block tag within a non-block tag
-				$errors[] = sprintf($lang_common['BBCode error 3'], $current_tag, $open_tags[$opened_tag]);
+				$errors[] = sprintf(__('BBCode error 3'), $current_tag, $open_tags[$opened_tag]);
 				return false;
 			}
 
@@ -453,7 +466,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if (in_array($current_tag, $open_tags) && !in_array($current_tag, array_keys($tags_nested)))
 			{
 				// We nested a tag we shouldn't
-				$errors[] = sprintf($lang_common['BBCode error 4'], $current_tag);
+				$errors[] = sprintf(__('BBCode error 4'), $current_tag);
 				return false;
 			}
 			else if (in_array($current_tag, array_keys($tags_nested)))
@@ -496,7 +509,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		if (in_array($check, $open_tags))
 		{
 			// We left an important tag open
-			$errors[] = sprintf($lang_common['BBCode error 5'], $check);
+			$errors[] = sprintf(__('BBCode error 5'), $check);
 			return false;
 		}
 	}
@@ -504,7 +517,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	if ($current_ignore)
 	{
 		// We left an ignore tag open
-		$errors[] = sprintf($lang_common['BBCode error 5'], $current_ignore);
+		$errors[] = sprintf(__('BBCode error 5'), $current_ignore);
 		return false;
 	}
 
@@ -521,15 +534,13 @@ function preparse_tags($text, &$errors, $is_signature = false)
 //
 function preparse_list_tag($content, $type = '*', &$errors)
 {
-	global $lang_common;
-
 	if (strlen($type) != 1)
 		$type = '*';
 
 	if (strpos($content,'[list') !== false)
 	{
 		$pattern = array('%\[list(?:=([1a*]))?+\]((?:(?>.*?(?=\[list(?:=[1a*])?+\]|\[/list\]))|(?R))*)\[/list\]%ise');
-		$replace = array('preparse_list_tag(\'$2\', \'$1\', $errors)');
+		$replace = array('bbcode()->preparse_list_tag(\'$2\', \'$1\', $errors)');
 		$content = preg_replace($pattern, $replace, $content);
 	}
 
@@ -551,8 +562,6 @@ function preparse_list_tag($content, $type = '*', &$errors)
 //
 function split_text($text, $start, $end, &$errors, $retab = true)
 {
-	global $forum_config, $lang_common;
-
 	$tokens = explode($start, $text);
 
 	$outside[] = $tokens[0];
@@ -564,16 +573,16 @@ function split_text($text, $start, $end, &$errors, $retab = true)
 
 		if (count($temp) != 2)
 		{
-			$errors[] = $lang_common['BBCode code problem'];
+			$errors[] = __('BBCode code problem');
 			return array(null, array($text));
 		}
 		$inside[] = $temp[0];
 		$outside[] = $temp[1];
 	}
 
-	if ($forum_config['o_indent_num_spaces'] != 8 && $retab)
+	if (config()->o_indent_num_spaces != 8 && $retab)
 	{
-		$spaces = str_repeat(' ', $forum_config['o_indent_num_spaces']);
+		$spaces = str_repeat(' ', config()->o_indent_num_spaces);
 		$inside = str_replace("\t", $spaces, $inside);
 	}
 
@@ -668,7 +677,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 //
 function callback_handle_url_nobb($reg)
 {
-	return handle_url_tag($reg[1], (isset($reg[2]) ? $reg[2] : ''), false);
+	return $this->handle_url_tag($reg[1], (isset($reg[2]) ? $reg[2] : ''), false);
 }
 
 //
@@ -676,17 +685,14 @@ function callback_handle_url_nobb($reg)
 //
 function callback_handle_url_bb($reg)
 {
-	return handle_url_tag($reg[1], (isset($reg[2]) ? $reg[2] : ''), true);
+	return $this->handle_url_tag($reg[1], (isset($reg[2]) ? $reg[2] : ''), true);
 }
-
 
 //
 // Turns an URL from the [img] tag into an <img> tag or a <a href...> tag
 //
 function handle_img_tag($url, $is_signature = false, $alt = null)
 {
-	global $lang_common, $forum_user;
-
 	$return = ($hook = get_hook('ps_handle_img_tag_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
@@ -694,11 +700,11 @@ function handle_img_tag($url, $is_signature = false, $alt = null)
 	if ($alt == null)
 		$alt = $url;
 
-	$img_tag = '<a href="'.$url.'">&lt;'.$lang_common['Image link'].'&gt;</a>';
+	$img_tag = '<a href="'.$url.'">&lt;'.__('Image link').'&gt;</a>';
 
-	if ($is_signature && $forum_user['show_img_sig'] != '0')
+	if ($is_signature && user()->show_img_sig != '0')
 		$img_tag = '<img class="sigimage" src="'.$url.'" alt="'.forum_htmlencode($alt).'" />';
-	else if (!$is_signature && $forum_user['show_img'] != '0')
+	else if (!$is_signature && user()->show_img != '0')
 		$img_tag = '<span class="postimg"><img src="'.$url.'" alt="'.forum_htmlencode($alt).'" /></span>';
 
 	$return = ($hook = get_hook('ps_handle_img_tag_end')) ? eval($hook) : null;
@@ -720,7 +726,7 @@ function handle_list_tag($content, $type = '*')
 	if (strpos($content,'[list') !== false)
 	{
 		$pattern = array('%\[list(?:=([1a*]))?+\]((?:(?>.*?(?=\[list(?:=[1a*])?+\]|\[/list\]))|(?R))*)\[/list\]%ise');
-		$replace = array('handle_list_tag(\'$2\', \'$1\')');
+		$replace = array('bbcode()->handle_list_tag(\'$2\', \'$1\')');
 		$content = preg_replace($pattern, $replace, $content);
 	}
 
@@ -743,15 +749,13 @@ function handle_list_tag($content, $type = '*')
 //
 function do_bbcode($text, $is_signature = false)
 {
-	global $lang_common, $forum_user, $forum_config;
-
 	$return = ($hook = get_hook('ps_do_bbcode_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
 	if (strpos($text, '[quote') !== false)
 	{
-		$text = preg_replace('#\[quote=(&\#039;|&quot;|"|\'|)(.*?)\\1\]#e', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</cite><blockquote><p>"', $text);
+		$text = preg_replace('#\[quote=(&\#039;|&quot;|"|\'|)(.*?)\\1\]#e', '"</p><div class=\"quotebox\"><cite>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".__(\'wrote\').":</cite><blockquote><p>"', $text);
 		$text = preg_replace('#\[quote\]\s*#', '</p><div class="quotebox"><blockquote><p>', $text);
 		$text = preg_replace('#\s*\[\/quote\]#S', '</p></blockquote></div><p>', $text);
 	}
@@ -759,7 +763,7 @@ function do_bbcode($text, $is_signature = false)
 	if (!$is_signature)
 	{
 		$pattern[] = '%\[list(?:=([1a*]))?+\]((?:(?>.*?(?=\[list(?:=[1a*])?+\]|\[/list\]))|(?R))*)\[/list\]%ise';
-		$replace[] = 'handle_list_tag(\'$2\', \'$1\')';
+		$replace[] = 'bbcode()->handle_list_tag(\'$2\', \'$1\')';
 	}
 
 	$pattern[] = '#\[b\](.*?)\[/b\]#ms';
@@ -774,24 +778,25 @@ function do_bbcode($text, $is_signature = false)
 	$replace[] = '<span style="color: $1">$2</span>';
 	$replace[] = '</p><h5>$1</h5><p>';
 
-	if (($is_signature && $forum_config['p_sig_img_tag'] == '1') || (!$is_signature && $forum_config['p_message_img_tag'] == '1'))
+	if (($is_signature && config()->p_sig_img_tag == '1') ||
+			(!$is_signature && config()->p_message_img_tag == '1'))
 	{
 		$pattern[] = '#\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e';
 		$pattern[] = '#\[img=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e';
 		if ($is_signature)
 		{
-			$replace[] = 'handle_img_tag(\'$1$3\', true)';
-			$replace[] = 'handle_img_tag(\'$2$4\', true, \'$1\')';
+			$replace[] = 'bbcode()->handle_img_tag(\'$1$3\', true)';
+			$replace[] = 'bbcode()->handle_img_tag(\'$2$4\', true, \'$1\')';
 		}
 		else
 		{
-			$replace[] = 'handle_img_tag(\'$1$3\', false)';
-			$replace[] = 'handle_img_tag(\'$2$4\', false, \'$1\')';
+			$replace[] = 'bbcode()->handle_img_tag(\'$1$3\', false)';
+			$replace[] = 'bbcode()->handle_img_tag(\'$2$4\', false, \'$1\')';
 		}
 	}
 
-	$text = preg_replace_callback('#\[url\]([^\[]*?)\[/url\]#', 'callback_handle_url_nobb', $text);
-	$text = preg_replace_callback('#\[url=([^\[]+?)\](.*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+	$text = preg_replace_callback('#\[url\]([^\[]*?)\[/url\]#', array(bbcode(), 'callback_handle_url_nobb'), $text);
+	$text = preg_replace_callback('#\[url=([^\[]+?)\](.*?)\[/url\]#', array(bbcode(), 'callback_handle_url_nobb'), $text);
 
 	$pattern[] = '#\[email\]([^\[]*?)\[/email\]#';
 	$pattern[] = '#\[email=([^\[]+?)\](.*?)\[/email\]#';
@@ -823,13 +828,13 @@ function do_clickable($text, $unicode = FALSE)
 
 	if ($unicode)
 	{
-		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\p{Nd}\p{L}\-]+\.([\p{Nd}\p{L}\-]+\.)*[\p{Nd}\p{L}\-]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-]?)?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ieu', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
-		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\p{Nd}\p{L}\-]+\.)*[\p{Nd}\p{L}\-]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ieu', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\p{Nd}\p{L}\-]+\.([\p{Nd}\p{L}\-]+\.)*[\p{Nd}\p{L}\-]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-]?)?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ieu', 'stripslashes(\'$1$2$3$4\').bbcode()->handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\p{Nd}\p{L}\-]+\.)*[\p{Nd}\p{L}\-]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ieu', 'stripslashes(\'$1$2$3$4\').bbcode()->handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
 	}
 	else
 	{
-		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-]?)?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
-		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(https?|ftp|news){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-]?)?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').bbcode()->handle_url_tag(\'$5://$6\', \'$5://$6\', true).stripslashes(\'$4$10$11$12\')', $text);
+		$text = preg_replace('#(?<=[\s\]\)])(<)?(\[)?(\()?([\'"]?)(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^\s\[]*[^\s.,?!\[;:-])?)\4(?(3)(\)))(?(2)(\]))(?(1)(>))(?![^\s]*\[/(?:url|img)\])#ie', 'stripslashes(\'$1$2$3$4\').bbcode()->handle_url_tag(\'$5.$6\', \'$5.$6\', true).stripslashes(\'$4$10$11$12\')', $text);
 	}
 
 	return substr($text, 1);
@@ -841,7 +846,7 @@ function do_clickable($text, $unicode = FALSE)
 //
 function do_smilies($text)
 {
-	global $forum_config, $base_url, $smilies;
+	global $smilies;
 
 	$return = ($hook = get_hook('ps_do_smilies_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -852,7 +857,8 @@ function do_smilies($text)
 	foreach ($smilies as $smiley_text => $smiley_img)
 	{
 		if (strpos($text, $smiley_text) !== false)
-			$text = preg_replace("#(?<=[>\s])".preg_quote($smiley_text, '#')."(?=\W)#m", '<img src="'.$base_url.'/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />', $text);
+			$text = preg_replace("#(?<=[>\s])".preg_quote($smiley_text, '#')."(?=\W)#m", '<img src="' .
+				app()->base_url . '/img/smilies/'.$smiley_img.'" width="15" height="15" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />', $text);
 	}
 
 	$return = ($hook = get_hook('ps_do_smilies_end')) ? eval($hook) : null;
@@ -866,13 +872,11 @@ function do_smilies($text)
 //
 function parse_message($text, $hide_smilies)
 {
-	global $forum_config, $lang_common, $forum_user;
-
 	$return = ($hook = get_hook('ps_parse_message_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	if ($forum_config['o_censoring'] == '1')
+	if (config()->o_censoring == '1')
 		$text = censor_words($text);
 
 	$return = ($hook = get_hook('ps_parse_message_post_censor')) ? eval($hook) : null;
@@ -889,7 +893,7 @@ function parse_message($text, $hide_smilies)
 	// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
 	if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
 	{
-		list($inside, $outside) = split_text($text, '[code]', '[/code]', $errors);
+		list($inside, $outside) = $this->split_text($text, '[code]', '[/code]', $errors);
 		$text = implode("\x1", $outside);
 	}
 
@@ -897,11 +901,11 @@ function parse_message($text, $hide_smilies)
 	if ($return != null)
 		return $return;
 
-	if ($forum_config['p_message_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
-		$text = do_bbcode($text);
+	if (config()->p_message_bbcode == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
+		$text = $this->do_bbcode($text);
 
-	if ($forum_config['o_smilies'] == '1' && $forum_user['show_smilies'] == '1' && $hide_smilies == '0')
-		$text = do_smilies($text);
+	if (config()->o_smilies == '1' && user()->show_smilies == '1' && $hide_smilies == '0')
+		$text = $this->do_smilies($text);
 
 	$return = ($hook = get_hook('ps_parse_message_bbcode')) ? eval($hook) : null;
 	if ($return != null)
@@ -954,13 +958,11 @@ function parse_message($text, $hide_smilies)
 //
 function parse_signature($text)
 {
-	global $forum_config, $lang_common, $forum_user;
-
 	$return = ($hook = get_hook('ps_parse_signature_start')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	if ($forum_config['o_censoring'] == '1')
+	if (config()->o_censoring == '1')
 		$text = censor_words($text);
 
 	$return = ($hook = get_hook('ps_parse_signature_post_censor')) ? eval($hook) : null;
@@ -974,11 +976,11 @@ function parse_signature($text)
 	if ($return != null)
 		return $return;
 
-	if ($forum_config['p_sig_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
-		$text = do_bbcode($text, true);
+	if (config()->p_sig_bbcode == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
+		$text = $this->do_bbcode($text, true);
 
-	if ($forum_config['o_smilies_sig'] == '1' && $forum_user['show_smilies'] == '1')
-		$text = do_smilies($text);
+	if (config()->o_smilies_sig == '1' && user()->show_smilies == '1')
+		$text = $this->do_smilies($text);
 
 	$return = ($hook = get_hook('ps_parse_signature_post_bbcode')) ? eval($hook) : null;
 	if ($return != null)
@@ -996,4 +998,4 @@ function parse_signature($text)
 	return $text;
 }
 
-define('FORUM_PARSER_LOADED', 1);
+}

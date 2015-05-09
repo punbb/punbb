@@ -6,16 +6,19 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 define('FORUM_ROOT', './');
-require FORUM_ROOT.'include/essentials.php';
+require FORUM_ROOT . 'include/essentials.php';
 
 // Bring in all the rewrite rules
-if (file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/rewrite_rules.php'))
-	require FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/rewrite_rules.php';
-else
-	require FORUM_ROOT.'include/url/Default/rewrite_rules.php';
+$fname = rewrite()->path[config()->o_sef] . '/rewrite_rules.php';
+if (file_exists($fname)) {
+	$forum_rewrite_rules = require $fname;
+}
+else {
+	$forum_rewrite_rules = rewrite()->path['Default'] . '/rewrite_rules.php';
+}
 
 // Allow extensions to create their own rewrite rules/modify existing rules
 ($hook = get_hook('re_rewrite_rules')) ? eval($hook) : null;

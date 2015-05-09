@@ -1,0 +1,119 @@
+<?php
+namespace punbb;
+
+global $errors;
+
+($hook = get_hook('rg_register_output_start')) ? eval($hook) : null;
+
+?>
+	<div class="main-head">
+		<h2 class="hn"><span><?= sprintf(__('Register at', 'profile'), config()->o_board_title) ?></span></h2>
+	</div>
+	<div class="main-content main-frm">
+<?php
+	if (!empty($forum_page['frm_info'])):
+?>
+		<div class="ct-box info-box">
+			<?php echo implode("\n\t\t\t", $forum_page['frm_info'])."\n" ?>
+		</div>
+<?php
+	endif;
+?>
+
+	<?php template()->helper('errors', [
+		'errors_title' => __('Register errors', 'profile'),
+		'errors' => $errors
+	]) ?>
+
+		<div id="req-msg" class="req-warn ct-box error-box">
+			<p class="important"><?= __('Required warn') ?></p>
+		</div>
+		<form class="frm-form frm-suggest-username" id="afocus" method="post" accept-charset="utf-8" action="<?= $form_action ?>" autocomplete="off">
+			<div class="hidden">
+				<input type="hidden" name="form_sent" value="1" />
+				<input type="hidden" name="csrf_token" value="<?= generate_form_token($form_action) ?>" />
+				<input type="hidden" name="timezone" id="register_timezone" value="<?php echo forum_htmlencode(config()->o_default_timezone) ?>" />
+				<input type="hidden" name="dst" id="register_dst" value="<?php echo forum_htmlencode(config()->o_default_dst) ?>" />
+			</div>
+<?php ($hook = get_hook('rg_register_pre_group')) ? eval($hook) : null; ?>
+			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+<?php ($hook = get_hook('rg_register_pre_email')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('E-mail', 'profile') ?></span> <small><?= __('E-mail help', 'profile') ?></small></label><br />
+						<span class="fld-input"><input type="email" data-suggest-role="email" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_email1" value="<?php echo(isset($_POST['req_email1']) ? forum_htmlencode($_POST['req_email1']) : '') ?>" size="35" maxlength="80" required spellcheck="false" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('rg_register_pre_username')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count']; if (config()->o_regs_verify == '0') echo ' prepend-top'; ?>">
+					<div class="sf-box text required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Username', 'profile') ?></span> <small><?= __('Username help', 'profile') ?></small></label><br />
+						<span class="fld-input"><input type="text" data-suggest-role="username" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_username" value="<?php echo(isset($_POST['req_username']) ? forum_htmlencode($_POST['req_username']) : '') ?>" size="35" maxlength="25" required spellcheck="false" /></span>
+					</div>
+				</div>
+<?php ($hook = get_hook('rg_register_pre_password')) ? eval($hook) : null; ?>
+<?php if (config()->o_regs_verify == '0'): ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Password', 'profile') ?></span> <small><?= __('Password help', 'profile') ?></small></label><br />
+						<span class="fld-input"><input type="<?php echo(config()->o_mask_passwords == '1' ? 'password' : 'text') ?>" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password1" size="35" value="<?php if (isset($_POST['req_password1'])) echo forum_htmlencode($_POST['req_password1']); ?>" required autocomplete="off" /></span>
+					</div>
+				</div>
+	<?php ($hook = get_hook('rg_register_pre_confirm_password')) ? eval($hook) : null; ?>
+	<?php if (config()->o_mask_passwords == '1'): ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box text required">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Confirm password', 'profile') ?></span> <small><?= __('Confirm password help', 'profile') ?></small></label><br />
+						<span class="fld-input"><input type="password" id="fld<?php echo $forum_page['fld_count'] ?>" name="req_password2" size="35" value="<?php if (isset($_POST['req_password2'])) echo forum_htmlencode($_POST['req_password2']); ?>" required autocomplete="off" /></span>
+					</div>
+				</div>
+	<?php endif; ?>
+<?php endif; ?>
+<?php ($hook = get_hook('rg_register_pre_email_confirm')) ? eval($hook) : null;
+
+		$languages = get_language_packs();
+
+		($hook = get_hook('rg_register_pre_language')) ? eval($hook) : null;
+
+		// Only display the language selection box if there's more than one language available
+		if (count($languages) > 1)
+		{
+			natcasesort($languages);
+
+?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box select">
+						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?= __('Language', 'profile') ?></span></label><br />
+						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="language">
+<?php
+
+			$select_lang = isset($_POST['language']) ? $_POST['language'] : config()->o_default_lang;
+			foreach ($languages as $lang)
+			{
+				if ($select_lang == $lang)
+					echo "\t\t\t\t\t\t".'<option value="'.$lang.'" selected="selected">'.$lang.'</option>'."\n";
+				else
+					echo "\t\t\t\t\t\t".'<option value="'.$lang.'">'.$lang.'</option>'."\n";
+			}
+
+?>
+						</select></span>
+					</div>
+				</div>
+<?php
+
+		}
+
+
+		($hook = get_hook('rg_register_pre_group_end')) ? eval($hook) : null;
+?>
+			</div>
+<?php ($hook = get_hook('rg_register_group_end')) ? eval($hook) : null; ?>
+			<div class="frm-buttons">
+				<span class="submit primary"><input type="submit" name="register" value="<?= __('Register', 'profile') ?>" /></span>
+			</div>
+		</form>
+	</div>
+<?php
+
+($hook = get_hook('rg_end')) ? eval($hook) : null;

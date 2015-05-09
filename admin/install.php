@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+return; // TODO
 
 define('MIN_PHP_VERSION', '5.0.0');
 define('MIN_MYSQL_VERSION', '4.1.2');
@@ -31,15 +31,6 @@ error_reporting(E_ALL);
 // Turn off PHP time limit
 @set_time_limit(0);
 
-require FORUM_ROOT.'include/constants.php';
-// We need some stuff from functions.php
-require FORUM_ROOT.'include/functions.php';
-
-// Load UTF-8 functions
-require FORUM_ROOT.'include/utf8/utf8.php';
-require FORUM_ROOT.'include/utf8/ucwords.php';
-require FORUM_ROOT.'include/utf8/trim.php';
-
 // Strip out "bad" UTF-8 characters
 forum_remove_bad_characters();
 
@@ -48,9 +39,10 @@ forum_remove_bad_characters();
 //
 function generate_config_file()
 {
-	global $db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $base_url, $cookie_name;
+	return; // TODO
+	global $cookie_name;
 
-	$config_body = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.addslashes($db_name)."';\n".'$db_username = \''.addslashes($db_username)."';\n".'$db_password = \''.addslashes($db_password)."';\n".'$db_prefix = \''.addslashes($db_prefix)."';\n".'$p_connect = false;'."\n\n".'$base_url = \''.$base_url.'\';'."\n\n".'$cookie_name = '."'".$cookie_name."';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n\ndefine('FORUM', 1);";
+	$config_body = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.addslashes($db_name)."';\n".'$db_username = \''.addslashes($db_username)."';\n".'$db_password = \''.addslashes($db_password)."';\n".'$db_prefix = \''.addslashes($db_prefix)."';\n".'$p_connect = false;'."\n\n".'base_url = \''.app()->base_url.'\';'."\n\n".'$cookie_name = '."'".$cookie_name."';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n\ndefine('FORUM', 1);";
 
 	// Add forum options
 	$config_body .= "\n\n// Enable DEBUG mode by removing // from the following line\n//define('FORUM_DEBUG', 1);";
@@ -67,15 +59,11 @@ function generate_config_file()
 
 $language = isset($_GET['lang']) ? $_GET['lang'] : (isset($_POST['req_language']) ? forum_trim($_POST['req_language']) : 'English');
 $language = preg_replace('#[\.\\\/]#', '', $language);
-if (!file_exists(FORUM_ROOT.'lang/'.$language.'/install.php'))
+if (!file_exists(language()->path[$language] . '/install.php')) {
 	exit('The language pack you have chosen doesn\'t seem to exist or is corrupt. Please recheck and try again.');
+}
 
-// Load the language files
-require FORUM_ROOT.'lang/'.$language.'/install.php';
-require FORUM_ROOT.'lang/'.$language.'/admin_settings.php';
-
-if (isset($_POST['generate_config']))
-{
+if (isset($_POST['generate_config'])) {
 	header('Content-Type: text/x-delimtext; name="config.php"');
 	header('Content-disposition: attachment; filename=config.php');
 
@@ -85,7 +73,7 @@ if (isset($_POST['generate_config']))
 	$db_username = $_POST['db_username'];
 	$db_password = $_POST['db_password'];
 	$db_prefix = $_POST['db_prefix'];
-	$base_url = $_POST['base_url'];
+	app()->base_url = $_POST['base_url'];
 	$cookie_name = $_POST['cookie_name'];
 
 	echo generate_config_file();
@@ -122,12 +110,13 @@ if (!isset($_POST['form_sent']))
 		$db_extensions[] = array('pgsql', 'PostgreSQL');
 
 	if (empty($db_extensions))
-		error($lang_install['No database support']);
+		error(__('No database support', 'install'));
 
 	// Make an educated guess regarding base_url
 	$base_url_guess = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://').preg_replace('/:80$/', '', $_SERVER['HTTP_HOST']).substr(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), 0, -6);
-	if (substr($base_url_guess, -1) == '/')
+	if (substr($base_url_guess, -1) == '/') {
 		$base_url_guess = substr($base_url_guess, 0, -1);
+	}
 
 	// Check for available language packs
 	$languages = get_language_packs();
@@ -141,21 +130,22 @@ if (!isset($_POST['form_sent']))
 <head>
 	<meta charset="utf-8" />
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
 <div id="brd-wrap" class="brd">
 
 <div id="brd-head" class="gen-content">
-	<p id="brd-title"><strong><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></strong></p>
-	<p id="brd-desc"><?php echo $lang_install['Install intro'] ?></p>
+	<p id="brd-title"><strong><?php printf(__('Install PunBB', 'install'), FORUM_VERSION) ?></strong></p>
+	<p id="brd-desc"><?php echo __('Install intro', 'install') ?></p>
 </div>
 
 <div id="brd-main" class="main">
 
 	<div class="main-head">
-		<h1 class="hn"><span><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></span></h1>
+		<h1 class="hn"><span><?php printf(__('Install PunBB', 'install'), FORUM_VERSION) ?></span></h1>
 	</div>
 
 <?php
@@ -165,14 +155,14 @@ if (!isset($_POST['form_sent']))
 
 ?>	<form class="frm-form" method="get" accept-charset="utf-8" action="install.php">
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_install['Choose language'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Choose language', 'install') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<fieldset class="frm-group group1">
-			<legend class="group-legend"><strong><?php echo $lang_install['Choose language legend'] ?></strong></legend>
+			<legend class="group-legend"><strong><?php echo __('Choose language legend', 'install') ?></strong></legend>
 			<div class="sf-set set1">
 				<div class="sf-box text">
-					<label for="fld0"><span><?php echo $lang_install['Installer language'] ?></span> <small><?php echo $lang_install['Choose language help'] ?></small></label><br />
+					<label for="fld0"><span><?php echo __('Installer language', 'install') ?></span> <small><?php echo __('Choose language help', 'install') ?></small></label><br />
 					<span class="fld-input"><select id="fld0" name="lang">
 <?php
 
@@ -184,7 +174,7 @@ if (!isset($_POST['form_sent']))
 			</div>
 		</fieldset>
 		<div class="frm-buttons">
-			<span class="submit primary"><input type="submit" name="changelang" value="<?php echo $lang_install['Choose language'] ?>" /></span>
+			<span class="submit primary"><input type="submit" name="changelang" value="<?php echo __('Choose language', 'install') ?>" /></span>
 		</div>
 	</div>
 	</form>
@@ -197,27 +187,27 @@ if (!isset($_POST['form_sent']))
 		<input type="hidden" name="form_sent" value="1" />
 	</div>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_install['Part1'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Part1', 'install') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
-			<p><?php echo $lang_install['Part1 intro'] ?></p>
+			<p><?php echo __('Part1 intro', 'install') ?></p>
 			<ul class="spaced list-clean">
-				<li><span><strong><?php echo $lang_install['Database type'] ?></strong> <?php echo $lang_install['Database type info']; if (count($db_extensions) > 1) echo ' '.$lang_install['Mysql type info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Database server'] ?></strong> <?php echo $lang_install['Database server info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Database name'] ?></strong> <?php echo $lang_install['Database name info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Database user pass'] ?></strong> <?php echo $lang_install['Database username info'] ?></span></li>
-				<li><span><strong><?php echo $lang_install['Table prefix'] ?></strong> <?php echo $lang_install['Table prefix info'] ?></span></li>
+				<li><span><strong><?php echo __('Database type', 'install') ?></strong> <?php echo __('Database type info', 'install'); if (count($db_extensions) > 1) echo ' '.__('Mysql type info', 'install') ?></span></li>
+				<li><span><strong><?php echo __('Database server', 'install') ?></strong> <?php echo __('Database server info', 'install') ?></span></li>
+				<li><span><strong><?php echo __('Database name', 'install') ?></strong> <?php echo __('Database name info', 'install') ?></span></li>
+				<li><span><strong><?php echo __('Database user pass', 'install') ?></strong> <?php echo __('Database username info', 'install') ?></span></li>
+				<li><span><strong><?php echo __('Table prefix', 'install') ?></strong> <?php echo __('Table prefix info', 'install') ?></span></li>
 			</ul>
 		</div>
 		<div id="req-msg" class="req-warn ct-box error-box">
-			<p class="important"><?php echo $lang_install['Required warn'] ?></p>
+			<p class="important"><?php echo __('Required warn', 'install') ?></p>
 		</div>
 		<fieldset class="frm-group group1">
-			<legend class="group-legend"><strong><?php echo $lang_install['Part1 legend'] ?></strong></legend>
+			<legend class="group-legend"><strong><?php echo __('Part1 legend', 'install') ?></strong></legend>
 			<div class="sf-set set1">
 				<div class="sf-box select required">
-					<label for="req_db_type"><span><?php echo $lang_install['Database type'] ?></span> <small><?php echo $lang_install['Database type help'] ?></small></label><br />
+					<label for="req_db_type"><span><?php echo __('Database type', 'install') ?></span> <small><?php echo __('Database type help', 'install') ?></small></label><br />
 					<span class="fld-input"><select id="req_db_type" name="req_db_type">
 <?php
 
@@ -229,31 +219,31 @@ if (!isset($_POST['form_sent']))
 			</div>
 			<div class="sf-set set1" id="db_host_block">
 				<div class="sf-box text required">
-					<label for="db_host"><span><?php echo $lang_install['Database server'] ?></span> <small><?php echo $lang_install['Database server help'] ?></small></label><br />
+					<label for="db_host"><span><?php echo __('Database server', 'install') ?></span> <small><?php echo __('Database server help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="db_host" type="text" name="req_db_host" value="localhost" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text required">
-					<label for="fld3"><span><?php echo $lang_install['Database name'] ?></span> <small><?php echo $lang_install['Database name help'] ?></small></label><br />
+					<label for="fld3"><span><?php echo __('Database name', 'install') ?></span> <small><?php echo __('Database name help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="fld3" type="text" name="req_db_name" size="35" maxlength="50" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set3" id="db_username_block">
 				<div class="sf-box text">
-					<label for="fld4"><span><?php echo $lang_install['Database username'] ?></span> <small><?php echo $lang_install['Database username help'] ?></small></label><br />
+					<label for="fld4"><span><?php echo __('Database username', 'install') ?></span> <small><?php echo __('Database username help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="fld4" type="text" name="db_username" size="35" maxlength="50" /></span>
 				</div>
 			</div>
 			<div class="sf-set set4" id="db_password_block">
 				<div class="sf-box text">
-					<label for="fld5"><span><?php echo $lang_install['Database password'] ?></span> <small><?php echo $lang_install['Database password help'] ?></small></label><br />
+					<label for="fld5"><span><?php echo __('Database password', 'install') ?></span> <small><?php echo __('Database password help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="fld5" type="text" name="db_password" size="35" autocomplete="off" /></span>
 				</div>
 			</div>
 			<div class="sf-set set5">
 				<div class="sf-box text">
-					<label for="fld6"><span><?php echo $lang_install['Table prefix'] ?></span> <small><?php echo $lang_install['Table prefix help'] ?></small></label><br />
+					<label for="fld6"><span><?php echo __('Table prefix', 'install') ?></span> <small><?php echo __('Table prefix help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="35" maxlength="30" /></span>
 				</div>
 			</div>
@@ -261,50 +251,50 @@ if (!isset($_POST['form_sent']))
 	</div>
 
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_install['Part2'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Part2', 'install') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
-			<p><?php echo $lang_install['Part2 intro'] ?></p>
+			<p><?php echo __('Part2 intro', 'install') ?></p>
 		</div>
 		<fieldset class="frm-group group1">
-			<legend class="group-legend"><strong><?php echo $lang_install['Part2 legend'] ?></strong></legend>
+			<legend class="group-legend"><strong><?php echo __('Part2 legend', 'install') ?></strong></legend>
 			<div class="sf-set set4">
 				<div class="sf-box text required">
-					<label for="admin_email"><span><?php echo $lang_install['Admin e-mail'] ?></span> <small><?php echo $lang_install['E-mail address help'] ?></small></label><br />
+					<label for="admin_email"><span><?php echo __('Admin e-mail', 'install') ?></span> <small><?php echo __('E-mail address help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="admin_email" type="email" data-suggest-role="email" name="req_email" size="35" maxlength="80" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set1 prepend-top">
 				<div class="sf-box text required">
-					<label for="admin_username"><span><?php echo $lang_install['Admin username'] ?></span> <small><?php echo $lang_install['Username help'] ?></small></label><br />
+					<label for="admin_username"><span><?php echo __('Admin username', 'install') ?></span> <small><?php echo __('Username help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="admin_username" type="text" data-suggest-role="username" name="req_username" size="35" maxlength="25" required /></span>
 				</div>
 			</div>
 			<div class="sf-set set2">
 				<div class="sf-box text required">
-					<label for="fld8"><span><?php echo $lang_install['Admin password'] ?></span> <small><?php echo $lang_install['Password help'] ?></small></label><br />
+					<label for="fld8"><span><?php echo __('Admin password', 'install') ?></span> <small><?php echo __('Password help', 'install') ?></small></label><br />
 					<span class="fld-input"><input id="fld8" type="text" name="req_password1" size="35" required autocomplete="off" /></span>
 				</div>
 			</div>
 		</fieldset>
 	</div>
 	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_install['Part3'] ?></span></h2>
+		<h2 class="hn"><span><?php echo __('Part3', 'install') ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
-			<p><?php echo $lang_install['Part3 intro'] ?></p>
+			<p><?php echo __('Part3 intro', 'install') ?></p>
 			<ul class="spaced list-clean">
-				<li><span><strong><?php echo $lang_install['Base URL'] ?></strong> <?php echo $lang_install['Base URL info'] ?></span></li>
+				<li><span><strong><?php echo __('Base URL', 'install') ?></strong> <?php echo __('Base URL info', 'install') ?></span></li>
 			</ul>
 		</div>
 		<fieldset class="frm-group group1">
-			<legend class="group-legend"><strong><?php echo $lang_install['Part3 legend'] ?></strong></legend>
+			<legend class="group-legend"><strong><?php echo __('Part3 legend', 'install') ?></strong></legend>
 			<div class="sf-set set3">
 				<div class="sf-box text required">
-					<label for="fld10"><span><?php echo $lang_install['Base URL'] ?></span> <small><?php echo $lang_install['Base URL help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld10" type="url" name="req_base_url" value="<?php echo $base_url_guess ?>" size="35" maxlength="100" required /></span>
+					<label for="fld10"><span><?php echo __('Base URL', 'install') ?></span> <small><?php echo __('Base URL help', 'install') ?></small></label><br />
+					<span class="fld-input"><input id="fld10" type="url" name="req_base_url" value="<?= app()->base_url ?>" size="35" maxlength="100" required /></span>
 				</div>
 			</div>
 <?php
@@ -314,7 +304,7 @@ if (!isset($_POST['form_sent']))
 
 ?>			<div class="sf-set set4">
 				<div class="sf-box text">
-					<label for="fld11"><span><?php echo $lang_install['Default language'] ?></span> <small><?php echo $lang_install['Default language help'] ?></small></label><br />
+					<label for="fld11"><span><?php echo __('Default language', 'install') ?></span> <small><?php echo __('Default language help', 'install') ?></small></label><br />
 					<span class="fld-input"><select id="fld11" name="req_language">
 <?php
 
@@ -342,7 +332,7 @@ if (!isset($_POST['form_sent']))
 ?>			<div class="sf-set set5">
 				<div class="sf-box checkbox">
 					<span class="fld-input"><input id="fld12" type="checkbox" name="install_pun_repository" value="1" checked="checked" /></span>
-					<label for="fld12"><span><?php echo $lang_install['Pun repository'] ?></span> <?php echo $lang_install['Pun repository help'] ?></label><br />
+					<label for="fld12"><span><?php echo __('Pun repository', 'install') ?></span> <?php echo __('Pun repository help', 'install') ?></label><br />
 				</div>
 			</div>
 <?php
@@ -352,7 +342,7 @@ if (!isset($_POST['form_sent']))
 ?>
 		</fieldset>
 		<div class="frm-buttons">
-			<span class="submit primary"><input type="submit" name="start" value="<?php echo $lang_install['Start install'] ?>" /></span>
+			<span class="submit primary"><input type="submit" name="start" value="<?php echo __('Start install', 'install') ?>" /></span>
 		</div>
 	</div>
 	</form>
@@ -392,44 +382,45 @@ else
 
 	// Make sure base_url doesn't end with a slash
 	if (substr($_POST['req_base_url'], -1) == '/')
-		$base_url = substr($_POST['req_base_url'], 0, -1);
+		app()->base_url = substr($_POST['req_base_url'], 0, -1);
 	else
-		$base_url = $_POST['req_base_url'];
+		app()->base_url = $_POST['req_base_url'];
 
 	// Validate form
 	if (utf8_strlen($db_name) == 0)
-		error($lang_install['Missing database name']);
+		error(__('Missing database name', 'install'));
 	if (utf8_strlen($username) < 2)
-		error($lang_install['Username too short']);
+		error(__('Username too short', 'install'));
 	if (utf8_strlen($username) > 25)
-		error($lang_install['Username too long']);
+		error(__('Username too long', 'install'));
 	if (utf8_strlen($password1) < 4)
-		error($lang_install['Pass too short']);
+		error(__('Pass too short', 'install'));
 	if (strtolower($username) == 'guest')
-		error($lang_install['Username guest']);
+		error(__('Username guest', 'install'));
 	if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $username) || preg_match('/((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))/', $username))
-		error($lang_install['Username IP']);
+		error(__('Username IP', 'install'));
 	if ((strpos($username, '[') !== false || strpos($username, ']') !== false) && strpos($username, '\'') !== false && strpos($username, '"') !== false)
-		error($lang_install['Username reserved chars']);
+		error(__('Username reserved chars', 'install'));
 	if (preg_match('/(?:\[\/?(?:b|u|i|h|colou?r|quote|code|img|url|email|list)\]|\[(?:code|quote|list)=)/i', $username))
-		error($lang_install['Username BBCode']);
+		error(__('Username BBCode', 'install'));
 
 	// Validate email
 	if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 		require FORUM_ROOT.'include/email.php';
 
 	if (!is_valid_email($email))
-		error($lang_install['Invalid email']);
+		error(__('Invalid email', 'install'));
 
 	// Make sure board title and description aren't left blank
 	$board_title = 'My PunBB forum';
 	$board_descrip = 'Unfortunately no one can be told what PunBB is — you have to see it for yourself';
 
-	if (utf8_strlen($base_url) == 0)
-		error($lang_install['Missing base url']);
+	if (utf8_strlen(app()->base_url) == 0)
+		error(__('Missing base url', 'install'));
 
-	if (!file_exists(FORUM_ROOT.'lang/'.$default_lang.'/common.php'))
-		error($lang_install['Invalid language']);
+	if (!file_exists(language()->path[$default_lang] . '/common.php')) {
+		error(__('Invalid language', 'install'));
+	}
 
 	// Load the appropriate DB layer class
 	switch ($db_type)
@@ -463,44 +454,43 @@ else
 			break;
 
 		default:
-			error(sprintf($lang_install['No such database type'], forum_htmlencode($db_type)));
+			error(sprintf(__('No such database type', 'install'), forum_htmlencode($db_type)));
 	}
 
 	// Create the database object (and connect/select db)
-	$forum_db = new DBLayer($db_host, $db_username, $db_password, $db_name, $db_prefix, false);
-
+	db() = db();
 
 	// If MySQL, make sure it's at least 4.1.2
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 	{
-		$mysql_info = $forum_db->get_version();
+		$mysql_info = db()->get_version();
 		if (version_compare($mysql_info['version'], MIN_MYSQL_VERSION, '<'))
-			error(sprintf($lang_install['Invalid MySQL version'], forum_htmlencode($mysql_info['version']), MIN_MYSQL_VERSION));
+			error(sprintf(__('Invalid MySQL version', 'install'), forum_htmlencode($mysql_info['version']), MIN_MYSQL_VERSION));
 
 		// Check InnoDB support in DB
 		if (in_array($db_type, array('mysql_innodb', 'mysqli_innodb')))
 		{
-			$result = $forum_db->query('SHOW VARIABLES LIKE \'have_innodb\'');
-			$row = $forum_db->fetch_assoc($result);
+			$result = db()->query('SHOW VARIABLES LIKE \'have_innodb\'');
+			$row = db()->fetch_assoc($result);
 
 			if (!$row || !isset($row['Value']) || strtolower($row['Value']) != 'yes')
 			{
-				error($lang_install['MySQL InnoDB Not Supported']);
+				error(__('MySQL InnoDB Not Supported', 'install'));
 			}
 		}
 	}
 
 	// Validate prefix
 	if (strlen($db_prefix) > 0 && (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $db_prefix) || strlen($db_prefix) > 40))
-		error(sprintf($lang_install['Invalid table prefix'], $db_prefix));
+		error(sprintf(__('Invalid table prefix', 'install'), $db_prefix));
 
 	// Check SQLite prefix collision
 	if (in_array($db_type, array('sqlite', 'sqlite3')) && strtolower($db_prefix) == 'sqlite_')
-		error($lang_install['SQLite prefix collision']);
+		error(__('SQLite prefix collision', 'install'));
 
 
 	// Make sure PunBB isn't already installed
-	if ($forum_db->table_exists('users'))
+	if (db()->table_exists('users'))
 	{
 		$query = array(
 			'SELECT'	=> 'COUNT(id)',
@@ -508,13 +498,13 @@ else
 			'WHERE'		=> 'id=1'
 		);
 
-		$result = $forum_db->query_build($query);
-		if ($forum_db->result($result) > 0)
-			error(sprintf($lang_install['PunBB already installed'], $db_prefix, $db_name));
+		$result = db()->query_build($query);
+		if (db()->result($result) > 0)
+			error(sprintf(__('PunBB already installed', 'install'), $db_prefix, $db_name));
 	}
 
 	// Start a transaction
-	$forum_db->start_transaction();
+	db()->start_transaction();
 
 
 	// Create all tables
@@ -553,7 +543,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('bans', $schema);
+	db()->create_table('bans', $schema);
 
 
 	$schema = array(
@@ -576,7 +566,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('categories', $schema);
+	db()->create_table('categories', $schema);
 
 
 	$schema = array(
@@ -599,7 +589,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('censoring', $schema);
+	db()->create_table('censoring', $schema);
 
 
 	$schema = array(
@@ -617,7 +607,7 @@ else
 		'PRIMARY KEY'	=> array('conf_name')
 	);
 
-	$forum_db->create_table('config', $schema);
+	db()->create_table('config', $schema);
 
 
 	$schema = array(
@@ -668,7 +658,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('extensions', $schema);
+	db()->create_table('extensions', $schema);
 
 
 	$schema = array(
@@ -701,7 +691,7 @@ else
 		'PRIMARY KEY'	=> array('id', 'extension_id')
 	);
 
-	$forum_db->create_table('extension_hooks', $schema);
+	db()->create_table('extension_hooks', $schema);
 
 
 	$schema = array(
@@ -735,7 +725,7 @@ else
 		'PRIMARY KEY'	=> array('group_id', 'forum_id')
 	);
 
-	$forum_db->create_table('forum_perms', $schema);
+	db()->create_table('forum_perms', $schema);
 
 
 	$schema = array(
@@ -802,7 +792,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('forums', $schema);
+	db()->create_table('forums', $schema);
 
 
 	$schema = array(
@@ -919,7 +909,7 @@ else
 		'PRIMARY KEY'	=> array('g_id')
 	);
 
-	$forum_db->create_table('groups', $schema);
+	db()->create_table('groups', $schema);
 
 
 	$schema = array(
@@ -978,7 +968,7 @@ else
 		$schema['INDEXES']['ident_idx'] = array('ident(25)');
 	}
 
-	$forum_db->create_table('online', $schema);
+	db()->create_table('online', $schema);
 
 
 	$schema = array(
@@ -1041,7 +1031,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('posts', $schema);
+	db()->create_table('posts', $schema);
 
 
 	$schema = array(
@@ -1064,7 +1054,7 @@ else
 		'PRIMARY KEY'	=> array('id')
 	);
 
-	$forum_db->create_table('ranks', $schema);
+	db()->create_table('ranks', $schema);
 
 
 	$schema = array(
@@ -1117,7 +1107,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('reports', $schema);
+	db()->create_table('reports', $schema);
 
 
 	$schema = array(
@@ -1146,7 +1136,7 @@ else
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		$schema['INDEXES']['ident_idx'] = array('ident(8)');
 
-	$forum_db->create_table('search_cache', $schema);
+	db()->create_table('search_cache', $schema);
 
 
 	$schema = array(
@@ -1173,7 +1163,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('search_matches', $schema);
+	db()->create_table('search_matches', $schema);
 
 
 	$schema = array(
@@ -1201,7 +1191,7 @@ else
 		$schema['UNIQUE KEYS'] = array('word_idx'	=> array('word'));
 	}
 
-	$forum_db->create_table('search_words', $schema);
+	db()->create_table('search_words', $schema);
 
 
 	$schema = array(
@@ -1220,7 +1210,7 @@ else
 		'PRIMARY KEY'	=> array('user_id', 'topic_id')
 	);
 
-	$forum_db->create_table('subscriptions', $schema);
+	db()->create_table('subscriptions', $schema);
 
 
 	$schema = array(
@@ -1239,7 +1229,7 @@ else
 		'PRIMARY KEY'	=> array('user_id', 'forum_id')
 	);
 
-	$forum_db->create_table('forum_subscriptions', $schema);
+	db()->create_table('forum_subscriptions', $schema);
 
 
 	$schema = array(
@@ -1321,7 +1311,7 @@ else
 		)
 	);
 
-	$forum_db->create_table('topics', $schema);
+	db()->create_table('topics', $schema);
 
 
 	$schema = array(
@@ -1563,7 +1553,7 @@ else
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		$schema['INDEXES']['username_idx'] = array('username(8)');
 
-	$forum_db->create_table('users', $schema);
+	db()->create_table('users', $schema);
 
 
 
@@ -1582,7 +1572,7 @@ else
 		$query['VALUES'] .= ', 1';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
@@ -1596,7 +1586,7 @@ else
 		$query['VALUES'] .= ', 2';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
@@ -1610,7 +1600,7 @@ else
 		$query['VALUES'] .= ', 3';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
@@ -1624,7 +1614,7 @@ else
 		$query['VALUES'] .= ', 4';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Insert guest and first admin user
 	$query = array(
@@ -1639,18 +1629,18 @@ else
 		$query['VALUES'] .= ', 1';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$salt = random_key(12);
 
 	$query = array(
 		'INSERT'	=> 'group_id, username, password, email, language, num_posts, last_post, registered, registration_ip, last_visit, salt',
 		'INTO'		=> 'users',
-		'VALUES'	=> '1, \''.$forum_db->escape($username).'\', \''.forum_hash($password1, $salt).'\', \''.$forum_db->escape($email).'\', \''.$forum_db->escape($default_lang).'\', 1, '.$now.', '.$now.', \'127.0.0.1\', '.$now.', \''.$forum_db->escape($salt).'\''
+		'VALUES'	=> '1, \''.db()->escape($username).'\', \''.forum_hash($password1, $salt).'\', \''.db()->escape($email).'\', \''.db()->escape($default_lang).'\', 1, '.$now.', '.$now.', \'127.0.0.1\', '.$now.', \''.db()->escape($salt).'\''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$new_uid = $forum_db->insert_id();
+	db()->query_build($query) or error(__FILE__, __LINE__);
+	$new_uid = db()->insert_id();
 
 	// Enable/disable avatars depending on file_uploads setting in PHP configuration
 	$avatars = in_array(strtolower(@ini_get('file_uploads')), array('on', 'true', '1')) ? 1 : 0;
@@ -1662,8 +1652,8 @@ else
 	$config = array(
 		'o_cur_version'				=> "'".FORUM_VERSION."'",
 		'o_database_revision'		=> "'".FORUM_DB_REVISION."'",
-		'o_board_title'				=> "'".$forum_db->escape($board_title)."'",
-		'o_board_desc'				=> "'".$forum_db->escape($board_descrip)."'",
+		'o_board_title'				=> "'".db()->escape($board_title)."'",
+		'o_board_desc'				=> "'".db()->escape($board_descrip)."'",
 		'o_default_timezone'		=> "'0'",
 		'o_time_format'				=> "'H:i:s'",
 		'o_date_format'				=> "'Y-m-d'",
@@ -1679,7 +1669,7 @@ else
 		'o_smilies'					=> "'1'",
 		'o_smilies_sig'				=> "'1'",
 		'o_make_links'				=> "'1'",
-		'o_default_lang'			=> "'".$forum_db->escape($default_lang)."'",
+		'o_default_lang'			=> "'".db()->escape($default_lang)."'",
 		'o_default_style'			=> "'Oxygen'",
 		'o_default_user_group'		=> "'3'",
 		'o_topic_review'			=> "'15'",
@@ -1699,7 +1689,7 @@ else
 		'o_report_method'			=> "'0'",
 		'o_regs_report'				=> "'0'",
 		'o_default_email_setting'	=> "'1'",
-		'o_mailing_list'			=> "'".$forum_db->escape($email)."'",
+		'o_mailing_list'			=> "'".db()->escape($email)."'",
 		'o_avatars'					=> "'$avatars'",
 		'o_avatars_dir'				=> "'img/avatars'",
 		'o_avatars_width'			=> "'60'",
@@ -1707,8 +1697,8 @@ else
 		'o_avatars_size'			=> "'15360'",
 		'o_search_all_forums'		=> "'1'",
 		'o_sef'						=> "'Default'",
-		'o_admin_email'				=> "'".$forum_db->escape($email)."'",
-		'o_webmaster_email'			=> "'".$forum_db->escape($email)."'",
+		'o_admin_email'				=> "'".db()->escape($email)."'",
+		'o_webmaster_email'			=> "'".db()->escape($email)."'",
 		'o_subscriptions'			=> "'1'",
 		'o_smtp_host'				=> "NULL",
 		'o_smtp_user'				=> "NULL",
@@ -1717,12 +1707,12 @@ else
 		'o_regs_allow'				=> "'1'",
 		'o_regs_verify'				=> "'0'",
 		'o_announcement'			=> "'0'",
-		'o_announcement_heading'	=> "'".$lang_install['Default announce heading']."'",
-		'o_announcement_message'	=> "'".$lang_install['Default announce message']."'",
+		'o_announcement_heading'	=> "'".__('Default announce heading', 'install')."'",
+		'o_announcement_message'	=> "'".__('Default announce message', 'install')."'",
 		'o_rules'					=> "'0'",
-		'o_rules_message'			=> "'".$lang_install['Default rules']."'",
+		'o_rules_message'			=> "'".__('Default rules', 'install')."'",
 		'o_maintenance'				=> "'0'",
-		'o_maintenance_message'		=> "'".$lang_admin_settings['Maintenance message default']."'",
+		'o_maintenance_message'		=> "'".__('Maintenance message default', 'admin_settings')."'",
 		'o_default_dst'				=> "'0'",
 		'p_message_bbcode'			=> "'1'",
 		'p_message_img_tag'			=> "'1'",
@@ -1748,38 +1738,38 @@ else
 			'VALUES'	=> '\''.$conf_name.'\', '.$conf_value.''
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 	}
 
 	// Insert some other default data
 	$query = array(
 		'INSERT'	=> 'cat_name, disp_position',
 		'INTO'		=> 'categories',
-		'VALUES'	=> '\''.$lang_install['Default category name'].'\', 1'
+		'VALUES'	=> '\''.__('Default category name', 'install').'\', 1'
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, disp_position, cat_id',
 		'INTO'		=> 'forums',
-		'VALUES'	=> '\''.$lang_install['Default forum name'].'\', \''.$lang_install['Default forum descrip'].'\', 1, 1, '.$now.', 1, \''.$forum_db->escape($username).'\', 1, '.$forum_db->insert_id().''
+		'VALUES'	=> '\''.__('Default forum name', 'install').'\', \''.__('Default forum descrip', 'install').'\', 1, 1, '.$now.', 1, \''.db()->escape($username).'\', 1, '.db()->insert_id().''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id',
 		'INTO'		=> 'topics',
-		'VALUES'	=> '\''.$forum_db->escape($username).'\', \''.$lang_install['Default topic subject'].'\', '.$now.', 1, '.$now.', 1, \''.$forum_db->escape($username).'\', '.$forum_db->insert_id().''
+		'VALUES'	=> '\''.db()->escape($username).'\', \''.__('Default topic subject', 'install').'\', '.$now.', 1, '.$now.', 1, \''.db()->escape($username).'\', '.db()->insert_id().''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'poster, poster_id, poster_ip, message, posted, topic_id',
 		'INTO'		=> 'posts',
-		'VALUES'	=> '\''.$forum_db->escape($username).'\', '.$new_uid.', \'127.0.0.1\', \''.$lang_install['Default post contents'].'\', '.$now.', '.$forum_db->insert_id().''
+		'VALUES'	=> '\''.db()->escape($username).'\', '.$new_uid.', \'127.0.0.1\', \''.__('Default post contents', 'install').'\', '.$now.', '.db()->insert_id().''
 	);
 
 	if ($db_type != 'pgsql')
@@ -1788,30 +1778,30 @@ else
 		$query['VALUES'] .= ', 1';
 	}
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	// Add new post to search table
 	require FORUM_ROOT.'include/search_idx.php';
-	update_search_index('post', $forum_db->insert_id(), $lang_install['Default post contents'], $lang_install['Default topic subject']);
+	update_search_index('post', db()->insert_id(), __('Default post contents', 'install'), __('Default topic subject', 'install'));
 
 	// Insert the default ranks
 	$query = array(
 		'INSERT'	=> 'rank, min_posts',
 		'INTO'		=> 'ranks',
-		'VALUES'	=> '\''.$lang_install['Default rank 1'].'\', 0'
+		'VALUES'	=> '\''.__('Default rank 1', 'install') . '\', 0'
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$query = array(
 		'INSERT'	=> 'rank, min_posts',
 		'INTO'		=> 'ranks',
-		'VALUES'	=> '\''.$lang_install['Default rank 2'].'\', 10'
+		'VALUES'	=> '\''.__('Default rank 2', 'install') . '\', 10'
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
-	$forum_db->end_transaction();
+	db()->end_transaction();
 
 
 	$alerts = array();
@@ -1832,16 +1822,16 @@ else
 	}
 	else
 	{
-		$alerts[] = '<li><span>'.$lang_install['No cache write'].'</span></li>';
+		$alerts[] = '<li><span>'.__('No cache write', 'install').'</span></li>';
 	}
 
 	// Check if default avatar directory is writable
 	if (!is_writable(FORUM_ROOT.'img/avatars/'))
-		$alerts[] = '<li><span>'.$lang_install['No avatar write'].'</span></li>';
+		$alerts[] = '<li><span>'.__('No avatar write', 'install').'</span></li>';
 
 	// Check if we disabled uploading avatars because file_uploads was disabled
 	if ($avatars == '0')
-		$alerts[] = '<li><span>'.$lang_install['File upload alert'].'</span></li>';
+		$alerts[] = '<li><span>'.__('File upload alert', 'install').'</span></li>';
 
 	// Add some random bytes at the end of the cookie name to prevent collisions
 	$cookie_name = 'forum_cookie_'.random_key(6, false, true);
@@ -1875,10 +1865,10 @@ else
 			$query = array(
 				'INSERT'	=> 'id, title, version, description, author, uninstall, uninstall_note, dependencies',
 				'INTO'		=> 'extensions',
-				'VALUES'	=> '\'pun_repository\', \''.$forum_db->escape($ext_data['extension']['title']).'\', \''.$forum_db->escape($ext_data['extension']['version']).'\', \''.$forum_db->escape($ext_data['extension']['description']).'\', \''.$forum_db->escape($ext_data['extension']['author']).'\', NULL, NULL, \'||\'',
+				'VALUES'	=> '\'pun_repository\', \''.db()->escape($ext_data['extension']['title']).'\', \''.db()->escape($ext_data['extension']['version']).'\', \''.db()->escape($ext_data['extension']['description']).'\', \''.db()->escape($ext_data['extension']['author']).'\', NULL, NULL, \'||\'',
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			if (isset($ext_data['extension']['hooks']['hook']))
 			{
@@ -1890,10 +1880,10 @@ else
 						$query = array(
 							'INSERT'	=> 'id, extension_id, code, installed, priority',
 							'INTO'		=> 'extension_hooks',
-							'VALUES'	=> '\''.$forum_db->escape(forum_trim($cur_hook)).'\', \'pun_repository\', \''.$forum_db->escape(forum_trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
+							'VALUES'	=> '\''.db()->escape(forum_trim($cur_hook)).'\', \'pun_repository\', \''.db()->escape(forum_trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
 						);
 
-						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+						db()->query_build($query) or error(__FILE__, __LINE__);
 					}
 				}
 			}
@@ -1910,23 +1900,24 @@ else
 <head>
 	<meta charset="utf-8" />
 	<title>PunBB Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo FORUM_ROOT ?>style/Oxygen/Oxygen.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
 	<div id="brd-wrap" class="brd">
 		<div id="brd-head" class="gen-content">
-			<p id="brd-title"><strong><?php printf($lang_install['Install PunBB'], FORUM_VERSION) ?></strong></p>
-			<p id="brd-desc"><?php printf($lang_install['Success description'], FORUM_VERSION) ?></p>
+			<p id="brd-title"><strong><?php printf(__('Install PunBB', 'install'), FORUM_VERSION) ?></strong></p>
+			<p id="brd-desc"><?php printf(__('Success description', 'install'), FORUM_VERSION) ?></p>
 		</div>
 		<div id="brd-main" class="main basic">
 			<div class="main-head">
-				<h1 class="hn"><span><?php echo $lang_install['Final instructions'] ?></span></h1>
+				<h1 class="hn"><span><?php echo __('Final instructions', 'install') ?></span></h1>
 			</div>
 			<div class="main-content main-frm">
 <?php if (!empty($alerts)): ?>
 				<div class="ct-box error-box">
-					<p class="warn"><strong><?php echo $lang_install['Warning'] ?></strong></p>
+					<p class="warn"><strong><?php echo __('Warning', 'install') ?></strong></p>
 					<ul>
 						<?php echo implode("\n\t\t\t\t", $alerts)."\n" ?>
 					</ul>
@@ -1937,8 +1928,8 @@ if (!$written)
 {
 ?>
 				<div class="ct-box info-box">
-					<p class="warn"><?php echo $lang_install['No write info 1'] ?></p>
-					<p class="warn"><?php printf($lang_install['No write info 2'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
+					<p class="warn"><?php echo __('No write info 1', 'install') ?></p>
+					<p class="warn"><?php printf(__('No write info 2', 'install'), '<a href="'.FORUM_ROOT.'index.php">'.__('Go to index', 'install').'</a>') ?></p>
 				</div>
 				<form class="frm-form" method="post" accept-charset="utf-8" action="install.php">
 					<div class="hidden">
@@ -1949,11 +1940,11 @@ if (!$written)
 					<input type="hidden" name="db_username" value="<?php echo forum_htmlencode($db_username) ?>" />
 					<input type="hidden" name="db_password" value="<?php echo forum_htmlencode($db_password) ?>" />
 					<input type="hidden" name="db_prefix" value="<?php echo forum_htmlencode($db_prefix) ?>" />
-					<input type="hidden" name="base_url" value="<?php echo forum_htmlencode($base_url) ?>" />
+					<input type="hidden" name="base_url" value="<?= forum_htmlencode(app()->base_url) ?>" />
 					<input type="hidden" name="cookie_name" value="<?php echo forum_htmlencode($cookie_name) ?>" />
 					</div>
 					<div class="frm-buttons">
-						<span class="submit"><input type="submit" value="<?php echo $lang_install['Download config'] ?>" /></span>
+						<span class="submit"><input type="submit" value="<?php echo __('Download config', 'install') ?>" /></span>
 					</div>
 				</form>
 <?php
@@ -1962,7 +1953,7 @@ else
 {
 ?>
 				<div class="ct-box info-box">
-					<p class="warn"><?php printf($lang_install['Write info'], '<a href="'.FORUM_ROOT.'index.php">'.$lang_install['Go to index'].'</a>') ?></p>
+					<p class="warn"><?php printf(__('Write info', 'install'), '<a href="'.FORUM_ROOT.'index.php">'.__('Go to index', 'install').'</a>') ?></p>
 				</div>
 <?php
 }

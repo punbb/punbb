@@ -7,6 +7,6 @@ cache/
 img/avatars/
 db.sqlite
 test.php
-extensions/
 .htaccess
-
+/nbproject/
+errors.log

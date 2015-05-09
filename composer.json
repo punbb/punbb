@@ -1,0 +1,61 @@
+{
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/php-service"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-db-mysqli-innodb"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-lang-English"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-lang-Russian"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-style-Oxygen"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-urls-Default"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/rivetweb/punbb-template-Default"
+		}
+	],
+
+	"require": {
+		"lib/service": "dev-master",
+		"punbb/db-mysqli-innodb": "dev-master",
+		"punbb/lang-English": "dev-master",
+		"punbb/lang-Russian": "dev-master",
+		"punbb/style-Oxygen": "dev-master",
+		"punbb/urls-Default": "dev-master",
+		"punbb/template-Default": "dev-master"
+	},
+
+	"autoload": {
+		"classmap": [
+			"include"
+		],
+		"files": [
+			"include/constants.php",
+			"include/functions.php",
+
+			"include/utf8/utf8.php",
+			"include/utf8/ucwords.php",
+			"include/utf8/trim.php",
+
+			"include/init.php",
+			"include/essentials.php",
+			"include/common.php",
+			"include/common_admin.php"
+		]
+	}
+}

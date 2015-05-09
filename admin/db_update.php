@@ -8,7 +8,9 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
+namespace punbb;
 
+return; // TODO
 
 define('UPDATE_TO', '1.4.2');
 define('UPDATE_TO_DB_REVISION', 5);
@@ -66,14 +68,6 @@ if (empty($cookie_name))
 if (!defined('FORUM_CACHE_DIR'))
 	define('FORUM_CACHE_DIR', FORUM_ROOT.'cache/');
 
-// Load the functions script
-require FORUM_ROOT.'include/functions.php';
-
-// Load UTF-8 functions
-require FORUM_ROOT.'include/utf8/utf8.php';
-require FORUM_ROOT.'include/utf8/ucwords.php';
-require FORUM_ROOT.'include/utf8/trim.php';
-
 // Strip out "bad" UTF-8 characters
 forum_remove_bad_characters();
 
@@ -84,11 +78,8 @@ if (!defined('FORUM_IGNORE_REQUEST_URI'))
 // Instruct DB abstraction layer that we don't want it to "SET NAMES". If we need to, we'll do it ourselves below.
 define('FORUM_NO_SET_NAMES', 1);
 
-// Load DB abstraction layer and try to connect
-require FORUM_ROOT.'include/dblayer/common_db.php';
-
 // Start a transaction
-$forum_db->start_transaction();
+db()->start_transaction();
 
 // Check current version
 $query = array(
@@ -97,19 +88,19 @@ $query = array(
 	'WHERE'		=> 'conf_name = \'o_cur_version\''
 );
 
-$result = $forum_db->query_build($query);
-$cur_version = $forum_db->result($result);
+$result = db()->query_build($query);
+$cur_version = db()->result($result);
 
 if (version_compare($cur_version, '1.2', '<'))
 	error('Version mismatch. The database \''.$db_name.'\' doesn\'t seem to be running a PunBB database schema supported by this update script.', __FILE__, __LINE__);
 
 // If we've already done charset conversion in a previous update, we have to do SET NAMES
-$forum_db->set_names(version_compare($cur_version, '1.3', '>=') ? 'utf8' : 'latin1');
+db()->set_names(version_compare($cur_version, '1.3', '>=') ? 'utf8' : 'latin1');
 
 // If MySQL, make sure it's at least 4.1.2
 if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 {
-	$mysql_info = $forum_db->get_version();
+	$mysql_info = db()->get_version();
 	if (version_compare($mysql_info['version'], MIN_MYSQL_VERSION, '<'))
 		error('You are running MySQL version '.$mysql_version.'. PunBB '.UPDATE_TO.' requires at least MySQL '.MIN_MYSQL_VERSION.' to run properly. You must upgrade your MySQL installation before you can continue.');
 }
@@ -120,25 +111,29 @@ $query = array(
 	'FROM'		=> 'config'
 );
 
-$result = $forum_db->query_build($query);
-while ($cur_config_item = $forum_db->fetch_row($result))
-	$forum_config[$cur_config_item[0]] = $cur_config_item[1];
+$result = db()->query_build($query);
+while ($cur_config_item = db()->fetch_row($result)) {
+	config()->{$cur_config_item[0]} = $cur_config_item[1];
+}
 
 // Check the database revision and the current version
-if (isset($forum_config['o_database_revision']) && $forum_config['o_database_revision'] >= UPDATE_TO_DB_REVISION && version_compare($forum_config['o_cur_version'], UPDATE_TO, '>='))
+if (!empty(config()->o_database_revision) && config()->o_database_revision >= UPDATE_TO_DB_REVISION && version_compare(config()->o_cur_version, UPDATE_TO, '>=')) {
 	error('Your database is already as up-to-date as this script can make it.');
+}
 
-// If $base_url isn't set, use o_base_url from config
-if (!isset($base_url))
-	$base_url = $forum_config['o_base_url'];
+// If base url isn't set, use o_base_url from config
+if (empty(app()->base_url)) {
+	app()->base_url = config()->o_base_url;
+}
 
-// There's no $forum_user, but we need the style element
+// There's no forum_user, but we need the style element
 // We default to Oxygen if the default style is invalid (a 1.2 to 1.3 upgrade most likely)
-if (file_exists(FORUM_ROOT.'style/'.$forum_config['o_default_style'].'/'.$forum_config['o_default_style'].'.php'))
-	$forum_user['style'] = $forum_config['o_default_style'];
-else
-{
-	$forum_user['style'] = 'Oxygen';
+if (file_exists(theme()->path[config()->o_default_style] .
+			'/' . config()->o_default_style . '.php')) {
+	user()->style = config()->o_default_style;
+}
+else {
+	user()->style = 'Oxygen';
 
 	$query = array(
 		'UPDATE'	=> 'config',
@@ -146,20 +141,19 @@ else
 		'WHERE'		=> 'conf_name = \'o_default_style\''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 }
 
 // Make sure the default language exists
 // We default to English if the default language is invalid (a 1.2 to 1.3 upgrade most likely)
-if (!file_exists(FORUM_ROOT.'lang/'.$forum_config['o_default_lang'].'/common.php'))
-{
+if (!file_exists(language()->path[config()->o_default_lang] . '/common.php')) {
 	$query = array(
 		'UPDATE'	=> 'config',
 		'SET'		=> 'conf_value = \'English\'',
 		'WHERE'		=> 'conf_name = \'o_default_lang\''
 	);
 
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 }
 
 
@@ -290,7 +284,7 @@ function utf8_callback_2($matches)
 //
 function db_seems_utf8()
 {
-	global $db_type, $forum_db;
+	global $db_type;
 
 	$seems_utf8 = true;
 
@@ -299,8 +293,8 @@ function db_seems_utf8()
 		'FROM'		=> 'posts'
 	);
 
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($min_id, $max_id, $count_id) = $forum_db->fetch_row($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	list($min_id, $max_id, $count_id) = db()->fetch_row($result);
 
 	if ($count_id == 0)
 		return false;
@@ -327,8 +321,8 @@ function db_seems_utf8()
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$random_row = $forum_db->fetch_row($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$random_row = db()->fetch_row($result);
 
 		if (!seems_utf8($random_row[0].$random_row[1].$random_row[2].$random_row[3]))
 		{
@@ -347,8 +341,6 @@ function db_seems_utf8()
 //
 function convert_table_utf8($table)
 {
-	global $forum_db;
-
 	$types = array(
 		'char'			=> 'binary',
 		'varchar'		=> 'varbinary',
@@ -359,19 +351,19 @@ function convert_table_utf8($table)
 	);
 
 	// Set table default charset to utf8
-	$forum_db->query('ALTER TABLE `'.$table.'` CHARACTER SET utf8') or error(__FILE__, __LINE__);
+	db()->query('ALTER TABLE `'.$table.'` CHARACTER SET utf8') or error(__FILE__, __LINE__);
 
 	// Find out which columns need converting and build SQL statements
-	$result = $forum_db->query('SHOW FULL COLUMNS FROM `'.$table.'`') or error(__FILE__, __LINE__);
-	while ($cur_column = $forum_db->fetch_assoc($result))
+	$result = db()->query('SHOW FULL COLUMNS FROM `'.$table.'`') or error(__FILE__, __LINE__);
+	while ($cur_column = db()->fetch_assoc($result))
 	{
 		list($type) = explode('(', $cur_column['Type']);
 		if (isset($types[$type]) && strpos($cur_column['Collation'], 'utf8') === false)
 		{
 			$allow_null = ($cur_column['Null'] == 'YES');
 
-			$forum_db->alter_field($table, $cur_column['Field'], preg_replace('/'.$type.'/i', $types[$type], $cur_column['Type']), $allow_null, $cur_column['Default']);
-			$forum_db->alter_field($table, $cur_column['Field'], $cur_column['Type'].' CHARACTER SET utf8', $allow_null, $cur_column['Default']);
+			db()->alter_field($table, $cur_column['Field'], preg_replace('/'.$type.'/i', $types[$type], $cur_column['Type']), $allow_null, $cur_column['Default']);
+			db()->alter_field($table, $cur_column['Field'], $cur_column['Type'].' CHARACTER SET utf8', $allow_null, $cur_column['Default']);
 		}
 	}
 }
@@ -380,8 +372,6 @@ function convert_table_utf8($table)
 // Move avatars to DB
 function convert_avatars()
 {
-	global $forum_config, $forum_db;
-
 	$avatar_dir = FORUM_ROOT.'img/avatars/';
 	if (!is_dir($avatar_dir))
 	{
@@ -429,7 +419,8 @@ function convert_avatars()
 
 				// Now check the width/height
 				list($width, $height, $type,) = @/**/getimagesize($avatar_file);
-				if (empty($width) || empty($height) || $width > $forum_config['o_avatars_width'] || $height > $forum_config['o_avatars_height'])
+				if (empty($width) || empty($height) ||
+						$width > config()->o_avatars_width || $height > config()->o_avatars_height)
 				{
 					@/**/unlink($avatar_file);
 				}
@@ -441,7 +432,7 @@ function convert_avatars()
 						'SET'		=> 'avatar=\''.$avatar_type.'\', avatar_height=\''.$height.'\', avatar_width=\''.$width.'\'',
 						'WHERE'		=> 'id='.$user_id
 					);
-					$forum_db->query_build($query) or error(__FILE__, __LINE__);
+					db()->query_build($query) or error(__FILE__, __LINE__);
 				}
 			}
 		}
@@ -476,8 +467,9 @@ switch ($stage)
 <head>
 	<meta charset="utf-8" />
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
-	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
+	<script type="text/javascript" src="<?= app()->base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
 <div id="brd-update" class="brd-page">
@@ -585,7 +577,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	// Start by updating the database structure
 	case 'start':
 		// Put back dropped search tables
-		if (!$forum_db->table_exists('search_cache') && in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
+		if (!db()->table_exists('search_cache') && in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
 			$schema = array(
 				'FIELDS'		=> array(
@@ -610,7 +602,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				)
 			);
 
-			$forum_db->create_table('search_cache', $schema);
+			db()->create_table('search_cache', $schema);
 
 
 			$schema = array(
@@ -637,7 +629,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				)
 			);
 
-			$forum_db->create_table('search_matches', $schema);
+			db()->create_table('search_matches', $schema);
 
 
 			$schema = array(
@@ -659,11 +651,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				)
 			);
 
-			$forum_db->create_table('search_words', $schema);
+			db()->create_table('search_words', $schema);
 		}
 
 		// Add the extensions table if it doesn't already exist
-		if (!$forum_db->table_exists('extensions'))
+		if (!db()->table_exists('extensions'))
 		{
 			$schema = array(
 				'FIELDS'		=> array(
@@ -713,19 +705,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'PRIMARY KEY'	=> array('id')
 			);
 
-			$forum_db->create_table('extensions', $schema);
+			db()->create_table('extensions', $schema);
 		}
 
 		// Make sure the collation on "word" in the search_words table is utf8_bin
 		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
-			$result = $forum_db->query('SHOW FULL COLUMNS FROM '.$forum_db->prefix.'search_words') or error(__FILE__, __LINE__);
-			while ($cur_column = $forum_db->fetch_assoc($result))
+			$result = db()->query('SHOW FULL COLUMNS FROM '.db()->prefix.'search_words') or error(__FILE__, __LINE__);
+			while ($cur_column = db()->fetch_assoc($result))
 			{
 				if ($cur_column['Field'] === 'word')
 				{
 					if ($cur_column['Collation'] !== 'utf8_bin')
-						$forum_db->alter_field('search_words', 'word', 'VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_bin', false, '');
+						db()->alter_field('search_words', 'word', 'VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_bin', false, '');
 
 					break;
 				}
@@ -733,19 +725,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// Add uninstall_note field to extensions
-		$forum_db->add_field('extensions', 'uninstall_note', 'TEXT', true, null, 'uninstall');
+		db()->add_field('extensions', 'uninstall_note', 'TEXT', true, null, 'uninstall');
 
 		// Drop uninstall_notes (plural) field
-		$forum_db->drop_field('extensions', 'uninstall_notes');
+		db()->drop_field('extensions', 'uninstall_notes');
 
 		// Add disabled field to extensions
-		$forum_db->add_field('extensions', 'disabled', 'TINYINT(1)', false, 0, 'uninstall_note');
+		db()->add_field('extensions', 'disabled', 'TINYINT(1)', false, 0, 'uninstall_note');
 
 		// Add dependencies field to extensions
-		$forum_db->add_field('extensions', 'dependencies', 'VARCHAR(255)', false, '', 'disabled');
+		db()->add_field('extensions', 'dependencies', 'VARCHAR(255)', false, '', 'disabled');
 
 		// Add the extension_hooks table
-		if (!$forum_db->table_exists('extension_hooks'))
+		if (!db()->table_exists('extension_hooks'))
 		{
 			$schema = array(
 				'FIELDS'		=> array(
@@ -777,17 +769,17 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'PRIMARY KEY'	=> array('id', 'extension_id')
 			);
 
-			$forum_db->create_table('extension_hooks', $schema);
+			db()->create_table('extension_hooks', $schema);
 		}
 
 		// Add priority field to extension_hooks
-		$forum_db->add_field('extension_hooks', 'priority', 'TINYINT(1)', false, 5, 'installed');
+		db()->add_field('extension_hooks', 'priority', 'TINYINT(1)', false, 5, 'installed');
 
 		// Extend id field in extension_hooks to 150
-		$forum_db->alter_field('extension_hooks', 'id', 'VARCHAR(150)', false, '');
+		db()->alter_field('extension_hooks', 'id', 'VARCHAR(150)', false, '');
 
 		// Add the subscriptions forum table if it doesn't already exist
-		if (!$forum_db->table_exists('forum_subscriptions'))
+		if (!db()->table_exists('forum_subscriptions'))
 		{
 			$schema = array(
 				'FIELDS'		=> array(
@@ -805,140 +797,141 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'PRIMARY KEY'	=> array('user_id', 'forum_id')
 			);
 
-			$forum_db->create_table('forum_subscriptions', $schema);
+			db()->create_table('forum_subscriptions', $schema);
 		}
 
 
 		// Make all e-mail fields VARCHAR(80)
-		$forum_db->alter_field('bans', 'email', 'VARCHAR(80)', true);
-		$forum_db->alter_field('posts', 'poster_email', 'VARCHAR(80)', true);
-		$forum_db->alter_field('users', 'email', 'VARCHAR(80)', false, '');
-		$forum_db->alter_field('users', 'jabber', 'VARCHAR(80)', true);
-		$forum_db->alter_field('users', 'msn', 'VARCHAR(80)', true);
-		$forum_db->alter_field('users', 'activate_string', 'VARCHAR(80)', true);
+		db()->alter_field('bans', 'email', 'VARCHAR(80)', true);
+		db()->alter_field('posts', 'poster_email', 'VARCHAR(80)', true);
+		db()->alter_field('users', 'email', 'VARCHAR(80)', false, '');
+		db()->alter_field('users', 'jabber', 'VARCHAR(80)', true);
+		db()->alter_field('users', 'msn', 'VARCHAR(80)', true);
+		db()->alter_field('users', 'activate_string', 'VARCHAR(80)', true);
 
 		// Add avatars field
-		$forum_db->add_field('users', 'avatar', 'TINYINT(3) UNSIGNED', false, 0);
-		$forum_db->add_field('users', 'avatar_width', 'TINYINT(3) UNSIGNED', false, 0, 'avatar');
-		$forum_db->add_field('users', 'avatar_height', 'TINYINT(3) UNSIGNED', false, 0, 'avatar_width');
+		db()->add_field('users', 'avatar', 'TINYINT(3) UNSIGNED', false, 0);
+		db()->add_field('users', 'avatar_width', 'TINYINT(3) UNSIGNED', false, 0, 'avatar');
+		db()->add_field('users', 'avatar_height', 'TINYINT(3) UNSIGNED', false, 0, 'avatar_width');
 
 		// Add new profile fileds
-		$forum_db->add_field('users', 'facebook', 'VARCHAR(100)', true, null, 'url');
-		$forum_db->add_field('users', 'twitter', 'VARCHAR(100)', true, null, 'facebook');
-		$forum_db->add_field('users', 'linkedin', 'VARCHAR(100)', true, null, 'twitter');
-		$forum_db->add_field('users', 'skype', 'VARCHAR(100)', true, null, 'linkedin');
+		db()->add_field('users', 'facebook', 'VARCHAR(100)', true, null, 'url');
+		db()->add_field('users', 'twitter', 'VARCHAR(100)', true, null, 'facebook');
+		db()->add_field('users', 'linkedin', 'VARCHAR(100)', true, null, 'twitter');
+		db()->add_field('users', 'skype', 'VARCHAR(100)', true, null, 'linkedin');
 
 		// Add avatars to DB
 		convert_avatars();
 
 		// Remove NOT NULL from TEXT fields for consistency. See http://dev.punbb.org/changeset/596
-		$forum_db->alter_field('posts', 'message', 'TEXT', true);
-		$forum_db->alter_field('reports', 'message', 'TEXT', true);
+		db()->alter_field('posts', 'message', 'TEXT', true);
+		db()->alter_field('reports', 'message', 'TEXT', true);
 
 
 		// Drop fulltext indexes (should only apply to SVN installs)
 		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
-			$forum_db->drop_index('topics', 'subject_idx');
-			$forum_db->drop_index('posts', 'message_idx');
+			db()->drop_index('topics', 'subject_idx');
+			db()->drop_index('posts', 'message_idx');
 		}
 
 		// Make all IP fields VARCHAR(39) to support IPv6
-		$forum_db->alter_field('posts', 'poster_ip', 'VARCHAR(39)', true);
-		$forum_db->alter_field('users', 'registration_ip', 'VARCHAR(39)', false, '0.0.0.0');
+		db()->alter_field('posts', 'poster_ip', 'VARCHAR(39)', true);
+		db()->alter_field('users', 'registration_ip', 'VARCHAR(39)', false, '0.0.0.0');
 
 		// Add the DST option to the users table
-		$forum_db->add_field('users', 'dst', 'TINYINT(1)', false, 0, 'timezone');
+		db()->add_field('users', 'dst', 'TINYINT(1)', false, 0, 'timezone');
 
 		// Add the salt field to the users table
-		$forum_db->add_field('users', 'salt', 'VARCHAR(12)', true, null, 'password');
+		db()->add_field('users', 'salt', 'VARCHAR(12)', true, null, 'password');
 
 		// Add the access_keys field to the users table
-		$forum_db->add_field('users', 'access_keys', 'TINYINT(1)', false, 0, 'show_sig');
+		db()->add_field('users', 'access_keys', 'TINYINT(1)', false, 0, 'show_sig');
 
 		// Add the CSRF token field to the online table
-		$forum_db->add_field('online', 'csrf_token', 'VARCHAR(40)', false, '', null);
+		db()->add_field('online', 'csrf_token', 'VARCHAR(40)', false, '', null);
 
 		// Add the prev_url field to the online table
-		$forum_db->add_field('online', 'prev_url', 'VARCHAR(255)', true, null, null);
+		db()->add_field('online', 'prev_url', 'VARCHAR(255)', true, null, null);
 
 		// Add the last_post field to the online table
-		$forum_db->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
+		db()->add_field('online', 'last_post', 'INT(10) UNSIGNED', true, null, null);
 
 		// Add the last_search field to the online table
-		$forum_db->add_field('online', 'last_search', 'INT(10) UNSIGNED', true, null, null);
+		db()->add_field('online', 'last_search', 'INT(10) UNSIGNED', true, null, null);
 
 		// Drop use_avatar column from users table
-		$forum_db->drop_field('users', 'use_avatar');
+		db()->drop_field('users', 'use_avatar');
 
 		// Drop save_pass column from users table
-		$forum_db->drop_field('users', 'save_pass');
+		db()->drop_field('users', 'save_pass');
 
 		// Drop g_edit_subjects_interval column from groups table
-		$forum_db->drop_field('groups', 'g_edit_subjects_interval');
+		db()->drop_field('groups', 'g_edit_subjects_interval');
 
 		$new_config = array();
 
 		// Add quote depth option
-		if (!array_key_exists('o_quote_depth', $forum_config))
+		if (!array_key_exists('o_quote_depth', config()))
 			$new_config[] = '\'o_quote_depth\', \'3\'';
 
 		// Add database revision number
-		if (!array_key_exists('o_database_revision', $forum_config))
+		if (!array_key_exists('o_database_revision', config()))
 			$new_config[] = '\'o_database_revision\', \'0\'';
 
 		// Add default email setting option
-		if (!array_key_exists('o_default_email_setting', $forum_config))
+		if (!array_key_exists('o_default_email_setting', config()))
 			$new_config[] = '\'o_default_email_setting\', \'1\'';
 
 		// Make sure we have o_additional_navlinks (was added in 1.2.1)
-		if (!array_key_exists('o_additional_navlinks', $forum_config))
+		if (!array_key_exists('o_additional_navlinks', config()))
 			$new_config[] = '\'o_additional_navlinks\', \'\'';
 
 		// Insert new config options o_sef
-		if (!array_key_exists('o_sef', $forum_config))
+		if (!array_key_exists('o_sef', config()))
 			$new_config[] = '\'o_sef\', \'Default\'';
 
 		// Insert new config option o_topic_views
-		if (!array_key_exists('o_topic_views', $forum_config))
+		if (!array_key_exists('o_topic_views', config()))
 			$new_config[] = '\'o_topic_views\', \'1\'';
 
 		// Insert new config option o_signatures
-		if (!array_key_exists('o_signatures', $forum_config))
+		if (!array_key_exists('o_signatures', config()))
 			$new_config[] = '\'o_signatures\', \'1\'';
 
 		// Insert new config option o_smtp_ssl
-		if (!array_key_exists('o_smtp_ssl', $forum_config))
+		if (!array_key_exists('o_smtp_ssl', config()))
 			$new_config[] = '\'o_smtp_ssl\', \'0\'';
 
 		// Insert new config option o_check_for_updates
-		if (!array_key_exists('o_check_for_updates', $forum_config))
+		if (!array_key_exists('o_check_for_updates', config()))
 		{
 			$check_for_updates = (function_exists('curl_init') || function_exists('fsockopen') || in_array(strtolower(@ini_get('allow_url_fopen')), array('on', 'true', '1'))) ? 1 : 0;
 			$new_config[] = '\'o_check_for_updates\', \''.$check_for_updates.'\'';
 		}
 
 		// Insert new config option o_check_for_version
-		if (!array_key_exists('o_check_for_versions', $forum_config))
+		if (!array_key_exists('o_check_for_versions', config()))
 		{
-			$o_check_for_versions = array_key_exists('o_check_for_updates', $forum_config) ? $forum_config['o_check_for_updates'] : $check_for_updates;
+			$o_check_for_versions = array_key_exists('o_check_for_updates', config()) ?
+				config()->o_check_for_updates : $check_for_updates;
 			$new_config[] = '\'o_check_for_versions\', \''.$o_check_for_versions.'\'';
 		}
 
 		// Insert new config option o_announcement_heading
-		if (!array_key_exists('o_announcement_heading', $forum_config))
+		if (!array_key_exists('o_announcement_heading', config()))
 			$new_config[] = '\'o_announcement_heading\', \'\'';
 
 		// Insert new config option o_default_dst
-		if (!array_key_exists('o_default_dst', $forum_config))
+		if (!array_key_exists('o_default_dst', config()))
 			$new_config[] = '\'o_default_dst\', \'0\'';
 
 		// Insert new config option o_show_moderators
-		if (!array_key_exists('o_show_moderators', $forum_config))
+		if (!array_key_exists('o_show_moderators', config()))
 			$new_config[] = '\'o_show_moderators\', \'0\'';
 
 		// Insert new config option o_show_moderators
-		if (!array_key_exists('o_mask_passwords', $forum_config))
+		if (!array_key_exists('o_mask_passwords', config()))
 			$new_config[] = '\'o_mask_passwords\', \'1\'';
 
 
@@ -950,12 +943,12 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'VALUES'	=> $new_config
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 		unset($new_config);
 
 		// Server timezone is now simply the default timezone
-		if (!array_key_exists('o_default_timezone', $forum_config))
+		if (!array_key_exists('o_default_timezone', config()))
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -963,11 +956,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'conf_name = \'o_server_timezone\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Increase visit timeout to 30 minutes (only if it hasn't been changed from the default)
-		if ($forum_config['o_timeout_visit'] == '600')
+		if (config()->o_timeout_visit == '600')
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -975,11 +968,11 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'conf_name = \'o_timeout_visit\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Update redirect timeout
-		if (version_compare($cur_version, '1.4', '<') && $forum_config['o_redirect_delay'] == '1')
+		if (version_compare($cur_version, '1.4', '<') && config()->o_redirect_delay == '1')
 		{
 			$query = array(
 				'UPDATE'	=> 'config',
@@ -987,17 +980,17 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'conf_name = \'o_redirect_delay\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Remove obsolete g_post_polls permission from groups table
-		$forum_db->drop_field('groups', 'g_post_polls');
+		db()->drop_field('groups', 'g_post_polls');
 
 		// Make room for multiple moderator groups
-		if (!$forum_db->field_exists('groups', 'g_moderator'))
+		if (!db()->field_exists('groups', 'g_moderator'))
 		{
 			// Add g_moderator column to groups table
-			$forum_db->add_field('groups', 'g_moderator', 'TINYINT(1)', false, 0, 'g_user_title');
+			db()->add_field('groups', 'g_moderator', 'TINYINT(1)', false, 0, 'g_user_title');
 
 			// Give the moderator group moderator privileges
 			$query = array(
@@ -1006,7 +999,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'g_id = 2'
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Shuffle the group IDs around a bit
 			$query = array(
@@ -1014,92 +1007,92 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'FROM'		=> 'groups'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$temp_id = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$temp_id = db()->result($result);
 
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id='.$temp_id,
 				'WHERE'		=> 'g_id=2'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=2',
 				'WHERE'		=> 'g_id=3'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=3',
 				'WHERE'		=> 'g_id=4'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'groups',
 				'SET'		=> 'g_id=4',
 				'WHERE'		=> 'g_id='.$temp_id
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'users',
 				'SET'		=> 'group_id='.$temp_id,
 				'WHERE'		=> 'group_id=2'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'users',
 				'SET'		=> 'group_id=2',
 				'WHERE'		=> 'group_id=3'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'users',
 				'SET'		=> 'group_id=3',
 				'WHERE'		=> 'group_id=4'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'users',
 				'SET'		=> 'group_id=4',
 				'WHERE'		=> 'group_id='.$temp_id
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'forum_perms',
 				'SET'		=> 'group_id='.$temp_id,
 				'WHERE'		=> 'group_id=2'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'forum_perms',
 				'SET'		=> 'group_id=2',
 				'WHERE'		=> 'group_id=3'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'forum_perms',
 				'SET'		=> 'group_id=3',
 				'WHERE'		=> 'group_id=4'
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'UPDATE'	=> 'forum_perms',
 				'SET'		=> 'group_id=4',
 				'WHERE'		=> 'group_id='.$temp_id
 			);
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			// Update the default usergroup if it uses the old ID for the members group
 			$query = array(
@@ -1108,101 +1101,101 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'conf_name = \'o_default_user_group\' and conf_value = \'4\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Replace obsolete p_mod_edit_users config setting with new per-group permission
-		if (array_key_exists('p_mod_edit_users', $forum_config))
+		if (array_key_exists('p_mod_edit_users', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
 				'WHERE'		=> 'conf_name = \'p_mod_edit_users\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_db->add_field('groups', 'g_mod_edit_users', 'TINYINT(1)', false, 0, 'g_moderator');
+			db()->add_field('groups', 'g_mod_edit_users', 'TINYINT(1)', false, 0, 'g_moderator');
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_edit_users = '.$forum_config['p_mod_edit_users'],
+				'SET'		=> 'g_mod_edit_users = '.config()->p_mod_edit_users,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Replace obsolete p_mod_rename_users config setting with new per-group permission
-		if (array_key_exists('p_mod_rename_users', $forum_config))
+		if (array_key_exists('p_mod_rename_users', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
 				'WHERE'		=> 'conf_name = \'p_mod_rename_users\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_db->add_field('groups', 'g_mod_rename_users', 'TINYINT(1)', false, 0, 'g_mod_edit_users');
+			db()->add_field('groups', 'g_mod_rename_users', 'TINYINT(1)', false, 0, 'g_mod_edit_users');
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_rename_users = '.$forum_config['p_mod_rename_users'],
+				'SET'		=> 'g_mod_rename_users = '.config()->p_mod_rename_users,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Replace obsolete p_mod_change_passwords config setting with new per-group permission
-		if (array_key_exists('p_mod_change_passwords', $forum_config))
+		if (array_key_exists('p_mod_change_passwords', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
 				'WHERE'		=> 'conf_name = \'p_mod_change_passwords\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_db->add_field('groups', 'g_mod_change_passwords', 'TINYINT(1)', false, 0, 'g_mod_rename_users');
+			db()->add_field('groups', 'g_mod_change_passwords', 'TINYINT(1)', false, 0, 'g_mod_rename_users');
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_change_passwords = '.$forum_config['p_mod_change_passwords'],
+				'SET'		=> 'g_mod_change_passwords = '.config()->p_mod_change_passwords,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Replace obsolete p_mod_ban_users config setting with new per-group permission
-		if (array_key_exists('p_mod_ban_users', $forum_config))
+		if (array_key_exists('p_mod_ban_users', config()))
 		{
 			$query = array(
 				'DELETE'	=> 'config',
 				'WHERE'		=> 'conf_name = \'p_mod_ban_users\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
-			$forum_db->add_field('groups', 'g_mod_ban_users', 'TINYINT(1)', false, 0, 'g_mod_change_passwords');
+			db()->add_field('groups', 'g_mod_ban_users', 'TINYINT(1)', false, 0, 'g_mod_change_passwords');
 
 			$query = array(
 				'UPDATE'	=> 'groups',
-				'SET'		=> 'g_mod_ban_users = '.$forum_config['p_mod_ban_users'],
+				'SET'		=> 'g_mod_ban_users = '.config()->p_mod_ban_users,
 				'WHERE'		=> 'g_moderator = 1'
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// We need to add a unique index to avoid users having multiple rows in the online table
-		if (!$forum_db->index_exists('online', 'user_id_ident_idx'))
+		if (!db()->index_exists('online', 'user_id_ident_idx'))
 		{
 			$query = array(
 				'DELETE'	=> 'online'
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			switch ($db_type)
 			{
@@ -1210,17 +1203,17 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				case 'mysql_innodb':
 				case 'mysqli':
 				case 'mysqli_innodb':
-					$forum_db->add_index('online', 'user_id_ident_idx', array('user_id', 'ident(25)'), true);
+					db()->add_index('online', 'user_id_ident_idx', array('user_id', 'ident(25)'), true);
 					break;
 
 				default:
-					$forum_db->add_index('online', 'user_id_ident_idx', array('user_id', 'ident'), true);
+					db()->add_index('online', 'user_id_ident_idx', array('user_id', 'ident'), true);
 					break;
 			}
 		}
 
 		// Remove the redundant user_id_idx on the online table
-		$forum_db->drop_index('online', 'user_id_idx');
+		db()->drop_index('online', 'user_id_idx');
 
 		// Add an index to ident on the online table
 		switch ($db_type)
@@ -1229,40 +1222,40 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			case 'mysql_innodb':
 			case 'mysqli':
 			case 'mysqli_innodb':
-				$forum_db->add_index('online', 'ident_idx', array('ident(25)'));
+				db()->add_index('online', 'ident_idx', array('ident(25)'));
 				break;
 
 			default:
-				$forum_db->add_index('online', 'ident_idx', array('ident'));
+				db()->add_index('online', 'ident_idx', array('ident'));
 				break;
 		}
 
 		// Add an index to logged on the online table
-		$forum_db->add_index('online', 'logged_idx', array('logged'));
+		db()->add_index('online', 'logged_idx', array('logged'));
 
 		// Add an index on last_post in the topics table
-		$forum_db->add_index('topics', 'last_post_idx', array('last_post'));
+		db()->add_index('topics', 'last_post_idx', array('last_post'));
 
 		// Remove any remnants of the now defunct post approval system
-		$forum_db->drop_field('forums', 'approval');
-		$forum_db->drop_field('groups', 'g_posts_approved');
-		$forum_db->drop_field('posts', 'approved');
+		db()->drop_field('forums', 'approval');
+		db()->drop_field('groups', 'g_posts_approved');
+		db()->drop_field('posts', 'approved');
 
 		// Add g_view_users field to groups table
-		$forum_db->add_field('groups', 'g_view_users', 'TINYINT(1)', false, 1, 'g_read_board');
+		db()->add_field('groups', 'g_view_users', 'TINYINT(1)', false, 1, 'g_read_board');
 
 		// Add the time/date format settings to the user table
-		$forum_db->add_field('users', 'time_format', 'INT(10)', false, 0, 'dst');
-		$forum_db->add_field('users', 'date_format', 'INT(10)', false, 0, 'dst');
+		db()->add_field('users', 'time_format', 'INT(10)', false, 0, 'dst');
+		db()->add_field('users', 'date_format', 'INT(10)', false, 0, 'dst');
 
 		// Add the last_search column to the users table
-		$forum_db->add_field('users', 'last_search', 'INT(10)', true, null, 'last_post');
+		db()->add_field('users', 'last_search', 'INT(10)', true, null, 'last_post');
 
 		// Add the last_email_sent column to the users table and the g_send_email and
 		// g_email_flood columns to the groups table
-		$forum_db->add_field('users', 'last_email_sent', 'INT(10)', true, null, 'last_search');
-		$forum_db->add_field('groups', 'g_send_email', 'TINYINT(1)', false, 1, 'g_search_users');
-		$forum_db->add_field('groups', 'g_email_flood', 'INT(10)', false, 60, 'g_search_flood');
+		db()->add_field('users', 'last_email_sent', 'INT(10)', true, null, 'last_search');
+		db()->add_field('groups', 'g_send_email', 'TINYINT(1)', false, 1, 'g_search_users');
+		db()->add_field('groups', 'g_email_flood', 'INT(10)', false, 60, 'g_search_flood');
 
 		// Set non-default g_send_email and g_flood_email values properly
 		$query = array(
@@ -1271,7 +1264,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'WHERE'		=> 'g_id = 2'
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$query = array(
 			'UPDATE'	=> 'groups',
@@ -1279,16 +1272,16 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'WHERE'		=> 'g_id IN (1,2,4)'
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Add the auto notify/subscription option to the users table
-		$forum_db->add_field('users', 'auto_notify', 'TINYINT(1)', false, 0, 'notify_with_post');
+		db()->add_field('users', 'auto_notify', 'TINYINT(1)', false, 0, 'notify_with_post');
 
 		// Add the first_post_id column to the topics table
-		if (!$forum_db->field_exists('topics', 'first_post_id'))
+		if (!db()->field_exists('topics', 'first_post_id'))
 		{
-			$forum_db->add_field('topics', 'first_post_id', 'INT(10) UNSIGNED', false, 0, 'posted');
-			$forum_db->add_index('topics', 'first_post_id_idx', array('first_post_id'));
+			db()->add_field('topics', 'first_post_id', 'INT(10) UNSIGNED', false, 0, 'posted');
+			db()->add_index('topics', 'first_post_id_idx', array('first_post_id'));
 
 			// Now that we've added the column and indexed it, we need to give it correct data
 			$query = array(
@@ -1297,8 +1290,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'GROUP BY'	=> 'topic_id'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			while ($cur_post = $forum_db->fetch_assoc($result))
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			while ($cur_post = db()->fetch_assoc($result))
 			{
 				$query = array(
 					'UPDATE'	=> 'topics',
@@ -1306,13 +1299,13 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					'WHERE'		=> 'id = '.$cur_post['topic_id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
 		// Add the index for the post time
-		if (!$forum_db->index_exists('posts', 'posted_idx'))
-			$forum_db->add_index('posts', 'posted_idx', array('posted'));
+		if (!db()->index_exists('posts', 'posted_idx'))
+			db()->add_index('posts', 'posted_idx', array('posted'));
 
 		// Move any users with the old unverified status to their new group
 		$query = array(
@@ -1321,10 +1314,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'WHERE'		=> 'group_id=32000'
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Add the ban_creator column to the bans table
-		$forum_db->add_field('bans', 'ban_creator', 'INT(10) UNSIGNED', false, 0);
+		db()->add_field('bans', 'ban_creator', 'INT(10) UNSIGNED', false, 0);
 
 		// Remove any hotfix extensions this update supersedes
 		$query = array(
@@ -1333,37 +1326,37 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'WHERE'		=> 'id LIKE \'hotfix_%\' AND version != \''.UPDATE_TO.'\''
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_ext = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_ext = db()->fetch_assoc($result))
 		{
 			$query = array(
 				'DELETE'	=> 'extension_hooks',
 				'WHERE'		=> 'extension_id = \''.$cur_ext['id'].'\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 
 			$query = array(
 				'DELETE'	=> 'extensions',
 				'WHERE'		=> 'id = \''.$cur_ext['id'].'\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Fix linkedIn possible XSS founded in 1.4.0
 		if (version_compare($cur_version, '1.3', '>') && version_compare($cur_version, '1.4.1', '<'))
 		{
-			if ($forum_db->field_exists('users', 'linkedin'))
+			if (db()->field_exists('users', 'linkedin'))
 			{
 				$query = array(
 					'SELECT'	=> 'id, linkedin',
 					'FROM'		=> 'users',
 					'WHERE'		=> 'linkedin IS NOT NULL'
 				);
-				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+				$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-				while ($cur_user = $forum_db->fetch_assoc($result))
+				while ($cur_user = db()->fetch_assoc($result))
 				{
 					if ($cur_user['linkedin'] != '' &&
 						strpos(strtolower($cur_user['linkedin']), 'http://') !== 0 &&
@@ -1371,10 +1364,10 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 					{
 						$query = array(
 							'UPDATE'	=> 'users',
-							'SET'		=> 'linkedin=\''.$forum_db->escape('http://'.$cur_user['linkedin']).'\'',
+							'SET'		=> 'linkedin=\''.db()->escape('http://'.$cur_user['linkedin']).'\'',
 							'WHERE'		=> 'id = \''.$cur_user['id'].'\''
 						);
-						$forum_db->query_build($query) or error(__FILE__, __LINE__);
+						db()->query_build($query) or error(__FILE__, __LINE__);
 					}
 				}
 			}
@@ -1400,21 +1393,21 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// We need to set names to utf8 before we execute update query
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Convert config
 		echo 'Converting configuration…'."<br />\n";
-		foreach ($forum_config as $conf_name => $conf_value)
+		foreach (config() as $conf_name => $conf_value)
 		{
 			if (convert_to_utf8($conf_value, $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'config',
-					'SET'		=> 'conf_value = \''.$forum_db->escape($conf_value).'\'',
+					'SET'		=> 'conf_value = \''.db()->escape($conf_value).'\'',
 					'WHERE'		=> 'conf_name = \''.$conf_name.'\''
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1426,18 +1419,18 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			if (convert_to_utf8($cur_item['cat_name'], $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'categories',
-					'SET'		=> 'cat_name = \''.$forum_db->escape($cur_item['cat_name']).'\'',
+					'SET'		=> 'cat_name = \''.db()->escape($cur_item['cat_name']).'\'',
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1449,8 +1442,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			$moderators = ($cur_item['moderators'] != '') ? unserialize($cur_item['moderators']) : array();
 			$moderators_utf8 = array();
@@ -1462,16 +1455,16 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			if (convert_to_utf8($cur_item['forum_name'], $old_charset) | convert_to_utf8($cur_item['forum_desc'], $old_charset) || $moderators !== $moderators_utf8)
 			{
-				$cur_item['forum_desc'] = $cur_item['forum_desc'] != '' ? '\''.$forum_db->escape($cur_item['forum_desc']).'\'' : 'NULL';
-				$cur_item['moderators'] = !empty($moderators_utf8) ? '\''.$forum_db->escape(serialize($moderators_utf8)).'\'' : 'NULL';
+				$cur_item['forum_desc'] = $cur_item['forum_desc'] != '' ? '\''.db()->escape($cur_item['forum_desc']).'\'' : 'NULL';
+				$cur_item['moderators'] = !empty($moderators_utf8) ? '\''.db()->escape(serialize($moderators_utf8)).'\'' : 'NULL';
 
 				$query = array(
 					'UPDATE'	=> 'forums',
-					'SET'		=> 'forum_name = \''.$forum_db->escape($cur_item['forum_name']).'\', forum_desc = '.$cur_item['forum_desc'].', moderators = '.$cur_item['moderators'],
+					'SET'		=> 'forum_name = \''.db()->escape($cur_item['forum_name']).'\', forum_desc = '.$cur_item['forum_desc'].', moderators = '.$cur_item['moderators'],
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1483,20 +1476,20 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'g_id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			if (convert_to_utf8($cur_item['g_title'], $old_charset) | convert_to_utf8($cur_item['g_user_title'], $old_charset))
 			{
-				$cur_item['g_user_title'] = $cur_item['g_user_title'] != '' ? '\''.$forum_db->escape($cur_item['g_user_title']).'\'' : 'NULL';
+				$cur_item['g_user_title'] = $cur_item['g_user_title'] != '' ? '\''.db()->escape($cur_item['g_user_title']).'\'' : 'NULL';
 
 				$query = array(
 					'UPDATE'	=> 'groups',
-					'SET'		=> 'g_title = \''.$forum_db->escape($cur_item['g_title']).'\', g_user_title = '.$cur_item['g_user_title'].'',
+					'SET'		=> 'g_title = \''.db()->escape($cur_item['g_title']).'\', g_user_title = '.$cur_item['g_user_title'].'',
 					'WHERE'		=> 'g_id = '.$cur_item['g_id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1508,18 +1501,18 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			if (convert_to_utf8($cur_item['rank'], $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'ranks',
-					'SET'		=> 'rank = \''.$forum_db->escape($cur_item['rank']).'\'',
+					'SET'		=> 'rank = \''.db()->escape($cur_item['rank']).'\'',
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1531,18 +1524,18 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			if (convert_to_utf8($cur_item['search_for'], $old_charset) | convert_to_utf8($cur_item['replace_with'], $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'censoring',
-					'SET'		=> 'search_for = \''.$forum_db->escape($cur_item['search_for']).'\', replace_with = \''.$forum_db->escape($cur_item['replace_with']).'\'',
+					'SET'		=> 'search_for = \''.db()->escape($cur_item['search_for']).'\', replace_with = \''.db()->escape($cur_item['replace_with']).'\'',
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1559,7 +1552,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// We need to set names to utf8 before we execute update query
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1572,8 +1565,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'LIMIT'		=> '1'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$start_at = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$start_at = db()->result($result);
 
 			if (is_null($start_at) || $start_at === false)
 				$start_at = 0;
@@ -1588,19 +1581,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Converting report '.$cur_item['id'].'…<br />'."\n";
 			if (convert_to_utf8($cur_item['message'], $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'reports',
-					'SET'		=> 'message = \''.$forum_db->escape($cur_item['message']).'\'',
+					'SET'		=> 'message = \''.db()->escape($cur_item['message']).'\'',
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1613,8 +1606,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_search_words&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
@@ -1634,7 +1627,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// We need to set names to utf8 before we execute update query
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1647,8 +1640,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'LIMIT'		=> '1'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$start_at = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$start_at = db()->result($result);
 
 			if (is_null($start_at) || $start_at === false)
 				$start_at = 0;
@@ -1663,19 +1656,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Converting search word '.$cur_item['id'].'…<br />'."\n";
 			if (convert_to_utf8($cur_item['word'], $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'search_words',
-					'SET'		=> 'word = \''.$forum_db->escape($cur_item['word']).'\'',
+					'SET'		=> 'word = \''.db()->escape($cur_item['word']).'\'',
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1688,8 +1681,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_users&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
@@ -1709,7 +1702,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// We need to set names to utf8 before we execute update query
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1725,25 +1718,25 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Converting user '.$cur_item['id'].'…<br />'."\n";
 			if (convert_to_utf8($cur_item['username'], $old_charset) | convert_to_utf8($cur_item['title'], $old_charset) | convert_to_utf8($cur_item['realname'], $old_charset) | convert_to_utf8($cur_item['location'], $old_charset) | convert_to_utf8($cur_item['signature'], $old_charset) | convert_to_utf8($cur_item['admin_note'], $old_charset))
 			{
-				$cur_item['title'] = $cur_item['title'] != '' ? '\''.$forum_db->escape($cur_item['title']).'\'' : 'NULL';
-				$cur_item['realname'] = $cur_item['realname'] != '' ? '\''.$forum_db->escape($cur_item['realname']).'\'' : 'NULL';
-				$cur_item['location'] = $cur_item['location'] != '' ? '\''.$forum_db->escape($cur_item['location']).'\'' : 'NULL';
-				$cur_item['signature'] = $cur_item['signature'] != '' ? '\''.$forum_db->escape($cur_item['signature']).'\'' : 'NULL';
-				$cur_item['admin_note'] = $cur_item['admin_note'] != '' ? '\''.$forum_db->escape($cur_item['admin_note']).'\'' : 'NULL';
+				$cur_item['title'] = $cur_item['title'] != '' ? '\''.db()->escape($cur_item['title']).'\'' : 'NULL';
+				$cur_item['realname'] = $cur_item['realname'] != '' ? '\''.db()->escape($cur_item['realname']).'\'' : 'NULL';
+				$cur_item['location'] = $cur_item['location'] != '' ? '\''.db()->escape($cur_item['location']).'\'' : 'NULL';
+				$cur_item['signature'] = $cur_item['signature'] != '' ? '\''.db()->escape($cur_item['signature']).'\'' : 'NULL';
+				$cur_item['admin_note'] = $cur_item['admin_note'] != '' ? '\''.db()->escape($cur_item['admin_note']).'\'' : 'NULL';
 
 				$query = array(
 					'UPDATE'	=> 'users',
-					'SET'		=> 'username = \''.$forum_db->escape($cur_item['username']).'\', title = '.$cur_item['title'].', realname = '.$cur_item['realname'].', location = '.$cur_item['location'].', signature = '.$cur_item['signature'].', admin_note = '.$cur_item['admin_note'],
+					'SET'		=> 'username = \''.db()->escape($cur_item['username']).'\', title = '.$cur_item['title'].', realname = '.$cur_item['realname'].', location = '.$cur_item['location'].', signature = '.$cur_item['signature'].', admin_note = '.$cur_item['admin_note'],
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1756,8 +1749,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_topics&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
@@ -1777,7 +1770,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// We need to set names to utf8 before we execute update query
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1790,8 +1783,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'LIMIT'		=> '1'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$start_at = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$start_at = db()->result($result);
 
 			if (is_null($start_at) || $start_at === false)
 				$start_at = 0;
@@ -1806,19 +1799,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Converting topic '.$cur_item['id'].'…<br />'."\n";
 			if (convert_to_utf8($cur_item['poster'], $old_charset) | convert_to_utf8($cur_item['subject'], $old_charset) | convert_to_utf8($cur_item['last_poster'], $old_charset))
 			{
 				$query = array(
 					'UPDATE'	=> 'topics',
-					'SET'		=> 'poster = \''.$forum_db->escape($cur_item['poster']).'\', subject = \''.$forum_db->escape($cur_item['subject']).'\', last_poster = \''.$forum_db->escape($cur_item['last_poster']).'\'',
+					'SET'		=> 'poster = \''.db()->escape($cur_item['poster']).'\', subject = \''.db()->escape($cur_item['subject']).'\', last_poster = \''.db()->escape($cur_item['last_poster']).'\'',
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1831,8 +1824,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_posts&req_old_charset='.$old_charset.'&req_per_page='.PER_PAGE;
@@ -1852,7 +1845,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		}
 
 		// We need to set names to utf8 before we execute update query
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1865,8 +1858,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'LIMIT'		=> '1'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$start_at = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$start_at = db()->result($result);
 
 			if (is_null($start_at) || $start_at === false)
 				$start_at = 0;
@@ -1881,21 +1874,21 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Converting post '.$cur_item['id'].'…<br />'."\n";
 			if (convert_to_utf8($cur_item['poster'], $old_charset) | convert_to_utf8($cur_item['message'], $old_charset) | convert_to_utf8($cur_item['edited_by'], $old_charset))
 			{
-				$cur_item['edited_by'] = $cur_item['edited_by'] != '' ? '\''.$forum_db->escape($cur_item['edited_by']).'\'' : 'NULL';
+				$cur_item['edited_by'] = $cur_item['edited_by'] != '' ? '\''.db()->escape($cur_item['edited_by']).'\'' : 'NULL';
 
 				$query = array(
 					'UPDATE'	=> 'posts',
-					'SET'		=> 'poster = \''.$forum_db->escape($cur_item['poster']).'\', message = \''.$forum_db->escape($cur_item['message']).'\', edited_by = '.$cur_item['edited_by'],
+					'SET'		=> 'poster = \''.db()->escape($cur_item['poster']).'\', message = \''.db()->escape($cur_item['message']).'\', edited_by = '.$cur_item['edited_by'],
 					'WHERE'		=> 'id = '.$cur_item['id']
 				);
 
-				$forum_db->query_build($query) or error(__FILE__, __LINE__);
+				db()->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -1908,8 +1901,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=conv_tables';
@@ -1925,55 +1918,52 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		// Do the cumbersome charset conversion of MySQL tables/columns
 		if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 		{
-			echo 'Converting table '.$forum_db->prefix.'bans…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'bans');
-			echo 'Converting table '.$forum_db->prefix.'categories…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'categories');
-			echo 'Converting table '.$forum_db->prefix.'censoring…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'censoring');
-			echo 'Converting table '.$forum_db->prefix.'config…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'config');
-			echo 'Converting table '.$forum_db->prefix.'extension_hooks…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'extension_hooks');
-			echo 'Converting table '.$forum_db->prefix.'extensions…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'extensions');
-			echo 'Converting table '.$forum_db->prefix.'forum_perms…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'forum_perms');
-			echo 'Converting table '.$forum_db->prefix.'forums…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'forums');
-			echo 'Converting table '.$forum_db->prefix.'groups…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'groups');
-			echo 'Converting table '.$forum_db->prefix.'online…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'online');
-			echo 'Converting table '.$forum_db->prefix.'posts…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'posts');
-			echo 'Converting table '.$forum_db->prefix.'ranks…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'ranks');
-			echo 'Converting table '.$forum_db->prefix.'reports…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'reports');
-			echo 'Converting table '.$forum_db->prefix.'search_cache…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'search_cache');
-			echo 'Converting table '.$forum_db->prefix.'search_matches…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'search_matches');
-			echo 'Converting table '.$forum_db->prefix.'search_words…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'search_words');
-			echo 'Converting table '.$forum_db->prefix.'subscriptions…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'subscriptions');
-			echo 'Converting table '.$forum_db->prefix.'topics…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'topics');
-			echo 'Converting table '.$forum_db->prefix.'users…<br />'."\n"; flush();
-			convert_table_utf8($forum_db->prefix.'users');
+			echo 'Converting table '.db()->prefix.'bans…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'bans');
+			echo 'Converting table '.db()->prefix.'categories…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'categories');
+			echo 'Converting table '.db()->prefix.'censoring…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'censoring');
+			echo 'Converting table '.db()->prefix.'config…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'config');
+			echo 'Converting table '.db()->prefix.'extension_hooks…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'extension_hooks');
+			echo 'Converting table '.db()->prefix.'extensions…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'extensions');
+			echo 'Converting table '.db()->prefix.'forum_perms…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'forum_perms');
+			echo 'Converting table '.db()->prefix.'forums…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'forums');
+			echo 'Converting table '.db()->prefix.'groups…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'groups');
+			echo 'Converting table '.db()->prefix.'online…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'online');
+			echo 'Converting table '.db()->prefix.'posts…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'posts');
+			echo 'Converting table '.db()->prefix.'ranks…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'ranks');
+			echo 'Converting table '.db()->prefix.'reports…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'reports');
+			echo 'Converting table '.db()->prefix.'search_cache…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'search_cache');
+			echo 'Converting table '.db()->prefix.'search_matches…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'search_matches');
+			echo 'Converting table '.db()->prefix.'search_words…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'search_words');
+			echo 'Converting table '.db()->prefix.'subscriptions…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'subscriptions');
+			echo 'Converting table '.db()->prefix.'topics…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'topics');
+			echo 'Converting table '.db()->prefix.'users…<br />'."\n"; flush();
+			convert_table_utf8(db()->prefix.'users');
 		}
 
 		$query_str = '?stage=preparse_posts';
 		break;
 
 	case 'preparse_posts':
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
 		// Now we're definitely using UTF-8, so we convert the output properly
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -1986,8 +1976,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'LIMIT'		=> '1'
 			);
 
-			$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-			$start_at = $forum_db->result($result);
+			$result = db()->query_build($query) or error(__FILE__, __LINE__);
+			$start_at = db()->result($result);
 
 			if (is_null($start_at) || $start_at === false)
 				$start_at = 0;
@@ -2002,19 +1992,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Preparsing post '.$cur_item['id'].'…<br />'."\n";
 			$preparse_errors = array();
 
 			$query = array(
 				'UPDATE'	=> 'posts',
-				'SET'		=> 'message = \''.$forum_db->escape(preparse_bbcode($cur_item['message'], $preparse_errors)).'\'',
+				'SET'		=> 'message = \''.db()->escape(bbcode()->preparse_bbcode($cur_item['message'], $preparse_errors)).'\'',
 				'WHERE'		=> 'id = '.$cur_item['id']
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Check if there is more work to do
@@ -2026,8 +2016,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=preparse_sigs';
@@ -2038,11 +2028,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		break;
 
 	case 'preparse_sigs':
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
 		// Now we're definitely using UTF-8, so we convert the output properly
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// Determine where to start
 		if ($start_at == 0)
@@ -2059,19 +2046,19 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'ORDER BY'	=> 'id'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_item = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_item = db()->fetch_assoc($result))
 		{
 			echo 'Preparsing signature '.$cur_item['id'].'…<br />'."\n";
 			$preparse_errors = array();
 
 			$query = array(
 				'UPDATE'	=> 'users',
-				'SET'		=> 'signature = \''.$forum_db->escape(preparse_bbcode($cur_item['signature'], $preparse_errors, true)).'\'',
+				'SET'		=> 'signature = \''.db()->escape(bbcode()->preparse_bbcode($cur_item['signature'], $preparse_errors, true)).'\'',
 				'WHERE'		=> 'id = '.$cur_item['id']
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 		// Check if there is more work to do
@@ -2083,8 +2070,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'LIMIT'		=> '1'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$start_id = $forum_db->result($result);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		$start_id = db()->result($result);
 
 		if (is_null($start_id) || $start_id === false)
 			$query_str = '?stage=finish';
@@ -2097,7 +2084,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	// Show results page
 	case 'finish':
 		// Now we're definitely using UTF-8, so we convert the output properly
-		$forum_db->set_names('utf8');
+		db()->set_names('utf8');
 
 		// We update the version number
 		$query = array(
@@ -2106,7 +2093,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'WHERE'		=> 'conf_name = \'o_cur_version\''
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// And the database revision number
 		$query = array(
@@ -2115,7 +2102,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'WHERE'		=> 'conf_name = \'o_database_revision\''
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// This feels like a good time to synchronize the forums
 		$query = array(
@@ -2123,8 +2110,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'FROM'		=> 'forums'
 		);
 
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($row = $forum_db->fetch_row($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($row = db()->fetch_row($result))
 			sync_forum($row[0]);
 
 		// We'll empty the search cache table as well (using DELETE FROM since SQLite does not support TRUNCATE TABLE)
@@ -2132,23 +2119,33 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 			'DELETE'	=> 'search_cache'
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Empty the online table too (we did not convert strings there)
 		$query = array(
 			'DELETE'	=> 'online'
 		);
 
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
+		db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Empty the PHP cache
 		forum_clear_cache();
 
 		// Drop Base URL row from database config
-		if (array_key_exists('o_base_url', $forum_config))
+		if (array_key_exists('o_base_url', config()))
 		{
 			// Generate new config file
-			$new_config = "<?php\n\n\$db_type = '$db_type';\n\$db_host = '$db_host';\n\$db_name = '".addslashes($db_name)."';\n\$db_username = '".addslashes($db_username)."';\n\$db_password = '".addslashes($db_password)."';\n\$db_prefix = '".addslashes($db_prefix)."';\n\$p_connect = ".($p_connect ? 'true' : 'false').";\n\n\$base_url = '$base_url';\n\n\$cookie_name = '$cookie_name';\n\$cookie_domain = '$cookie_domain';\n\$cookie_path = '$cookie_path';\n\$cookie_secure = $cookie_secure;\n\ndefine('FORUM', 1);";
+			$new_config = "<?php
+			return; // TODO
+			\$db_type = '$db_type';
+			\$db_host = '$db_host';
+			\$db_name = '" . addslashes($db_name) . "';
+			\$db_username = '" . addslashes($db_username) . "';
+			\$db_password = '".addslashes($db_password)."';
+			\$db_prefix = '".addslashes($db_prefix)."';
+			\$p_connect = ".($p_connect ? 'true' : 'false').";
+
+			\base_url = 'base_url';\n\n\$cookie_name = '$cookie_name';\n\$cookie_domain = '$cookie_domain';\n\$cookie_path = '$cookie_path';\n\$cookie_secure = $cookie_secure;\n\ndefine('FORUM', 1);";
 
 			// Attempt to write config.php and display it if writing fails
 			$written = false;
@@ -2173,7 +2170,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 				'WHERE'		=> 'conf_name = \'o_base_url\''
 			);
 
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 
 ?>
@@ -2185,8 +2182,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 <head>
 	<meta charset="utf-8" />
 	<title>PunBB Database Update</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/Oxygen/Oxygen.min.css" />
-	<script type="text/javascript" src="<?php echo $base_url ?>/include/js/min/punbb.common.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
+	<script type="text/javascript" src="<?= app()->base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
 <div id="brd-update" class="brd-page">
@@ -2207,9 +2205,9 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		<div class="ct-box info-box">
 			<p>Your forum database was updated successfully.</p>
 <?php if (isset($new_config) && !$written): ?>
-			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> once config.php has been updated.</p>
+			<p>In order to complete the process, you must now update your config.php script. <strong>Copy and paste the text in the text box below into the file called config.php in the root directory of your PunBB installation</strong>. The file already exists, so you must edit/overwrite the contents of the old file. You may then <a href="<?= app()->base_url ?>/index.php">go to the forum index</a> once config.php has been updated.</p>
 <?php else: ?>
-			<p>You may <a href="<?php echo $base_url ?>/index.php">go to the forum index</a> now.</p>
+			<p>You may <a href="<?= app()->base_url ?>/index.php">go to the forum index</a> now.</p>
 <?php endif; ?>		</div>
 <?php if (isset($new_config) && !$written): ?>
 		<form class="frm-form" action="foo">
@@ -2237,8 +2235,8 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		break;
 }
 
-$forum_db->end_transaction();
-$forum_db->close();
+db()->end_transaction();
+db()->close();
 
 if ($query_str != '')
 	exit('<script type="text/javascript">window.location="db_update.php'.$query_str.'"</script><br />JavaScript seems to be disabled. <a href="db_update.php'.$query_str.'">Click here to continue</a>.');

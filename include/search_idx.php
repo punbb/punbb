@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // The contents of this file are very much inspired by the file functions_search.php
 // from the phpBB Group forum software phpBB2 (http://www.phpbb.com).
@@ -52,7 +52,7 @@ function split_words($text)
 //
 function update_search_index($mode, $post_id, $message, $subject = null)
 {
-	global $db_type, $forum_db;
+	global $db_type;
 
 	$return = ($hook = get_hook('si_fn_update_search_index_start')) ? eval($hook) : null;
 	if ($return != null)
@@ -80,7 +80,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 		);
 
 		($hook = get_hook('si_fn_update_search_index_qr_get_current_words')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		// Declare here to stop array_keys() and array_diff() from complaining if not set
 		$cur_words = array(
@@ -88,10 +88,10 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			'subject'	=> array()
 		);
 
-		while ($row = $forum_db->fetch_assoc($result))
+		while ($row = db()->fetch_assoc($result))
 			$cur_words[$row['subject_match'] == 1 ? 'subject' : 'post'][$row['word']] = $row['id'];
 
-		$forum_db->free_result($result);
+		db()->free_result($result);
 
 		$words = array(
 			'add'	=> array(
@@ -126,17 +126,17 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 		$query = array(
 			'SELECT'	=> 'id, word',
 			'FROM'		=> 'search_words',
-			'WHERE'		=> 'word IN(\''.implode('\',\'', array_map(array($forum_db, 'escape'), $unique_words)).'\')'
+			'WHERE'		=> 'word IN(\''.implode('\',\'', array_map(array(db(), 'escape'), $unique_words)).'\')'
 		);
 
 		($hook = get_hook('si_fn_update_search_index_qr_get_existing_words')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$existing_words = array();
-		while ($row = $forum_db->fetch_assoc($result))
+		while ($row = db()->fetch_assoc($result))
 			$existing_words[] = $row['word'];
 
-		$forum_db->free_result($result);
+		db()->free_result($result);
 
 		$new_words = array_diff($unique_words, $existing_words);
 		if (!empty($new_words))
@@ -144,11 +144,11 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			$query = array(
 				'INSERT'	=> 'word',
 				'INTO'		=> 'search_words',
-				'VALUES'	=> preg_replace('#^(.*)$#', '\'\1\'', array_map(array($forum_db, 'escape'), $new_words))
+				'VALUES'	=> preg_replace('#^(.*)$#', '\'\1\'', array_map(array(db(), 'escape'), $new_words))
 			);
 
 			($hook = get_hook('si_fn_update_search_index_qr_insert_words')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 	}
 
@@ -167,7 +167,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			);
 
 			($hook = get_hook('si_fn_update_search_index_qr_delete_matches')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 	}
 
@@ -179,14 +179,14 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			$subquery = array(
 				'SELECT'	=> $post_id.', id, '.($match_in == 'subject' ? '1' : '0'),
 				'FROM'		=> 'search_words',
-				'WHERE'		=> 'word IN (\''.implode('\',\'', array_map(array($forum_db, 'escape'), $wordlist)).'\')'
+				'WHERE'		=> 'word IN (\''.implode('\',\'', array_map(array(db(), 'escape'), $wordlist)).'\')'
 			);
 
 			// Really this should use the query builder too, though it doesn't currently support the syntax
-			$sql = 'INSERT INTO '.$forum_db->prefix.'search_matches (post_id, word_id, subject_match) '.$forum_db->query_build($subquery, true);
+			$sql = 'INSERT INTO '.db()->prefix.'search_matches (post_id, word_id, subject_match) '.db()->query_build($subquery, true);
 
 			($hook = get_hook('si_fn_update_search_index_qr_add_matches')) ? eval($hook) : null;
-			$forum_db->query($sql) or error(__FILE__, __LINE__);
+			db()->query($sql) or error(__FILE__, __LINE__);
 		}
 	}
 
@@ -199,7 +199,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 //
 function strip_search_index($post_ids)
 {
-	global $db_type, $forum_db;
+	global $db_type;
 
 	if (is_array($post_ids))
 		$post_ids = implode(',', $post_ids);
@@ -216,10 +216,10 @@ function strip_search_index($post_ids)
 	);
 
 	($hook = get_hook('si_fn_strip_search_index_qr_get_post_words')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 	$word_ids = array();
-	while ($row = $forum_db->fetch_assoc($result))
+	while ($row = db()->fetch_assoc($result))
 	{
 		$word_ids[] = $row['word_id'];
 	}
@@ -235,10 +235,10 @@ function strip_search_index($post_ids)
 		);
 
 		($hook = get_hook('si_fn_strip_search_index_qr_get_removable_words')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$word_ids = array();
-		while ($row = $forum_db->fetch_assoc($result))
+		while ($row = db()->fetch_assoc($result))
 		{
 			$word_ids[] = $row['word_id'];
 		}
@@ -251,7 +251,7 @@ function strip_search_index($post_ids)
 			);
 
 			($hook = get_hook('si_fn_strip_search_index_qr_delete_words')) ? eval($hook) : null;
-			$forum_db->query_build($query) or error(__FILE__, __LINE__);
+			db()->query_build($query) or error(__FILE__, __LINE__);
 		}
 	}
 
@@ -261,7 +261,7 @@ function strip_search_index($post_ids)
 	);
 
 	($hook = get_hook('si_fn_strip_search_index_qr_delete_matches')) ? eval($hook) : null;
-	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+	db()->query_build($query) or error(__FILE__, __LINE__);
 
 	($hook = get_hook('si_fn_strip_search_index_end')) ? eval($hook) : null;
 }

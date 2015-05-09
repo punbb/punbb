@@ -9,6 +9,12 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
+namespace punbb;
+
+// TODO separate to different files
+// /feed/atom/index.php
+// /feed/rss/index.php
+// ...
 
 /***********************************************************************
 
@@ -58,9 +64,7 @@
 
 define('FORUM_QUIET_VISIT', 1);
 
-if (!defined('FORUM_ROOT'))
-	define('FORUM_ROOT', './');
-require FORUM_ROOT.'include/common.php';
+require __DIR__ . '/vendor/autoload.php';
 
 ($hook = get_hook('ex_start')) ? eval($hook) : null;
 
@@ -69,13 +73,13 @@ if (!defined('FORUM_EXTERN_MAX_SUBJECT_LENGTH'))
 	define('FORUM_EXTERN_MAX_SUBJECT_LENGTH', 30);
 
 // If we're a guest and we've sent a username/pass, we can try to authenticate using those details
-if ($forum_user['is_guest'] && isset($_SERVER['PHP_AUTH_USER']))
+if (user()->is_guest && isset($_SERVER['PHP_AUTH_USER'])) {
 	authenticate_user($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+}
 
-if ($forum_user['g_read_board'] == '0')
-{
+if (user()->g_read_board == '0') {
 	http_authenticate_user();
-	exit($lang_common['No view']);
+	exit(__('No view'));
 }
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'feed';
@@ -84,25 +88,20 @@ $sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'posted';
 //
 // Sends the proper headers for Basic HTTP Authentication
 //
-function http_authenticate_user()
-{
-	global $forum_config, $forum_user;
-
-	if (!$forum_user['is_guest'])
+function http_authenticate_user() {
+	if (!user()->is_guest) {
 		return;
-
-	header('WWW-Authenticate: Basic realm="'.$forum_config['o_board_title'].' External Syndication"');
+	}
+	header('WWW-Authenticate: Basic realm="' .
+		config()->o_board_title . ' External Syndication"');
 	header('HTTP/1.0 401 Unauthorized');
 }
-
 
 //
 // Output $feed as RSS 2.0
 //
 function output_rss($feed)
 {
-	global $lang_common, $forum_config;
-
 	// Send XML/no cache headers
 	header('Content-Type: text/xml; charset=utf-8');
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -118,10 +117,12 @@ function output_rss($feed)
 	echo "\t\t".'<description><![CDATA['.escape_cdata($feed['description']).']]></description>'."\n";
 	echo "\t\t".'<lastBuildDate>'.gmdate('r', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</lastBuildDate>'."\n";
 
-	if ($forum_config['o_show_version'] == '1')
-		echo "\t\t".'<generator>PunBB '.$forum_config['o_cur_version'].'</generator>'."\n";
-	else
+	if (config()->o_show_version == '1') {
+		echo "\t\t".'<generator>PunBB ' . config()->o_cur_version . '</generator>'."\n";
+	}
+	else {
 		echo "\t\t".'<generator>PunBB</generator>'."\n";
+	}
 
 	($hook = get_hook('ex_add_new_rss_info')) ? eval($hook) : null;
 
@@ -150,8 +151,6 @@ function output_rss($feed)
 //
 function output_atom($feed)
 {
-	global $lang_common, $forum_config;
-
 	// Send XML/no cache headers
 	header('Content-Type: text/xml; charset=utf-8');
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -165,10 +164,12 @@ function output_atom($feed)
 	echo "\t".'<link rel="self" href="'.forum_htmlencode(get_current_url()).'" />'."\n";
 	echo "\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</updated>'."\n";
 
-	if ($forum_config['o_show_version'] == '1')
-		echo "\t".'<generator version="'.$forum_config['o_cur_version'].'">PunBB</generator>'."\n";
-	else
+	if (config()->o_show_version == '1') {
+		echo "\t".'<generator version="' . config()->o_cur_version . '">PunBB</generator>'."\n";
+	}
+	else {
 		echo "\t".'<generator>PunBB</generator>'."\n";
+	}
 
 	($hook = get_hook('ex_add_new_atom_info')) ? eval($hook) : null;
 
@@ -209,8 +210,6 @@ function output_atom($feed)
 //
 function output_xml($feed)
 {
-	global $lang_common, $forum_config;
-
 	// Send XML/no cache headers
 	header('Content-Type: application/xml; charset=utf-8');
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -300,33 +299,31 @@ if ($action == 'feed')
 			'JOINS'		=> array(
 				array(
 					'LEFT JOIN'		=> 'forum_perms AS fp',
-					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.$forum_user['g_id'].')'
+					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.user()->g_id.')'
 				)
 			),
 			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL and t.id='.$tid
 		);
 
 		($hook = get_hook('ex_qr_get_topic_data')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		$cur_topic = $forum_db->fetch_assoc($result);
-		if (!$cur_topic)
-		{
+		$cur_topic = db()->fetch_assoc($result);
+		if (!$cur_topic) {
 			http_authenticate_user();
-			exit($lang_common['Bad request']);
+			exit(__('Bad request'));
 		}
 
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
-		if ($forum_config['o_censoring'] == '1')
+		if (config()->o_censoring == '1') {
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
+		}
 
 		// Setup the feed
 		$feed = array(
-			'title'		=>	$forum_config['o_board_title'].$lang_common['Title separator'].$cur_topic['subject'],
-			'link'			=>	forum_link($forum_url['topic'], array($tid, sef_friendly($cur_topic['subject']))),
-			'description'	=>	sprintf($lang_common['RSS description topic'], $cur_topic['subject']),
+			'title'		=>	config()->o_board_title .
+				__('Title separator') . $cur_topic['subject'],
+			'link'			=>	link('topic', array($tid, sef_friendly($cur_topic['subject']))),
+			'description'	=>	sprintf(__('RSS description topic'), $cur_topic['subject']),
 			'items'			=>	array(),
 			'type'			=>	'posts'
 		);
@@ -346,19 +343,20 @@ if ($action == 'feed')
 			'LIMIT'		=> $show
 		);
 		($hook = get_hook('ex_qr_get_posts')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
-		while ($cur_post = $forum_db->fetch_assoc($result))
+		while ($cur_post = db()->fetch_assoc($result))
 		{
-			if ($forum_config['o_censoring'] == '1')
+			if (config()->o_censoring == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
 
-			$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+			$cur_post['message'] = bbcode()->parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 			$item = array(
 				'id'			=>	$cur_post['id'],
-				'title'			=>	$cur_topic['first_post_id'] == $cur_post['id'] ? $cur_topic['subject'] : $lang_common['RSS reply'].$cur_topic['subject'],
-				'link'			=>	forum_link($forum_url['post'], $cur_post['id']),
+				'title'			=>	$cur_topic['first_post_id'] == $cur_post['id'] ?
+					$cur_topic['subject'] : __('RSS reply') . $cur_topic['subject'],
+				'link'			=>	link('post', $cur_post['id']),
 				'description'	=>	$cur_post['message'],
 				'author'		=>	array(
 					'name'	=> $cur_post['poster'],
@@ -366,15 +364,16 @@ if ($action == 'feed')
 				'pubdate'		=>	$cur_post['posted']
 			);
 
-			if ($cur_post['poster_id'] > 1)
-			{
-				if ($cur_post['email_setting'] == '0' && !$forum_user['is_guest'])
+			if ($cur_post['poster_id'] > 1) {
+				if ($cur_post['email_setting'] == '0' && !user()->is_guest) {
 					$item['author']['email'] = $cur_post['email'];
+				}
 
-				$item['author']['uri'] = forum_link($forum_url['user'], $cur_post['poster_id']);
+				$item['author']['uri'] = link('user', $cur_post['poster_id']);
 			}
-			else if ($cur_post['poster_email'] != '' && !$forum_user['is_guest'])
+			else if ($cur_post['poster_email'] != '' && !user()->is_guest) {
 				$item['author']['email'] = $cur_post['poster_email'];
+			}
 
 			$feed['items'][] = $item;
 
@@ -383,27 +382,22 @@ if ($action == 'feed')
 
 		($hook = get_hook('ex_pre_topic_output')) ? eval($hook) : null;
 
-		$output_func = 'output_'.$type;
+		$output_func = 'punbb\\output_'.$type;
 		$output_func($feed);
 	}
-	else
-	{
+	else {
 		$forum_name = '';
 
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
 		// Were any forum ID's supplied?
-		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '')
-		{
+		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '') {
 			$fids = explode(',', forum_trim($_GET['fid']));
 			$fids = array_map('intval', $fids);
 
-			if (!empty($fids))
+			if (!empty($fids)) {
 				$forum_sql = ' AND t.forum_id IN('.implode(',', $fids).')';
+			}
 
-			if (count($fids) == 1)
-			{
+			if (count($fids) == 1) {
 				// Fetch forum name
 				$query = array(
 					'SELECT'	=> 'f.forum_name',
@@ -411,16 +405,16 @@ if ($action == 'feed')
 					'JOINS'		=> array(
 						array(
 							'LEFT JOIN'		=> 'forum_perms AS fp',
-							'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.$forum_user['g_id'].')'
+							'ON'			=> '(fp.forum_id=f.id AND fp.group_id='.user()->g_id.')'
 						)
 					),
 					'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum=1) AND f.id='.$fids[0]
 				);
 
-				$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-				$forum_name_in_db = $forum_db->result($result);
+				$result = db()->query_build($query) or error(__FILE__, __LINE__);
+				$forum_name_in_db = db()->result($result);
 				if (!is_null($forum_name_in_db) && $forum_name_in_db !== false)
-					$forum_name = $lang_common['Title separator'].$forum_name_in_db;
+					$forum_name = __('Title separator') . $forum_name_in_db;
 			}
 		}
 
@@ -436,9 +430,9 @@ if ($action == 'feed')
 
 		// Setup the feed
 		$feed = array(
-			'title'			=>	$forum_config['o_board_title'].$forum_name,
-			'link'			=>	forum_link($forum_url['index']),
-			'description'	=>	sprintf($lang_common['RSS description'], $forum_config['o_board_title']),
+			'title'			=>	config()->o_board_title . $forum_name,
+			'link'			=>	link('index'),
+			'description'	=>	sprintf(__('RSS description'), config()->o_board_title),
 			'items'			=>	array(),
 			'type'			=>	'topics'
 		);
@@ -458,7 +452,7 @@ if ($action == 'feed')
 				),
 				array(
 					'LEFT JOIN'		=> 'forum_perms AS fp',
-					'ON'			=> '(fp.forum_id = t.forum_id AND fp.group_id = '.$forum_user['g_id'].')'
+					'ON'			=> '(fp.forum_id = t.forum_id AND fp.group_id = '.user()->g_id.')'
 				)
 			),
 			'WHERE'		=> '(fp.read_forum IS NULL OR fp.read_forum = 1) AND t.moved_to IS NULL',
@@ -470,21 +464,20 @@ if ($action == 'feed')
 			$query['WHERE'] .= $forum_sql;
 
 		($hook = get_hook('ex_qr_get_topics')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_topic = $forum_db->fetch_assoc($result))
+		$result = db()->query_build($query) or error(__FILE__, __LINE__);
+		while ($cur_topic = db()->fetch_assoc($result))
 		{
-			if ($forum_config['o_censoring'] == '1')
-			{
+			if (config()->o_censoring == '1') {
 				$cur_topic['subject'] = censor_words($cur_topic['subject']);
 				$cur_topic['message'] = censor_words($cur_topic['message']);
 			}
 
-			$cur_topic['message'] = parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
+			$cur_topic['message'] = bbcode()->parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
 
 			$item = array(
 				'id'			=>	$cur_topic['id'],
 				'title'			=>	$cur_topic['subject'],
-				'link'			=>	forum_link($forum_url['topic_new_posts'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
+				'link'			=>	link('topic_new_posts', array($cur_topic['id'], sef_friendly($cur_topic['subject']))),
 				'description'	=>	$cur_topic['message'],
 				'author'		=>	array(
 					'name'			=> $cur_topic['poster']
@@ -494,13 +487,15 @@ if ($action == 'feed')
 
 			if ($cur_topic['poster_id'] > 1)
 			{
-				if ($cur_topic['email_setting'] == '0' && !$forum_user['is_guest'])
+				if ($cur_topic['email_setting'] == '0' && !user()->is_guest) {
 					$item['author']['email'] = $cur_topic['email'];
+				}
 
-				$item['author']['uri'] = forum_link($forum_url['user'], $cur_topic['poster_id']);
+				$item['author']['uri'] = link('user', $cur_topic['poster_id']);
 			}
-			else if ($cur_topic['poster_email'] != '' && !$forum_user['is_guest'])
+			else if ($cur_topic['poster_email'] != '' && !user()->is_guest) {
 				$item['author']['email'] = $cur_topic['poster_email'];
+			}
 
 			$feed['items'][] = $item;
 
@@ -509,7 +504,7 @@ if ($action == 'feed')
 
 		($hook = get_hook('ex_pre_forum_output')) ? eval($hook) : null;
 
-		$output_func = 'output_'.$type;
+		$output_func = 'punbb\\output_'.$type;
 		$output_func($feed);
 	}
 
@@ -519,9 +514,6 @@ if ($action == 'feed')
 // Show users online
 else if ($action == 'online' || $action == 'online_full')
 {
-	// Load the index.php language file
-	require FORUM_ROOT.'lang/'.$forum_config['o_default_lang'].'/index.php';
-
 	// Fetch users online info and generate strings for output
 	$num_guests = $num_users = 0;
 	$users = array();
@@ -534,12 +526,13 @@ else if ($action == 'online' || $action == 'online_full')
 	);
 
 	($hook = get_hook('ex_qr_get_users_online')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	while ($forum_user_online = $forum_db->fetch_assoc($result))
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	while ($forum_user_online = db()->fetch_assoc($result))
 	{
 		if ($forum_user_online['user_id'] > 1)
 		{
-			$users[] = $forum_user['g_view_users'] == '1' ?'<a href="'.forum_link($forum_url['user'], $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
+			$users[] = user()->g_view_users == '1'?
+				'<a href="'.link('user', $forum_user_online['user_id']).'">'.forum_htmlencode($forum_user_online['ident']).'</a>' : forum_htmlencode($forum_user_online['ident']);
 			++$num_users;
 		}
 		else
@@ -554,12 +547,13 @@ else if ($action == 'online' || $action == 'online_full')
 	header('Pragma: public');
 
 
-	echo $lang_index['Guests online'].': '.forum_number_format($num_guests).'<br />'."\n";
+	echo __('Guests online', 'index') . ': ' . forum_number_format($num_guests) . '<br />' . "\n";
 
 	if ($_GET['action'] == 'online_full' && !empty($users))
-		echo $lang_index['Users online'].': '.implode($lang_index['Online list separator'], $users).'<br />'."\n";
+		echo __('Users online', 'index') . ': ' .
+			implode(__('Online list separator', 'index'), $users).'<br />'."\n";
 	else
-		echo $lang_index['Users online'].': '.forum_number_format($num_users).'<br />'."\n";
+		echo __('Users online', 'index') . ': ' . forum_number_format($num_users).'<br />'."\n";
 
 	exit;
 }
@@ -567,9 +561,6 @@ else if ($action == 'online' || $action == 'online_full')
 // Show board statistics
 else if ($action == 'stats')
 {
-	// Load the index.php language file
-	require FORUM_ROOT.'lang/'.$forum_config['o_default_lang'].'/index.php';
-
 	// Collect some statistics from the database
 	$query = array(
 		'SELECT'	=> 'COUNT(u.id) - 1',
@@ -578,8 +569,8 @@ else if ($action == 'stats')
 	);
 
 	($hook = get_hook('ex_qr_get_user_count')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$stats['total_users'] = $forum_db->result($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$stats['total_users'] = db()->result($result);
 
 	$query = array(
 		'SELECT'	=> 'u.id, u.username',
@@ -590,8 +581,8 @@ else if ($action == 'stats')
 	);
 
 	($hook = get_hook('ex_qr_get_newest_user')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	$stats['last_user'] = $forum_db->fetch_assoc($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	$stats['last_user'] = db()->fetch_assoc($result);
 
 	$query = array(
 		'SELECT'	=> 'SUM(f.num_topics), SUM(f.num_posts)',
@@ -599,8 +590,8 @@ else if ($action == 'stats')
 	);
 
 	($hook = get_hook('ex_qr_get_post_stats')) ? eval($hook) : null;
-	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-	list($stats['total_topics'], $stats['total_posts']) = $forum_db->fetch_row($result);
+	$result = db()->query_build($query) or error(__FILE__, __LINE__);
+	list($stats['total_topics'], $stats['total_posts']) = db()->fetch_row($result);
 
 	// Send the Content-type header in case the web server is setup to send something else
 	header('Content-type: text/html; charset=utf-8');
@@ -610,10 +601,10 @@ else if ($action == 'stats')
 
 	($hook = get_hook('ex_pre_stats_output')) ? eval($hook) : null;
 
-	echo sprintf($lang_index['No of users'], forum_number_format($stats['total_users'])).'<br />'."\n";
-	echo sprintf($lang_index['Newest user'], '<a href="'.forum_link($forum_url['user'], $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>').'<br />'."\n";
-	echo sprintf($lang_index['No of topics'], forum_number_format($stats['total_topics'])).'<br />'."\n";
-	echo sprintf($lang_index['No of posts'], forum_number_format($stats['total_posts'])).'<br />'."\n";
+	echo sprintf(__('No of users', 'index'), forum_number_format($stats['total_users'])).'<br />'."\n";
+	echo sprintf(__('Newest user', 'index'), '<a href="'.link('user', $stats['last_user']['id']).'">'.forum_htmlencode($stats['last_user']['username']).'</a>').'<br />'."\n";
+	echo sprintf(__('No of topics', 'index'), forum_number_format($stats['total_topics'])).'<br />'."\n";
+	echo sprintf(__('No of posts', 'index'), forum_number_format($stats['total_posts'])).'<br />'."\n";
 
 	exit;
 }
@@ -622,4 +613,4 @@ else if ($action == 'stats')
 ($hook = get_hook('ex_new_action')) ? eval($hook) : null;
 
 // If we end up here, the script was called with some wacky parameters
-exit($lang_common['Bad request']);
+exit(__('Bad request'));

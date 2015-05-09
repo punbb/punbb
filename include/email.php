@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
-
+namespace punbb;
 
 // Make sure no one attempts to run this script "directly"
 if (!defined('FORUM'))
@@ -32,20 +32,20 @@ function is_valid_email($email)
 //
 // Check if $email is banned
 //
-function is_banned_email($email)
-{
-	global $forum_db, $forum_bans;
+function is_banned_email($email) {
+	$cached = cache()->get('cache_bans', 'punbb\\fn::generate_bans_cache');
 
 	$return = ($hook = get_hook('em_fn_is_banned_email_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return != null) {
 		return $return;
+	}
 
-	foreach ($forum_bans as $cur_ban)
-	{
+	foreach ($cached as $cur_ban) {
 		if ($cur_ban['email'] != '' &&
-			($email == $cur_ban['email'] ||
-			(strpos($cur_ban['email'], '@') === false && stristr($email, '@'.$cur_ban['email']))))
+				($email == $cur_ban['email'] ||
+				(strpos($cur_ban['email'], '@') === false && stristr($email, '@'.$cur_ban['email'])))) {
 			return true;
+		}
 	}
 
 	return false;
@@ -57,11 +57,9 @@ function is_banned_email($email)
 //
 function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_name = '')
 {
-	global $forum_config, $lang_common;
-
 	// Default sender address
-	$from_name = sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']);
-	$from_email = $forum_config['o_webmaster_email'];
+	$from_name = sprintf(__('Forum mailer'), config()->o_board_title);
+	$from_email = config()->o_webmaster_email;
 
 	($hook = get_hook('em_fn_forum_mail_start')) ? eval($hook) : null;
 
@@ -92,7 +90,7 @@ function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_nam
 
 	($hook = get_hook('em_fn_forum_mail_pre_send')) ? eval($hook) : null;
 
-	if ($forum_config['o_smtp_host'] != '')
+	if (config()->o_smtp_host != '')
 		smtp_mail($to, $subject, $message, $headers);
 	else
 	{
@@ -131,8 +129,6 @@ function server_parse($socket, $expected_response)
 //
 function smtp_mail($to, $subject, $message, $headers = '')
 {
-	global $forum_config;
-
 	$recipients = explode(',', $to);
 
 	// Sanitize the message
@@ -140,23 +136,23 @@ function smtp_mail($to, $subject, $message, $headers = '')
 	$message = (substr($message, 0, 1) == '.' ? '.'.$message : $message);
 
 	// Are we using port 25 or a custom port?
-	if (strpos($forum_config['o_smtp_host'], ':') !== false)
-		list($smtp_host, $smtp_port) = explode(':', $forum_config['o_smtp_host']);
+	if (strpos(config()->o_smtp_host, ':') !== false)
+		list($smtp_host, $smtp_port) = explode(':', config()->o_smtp_host);
 	else
 	{
-		$smtp_host = $forum_config['o_smtp_host'];
+		$smtp_host = config()->o_smtp_host;
 		$smtp_port = 25;
 	}
 
-	if ($forum_config['o_smtp_ssl'] == '1')
+	if (config()->o_smtp_ssl == '1')
 		$smtp_host = 'ssl://'.$smtp_host;
 
 	if (!($socket = fsockopen($smtp_host, $smtp_port, $errno, $errstr, 15)))
-		error('Could not connect to smtp host "'.$forum_config['o_smtp_host'].'" ('.$errno.') ('.$errstr.').', __FILE__, __LINE__);
+		error('Could not connect to smtp host "'.config()->o_smtp_host.'" ('.$errno.') ('.$errstr.').', __FILE__, __LINE__);
 
 	server_parse($socket, '220');
 
-	if ($forum_config['o_smtp_user'] != '' && $forum_config['o_smtp_pass'] != '')
+	if (config()->o_smtp_user != '' && config()->o_smtp_pass != '')
 	{
 		fwrite($socket, 'EHLO '.$smtp_host."\r\n");
 		server_parse($socket, '250');
@@ -164,10 +160,10 @@ function smtp_mail($to, $subject, $message, $headers = '')
 		fwrite($socket, 'AUTH LOGIN'."\r\n");
 		server_parse($socket, '334');
 
-		fwrite($socket, base64_encode($forum_config['o_smtp_user'])."\r\n");
+		fwrite($socket, base64_encode(config()->o_smtp_user)."\r\n");
 		server_parse($socket, '334');
 
-		fwrite($socket, base64_encode($forum_config['o_smtp_pass'])."\r\n");
+		fwrite($socket, base64_encode(config()->o_smtp_pass)."\r\n");
 		server_parse($socket, '235');
 	}
 	else
@@ -176,7 +172,7 @@ function smtp_mail($to, $subject, $message, $headers = '')
 		server_parse($socket, '250');
 	}
 
-	fwrite($socket, 'MAIL FROM: <'.$forum_config['o_webmaster_email'].'>'."\r\n");
+	fwrite($socket, 'MAIL FROM: <'.config()->o_webmaster_email.'>'."\r\n");
 	server_parse($socket, '250');
 
 	foreach ($recipients as $email)
