@@ -2947,7 +2947,8 @@ function maintenance_message() {
 
 	template()->render([
 		'template' => 'layout/maintenance',
-		'main_view' => 'partial/maintenance'
+		'main_view' => 'partial/maintenance',
+		'message' => $message
 	]);
 }
 
