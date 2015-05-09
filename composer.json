@@ -52,7 +52,7 @@
 			"include/utf8/ucwords.php",
 			"include/utf8/trim.php",
 
-			"include/services.php",
+			"include/init.php",
 			"include/essentials.php",
 			"include/common.php",
 			"include/common_admin.php"

@@ -4,8 +4,40 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "593a64ed560ae5d5babd3b3f9917cb04",
+    "hash": "b288913fabf925d356d12df361f94842",
     "packages": [
+        {
+            "name": "lib/service",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rivetweb/php-service.git",
+                "reference": "a71b427e9c37a82baf116e023e658ff6efe3ae6c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rivetweb/php-service/zipball/a71b427e9c37a82baf116e023e658ff6efe3ae6c",
+                "reference": "a71b427e9c37a82baf116e023e658ff6efe3ae6c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Rick Deckard",
+                    "email": "rivetweb@yandex.ru"
+                }
+            ],
+            "description": "Service container",
+            "support": {
+                "source": "https://github.com/rivetweb/php-service/tree/master"
+            },
+            "time": "2015-05-09 11:28:54"
+        },
         {
             "name": "punbb/db-mysqli-innodb",
             "version": "dev-master",
@@ -211,6 +243,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "lib/service": 20,
         "punbb/db-mysqli-innodb": 20,
         "punbb/lang-english": 20,
         "punbb/lang-russian": 20,
