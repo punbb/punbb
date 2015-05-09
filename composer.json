@@ -2,6 +2,10 @@
 	"repositories": [
 		{
 			"type": "vcs",
+			"url": "https://github.com/rivetweb/php-service"
+		}
+		{
+			"type": "vcs",
 			"url": "https://github.com/rivetweb/punbb-db-mysqli-innodb"
 		},
 		{
@@ -27,6 +31,7 @@
 	],
 
 	"require": {
+		"lib/service": "dev-master",
 		"punbb/db-mysqli-innodb": "dev-master",
 		"punbb/lang-English": "dev-master",
 		"punbb/lang-Russian": "dev-master",
