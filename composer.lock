@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b288913fabf925d356d12df361f94842",
+    "hash": "48bf279b9e38903b1c20381c37031822",
     "packages": [
         {
             "name": "lib/service",
@@ -44,12 +44,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-db-mysqli-innodb.git",
-                "reference": "bd8d90111e3b70cb279c1c3cb8ebc36362ad6695"
+                "reference": "60878363c44ff3bc27ffc07dde942df025309309"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-db-mysqli-innodb/zipball/bd8d90111e3b70cb279c1c3cb8ebc36362ad6695",
-                "reference": "bd8d90111e3b70cb279c1c3cb8ebc36362ad6695",
+                "url": "https://api.github.com/repos/rivetweb/punbb-db-mysqli-innodb/zipball/60878363c44ff3bc27ffc07dde942df025309309",
+                "reference": "60878363c44ff3bc27ffc07dde942df025309309",
                 "shasum": ""
             },
             "type": "library",
@@ -71,7 +71,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-db-mysqli-innodb/tree/master"
             },
-            "time": "2015-05-06 08:48:58"
+            "time": "2015-05-09 11:47:38"
         },
         {
             "name": "punbb/lang-English",
@@ -79,12 +79,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-lang-English.git",
-                "reference": "b687cff4abe3eff765d00263a014adca92faba80"
+                "reference": "32efe25e0f08c2cea2c5ecaf3fa3fdd15a84bf0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-lang-English/zipball/b687cff4abe3eff765d00263a014adca92faba80",
-                "reference": "b687cff4abe3eff765d00263a014adca92faba80",
+                "url": "https://api.github.com/repos/rivetweb/punbb-lang-English/zipball/32efe25e0f08c2cea2c5ecaf3fa3fdd15a84bf0d",
+                "reference": "32efe25e0f08c2cea2c5ecaf3fa3fdd15a84bf0d",
                 "shasum": ""
             },
             "type": "library",
@@ -104,7 +104,7 @@
                 "source": "https://github.com/rivetweb/punbb-lang-English/tree/master",
                 "issues": "https://github.com/rivetweb/punbb-lang-English/issues"
             },
-            "time": "2015-05-06 08:49:28"
+            "time": "2015-05-09 11:48:19"
         },
         {
             "name": "punbb/lang-Russian",
@@ -112,12 +112,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-lang-Russian.git",
-                "reference": "4dcbf09b77a3dcfc204694b5236411e8f9262059"
+                "reference": "2732502c8704e10a858284dfef02b0ab8e81fc18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-lang-Russian/zipball/4dcbf09b77a3dcfc204694b5236411e8f9262059",
-                "reference": "4dcbf09b77a3dcfc204694b5236411e8f9262059",
+                "url": "https://api.github.com/repos/rivetweb/punbb-lang-Russian/zipball/2732502c8704e10a858284dfef02b0ab8e81fc18",
+                "reference": "2732502c8704e10a858284dfef02b0ab8e81fc18",
                 "shasum": ""
             },
             "type": "library",
@@ -137,7 +137,7 @@
                 "source": "https://github.com/rivetweb/punbb-lang-Russian/tree/master",
                 "issues": "https://github.com/rivetweb/punbb-lang-Russian/issues"
             },
-            "time": "2015-05-06 08:49:47"
+            "time": "2015-05-09 11:48:36"
         },
         {
             "name": "punbb/style-Oxygen",
@@ -145,12 +145,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-style-Oxygen.git",
-                "reference": "7be182af76cd811a1f9d92a3a911c18ded0555c8"
+                "reference": "3f1f3d3872bc5f573073fc43cd476e6288c8e827"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-style-Oxygen/zipball/7be182af76cd811a1f9d92a3a911c18ded0555c8",
-                "reference": "7be182af76cd811a1f9d92a3a911c18ded0555c8",
+                "url": "https://api.github.com/repos/rivetweb/punbb-style-Oxygen/zipball/3f1f3d3872bc5f573073fc43cd476e6288c8e827",
+                "reference": "3f1f3d3872bc5f573073fc43cd476e6288c8e827",
                 "shasum": ""
             },
             "type": "library",
@@ -169,7 +169,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-style-Oxygen/tree/master"
             },
-            "time": "2015-05-06 08:56:17"
+            "time": "2015-05-09 11:48:56"
         },
         {
             "name": "punbb/template-Default",
@@ -177,12 +177,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-template-Default.git",
-                "reference": "bed6f98d7789ac4cd8c63585369c4792900a5857"
+                "reference": "c9480b5e30900318a983326ecb0d74fb1bce6c5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-template-Default/zipball/bed6f98d7789ac4cd8c63585369c4792900a5857",
-                "reference": "bed6f98d7789ac4cd8c63585369c4792900a5857",
+                "url": "https://api.github.com/repos/rivetweb/punbb-template-Default/zipball/c9480b5e30900318a983326ecb0d74fb1bce6c5a",
+                "reference": "c9480b5e30900318a983326ecb0d74fb1bce6c5a",
                 "shasum": ""
             },
             "type": "library",
@@ -204,7 +204,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-template-Default/tree/master"
             },
-            "time": "2015-05-06 08:50:59"
+            "time": "2015-05-09 11:49:19"
         },
         {
             "name": "punbb/urls-Default",
@@ -212,12 +212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rivetweb/punbb-urls-Default.git",
-                "reference": "02b6de6d2f1f90dfb81b4d4511eb1af1824b17cc"
+                "reference": "3433b7b7a1f3f00b75c29d61f8c2b3516a44364f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rivetweb/punbb-urls-Default/zipball/02b6de6d2f1f90dfb81b4d4511eb1af1824b17cc",
-                "reference": "02b6de6d2f1f90dfb81b4d4511eb1af1824b17cc",
+                "url": "https://api.github.com/repos/rivetweb/punbb-urls-Default/zipball/3433b7b7a1f3f00b75c29d61f8c2b3516a44364f",
+                "reference": "3433b7b7a1f3f00b75c29d61f8c2b3516a44364f",
                 "shasum": ""
             },
             "type": "library",
@@ -236,7 +236,7 @@
             "support": {
                 "source": "https://github.com/rivetweb/punbb-urls-Default/tree/master"
             },
-            "time": "2015-05-06 08:51:40"
+            "time": "2015-05-09 11:49:43"
         }
     ],
     "packages-dev": [],

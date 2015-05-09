@@ -177,8 +177,7 @@ class Loader
 
 
 	// Add CSS url to load
-	public function add_css($data = NULL, $options = NULL)
-	{
+	public function add_css($data = NULL, $options = NULL) {
 		$return = ($hook = get_hook('ld_fn_add_css_start')) ? eval($hook) : null;
 		if ($return != null)
 			return $return;

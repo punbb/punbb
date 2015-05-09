@@ -468,7 +468,7 @@ switch ($stage)
 	<meta charset="utf-8" />
 	<title>PunBB Database Update</title>
 	<link rel="stylesheet" type="text/css"
-		href="<?= theme()->url['Oxygen'] ?>/Oxygen.min.css" />
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
 	<script type="text/javascript" src="<?= app()->base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>
@@ -2183,7 +2183,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 	<meta charset="utf-8" />
 	<title>PunBB Database Update</title>
 	<link rel="stylesheet" type="text/css"
-		href="<?= theme()->url['Oxygen'] ?>/Oxygen.min.css" />
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
 	<script type="text/javascript" src="<?= app()->base_url ?>/include/js/min/punbb.common.min.js"></script>
 </head>
 <body>

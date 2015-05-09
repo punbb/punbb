@@ -131,7 +131,7 @@ if (!isset($_POST['form_sent']))
 	<meta charset="utf-8" />
 	<title>PunBB Installation</title>
 	<link rel="stylesheet" type="text/css"
-		href="<?= theme()->url['Oxygen'] ?>/Oxygen.min.css" />
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
@@ -1901,7 +1901,7 @@ else
 	<meta charset="utf-8" />
 	<title>PunBB Installation</title>
 	<link rel="stylesheet" type="text/css"
-		href="<?= theme()->url['Oxygen'] ?>/Oxygen.min.css" />
+		href="<?= path2url(theme()->path['Oxygen']) ?>/Oxygen.min.css" />
 </head>
 <body>
 <div id="brd-install" class="brd-page">
