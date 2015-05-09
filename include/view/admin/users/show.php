@@ -15,7 +15,7 @@ namespace punbb;
 		__('Select', 'misc') . '</th>';
 
 	if ($forum_page['num_users'] > 0)
-		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-show-users-results-form">'.
+		$main_head_options['select'] = $forum_page['main_foot_options']['select'] = '<span class="select-all js_link" data-check-form="aus-show-users-results-form">'.
 		__('Select all', 'admin_common').'</span>';
 
 	($hook = get_hook('aus_show_users_output_start')) ? eval($hook) : null;
@@ -24,8 +24,8 @@ namespace punbb;
 	<div class="main-head">
 <?php
 
-	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+	if (!empty($main_head_options))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $main_head_options).'</p>';
 
 ?>
 		<h2 class="hn"><span><?php printf(__('Users found', 'admin_users'), $forum_page['num_users']) ?></span></h2>

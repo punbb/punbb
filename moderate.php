@@ -379,7 +379,8 @@ if (isset($_GET['tid']))
 		__('Moderate topic', 'topic')
 	);
 
-	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
+	$main_head_options['select_all'] = '<span ' .
+		(empty($main_head_options)? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
 		__('Select all', 'misc') . '</span></span>';
 	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-post-actions-form">'.
 		__('Select all', 'misc') . '</span></span>';
@@ -428,7 +429,8 @@ if (isset($_GET['tid']))
 		'page_post' => $page_post,
 		'page' => $page,
 		'form_action' => $form_action,
-		'nav' => $nav
+		'nav' => $nav,
+		'main_head_options' => $main_head_options
 	]);
 }
 
@@ -1166,7 +1168,8 @@ else {
 	$main_head_pages = '';
 }
 
-$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.
+$main_head_options['select_all'] = '<span ' .
+	(empty($main_head_options)? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.
 	__('Select all', 'misc') . '</span></span>';
 $forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><span class="select-all js_link" data-check-form="mr-topic-actions-form">'.
 	__('Select all', 'misc') . '</span></span>';
@@ -1182,5 +1185,6 @@ template()->render([
 	'page_post' => $page_post,
 	'page' => $page,
 	'form_action' => $form_action,
-	'nav' => $nav
+	'nav' => $nav,
+	'main_head_options' => $main_head_options
 ]);

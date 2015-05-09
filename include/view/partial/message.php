@@ -3,9 +3,9 @@ namespace punbb;
 
 ?>
 <div class="main-head">
-	<?php if (!empty($forum_page['main_head_options'])) { ?>
+	<?php if (!empty($main_head_options)) { ?>
 		<p class="options">
-			<?php foreach ($forum_page['main_head_options'] as $v) { ?>
+			<?php foreach ($main_head_options as $v) { ?>
 				<?= $v ?>
 			<?php } ?>
 		</p>

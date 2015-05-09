@@ -93,13 +93,15 @@ if ($page > 1) {
 }
 
 // Setup main options
-if (empty($_GET))
-	$forum_page['main_head_options'] = array();
-else
-	$forum_page['main_head_options'] = array(
+if (empty($_GET)) {
+	$main_head_options = array();
+}
+else {
+	$main_head_options = array(
 		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.link('users').'">'.
 			__('Perform new search', 'userlist') . '</a></span>'
 	);
+}
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -163,5 +165,6 @@ template()->render([
 	'page_post' => $page_post,
 	'page' => $page,
 	'form_action' => $form_action,
-	'nav' => $nav
+	'nav' => $nav,
+	'main_head_options' => $main_head_options
 ]);

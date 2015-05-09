@@ -7,8 +7,8 @@ namespace punbb;
 	<div class="main-head">
 <?php
 
-	if (!empty($forum_page['main_head_options']))
-		echo "\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>'."\n";
+	if (!empty($main_head_options))
+		echo "\t\t".'<p class="options">'.implode(' ', $main_head_options).'</p>'."\n";
 
 ?>
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>

@@ -2996,10 +2996,10 @@ function redirect($destination_url, $message) {
 	template()->render([
 		'template' => 'layout/redirect',
 		'main_view' => 'partial/redirect',
-		'destination_url' => $destination_url
+		'destination_url' => $destination_url,
+		'message' => $message
 	]);
 }
-
 
 // Display a simple error message
 function error() {

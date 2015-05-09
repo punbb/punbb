@@ -11,8 +11,8 @@ $forum_page['item_body']['subject']['desc'] = '<p>' .
 ?>
 <div class="main-head">
 <?php
-	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+	if (!empty($main_head_options))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $main_head_options).'</p>';
 ?>
 	<h2 class="hn"><span><?= __('Empty forum', 'forum') ?></span></h2>
 </div>

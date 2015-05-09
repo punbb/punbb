@@ -170,24 +170,22 @@ else
 	__('No permission', 'forum') . '</p>';
 
 // Setup main options
-$forum_page['main_head_options'] = $forum_page['main_foot_options'] = array();
+$main_head_options = $forum_page['main_foot_options'] = array();
 
 if (!empty($topics))
-	$forum_page['main_head_options']['feed'] = '<span class="feed first-item"><a class="feed" href="'.link('forum_rss', $id).'">'.
+	$main_head_options['feed'] = '<span class="feed first-item"><a class="feed" href="'.link('forum_rss', $id).'">'.
 	__('RSS forum feed', 'forum') . '</a></span>';
 
-if (!user()->is_guest && config()->o_subscriptions == '1')
-{
+if (!user()->is_guest && config()->o_subscriptions == '1') {
 	if ($cur_forum['is_subscribed'])
-		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.link('forum_unsubscribe', array($id, generate_form_token('forum_unsubscribe'.$id.user()->id))).'"><em>'.
+		$main_head_options['unsubscribe'] = '<span><a class="sub-option" href="'.link('forum_unsubscribe', array($id, generate_form_token('forum_unsubscribe'.$id.user()->id))).'"><em>'.
 		__('Unsubscribe', 'forum') . '</em></a></span>';
 	else
-		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.link('forum_subscribe', array($id, generate_form_token('forum_subscribe'.$id.user()->id))).'" title="'.
+		$main_head_options['subscribe'] = '<span><a class="sub-option" href="'.link('forum_subscribe', array($id, generate_form_token('forum_subscribe'.$id.user()->id))).'" title="'.
 		__('Subscribe info', 'forum') . '">' . __('Subscribe', 'forum') . '</a></span>';
 }
 
-if (!user()->is_guest && !empty($topics))
-{
+if (!user()->is_guest && !empty($topics)) {
 	$forum_page['main_foot_options']['mark_read'] = '<span class="first-item"><a href="'.link('mark_forum_read', array($id, generate_form_token('markforumread'.$id.user()->id))).'">'.
 		__('Mark forum read', 'forum') . '</a></span>';
 
@@ -226,5 +224,6 @@ template()->render([
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
 	'page' => $page,
-	'nav' => $nav
+	'nav' => $nav,
+	'main_head_options' => $main_head_options
 ]);

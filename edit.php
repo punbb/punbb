@@ -181,7 +181,7 @@ $hidden_fields = array(
 );
 
 // Setup help
-$forum_page['main_head_options'] = array();
+$main_head_options = array();
 if (config()->p_message_bbcode == '1')
 	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'bbcode').'" title="'.
 	sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
@@ -210,5 +210,6 @@ template()->render([
 	'main_view' => 'edit/main',
 	'crumbs' => $crumbs,
 	'form_action' => $form_action,
-	'hidden_fields' => $hidden_fields
+	'hidden_fields' => $hidden_fields,
+	'main_head_options' => $main_head_options
 ]);

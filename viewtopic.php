@@ -207,18 +207,18 @@ else {
 }
 
 $main_title = __('Topic options', 'topic');
-$forum_page['main_head_options'] = array(
+$main_head_options = array(
 	'rss' => '<span class="feed first-item"><a class="feed" href="'.link('topic_rss', $id).'">'.
 		__('RSS topic feed', 'topic') . '</a></span>'
 );
 
 if (!user()->is_guest && config()->o_subscriptions == '1') {
 	if ($cur_topic['is_subscribed']) {
-		$forum_page['main_head_options']['unsubscribe'] = '<span><a class="sub-option" href="'.link('unsubscribe', array($id, generate_form_token('unsubscribe'.$id.user()->id))).'"><em>'.
+		$main_head_options['unsubscribe'] = '<span><a class="sub-option" href="'.link('unsubscribe', array($id, generate_form_token('unsubscribe'.$id.user()->id))).'"><em>'.
 			__('Unsubscribe', 'topic') . '</em></a></span>';
 	}
 	else {
-		$forum_page['main_head_options']['subscribe'] = '<span><a class="sub-option" href="'.link('subscribe', array($id, generate_form_token('subscribe'.$id.user()->id))).'" title="'.
+		$main_head_options['subscribe'] = '<span><a class="sub-option" href="'.link('subscribe', array($id, generate_form_token('subscribe'.$id.user()->id))).'" title="'.
 			__('Subscribe info', 'topic') . '">'.
 			__('Subscribe', 'topic') . '</a></span>';
 	}
@@ -348,5 +348,6 @@ template()->render([
 	'crumbs' => $crumbs,
 	'page_post' => $page_post,
 	'page' => $page,
-	'nav' => $nav
+	'nav' => $nav,
+	'main_head_options' => $main_head_options
 ]);

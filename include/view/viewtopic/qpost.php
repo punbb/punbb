@@ -20,7 +20,7 @@ if (!user()->is_guest && config()->o_subscriptions == '1' &&
 }
 
 // Setup help
-$forum_page['main_head_options'] = array();
+$main_head_options = array();
 if (config()->p_message_bbcode == '1')
 	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="first-item"' : '').'><a class="exthelp" href="'.link('help', 'bbcode').'" title="'.sprintf(__('Help page'), __('BBCode')).'">'.__('BBCode').'</a></span>';
 if (config()->p_message_img_tag == '1')

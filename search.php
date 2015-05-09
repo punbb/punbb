@@ -229,7 +229,7 @@ $advanced_search = isset($_GET['advanced']) ? true : false;
 // Show link for advanced form
 if (!$advanced_search)
 {
-	$forum_page['main_head_options']['advanced_search'] = '<span'.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="'.link('search_advanced').'">'.
+	$main_head_options['advanced_search'] = '<span'.(empty($main_head_options)? ' class="first-item"' : '').'><a href="'.link('search_advanced').'">'.
 		__('Advanced search', 'search') . '</a></span>';
 }
 
@@ -274,5 +274,6 @@ if ((!$advanced_search && (config()->o_search_all_forums == '0' &&
 template()->render([
 	'main_view' => 'search/main',
 	'crumbs' => $crumbs,
-	'page' => $page
+	'page' => $page,
+	'main_head_options' => $main_head_options
 ]);

@@ -18,8 +18,8 @@ namespace punbb;
 	<div class="main-head">
 <?php
 
-	if (!empty($forum_page['main_head_options']))
-		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+	if (!empty($main_head_options))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $main_head_options).'</p>';
 
 ?>
 		<h2 class="hn"><span><?php printf(__('IP addresses found', 'admin_users'), $forum_page['num_users']) ?></span></h2>
