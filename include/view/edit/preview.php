@@ -3,10 +3,6 @@ namespace punbb;
 
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($forum_page['errors'])) {
-	if (!defined('FORUM_PARSER_LOADED')) {
-		require FORUM_ROOT.'include/parser.php';
-	}
-
 	// Generate the post heading
 	$forum_page['post_ident'] = array();
 	$forum_page['post_ident']['num'] = '<span class="post-num">#</span>';
@@ -14,7 +10,7 @@ if (isset($_POST['preview']) && empty($forum_page['errors'])) {
 		__('Topic byline', 'post') : __('Reply byline', 'post')), '<strong>'.forum_htmlencode($cur_post['poster']).'</strong>').'</span>';
 	$forum_page['post_ident']['link'] = '<span class="post-link">'.format_time(time()).'</span>';
 
-	$forum_page['preview_message'] = parse_message($message, $hide_smilies);
+	$forum_page['preview_message'] = bbcode()->parse_message($message, $hide_smilies);
 
 	($hook = get_hook('ed_preview_pre_display')) ? eval($hook) : null;
 

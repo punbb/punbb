@@ -309,14 +309,10 @@ if ($action == 'feed')
 		$result = db()->query_build($query) or error(__FILE__, __LINE__);
 
 		$cur_topic = db()->fetch_assoc($result);
-		if (!$cur_topic)
-		{
+		if (!$cur_topic) {
 			http_authenticate_user();
 			exit(__('Bad request'));
 		}
-
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
 
 		if (config()->o_censoring == '1') {
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
@@ -354,7 +350,7 @@ if ($action == 'feed')
 			if (config()->o_censoring == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
 
-			$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+			$cur_post['message'] = bbcode()->parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 			$item = array(
 				'id'			=>	$cur_post['id'],
@@ -389,24 +385,19 @@ if ($action == 'feed')
 		$output_func = 'punbb\\output_'.$type;
 		$output_func($feed);
 	}
-	else
-	{
+	else {
 		$forum_name = '';
 
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
 		// Were any forum ID's supplied?
-		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '')
-		{
+		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '') {
 			$fids = explode(',', forum_trim($_GET['fid']));
 			$fids = array_map('intval', $fids);
 
-			if (!empty($fids))
+			if (!empty($fids)) {
 				$forum_sql = ' AND t.forum_id IN('.implode(',', $fids).')';
+			}
 
-			if (count($fids) == 1)
-			{
+			if (count($fids) == 1) {
 				// Fetch forum name
 				$query = array(
 					'SELECT'	=> 'f.forum_name',
@@ -481,7 +472,7 @@ if ($action == 'feed')
 				$cur_topic['message'] = censor_words($cur_topic['message']);
 			}
 
-			$cur_topic['message'] = parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
+			$cur_topic['message'] = bbcode()->parse_message($cur_topic['message'], $cur_topic['hide_smilies']);
 
 			$item = array(
 				'id'			=>	$cur_topic['id'],

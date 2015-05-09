@@ -1962,9 +1962,6 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		break;
 
 	case 'preparse_posts':
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
 		// Now we're definitely using UTF-8, so we convert the output properly
 		db()->set_names('utf8');
 
@@ -2003,7 +2000,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'posts',
-				'SET'		=> 'message = \''.db()->escape(preparse_bbcode($cur_item['message'], $preparse_errors)).'\'',
+				'SET'		=> 'message = \''.db()->escape(bbcode()->preparse_bbcode($cur_item['message'], $preparse_errors)).'\'',
 				'WHERE'		=> 'id = '.$cur_item['id']
 			);
 
@@ -2031,9 +2028,6 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 		break;
 
 	case 'preparse_sigs':
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
 		// Now we're definitely using UTF-8, so we convert the output properly
 		db()->set_names('utf8');
 
@@ -2060,7 +2054,7 @@ if (strpos($cur_version, '1.2') === 0 && $db_seems_utf8 && !isset($_GET['force']
 
 			$query = array(
 				'UPDATE'	=> 'users',
-				'SET'		=> 'signature = \''.db()->escape(preparse_bbcode($cur_item['signature'], $preparse_errors, true)).'\'',
+				'SET'		=> 'signature = \''.db()->escape(bbcode()->preparse_bbcode($cur_item['signature'], $preparse_errors, true)).'\'',
 				'WHERE'		=> 'id = '.$cur_item['id']
 			);
 

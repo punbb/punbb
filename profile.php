@@ -802,12 +802,8 @@ else if (isset($_POST['form_sent']))
 				$form['signature'] = utf8_ucwords(utf8_strtolower($form['signature']));
 
 			// Validate BBCode syntax
-			if (config()->p_sig_bbcode == '1' || config()->o_make_links == '1')
-			{
-				if (!defined('FORUM_PARSER_LOADED'))
-					require FORUM_ROOT.'include/parser.php';
-
-				$form['signature'] = preparse_bbcode($form['signature'], $errors, true);
+			if (config()->p_sig_bbcode == '1' || config()->o_make_links == '1') {
+				$form['signature'] = bbcode()->preparse_bbcode($form['signature'], $errors, true);
 			}
 
 			break;
@@ -1113,21 +1109,17 @@ else if (isset($_POST['form_sent']))
 
 ($hook = get_hook('pf_new_action')) ? eval($hook) : null;
 
-
-if ($user['signature'] != '')
-{
-	if (!defined('FORUM_PARSER_LOADED'))
-		require FORUM_ROOT.'include/parser.php';
-
-	$parsed_signature = parse_signature($user['signature']);
+if ($user['signature'] != '') {
+	$parsed_signature = bbcode()->parse_signature($user['signature']);
 }
-
 
 // View or edit?
 if (user()->id != $id &&
 	user()->g_id != FORUM_ADMIN &&
-	(user()->g_moderator != '1' || user()->g_mod_edit_users == '0' || $user['g_id'] == FORUM_ADMIN || $user['g_moderator'] == '1'))
-{
+	(user()->g_moderator != '1' ||
+		user()->g_mod_edit_users == '0' ||
+		$user['g_id'] == FORUM_ADMIN ||
+		$user['g_moderator'] == '1')) {
 	// Setup user identification
 	$forum_page['user_ident'] = array();
 
@@ -1182,11 +1174,7 @@ if (user()->id != $id &&
 		$url_source = $user['url'];
 
 		// IDNA url handling
-		if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
-		{
-			// Load the IDNA class for international url handling
-			require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
-
+		if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA')) {
 			$idn = new idna_convert();
 			$idn->set_parameter('encoding', 'utf8');
 			$idn->set_parameter('strict', false);
@@ -1426,11 +1414,7 @@ else {
 			$url_source = $user['url'];
 
 			// IDNA url handling
-			if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA'))
-			{
-				// Load the IDNA class for international url handling
-				require_once FORUM_ROOT.'include/idna/idna_convert.class.php';
-
+			if (defined('FORUM_SUPPORT_PCRE_UNICODE') && defined('FORUM_ENABLE_IDNA')) {
 				$idn = new idna_convert();
 				$idn->set_parameter('encoding', 'utf8');
 				$idn->set_parameter('strict', false);

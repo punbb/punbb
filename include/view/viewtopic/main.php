@@ -251,14 +251,14 @@ if (!empty($posts_id))
 		$forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
 		// Perform the main parsing of the message (BBCode, smilies, censor words etc)
-		$forum_page['message']['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+		$forum_page['message']['message'] = bbcode()->parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 		// Do signature parsing/caching
 		if ($cur_post['signature'] != '' && user()->show_sig != '0' &&
-				config()->o_signatures == '1')
-		{
-			if (!isset($signature_cache[$cur_post['poster_id']]))
-				$signature_cache[$cur_post['poster_id']] = parse_signature($cur_post['signature']);
+				config()->o_signatures == '1') {
+			if (!isset($signature_cache[$cur_post['poster_id']])) {
+				$signature_cache[$cur_post['poster_id']] = bbcode()->parse_signature($cur_post['signature']);
+			}
 
 			$forum_page['message']['signature'] = '<div class="sig-content"><span class="sig-line"><!-- --></span>'.$signature_cache[$cur_post['poster_id']].'</div>';
 		}
@@ -266,8 +266,8 @@ if (!empty($posts_id))
 		($hook = get_hook('vt_row_pre_display')) ? eval($hook) : null;
 
 		// Do user data caching for the post
-		if ($cur_post['poster_id'] > 1 && !isset($user_data_cache[$cur_post['poster_id']]))
-		{
+		if ($cur_post['poster_id'] > 1 &&
+				!isset($user_data_cache[$cur_post['poster_id']])) {
 			$user_data_cache[$cur_post['poster_id']] = array(
 				'author_ident'	=> $forum_page['author_ident'],
 				'author_info'	=> $forum_page['author_info'],

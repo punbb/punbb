@@ -3,11 +3,8 @@ namespace punbb;
 
 // If preview selected and there are no errors
 if (isset($_POST['preview']) && empty($errors)) {
-	if (!defined('FORUM_PARSER_LOADED')) {
-		require FORUM_ROOT.'include/parser.php';
-	}
 
-	$forum_page['preview_message'] = parse_message(forum_trim($message), $hide_smilies);
+	$forum_page['preview_message'] = bbcode()->parse_message(forum_trim($message), $hide_smilies);
 
 	// Generate the post heading
 	$forum_page['post_ident'] = array();

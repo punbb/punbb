@@ -167,16 +167,13 @@ if (isset($_POST['form_sent']))
 		$errors[] = __('All caps message', 'post');
 
 	// Validate BBCode syntax
-	if (config()->p_message_bbcode == '1' || config()->o_make_links == '1')
-	{
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
-		$message = preparse_bbcode($message, $errors);
+	if (config()->p_message_bbcode == '1' || config()->o_make_links == '1') {
+		$message = bbcode()->preparse_bbcode($message, $errors);
 	}
 
-	if ($message == '')
+	if ($message == '') {
 		$errors[] = __('No message', 'post');
+	}
 
 	$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 	$subscribe = isset($_POST['subscribe']) ? 1 : 0;
@@ -333,10 +330,6 @@ define('FORUM_PAGE', 'post');
 
 // Check if the topic review is to be displayed
 if ($tid && config()->o_topic_review != '0') {
-	if (!defined('FORUM_PARSER_LOADED')) {
-		require FORUM_ROOT.'include/parser.php';
-	}
-
 	// Get the amount of posts in the topic
 	$query = array(
 		'SELECT'	=> 'count(p.id)',

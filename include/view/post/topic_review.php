@@ -14,7 +14,7 @@ if ($tid && config()->o_topic_review != '0') { ?>
 			foreach ($posts as $cur_post) {
 				++$forum_page['item_count'];
 
-				$forum_page['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+				$forum_page['message'] = bbcode()->parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 				// Generate the post heading
 				$forum_page['post_ident'] = array();

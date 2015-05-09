@@ -74,7 +74,7 @@ include template()->view('moderate/posts_start');
 		$forum_page['item_subject'] = forum_htmlencode($forum_page['item_subject']);
 
 		// Perform the main parsing of the message (BBCode, smilies, censor words etc)
-		$forum_page['message']['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+		$forum_page['message']['message'] = bbcode()->parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 		($hook = get_hook('mr_post_actions_row_pre_display')) ? eval($hook) : null;
 

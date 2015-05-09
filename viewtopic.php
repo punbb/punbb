@@ -293,10 +293,6 @@ if (config()->o_topic_views == '1') {
 
 $forum_id = $cur_topic['forum_id'];
 
-if (!defined('FORUM_PARSER_LOADED')) {
-	require FORUM_ROOT.'include/parser.php';
-}
-
 // 1. Retrieve the posts ids
 $query = array(
 	'SELECT'	=> 'p.id',

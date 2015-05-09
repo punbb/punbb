@@ -35,12 +35,7 @@ namespace punbb;
 <?php
 
 	}
-	else if ($show_as == 'posts')
-	{
-		// Load parser
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-?>
+	else if ($show_as == 'posts') { ?>
 	<div class="main-head">
 <?php
 
@@ -106,7 +101,7 @@ namespace punbb;
 				__('Permalink post', 'topic') . '" href="'.link('post', $cur_set['pid']).'">'.
 					__('Go to post', 'search') . '<span> '.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span></a></span>';
 
-			$forum_page['message'] = parse_message($cur_set['message'], $cur_set['hide_smilies']);
+			$forum_page['message'] = bbcode()->parse_message($cur_set['message'], $cur_set['hide_smilies']);
 
 			// Give the post some class
 			$forum_page['item_status'] = array(

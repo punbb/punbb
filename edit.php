@@ -100,16 +100,13 @@ if (isset($_POST['form_sent']))
 		$message = utf8_ucwords(utf8_strtolower($message));
 
 	// Validate BBCode syntax
-	if (config()->p_message_bbcode == '1' || config()->o_make_links == '1')
-	{
-		if (!defined('FORUM_PARSER_LOADED'))
-			require FORUM_ROOT.'include/parser.php';
-
-		$message = preparse_bbcode($message, $errors);
+	if (config()->p_message_bbcode == '1' || config()->o_make_links == '1') {
+		$message = bbcode()->preparse_bbcode($message, $errors);
 	}
 
-	if ($message == '')
+	if ($message == '') {
 		$errors[] = __('No message', 'post');
+	}
 
 	$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 

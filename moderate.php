@@ -396,9 +396,6 @@ if (isset($_GET['tid']))
 
 	define('FORUM_PAGE', 'modtopic');
 
-	if (!defined('FORUM_PARSER_LOADED'))
-		require FORUM_ROOT.'include/parser.php';
-
 	// Retrieve the posts (and their respective poster)
 	$query = array(
 		'SELECT'	=> 'u.title, u.num_posts, g.g_id, g.g_user_title, p.id, p.poster, p.poster_id, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by',

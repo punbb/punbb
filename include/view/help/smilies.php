@@ -12,10 +12,6 @@ namespace punbb;
 		<div class="entry-content">
 <?php
 
-// Display the smiley set
-if (!defined('FORUM_PARSER_LOADED'))
-	require FORUM_ROOT.'include/parser.php';
-
 $smiley_groups = array();
 
 ($hook = get_hook('he_pre_smile_display')) ? eval($hook) : null;

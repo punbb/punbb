@@ -49,6 +49,10 @@ function cache() {
 	return service::get('cache');
 }
 
+function bbcode() {
+	return service::get('bbcode');
+}
+
 // configure
 
 service::set('app', function () {
@@ -92,4 +96,8 @@ service::set('user', function () {
 
 service::set('translations', function () {
 	return new \stdClass();
+});
+
+service::set('bbcode', function () {
+	return new BbcodeParser();
 });
