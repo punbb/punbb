@@ -4,7 +4,7 @@ A - SETUP
 
 /* Start from scratch
 -------------------------------------------------------------*/
-
+*{margin:0;padding:0}
 html,
 body, /* remove this line if necessary for site integration */
 div,
@@ -122,8 +122,6 @@ samp,
 code,
 pre {
 	font-family: monospace, sans-serif;
-	white-space: pre-wrap;
-	word-wrap: break-word;
 }
 
 /* Float Clearing
@@ -220,7 +218,7 @@ B - GLOBAL STYLES
 -------------------------------------------------------------*/
 
 .brd {
-	padding: 1em 2em;
+	padding: 1.3em 2em;
 	margin: 0 auto;
 	max-width: 1100px;
 	min-width: 700px;
@@ -276,38 +274,6 @@ B - GLOBAL STYLES
 	border-top: none;
 	margin: -1em 0 1em 0;
 }
-
-#rules-content {
-	padding: 1.5em;
-}
-
-#rules-content h1 {
-	font-size: 1.3em;
-	line-height: 1em;
-	margin-bottom: .7em;
-}
-
-#rules-content h2 {
-	font-size: 1.2em;
-	font-weight: bold;
-	margin-bottom: .3em;
-}
-
-#rules-content h3 {
-	font-size: 1.1em;
-	font-weight: bold;
-}
-
-#rules-content h4,
-#rules-content h5 {
-	font-size: 1;
-	font-weight: bold;
-}
-
-#rules-content p {
-	margin: 0 0 .65em;
-}
-
 
 /* Content Text (Default spacing for paragraphs and lists)
 -------------------------------------------------------------*/
@@ -437,15 +403,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .hotfix .options {
 	border-top-style: dashed;
 	border-top-width: 1px;
-}
-
-.extension h3 > em {
-	font-style: normal;
-}
-
-.extension .data-list {
-	list-style-type: none;
-	padding-left: 0;
 }
 
 /* Content Containers
@@ -601,18 +558,13 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 /* Section Menus (By Default - Profile and Admin)
 -------------------------------------------------------------*/
-#brd-navlinks,
-.main-menu,
-.admin-menu {
-	padding: 0 .75em;
-}
 
 .main-menu,
 .admin-menu {
 	border: 0;
+	padding: 0.4em 0 0.2em 0.75em;
 }
 
-#brd-navlinks ul,
 .main-menu ul,
 .admin-menu ul {
 	list-style-type: none;
@@ -620,26 +572,24 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding: 0;
 }
 
-#brd-navlinks li,
 .main-menu li,
 .admin-menu li {
 	float: left;
 	display: inline;
 }
 
-#brd-navlinks a,
 .main-menu a,
 .admin-menu a {
 	float: left;
 	position: relative;
-	padding: 0.55em .7em;
+	padding: 0.2em 0.75em 0.4em 0.75em;
 }
 
-#brd-navlinks a {
-	padding: 0.43em .7em;
+.main-menu .active a,
+.admin-menu .active a {
+	font-weight: bold;
 }
 
-#brd-navlinks li.first-item,
 .main-menu li.first-item,
 .admin-menu li.first-item {
 	border-left: 0;
@@ -699,20 +649,26 @@ D - COMMON INTERFACE ELEMENTS
 
 #brd-navlinks ul {
 	margin: 0;
+	padding: 0.4em 0;
 	float: left;
 }
 
 #brd-navlinks li {
 	display: inline;
+	margin-right: 1em;
 }
 
 #brd-navlinks li a {
 	text-decoration: none;
 }
 
-ul#brd-admod {
+#brd-admod {
 	float: right;
 	text-align: right;
+}
+
+#brd-admod span {
+	margin-left: 0.75em;
 }
 
 #brd-access {
@@ -914,7 +870,7 @@ p.options {
 
 a.feed {
 	padding-left: 22px;
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAAVZQTFRFzF0V2XIp2l4q3GEr3W4v3mUs3m8v3nAw33Ew4Got4HVF4XQw4Xgx4nA24nYx424u43kx43ky5Hsy5HxH5XQu5Xwy5X0y5nQv5n8z5otg53gv54Ez6Hkx6II06IM06IU16IlV6X456YU16Yg26n0x6oc16olJ638y64k17IEy7Io27JZj7oUz7oU07pFM7ppk7quJ7rKV741B751k8Ik08Ys18beX8o018pNC8qNm86Rn9JE29KZn9Kxz9LKA9L2Y9ZI39alo9b+Z9cCY9pQ39ptE95c496FQ961p98OZ99S++Jk5+J5E+K9p+LR1+L+O+Zo5+Z1B+Z9F+aVS+cib+de/+pw5+qJG+qxe+rNq+r6D+sOP+s6n+tOz+506+6lS+69e+7l3++bY/MKE/Nm1/OPN/dq1/d/B/eXN/fHm/ubO/uza/vHm/vLm/vfy/vjy//nz////L/lnWgAAAAJ0Uk5TEI9BVkHYAAAA50lEQVQY0yXOu07DMBSA4XNxnDtE4bYBFYxMMPAaPCoPg5gqBgRDSVtok1McO3awxPj904+ApSJFzIqZxrcZ8brXRcIZq5wK7Z65Cu1Vy/TvbBiV0vU9QPjcYfRGmIsjtkDJ8ZkO0bLnukL73f1WKoNOxPQxNI9taUTr9Gdr7IE4S6g6v21MDwtvZYoD9nU1YWOXhhpxnpTK58OX4Kl5gTtnvOKcFjyu00SvPOf7mZhOijTZvsOFLKGZAsW/GQbpoHZrwBDw5iET2RibTR9K70yC+GTjjxVn7BTmckDAS3bOT977ENjOfw1gcm/NBi+EAAAAAElFTkSuQmCC) center left no-repeat;
+	background: url(feed-icon.png) center left no-repeat;
 }
 
 .content-options,
@@ -1135,7 +1091,7 @@ li.info-lastpost cite {
 
 .item-nav,
 .item-nav a,
-.item-nav span {
+.item-nav span  {
 	white-space: nowrap;
 	font-style: normal;
 }
@@ -1234,15 +1190,9 @@ F - MAIN CONTENT - FORMS
 	margin: 0;
 }
 
-.text input {
+.text input,
+.select select {
 	font-size: 1.084em;
-}
-
-select {
-	height: 25px;
-	*height: auto;
-	line-height: 25px;
-	padding-left: 3px;
 }
 
 optgroup {
@@ -1300,11 +1250,11 @@ button {
 	vertical-align: baseline;
 	text-align: center;
 	text-decoration: none;
-	padding: .5em .6em;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	-khtml-border-radius: 2px;
-	border-radius: 2px;
+	padding: .5em .65em;
+	-moz-border-radius: .25em;
+	-webkit-border-radius: .25em;
+	-khtml-border-radius: .25em;
+	border-radius: .25em;
 	border-style: solid;
 	border-width: 1px;
 	-webkit-appearance: button;
@@ -1334,14 +1284,6 @@ input[type="reset"][disabled]:active,
 button[disabled]:active {
 	position: relative;
 	top: 0;
-}
-
-.primary input[type="submit"],
-.primary input[type="button"],
-.primary input[type="reset"],
-.primary button {
-	padding-left: 1.2em;
-	padding-right: 1.2em;
 }
 
 .js_link {
@@ -1405,7 +1347,7 @@ button[disabled]:active {
 
 
 .sf-set .checkbox input {
-	margin: .2em 0 .2em -.1em;
+	margin: .2em 0 .2em -0.2em;
 }
 
  /* Fixes alignment issue in Safari */
@@ -1425,13 +1367,13 @@ button[disabled]:active {
 
 input[type="radio"] {
 	vertical-align: middle;
-	bottom: 1px;
+    bottom: 1px;
 }
 
 
 input[type="checkbox"] {
 	vertical-align: middle;
-	bottom: 1px;
+    bottom: 1px;
 }
 
 table input[type="checkbox"] {
@@ -1483,7 +1425,7 @@ table input[type="checkbox"] {
 }
 
 .mf-item input {
-	margin: .1em 0 .1em -.1em;
+	margin: .1em 0 .1em -0.25em;
 }
 
 .mf-item label {
@@ -1673,7 +1615,7 @@ textarea {
 	display: block;
 }
 
-.required label span {
+.required label span  {
 	font-weight: bold;
 }
 
@@ -1885,10 +1827,11 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 -------------------------------------------------------------*/
 
 .entry-content {
-	padding-bottom: 2em;
+	padding-bottom: 1em;
 	overflow: hidden;
 	width: 100%;
-	min-height: 7em;
+	min-height: 8em;
+	font-size: 1.084em;
 }
 
 #brd-help .entry-content {
@@ -1910,9 +1853,9 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 }
 
 .entry-content h5 {
-	font-weight: normal;
-	font-size: 1.5em;
-	line-height: 1.5em;
+	font-weight: bold;
+	font-size: 1.084em;
+	padding: 0.5em 0;
 }
 
 .entry-content img {
@@ -1965,18 +1908,9 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 
 .sig-content {
 	padding-top: 2em;
-	font-size: .95em;
+	font-size: .917em;
 }
 
-.sig-content a,
-.sig-demo a {
-	border-bottom: solid;
-	border-width: 1px;
-}
-
-.sig-demo {
-	overflow: hidden;
-}
 span.sig-line {
 	display: block;
 	width: 200px;
@@ -2043,45 +1977,45 @@ table caption {
 #brd-admin-uresults table .tc0,
 #brd-admin-iresults table .tc0 {
 	width: 45%;
-}
+	}
 
 #brd-admin-uresults table .tc1,
 #brd-admin-iresults table .tc1,
 #brd-admin-iresults table .tc2 {
 	width: 20%;
-}
+	}
 
 #brd-admin-uresults table .tc2,
 #brd-admin-uresults table .tc4 {
 	width: 10%;
 	text-align: center;
-}
+	}
 
 #brd-admin-uresults .tc3 {
 	width: 15%;
-}
+	}
 
 #brd-admin-uresults td.tc0 span,
 #brd-admin-uresults td.tc3 span {
 	display: block;
 	white-space: nowrap;
-}
+	}
 
 #brd-admin-iresults table .tc0 {
 	width: 25%;
-}
+	}
 
 #brd-admin-iresults table .tc1 {
 	width: 25%;
-}
+	}
 
 #brd-admin-iresults table .tc2 {
 	width: 20%;
-}
+	}
 
 #brd-admin-iresults .tc3 {
 	width: 30%;
-}
+	}
 
 
 /* Table Cell Styling
@@ -2101,7 +2035,7 @@ td {
 
 td.tc0 {
 	border-left-style: none;
-	border-left-width: 0;
+	border-left-width: 0
 }
 
 th {
@@ -2152,7 +2086,6 @@ H - MAIN CONTENT - ODDMENTS
 .report p strong {
 	display: block;
 	font-weight: normal;
-	margin-top: 1em;
 }
 
 .report h4 {
@@ -2227,4 +2160,190 @@ H - MAIN CONTENT - ODDMENTS
 	line-height: 2em;
 	border-width: 1px;
 	border-style: solid;
+}
+
+
+/*************************************************************
+IE6 - FIXES
+**************************************************************/
+
+/* Float Clearing and Has Layout Fixes
+-------------------------------------------------------------*/
+
+.ie6 .brd-page,
+.ie6 .main,
+.ie6 #brd-index .main-subhead,
+.ie6 .main-content .main-item,
+.ie6 .main-content .main-item ul,
+.ie6 .gen-content,
+.ie6 .main-content,
+.ie6 .ct-box,
+.ie6 .frm-group,
+.ie6 .mf-set,
+.ie6 .sf-set,
+.ie6 .mf-box,
+.ie6 .sf-box,
+.ie6 .mf-item,
+.ie6 .txt-set,
+.ie6 .txt-box,
+.ie6 .frm-form label,
+.ie6 fieldset,
+.ie6 span.fld-input,
+.ie6 .main-subhead .hn,
+.ie6 .post,
+.ie6 .posthead,
+.ie6 .postbody,
+.ie6 .post-entry,
+.ie6 .postfoot .post-options {
+	zoom: 1;
+}
+
+.ie6 .ct-box ol,
+.ie6 .ct-box ol li {
+	zoom: normal;
+}
+
+.ie6 .postfoot .post-contacts {
+	position: absolute;
+}
+
+/* Forms
+-------------------------------------------------------------*/
+
+.ie6 #brd-wrap fieldset {
+	padding-top: 1px;
+	position: relative;
+}
+
+.ie6 fieldset legend {
+	margin-left: -7px;
+}
+
+.ie6 #brd-wrap .checklist {
+	height: 9em;
+	width: 30em;
+	overflow: auto;
+}
+
+.ie6 .sf-set .checkbox label span {
+	padding-right: 0;
+	padding-left: 5em;
+}
+
+.ie6 #info-censored-intro,
+.ie6 #info-ranks-intro {
+	margin-bottom: 3em;
+}
+
+.ie6 .important strong {
+	margin-right: 1ex;
+}
+
+.ie6 #brd-stats .st-users {
+	margin-bottom: -1ex;
+}
+
+/* Fixes for the forms in post.php and edit.php. */
+.ie6 .txt-box label span {
+	position: absolute;
+}
+
+/* Fix for index.php: no backgroud for the first main-head. */
+.ie6 #brd-index .main-head {
+	position: relative;
+}
+
+.ie6 input {
+	vertical-align: text-bottom;
+}
+
+/* Footer
+-------------------------------------------------------------*/
+
+.ie6 #extensions-used {
+	clear: left;
+}
+
+/* Remove scrollbar from empty textarea */
+.oldie textarea {
+	overflow: auto;
+}
+
+
+/*************************************************************
+IE7 - FIXES
+**************************************************************/
+
+/* Float Clearing and Has Layout Fixes
+-------------------------------------------------------------*/
+
+.ie7 .brd-page,
+.ie7 .main,
+.ie7 #brd-index .main-subhead,
+.ie7 #brd-index .forum-item,
+.ie7 .gen-content,
+.ie7 .main-content,
+.ie7 .ct-box,
+.ie7 .frm-group,
+.ie7 .mf-set,
+.ie7 .sf-set,
+.ie7 .mf-box,
+.ie7 .sf-box,
+.ie7 .mf-item,
+.ie7 .txt-set,
+.ie7 .txt-box,
+.ie7 .frm-group label,
+.ie7 fieldset,
+.ie7 span.fld-input,
+.ie7 .main-subhead .hn,
+.ie7 .post,
+.ie7 .posthead,
+.ie7 .postbody,
+.ie7 .post-entry,
+.ie7 .postfoot .post-options,
+.ie7 #brd-stats ul {
+	max-height: 100%;
+	zoom: 1;
+}
+
+/* Forms
+-------------------------------------------------------------*/
+
+.ie7 #brd-wrap fieldset {
+	padding-top: 1px;
+	position: relative;
+}
+
+.ie7 fieldset legend {
+	margin-left: -7px;
+}
+
+.ie7 .entry-content .codebox pre {
+	min-height: 3em
+}
+
+.ie7 #info-censored-intro,
+.ie7 #info-ranks-intro {
+	margin-bottom: 3em;
+}
+
+.ie7 .main-forum .main-item .item-starter {
+	margin-left: 1ex;
+}
+
+.ie7 #brd-admin-settings-setup #fld19,
+.ie7 #brd-post textarea#fld1,
+.ie7 #brd-post textarea#fld2,
+.ie7 #brd-viewtopic textarea#fld1,
+.ie7 #brd-postedit #fld2 {
+	margin-top: -19px;
+}
+
+.ie7 .item-starter {
+	position: relative;
+	left: -0.5em;
+}
+
+.ie7 input[type="checkbox"] {
+	vertical-align: baseline;
 }
