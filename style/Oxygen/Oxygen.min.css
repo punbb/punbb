@@ -2735,7 +2735,7 @@ a.nav-toggle:hover,a.nav-toggle:focus{color:#fff; text-decoration:none;}
 	.frm-form .mf-set .mf-field .fld-input input{width:90%;}
 }
 
-@media screen and (min-width: 600px) and (max-width: 830px) {
+@media screen and (min-width: 600px) and (max-width: 915px) {
     #brd-navlinks ul, ul#brd-admod {float: none; display: inline;}
 }
 
