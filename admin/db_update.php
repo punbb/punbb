@@ -26,6 +26,8 @@ if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.0.0',
 
 define('FORUM_ROOT', '../');
 
+require FORUM_ROOT.'include/constants.php';
+
 // Attempt to load the configuration file config.php
 if (file_exists(FORUM_ROOT.'config.php'))
 	include FORUM_ROOT.'config.php';
@@ -41,12 +43,6 @@ if (!defined('FORUM'))
 // Enable debug mode
 if (!defined('FORUM_DEBUG'))
 	define('FORUM_DEBUG', 1);
-
-// Define avatars type
-define('FORUM_AVATAR_NONE', 0);
-define('FORUM_AVATAR_GIF', 1);
-define('FORUM_AVATAR_JPG', 2);
-define('FORUM_AVATAR_PNG', 3);
 
 // Turn on full PHP error reporting
 error_reporting(E_ALL);
