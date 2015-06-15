@@ -2738,6 +2738,8 @@ a.nav-toggle:hover,a.nav-toggle:focus{color:#fff; text-decoration:none;}
 @media screen and (max-width: 600px) {
 	/*body*/
 	body{font-size:1.2em}
+	/*header*/
+	#brd-head {display: none !important;}
 	/*nav*/
 	ul#brd-admod,#brd-navlinks ul,#brd-navlinks ul, .main-menu ul, .admin-menu ul{float:none;}
 	#brd-navlinks, .main-menu, .admin-menu{padding-left:0; padding-right:0; font-size:1.2em;}
