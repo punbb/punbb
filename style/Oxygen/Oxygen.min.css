@@ -2735,7 +2735,11 @@ a.nav-toggle:hover,a.nav-toggle:focus{color:#fff; text-decoration:none;}
 	.frm-form .mf-set .mf-field .fld-input input{width:90%;}
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 600px) and (max-width: 830px) {
+    #brd-navlinks ul, ul#brd-admod {float: none; display: inline;}
+}
+
+   @media screen and (max-width: 600px) {
 	/*body*/
 	body{font-size:1.2em}
 	/*header*/
