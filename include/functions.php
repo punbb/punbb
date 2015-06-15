@@ -815,6 +815,20 @@ function forum_link($link, $args = null)
 	return $gen_link;
 }
 
+// Generate a global hyperlink when $base_url = '', for CSRF token and feeds
+function global_link($target_url)
+{
+	global $base_url;
+
+	if ($target_url[0] == '/' && $base_url == '')
+	{
+		$forum_url = get_current_url(255);
+		return substr($forum_url, 0, strpos($forum_url, '/', 8)).$target_url;
+	}
+	else
+		return $target_url;
+}
+
 
 // Generate a hyperlink with parameters and anchor and a subsection such as a subpage
 function forum_sublink($link, $sublink, $subarg, $args = null)
@@ -1250,7 +1264,7 @@ function generate_form_token($target_url)
 	if ($return != null)
 		return $return;
 
-	return sha1(str_replace('&amp;', '&', $target_url).$forum_user['csrf_token']);
+	return sha1(str_replace('&amp;', '&', global_link($target_url)).$forum_user['csrf_token']);
 }
 
 
