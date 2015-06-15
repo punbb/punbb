@@ -590,6 +590,20 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	if ($return != null)
 		return $return;
 
+	if (preg_match('%^#?\d+$%', $url)) // relative links [url=2] and [url=2#3]
+	{
+		if ($link == '')
+			$link = $url;
+
+		global $forum_url;
+		$url = $url[0] == '#' ? forum_link($forum_url['post'], substr($url, 1)) : forum_link($forum_url['topic'], $url);
+
+		if ($bbcode)
+			return '[url='.$url.']'.$link.'[/url]';
+		else
+			return '<a href="'.$url.'">'.$link.'</a>';
+	}
+
 	$full_url = str_replace(array(' ', '\'', '`', '"'), array('%20', '', '', ''), $url);
 	if (strpos($url, 'www.') === 0)			// If it starts with www, we add http://
 		$full_url = 'http://'.$full_url;
