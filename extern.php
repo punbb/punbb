@@ -376,9 +376,9 @@ if ($action == 'feed')
 			else if ($cur_post['poster_email'] != '' && !$forum_user['is_guest'])
 				$item['author']['email'] = $cur_post['poster_email'];
 
-			$feed['items'][] = $item;
-
 			($hook = get_hook('ex_modify_cur_post_item')) ? eval($hook) : null;
+
+			$feed['items'][] = $item;
 		}
 
 		($hook = get_hook('ex_pre_topic_output')) ? eval($hook) : null;
@@ -502,9 +502,9 @@ if ($action == 'feed')
 			else if ($cur_topic['poster_email'] != '' && !$forum_user['is_guest'])
 				$item['author']['email'] = $cur_topic['poster_email'];
 
-			$feed['items'][] = $item;
-
 			($hook = get_hook('ex_modify_cur_topic_item')) ? eval($hook) : null;
+
+			$feed['items'][] = $item;
 		}
 
 		($hook = get_hook('ex_pre_forum_output')) ? eval($hook) : null;
