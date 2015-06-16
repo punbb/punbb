@@ -986,7 +986,8 @@ else if (isset($_POST['form_sent']))
 					$errors[] = $lang_profile['Bad Twitter'];
 
 			//check LinkedIn for validity
-			if (!preg_match('#https?://(www\.)?linkedin.com/.+?#', $form['linkedin']))
+			if (strpos($form['linkedin'], 'http://') === 0 || strpos($form['linkedin'], 'https://') === 0)
+				if (!preg_match('#https?://(www\.)?linkedin.com/.+?#', $form['linkedin']))
 					$errors[] = $lang_profile['Bad LinkedIn'];
 
 			// Add http:// if the LinkedIn doesn't contain it or https:// already
