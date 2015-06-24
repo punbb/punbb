@@ -101,9 +101,6 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
 
-require FORUM_ROOT.'include/flash_messenger.php';
-$forum_flash = new FlashMessenger();
-
 // If the request_uri is invalid try fix it
 forum_fix_request_uri();
 
@@ -134,6 +131,9 @@ if (!defined('FORUM_HOOKS_LOADED'))
 	generate_hooks_cache();
 	require FORUM_CACHE_DIR.'cache_hooks.php';
 }
+
+require FORUM_ROOT.'include/flash_messenger.php';
+$forum_flash = new FlashMessenger();
 
 // A good place to add common functions for your extension
 ($hook = get_hook('es_essentials')) ? eval($hook) : null;
