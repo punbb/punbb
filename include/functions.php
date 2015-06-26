@@ -1884,7 +1884,7 @@ function add_user($user_info, &$new_uid)
 		$mail_subject = str_replace('<board_title>', $forum_config['o_board_title'], $mail_subject);
 		$mail_message = str_replace('<base_url>', $base_url.'/', $mail_message);
 		$mail_message = str_replace('<username>', $user_info['username'], $mail_message);
-		$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', forum_link($forum_url['change_password_key'], array($new_uid, substr($user_info['activate_key'], 1, -1)))), $mail_message);
+		$mail_message = str_replace('<activation_url>', str_replace('&amp;', '&', global_link(forum_link($forum_url['change_password_key'], array($new_uid, substr($user_info['activate_key'], 1, -1))))), $mail_message);
 		$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
 
 		($hook = get_hook('fn_add_user_send_verification')) ? eval($hook) : null;
@@ -1895,8 +1895,8 @@ function add_user($user_info, &$new_uid)
 	// Should we alert people on the admin mailing list that a new user has registered?
 	if ($user_info['notify_admins'] && $forum_config['o_mailing_list'] != '')
 	{
-		$mail_subject = 'Alert - New registration';
-		$mail_message = 'User \''.$user_info['username'].'\' registered in the forums at '.$base_url.'/'."\n\n".'User profile: '.forum_link($forum_url['user'], $new_uid)."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+		$mail_subject = sprintf('New user: %s', $user_info['username']);
+		$mail_message = 'User \''.$user_info['username'].'\' registered in the '.$forum_config['o_board_title']."\n\n".'User profile: '.global_link(forum_link($forum_url['user'], $new_uid))."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 		forum_mail($forum_config['o_mailing_list'], $mail_subject, $mail_message);
 	}
@@ -2775,16 +2775,16 @@ function send_subscriptions($post_info, $new_pid)
 				$mail_subject = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject);
 				$mail_message = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message);
 				$mail_message = str_replace('<replier>', $post_info['poster'], $mail_message);
-				$mail_message = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message);
-				$mail_message = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message);
+				$mail_message = str_replace('<post_url>', global_link(forum_link($forum_url['post'], $new_pid)), $mail_message);
+				$mail_message = str_replace('<unsubscribe_url>', global_link(forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id'])))), $mail_message);
 				$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
 
 				$mail_subject_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_subject_full);
 				$mail_message_full = str_replace('<topic_subject>', '\''.$post_info['subject'].'\'', $mail_message_full);
 				$mail_message_full = str_replace('<replier>', $post_info['poster'], $mail_message_full);
 				$mail_message_full = str_replace('<message>', $post_info['message'], $mail_message_full);
-				$mail_message_full = str_replace('<post_url>', forum_link($forum_url['post'], $new_pid), $mail_message_full);
-				$mail_message_full = str_replace('<unsubscribe_url>', forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id']))), $mail_message_full);
+				$mail_message_full = str_replace('<post_url>', global_link(forum_link($forum_url['post'], $new_pid)), $mail_message_full);
+				$mail_message_full = str_replace('<unsubscribe_url>', global_link(forum_link($forum_url['unsubscribe'], array($post_info['topic_id'], generate_form_token('unsubscribe'.$post_info['topic_id'].$cur_subscriber['id'])))), $mail_message_full);
 				$mail_message_full = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message_full);
 
 				$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
@@ -2889,8 +2889,8 @@ function send_forum_subscriptions($topic_info, $new_tid)
 				$mail_message = str_replace('<forum_name>', '\''.$topic_info['forum_name'].'\'', $mail_message);
 				$mail_message = str_replace('<topic_starter>', $topic_info['poster'], $mail_message);
 				$mail_message = str_replace('<topic_subject>', '\''.$topic_info['subject'].'\'', $mail_message);
-				$mail_message = str_replace('<topic_url>', forum_link($forum_url['topic'], array($new_tid, sef_friendly($topic_info['subject']))), $mail_message);
-				$mail_message = str_replace('<unsubscribe_url>', forum_link($forum_url['forum_unsubscribe'], array($topic_info['forum_id'], generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id']))), $mail_message);
+				$mail_message = str_replace('<topic_url>', global_link(forum_link($forum_url['topic'], array($new_tid, sef_friendly($topic_info['subject'])))), $mail_message);
+				$mail_message = str_replace('<unsubscribe_url>', global_link(forum_link($forum_url['forum_unsubscribe'], array($topic_info['forum_id'], generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id'])))), $mail_message);
 				$mail_message = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message);
 
 				$mail_subject_full = str_replace('<forum_name>', '\''.$topic_info['forum_name'].'\'', $mail_subject_full);
@@ -2898,8 +2898,8 @@ function send_forum_subscriptions($topic_info, $new_tid)
 				$mail_message_full = str_replace('<topic_starter>', $topic_info['poster'], $mail_message_full);
 				$mail_message_full = str_replace('<topic_subject>', '\''.$topic_info['subject'].'\'', $mail_message_full);
 				$mail_message_full = str_replace('<message>', $topic_info['message'], $mail_message_full);
-				$mail_message_full = str_replace('<topic_url>', forum_link($forum_url['topic'], $new_tid), $mail_message_full);
-				$mail_message_full = str_replace('<unsubscribe_url>', forum_link($forum_url['forum_unsubscribe'], array($topic_info['forum_id'], generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id']))), $mail_message_full);
+				$mail_message_full = str_replace('<topic_url>', global_link(forum_link($forum_url['topic'], $new_tid)), $mail_message_full);
+				$mail_message_full = str_replace('<unsubscribe_url>', global_link(forum_link($forum_url['forum_unsubscribe'], array($topic_info['forum_id'], generate_form_token('forum_unsubscribe'.$topic_info['forum_id'].$cur_subscriber['id'])))), $mail_message_full);
 				$mail_message_full = str_replace('<board_mailer>', sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']), $mail_message_full);
 
 				$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
