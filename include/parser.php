@@ -771,25 +771,25 @@ $text);
 	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#ms';
 	$pattern[] = '#\[h\](.*?)\[/h\]#ms';
 
-	$replace[] = '<strong>$1</strong>';
-	$replace[] = '<em>$1</em>';
-	$replace[] = '<span class="bbu">$1</span>';
-	$replace[] = '<span style="color: $1">$2</span>';
-	$replace[] = '</p><h5>$1</h5><p>';
+	$replace[] = '<strong>$matches[1]</strong>';
+	$replace[] = '<em>$matches[1]</em>';
+	$replace[] = '<span class=\"bbu\">$matches[1]</span>';
+	$replace[] = '<span style=\"color: $matches[1]\">$matches[2]</span>';
+	$replace[] = '</p><h5>$matches[1]</h5><p>';
 
 	if (($is_signature && $forum_config['p_sig_img_tag'] == '1') || (!$is_signature && $forum_config['p_message_img_tag'] == '1'))
 	{
-		$pattern[] = '#\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e';
-		$pattern[] = '#\[img=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e';
+		$pattern[] = '#\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#';
+		$pattern[] = '#\[img=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#';
 		if ($is_signature)
 		{
-			$replace[] = 'handle_img_tag(\'$1$3\', true)';
-			$replace[] = 'handle_img_tag(\'$2$4\', true, \'$1\')';
+			$replace[] = '".handle_img_tag($matches[1].$matches[3], true)."';
+			$replace[] = '".handle_img_tag($matches[2].$matches[4], true, $matches[1])."';
 		}
 		else
 		{
-			$replace[] = 'handle_img_tag(\'$1$3\', false)';
-			$replace[] = 'handle_img_tag(\'$2$4\', false, \'$1\')';
+			$replace[] = '".handle_img_tag($matches[1].$matches[3], false)."';
+			$replace[] = '".handle_img_tag($matches[2].$matches[4], false, $matches[1])."';
 		}
 	}
 
@@ -799,15 +799,18 @@ $text);
 	$pattern[] = '#\[email\]([^\[]*?)\[/email\]#';
 	$pattern[] = '#\[email=([^\[]+?)\](.*?)\[/email\]#';
 
-	$replace[] = '<a href="mailto:$1">$1</a>';
-	$replace[] = '<a href="mailto:$1">$2</a>';
+	$replace[] = '<a href=\"mailto:$matches[1]\">$matches[1]</a>';
+	$replace[] = '<a href=\"mailto:$matches[1]\">$matches[2]</a>';
 
 	$return = ($hook = get_hook('ps_do_bbcode_replace')) ? eval($hook) : null;
 	if ($return != null)
 		return $return;
 
-	// This thing takes a while! :)
-	$text = preg_replace($pattern, $replace, $text);
+	$count = count($pattern);
+	for ($i = 0; $i < $count; $i++) {
+		$text = preg_replace_callback($pattern[$i], create_function('$matches', 'return "'.$replace[$i].'";'), $text);
+	}
+	
 	$count = count($pattern_callback);
 	for ($i = 0; $i < $count; $i++) {
 		$text = preg_replace_callback($pattern_callback[$i], create_function('$matches', 'return '.$replace_callback[$i].';'), $text);
