@@ -1,3 +1,34 @@
+PunBB 1.4.4
+2015-10-14 13:00:00
+====================
+
+ * Fixed validation of the LinkedIn field in profile.
+ * Removed deprecated function calls.
+ * Fixed validation for unclosed tag in BBCode parser.
+ * Other minor bug fixes.
+
+
+PunBB 1.4.3
+2015-06-15 18:30:00
+====================
+
+ * The default Oxygen theme now supports responsive design.
+ * Added the OpenSearch plugin.
+ * Added the check for versions of dependent extensions.
+ * Added processing AJAX requests.
+ * Blocked password reset for Administrator.
+ * Added the check for max length of email subjects.
+ * Constants have been put into a separate file.
+ * Updated LABjs to version 2.0.3.
+ * Fixed redeclared clean_conf_names.
+ * Fixed interaction with the extension repository.
+ * Fixed hardcoded max_subject_length.
+ * Fixed the possibility to insert incorrect social network addresses into profiles.
+ * Fixed some function calls incompatible with new PHP versions.
+ * Fixed some misprints.
+ * Added some hooks.
+
+
 PunBB 1.4.2
 2012-02-09 20:36:00
 ====================
