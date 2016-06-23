@@ -186,23 +186,49 @@ function prune($forum_id, $prune_sticky, $prune_date)
 }
 
 
-// Add config value to forum config table
-// Warning!
-// This function dont refresh config cache - use "forum_clear_cache()" if
-// call this function outside install/uninstall extension manifest section
-function forum_config_add($name, $value)
+/** Add config value to forum config table
+ * Warning!
+ * This function dont refresh config cache - use "forum_clear_cache()" if
+ * call this function outside install/uninstall extension manifest section
+ * @param string|array $name If the array is then taken as the key name, and overrides $value.
+ * If the key value in the array is null or False, then $value is not overridden. It can be used as the default value.
+ * Example:
+ * <pre>
+ * forum_config_add(['A' => null], 'Hi');
+ * $name = 'A';
+ * $value = 'Hi';
+ *
+ * forum_config_add(['B' => 1], 'Hi');
+ * $name = 'B';
+ * $value = 1;
+ * </pre>
+ * @param string $value
+ */
+function forum_config_add($name, $value = null)
 {
-	global $forum_db, $forum_config;
+    global $forum_db, $forum_config;
 
-	if (!empty($name) && !isset($forum_config[$name]))
-	{
-		$query = array(
-			'INSERT'	=> 'conf_name, conf_value',
-			'INTO'		=> 'config',
-			'VALUES'	=> '\''.$name.'\', \''.$value.'\''
-		);
-		$forum_db->query_build($query) or error(__FILE__, __LINE__);
-	}
+    $fields = [];
+
+    if (is_string($name))
+        $fields[$name] = !$value ? '' : strval($value);
+
+    if (is_array($name))
+        $fields = $name;
+
+    if (count($fields)) foreach ($fields as $key => $fieldValue)
+        if (!isset($forum_config[$key]))
+        {
+            if (is_null($fieldValue) || $fieldValue === false)
+                $fieldValue =  !$value ? '' : strval($value);
+
+            $query = array(
+                'INSERT'    => 'conf_name, conf_value',
+                'INTO'      => 'config',
+                'VALUES'    => '\''.$key.'\', \''.$fieldValue.'\''
+            );
+            $forum_db->query_build($query) or error(__FILE__, __LINE__);
+        }
 }
 
 
