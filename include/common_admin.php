@@ -220,7 +220,7 @@ function forum_config_add($name, $value = null)
         if (!isset($forum_config[$key]))
         {
             if (is_null($fieldValue) || $fieldValue === false)
-                $fieldValue =  !$value ? '' : strval($value);
+                $fieldValue = strval($value);
 
             $query = array(
                 'INSERT'    => 'conf_name, conf_value',
