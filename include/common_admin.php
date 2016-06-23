@@ -211,7 +211,7 @@ function forum_config_add($name, $value = null)
     $fields = [];
 
     if (is_string($name))
-        $fields[$name] = !$value ? '' : strval($value);
+        $fields[$name] = strval($value);
 
     if (is_array($name))
         $fields = $name;
