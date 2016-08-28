@@ -28,7 +28,7 @@ if ($id < 1)
 
 // Fetch some info about the forum
 $query = array(
-	'SELECT'	=> 'f.forum_name, f.redirect_url, f.moderators, f.num_topics, f.sort_by, fp.post_topics',
+	'SELECT'	=> 'f.forum_name, f.redirect_url, f.moderators, f.num_topics, f.sort_by, fp.post_topics, f.forum_desc',
 	'FROM'		=> 'forums AS f',
 	'JOINS'		=> array(
 		array(
