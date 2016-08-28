@@ -2,7 +2,7 @@
 /**
  * A database layer class that relies on the MySQL PHP extension.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2016 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -28,7 +28,7 @@ class DBLayer
 	);
 
 
-	function DBLayer($db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect)
+	function __construct($db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect)
 	{
 		$this->prefix = $db_prefix;
 
@@ -52,7 +52,11 @@ class DBLayer
 		return $this->link_id;
 	}
 
-
+	function __destruct()
+	{
+	    $this->close();
+	}
+	
 	function start_transaction()
 	{
 		++$this->in_transaction;
@@ -258,6 +262,14 @@ class DBLayer
 	{
 		if ($this->link_id)
 		{
+		    if ($this->in_transaction)
+		    {
+		        if (defined('FORUM_SHOW_QUERIES') || defined('FORUM_DEBUG'))
+		            $this->saved_queries[] = array('COMMIT', 0);
+		    
+		        @mysqli_query($this->link_id, 'COMMIT');
+		    }
+		    		    
 			if ($this->query_result)
 				@mysql_free_result($this->query_result);
 
