@@ -2,7 +2,7 @@
 /**
  * Loads common functions used throughout the site.
  *
- * @copyright (C) 2008-2012 PunBB, partially based on code (C) 2008-2009 FluxBB.org
+ * @copyright (C) 2008-2016 PunBB, partially based on code (C) 2008-2009 FluxBB.org
  * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * @package PunBB
  */
@@ -163,10 +163,13 @@ function forum_remove_bad_characters()
 
 	($hook = get_hook('fn_remove_bad_characters_start')) ? eval($hook) : null;
 
-	function _forum_remove_bad_characters($array)
+	if (!function_exists('_forum_remove_bad_characters'))
 	{
-		global $bad_utf8_chars;
-		return is_array($array) ? array_map('_forum_remove_bad_characters', $array) : str_replace($bad_utf8_chars, '', $array);
+	    function _forum_remove_bad_characters($array)
+	    {
+	        global $bad_utf8_chars;
+		    return is_array($array) ? array_map('_forum_remove_bad_characters', $array) : str_replace($bad_utf8_chars, '', $array);
+	    }
 	}
 
 	$_GET = _forum_remove_bad_characters($_GET);
@@ -3008,7 +3011,7 @@ function csrf_confirm_form()
 	($hook = get_hook('fn_csrf_confirm_form_pre_header_load')) ? eval($hook) : null;
 
 ?>
-<div id="brd-main" class="main">
+<div class="main">
 	<div class="main-head">
 		<h2 class="hn"><span><?php echo $lang_common['Confirm action head'] ?></span></h2>
 	</div>
