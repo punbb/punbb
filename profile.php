@@ -2145,9 +2145,9 @@ if ($forum_page['has_required']): ?>
 						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="form[yahoo]" value="<?php echo(isset($form['yahoo']) ? forum_htmlencode($form['yahoo']) : forum_htmlencode($user['yahoo'])) ?>" size="20" maxlength="30" /></span>
 					</div>
 				</div>
-<?php ($hook = get_hook('pf_change_details_identity_pre_contact_fieldset_end')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('pf_change_details_identity_pre_messengers_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
-<?php ($hook = get_hook('pf_change_details_identity_contact_fieldset_end')) ? eval($hook) : null; ?>
+<?php ($hook = get_hook('pf_change_details_identity_messengers_fieldset_end')) ? eval($hook) : null; ?>
 			<div class="frm-buttons">
 				<span class="submit primary"><input type="submit" name="update" value="<?php echo $lang_profile['Update profile'] ?>" /></span>
 			</div>
