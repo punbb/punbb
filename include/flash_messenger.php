@@ -85,7 +85,7 @@ class FlashMessenger
 		$_SESSION['punbb_forum_flash'] = serialize($this->message);
 	}
 
-	private function get_message()
+	public function get_message()
 	{
 		$message = NULL;
 

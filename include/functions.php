@@ -3208,7 +3208,7 @@ function maintenance_message()
 // Display $message and redirect user to $destination_url
 function redirect($destination_url, $message)
 {
-	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url, $forum_loader;
+	global $forum_db, $forum_config, $lang_common, $forum_user, $base_url, $forum_loader, $forum_flash;
 
 	define('FORUM_PAGE', 'redirect');
 
@@ -3235,8 +3235,12 @@ function redirect($destination_url, $message)
 	}	
 	
 	// If the delay is 0 seconds, we might as well skip the redirect all together
-	if ($forum_config['o_redirect_delay'] == '0')
+	if ($forum_config['o_redirect_delay'] == '0') {
+        if (!$forum_flash->get_message()) {
+            $forum_flash->add_info($message);
+        }
 		header('Location: '.str_replace('&amp;', '&', $destination_url));
+    }
 
 	// Send no-cache headers
 	header('Expires: Thu, 21 Jul 1977 07:30:00 GMT');	// When yours truly first set eyes on this world! :)
