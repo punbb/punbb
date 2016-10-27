@@ -974,8 +974,8 @@ else
 
 	if (in_array($db_type, array('mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb')))
 	{
-		$schema['UNIQUE KEYS']['user_id_ident_idx'] = array('user_id', 'ident(25)');
-		$schema['INDEXES']['ident_idx'] = array('ident(25)');
+		$schema['UNIQUE KEYS']['user_id_ident_idx'] = array('user_id', 'ident(40)');
+		$schema['INDEXES']['ident_idx'] = array('ident(40)');
 	}
 
 	$forum_db->create_table('online', $schema);
