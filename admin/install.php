@@ -485,7 +485,17 @@ else
 
 			if (!$row || !isset($row['Value']) || strtolower($row['Value']) != 'yes')
 			{
-				error($lang_install['MySQL InnoDB Not Supported']);
+				// check InnoDB support for new mysql versions
+				$result = $forum_db->query("SHOW ENGINES");
+				$found_innodb = false;
+				while ($row = $forum_db->fetch_assoc($result)) {
+					if ($row["Engine"] == "InnoDB") {
+						$found_innodb = true;
+					}
+				}
+				if (!$found_innodb) {
+					error($lang_install['MySQL InnoDB Not Supported']);
+				}
 			}
 		}
 	}
