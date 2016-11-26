@@ -131,7 +131,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// Inline tags, we do not allow new lines in these
 	$tags_inline = array('b', 'i', 'u', 'color', 'colour', 'h');
 	// Tags we trim interior space
-	$tags_trim = array('img');
+	$tags_trim = array('url', 'email', 'img');
 	// Tags we remove quotes from the argument
 	$tags_quotes = array('url', 'email', 'img');
 	// Tags we limit bbcode in
@@ -790,11 +790,11 @@ function do_bbcode($text, $is_signature = false)
 		}
 	}
 
-	$text = preg_replace_callback('#\[url\]([^\[]*?)\[/url\]#', 'callback_handle_url_nobb', $text);
-	$text = preg_replace_callback('#\[url=([^\[]+?)\](.*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+	$text = preg_replace_callback('#\[url\]([^\[\n\r\t]*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+	$text = preg_replace_callback('#\[url=([^\[\n\r\t]+?)\](.*?)\[/url\]#', 'callback_handle_url_nobb', $text);
 
-	$pattern[] = '#\[email\]([^\[]*?)\[/email\]#';
-	$pattern[] = '#\[email=([^\[]+?)\](.*?)\[/email\]#';
+	$pattern[] = '#\[email\]([^\[\n\r\t]*?)\[/email\]#';
+	$pattern[] = '#\[email=([^\[\n\r\t]+?)\](.*?)\[/email\]#';
 
 	$replace[] = '<a href=\"mailto:$matches[1]\">$matches[1]</a>';
 	$replace[] = '<a href=\"mailto:$matches[1]\">$matches[2]</a>';
