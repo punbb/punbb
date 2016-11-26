@@ -20,7 +20,7 @@ function generate_admin_menu($submenu)
 	global $forum_config, $forum_url, $forum_user, $lang_admin_common, $db_type;
 
 	$return = ($hook = get_hook('ca_fn_generate_admin_menu_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return $return;
 
 	if ($submenu)
@@ -110,7 +110,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 	global $forum_db, $db_type;
 
 	$return = ($hook = get_hook('ca_fn_prune_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Fetch topics to prune

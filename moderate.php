@@ -1582,7 +1582,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 		$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], forum_htmlencode($cur_topic['poster'])).'</span>';
 
-		if ($cur_topic['moved_to'] != null)
+		if ($cur_topic['moved_to'] !== null)
 		{
 			$forum_page['item_status']['moved'] = 'moved';
 			$forum_page['item_title']['link'] = '<span class="item-status"><em class="moved">'.sprintf($lang_forum['Item status'], $lang_forum['Moved']).'</em></span> <a href="'.forum_link($forum_url['topic'], array($cur_topic['moved_to'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
