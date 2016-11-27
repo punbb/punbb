@@ -65,7 +65,7 @@ function generate_config_cache()
 	global $forum_db;
 
 	$return = ($hook = get_hook('ch_fn_generate_config_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Get the forum config from the DB
@@ -97,7 +97,7 @@ function generate_bans_cache()
 	global $forum_db;
 
 	$return = ($hook = get_hook('ch_fn_generate_bans_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Get the ban list from the DB
@@ -136,7 +136,7 @@ function generate_ranks_cache()
 	global $forum_db;
 
 	$return = ($hook = get_hook('ch_fn_generate_ranks_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Get the rank list from the DB
@@ -171,7 +171,7 @@ function generate_stats_cache()
 	$stats = array();
 
 	$return = ($hook = get_hook('ch_fn_generate_stats_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Collect some statistics from the database
@@ -245,7 +245,7 @@ function generate_censors_cache()
 	global $forum_db;
 
 	$return = ($hook = get_hook('ch_fn_generate_censors_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Get the censor list from the DB
@@ -278,7 +278,7 @@ function generate_quickjump_cache($group_id = false)
 	global $forum_db, $lang_common, $forum_url, $forum_config, $forum_user, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_quickjump_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	$groups = array();
@@ -391,7 +391,7 @@ function clean_quickjump_cache($group_id = false)
 	global $forum_db;
 
 	$return = ($hook = get_hook('ch_fn_clean_quickjump_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	$groups = array();
@@ -438,7 +438,7 @@ function generate_hooks_cache()
 	global $forum_db, $forum_config, $base_url;
 
 	$return = ($hook = get_hook('ch_fn_generate_hooks_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Get the hooks from the DB
@@ -502,7 +502,7 @@ function generate_updates_cache()
 	global $forum_db, $forum_config;
 
 	$return = ($hook = get_hook('ch_fn_generate_updates_cache_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	// Get a list of installed hotfix extensions

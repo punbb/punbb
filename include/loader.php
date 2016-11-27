@@ -61,7 +61,7 @@ class Loader
 	public function add_js($data = NULL, $options = NULL)
 	{
 		$return = ($hook = get_hook('ld_fn_add_js_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 		if (is_null($options) || !is_array($options))
@@ -158,7 +158,7 @@ class Loader
 		$output = '';
 
 		$return = ($hook = get_hook('ld_fn_render_js_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 		if (empty($this->libs['js']))
@@ -180,7 +180,7 @@ class Loader
 	public function add_css($data = NULL, $options = NULL)
 	{
 		$return = ($hook = get_hook('ld_fn_add_css_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 		if (is_null($options) || !is_array($options))
@@ -280,7 +280,7 @@ class Loader
 		$output = '';
 
 		$return = ($hook = get_hook('ld_fn_render_css_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 		if (empty($this->libs['css']))
@@ -300,7 +300,7 @@ class Loader
 		$libs = $this->libs['css'];
 
 		$return = ($hook = get_hook('ld_fn_render_css_simple_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 
@@ -340,7 +340,7 @@ class Loader
 		$libs = $this->libs['js'];
 
 		$return = ($hook = get_hook('ld_fn_render_js_simple_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 		foreach ($libs as $key => $lib)
@@ -372,7 +372,7 @@ class Loader
 		$libs = $this->libs['js'];
 
 		$return = ($hook = get_hook('ld_fn_render_js_labjs_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 
@@ -437,7 +437,7 @@ class Loader
 	private static function sort_libs($a, $b)
 	{
 		$return = ($hook = get_hook('ld_fn_sort_libs_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 
@@ -484,7 +484,7 @@ class Loader
 	private function check_conditional_comments($element, $data)
 	{
 		$return = ($hook = get_hook('ld_fn_check_conditional_comments_start')) ? eval($hook) : null;
-		if ($return != null)
+		if ($return !== null)
 			return $return;
 
 		$browsers = (isset($element['browsers']) && is_array($element['browsers'])) ? $element['browsers'] : array();

@@ -141,7 +141,7 @@ function validate_manifest($xml_array, $folder_name)
 	$errors = array();
 
 	$return = ($hook = get_hook('xm_fn_validate_manifest_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	if (!isset($xml_array['extension']) || !is_array($xml_array['extension']))

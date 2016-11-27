@@ -40,7 +40,7 @@ function split_words($text)
 	$words = array_filter($words, 'validate_search_word');
 
 	$return = ($hook = get_hook('si_fn_split_words_end')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return $return;
 
 	return $words;
@@ -55,7 +55,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	global $db_type, $forum_db;
 
 	$return = ($hook = get_hook('si_fn_update_search_index_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	$message = utf8_strtolower($message);
@@ -205,7 +205,7 @@ function strip_search_index($post_ids)
 		$post_ids = implode(',', $post_ids);
 
 	$return = ($hook = get_hook('si_fn_strip_search_index_start')) ? eval($hook) : null;
-	if ($return != null)
+	if ($return !== null)
 		return;
 
 	$query = array(

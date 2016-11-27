@@ -851,7 +851,7 @@ else if (isset($_GET['find_user']))
 	//Check up for order_by and direction values
 	$order_by = isset($_GET['order_by']) ? forum_trim($_GET['order_by']) : null;
 	$direction = isset($_GET['direction']) ? forum_trim($_GET['direction']) : null;
-	if ($order_by == null || $direction == null)
+	if ($order_by === null || $direction === null)
 		message($lang_common['Bad request']);
 
 	if (!in_array($order_by, array('username', 'email', 'num_posts', 'num_posts', 'registered')) || !in_array($direction, array('ASC', 'DESC')))
