@@ -207,6 +207,28 @@ function validate_manifest($xml_array, $folder_name)
 				}
 			}
 		}
+
+		if (isset($ext['minphpversion'])) {
+			if (version_compare(PHP_VERSION, $ext['minphpversion'], "<")) {
+				$errors[] = $lang_admin_ext['The minimum required version of PHP'] . $ext['minphpversion'];
+			}
+		}
+		if (isset($ext['maxphpversion'])) {
+			if (version_compare(PHP_VERSION, $ext['maxphpversion'], ">")) {
+				$errors[] = $lang_admin_ext['The maximum required version of PHP'] . $ext['maxphpversion'];
+			}
+		}
+		if (isset($ext['phpextensions'])) {
+			$installed_phpextensions = array_flip(get_loaded_extensions());
+			foreach (explode(",", $ext['phpextensions']) as $v) {
+				$v = trim($v);
+				if ($v != "") {
+					if (!isset($installed_phpextensions[$v])) {
+						$errors[] = $lang_admin_ext['PHP extension is required'] . $v;
+					}
+				}
+			}
+		}
 	}
 
 	($hook = get_hook('xm_fn_validate_manifest_end')) ? eval($hook) : null;
