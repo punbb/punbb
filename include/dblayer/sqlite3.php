@@ -56,6 +56,8 @@ class DBLayer
 
 		@/**/$this->link_id = new SQLite3($db_name, SQLITE3_OPEN_READWRITE);
 
+		$this->link_id->busyTimeout(SQLITE3_BUSY_TIMEOUT);
+
 		if (!$this->link_id)
 			error('Unable to open database \''.$db_name.'\'.', __FILE__, __LINE__);
 		else
