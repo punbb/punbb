@@ -65,7 +65,7 @@ $forum_page['num_users'] = $forum_db->result($result);
 $forum_page['num_pages'] = ceil($forum_page['num_users'] / 50);
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
 $forum_page['start_from'] = 50 * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + 50), ($forum_page['num_users']));
+$forum_page['finish_at'] = min(50, ($forum_page['num_users']));
 
 $forum_page['users_searched'] = (($forum_user['g_search_users'] == '1' && $forum_page['username'] != '') || $forum_page['show_group'] > -1);
 
