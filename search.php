@@ -694,7 +694,11 @@ if (!empty($forums))
 			$cur_category = $cur_forum['cid'];
 		}
 
-		echo "\t\t\t\t\t\t\t\t".'<div class="checklist-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="forum[]" value="'.$cur_forum['fid'].'" /></span> <label for="fld'.$forum_page['fld_count'].'">'.forum_htmlencode($cur_forum['forum_name']).'</label></div>'."\n";
+		$forum_entry = "\t\t\t\t\t\t\t\t".'<div class="checklist-item"><span class="fld-input"><input type="checkbox" id="fld'.(++$forum_page['fld_count']).'" name="forum[]" value="'.$cur_forum['fid'].'" /></span> <label for="fld'.$forum_page['fld_count'].'">'.forum_htmlencode($cur_forum['forum_name']).'</label></div>'."\n";
+		
+		($hook = get_hook('se_forum_loop_end')) ? eval($hook) : null;
+		
+		echo $forum_entry;
 		
 		($hook = get_hook('se_forum_loop_end')) ? eval($hook) : null;
 	}
