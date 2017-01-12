@@ -253,7 +253,11 @@ else
 			$cur_category = $forum['cid'];
 		}
 
-		echo "\t\t\t\t\t\t\t\t\t".'<option value="'.$forum['fid'].'">'.forum_htmlencode($forum['forum_name']).'</option>'."\n";
+		$cur_forum_entry = "\t\t\t\t\t\t\t\t\t".'<option value="'.$forum['fid'].'">'.forum_htmlencode($forum['forum_name']).'</option>'."\n";
+		
+		($hook = get_hook('apr_pre_prune_forum_loop_pre_display')) ? eval($hook) : null;
+		
+		echo $cur_forum_entry;
 		
 		($hook = get_hook('apr_pre_prune_forum_loop_end')) ? eval($hook) : null;
 	}

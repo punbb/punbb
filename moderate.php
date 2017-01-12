@@ -884,23 +884,29 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="move_to_forum">
 <?php
 
-	$forum_page['cur_category'] = 0;
+	$cur_category = 0;
 	foreach ($forum_list as $cur_forum)
 	{
 		($hook = get_hook('mr_move_topics_forum_loop_start')) ? eval($hook) : null;
 		
-		if ($cur_forum['cid'] != $forum_page['cur_category'])	// A new category since last iteration?
+		if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
 		{
-			if ($forum_page['cur_category'])
+			if ($cur_category)
 				echo "\t\t\t\t".'</optgroup>'."\n";
 
 			echo "\t\t\t\t".'<optgroup label="'.forum_htmlencode($cur_forum['cat_name']).'">'."\n";
-			$forum_page['cur_category'] = $cur_forum['cid'];
+			$cur_category = $cur_forum['cid'];
 		}
 
 		if ($cur_forum['fid'] != $fid)
-			echo "\t\t\t\t".'<option value="'.$cur_forum['fid'].'">'.forum_htmlencode($cur_forum['forum_name']).'</option>'."\n";
-			
+			$cur_forum_entry = "\t\t\t\t".'<option value="'.$cur_forum['fid'].'">'.forum_htmlencode($cur_forum['forum_name']).'</option>'."\n";
+		else
+			$cur_forum_entry = '';
+		
+		($hook = get_hook('mr_move_topics_forum_loop_pre_display')) ? eval($hook) : null;
+		
+		echo $cur_forum_entry;
+		
 		($hook = get_hook('mr_move_topics_forum_loop_end')) ? eval($hook) : null;
 	}
 
