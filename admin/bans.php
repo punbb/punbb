@@ -308,7 +308,7 @@ else if (isset($_POST['add_edit_ban']))
 
 	if ($ban_email != '' && !is_valid_email($ban_email))
 	{
-		if (!preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/', $ban_email))
+		if (!preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/D', $ban_email))
 			message($lang_admin_bans['Invalid e-mail message']);
 	}
 

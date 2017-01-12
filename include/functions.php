@@ -53,7 +53,7 @@ function forum_session_start() {
 	else if (isset($_GET['PHPSESSID']))
 		$forum_session_id = $_GET['PHPSESSID'];
 
-	if (empty($forum_session_id) || !preg_match('/^[a-z0-9\-,]{16,32}$/i', $forum_session_id))
+	if (empty($forum_session_id) || !preg_match('/^[a-z0-9\-,]{16,32}$/iD', $forum_session_id))
 	{
 		// Create new session id
 		$forum_session_id = random_key(32, FALSE, TRUE);

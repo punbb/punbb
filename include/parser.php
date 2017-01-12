@@ -131,7 +131,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// Inline tags, we do not allow new lines in these
 	$tags_inline = array('b', 'i', 'u', 'color', 'colour', 'h');
 	// Tags we trim interior space
-	$tags_trim = array('img');
+	$tags_trim = array('url', 'email', 'img');
 	// Tags we remove quotes from the argument
 	$tags_quotes = array('url', 'email', 'img');
 	// Tags we limit bbcode in
@@ -751,10 +751,7 @@ function do_bbcode($text, $is_signature = false)
 
 	if (strpos($text, '[quote') !== false)
 	{
-		$text = preg_replace_callback(
-			'#\[quote=(&\#039;|&quot;|"|\'|)(.*?)\\1\]#',create_function('$matches', 
-'global $lang_common; return \'</p><div class="quotebox"><cite>\'.str_replace(array(\'[\', \'\"\'), array(\'&#91;\', \'"\'), $matches[2])." ".$lang_common[\'wrote\'].":</cite><blockquote><p>";'),
-$text);
+		$text = preg_replace('#\[quote=(?P<quote>(?:&quot;|&\#039;|"|\'))?((?(quote)[^\r\n]+?|[^\r\n\]]++))(?(quote)(?P=quote))\]\s*#', '</p><div class="quotebox"><cite>$2 '.$lang_common['wrote'].'</cite><blockquote><p>', $text);
 		$text = preg_replace('#\[quote\]\s*#', '</p><div class="quotebox"><blockquote><p>', $text);
 		$text = preg_replace('#\s*\[\/quote\]#S', '</p></blockquote></div><p>', $text);
 	}
@@ -765,11 +762,11 @@ $text);
 		$replace_callback[] = 'handle_list_tag($matches[2], $matches[1])';
 	}
 
-	$pattern[] = '#\[b\](.*?)\[/b\]#ms';
-	$pattern[] = '#\[i\](.*?)\[/i\]#ms';
-	$pattern[] = '#\[u\](.*?)\[/u\]#ms';
-	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#ms';
-	$pattern[] = '#\[h\](.*?)\[/h\]#ms';
+	$pattern[] = '#\[b\](.*?)\[/b\]#s';
+	$pattern[] = '#\[i\](.*?)\[/i\]#s';
+	$pattern[] = '#\[u\](.*?)\[/u\]#s';
+	$pattern[] = '#\[colou?r=([a-zA-Z]{3,20}|\#[0-9a-fA-F]{6}|\#[0-9a-fA-F]{3})](.*?)\[/colou?r\]#s';
+	$pattern[] = '#\[h\](.*?)\[/h\]#s';
 
 	$replace[] = '<strong>$matches[1]</strong>';
 	$replace[] = '<em>$matches[1]</em>';
@@ -793,11 +790,11 @@ $text);
 		}
 	}
 
-	$text = preg_replace_callback('#\[url\]([^\[]*?)\[/url\]#', 'callback_handle_url_nobb', $text);
-	$text = preg_replace_callback('#\[url=([^\[]+?)\](.*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+	$text = preg_replace_callback('#\[url\]([^\[\n\r\t]*?)\[/url\]#', 'callback_handle_url_nobb', $text);
+	$text = preg_replace_callback('#\[url=([^\[\n\r\t]+?)\](.*?)\[/url\]#', 'callback_handle_url_nobb', $text);
 
-	$pattern[] = '#\[email\]([^\[]*?)\[/email\]#';
-	$pattern[] = '#\[email=([^\[]+?)\](.*?)\[/email\]#';
+	$pattern[] = '#\[email\]([^\[\n\r\t]*?)\[/email\]#';
+	$pattern[] = '#\[email=([^\[\n\r\t]+?)\](.*?)\[/email\]#';
 
 	$replace[] = '<a href=\"mailto:$matches[1]\">$matches[1]</a>';
 	$replace[] = '<a href=\"mailto:$matches[1]\">$matches[2]</a>';

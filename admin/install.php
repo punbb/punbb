@@ -501,7 +501,7 @@ else
 	}
 
 	// Validate prefix
-	if (strlen($db_prefix) > 0 && (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $db_prefix) || strlen($db_prefix) > 40))
+	if (strlen($db_prefix) > 0 && (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/D', $db_prefix) || strlen($db_prefix) > 40))
 		error(sprintf($lang_install['Invalid table prefix'], $db_prefix));
 
 	// Check SQLite prefix collision
