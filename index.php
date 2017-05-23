@@ -154,7 +154,7 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 		$forum_page['item_title']['title'] = '<a href="'.forum_link($forum_url['forum'], array($cur_forum['fid'], sef_friendly($cur_forum['forum_name']))).'"><span>'.forum_htmlencode($cur_forum['forum_name']).'</span></a>';
 
 		// Are there new posts since our last visit?
-		if (!$forum_user['is_guest'] && $cur_forum['last_post'] > $forum_user['last_visit'] && (empty($tracked_topics['forums'][$cur_forum['fid']]) || $cur_forum['last_post'] > $tracked_topics['forums'][$cur_forum['fid']]))
+		if (!empty($new_topics[$cur_forum['fid']]) && !$forum_user['is_guest'] && $cur_forum['last_post'] > $forum_user['last_visit'] && (empty($tracked_topics['forums'][$cur_forum['fid']]) || $cur_forum['last_post'] > $tracked_topics['forums'][$cur_forum['fid']]))
 		{
 			// There are new posts in this forum, but have we read all of them already?
 			foreach ($new_topics[$cur_forum['fid']] as $check_topic_id => $check_last_post)
