@@ -560,6 +560,7 @@ if (!empty($posts_id))
 					</ul>
 					<ul class="author-info">
 						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['author_info'])."\n" ?>
+						<?php ($hook = get_hook('vt_row_userbar_bottom')) ? eval($hook) : null;?>
 					</ul>
 				</div>
 				<div class="post-entry">
