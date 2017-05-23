@@ -128,7 +128,7 @@ $lang_common = array(
 'Admin'						=>	'Administration',
 'Last visit'				=>	'Last visit %s',
 'Mark all as read'			=>	'Mark all topics as read',
-'Login nag'					=>	'Please login or register.',
+'Login nag'					=>	'Please <a href="login.php">login</a> or <a href="register.php">register</a>.',
 'New reports'				=>	'New reports',
 
 // Alerts
