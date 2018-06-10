@@ -967,7 +967,7 @@ else if (isset($_GET['find_user']))
 	$forum_page['num_pages'] = ceil($forum_page['num_users'] / $forum_user['disp_topics']);
 	$forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 	$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
-	$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_users']));
+	$forum_page['finish_at'] = min(($forum_user['disp_topics']), ($forum_page['num_users']));
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(

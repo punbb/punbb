@@ -428,7 +428,7 @@ $forum_page['num_bans'] = $forum_db->result($result);
 $forum_page['num_pages'] = ceil($forum_page['num_bans'] / $forum_user['disp_topics']);
 $forum_page['page'] = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
 $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($forum_page['num_bans']));
+$forum_page['finish_at'] = min(($forum_user['disp_topics']), ($forum_page['num_bans']));
 
 // Generate paging
 $forum_page['page_post']['paging']='<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['admin_bans'], $lang_common['Paging separator'], null, true).'</p>';
