@@ -759,6 +759,7 @@ $text);
 		$text = preg_replace('#\s*\[\/quote\]#S', '</p></blockquote></div><p>', $text);
 	}
 
+	$pattern_callback = array();
 	if (!$is_signature)
 	{
 		$pattern_callback[] = '%\[list(?:=([1a*]))?+\]((?:(?>.*?(?=\[list(?:=[1a*])?+\]|\[/list\]))|(?R))*)\[/list\]%is';
